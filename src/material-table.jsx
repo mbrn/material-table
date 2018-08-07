@@ -1,21 +1,22 @@
 import * as React from 'react'
-import { 
-  Checkbox, Paper, Table, 
-  TableHead, TableBody, TableRow, 
+import MTableToolbar from './m-table-toolbar'
+import {
+  Checkbox, Paper, Table,
+  TableHead, TableBody, TableRow,
   TableCell, withStyles
 } from '@material-ui/core'
 
 class MaterialTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {                  
+    this.state = {
     }
-  }  
-  
+  }
+
   renderHeader() {
     return (
       <TableHead>
-        <TableRow>          
+        <TableRow>
           {this.props.columns.map(columnDef => (
             <TableCell numeric={columnDef.isNumeric}>{columnDef.title}</TableCell>
           ))}
@@ -34,11 +35,11 @@ class MaterialTable extends React.Component {
 
   renderRow(data) {
     return (
-      <TableRow>        
+      <TableRow>
         {this.props.columns.map(columnDef => {
           const value = data[columnDef.field];
           return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
-        })}                
+        })}
       </TableRow>
     );
   }
@@ -48,7 +49,8 @@ class MaterialTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <Table className={classes.table}>        
+        {this.props.toolbar && <MTableToolbar {...this.props.toolbar}/>}
+        <Table className={classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
         </Table>
