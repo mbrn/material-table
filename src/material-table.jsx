@@ -11,6 +11,7 @@ class MaterialTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      columns: this.props.columns
     }
   }
 
@@ -18,7 +19,7 @@ class MaterialTable extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {this.props.columns.map(columnDef => (
+          {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => (
             <TableCell numeric={columnDef.isNumeric}>{columnDef.title}</TableCell>
           ))}
         </TableRow>
@@ -37,7 +38,7 @@ class MaterialTable extends React.Component {
   renderRow(data) {
     return (
       <TableRow>
-        {this.props.columns.map(columnDef => {
+        {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => {
           const value = data[columnDef.field];
           return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
         })}
@@ -46,11 +47,17 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const { classes, columns, data } = this.props;
+    const { classes } = this.props;
 
     return (
       <Paper className={classes.root}>
-        {this.props.options.toolbar && <MTableToolbar {...this.props.options.toolbar}/>}
+        {this.props.options.toolbar && 
+          <MTableToolbar 
+            {...this.props.options.toolbar} 
+            columns={this.state.columns}
+            onColumnsChanged={columns => this.setState({columns})}
+          />
+        }
         <Table className={classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
@@ -66,7 +73,7 @@ MaterialTable.defaultProps = {
   data: [],  
   options: {    
     selection: false,            
-    toolbar: true
+    toolbar: false,
   }
 }
 

@@ -2,11 +2,59 @@ import * as React from 'react'
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { 
-  Icon, IconButton, Toolbar, 
-  Tooltip, Typography, withStyles 
+  Icon, IconButton, Menu, List, ListItem,
+  MenuItem, Toolbar, Tooltip, 
+  Typography, withStyles, Checkbox, FormControlLabel
 } from '@material-ui/core'
 
 class MTableToolbar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showColumnsButtonAnchorEl: null,
+    };
+  }
+
+
+  renderShowColumnsButton() {
+    return (
+      <div>
+        <Tooltip title="Show Columns">
+          <IconButton 
+            onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
+            aria-label="Show Columns">
+            <Icon>view_column</Icon>
+          </IconButton>
+        </Tooltip>
+        <Menu
+          anchorEl={this.state.showColumnsButtonAnchorEl}
+          open={Boolean(this.state.showColumnsButtonAnchorEl)}
+          onClose={() => this.setState({ showColumnsButtonAnchorEl: null }) }>
+          
+          {this.props.columns.map((col, index) => {            
+            return (
+              <MenuItem>
+                <FormControlLabel
+                  label={col.title}
+                  control={
+                    <Checkbox 
+                      checked={!col.hidden} 
+                      onChange={(event, checked) => {
+                        const columns = this.props.columns;
+                        columns[index].hidden = !checked; 
+                        this.props.onColumnsChanged(columns);
+                      }
+                    }/>
+                  }
+                />
+              </MenuItem>
+            );
+          })}
+        </Menu>
+      </div>
+    )
+  }
+
   render() {
     const { classes } = this.props;    
     return (
@@ -18,11 +66,7 @@ class MTableToolbar extends React.Component {
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>
-          {/* <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <Icon>delete</Icon>
-            </IconButton>
-          </Tooltip> */}
+          {this.props.showColumnsButton && this.renderShowColumnsButton()}
         </div>
       </Toolbar>
     );
@@ -30,11 +74,16 @@ class MTableToolbar extends React.Component {
 }
 
 MTableToolbar.defaultProps = {
+  columns: [],  
+  showColumnsButton: false,
   title: 'No Title!'
+  
 }
 
 MTableToolbar.propTypes = {
-  title: PropTypes.string.isRequired
+  columns: PropTypes.array,
+  showColumnsButton: PropTypes.bool,
+  title: PropTypes.string.isRequired  
 }
 
 const styles = theme => ({
