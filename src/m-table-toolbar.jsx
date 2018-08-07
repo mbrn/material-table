@@ -1,5 +1,6 @@
 import * as React from 'react'
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { 
   Icon, IconButton, Toolbar, 
   Tooltip, Typography, withStyles 
@@ -26,6 +27,14 @@ class MTableToolbar extends React.Component {
       </Toolbar>
     );
   }
+}
+
+MTableToolbar.defaultProps = {
+  title: 'No Title!'
+}
+
+MTableToolbar.propTypes = {
+  title: PropTypes.string.isRequired
 }
 
 const styles = theme => ({

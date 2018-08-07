@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types';
 import MTableToolbar from './m-table-toolbar'
 import {
   Checkbox, Paper, Table,
@@ -49,7 +50,7 @@ class MaterialTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        {this.props.toolbar && <MTableToolbar {...this.props.toolbar}/>}
+        {this.props.options.toolbar && <MTableToolbar {...this.props.options.toolbar}/>}
         <Table className={classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
@@ -57,6 +58,23 @@ class MaterialTable extends React.Component {
       </Paper>
     );
   }
+}
+
+MaterialTable.defaultProps = {
+  classes: {},
+  columns: [],
+  data: [],  
+  options: {    
+    selection: false,            
+    toolbar: true
+  }
+}
+
+MaterialTable.propTypes = {
+  classes: PropTypes.object.isRequired,
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  options: PropTypes.object
 }
 
 const styles = theme => ({
