@@ -1,10 +1,70 @@
 import * as React from 'react'
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core'
+import { 
+  Checkbox, Paper, Table, 
+  TableHead, TableBody, TableRow, 
+  TableCell, withStyles
+} from '@material-ui/core'
 
-export default class MaterialTable extends React.Component {
-  render() {
+class MaterialTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {                  
+    }
+  }  
+  
+  renderHeader() {
     return (
-      <div> hello, i am material table </div>
+      <TableHead>
+        <TableRow>          
+          {this.props.columns.map(columnDef => (
+            <TableCell numeric={columnDef.isNumeric}>{columnDef.title}</TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    );
+  }
+
+  renderBody() {
+    return (
+      <TableBody>
+        {this.props.data.map(data => (this.renderRow(data)))}
+      </TableBody>
+    );
+  }
+
+  renderRow(data) {
+    return (
+      <TableRow>        
+        {this.props.columns.map(columnDef => {
+          const value = data[columnDef.field];
+          return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
+        })}                
+      </TableRow>
+    );
+  }
+
+  render() {
+    const { classes, columns, data } = this.props;
+
+    return (
+      <Paper className={classes.root}>
+        <Table className={classes.table}>        
+          {this.renderHeader()}
+          {this.renderBody()}
+        </Table>
+      </Paper>
     );
   }
 }
+
+const styles = theme => ({
+  root: {
+    margin: theme.spacing.unit,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+});
+
+export default withStyles(styles)(MaterialTable)

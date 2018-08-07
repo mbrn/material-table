@@ -23,19 +23,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MaterialTable = function (_React$Component) {
   _inherits(MaterialTable, _React$Component);
 
-  function MaterialTable() {
+  function MaterialTable(props) {
     _classCallCheck(this, MaterialTable);
 
-    return _possibleConstructorReturn(this, (MaterialTable.__proto__ || Object.getPrototypeOf(MaterialTable)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (MaterialTable.__proto__ || Object.getPrototypeOf(MaterialTable)).call(this, props));
+
+    _this.state = {};
+    return _this;
   }
 
   _createClass(MaterialTable, [{
+    key: 'renderHeader',
+    value: function renderHeader() {
+      return React.createElement(
+        _core.TableHead,
+        null,
+        React.createElement(
+          _core.TableRow,
+          null,
+          this.props.columns.map(function (columnDef) {
+            return React.createElement(
+              _core.TableCell,
+              { numeric: columnDef.isNumeric },
+              columnDef.title
+            );
+          })
+        )
+      );
+    }
+  }, {
+    key: 'renderBody',
+    value: function renderBody() {
+      var _this2 = this;
+
+      return React.createElement(
+        _core.TableBody,
+        null,
+        this.props.data.map(function (data) {
+          return _this2.renderRow(data);
+        })
+      );
+    }
+  }, {
+    key: 'renderRow',
+    value: function renderRow(data) {
+      return React.createElement(
+        _core.TableRow,
+        null,
+        this.props.columns.map(function (columnDef) {
+          var value = data[columnDef.field];
+          return React.createElement(
+            _core.TableCell,
+            { numeric: columnDef.isNumeric },
+            value
+          );
+        })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          classes = _props.classes,
+          columns = _props.columns,
+          data = _props.data;
+
+
       return React.createElement(
-        'div',
-        null,
-        ' hello, i am material table '
+        _core.Paper,
+        { className: classes.root },
+        React.createElement(
+          _core.Table,
+          { className: classes.table },
+          this.renderHeader(),
+          this.renderBody()
+        )
       );
     }
   }]);
@@ -43,4 +105,16 @@ var MaterialTable = function (_React$Component) {
   return MaterialTable;
 }(React.Component);
 
-exports.default = MaterialTable;
+var styles = function styles(theme) {
+  return {
+    root: {
+      margin: theme.spacing.unit,
+      overflowX: 'auto'
+    },
+    table: {
+      minWidth: 700
+    }
+  };
+};
+
+exports.default = (0, _core.withStyles)(styles)(MaterialTable);
