@@ -10,8 +10,14 @@ import {
 class MaterialTable extends React.Component {
   constructor(props) {
     super(props);
+    const data =  this.props.data.map((row, index) => { 
+      row.tableData = { id: index };
+      return row;
+    });
     this.state = {
-      columns: this.props.columns
+      columns: this.props.columns,
+      data: data,
+      selectedCount: 0
     }
   }
 
@@ -19,6 +25,22 @@ class MaterialTable extends React.Component {
     return (
       <TableHead>
         <TableRow>
+          {this.props.options.selection &&
+            <TableCell padding="checkbox">
+              <Checkbox 
+                indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
+                checked={this.state.selectedCount === this.state.data.length}
+                onChange={(event, checked) => {
+                  const data = this.state.data.map(row => { 
+                    row.tableData.checked = checked; 
+                    return row;
+                  });
+                  const selectedCount = checked ? data.length : 0;
+                  this.setState({data, selectedCount});
+                }} 
+              />
+            </TableCell>
+          }
           {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => (
             <TableCell numeric={columnDef.isNumeric}>{columnDef.title}</TableCell>
           ))}
@@ -30,7 +52,7 @@ class MaterialTable extends React.Component {
   renderBody() {
     return (
       <TableBody>
-        {this.props.data.map(data => (this.renderRow(data)))}
+        {this.state.data.map(data => (this.renderRow(data)))}
       </TableBody>
     );
   }
@@ -38,6 +60,22 @@ class MaterialTable extends React.Component {
   renderRow(data) {
     return (
       <TableRow>
+        {this.props.options.selection &&
+          <TableCell padding="checkbox">
+            <Checkbox 
+              checked={data.tableData.checked === true}
+              value={data.tableData.id}
+              onChange={(event, checked) => {
+                data = this.state.data;
+                data[event.target.value].tableData.checked = checked;
+                this.setState(state => ({
+                  data: data,
+                  selectedCount: state.selectedCount + (checked ? 1 : -1)
+                }))
+              }}
+            />
+          </TableCell>
+        }
         {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => {
           const value = data[columnDef.field];
           return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
