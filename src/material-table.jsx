@@ -1,31 +1,53 @@
 import * as React from 'react'
 import PropTypes from 'prop-types';
 import MTableToolbar from './m-table-toolbar'
+import MTablePagination from './m-table-pagination'
 import {
   Checkbox, Paper, Table,
   TableHead, TableBody, TableRow,
-  TableCell, withStyles
+  TableCell, TableFooter, TablePagination, 
+  withStyles
 } from '@material-ui/core'
 
 class MaterialTable extends React.Component {
   constructor(props) {
-    super(props);
+    super(props);         
+
     const data =  this.props.data.map((row, index) => { 
       row.tableData = { id: index };
       return row;
     });
+    data = getRenderData(data);
+
+    const calculatedProps = {...this.props}
+    calculatedProps.options.paging = calculatedProps.options.paging !== false 
+      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);
+
+
+
     this.state = {
       columns: this.props.columns,
+      currentPage: 0,
       data: data,
+      props: calculatedProps,      
       selectedCount: 0
     }
+  }
+
+  getRenderData() {
+    const data = this.state.data;
+    if(this.state.props.options.paging) {
+      data = data.splice(this.state.currentPage * this.state.props.options.paging.pageSize, this.state.props.options.paging.pageSize)
+    }
+
+    return data;
   }
 
   renderHeader() {
     return (
       <TableHead>
         <TableRow>
-          {this.props.options.selection &&
+          {this.state.props.options.selection &&
             <TableCell padding="checkbox">
               <Checkbox 
                 indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
@@ -52,7 +74,7 @@ class MaterialTable extends React.Component {
   renderBody() {
     return (
       <TableBody>
-        {this.state.data.map(data => (this.renderRow(data)))}
+        {this.state.data.map(data => (this.renderRow(data)))}        
       </TableBody>
     );
   }
@@ -60,7 +82,7 @@ class MaterialTable extends React.Component {
   renderRow(data) {
     return (
       <TableRow>
-        {this.props.options.selection &&
+        {this.state.props.options.selection &&
           <TableCell padding="checkbox">
             <Checkbox 
               checked={data.tableData.checked === true}
@@ -85,13 +107,13 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.state.props;
 
     return (
       <Paper className={classes.root}>
-        {this.props.options.toolbar && 
+        {this.state.props.options.toolbar && 
           <MTableToolbar 
-            {...this.props.options.toolbar} 
+            {...this.state.props.options.toolbar} 
             columns={this.state.columns}
             onColumnsChanged={columns => this.setState({columns})}
           />
@@ -99,7 +121,23 @@ class MaterialTable extends React.Component {
         <Table className={classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
-        </Table>
+        </Table>        
+        {this.state.props.options.paging &&  
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                style={{position: 'absolute', right: 20}}
+                colSpan={3}
+                count={this.state.data.length}
+                rowsPerPage={this.state.props.options.paging.pageSize}
+                page={this.state.currentPage}
+                onChangePage={(event, page) => { this.setState({currentPage: page}); }}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                ActionsComponent={MTablePagination}
+              />
+            </TableRow>
+          </TableFooter>          
+        }
       </Paper>
     );
   }
@@ -109,7 +147,14 @@ MaterialTable.defaultProps = {
   classes: {},
   columns: [],
   data: [],  
-  options: {    
+  options: {
+    paging: {
+      pageSize: 5,
+      showPageSizeOptions: true,
+      pageSizeOptions: [5, 10, 20, -1],
+      showFirstButton: true,
+      showLastButton: true      
+    },
     selection: false,            
     toolbar: false,
   }
