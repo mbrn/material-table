@@ -51,12 +51,26 @@ class MaterialTable extends React.Component {
       const columnDef = this.state.columns[this.state.orderBy];
       renderData = data.sort(
         this.state.orderDirection === 'desc' ? 
-        (a, b) => this.sort(b[columnDef.field], a[columnDef.field], columnDef.isNumeric) : 
-        (a, b) => this.sort(a[columnDef.field], b[columnDef.field], columnDef.isNumeric)
+        (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.isNumeric) : 
+        (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.isNumeric)
       );
     }
 
     return renderData || data;
+  }
+
+  getFieldValue(rowData, columnDef) {
+    if(columnDef.render) {
+      return columnDef.render(rowData);
+    }
+    else {
+      let value = rowData[columnDef.field];
+      if(columnDef.lookup) {
+        value = columnDef.lookup[value];
+      }
+
+      return value;
+    }
   }
 
   sort(a, b, isNumeric) {
@@ -96,7 +110,7 @@ class MaterialTable extends React.Component {
                   direction={this.state.orderDirection}
                   onClick={() => {
                     const orderDirection = index !== this.state.orderBy ? "asc" : this.state.orderDirection === "asc" ? "desc" : "asc";
-                    this.setState({orderBy: index,  orderDirection}, () => {
+                    this.setState({orderBy: index,  orderDirection, currentPage: 0}, () => {
                       this.setData();
                     });
                   }}
@@ -152,7 +166,7 @@ class MaterialTable extends React.Component {
           </TableCell>
         }
         {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => {
-          const value = data[columnDef.field];
+          const value = this.getFieldValue(data, columnDef);
           return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
         })}
       </TableRow>
