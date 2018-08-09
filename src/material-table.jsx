@@ -1,12 +1,13 @@
 import * as React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import MTableFilterRow from './m-table-filter-row'
 import MTableToolbar from './m-table-toolbar'
 import MTablePagination from './m-table-pagination'
 import {
   Checkbox, Paper, Table,
   TableHead, TableBody, TableRow,
   TableCell, TableFooter, TablePagination, 
-  TableSortLabel, withStyles
+  TableSortLabel, withStyles, Typography
 } from '@material-ui/core'
 
 class MaterialTable extends React.Component {
@@ -15,7 +16,7 @@ class MaterialTable extends React.Component {
 
     const calculatedProps = {...this.props}
     calculatedProps.options.paging = calculatedProps.options.paging !== false 
-      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);    
+      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);        
 
     const data =  this.props.data.map((row, index) => { 
       row.tableData = { id: index };
@@ -23,8 +24,13 @@ class MaterialTable extends React.Component {
     });
     const renderData = this.getRenderData(data, calculatedProps);
 
+    const columns =  this.props.columns.map((columnDef, index) => { 
+      columnDef.tableData = { id: index };
+      return columnDef;
+    });
+
     this.state = {
-      columns: this.props.columns,
+      columns: columns,
       currentPage: 0,      
       data: data,
       props: calculatedProps,      
@@ -46,10 +52,36 @@ class MaterialTable extends React.Component {
     data = data || this.state.data;
     props = props || this.state.props
 
-    let renderData; //apply filter & sorting
+    let renderData = [...data]; //apply filter & 
+    
+    // App filter
+    if(this.state) {
+      this.state.columns.filter(columnDef => { return columnDef.tableData.filterValue; }).forEach(columnDef => {
+        if(columnDef.lookup) {
+          renderData = renderData.filter(row => {             
+            return !columnDef.tableData.filterValue 
+              || columnDef.tableData.filterValue.length == 0 
+              || columnDef.tableData.filterValue.indexOf(row[columnDef.field] && row[columnDef.field].toString()) > -1;
+          });
+        }
+        else if(columnDef.isNumeric === true) {
+          renderData = renderData.filter(row => { 
+            return row[columnDef.field] == columnDef.tableData.filterValue
+          });
+        }
+        else {
+          renderData = renderData.filter(row => { 
+            return row[columnDef.field] 
+              && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase())
+          });
+        }
+      });
+    }
+
+    // Apply Sorting
     if(this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
       const columnDef = this.state.columns[this.state.orderBy];
-      renderData = data.sort(
+      renderData = renderData.sort(
         this.state.orderDirection === 'desc' ? 
         (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.isNumeric) : 
         (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.isNumeric)
@@ -139,6 +171,18 @@ class MaterialTable extends React.Component {
     }
     return (
       <TableBody>
+        {this.state.props.options.filtering && 
+          <MTableFilterRow 
+            columns={this.state.columns.filter(columnDef => {return !columnDef.hidden})}
+            onFilterChanged={(columnId, value) => {
+              const columns = this.state.columns;
+              columns[columnId].tableData.filterValue = value;
+              this.setState({columns}, () => {
+                this.setData();
+              });
+            }}
+          />
+        }
         {renderData.map((data, index) => (this.renderRow(data, index)))}        
         {[...Array(emptyRowCount)].map(() => <TableRow style={{height: 49}}/>)}
         {emptyRowCount > 0 && <div style={{height: 1}}/>}
@@ -235,6 +279,7 @@ MaterialTable.defaultProps = {
   columns: [],
   data: [],  
   options: {
+    filtering: false,
     paging: {
       pageSize: 5,
       pageSizeOptions: [5, 10, 20]
