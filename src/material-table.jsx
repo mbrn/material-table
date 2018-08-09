@@ -6,7 +6,7 @@ import {
   Checkbox, Paper, Table,
   TableHead, TableBody, TableRow,
   TableCell, TableFooter, TablePagination, 
-  withStyles
+  TableSortLabel, withStyles
 } from '@material-ui/core'
 
 class MaterialTable extends React.Component {
@@ -29,7 +29,9 @@ class MaterialTable extends React.Component {
       data: data,
       props: calculatedProps,      
       renderData: renderData,
-      selectedCount: 0
+      selectedCount: 0,
+      orderBy: -1,
+      orderDirection: ''
     }
   }
 
@@ -45,8 +47,25 @@ class MaterialTable extends React.Component {
     props = props || this.state.props
 
     let renderData; //apply filter & sorting
+    if(this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
+      const columnDef = this.state.columns[this.state.orderBy];
+      renderData = data.sort(
+        this.state.orderDirection === 'desc' ? 
+        (a, b) => this.sort(b[columnDef.field], a[columnDef.field], columnDef.isNumeric) : 
+        (a, b) => this.sort(a[columnDef.field], b[columnDef.field], columnDef.isNumeric)
+      );
+    }
 
     return renderData || data;
+  }
+
+  sort(a, b, isNumeric) {
+    if(isNumeric) {
+      return a - b;
+    } 
+    else {
+      return a < b ? -1 : a > b ? 1 : 0
+    }
   }
 
   renderHeader() {
@@ -69,8 +88,26 @@ class MaterialTable extends React.Component {
               />
             </TableCell>
           }
-          {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => (
-            <TableCell numeric={columnDef.isNumeric}>{columnDef.title}</TableCell>
+          {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map((columnDef, index) => (
+            <TableCell numeric={columnDef.isNumeric}>
+              {columnDef.sort !== false ? 
+                <TableSortLabel
+                  active={this.state.orderBy === index}
+                  direction={this.state.orderDirection}
+                  onClick={() => {
+                    const orderDirection = index !== this.state.orderBy ? "asc" : this.state.orderDirection === "asc" ? "desc" : "asc";
+                    this.setState({orderBy: index,  orderDirection}, () => {
+                      this.setData();
+                    });
+                  }}
+                >
+                  {columnDef.title}
+                </TableSortLabel>
+                :
+                columnDef.title
+              }
+              
+            </TableCell>
           ))}
         </TableRow>
       </TableHead>
