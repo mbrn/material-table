@@ -36,6 +36,7 @@ class MaterialTable extends React.Component {
       data: data,
       props: calculatedProps,      
       renderData: renderData,
+      searchText: '',
       selectedCount: 0,
       orderBy: -1,
       orderDirection: ''
@@ -76,6 +77,24 @@ class MaterialTable extends React.Component {
               && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase())
           });
         }
+      });
+    }
+
+    // Apply Search 
+    if(this.state && this.state.searchText) {
+      renderData = renderData.filter(row => {
+        let result = false;
+         this.state.columns
+          .filter(columnDef => {return !columnDef.hidden})
+          .forEach(columnDef => {
+            const value = this.getFieldValue(row, columnDef) || "";
+            if(value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
+              result = true; 
+              return;
+            }
+          });
+
+        return result;;
       });
     }
 
@@ -274,6 +293,8 @@ class MaterialTable extends React.Component {
             selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => {return a.tableData.checked} )}            
             {...this.state.props.options.toolbar} 
             columns={this.state.columns}
+            searchText={this.state.searchText}
+            onSearchChanged={searchText => this.setState({searchText}, () => this.setData() )}
             onColumnsChanged={columns => this.setState({columns})}
           />
         }

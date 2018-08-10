@@ -2,7 +2,9 @@ import * as React from 'react'
 import {
   TableCell, TableRow, TextField, 
   FormControl, InputLabel, Select,
-  Input, MenuProps, MenuItem, Checkbox, ListItemText
+  Input, MenuProps, MenuItem, 
+  Checkbox, ListItemText, Button,
+  InputAdornment, Icon
 } from '@material-ui/core'
 
 class MTableFilterRow extends React.Component {
@@ -29,19 +31,33 @@ class MTableFilterRow extends React.Component {
                     <ListItemText primary={columnDef.lookup[key]} />
                   </MenuItem>  
                 ))
-              }              
+              }   
             </Select>
           </FormControl>
         );
       }
       else {
         return (
-          <TextField 
+          <TextField
             style={columnDef.isNumeric && {float:'right'}}
             type={columnDef.isNumeric && 'number'}
             value={columnDef.tableData.filterValue}
             onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon>filter_list</Icon>
+                </InputAdornment>
+              ),
+            }}
           />
+
+          // <TextField 
+          //   style={columnDef.isNumeric && {float:'right'}}
+          //   type={columnDef.isNumeric && 'number'}
+          //   value={columnDef.tableData.filterValue}
+          //   onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
+          // />
         );
       }
     }

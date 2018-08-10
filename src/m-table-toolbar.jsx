@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { 
   Icon, IconButton, Menu, List, ListItem,
   MenuItem, Toolbar, Tooltip, 
-  Typography, withStyles, Checkbox, FormControlLabel
+  Typography, withStyles, Checkbox, 
+  FormControlLabel, TextField, InputAdornment
 } from '@material-ui/core'
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
@@ -23,13 +24,28 @@ class MTableToolbar extends React.Component {
 
   renderDefaultActions() {
     return (
-      <Tooltip title="Show Columns">
-        <IconButton 
-          onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
-          aria-label="Show Columns">
-          <Icon>view_column</Icon>
-        </IconButton>
-      </Tooltip>
+      <div>
+        {this.props.search && 
+          <TextField
+            value={this.props.searchText}
+            onChange={event => this.props.onSearchChanged(event.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon>search</Icon>
+                </InputAdornment>
+              ),
+            }}
+          />
+        }
+        <Tooltip title="Show Columns">
+          <IconButton 
+            onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
+            aria-label="Show Columns">
+            <Icon>view_column</Icon>
+          </IconButton>
+        </Tooltip>
+      </div>
     );
   }
 
@@ -91,6 +107,7 @@ class MTableToolbar extends React.Component {
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],  
+  search: true,
   showColumnsButton: false,
   title: 'No Title!'
   
