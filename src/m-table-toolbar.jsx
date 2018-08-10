@@ -1,11 +1,13 @@
 import * as React from 'react'
 import classNames from 'classnames';
+import MTableActions from './m-table-actions'
 import PropTypes from 'prop-types';
 import { 
   Icon, IconButton, Menu, List, ListItem,
   MenuItem, Toolbar, Tooltip, 
   Typography, withStyles, Checkbox, FormControlLabel
 } from '@material-ui/core'
+import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 class MTableToolbar extends React.Component {
   constructor(props) {
@@ -15,17 +17,29 @@ class MTableToolbar extends React.Component {
     };
   }
 
+  renderSelectedActions() {
+    return <MTableActions actions={this.props.actions} data={this.props.selectedRows}/> 
+  }
+
+  renderDefaultActions() {
+    return (
+      <Tooltip title="Show Columns">
+        <IconButton 
+          onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
+          aria-label="Show Columns">
+          <Icon>view_column</Icon>
+        </IconButton>
+      </Tooltip>
+    );
+  }
 
   renderShowColumnsButton() {
     return (
       <div>
-        <Tooltip title="Show Columns">
-          <IconButton 
-            onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
-            aria-label="Show Columns">
-            <Icon>view_column</Icon>
-          </IconButton>
-        </Tooltip>
+        {this.props.selectedRows ?
+          this.renderSelectedActions() : 
+          this.renderDefaultActions()
+        }
         <Menu
           anchorEl={this.state.showColumnsButtonAnchorEl}
           open={Boolean(this.state.showColumnsButtonAnchorEl)}
@@ -57,11 +71,12 @@ class MTableToolbar extends React.Component {
 
   render() {
     const { classes } = this.props;    
+    const title = this.props.selectedRows ? this.props.selectedRows.length + " row(s) selected" : this.props.title;
     return (
-      <Toolbar className={classNames(classes.root)}>
+      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows})}>
         <div className={classes.title}>
           <Typography variant="title">
-            {this.props.title}
+            {title}
           </Typography>            
         </div>
         <div className={classes.spacer} />
@@ -74,6 +89,7 @@ class MTableToolbar extends React.Component {
 }
 
 MTableToolbar.defaultProps = {
+  actions: [],
   columns: [],  
   showColumnsButton: false,
   title: 'No Title!'
@@ -81,6 +97,7 @@ MTableToolbar.defaultProps = {
 }
 
 MTableToolbar.propTypes = {
+  actions: PropTypes.array,
   columns: PropTypes.array,
   showColumnsButton: PropTypes.bool,
   title: PropTypes.string.isRequired  
@@ -90,18 +107,18 @@ const styles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
   },
-  // highlight:
-  //   theme.palette.type === 'light'
-  //     ? {
-  //         color: theme.palette.secondary.main,
-  //         backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-  //       }
-  //     : {
-  //         color: theme.palette.text.primary,
-  //         backgroundColor: theme.palette.secondary.dark,
-  //       },
+  highlight:
+    theme.palette.type === 'light'
+      ? {
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        }
+      : {
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark,
+        },
   spacer: {
-    flex: '1 1 100%',
+    flex: '1 1 10%',
   },
   actions: {
     color: theme.palette.text.secondary,

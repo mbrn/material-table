@@ -1,5 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import MTableActions from './m-table-actions'
 import MTableFilterRow from './m-table-filter-row'
 import MTableToolbar from './m-table-toolbar'
 import MTablePagination from './m-table-pagination'
@@ -118,20 +119,24 @@ class MaterialTable extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {this.state.props.options.selection &&
+          {this.state.props.options.selection ?
             <TableCell padding="checkbox">
               <Checkbox 
                 indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
                 checked={this.state.selectedCount === this.state.data.length}
                 onChange={(event, checked) => {
-                  const data = this.state.data.map(row => { 
+                  const data = this.state.renderData.map(row => { 
                     row.tableData.checked = checked; 
                     return row;
                   });
                   const selectedCount = checked ? data.length : 0;
-                  this.setState({data, selectedCount});
+                  this.setState({renderData: data, selectedCount});
                 }} 
               />
+            </TableCell>:
+            (this.state.props.actions && this.state.props.actions.length > 0) &&
+            <TableCell>
+              <Typography>Actions</Typography>
             </TableCell>
           }
           {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map((columnDef, index) => (
@@ -174,6 +179,7 @@ class MaterialTable extends React.Component {
         {this.state.props.options.filtering && 
           <MTableFilterRow 
             columns={this.state.columns.filter(columnDef => {return !columnDef.hidden})}
+            emptyCell={this.state.props.selection || (this.state.props.actions && this.state.props.actions.length > 0)}
             onFilterChanged={(columnId, value) => {
               const columns = this.state.columns;
               columns[columnId].tableData.filterValue = value;
@@ -193,7 +199,7 @@ class MaterialTable extends React.Component {
   renderRow(data, index) {
     return (
       <TableRow selected={index % 2 === 0}>
-        {this.state.props.options.selection &&
+        {this.state.props.options.selection ?
           <TableCell padding="checkbox">
             <Checkbox 
               checked={data.tableData.checked === true}
@@ -207,7 +213,12 @@ class MaterialTable extends React.Component {
                 }))
               }}
             />
+          </TableCell>:
+          (this.state.props.actions && this.state.props.actions.length > 0) &&
+          <TableCell>
+            <MTableActions data={data} actions={this.state.props.actions}/>
           </TableCell>
+
         }
         {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => {
           const value = this.getFieldValue(data, columnDef);
@@ -220,10 +231,10 @@ class MaterialTable extends React.Component {
   renderFooter() {
     if(this.state.props.options.paging) {
       return (
-        <TableFooter>
-          <TableRow>
+        <TableFooter style={{display: 'grid'}}>
+          <TableRow>            
             <TablePagination
-              style={{position: 'absolute', right: 20}}
+              style={{float:'right'}}
               colSpan={3}
               count={this.state.renderData.length}
               rowsPerPage={this.state.props.options.paging.pageSize}
@@ -259,6 +270,8 @@ class MaterialTable extends React.Component {
       <Paper className={classes.root}>
         {this.state.props.options.toolbar && 
           <MTableToolbar 
+            actions={this.state.props.options.selection && this.state.props.actions}     
+            selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => {return a.tableData.checked} )}            
             {...this.state.props.options.toolbar} 
             columns={this.state.columns}
             onColumnsChanged={columns => this.setState({columns})}
@@ -302,7 +315,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    // minWidth: 700,
   },
 });
 

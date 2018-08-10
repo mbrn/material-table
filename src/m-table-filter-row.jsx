@@ -49,7 +49,8 @@ class MTableFilterRow extends React.Component {
 
   render() {
     return (
-      <TableRow  >
+      <TableRow style={{height: 10}}>
+        {this.props.emptyCell && <TableCell/>}
         {this.props.columns.map(columnDef => (
           <TableCell>
             {this.getComponentForColumn(columnDef)}
