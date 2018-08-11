@@ -21,5 +21,6 @@ jobs:
         provider: npm
         email: "mehmetbaran@mehmetbaran.net"
         api_key: "$NPM_TOKEN"
+        before_deploy: "npm run build"
         on:
           branch: master
