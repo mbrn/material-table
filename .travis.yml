@@ -11,6 +11,7 @@ script:
 - npm run lint
 before_install:
   - npm i -g makeshift && makeshift -s @mbrn -r registry.npmjs.org
+  - npm run build
 deploy:
   provider: npm
   email: "mehmetbaran@mehmetbaran.net"
