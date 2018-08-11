@@ -1,8 +1,11 @@
 {
   "name": "material-table",
-  "version": "0.1.13",
+  "version": "0.1.16",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "babel src --out-dir dist",
     "lint": "eslint index.js src/**",
