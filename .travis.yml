@@ -7,8 +7,6 @@ install:
 script:
   - npm run lint
   - npm run build
-  - ls
-  - ls dist
 deploy:
   provider: npm
   email: "mehmetbaran@mehmetbaran.net"
