@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "index.js",
   "files": [
@@ -27,8 +27,7 @@
   },
   "homepage": "https://github.com/mbrn/material-table#readme",
   "dependencies": {
-    "@material-ui/core": "^1.4.3",
-    "material-design-icons": "^3.0.1"
+    "@material-ui/core": "^1.4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
