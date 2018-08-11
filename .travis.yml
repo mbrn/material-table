@@ -1,21 +1,29 @@
 language: node_js
 sudo: false
 node_js:
-- "8"
-- "10"
-cache:
-  directories:
-    - "node_modules"
-script:
-- npm run build
-- npm run lint
-- npm test
-before_install:
-  - npm i -g makeshift && makeshift -s @mbrn -r registry.npmjs.org
-  - npm run build
-deploy:
-  provider: npm
-  email: "mehmetbaran@mehmetbaran.net"
-  api_key: "$NPM_TOKEN"
-  on:
-    branch: master
+  - "8"
+  - "10"
+install:
+  - npm install
+stages:
+  - lint
+  - build  
+  - publish
+jobs:
+  include:
+    - stage: lint
+      script:
+        - npm run lint                
+    - stage: build
+      script:
+        # Compile JS
+        - npm run build
+    - stage: publish
+      script:
+        - npm publish
+# deploy:
+#   provider: npm
+#   email: "mehmetbaran@mehmetbaran.net"
+#   api_key: "$NPM_TOKEN"
+#   on:
+#     branch: master
