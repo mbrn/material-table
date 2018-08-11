@@ -1,24 +1,26 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import MTableActions from './m-table-actions'
-import MTableFilterRow from './m-table-filter-row'
-import MTableToolbar from './m-table-toolbar'
-import MTablePagination from './m-table-pagination'
+/* eslint-disable no-unused-vars */
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import MTableActions from './m-table-actions';
+import MTableFilterRow from './m-table-filter-row';
+import MTableToolbar from './m-table-toolbar';
+import MTablePagination from './m-table-pagination';
 import {
   Checkbox, Paper, Table,
   TableHead, TableBody, TableRow,
-  TableCell, TableFooter, TablePagination, 
+  TableCell, TableFooter, TablePagination,
   TableSortLabel, withStyles, Typography
-} from '@material-ui/core'
+} from '@material-ui/core';
+/* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
   constructor(props) {
-    super(props);                
+    super(props);
 
     const calculatedProps = this.getProps(props);
     this.state = Object.assign({
       columns: [],
-      currentPage: 0,            
+      currentPage: 0,
       data: [],
       pageSize: calculatedProps.options.paging.pageSize,
       renderData: [],
@@ -27,37 +29,34 @@ class MaterialTable extends React.Component {
       orderBy: -1,
       orderDirection: ''
     }, this.getDataAndColumns(calculatedProps));
-
-    // this.init(calculatedProps);
   }
 
-  componentWillReceiveProps(nextProps) {    
+  componentWillReceiveProps(nextProps) {
     const dataAndColumns = this.getDataAndColumns(this.getProps(nextProps));
     this.setState(dataAndColumns);
   }
 
   getDataAndColumns(props) {
-    const data =  props.data.map((row, index) => { 
+    const data = props.data.map((row, index) => {
       row.tableData = { id: index };
       return row;
     });
-    
-    const columns =  props.columns.map((columnDef, index) => { 
+
+    const columns = props.columns.map((columnDef, index) => {
       columnDef.tableData = { id: index };
       return columnDef;
     });
 
     const renderData = this.getRenderData(data, props);
-
-    return {data, columns, renderData}
+    return {data, columns, renderData};
   }
 
   getProps(props) {
-    const calculatedProps = {...(props || this.props)}
-    calculatedProps.options.paging = calculatedProps.options.paging !== false 
-      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);        
+    const calculatedProps = {...(props || this.props)};
+    calculatedProps.options.paging = calculatedProps.options.paging !== false &&
+      Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);
 
-    return calculatedProps;    
+    return calculatedProps;
   }
 
   setData(data) {
@@ -71,57 +70,53 @@ class MaterialTable extends React.Component {
     data = data || this.state.data;
     props = this.getProps();
 
-    let renderData = [...data]; //apply filter & 
-    
+    let renderData = [...data];
+
     // App filter
-    if(this.state) {
-      this.state.columns.filter(columnDef => { return columnDef.tableData.filterValue; }).forEach(columnDef => {
-        if(columnDef.lookup) {
-          renderData = renderData.filter(row => {             
-            return !columnDef.tableData.filterValue 
-              || columnDef.tableData.filterValue.length == 0 
-              || columnDef.tableData.filterValue.indexOf(row[columnDef.field] && row[columnDef.field].toString()) > -1;
+    if (this.state) {
+      this.state.columns.filter(columnDef => { return columnDef.tableData.filterValue }).forEach(columnDef => {
+        if (columnDef.lookup) {
+          renderData = renderData.filter(row => {
+            return !columnDef.tableData.filterValue ||
+              columnDef.tableData.filterValue.length === 0 ||
+              columnDef.tableData.filterValue.indexOf(row[columnDef.field] && row[columnDef.field].toString()) > -1;
           });
-        }
-        else if(columnDef.isNumeric === true) {
-          renderData = renderData.filter(row => { 
-            return row[columnDef.field] == columnDef.tableData.filterValue
+        } else if (columnDef.isNumeric === true) {
+          renderData = renderData.filter(row => {
+            return row[columnDef.field] === columnDef.tableData.filterValue;
           });
-        }
-        else {
-          renderData = renderData.filter(row => { 
-            return row[columnDef.field] 
-              && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase())
+        } else {
+          renderData = renderData.filter(row => {
+            return row[columnDef.field] && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase());
           });
         }
       });
     }
 
-    // Apply Search 
-    if(this.state && this.state.searchText) {
+    // Apply Search
+    if (this.state && this.state.searchText) {
       renderData = renderData.filter(row => {
         let result = false;
-         this.state.columns
-          .filter(columnDef => {return !columnDef.hidden})
+        this.state.columns
+          .filter(columnDef => { return !columnDef.hidden })
           .forEach(columnDef => {
-            const value = this.getFieldValue(row, columnDef) || "";
-            if(value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
-              result = true; 
-              return;
+            const value = this.getFieldValue(row, columnDef) || '';
+            if (value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
+              result = true;
             }
           });
 
-        return result;;
+        return result;
       });
     }
 
     // Apply Sorting
-    if(this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
+    if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
       const columnDef = this.state.columns[this.state.orderBy];
       renderData = renderData.sort(
-        this.state.orderDirection === 'desc' ? 
-        (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.isNumeric) : 
-        (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.isNumeric)
+        this.state.orderDirection === 'desc'
+          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.isNumeric)
+          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.isNumeric)
       );
     }
 
@@ -129,12 +124,11 @@ class MaterialTable extends React.Component {
   }
 
   getFieldValue(rowData, columnDef) {
-    if(columnDef.render) {
+    if (columnDef.render) {
       return columnDef.render(rowData);
-    }
-    else {
+    } else {
       let value = rowData[columnDef.field];
-      if(columnDef.lookup) {
+      if (columnDef.lookup) {
         value = columnDef.lookup[value];
       }
 
@@ -143,11 +137,10 @@ class MaterialTable extends React.Component {
   }
 
   sort(a, b, isNumeric) {
-    if(isNumeric) {
+    if (isNumeric) {
       return a - b;
-    } 
-    else {
-      return a < b ? -1 : a > b ? 1 : 0
+    } else {
+      return a < b ? -1 : a > b ? 1 : 0;
     }
   }
 
@@ -156,45 +149,43 @@ class MaterialTable extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {props.options.selection ?
-            <TableCell padding="checkbox">
-              <Checkbox 
+          {props.options.selection
+            ? <TableCell padding="checkbox">
+              <Checkbox
                 indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
                 checked={this.state.selectedCount === this.state.data.length}
                 onChange={(event, checked) => {
-                  const data = this.state.renderData.map(row => { 
-                    row.tableData.checked = checked; 
+                  const data = this.state.renderData.map(row => {
+                    row.tableData.checked = checked;
                     return row;
                   });
                   const selectedCount = checked ? data.length : 0;
                   this.setState({renderData: data, selectedCount});
-                }} 
+                }}
               />
-            </TableCell>:
-            (props.actions && props.actions.length > 0) &&
+            </TableCell>
+            : (props.actions && props.actions.length > 0) &&
             <TableCell>
               <Typography>Actions</Typography>
             </TableCell>
           }
-          {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map((columnDef, index) => (
+          {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index) => (
             <TableCell numeric={columnDef.isNumeric}>
-              {columnDef.sort !== false ? 
-                <TableSortLabel
+              {columnDef.sort !== false
+                ? <TableSortLabel
                   active={this.state.orderBy === index}
                   direction={this.state.orderDirection}
                   onClick={() => {
-                    const orderDirection = index !== this.state.orderBy ? "asc" : this.state.orderDirection === "asc" ? "desc" : "asc";
-                    this.setState({orderBy: index,  orderDirection, currentPage: 0}, () => {
+                    const orderDirection = index !== this.state.orderBy ? 'asc' : this.state.orderDirection === 'asc' ? 'desc' : 'asc';
+                    this.setState({orderBy: index, orderDirection, currentPage: 0}, () => {
                       this.setData();
                     });
                   }}
                 >
                   {columnDef.title}
                 </TableSortLabel>
-                :
-                columnDef.title
+                : columnDef.title
               }
-              
             </TableCell>
           ))}
         </TableRow>
@@ -206,17 +197,17 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
     let renderData = this.state.renderData;
     let emptyRowCount = 0;
-    if(props.options.paging) {
+    if (props.options.paging) {
       const startIndex = this.state.currentPage * this.state.pageSize;
       const endIndex = startIndex + this.state.pageSize;
-      renderData = renderData.slice(startIndex, endIndex);      
+      renderData = renderData.slice(startIndex, endIndex);
       emptyRowCount = this.state.pageSize - renderData.length;
     }
     return (
       <TableBody>
-        {props.options.filtering && 
-          <MTableFilterRow 
-            columns={this.state.columns.filter(columnDef => {return !columnDef.hidden})}
+        {props.options.filtering &&
+          <MTableFilterRow
+            columns={this.state.columns.filter(columnDef => { return !columnDef.hidden })}
             emptyCell={props.options.selection || (props.actions && props.actions.length > 0)}
             onFilterChanged={(columnId, value) => {
               const columns = this.state.columns;
@@ -227,7 +218,7 @@ class MaterialTable extends React.Component {
             }}
           />
         }
-        {renderData.map((data, index) => (this.renderRow(data, index)))}        
+        {renderData.map((data, index) => (this.renderRow(data, index)))}
         {[...Array(emptyRowCount)].map(() => <TableRow style={{height: 49}}/>)}
         {emptyRowCount > 0 && <div style={{height: 1}}/>}
       </TableBody>
@@ -238,9 +229,9 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
     return (
       <TableRow selected={index % 2 === 0}>
-        {props.options.selection ?
-          <TableCell padding="checkbox">
-            <Checkbox 
+        {props.options.selection
+          ? <TableCell padding="checkbox">
+            <Checkbox
               checked={data.tableData.checked === true}
               value={data.tableData.id}
               onChange={(event, checked) => {
@@ -249,19 +240,18 @@ class MaterialTable extends React.Component {
                 this.setState(state => ({
                   data: data,
                   selectedCount: state.selectedCount + (checked ? 1 : -1)
-                }))
+                }));
               }}
             />
-          </TableCell>:
-          (props.actions && props.actions.length > 0) &&
+          </TableCell>
+          : (props.actions && props.actions.length > 0) &&
           <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
             <MTableActions data={data} actions={props.actions}/>
           </TableCell>
-
         }
-        {this.state.columns.filter(columnDef => {return !columnDef.hidden}).map(columnDef => {
+        {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
           const value = this.getFieldValue(data, columnDef);
-          return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>
+          return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>;
         })}
       </TableRow>
     );
@@ -269,22 +259,21 @@ class MaterialTable extends React.Component {
 
   renderFooter() {
     const props = this.getProps();
-    if(props.options.paging) {
+    if (props.options.paging) {
       return (
         <TableFooter style={{display: 'grid'}}>
-          <TableRow>            
+          <TableRow>
             <TablePagination
-              style={{float:'right'}}
+              style={{float: 'right'}}
               colSpan={3}
               count={this.state.renderData.length}
               rowsPerPage={this.state.pageSize}
               rowsPerPageOptions={props.options.paging.pageSizeOptions}
               page={this.state.currentPage}
-              onChangePage={(event, page) => { 
+              onChangePage={(event, page) => {
                 this.setState({currentPage: page}, () => {
                   this.setData();
-                }); 
-                
+                });
               }}
               onChangeRowsPerPage={(event) => {
                 this.setState(state => {
@@ -298,31 +287,31 @@ class MaterialTable extends React.Component {
               ActionsComponent={MTablePagination}
             />
           </TableRow>
-        </TableFooter>    
+        </TableFooter>
       );
-    } 
+    }
   }
 
   render() {
-    const props = this.getProps();    
+    const props = this.getProps();
 
     return (
       <Paper className={props.classes.root}>
-        {props.options.toolbar && 
-          <MTableToolbar 
-            actions={props.options.selection && props.actions}     
-            selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => {return a.tableData.checked} )}            
-            {...props.options.toolbar} 
+        {props.options.toolbar &&
+          <MTableToolbar
+            actions={props.options.selection && props.actions}
+            selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => { return a.tableData.checked })}
+            {...props.options.toolbar}
             columns={this.state.columns}
             searchText={this.state.searchText}
-            onSearchChanged={searchText => this.setState({searchText}, () => this.setData() )}
+            onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
             onColumnsChanged={columns => this.setState({columns})}
           />
         }
         <Table className={props.classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
-        </Table>        
+        </Table>
         {this.renderFooter()}
       </Paper>
     );
@@ -332,33 +321,33 @@ class MaterialTable extends React.Component {
 MaterialTable.defaultProps = {
   classes: {},
   columns: [],
-  data: [],  
+  data: [],
   options: {
     filtering: false,
     paging: {
       pageSize: 5,
       pageSizeOptions: [5, 10, 20]
     },
-    selection: false,            
-    toolbar: false,
+    selection: false,
+    toolbar: false
   }
-}
+};
 
 MaterialTable.propTypes = {
   classes: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   options: PropTypes.object
-}
+};
 
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
-    overflowX: 'auto',
+    overflowX: 'auto'
   },
   table: {
     // minWidth: 700,
-  },
+  }
 });
 
-export default withStyles(styles)(MaterialTable)
+export default withStyles(styles)(MaterialTable);

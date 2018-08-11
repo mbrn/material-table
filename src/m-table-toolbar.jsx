@@ -1,35 +1,33 @@
-import * as React from 'react'
+/* eslint-disable no-unused-vars */
+import * as React from 'react';
 import classNames from 'classnames';
-import MTableActions from './m-table-actions'
+import MTableActions from './m-table-actions';
 import PropTypes from 'prop-types';
-import { 
+import {
   Icon, IconButton, Menu, List, ListItem,
-  MenuItem, Toolbar, Tooltip, 
-  Typography, withStyles, Checkbox, 
+  MenuItem, Toolbar, Tooltip,
+  Typography, withStyles, Checkbox,
   FormControlLabel, TextField, InputAdornment
-} from '@material-ui/core'
+} from '@material-ui/core';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+/* eslint-enable no-unused-vars */
 
 class MTableToolbar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      showColumnsButtonAnchorEl: null,
+      showColumnsButtonAnchorEl: null
     };
   }
 
   renderSelectedActions() {
-    return <MTableActions actions={this.props.actions} data={this.props.selectedRows}/> 
-  }
-
-  UNSAFE_componentWillUpdate(nextProps, nextState) {
-    this.state.data = nextProps.data;
+    return <MTableActions actions={this.props.actions} data={this.props.selectedRows}/>;
   }
 
   renderDefaultActions() {
     return (
       <div>
-        {this.props.search && 
+        {this.props.search &&
           <TextField
             value={this.props.searchText}
             onChange={event => this.props.onSearchChanged(event.target.value)}
@@ -38,13 +36,13 @@ class MTableToolbar extends React.Component {
                 <InputAdornment position="start">
                   <Icon>search</Icon>
                 </InputAdornment>
-              ),
+              )
             }}
           />
         }
-        {this.props.showColumnsButton && 
+        {this.props.showColumnsButton &&
           <Tooltip title="Show Columns">
-            <IconButton 
+            <IconButton
               onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
               aria-label="Show Columns">
               <Icon>view_column</Icon>
@@ -58,29 +56,29 @@ class MTableToolbar extends React.Component {
   renderShowColumnsButton() {
     return (
       <div>
-        {this.props.selectedRows ?
-          this.renderSelectedActions() : 
-          this.renderDefaultActions()
+        {this.props.selectedRows
+          ? this.renderSelectedActions()
+          : this.renderDefaultActions()
         }
         <Menu
           anchorEl={this.state.showColumnsButtonAnchorEl}
           open={Boolean(this.state.showColumnsButtonAnchorEl)}
           onClose={() => this.setState({ showColumnsButtonAnchorEl: null }) }>
-          
-          {this.props.columns.map((col, index) => {            
+
+          {this.props.columns.map((col, index) => {
             return (
               <MenuItem>
                 <FormControlLabel
                   label={col.title}
                   control={
-                    <Checkbox 
-                      checked={!col.hidden} 
+                    <Checkbox
+                      checked={!col.hidden}
                       onChange={(event, checked) => {
                         const columns = this.props.columns;
-                        columns[index].hidden = !checked; 
+                        columns[index].hidden = !checked;
                         this.props.onColumnsChanged(columns);
                       }
-                    }/>
+                      }/>
                   }
                 />
               </MenuItem>
@@ -88,18 +86,18 @@ class MTableToolbar extends React.Component {
           })}
         </Menu>
       </div>
-    )
+    );
   }
 
   render() {
-    const { classes } = this.props;    
-    const title = this.props.selectedRows ? this.props.selectedRows.length + " row(s) selected" : this.props.title;
+    const { classes } = this.props;
+    const title = this.props.selectedRows ? this.props.selectedRows.length + ' row(s) selected' : this.props.title;
     return (
-      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows})}>
+      <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows})}>
         <div className={classes.title}>
           <Typography variant="title">
             {title}
-          </Typography>            
+          </Typography>
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>
@@ -112,43 +110,43 @@ class MTableToolbar extends React.Component {
 
 MTableToolbar.defaultProps = {
   actions: [],
-  columns: [],  
+  columns: [],
   search: true,
   showColumnsButton: false,
   title: 'No Title!'
-  
-}
+
+};
 
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
   columns: PropTypes.array,
   showColumnsButton: PropTypes.bool,
-  title: PropTypes.string.isRequired  
-}
+  title: PropTypes.string.isRequired
+};
 
 const styles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit
   },
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark
+      },
   spacer: {
-    flex: '1 1 10%',
+    flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   title: {
-    flex: '0 0 auto',
-  },
+    flex: '0 0 auto'
+  }
 });
 
-export default withStyles(styles)(MTableToolbar)
+export default withStyles(styles)(MTableToolbar);

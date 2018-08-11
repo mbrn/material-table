@@ -1,1 +1,1 @@
-module.exports = require('./dist/material-table').default
+module.exports = require('./dist/material-table').default;

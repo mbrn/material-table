@@ -1,24 +1,25 @@
-import * as React from 'react'
+/* eslint-disable no-unused-vars */
+import * as React from 'react';
 import {
-  TableCell, TableRow, TextField, 
+  TableCell, TableRow, TextField,
   FormControl, InputLabel, Select,
-  Input, MenuProps, MenuItem, 
+  Input, MenuProps, MenuItem,
   Checkbox, ListItemText, Button,
   InputAdornment, Icon
-} from '@material-ui/core'
+} from '@material-ui/core';
+/* eslint-enable no-unused-vars */
 
 class MTableFilterRow extends React.Component {
-  
   getComponentForColumn(columnDef) {
-    if(columnDef.field) {
-      if(columnDef.lookup) {
+    if (columnDef.field) {
+      if (columnDef.lookup) {
         return (
           <FormControl style={{width: '100%'}}>
             <Select
               multiple
               value={columnDef.tableData.filterValue || []}
               onChange={event => {
-                this.props.onFilterChanged(columnDef.tableData.id, event.target.value)
+                this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
               }}
               input={<Input id="select-multiple-checkbox" />}
               renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
@@ -29,17 +30,16 @@ class MTableFilterRow extends React.Component {
                   <MenuItem key={key} value={key}>
                     <Checkbox checked={columnDef.tableData.filterValue && columnDef.tableData.filterValue.indexOf(key.toString()) > -1} />
                     <ListItemText primary={columnDef.lookup[key]} />
-                  </MenuItem>  
+                  </MenuItem>
                 ))
-              }   
+              }
             </Select>
           </FormControl>
         );
-      }
-      else {
+      } else {
         return (
           <TextField
-            style={columnDef.isNumeric && {float:'right'}}
+            style={columnDef.isNumeric && {float: 'right'}}
             type={columnDef.isNumeric && 'number'}
             value={columnDef.tableData.filterValue}
             onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
@@ -48,16 +48,9 @@ class MTableFilterRow extends React.Component {
                 <InputAdornment position="start">
                   <Icon>filter_list</Icon>
                 </InputAdornment>
-              ),
+              )
             }}
           />
-
-          // <TextField 
-          //   style={columnDef.isNumeric && {float:'right'}}
-          //   type={columnDef.isNumeric && 'number'}
-          //   value={columnDef.tableData.filterValue}
-          //   onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
-          // />
         );
       }
     }
@@ -77,4 +70,4 @@ class MTableFilterRow extends React.Component {
   }
 }
 
-export default MTableFilterRow
+export default MTableFilterRow;
