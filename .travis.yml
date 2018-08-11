@@ -5,18 +5,23 @@ install:
   - npm install
 stages:
   - lint
+  - build
   - deploy  
 jobs:
   include:
-    - stage: lint
-      script:
-        - npm run lint                
+    # - stage: lint
+    #   script:
+    #     - npm run lint                
+    # - stage: build
+    #   script:
+    #     - npm run build
     - stage: deploy
-      script: npm run build     # usually you do not want to rerun any tests
+      script: skip     # usually you do not want to rerun any tests
       deploy:
         provider: npm
         email: "mehmetbaran@mehmetbaran.net"
         api_key: "$NPM_TOKEN"
-        before_deploy: "npm run build"
+        before_deploy: 
+          - npm run build
         on:
           branch: master
