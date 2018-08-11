@@ -1,4 +1,5 @@
 language: node_js
+sudo: false
 node_js:
  - 10
 install:
@@ -16,12 +17,11 @@ jobs:
     #   script:
     #     - npm run build
     - stage: deploy
-      script: skip     # usually you do not want to rerun any tests
+      script: 
+        - npm run build
       deploy:
         provider: npm
         email: "mehmetbaran@mehmetbaran.net"
         api_key: "$NPM_TOKEN"
-        before_deploy: 
-          - npm run build
         on:
           branch: master
