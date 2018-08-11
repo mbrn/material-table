@@ -6,20 +6,18 @@ install:
   - npm install
 stages:
   - lint
-  - build
-  - deploy  
+  - build&deploy
 jobs:
   include:
     - stage: lint
       script:
-        - npm run lint                
-    - stage: build
-      script:
-        - npm run build
-    - stage: deploy
+        - npm run lint                    
+    - stage: build&deploy
       deploy:
         provider: npm
         email: "mehmetbaran@mehmetbaran.net"
+        before_script: 
+          - npm run build
         api_key: "$NPM_TOKEN"
         on:
           branch: master
