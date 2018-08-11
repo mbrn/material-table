@@ -1,0 +1,19 @@
+language: node_js
+sudo: false
+node_js:
+- "8"
+- "10"
+cache:
+  directories:
+    - "node_modules"
+script:
+- npm run lint
+- npm test
+before_install:
+  - npm i -g makeshift && makeshift -s @mbrn -r registry.npmjs.org
+deploy:
+  provider: npm
+  email: "mehmetbaran@mehmetbaran.net"
+  api_key: "$NPM_TOKEN"
+  on:
+    branch: master
