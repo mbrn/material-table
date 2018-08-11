@@ -4,24 +4,33 @@ node_js:
  - 10
 install:
   - npm install
-stages:
-  - lint
-  - build
-  - deploy  
-jobs:
-  include:
-    # - stage: lint
-    #   script:
-    #     - npm run lint                
-    # - stage: build
-    #   script:
-    #     - npm run build
-    - stage: deploy
-      script: 
-        - npm run build
-      deploy:
-        provider: npm
-        email: "mehmetbaran@mehmetbaran.net"
-        api_key: "$NPM_TOKEN"
-        on:
-          branch: master
+script: 
+  - npm run lint
+  - npm run build
+deploy:
+  provider: npm
+  email: "mehmetbaran@mehmetbaran.net"
+  api_key: "$NPM_TOKEN"
+  on:
+    branch: master
+# stages:
+#   - lint
+#   - build
+#   - deploy  
+# jobs:
+#   include:
+#     # - stage: lint
+#     #   script:
+#     #     - npm run lint                
+#     # - stage: build
+#     #   script:
+#     #     - npm run build
+#     - stage: deploy
+#       script: 
+#         - npm run build
+#       deploy:
+#         provider: npm
+#         email: "mehmetbaran@mehmetbaran.net"
+#         api_key: "$NPM_TOKEN"
+#         on:
+#           branch: master
