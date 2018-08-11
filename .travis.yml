@@ -5,18 +5,14 @@ install:
   - npm install
 stages:
   - lint
-  - build
   - deploy  
 jobs:
   include:
     - stage: lint
       script:
         - npm run lint                
-    - stage: build
-      script:
-        - npm run build
     - stage: deploy
-      script: skip     # usually you do not want to rerun any tests
+      script: npm run build     # usually you do not want to rerun any tests
       deploy:
         provider: npm
         email: "mehmetbaran@mehmetbaran.net"
