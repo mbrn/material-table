@@ -8,7 +8,6 @@ install:
 stages:
   - lint
   - build  
-  - publish
 jobs:
   include:
     - stage: lint
@@ -16,14 +15,10 @@ jobs:
         - npm run lint                
     - stage: build
       script:
-        # Compile JS
         - npm run build
-    - stage: publish
-      script:
-        - npm publish
-# deploy:
-#   provider: npm
-#   email: "mehmetbaran@mehmetbaran.net"
-#   api_key: "$NPM_TOKEN"
-#   on:
-#     branch: master
+deploy:
+  provider: npm
+  email: "mehmetbaran@mehmetbaran.net"
+  api_key: "$NPM_TOKEN"
+  on:
+    branch: master
