@@ -7,11 +7,10 @@ install:
 script:
   - npm run lint
   - npm run build
+  - ls
 deploy:
   provider: npm
   email: "mehmetbaran@mehmetbaran.net"
-  before_script: 
-    - npm run build
   api_key: "$NPM_TOKEN"
   on:
     branch: master
