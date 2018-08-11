@@ -9,6 +9,7 @@ cache:
 script:
 - npm run build
 - npm run lint
+- npm test
 before_install:
   - npm i -g makeshift && makeshift -s @mbrn -r registry.npmjs.org
   - npm run build
