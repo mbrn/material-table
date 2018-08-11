@@ -22,6 +22,10 @@ class MTableToolbar extends React.Component {
     return <MTableActions actions={this.props.actions} data={this.props.selectedRows}/> 
   }
 
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
+    this.state.data = nextProps.data;
+  }
+
   renderDefaultActions() {
     return (
       <div>
@@ -38,13 +42,15 @@ class MTableToolbar extends React.Component {
             }}
           />
         }
-        <Tooltip title="Show Columns">
-          <IconButton 
-            onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
-            aria-label="Show Columns">
-            <Icon>view_column</Icon>
-          </IconButton>
-        </Tooltip>
+        {this.props.showColumnsButton && 
+          <Tooltip title="Show Columns">
+            <IconButton 
+              onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
+              aria-label="Show Columns">
+              <Icon>view_column</Icon>
+            </IconButton>
+          </Tooltip>
+        }
       </div>
     );
   }
@@ -97,7 +103,7 @@ class MTableToolbar extends React.Component {
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>
-          {this.props.showColumnsButton && this.renderShowColumnsButton()}
+          {this.renderShowColumnsButton()}
         </div>
       </Toolbar>
     );

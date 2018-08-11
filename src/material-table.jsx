@@ -13,34 +13,51 @@ import {
 
 class MaterialTable extends React.Component {
   constructor(props) {
-    super(props);         
+    super(props);                
 
-    const calculatedProps = {...this.props}
-    calculatedProps.options.paging = calculatedProps.options.paging !== false 
-      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);        
-
-    const data =  this.props.data.map((row, index) => { 
-      row.tableData = { id: index };
-      return row;
-    });
-    const renderData = this.getRenderData(data, calculatedProps);
-
-    const columns =  this.props.columns.map((columnDef, index) => { 
-      columnDef.tableData = { id: index };
-      return columnDef;
-    });
-
-    this.state = {
-      columns: columns,
-      currentPage: 0,      
-      data: data,
-      props: calculatedProps,      
-      renderData: renderData,
+    const calculatedProps = this.getProps(props);
+    this.state = Object.assign({
+      columns: [],
+      currentPage: 0,            
+      data: [],
+      pageSize: calculatedProps.options.paging.pageSize,
+      renderData: [],
       searchText: '',
       selectedCount: 0,
       orderBy: -1,
       orderDirection: ''
-    }
+    }, this.getDataAndColumns(calculatedProps));
+
+    // this.init(calculatedProps);
+  }
+
+  componentWillReceiveProps(nextProps) {    
+    const dataAndColumns = this.getDataAndColumns(this.getProps(nextProps));
+    this.setState(dataAndColumns);
+  }
+
+  getDataAndColumns(props) {
+    const data =  props.data.map((row, index) => { 
+      row.tableData = { id: index };
+      return row;
+    });
+    
+    const columns =  props.columns.map((columnDef, index) => { 
+      columnDef.tableData = { id: index };
+      return columnDef;
+    });
+
+    const renderData = this.getRenderData(data, props);
+
+    return {data, columns, renderData}
+  }
+
+  getProps(props) {
+    const calculatedProps = {...(props || this.props)}
+    calculatedProps.options.paging = calculatedProps.options.paging !== false 
+      && Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);        
+
+    return calculatedProps;    
   }
 
   setData(data) {
@@ -52,7 +69,7 @@ class MaterialTable extends React.Component {
 
   getRenderData(data, props) {
     data = data || this.state.data;
-    props = props || this.state.props
+    props = this.getProps();
 
     let renderData = [...data]; //apply filter & 
     
@@ -135,10 +152,11 @@ class MaterialTable extends React.Component {
   }
 
   renderHeader() {
+    const props = this.getProps();
     return (
       <TableHead>
         <TableRow>
-          {this.state.props.options.selection ?
+          {props.options.selection ?
             <TableCell padding="checkbox">
               <Checkbox 
                 indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
@@ -153,7 +171,7 @@ class MaterialTable extends React.Component {
                 }} 
               />
             </TableCell>:
-            (this.state.props.actions && this.state.props.actions.length > 0) &&
+            (props.actions && props.actions.length > 0) &&
             <TableCell>
               <Typography>Actions</Typography>
             </TableCell>
@@ -185,20 +203,21 @@ class MaterialTable extends React.Component {
   }
 
   renderBody() {
+    const props = this.getProps();
     let renderData = this.state.renderData;
     let emptyRowCount = 0;
-    if(this.state.props.options.paging) {
-      const startIndex = this.state.currentPage * this.state.props.options.paging.pageSize;
-      const endIndex = startIndex + this.state.props.options.paging.pageSize;
+    if(props.options.paging) {
+      const startIndex = this.state.currentPage * this.state.pageSize;
+      const endIndex = startIndex + this.state.pageSize;
       renderData = renderData.slice(startIndex, endIndex);      
-      emptyRowCount = this.state.props.options.paging.pageSize - renderData.length;
+      emptyRowCount = this.state.pageSize - renderData.length;
     }
     return (
       <TableBody>
-        {this.state.props.options.filtering && 
+        {props.options.filtering && 
           <MTableFilterRow 
             columns={this.state.columns.filter(columnDef => {return !columnDef.hidden})}
-            emptyCell={this.state.props.selection || (this.state.props.actions && this.state.props.actions.length > 0)}
+            emptyCell={props.options.selection || (props.actions && props.actions.length > 0)}
             onFilterChanged={(columnId, value) => {
               const columns = this.state.columns;
               columns[columnId].tableData.filterValue = value;
@@ -216,9 +235,10 @@ class MaterialTable extends React.Component {
   }
 
   renderRow(data, index) {
+    const props = this.getProps();
     return (
       <TableRow selected={index % 2 === 0}>
-        {this.state.props.options.selection ?
+        {props.options.selection ?
           <TableCell padding="checkbox">
             <Checkbox 
               checked={data.tableData.checked === true}
@@ -233,9 +253,9 @@ class MaterialTable extends React.Component {
               }}
             />
           </TableCell>:
-          (this.state.props.actions && this.state.props.actions.length > 0) &&
-          <TableCell>
-            <MTableActions data={data} actions={this.state.props.actions}/>
+          (props.actions && props.actions.length > 0) &&
+          <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
+            <MTableActions data={data} actions={props.actions}/>
           </TableCell>
 
         }
@@ -248,7 +268,8 @@ class MaterialTable extends React.Component {
   }
 
   renderFooter() {
-    if(this.state.props.options.paging) {
+    const props = this.getProps();
+    if(props.options.paging) {
       return (
         <TableFooter style={{display: 'grid'}}>
           <TableRow>            
@@ -256,8 +277,8 @@ class MaterialTable extends React.Component {
               style={{float:'right'}}
               colSpan={3}
               count={this.state.renderData.length}
-              rowsPerPage={this.state.props.options.paging.pageSize}
-              rowsPerPageOptions={this.state.props.options.paging.pageSizeOptions}
+              rowsPerPage={this.state.pageSize}
+              rowsPerPageOptions={props.options.paging.pageSizeOptions}
               page={this.state.currentPage}
               onChangePage={(event, page) => { 
                 this.setState({currentPage: page}, () => {
@@ -267,7 +288,7 @@ class MaterialTable extends React.Component {
               }}
               onChangeRowsPerPage={(event) => {
                 this.setState(state => {
-                  state.props.options.paging.pageSize = event.target.value;
+                  state.pageSize = event.target.value;
                   state.currentPage = 0;
                   return state;
                 }, () => {
@@ -283,22 +304,22 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const { classes } = this.state.props;
+    const props = this.getProps();    
 
     return (
-      <Paper className={classes.root}>
-        {this.state.props.options.toolbar && 
+      <Paper className={props.classes.root}>
+        {props.options.toolbar && 
           <MTableToolbar 
-            actions={this.state.props.options.selection && this.state.props.actions}     
+            actions={props.options.selection && props.actions}     
             selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => {return a.tableData.checked} )}            
-            {...this.state.props.options.toolbar} 
+            {...props.options.toolbar} 
             columns={this.state.columns}
             searchText={this.state.searchText}
             onSearchChanged={searchText => this.setState({searchText}, () => this.setData() )}
             onColumnsChanged={columns => this.setState({columns})}
           />
         }
-        <Table className={classes.table}>
+        <Table className={props.classes.table}>
           {this.renderHeader()}
           {this.renderBody()}
         </Table>        

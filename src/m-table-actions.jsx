@@ -23,7 +23,11 @@ class MTableActions extends React.Component {
   }
 
   render() {
-    return this.props.actions.map(action => (this.renderButton(action)));
+    if(this.props.actions) {
+      return this.props.actions.map(action => (this.renderButton(action)));
+    }
+
+    return null
   }
 }
 
