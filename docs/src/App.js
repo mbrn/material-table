@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import MaterialTable from 'material-table'
+import { 
+  Card, CardContent, Switch,
+  Grid, TextField, AppBar, 
+  Toolbar,
+  List, ListItem, ListSubheader, 
+  ListItemText, ListItemSecondaryAction, Typography
+} from '@material-ui/core'
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +24,7 @@ class App extends Component {
       showActions: true,
       toolbar: true,
       maxWidth: '100',
-      zCount: 1,
+      dataCount: 100,
       columns: [
         {
           title: 'Adı',
@@ -40,7 +47,6 @@ class App extends Component {
       ],
       data: [
         {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
-        {name: 'Gülcan', surname: 'Baran', birthYear: 1989, birthCity: 34},
       ],
       actions: [
         {
@@ -78,29 +84,148 @@ class App extends Component {
     const inputStyle={marginLeft: 40};
     const data = [...this.state.data]
 
-    for(let i = 1; i <= this.state.zCount; i++) {
-      data.push({name: i + '.Zerya Betül', surname: 'Baran', birthYear: 2017 + i, birthCity: i})
+    for(let i = 1; i < this.state.dataCount; i++) {
+      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: 2018 + i, birthCity: i})
     }
 
     return (
-      <div className="App" style={{backgroundColor: '#4aacc71a', height: '100%', padding: 50}}>
-        Grid Demo
-        <p className="App-intro">          
-          <div style={{margin: 30, marginBottom: 100}}>
-            <input style={inputStyle} type="checkbox" checked={this.state.filtering} onChange={(event) => this.setState({filtering: event.target.checked})} /> Filtering                          
-            <input style={inputStyle} type="checkbox" checked={this.state.selection} onChange={(event) => this.setState({selection: event.target.checked})} /> Selection                          
-            <input style={inputStyle} type="checkbox" checked={this.state.search} onChange={(event) => this.setState({search: event.target.checked})} /> Search                          
-            <input style={inputStyle} type="checkbox" checked={this.state.showColumnsButton} onChange={(event) => this.setState({showColumnsButton: event.target.checked})} /> ShowColumnsButton                          
-            <input style={inputStyle} type="checkbox" checked={this.state.showPrintButton} onChange={(event) => this.setState({showPrintButton: event.target.checked})} /> showPrintButton                          
-            <input style={inputStyle} type="checkbox" checked={this.state.paging} onChange={(event) => this.setState({paging: event.target.checked})} /> Paging                          
-            <input style={inputStyle} type="checkbox" checked={this.state.showActions} onChange={(event) => this.setState({showActions: event.target.checked})} /> Actions                          
-            <input style={inputStyle} type="checkbox" checked={this.state.toolbar} onChange={(event) => this.setState({toolbar: event.target.checked})} /> Toolbar                          
-            <span style={inputStyle}>Title</span><input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} /> 
-            <span style={inputStyle}>Max Width</span><input type="text" value={this.state.maxWidth} onChange={(event) => this.setState({maxWidth: event.target.value})} /> 
-            <span style={inputStyle}>Data Count</span><input type="text" value={this.state.zCount} onChange={(event) => this.setState({zCount: event.target.value})} /> 
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="title" color="inherit">
+              material-table demo
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className="App" style={{backgroundColor: '#4aacc71a', height: '100%', padding: '10px 50px 100px 50px'}}>
+          <div style={{padding:8}}>
+            <Card style={{padding: 10}}>
+              <Typography variant="headline" style={{textAlign: 'left'}}>Options</Typography>
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={12} sm={4} md={4} lg={3}>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Title" />
+                        <ListItemSecondaryAction>
+                          <TextField
+                            onChange={(event) => this.setState({title: event.target.value})}
+                            value={this.state.title}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Data Count" />
+                        <ListItemSecondaryAction>
+                          <TextField
+                            onChange={(event) => this.setState({dataCount: event.target.value})}
+                            value={this.state.dataCount}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Max Width (%)" />
+                        <ListItemSecondaryAction>
+                          <TextField
+                            onChange={(event) => this.setState({maxWidth: event.target.value})}
+                            value={this.state.maxWidth}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={3}>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Filtering" />
+                          <ListItemSecondaryAction>
+                            <Switch
+                              onChange={(event) => this.setState({filtering: event.target.checked})}
+                              checked={this.state.filtering}
+                            />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Selection" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({selection: event.target.checked})}
+                            checked={this.state.selection}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Paging" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({paging: event.target.checked})}
+                            checked={this.state.paging}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>                      
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={3}>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Show Toolbar" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({toolbar: event.target.checked})}
+                            checked={this.state.toolbar}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Show Columns Button" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({showColumnsButton: event.target.checked})}
+                            checked={this.state.showColumnsButton}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Show Print Button" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({showPrintButton: event.target.checked})}
+                            checked={this.state.showPrintButton}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={3}>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Search" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({search: event.target.checked})}
+                            checked={this.state.search}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Add Actions" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({showActions: event.target.checked})}
+                            checked={this.state.showActions}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    </List>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </div>
 
-          <div style={{maxWidth: this.state.maxWidth.toString() + '%'}}>
+          <div style={{maxWidth: this.state.maxWidth.toString() + '%', marginTop: 20}}>
             <MaterialTable
               actions={this.state.showActions && this.state.actions}
               columns={this.state.columns}
@@ -118,7 +243,7 @@ class App extends Component {
               }}
             />
           </div>
-        </p>
+        </div>
       </div>
     );
   }

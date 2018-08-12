@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.4.3",
+    "material-table": "file:../",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts": "1.1.4",
-    "material-table": "file:../"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
