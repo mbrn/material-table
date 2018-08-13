@@ -21,31 +21,17 @@ import ReactDOM from 'react-dom';
 import MaterialTable from 'material-table'
 
 class App extends Component {
-  this.state = {
-    columns: [
-      {title: 'Adı', field: 'name'},
-      {title: 'Soyadı', field: 'surname'},
-      {title: 'Doğum Yılı', field: 'birthYear', isNumeric: true},
-      {title: 'Doğum Yeri', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}}
-    ],
-    data: [
-      {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
-    ],
-  }
-
   render() {
-    const listStyle={backgroundColor: '#4aacc71a', margin: 2}
-    const data = [...this.state.data]
-
-    for(let i = 1; i < this.state.dataCount; i++) {
-      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: 2018 + i, birthCity: i})
-    }
-
     return (
       <div style={{maxWidth: '100%'}}>
         <MaterialTable
-          columns={this.state.columns}
-          data={data}
+          columns={[
+            {title: 'Adı', field: 'name'},
+            {title: 'Soyadı', field: 'surname'},
+            {title: 'Doğum Yılı', field: 'birthYear', isNumeric: true},
+            {title: 'Doğum Yeri', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}}
+          ]}
+          data={[{name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63}]}
           title="Demo Title"
         />
       </div>
