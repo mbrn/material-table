@@ -42,6 +42,9 @@ class App extends Component {
 ReactDOM.render(<App />, document.getElementById('react-div'));
 ```
 
-| Property | Type  | Default | Description          |
-|:---------|:------|:--------|:---------------------|
-| columns  | Array |         | Column definitions   |
+| Property | Type   | Default        | Description                                              |
+|:---------|:-------|:---------------|:---------------------------------------------------------|
+| columns  | Array  |                | Column definitions                                       |
+| data     | Array  |                | Data to be rendered                                      |
+| title    | string | 'Table Title'  | Table Title (only render if toolbar option is true       |
+
