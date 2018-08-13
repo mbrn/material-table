@@ -22,7 +22,7 @@ class MaterialTable extends React.Component {
       columns: [],
       currentPage: 0,
       data: [],
-      pageSize: calculatedProps.options.paging.pageSize,
+      pageSize: calculatedProps.options.pageSize,
       renderData: [],
       searchText: '',
       selectedCount: 0,
@@ -53,8 +53,7 @@ class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = {...(props || this.props)};
-    calculatedProps.options.paging = calculatedProps.options.paging !== false &&
-      Object.assign(MaterialTable.defaultProps.options.paging, calculatedProps.options.paging);
+    calculatedProps.options = Object.assign(MaterialTable.defaultProps.options, calculatedProps.options);
 
     return calculatedProps;
   }
@@ -268,7 +267,7 @@ class MaterialTable extends React.Component {
               colSpan={3}
               count={this.state.renderData.length}
               rowsPerPage={this.state.pageSize}
-              rowsPerPageOptions={props.options.paging.pageSizeOptions}
+              rowsPerPageOptions={props.options.pageSizeOptions}
               page={this.state.currentPage}
               onChangePage={(event, page) => {
                 this.setState({currentPage: page}, () => {
@@ -301,9 +300,11 @@ class MaterialTable extends React.Component {
           <MTableToolbar
             actions={props.options.selection && props.actions}
             selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => { return a.tableData.checked })}
-            {...props.options.toolbar}
             columns={this.state.columns}
+            columnsButton={props.options.columnsButton}
+            search={props.options.search}
             searchText={this.state.searchText}
+            title={props.title}
             onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
             onColumnsChanged={columns => this.setState({columns})}
           />
@@ -319,24 +320,29 @@ class MaterialTable extends React.Component {
 }
 
 MaterialTable.defaultProps = {
-  classes: {},
+  actions: [],
+  classes: {},  
   columns: [],
   data: [],
-  options: {
+  title: 'Table Title',
+  options: {  
+    columnsButton: false,
     filtering: false,
-    paging: {
-      pageSize: 5,
-      pageSizeOptions: [5, 10, 20]
-    },
+    paging: true,
+    pageSize: 5,
+    pageSizeOptions: [5, 10, 20],
+    search: true,
     selection: false,
     toolbar: false
   }
 };
 
 MaterialTable.propTypes = {
+  actions: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  title: PropTypes.string,
   options: PropTypes.object
 };
 

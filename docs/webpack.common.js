@@ -14,6 +14,10 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, '../dist/material-table.jsx'),
+        ],
         loader: "babel-loader",
         query: {
           presets: ['es2015', 'react']

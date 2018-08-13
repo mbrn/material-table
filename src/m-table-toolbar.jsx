@@ -16,7 +16,7 @@ class MTableToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showColumnsButtonAnchorEl: null
+      columnsButtonAnchorEl: null
     };
   }
 
@@ -40,51 +40,54 @@ class MTableToolbar extends React.Component {
             }}
           />
         }
-        {this.props.showColumnsButton &&
-          <Tooltip title="Show Columns">
-            <IconButton
-              onClick={event => this.setState({ showColumnsButtonAnchorEl: event.currentTarget }) }
-              aria-label="Show Columns">
-              <Icon>view_column</Icon>
-            </IconButton>
-          </Tooltip>
+        {this.props.columnsButton &&
+          <div>
+            <Tooltip title="Show Columns">
+              <IconButton
+                onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget }) }
+                aria-label="Show Columns">
+                <Icon>view_column</Icon>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={this.state.columnsButtonAnchorEl}
+              open={Boolean(this.state.columnsButtonAnchorEl)}
+              onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
+
+              {this.props.columns.map((col, index) => {
+                return (
+                  <MenuItem>
+                    <FormControlLabel
+                      label={col.title}
+                      control={
+                        <Checkbox
+                          checked={!col.hidden}
+                          onChange={(event, checked) => {
+                            const columns = this.props.columns;
+                            columns[index].hidden = !checked;
+                            this.props.onColumnsChanged(columns);
+                          }
+                          }/>
+                      }
+                    />
+                  </MenuItem>
+                );
+              })}
+            </Menu>
+          <div>
         }
       </div>
     );
   }
 
-  renderShowColumnsButton() {
+  renderActions() {
     return (
       <div>
         {this.props.selectedRows
           ? this.renderSelectedActions()
           : this.renderDefaultActions()
         }
-        <Menu
-          anchorEl={this.state.showColumnsButtonAnchorEl}
-          open={Boolean(this.state.showColumnsButtonAnchorEl)}
-          onClose={() => this.setState({ showColumnsButtonAnchorEl: null }) }>
-
-          {this.props.columns.map((col, index) => {
-            return (
-              <MenuItem>
-                <FormControlLabel
-                  label={col.title}
-                  control={
-                    <Checkbox
-                      checked={!col.hidden}
-                      onChange={(event, checked) => {
-                        const columns = this.props.columns;
-                        columns[index].hidden = !checked;
-                        this.props.onColumnsChanged(columns);
-                      }
-                      }/>
-                  }
-                />
-              </MenuItem>
-            );
-          })}
-        </Menu>
+        
       </div>
     );
   }
@@ -101,7 +104,7 @@ class MTableToolbar extends React.Component {
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>
-          {this.renderShowColumnsButton()}
+          {this.renderActions()}
         </div>
       </Toolbar>
     );
@@ -112,7 +115,7 @@ MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
   search: true,
-  showColumnsButton: false,
+  columnsButton: false,
   title: 'No Title!'
 
 };
@@ -120,7 +123,7 @@ MTableToolbar.defaultProps = {
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
   columns: PropTypes.array,
-  showColumnsButton: PropTypes.bool,
+  columnsButton: PropTypes.bool,
   title: PropTypes.string.isRequired
 };
 

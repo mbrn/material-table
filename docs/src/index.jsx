@@ -228,16 +228,15 @@ class App extends Component {
               actions={this.state.showActions && this.state.actions}
               columns={this.state.columns}
               data={data}
+              title={this.state.title}
               options={{
                 filtering: this.state.filtering,
                 selection: this.state.selection,
                 paging: this.state.paging,
-                toolbar: this.state.toolbar && {
-                  title: this.state.title,  
-                  search: this.state.search,
-                  showColumnsButton: this.state.showColumnsButton,
-                  showPrintButton: this.state.showPrintButton
-                }
+                toolbar: this.state.toolbar,
+                search: this.state.search,
+                columnsButton: this.state.showColumnsButton,
+                printButton: this.state.showPrintButton                
               }}
             />
           </div>
