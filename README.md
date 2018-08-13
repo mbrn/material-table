@@ -8,12 +8,12 @@
 
 A console application that contains a lof of features to help developer
 
-[DEMO](https://mbrn.github.io/material-table/)
+[__DEMO__](https://mbrn.github.io/material-table/)
 
 ## Installation
     $ npm install material-table --save
 
-## Example 
+## Usage 
 
 ```javascript
 import React, { Component } from 'react';
@@ -44,10 +44,22 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 
 ## Properties
 
-| Property | Type   | Default        | Description                                              |
-|:---------|:-------|:---------------|:---------------------------------------------------------|
-| columns  | Array  |                | Column definitions                                       |
-| data     | Array  |                | Data to be rendered                                      |
-| title    | string | 'Table Title'  | Table Title (only render if toolbar option is true       |
+| Property | Type   | Default           | Description                                                       |
+|:---------|:-------|:------------------|:------------------------------------------------------------------|
+| actions  | Array  |                   | Action list. An icon button will be rendered for each actions     |
+| columns  | Array  |                   | Column definitions                                                |
+| data     | Array  |                   | Data to be rendered                                               |
+| options  | object |                   | All options of table                                              |
+| title    | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
+
+### actions
+
+### columns
+
+### data
+
+### options
+
+Options property could be given to component as `options` property. You can change behaviour of grid 
 
 
