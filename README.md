@@ -52,13 +52,13 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 | options  | object |                   | All options of table                                              |
 | title    | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
 
-### actions
+#### actions
 
-### columns
+#### columns
 
-### data
+#### data
 
-### options
+#### options
 
 Options property could be given to component as `options` property. You can change behaviour of grid 
 
