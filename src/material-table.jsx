@@ -321,11 +321,11 @@ class MaterialTable extends React.Component {
 
 MaterialTable.defaultProps = {
   actions: [],
-  classes: {},  
+  classes: {},
   columns: [],
   data: [],
   title: 'Table Title',
-  options: {  
+  options: {
     columnsButton: false,
     filtering: false,
     paging: true,

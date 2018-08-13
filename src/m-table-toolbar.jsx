@@ -41,7 +41,7 @@ class MTableToolbar extends React.Component {
           />
         }
         {this.props.columnsButton &&
-          <div>
+          <span>
             <Tooltip title="Show Columns">
               <IconButton
                 onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget }) }
@@ -68,7 +68,7 @@ class MTableToolbar extends React.Component {
                               columns[index].hidden = !checked;
                               this.props.onColumnsChanged(columns);
                             }
-                          }/>
+                            }/>
                         }
                       />
                     </MenuItem>
@@ -76,7 +76,7 @@ class MTableToolbar extends React.Component {
                 })
               }
             </Menu>
-          </div>
+          </span>
         }
       </div>
     );

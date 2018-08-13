@@ -96,7 +96,7 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div className="App" style={{backgroundColor: '#4aacc71a', height: '100%', padding: '10px 50px 50px 50px'}}>
+        <div class="content">
           <div style={{padding:8}}>
             <Card style={{padding: 10}}>
               <Typography variant="title" style={{textAlign: 'left'}}>Options</Typography>
