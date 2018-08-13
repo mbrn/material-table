@@ -41,3 +41,7 @@ class App extends Component {
 
 ReactDOM.render(<App />, document.getElementById('react-div'));
 ```
+
+| Property | Type  | Default | Description          |
+--------------------------------------------------------------------------------------
+| columns  | Array |         | Column definitions   |
