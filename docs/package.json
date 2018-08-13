@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Basic boilerplate with React, ReactBootstrap, Babel and Webpack",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "copy": "robocopy ../dist node_modules/material-table/dist",
+    "start": "concurrently --kill-others \"npm run copy\" \"npm run dev\"",
+    "dev": "webpack-dev-server --open --config webpack.dev.js",
+    "copy": "cpx ../dist/* node_modules/material-table/dist/ --watch -v",
     "watch": "webpack --watch",
     "build": "webpack --config webpack.prod.js"
   },

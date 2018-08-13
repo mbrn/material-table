@@ -54,27 +54,29 @@ class MTableToolbar extends React.Component {
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
 
-              {this.props.columns.map((col, index) => {
-                return (
-                  <MenuItem>
-                    <FormControlLabel
-                      label={col.title}
-                      control={
-                        <Checkbox
-                          checked={!col.hidden}
-                          onChange={(event, checked) => {
-                            const columns = this.props.columns;
-                            columns[index].hidden = !checked;
-                            this.props.onColumnsChanged(columns);
-                          }
+              {
+                this.props.columns.map((col, index) => {
+                  return (
+                    <MenuItem>
+                      <FormControlLabel
+                        label={col.title}
+                        control={
+                          <Checkbox
+                            checked={!col.hidden}
+                            onChange={(event, checked) => {
+                              const columns = this.props.columns;
+                              columns[index].hidden = !checked;
+                              this.props.onColumnsChanged(columns);
+                            }
                           }/>
-                      }
-                    />
-                  </MenuItem>
-                );
-              })}
+                        }
+                      />
+                    </MenuItem>
+                  );
+                })
+              }
             </Menu>
-          <div>
+          </div>
         }
       </div>
     );
@@ -87,7 +89,6 @@ class MTableToolbar extends React.Component {
           ? this.renderSelectedActions()
           : this.renderDefaultActions()
         }
-        
       </div>
     );
   }
@@ -99,7 +100,7 @@ class MTableToolbar extends React.Component {
       <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows})}>
         <div className={classes.title}>
           <Typography variant="title">
-            {title}
+            {title}asd
           </Typography>
         </div>
         <div className={classes.spacer} />
