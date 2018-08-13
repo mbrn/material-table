@@ -100,7 +100,7 @@ class MTableToolbar extends React.Component {
       <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows})}>
         <div className={classes.title}>
           <Typography variant="title">
-            {title}asd
+            {title}
           </Typography>
         </div>
         <div className={classes.spacer} />
