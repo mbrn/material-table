@@ -1,18 +1,39 @@
 {
-  "name": "docs",
-  "version": "0.1.0",
-  "private": true,
+  "name": "basic-react-boilerplate",
+  "version": "1.0.0",
+  "description": "Basic boilerplate with React, ReactBootstrap, Babel and Webpack",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "watch": "webpack --watch",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "keywords": [],
+  "author": "hydrocarbons",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^1.4.3",
-    "material-table": "file:../",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "1.1.4"
+    "material-table": "file:../"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@material-ui/core": "^1.4.3",
+    "material-table": "file:../",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.18",
+    "css-loader": "^0.28.9",
+    "file-loader": "^1.1.6",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^2.30.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.2.0",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-merge": "^4.1.1"
   }
 }
