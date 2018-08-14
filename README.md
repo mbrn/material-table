@@ -54,6 +54,10 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 
 #### actions
 
+| Field | Type  | Default   | Description                                                       |    
+|:------|:------|:----------|:------------------------------------------------------------------|
+|       |       |           |                                                                   |
+
 #### columns
 
 #### data
