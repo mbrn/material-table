@@ -84,6 +84,20 @@ const data=[
 
 #### options
 
-Options property could be given to component as `options` property. You can change behaviour of grid 
+Options property could be given to component as `options` property. You can change behaviour of grid.
 
+| Field             | Type      | Default       | Description                                                                       |
+|:------------------|:----------|:--------------|:----------------------------------------------------------------------------------|
+| columnsButton     | boolean   | false         | Flag for columns button that controls which column could be rendered              |
+| filtering         | boolean   | false         | Flag for filtering row                                                            |
+| paging            | boolean   | true          | Flag for paging feature                                                           |
+| pageSize          | numeric   | 5             | Number of rows that would be rendered on every page                               |
+| pageSizeOptions   | array     | [5, 10, 20]   | Page size options that could be selected by user                                  |
+| search            | boolean   | true          | Flag for search feature                                                           |
+| selection         | boolean   | false         | Flag for selection feature                                                        |
+| toolbar           | boolean   | true          | Flag for toolbar                                                                  |
+
+## Licence
+
+This project is licensed under the terms of the [MIT license](/LICENSE).
 
