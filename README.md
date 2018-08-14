@@ -14,7 +14,7 @@ A console application that contains a lof of features to help developer
 
 ## Usage 
 
-```javascript
+```js
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from 'material-table'
@@ -65,11 +65,22 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 |:----------|:----------|:----------|:----------------------------------------------------------------------------------------------|
 | hidden    | boolean   | false     | Flag for hide column                                                                          |
 | isNumeric | boolean   | false     | Flag for render data as numeric                                                               |
+| field     | string    |           | Field name of data row                                                                        |
 | lookup    | object    |           | Key value pair for lookup render data from                                                    |
-| render    | func      |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement.  |
+| render    | func      |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement   |
 | title     | string    |           | Header text                                                                                   |
 
 #### data
+
+Data must be array of objects which has fields defined in columns. For example: 
+
+```js
+const data=[
+    {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
+    {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},    
+]
+    
+```
 
 #### options
 
