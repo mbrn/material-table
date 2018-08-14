@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/mbrn/material-table.svg?branch=master)](https://travis-ci.org/mbrn/material-table)
 [![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
 [![NPM Downloads](https://img.shields.io/npm/dm/material-table.svg?style=flat)](https://npmcharts.com/compare/material-table?minimal=true)
-[![Install Size](https://packagephobia.now.sh/badge?p=material-table)](https://packagephobia.now.sh/result?p=material-table)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
 
 A console application that contains a lof of features to help developer
@@ -54,11 +53,21 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 
 #### actions
 
-| Field | Type  | Default   | Description                                                       |    
-|:------|:------|:----------|:------------------------------------------------------------------|
-|       |       |           |                                                                   |
+| Field     | Type      | Default   | Description                                                                               |    
+|:----------|:----------|:----------|:------------------------------------------------------------------------------------------|
+| icon      | string    |           | Icon of button from material icons                                                        |
+| onClick   | func      |           | This event will be fired when button clicked. Parameters are `event` and `row or rows`    |
+| tooltip   | string    |           | Tooltip for button                                                                        |
 
 #### columns
+
+| Field     | Type      | Default   | Description                                                                                   |
+|:----------|:----------|:----------|:----------------------------------------------------------------------------------------------|
+| hidden    | boolean   | false     | Flag for hide column                                                                          |
+| isNumeric | boolean   | false     | Flag for render data as numeric                                                               |
+| lookup    | object    |           | Key value pair for lookup render data from                                                    |
+| render    | func      |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement.  |
+| title     | string    |           | Header text                                                                                   |
 
 #### data
 
