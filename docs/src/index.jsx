@@ -51,7 +51,7 @@ class App extends Component {
         {
           icon: 'save',
           tooltip: 'Save',
-          action: (event, data) => {
+          onClick: (event, data) => {
             if (Array.isArray(data)) {
               alert("Save : " + data.length);
             } 
@@ -63,7 +63,7 @@ class App extends Component {
         {
           icon: 'delete',
           tooltip: 'Delete',
-          action: (event, data) => {
+          onClick: (event, data) => {
             if (Array.isArray(data)) {
               alert("Delete : " + data.length);
             } 

@@ -9,7 +9,7 @@ class MTableActions extends React.Component {
   renderButton(action) {
     const button = (
       <IconButton
-        onClick={(event) => action.action && action.action(event, this.props.data)}
+        onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
       >
         <Icon>{action.icon}</Icon>
       </IconButton>

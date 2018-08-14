@@ -333,7 +333,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
-    toolbar: false
+    toolbar: true
   }
 };
 
