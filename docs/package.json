@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Basic boilerplate with React, ReactBootstrap, Babel and Webpack",
   "scripts": {
-    "start": "concurrently --kill-others \"npm run copy\" \"npm run dev\"",
+    "start": "concurrently --kill-others \"npm run copy\" \"npm run dev\" \"npm run build:mt\"",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "copy": "cpx ../dist/* node_modules/material-table/dist/ --watch -v",
+    "build:mt": "npm --prefix ../ run build -- --watch",
     "watch": "webpack --watch",
     "build": "webpack --config webpack.prod.js"
   },
