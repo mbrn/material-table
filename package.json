@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint index.js src/**"
+    "lint": "eslint index.js src/** --fix"
   },
   "repository": {
     "type": "git",
