@@ -24,7 +24,11 @@ class MTableActions extends React.Component {
 
   render() {
     if (this.props.actions) {
-      return this.props.actions.map(action => (this.renderButton(action)));
+      return (
+        <div style={{display: 'flex'}}>
+          {this.props.actions.map(action => (this.renderButton(action)))}
+        </div>
+      )
     }
 
     return null;
