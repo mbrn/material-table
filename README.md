@@ -10,7 +10,7 @@ A console application that contains a lof of features to help developer
 [__DEMO__](https://mbrn.github.io/material-table/)
 
 ## Installation
-    $ npm install material-table --save
+    npm install material-table --save
 
 ## Usage 
 
