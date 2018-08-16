@@ -5,7 +5,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/material-table.svg?style=flat)](https://npmcharts.com/compare/material-table?minimal=true)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
 
-A console application that contains a lof of features to help developer
+Datatable for React based on https://material-ui.com/api/table/ with additional features
 
 [__DEMO__](https://mbrn.github.io/material-table/)
 
