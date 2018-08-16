@@ -7,6 +7,13 @@ import {
 
 class MTableActions extends React.Component {
   renderButton(action) {
+    if (typeof action === "function") {
+      action = action(this.props.data);
+      if (!action) {
+        return null;
+      }
+    }
+
     const button = (
       <IconButton
         onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
