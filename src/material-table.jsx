@@ -85,13 +85,12 @@ class MaterialTable extends React.Component {
           renderData = renderData.filter(row => {
             return row[columnDef.field] === columnDef.tableData.filterValue;
           });
-        } else if(columnDef.type === 'boolean' && columnDef.tableData.filterValue) {
+        } else if (columnDef.type === 'boolean' && columnDef.tableData.filterValue) {
           renderData = renderData.filter(row => {
-            return (row[columnDef.field] && columnDef.tableData.filterValue === "checked") ||
-              (!row[columnDef.field] && columnDef.tableData.filterValue === "unchecked");
+            return (row[columnDef.field] && columnDef.tableData.filterValue === 'checked') ||
+              (!row[columnDef.field] && columnDef.tableData.filterValue === 'unchecked');
           });
-        } 
-        else {
+        } else {
           renderData = renderData.filter(row => {
             return row[columnDef.field] && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase());
           });
