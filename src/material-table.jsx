@@ -2,6 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableActions from './m-table-actions';
+import MTableCell from './m-table-cell';
 import MTableFilterRow from './m-table-filter-row';
 import MTableToolbar from './m-table-toolbar';
 import MTablePagination from './m-table-pagination';
@@ -80,11 +81,17 @@ class MaterialTable extends React.Component {
               columnDef.tableData.filterValue.length === 0 ||
               columnDef.tableData.filterValue.indexOf(row[columnDef.field] && row[columnDef.field].toString()) > -1;
           });
-        } else if (columnDef.isNumeric === true) {
+        } else if (columnDef.type === 'numeric') {
           renderData = renderData.filter(row => {
             return row[columnDef.field] === columnDef.tableData.filterValue;
           });
-        } else {
+        } else if(columnDef.type === 'boolean' && columnDef.tableData.filterValue) {
+          renderData = renderData.filter(row => {
+            return (row[columnDef.field] && columnDef.tableData.filterValue === "checked") ||
+              (!row[columnDef.field] && columnDef.tableData.filterValue === "unchecked");
+          });
+        } 
+        else {
           renderData = renderData.filter(row => {
             return row[columnDef.field] && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase());
           });
@@ -114,8 +121,8 @@ class MaterialTable extends React.Component {
       const columnDef = this.state.columns[this.state.orderBy];
       renderData = renderData.sort(
         this.state.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.isNumeric)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.isNumeric)
+          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
+          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
       );
     }
 
@@ -135,8 +142,8 @@ class MaterialTable extends React.Component {
     }
   }
 
-  sort(a, b, isNumeric) {
-    if (isNumeric) {
+  sort(a, b, type) {
+    if (type === 'numeric') {
       return a - b;
     } else {
       return a < b ? -1 : a > b ? 1 : 0;
@@ -169,7 +176,7 @@ class MaterialTable extends React.Component {
             </TableCell>
           }
           {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index) => (
-            <TableCell numeric={columnDef.isNumeric}>
+            <TableCell numeric={columnDef.type === 'numeric'}>
               {columnDef.sort !== false
                 ? <TableSortLabel
                   active={this.state.orderBy === index}
@@ -250,7 +257,7 @@ class MaterialTable extends React.Component {
         }
         {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
           const value = this.getFieldValue(data, columnDef);
-          return <TableCell numeric={columnDef.isNumeric}>{value}</TableCell>;
+          return <MTableCell columnDef={columnDef} value={value}/>;
         })}
       </TableRow>
     );

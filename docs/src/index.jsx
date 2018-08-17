@@ -34,18 +34,23 @@ class App extends Component {
           field: 'surname'          
         },
         {
+          title: 'deneme',
+          field: 'deneme',
+          type: 'boolean'
+        },
+        {
           title: 'Doğum Yılı',
           field: 'birthYear',
-          isNumeric: true
+          type: 'numeric'
         },
         {
           title: 'Doğum Yeri',
           field: 'birthCity',
           lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}
-        }
+        }        
       ],
       data: [
-        {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
+        {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, deneme: true},
       ],
       actions: [
         {
@@ -84,7 +89,7 @@ class App extends Component {
     const data = [...this.state.data]
 
     for(let i = 1; i < this.state.dataCount; i++) {
-      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: 2018 + i, birthCity: i})
+      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: 2018 + i, birthCity: i, deneme: false})
     }
 
     return (

@@ -27,7 +27,7 @@ class App extends Component {
           columns={[
             {title: 'Adı', field: 'name'},
             {title: 'Soyadı', field: 'surname'},
-            {title: 'Doğum Yılı', field: 'birthYear', isNumeric: true},
+            {title: 'Doğum Yılı', field: 'birthYear', type: 'numeric'},
             {title: 'Doğum Yeri', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}}
           ]}
           data={[{name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63}]}
@@ -64,11 +64,11 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 | Field     | Type      | Default   | Description                                                                                   |
 |:----------|:----------|:----------|:----------------------------------------------------------------------------------------------|
 | hidden    | boolean   | false     | Flag for hide column                                                                          |
-| isNumeric | boolean   | false     | Flag for render data as numeric                                                               |
 | field     | string    |           | Field name of data row                                                                        |
 | lookup    | object    |           | Key value pair for lookup render data from                                                    |
 | render    | func      |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement   |
 | title     | string    |           | Header text                                                                                   |
+| type      | strign    |           | Data type: 'boolean', 'numeric'                                                               |
 
 #### data
 

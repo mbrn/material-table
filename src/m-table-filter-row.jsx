@@ -36,11 +36,31 @@ class MTableFilterRow extends React.Component {
             </Select>
           </FormControl>
         );
-      } else {
+      } 
+      else if (columnDef.type === "boolean") {
+        return (
+          <Checkbox
+            indeterminate={columnDef.tableData.filterValue === undefined}
+            checked={columnDef.tableData.filterValue === 'checked'}
+            onChange={() => {
+              let val = undefined;
+              if(columnDef.tableData.filterValue === undefined) {
+                val = 'checked';
+              } 
+              else if(columnDef.tableData.filterValue === 'checked') {
+                val = 'unchecked';
+              }
+
+              this.props.onFilterChanged(columnDef.tableData.id, val);
+            }}
+          />
+        );
+      }
+      else {
         return (
           <TextField
-            style={columnDef.isNumeric && {float: 'right'}}
-            type={columnDef.isNumeric && 'number'}
+            style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
+            type={columnDef.type === 'numeric' && 'number'}
             value={columnDef.tableData.filterValue}
             onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
             InputProps={{
