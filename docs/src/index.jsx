@@ -71,7 +71,7 @@ class App extends Component {
               alert("Delete : " + data.name);
             }
           }
-        }
+        }       
       ]
     }
 
