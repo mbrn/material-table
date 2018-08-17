@@ -7,7 +7,7 @@ import {
 
 class MTableActions extends React.Component {
   renderButton(action) {
-    if (typeof action === "function") {
+    if (typeof action === 'function') {
       action = action(this.props.data);
       if (!action) {
         return null;
@@ -16,6 +16,7 @@ class MTableActions extends React.Component {
 
     const button = (
       <IconButton
+        disabled={action.disabled}
         onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
       >
         <Icon>{action.icon}</Icon>
@@ -35,7 +36,7 @@ class MTableActions extends React.Component {
         <div style={{display: 'flex'}}>
           {this.props.actions.map(action => (this.renderButton(action)))}
         </div>
-      )
+      );
     }
 
     return null;
