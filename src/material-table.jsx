@@ -174,8 +174,10 @@ class MaterialTable extends React.Component {
               <Typography>Actions</Typography>
             </TableCell>
           }
-          {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index) => (
-            <TableCell numeric={columnDef.type === 'numeric'}>
+          {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
+            <TableCell
+              numeric={columnDef.type === 'numeric'}
+              className={(arr.length - 1) === index && props.classes.lastColumn}>
               {columnDef.sort !== false
                 ? <TableSortLabel
                   active={this.state.orderBy === index}
@@ -354,11 +356,15 @@ MaterialTable.propTypes = {
 
 const styles = theme => ({
   root: {
-    margin: theme.spacing.unit,
-    overflowX: 'auto'
+    margin: theme.spacing.unit
   },
   table: {
     // minWidth: 700,
+    display: 'block',
+    overflowX: 'auto'
+  },
+  lastColumn: {
+    width: '100%'
   }
 });
 
