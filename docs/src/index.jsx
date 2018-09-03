@@ -39,9 +39,9 @@ class App extends Component {
           type: 'boolean'
         },
         {
-          title: 'Doğum Yılı',
+          title: 'Doğum Tarihi',
           field: 'birthYear',
-          type: 'numeric'
+          type: 'dateTime'
         },
         {
           title: 'Doğum Yeri',
@@ -50,7 +50,7 @@ class App extends Component {
         }        
       ],
       data: [
-        {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, deneme: true},
+        {name: 'Mehmet', surname: 'Baran', birthYear: new Date(1987, 4, 21, 17, 55, 29), birthCity: 63, deneme: true},
       ],
       actions: [
         {
@@ -89,7 +89,7 @@ class App extends Component {
     const data = [...this.state.data]
 
     for(let i = 1; i < this.state.dataCount; i++) {
-      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: 2018 + i, birthCity: i, deneme: false})
+      data.push({name: 'Name ' + i, surname: 'Surname ' + i, birthYear: new Date(2017 + i, 8, 9), birthCity: i, deneme: false})
     }
 
     return (

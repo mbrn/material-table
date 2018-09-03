@@ -176,7 +176,7 @@ class MaterialTable extends React.Component {
           }
           {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
             <TableCell
-              numeric={columnDef.type === 'numeric'}
+              numeric={['numeric', 'date', 'time', 'dateTime'].indexOf(columnDef.type) !== -1}
               className={(arr.length - 1) === index && props.classes.lastColumn}>
               {columnDef.sort !== false
                 ? <TableSortLabel

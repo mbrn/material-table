@@ -6,10 +6,29 @@ import { Icon, TableCell } from '@material-ui/core';
 export default class MTableCell extends React.Component {
   getRenderValue() {
     if (this.props.columnDef.type === 'boolean') {
+      const style = {textAlign: 'center', width: '48px'};
       if (this.props.value) {
-        return <Icon style={{textAlign: 'center'}}>check</Icon>;
+        return <Icon style={style}>check</Icon>;
       } else {
-        return <Icon>remove</Icon>;
+        return <Icon style={style}>remove</Icon>;
+      }
+    } else if (this.props.columnDef.type === 'date') {
+      if (this.props.value instanceof Date) {
+        return this.props.value.toLocaleDateString();
+      } else {
+        return this.props.value;
+      }
+    } else if (this.props.columnDef.type === 'time') {
+      if (this.props.value instanceof Date) {
+        return this.props.value.toLocaleTimeString();
+      } else {
+        return this.props.value;
+      }
+    } else if (this.props.columnDef.type === 'dateTime') {
+      if (this.props.value instanceof Date) {
+        return this.props.value.toLocaleString();
+      } else {
+        return this.props.value;
       }
     }
 
@@ -19,9 +38,9 @@ export default class MTableCell extends React.Component {
   render() {
     return (
       <TableCell
-        numeric={this.props.columnDef.type === 'numeric'}
+        numeric={['numeric', 'date', 'time', 'dateTime'].indexOf(this.props.columnDef.type) !== -1}
       >
-        {this.getRenderValue()}
+        {this.getRenderValue() || ''}
       </TableCell>
     );
   }
