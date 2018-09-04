@@ -71,10 +71,9 @@ class MTableToolbar extends React.Component {
                 })
               }
             </Menu>
-            <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
-
           </span>
         }
+        <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
       </div>
     );
   }
