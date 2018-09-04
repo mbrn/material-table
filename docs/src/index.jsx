@@ -76,7 +76,15 @@ class App extends Component {
               alert("Delete : " + data.name);
             }
           }
-        }       
+        },
+        {
+          icon: 'check',
+          tooltip: 'New',
+          isFreeAction: true,
+          onClick: (event) => {
+            alert("New");
+          }
+        }   
       ]
     }
 

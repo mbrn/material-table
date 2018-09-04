@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import MTableActions from './m-table-actions';
 import PropTypes from 'prop-types';
 import {
-  Icon, IconButton, Menu, List, ListItem,
+  Icon, IconButton, Menu,
   MenuItem, Toolbar, Tooltip,
   Typography, withStyles, Checkbox,
   FormControlLabel, TextField, InputAdornment
@@ -18,10 +18,6 @@ class MTableToolbar extends React.Component {
     this.state = {
       columnsButtonAnchorEl: null
     };
-  }
-
-  renderSelectedActions() {
-    return <MTableActions actions={this.props.actions} data={this.props.selectedRows}/>;
   }
 
   renderDefaultActions() {
@@ -53,7 +49,6 @@ class MTableToolbar extends React.Component {
               anchorEl={this.state.columnsButtonAnchorEl}
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
-
               {
                 this.props.columns.map((col, index) => {
                   return (
@@ -76,6 +71,8 @@ class MTableToolbar extends React.Component {
                 })
               }
             </Menu>
+            <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
+
           </span>
         }
       </div>
@@ -86,7 +83,7 @@ class MTableToolbar extends React.Component {
     return (
       <div>
         {this.props.selectedRows
-          ? this.renderSelectedActions()
+          ? <MTableActions actions={this.props.actions.filter(a => { return !a.isFreeAction })} data={this.props.selectedRows}/>
           : this.renderDefaultActions()
         }
       </div>

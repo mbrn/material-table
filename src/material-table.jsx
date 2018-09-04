@@ -253,7 +253,9 @@ class MaterialTable extends React.Component {
           </TableCell>
           : (props.actions && props.actions.length > 0) &&
           <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
-            <MTableActions data={data} actions={props.actions}/>
+            <div style={{display: 'flex'}}>
+              <MTableActions data={data} actions={props.actions.filter(a => { return !a.isFreeAction })}/>
+            </div>
           </TableCell>
         }
         {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
@@ -306,7 +308,7 @@ class MaterialTable extends React.Component {
       <Paper className={props.classes.root}>
         {props.options.toolbar &&
           <MTableToolbar
-            actions={props.options.selection && props.actions}
+            actions={props.actions}
             selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => { return a.tableData.checked })}
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
