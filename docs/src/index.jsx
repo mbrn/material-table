@@ -9,11 +9,25 @@ import {
   ListItemSecondaryAction, Typography, Tooltip,
   SvgIcon
 } from '@material-ui/core'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+});
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      darkTheme: false,
       selection: true,
       filtering: true,
       search: true,
@@ -109,6 +123,18 @@ class App extends Component {
               material-table demo
             </Typography>
             <div>
+              <Tooltip title={this.state.darkTheme ? "Light Theme" : "Dark Theme"}>
+                <IconButton color="inherit" onClick={() => this.setState(prevState => ({darkTheme: !prevState.darkTheme}))}>
+                  <SvgIcon>
+                    {
+                      this.state.darkTheme ?
+                      <path d="m9,21c0,0.55 0.45,1 1,1l4,0c0.55,0 1,-0.45 1,-1l0,-1l-6,0l0,1zm3,-19c-3.86,0 -7,3.14 -7,7c0,2.38 1.19,4.47 3,5.74l0,2.26c0,0.55 0.45,1 1,1l6,0c0.55,0 1,-0.45 1,-1l0,-2.26c1.81,-1.27 3,-3.36 3,-5.74c0,-3.86 -3.14,-7 -7,-7z" />
+                      :
+                      <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" />                      
+                    }                    
+                  </SvgIcon>
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Github repository">
                 <IconButton color="inherit" href="https://github.com/mbrn/material-table">
                   <SvgIcon>
@@ -247,24 +273,27 @@ class App extends Component {
           </div>
 
           <div style={{maxWidth: this.state.maxWidth.toString() + '%'}}>
-            <MaterialTable
-              actions={this.state.showActions && this.state.actions}
-              columns={this.state.columns}
-              data={data}
-              title={this.state.title}
-              options={{
-                filtering: this.state.filtering,
-                selection: this.state.selection,
-                paging: this.state.paging,
-                toolbar: this.state.toolbar,
-                search: this.state.search,
-                columnsButton: this.state.showColumnsButton,
-                printButton: this.state.showPrintButton                
-              }}
-            />
+            <MuiThemeProvider theme={this.state.darkTheme ? darkTheme : lightTheme}>
+              <MaterialTable
+                actions={this.state.showActions && this.state.actions}
+                columns={this.state.columns}
+                data={data}
+                title={this.state.title}
+                options={{
+                  filtering: this.state.filtering,
+                  selection: this.state.selection,
+                  paging: this.state.paging,
+                  toolbar: this.state.toolbar,
+                  search: this.state.search,
+                  columnsButton: this.state.showColumnsButton,
+                  printButton: this.state.showPrintButton                
+                }}
+              />
+            </MuiThemeProvider>
           </div>
         </div>
       </div>
+      
     );
   }
 }
