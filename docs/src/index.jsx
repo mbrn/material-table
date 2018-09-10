@@ -68,30 +68,30 @@ class App extends Component {
         {name: 'Mehmet', surname: 'Baran', birthYear: new Date(1987, 4, 21, 17, 55, 29), birthCity: 63, deneme: true},
       ],
       actions: [
-        {
-          icon: 'save',
-          tooltip: 'Save',
-          onClick: (event, data) => {
-            if (Array.isArray(data)) {
-              alert("Save : " + data.length);
-            } 
-            else {
-              alert("Save : " + data.name);
-            }
-          }
-        },
-        {
-          icon: 'delete',
-          tooltip: 'Delete',
-          onClick: (event, data) => {
-            if (Array.isArray(data)) {
-              alert("Delete : " + data.length);
-            } 
-            else {
-              alert("Delete : " + data.name);
-            }
-          }
-        },
+        // {
+        //   icon: 'save',
+        //   tooltip: 'Save',
+        //   onClick: (event, data) => {
+        //     if (Array.isArray(data)) {
+        //       alert("Save : " + data.length);
+        //     } 
+        //     else {
+        //       alert("Save : " + data.name);
+        //     }
+        //   }
+        // },
+        // {
+        //   icon: 'delete',
+        //   tooltip: 'Delete',
+        //   onClick: (event, data) => {
+        //     if (Array.isArray(data)) {
+        //       alert("Delete : " + data.length);
+        //     } 
+        //     else {
+        //       alert("Delete : " + data.name);
+        //     }
+        //   }
+        // },
         {
           icon: 'check',
           tooltip: 'New',

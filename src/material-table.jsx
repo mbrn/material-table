@@ -169,7 +169,7 @@ class MaterialTable extends React.Component {
                 }}
               />
             </TableCell>
-            : (props.actions && props.actions.length > 0) &&
+            : (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
             <TableCell>
               <Typography>Actions</Typography>
             </TableCell>
@@ -215,7 +215,7 @@ class MaterialTable extends React.Component {
         {props.options.filtering &&
           <MTableFilterRow
             columns={this.state.columns.filter(columnDef => { return !columnDef.hidden })}
-            emptyCell={props.options.selection || (props.actions && props.actions.length > 0)}
+            emptyCell={props.options.selection || (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0)}
             onFilterChanged={(columnId, value) => {
               const columns = this.state.columns;
               columns[columnId].tableData.filterValue = value;
@@ -251,7 +251,7 @@ class MaterialTable extends React.Component {
               }}
             />
           </TableCell>
-          : (props.actions && props.actions.length > 0) &&
+          : (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
           <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
             <div style={{display: 'flex'}}>
               <MTableActions data={data} actions={props.actions.filter(a => { return !a.isFreeAction })}/>
