@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from 'material-table'
+// const MaterialTable = require('material-table').default;
 import { 
   Card, CardContent, Switch,
   Grid, TextField, AppBar, 

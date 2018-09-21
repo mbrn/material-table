@@ -14,9 +14,9 @@
   "author": "hydrocarbons",
   "license": "MIT",
   "dependencies": {
-    "react": "16.3.0",
-    "react-dom": "16.3.0",
-    "@material-ui/core": "^1.5.0",
+    "react": "16.5.2",
+    "react-dom": "16.5.2",
+    "@material-ui/core": "^3.1.0",
     "material-table": "file:../"
   },
   "devDependencies": {
