@@ -171,7 +171,7 @@ class MaterialTable extends React.Component {
             </TableCell>
             : (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
             <TableCell>
-              <Typography>Actions</Typography>
+              <TableSortLabel>Actions</TableSortLabel>              
             </TableCell>
           }
           {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
