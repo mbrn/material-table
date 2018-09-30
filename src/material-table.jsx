@@ -6,6 +6,7 @@ import MTableCell from './m-table-cell';
 import MTableFilterRow from './m-table-filter-row';
 import MTableToolbar from './m-table-toolbar';
 import MTablePagination from './m-table-pagination';
+import MTableHeader from './m-table-header';
 import {
   Checkbox, Paper, Table,
   TableHead, TableBody, TableRow,
@@ -149,57 +150,6 @@ class MaterialTable extends React.Component {
     }
   }
 
-  renderHeader() {
-    const props = this.getProps();
-    return (
-      <TableHead>
-        <TableRow>
-          {props.options.selection
-            ? <TableCell padding="checkbox">
-              <Checkbox
-                indeterminate={this.state.selectedCount > 0 && this.state.selectedCount < this.state.data.length}
-                checked={this.state.selectedCount === this.state.data.length}
-                onChange={(event, checked) => {
-                  const data = this.state.renderData.map(row => {
-                    row.tableData.checked = checked;
-                    return row;
-                  });
-                  const selectedCount = checked ? data.length : 0;
-                  this.setState({renderData: data, selectedCount});
-                }}
-              />
-            </TableCell>
-            : (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
-            <TableCell>
-              <TableSortLabel>Actions</TableSortLabel>              
-            </TableCell>
-          }
-          {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
-            <TableCell
-              numeric={['numeric', 'date', 'time', 'dateTime'].indexOf(columnDef.type) !== -1}
-              className={(arr.length - 1) === index && props.classes.lastColumn}>
-              {columnDef.sort !== false
-                ? <TableSortLabel
-                  active={this.state.orderBy === index}
-                  direction={this.state.orderDirection}
-                  onClick={() => {
-                    const orderDirection = index !== this.state.orderBy ? 'asc' : this.state.orderDirection === 'asc' ? 'desc' : 'asc';
-                    this.setState({orderBy: index, orderDirection, currentPage: 0}, () => {
-                      this.setData();
-                    });
-                  }}
-                >
-                  {columnDef.title}
-                </TableSortLabel>
-                : columnDef.title
-              }
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-    );
-  }
-
   renderBody() {
     const props = this.getProps();
     let renderData = this.state.renderData;
@@ -320,7 +270,29 @@ class MaterialTable extends React.Component {
           />
         }
         <Table className={props.classes.table}>
-          {this.renderHeader()}
+          {/* {this.renderHeader()} */}
+          <MTableHeader 
+            columns={this.state.columns}
+            hasSelection={props.options.selection}
+            selectedCount={this.state.selectedCount}
+            dataCount={this.state.data.length}
+            showActionsColumn={props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0}
+            orderBy={this.state.orderBy}
+            orderDirection={this.state.orderDirection}
+            onAllSelected={(checked) => {
+              const data = this.state.renderData.map(row => {
+                row.tableData.checked = checked;
+                return row;
+              });
+              const selectedCount = checked ? data.length : 0;
+              this.setState({renderData: data, selectedCount});
+            }}
+            onOrderChanged={(orderBy, orderDirection) => {
+              this.setState({orderBy, orderDirection, currentPage: 0}, () => {
+                this.setData();
+              });
+            }}
+          />
           {this.renderBody()}
         </Table>
         {this.renderFooter()}
@@ -364,9 +336,6 @@ const styles = theme => ({
     // minWidth: 700,
     display: 'block',
     overflowX: 'auto'
-  },
-  lastColumn: {
-    width: '100%'
   }
 });
 
