@@ -40,6 +40,7 @@ class App extends Component {
       toolbar: true,
       maxWidth: '100',
       dataCount: 100,
+      rtl: false,
       columns: [
         {
           title: 'Adı',
@@ -266,6 +267,15 @@ class App extends Component {
                           />
                         </ListItemSecondaryAction>
                       </ListItem>
+                      <ListItem>
+                        <ListItemText primary="RTL" />
+                        <ListItemSecondaryAction>
+                          <Switch
+                            onChange={(event) => this.setState({rtl: event.target.checked})}
+                            checked={this.state.rtl}
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
                     </List>
                   </Grid>
                 </Grid>
@@ -273,7 +283,7 @@ class App extends Component {
             </Card>
           </div>
 
-          <div style={{maxWidth: this.state.maxWidth.toString() + '%'}}>
+          <div style={{maxWidth: this.state.maxWidth.toString() + '%', direction: this.state.rtl ? 'rtl' : 'ltr'}}>
             <MuiThemeProvider theme={this.state.darkTheme ? darkTheme : lightTheme}>
               <MaterialTable
                 actions={this.state.showActions && this.state.actions}
