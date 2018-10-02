@@ -299,6 +299,9 @@ class App extends Component {
                   columnsButton: this.state.showColumnsButton,
                   printButton: this.state.showPrintButton                
                 }}
+                localization={{
+                  actions: 'İşlemler'
+                }}
               />
             </MuiThemeProvider>
           </div>

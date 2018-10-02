@@ -266,12 +266,14 @@ class MaterialTable extends React.Component {
             searchText={this.state.searchText}
             title={props.title}
             onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
-            onColumnsChanged={columns => this.setState({columns})}
+            onColumnsChanged={columns => this.setState({columns})}    
+            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}        
           />
         }
         <Table className={props.classes.table}>
           {/* {this.renderHeader()} */}
           <MTableHeader 
+            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
             columns={this.state.columns}
             hasSelection={props.options.selection}
             selectedCount={this.state.selectedCount}
@@ -316,6 +318,10 @@ MaterialTable.defaultProps = {
     search: true,
     selection: false,
     toolbar: true
+  },
+  localization: {
+    actions: 'Actions',
+    nRowsSelected: '{0} row(s) selected'
   }
 };
 
@@ -325,7 +331,8 @@ MaterialTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   title: PropTypes.string,
-  options: PropTypes.object
+  options: PropTypes.object,
+  localization: PropTypes.object
 };
 
 const styles = theme => ({

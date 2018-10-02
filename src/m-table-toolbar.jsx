@@ -91,7 +91,7 @@ class MTableToolbar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const title = this.props.selectedRows ? this.props.selectedRows.length + ' row(s) selected' : this.props.title;
+    const title = this.props.selectedRows ? this.props.localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
     return (
       <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows})}>
         <div className={classes.title}>
@@ -114,7 +114,6 @@ MTableToolbar.defaultProps = {
   search: true,
   columnsButton: false,
   title: 'No Title!'
-
 };
 
 MTableToolbar.propTypes = {

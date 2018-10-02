@@ -21,7 +21,7 @@ class MTableHeader extends React.Component {
             </TableCell>
             : this.props.showActionsColumn &&
             <TableCell>
-              <TableSortLabel>Actions</TableSortLabel>              
+              <TableSortLabel>{this.props.localization.actions}</TableSortLabel>              
             </TableCell>
           }
           {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
