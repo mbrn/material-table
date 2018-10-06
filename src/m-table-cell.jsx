@@ -36,9 +36,17 @@ export default class MTableCell extends React.Component {
   }
 
   render() {
+    let cellStyle = {};
+    if(typeof this.props.columnDef.cellStyle === "function" ) {
+      cellStyle = Object.assign(cellStyle, this.props.columnDef.cellStyle(this.props.value));
+    }
+    else {
+      cellStyle = Object.assign(cellStyle, this.props.columnDef.cellStyle);
+    }
+
     return (
-      <TableCell
-        numeric={['numeric', 'date', 'time', 'dateTime'].indexOf(this.props.columnDef.type) !== -1}
+      <TableCell style={cellStyle}
+        numeric={['numeric'].indexOf(this.props.columnDef.type) !== -1}
       >
         {this.getRenderValue() || ''}
       </TableCell>

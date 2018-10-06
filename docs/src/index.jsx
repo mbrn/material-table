@@ -44,7 +44,7 @@ class App extends Component {
       columns: [
         {
           title: 'Adı',
-          field: 'name'          
+          field: 'name',
         },
         {
           title: 'Soyadı',

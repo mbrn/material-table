@@ -25,8 +25,8 @@ class MTableHeader extends React.Component {
             </TableCell>
           }
           {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
-            <TableCell
-              numeric={['numeric', 'date', 'time', 'dateTime'].indexOf(columnDef.type) !== -1}
+            <TableCell              
+              numeric={['numeric'].indexOf(columnDef.type) !== -1}
               className={(arr.length - 1) === index && this.props.classes.lastColumn}>
               {columnDef.sort !== false
                 ? <TableSortLabel
@@ -51,7 +51,7 @@ class MTableHeader extends React.Component {
 
 const styles = theme => ({
   lastColumn: {
-    width: '100%'
+    // width: '100%'
   }
 });
 

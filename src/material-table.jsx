@@ -270,33 +270,34 @@ class MaterialTable extends React.Component {
             localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}        
           />
         }
-        <Table className={props.classes.table}>
-          {/* {this.renderHeader()} */}
-          <MTableHeader 
-            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
-            columns={this.state.columns}
-            hasSelection={props.options.selection}
-            selectedCount={this.state.selectedCount}
-            dataCount={this.state.data.length}
-            showActionsColumn={props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0}
-            orderBy={this.state.orderBy}
-            orderDirection={this.state.orderDirection}
-            onAllSelected={(checked) => {
-              const data = this.state.renderData.map(row => {
-                row.tableData.checked = checked;
-                return row;
-              });
-              const selectedCount = checked ? data.length : 0;
-              this.setState({renderData: data, selectedCount});
-            }}
-            onOrderChanged={(orderBy, orderDirection) => {
-              this.setState({orderBy, orderDirection, currentPage: 0}, () => {
-                this.setData();
-              });
-            }}
-          />
-          {this.renderBody()}
-        </Table>
+        <div style={{overflowX: 'auto'}}>
+          <Table>
+            <MTableHeader 
+              localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
+              columns={this.state.columns}
+              hasSelection={props.options.selection}
+              selectedCount={this.state.selectedCount}
+              dataCount={this.state.data.length}
+              showActionsColumn={props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0}
+              orderBy={this.state.orderBy}
+              orderDirection={this.state.orderDirection}
+              onAllSelected={(checked) => {
+                const data = this.state.renderData.map(row => {
+                  row.tableData.checked = checked;
+                  return row;
+                });
+                const selectedCount = checked ? data.length : 0;
+                this.setState({renderData: data, selectedCount});
+              }}
+              onOrderChanged={(orderBy, orderDirection) => {
+                this.setState({orderBy, orderDirection, currentPage: 0}, () => {
+                  this.setData();
+                });
+              }}
+            />
+            {this.renderBody()}
+          </Table>
+        </div>
         {this.renderFooter()}
       </Paper>
     );
@@ -339,11 +340,6 @@ const styles = theme => ({
   root: {
     margin: theme.spacing.unit
   },
-  table: {
-    // minWidth: 700,
-    display: 'block',
-    overflowX: 'auto'
-  }
 });
 
 export default withStyles(styles)(MaterialTable);
