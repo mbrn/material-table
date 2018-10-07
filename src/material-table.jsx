@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableActions from './m-table-actions';
 import MTableCell from './m-table-cell';
-import MTableFilterRow from './m-table-filter-row';
+import MTableBody from './m-table-body';
 import MTableToolbar from './m-table-toolbar';
 import MTablePagination from './m-table-pagination';
 import MTableHeader from './m-table-header';
@@ -150,72 +150,6 @@ class MaterialTable extends React.Component {
     }
   }
 
-  renderBody() {
-    const props = this.getProps();
-    let renderData = this.state.renderData;
-    let emptyRowCount = 0;
-    if (props.options.paging) {
-      const startIndex = this.state.currentPage * this.state.pageSize;
-      const endIndex = startIndex + this.state.pageSize;
-      renderData = renderData.slice(startIndex, endIndex);
-      emptyRowCount = this.state.pageSize - renderData.length;
-    }
-    return (
-      <TableBody>
-        {props.options.filtering &&
-          <MTableFilterRow
-            columns={this.state.columns.filter(columnDef => { return !columnDef.hidden })}
-            emptyCell={props.options.selection || (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0)}
-            onFilterChanged={(columnId, value) => {
-              const columns = this.state.columns;
-              columns[columnId].tableData.filterValue = value;
-              this.setState({columns}, () => {
-                this.setData();
-              });
-            }}
-          />
-        }
-        {renderData.map((data, index) => (this.renderRow(data, index)))}
-        {[...Array(emptyRowCount)].map(() => <TableRow style={{height: 49}}/>)}
-        {emptyRowCount > 0 && <div style={{height: 1}}/>}
-      </TableBody>
-    );
-  }
-
-  renderRow(data, index) {
-    const props = this.getProps();
-    return (
-      <TableRow selected={index % 2 === 0}>
-        {props.options.selection
-          ? <TableCell padding="checkbox">
-            <Checkbox
-              checked={data.tableData.checked === true}
-              value={data.tableData.id}
-              onChange={(event, checked) => {
-                data = this.state.data;
-                data[event.target.value].tableData.checked = checked;
-                this.setState(state => ({
-                  data: data,
-                  selectedCount: state.selectedCount + (checked ? 1 : -1)
-                }));
-              }}
-            />
-          </TableCell>
-          : (props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
-          <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
-            <div style={{display: 'flex'}}>
-              <MTableActions data={data} actions={props.actions.filter(a => { return !a.isFreeAction })}/>
-            </div>
-          </TableCell>
-        }
-        {this.state.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
-          const value = this.getFieldValue(data, columnDef);
-          return <MTableCell columnDef={columnDef} value={value}/>;
-        })}
-      </TableRow>
-    );
-  }
-
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -295,7 +229,30 @@ class MaterialTable extends React.Component {
                 });
               }}
             />
-            {this.renderBody()}
+            <MTableBody 
+              actions={props.actions}
+              renderData={this.state.renderData}
+              currentPage={this.state.currentPage}
+              pageSize={this.state.pageSize}
+              columns={this.state.columns}
+              options={props.options}
+              getFieldValue={this.getFieldValue}
+              onFilterChanged={(columnId, value) => {
+                const columns = this.state.columns;
+                columns[columnId].tableData.filterValue = value;
+                this.setState({columns}, () => {
+                  this.setData();
+                });
+              }}
+              onRowSelected={(event, checked) => {
+                const data = this.state.data;
+                data[event.target.value].tableData.checked = checked;
+                this.setState(state => ({
+                  data: data,
+                  selectedCount: state.selectedCount + (checked ? 1 : -1)
+                }));
+              }}
+            />
           </Table>
         </div>
         {this.renderFooter()}
