@@ -1,43 +1,11 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import MTableFilterRow from './m-table-filter-row';
-import MTableCell from './m-table-cell';
-import {
-  Checkbox, Paper, Table,
-  TableHead, TableBody, TableRow,
-  TableCell, TableFooter, TablePagination,
-  TableSortLabel, withStyles, Typography
-} from '@material-ui/core';
+import MTableBodyRow from './m-table-body-row';
+import { TableBody, TableRow } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBody extends React.Component {
-
-  renderRow(data, index) {
-    return (
-      <TableRow selected={index % 2 === 0} key={index}>
-        {this.props.options.selection
-        ? <TableCell padding="checkbox" key="key-selection-column">
-            <Checkbox
-              checked={data.tableData.checked === true}
-              value={`${data.tableData.id}`}
-              onChange={this.props.onRowSelected}
-            />
-          </TableCell>
-        : (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
-          <TableCell style={{paddingTop: 0, paddingBottom: 0}} key="key-actions-column">
-            <div style={{display: 'flex'}}>
-              <MTableActions data={data} actions={this.props.actions.filter(a => { return !a.isFreeAction })}/>
-            </div>
-          </TableCell>
-        }
-        {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
-          const value = this.props.getFieldValue(data, columnDef);
-          return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id}/>;
-        })}
-      </TableRow>
-    );
-  }
-
   render() {
     let renderData = this.props.renderData;
     let emptyRowCount = 0;
@@ -56,7 +24,22 @@ export default class MTableBody extends React.Component {
             onFilterChanged={this.props.onFilterChanged}
           />
         }
-        {renderData.map((data, index) => (this.renderRow(data, index)))}
+        {
+          renderData.map((data, index) => {
+            return (
+              <MTableBodyRow 
+                data={data} 
+                index={index}
+                key={index}
+                options={this.props.options}
+                onRowSelected={this.props.onRowSelected}
+                actions={this.props.actions}
+                columns={this.props.columns}
+                getFieldValue={this.props.getFieldValue}
+              />
+            );
+          })
+        }
         {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={"empty-" + index} />)}
         {emptyRowCount > 0 && <div style={{height: 1}}/>}
       </TableBody>
