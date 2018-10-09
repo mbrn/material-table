@@ -57,7 +57,7 @@ class MTableFilterRow extends React.Component {
         return (
           <TextField
             style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
-            type={columnDef.type === 'numeric' && 'number'}
+            type={columnDef.type === 'numeric' ? 'number' : 'text'}
             value={columnDef.tableData.filterValue}
             onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
             InputProps={{
@@ -78,7 +78,7 @@ class MTableFilterRow extends React.Component {
       <TableRow style={{height: 10}}>
         {this.props.emptyCell && <TableCell/>}
         {this.props.columns.map(columnDef => (
-          <TableCell>
+          <TableCell key={columnDef.tableData.id}>
             {this.getComponentForColumn(columnDef)}
           </TableCell>
         ))}

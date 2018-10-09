@@ -147,7 +147,7 @@ class App extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        <div class="content">
+        <div className="content">
           <div style={{padding:8}}>
             <Card style={{padding: 10}}>
               <Typography variant="title" style={{textAlign: 'left'}}>Options</Typography>

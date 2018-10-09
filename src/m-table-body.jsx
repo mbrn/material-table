@@ -14,17 +14,17 @@ export default class MTableBody extends React.Component {
 
   renderRow(data, index) {
     return (
-      <TableRow selected={index % 2 === 0}>
+      <TableRow selected={index % 2 === 0} key={index}>
         {this.props.options.selection
-        ? <TableCell padding="checkbox">
+        ? <TableCell padding="checkbox" key="key-selection-column">
             <Checkbox
               checked={data.tableData.checked === true}
-              value={data.tableData.id}
+              value={`${data.tableData.id}`}
               onChange={this.props.onRowSelected}
             />
           </TableCell>
         : (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
-          <TableCell style={{paddingTop: 0, paddingBottom: 0}}>
+          <TableCell style={{paddingTop: 0, paddingBottom: 0}} key="key-actions-column">
             <div style={{display: 'flex'}}>
               <MTableActions data={data} actions={this.props.actions.filter(a => { return !a.isFreeAction })}/>
             </div>
@@ -32,7 +32,7 @@ export default class MTableBody extends React.Component {
         }
         {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
           const value = this.props.getFieldValue(data, columnDef);
-          return <MTableCell columnDef={columnDef} value={value}/>;
+          return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id}/>;
         })}
       </TableRow>
     );
@@ -57,7 +57,7 @@ export default class MTableBody extends React.Component {
           />
         }
         {renderData.map((data, index) => (this.renderRow(data, index)))}
-        {[...Array(emptyRowCount)].map(() => <TableRow style={{height: 49}}/>)}
+        {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={"empty-" + index} />)}
         {emptyRowCount > 0 && <div style={{height: 1}}/>}
       </TableBody>
     );

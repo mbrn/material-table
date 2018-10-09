@@ -50,9 +50,9 @@ class MTableToolbar extends React.Component {
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
               {
-                this.props.columns.map((col, index) => {
+                this.props.columns.map((col, index) => {                  
                   return (
-                    <MenuItem>
+                    <MenuItem key={col.tableData.id}>
                       <FormControlLabel
                         label={col.title}
                         control={

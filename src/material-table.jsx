@@ -154,33 +154,35 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
     if (props.options.paging) {
       return (
-        <TableFooter style={{display: 'grid'}}>
-          <TableRow>
-            <TablePagination
-              style={{float: 'right'}}
-              colSpan={3}
-              count={this.state.renderData.length}
-              rowsPerPage={this.state.pageSize}
-              rowsPerPageOptions={props.options.pageSizeOptions}
-              page={this.state.currentPage}
-              onChangePage={(event, page) => {
-                this.setState({currentPage: page}, () => {
-                  this.setData();
-                });
-              }}
-              onChangeRowsPerPage={(event) => {
-                this.setState(state => {
-                  state.pageSize = event.target.value;
-                  state.currentPage = 0;
-                  return state;
-                }, () => {
-                  this.setData();
-                });
-              }}
-              ActionsComponent={MTablePagination}
-            />
-          </TableRow>
-        </TableFooter>
+        <Table>
+          <TableFooter style={{display: 'grid'}}>
+            <TableRow>
+              <TablePagination
+                style={{float: 'right'}}
+                colSpan={3}
+                count={this.state.renderData.length}
+                rowsPerPage={this.state.pageSize}
+                rowsPerPageOptions={props.options.pageSizeOptions}
+                page={this.state.currentPage}
+                onChangePage={(event, page) => {
+                  this.setState({currentPage: page}, () => {
+                    this.setData();
+                  });
+                }}
+                onChangeRowsPerPage={(event) => {
+                  this.setState(state => {
+                    state.pageSize = event.target.value;
+                    state.currentPage = 0;
+                    return state;
+                  }, () => {
+                    this.setData();
+                  });
+                }}
+                ActionsComponent={MTablePagination}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
       );
     }
   }

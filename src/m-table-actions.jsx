@@ -16,6 +16,7 @@ class MTableActions extends React.Component {
 
     const button = (
       <IconButton
+        key={action.icon}
         disabled={action.disabled}
         onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
       >
@@ -24,7 +25,7 @@ class MTableActions extends React.Component {
     );
 
     if (action.tooltip) {
-      return <Tooltip title={action.tooltip}>{button}</Tooltip>;
+      return <Tooltip title={action.tooltip} key={action.tooltip}>{button}</Tooltip>;
     } else {
       return button;
     }
