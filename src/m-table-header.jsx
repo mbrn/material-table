@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { 
   TableHead, TableRow, TableCell, 
   TableSortLabel, Checkbox, withStyles
@@ -16,7 +17,7 @@ class MTableHeader extends React.Component {
                 <Checkbox
                   indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
                   checked={this.props.selectedCount === this.props.dataCount}
-                  onChange={(event, checked) => this.props.onAllSelected(checked)}
+                  onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
                 />
               </TableCell>
             : this.props.showActionsColumn &&
@@ -28,7 +29,7 @@ class MTableHeader extends React.Component {
             <TableCell     
               key={columnDef.tableData.id}
               numeric={['numeric'].indexOf(columnDef.type) !== -1}
-              className={(arr.length - 1) === index ? this.props.classes.lastColumn : ""}>
+            >
               {columnDef.sort !== false
                 ? <TableSortLabel
                   active={this.props.orderBy === index}
@@ -50,10 +51,26 @@ class MTableHeader extends React.Component {
   }
 }
 
-const styles = theme => ({
-  lastColumn: {
-    // width: '100%'
-  }
-});
 
-export default withStyles(styles)(MTableHeader);
+MTableHeader.defaultProps = {
+  dataCount: 0,
+  hasSelection: false,
+  selectedCount: 0,
+  localization: {},
+  orderBy: undefined,
+  orderDirection: 'asc'
+};
+
+MTableHeader.propTypes = {
+  columns: PropTypes.array.isRequired,
+  dataCount: PropTypes.number,
+  hasSelection: PropTypes.bool,
+  localization: PropTypes.object,
+  selectedCount: PropTypes.number,
+  onAllSelected: PropTypes.func,
+  onOrderChanged: PropTypes.func,
+  orderBy: PropTypes.number,
+  orderDirection: PropTypes.string,
+};
+
+export default MTableHeader;

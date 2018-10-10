@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import {
-  Icon, IconButton, Tooltip
-} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { Icon, IconButton, Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 class MTableActions extends React.Component {
@@ -39,5 +38,15 @@ class MTableActions extends React.Component {
     return null;
   }
 }
+
+MTableActions.defaultProps = {
+  actions: [],
+  data: {}
+};
+
+MTableActions.propTypes = {
+  actions: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired
+};
 
 export default MTableActions;

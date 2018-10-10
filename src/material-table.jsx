@@ -1,17 +1,14 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import MTableActions from './m-table-actions';
-import MTableCell from './m-table-cell';
 import MTableBody from './m-table-body';
 import MTableToolbar from './m-table-toolbar';
 import MTablePagination from './m-table-pagination';
 import MTableHeader from './m-table-header';
 import {
-  Checkbox, Paper, Table,
-  TableHead, TableBody, TableRow,
-  TableCell, TableFooter, TablePagination,
-  TableSortLabel, withStyles, Typography
+  Paper, Table, TableRow,
+  TableFooter, TablePagination,
+  withStyles
 } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
@@ -195,7 +192,7 @@ class MaterialTable extends React.Component {
         {props.options.toolbar &&
           <MTableToolbar
             actions={props.actions}
-            selectedRows={this.state.selectedCount > 0 && this.state.data.filter(a => { return a.tableData.checked })}
+            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
             search={props.options.search}

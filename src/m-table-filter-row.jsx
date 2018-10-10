@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
   TableCell, TableRow, TextField,
-  FormControl, InputLabel, Select,
-  Input, MenuProps, MenuItem,
-  Checkbox, ListItemText, Button,
-  InputAdornment, Icon
+  FormControl, Select, Input, 
+  MenuProps, MenuItem, Checkbox, 
+  ListItemText, InputAdornment, Icon
 } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
@@ -86,5 +86,16 @@ class MTableFilterRow extends React.Component {
     );
   }
 }
+
+MTableFilterRow.defaultProps = {
+  emptyCell: false,
+  columns: [],  
+};
+
+MTableFilterRow.propTypes = {
+  emptyCell: PropTypes.bool,
+  columns: PropTypes.array.isRequired,
+  onFilterChanged: PropTypes.func.isRequired
+};
 
 export default MTableFilterRow;

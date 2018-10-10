@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import MTableCell from './m-table-cell';
 import MTableActions from './m-table-actions'
-import {
-  Checkbox, TableRow, TableCell
-} from '@material-ui/core';
+import { Checkbox, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBodyRow extends React.Component {
@@ -35,3 +34,19 @@ export default class MTableBodyRow extends React.Component {
     );
   }
 }
+
+MTableBodyRow.defaultProps = {
+  actions: [],
+  index: 0,  
+  data: {},
+  options: {}
+};
+
+MTableBodyRow.propTypes = {
+  actions: PropTypes.array,
+  index: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
+  onRowSelected: PropTypes.func,
+  getFieldValue: PropTypes.func.isRequired  
+};

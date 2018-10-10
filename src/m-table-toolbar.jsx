@@ -81,7 +81,7 @@ class MTableToolbar extends React.Component {
   renderActions() {
     return (
       <div>
-        {this.props.selectedRows
+        {this.props.selectedRows && this.props.selectedRows.length > 0
           ? <MTableActions actions={this.props.actions.filter(a => { return !a.isFreeAction })} data={this.props.selectedRows}/>
           : this.renderDefaultActions()
         }
@@ -91,9 +91,9 @@ class MTableToolbar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const title = this.props.selectedRows ? this.props.localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
+    const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? this.props.localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
     return (
-      <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows})}>
+      <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0})}>
         <div className={classes.title}>
           <Typography variant="title">
             {title}
@@ -111,16 +111,25 @@ class MTableToolbar extends React.Component {
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
-  search: true,
   columnsButton: false,
-  title: 'No Title!'
+  localization: {},
+  search: true,
+  searchText: '',
+  selectedRows: [],
+  title: 'No Title!',
 };
 
 MTableToolbar.propTypes = {
   actions: PropTypes.array,
   columns: PropTypes.array,
   columnsButton: PropTypes.bool,
-  title: PropTypes.string.isRequired
+  localization: PropTypes.object.isRequired,
+  onColumnsChanged: PropTypes.func.isRequired,
+  onSearchChanged: PropTypes.func.isRequired,
+  search: PropTypes.bool.isRequired,
+  searchText: PropTypes.string.isRequired,
+  selectedRows: PropTypes.array,
+  title: PropTypes.string.isRequired,
 };
 
 const styles = theme => ({

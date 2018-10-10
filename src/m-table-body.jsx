@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import MTableFilterRow from './m-table-filter-row';
 import MTableBodyRow from './m-table-body-row';
 import { TableBody, TableRow } from '@material-ui/core';
@@ -46,3 +47,21 @@ export default class MTableBody extends React.Component {
     );
   }
 }
+
+MTableBody.defaultProps = {
+  actions: [],
+  currentPage: 0,
+  pageSize: 5,
+  renderData: []
+};
+
+MTableBody.propTypes = {
+  actions: PropTypes.array,
+  columns: PropTypes.array.isRequired,
+  currentPage: PropTypes.number,
+  getFieldValue: PropTypes.func.isRequired,
+  onRowSelected: PropTypes.func,
+  options: PropTypes.object.isRequired,
+  pageSize: PropTypes.number,
+  renderData: PropTypes.array,
+};
