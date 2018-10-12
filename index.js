@@ -3,4 +3,4 @@
 
 // module.exports = { default : require('./dist/material-table').default }
 
-export.default = require('./dist/material-table').default
+exports.default = require('./dist/material-table').default
