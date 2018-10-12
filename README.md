@@ -12,6 +12,10 @@ Datatable for React based on https://material-ui.com/api/table/ with additional 
 ## Installation
     npm install material-table --save
 
+Add material icons url to your html:
+
+`<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">`
+
 ## Usage 
 
 ```js
