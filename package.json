@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/material-table.js",
   "types": "index.d.ts",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint index.js src/** --fix"
+    "lint": "eslint src/** --fix"
   },
   "repository": {
     "type": "git",
