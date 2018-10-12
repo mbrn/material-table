@@ -29,7 +29,7 @@
     "url": "https://github.com/mbrn/material-table/issues"
   },
   "homepage": "https://github.com/mbrn/material-table#readme",
-  "devDependencies": {
+  "devDependencies": {    
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
