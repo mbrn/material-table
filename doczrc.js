@@ -11,5 +11,7 @@ export default {
   },
   themeConfig: {
     mode: 'dark'
-  }
+  },
+  hashRouter: true,
+  base: '/bar/'
 }
