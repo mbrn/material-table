@@ -188,7 +188,7 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <Paper className={props.classes.root}>
+      <Paper>
         {props.options.toolbar &&
           <MTableToolbar
             actions={props.actions}
@@ -283,19 +283,37 @@ MaterialTable.defaultProps = {
 };
 
 MaterialTable.propTypes = {
-  actions: PropTypes.array.isRequired,
-  classes: PropTypes.object.isRequired,
-  columns: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
+  actions: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.string.isRequired,
+    isFreeAction: PropTypes.bool,
+    tooltip: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
+  })),
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    hidden: PropTypes.bool,
+    field: PropTypes.string,
+    lookup: PropTypes.object,
+    render: PropTypes.func,
+    title: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time'])
+  })).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
-  options: PropTypes.object,
-  localization: PropTypes.object
+  options: PropTypes.shape({
+    columnsButton: PropTypes.bool,
+    filtering: PropTypes.bool,
+    paging: PropTypes.bool,
+    pageSize: PropTypes.number,
+    pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    search: PropTypes.bool,
+    selection: PropTypes.bool,
+    toolbar: PropTypes.bool
+  }),
+  localization: PropTypes.shape({
+    actions: PropTypes.string,
+    nRowsSelected: PropTypes.string
+  })
 };
 
-const styles = theme => ({
-  root: {
-    margin: theme.spacing.unit
-  },
-});
-
-export default withStyles(styles)(MaterialTable);
+export default MaterialTable;
