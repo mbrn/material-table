@@ -13,5 +13,5 @@ export default {
     mode: 'dark'
   },
   hashRouter: true,
-  base: '/bar/'
+  base: '/material-table/'
 }
