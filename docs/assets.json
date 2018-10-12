@@ -1,14 +1,14 @@
 {
-  "vendors.js": "/static/js/vendors.b479f7ea.js",
-  "app.js": "/static/js/app.2de5fc5f.js",
-  "docz-props.js": "/static/js/docz-props.ce784bd1.js",
-  "docz-get-started.js": "/static/js/docz-get-started.3da3894c.js",
-  "docz-examples-example-basic.js": "/static/js/docz-examples-example-basic.be19a65b.js",
-  "docz-examples-example-cell-styling.js": "/static/js/docz-examples-example-cell-styling.4183e08e.js",
-  "docz-examples-example-localization.js": "/static/js/docz-examples-example-localization.6c2aa719.js",
-  "docz-examples-example-options.js": "/static/js/docz-examples-example-options.4000f70b.js",
-  "docz-examples-example-actions.js": "/static/js/docz-examples-example-actions.89553bc9.js",
-  "docz-examples-example-selection.js": "/static/js/docz-examples-example-selection.2bf60376.js",
-  "runtime~app.js": "/static/js/runtime~app.61c3213b8895337ce133.js",
-  "index.html": "/index.html"
+  "vendors.js": "static/js/vendors.b479f7ea.js",
+  "app.js": "static/js/app.2de5fc5f.js",
+  "docz-props.js": "static/js/docz-props.ce784bd1.js",
+  "docz-get-started.js": "static/js/docz-get-started.3da3894c.js",
+  "docz-examples-example-basic.js": "static/js/docz-examples-example-basic.be19a65b.js",
+  "docz-examples-example-cell-styling.js": "static/js/docz-examples-example-cell-styling.4183e08e.js",
+  "docz-examples-example-localization.js": "static/js/docz-examples-example-localization.6c2aa719.js",
+  "docz-examples-example-options.js": "static/js/docz-examples-example-options.4000f70b.js",
+  "docz-examples-example-actions.js": "static/js/docz-examples-example-actions.89553bc9.js",
+  "docz-examples-example-selection.js": "static/js/docz-examples-example-selection.2bf60376.js",
+  "runtime~app.js": "static/js/runtime~app.61c3213b8895337ce133.js",
+  "index.html": "index.html"
 }
