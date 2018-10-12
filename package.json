@@ -34,6 +34,7 @@
   "devDependencies": {
     "@babel/cli": "7.1.2",
     "@babel/preset-react": "7.0.0",
+    "babel-eslint": "10.0.1",
     "docz": "0.12.5",
     "eslint": "^5.0.1",
     "eslint-config-defaults": "^9.0.0",
