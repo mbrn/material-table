@@ -45,61 +45,9 @@ class App extends Component {
 ReactDOM.render(<App />, document.getElementById('react-div'));
 ```
 
-## Properties
+## Documentation
 
-| Property | Type   | Default           | Description                                                       |
-|:---------|:-------|:------------------|:------------------------------------------------------------------|
-| actions  | Array  |                   | Action list. An icon button will be rendered for each actions     |
-| columns  | Array  |                   | Column definitions                                                |
-| data     | Array  |                   | Data to be rendered                                               |
-| options  | object |                   | All options of table                                              |
-| title    | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
-
-#### actions
-
-| Field     | Type      | Default   | Description                                                                               |    
-|:----------|:----------|:----------|:------------------------------------------------------------------------------------------|
-| icon      | string    |           | Icon of button from material icons                                                        |
-| onClick   | func      |           | This event will be fired when button clicked. Parameters are `event` and `row or rows`    |
-| tooltip   | string    |           | Tooltip for button                                                                        |
-
-#### columns
-
-| Field     | Type      | Default   | Description                                                                                   |
-|:----------|:----------|:----------|:----------------------------------------------------------------------------------------------|
-| hidden    | boolean   | false     | Flag for hide column                                                                          |
-| field     | string    |           | Field name of data row                                                                        |
-| lookup    | object    |           | Key value pair for lookup render data from                                                    |
-| render    | func      |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement   |
-| title     | string    |           | Header text                                                                                   |
-| type      | strign    |           | Data type: 'boolean', 'numeric'                                                               |
-
-#### data
-
-Data must be array of objects which has fields defined in columns. For example: 
-
-```js
-const data=[
-    {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
-    {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},    
-]
-    
-```
-
-#### options
-
-Options property could be given to component as `options` property. You can change behaviour of grid.
-
-| Field             | Type      | Default       | Description                                                                       |
-|:------------------|:----------|:--------------|:----------------------------------------------------------------------------------|
-| columnsButton     | boolean   | false         | Flag for columns button that controls which column could be rendered              |
-| filtering         | boolean   | false         | Flag for filtering row                                                            |
-| paging            | boolean   | true          | Flag for paging feature                                                           |
-| pageSize          | numeric   | 5             | Number of rows that would be rendered on every page                               |
-| pageSizeOptions   | array     | [5, 10, 20]   | Page size options that could be selected by user                                  |
-| search            | boolean   | true          | Flag for search feature                                                           |
-| selection         | boolean   | false         | Flag for selection feature                                                        |
-| toolbar           | boolean   | true          | Flag for toolbar                                                                  |
+You can access all examples and documentation from [__doc__](https://mbrn.github.io/material-table/)
 
 ## Licence
 
