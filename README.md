@@ -47,7 +47,7 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 
 ## Documentation
 
-You can access all examples and documentation from [__doc__](https://mbrn.github.io/material-table/)
+You can access all examples and documentation from [__docs site__](https://mbrn.github.io/material-table/)
 
 ## Licence
 
