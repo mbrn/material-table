@@ -7,7 +7,7 @@
 
 Datatable for React based on https://material-ui.com/api/table/ with additional features
 
-[__DEMO__](https://mbrn.github.io/material-table/)
+[__DEMO AND DOCUMENTATION__](https://mbrn.github.io/material-table/)
 
 ## Installation
     npm install material-table --save
