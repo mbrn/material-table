@@ -7,7 +7,8 @@ export default {
       links: [
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }
       ]
-    }
+    },
+    favicon: 'https://raw.githubusercontent.com/mbrn/mbrn.github.io/master/favicon.ico',
   },
   themeConfig: {
     mode: 'dark'
