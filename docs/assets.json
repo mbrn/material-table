@@ -1,15 +1,15 @@
 {
-  "vendors.js": "static/js/vendors.474c3751.js",
-  "app.js": "static/js/app.84224b9e.js",
-  "docz-get-started.js": "static/js/docz-get-started.06f48670.js",
-  "docz-props.js": "static/js/docz-props.89e491a4.js",
-  "docz-examples-example-actions.js": "static/js/docz-examples-example-actions.d62fda61.js",
-  "docz-examples-example-basic.js": "static/js/docz-examples-example-basic.39f47c64.js",
-  "docz-examples-example-custom-render.js": "static/js/docz-examples-example-custom-render.a2b792cf.js",
-  "docz-examples-example-localization.js": "static/js/docz-examples-example-localization.ba9fa4e4.js",
-  "docz-examples-example-options.js": "static/js/docz-examples-example-options.c08da8a5.js",
-  "docz-examples-example-selection.js": "static/js/docz-examples-example-selection.2bf60376.js",
-  "docz-examples-example-cell-styling.js": "static/js/docz-examples-example-cell-styling.cbcd395a.js",
-  "runtime~app.js": "static/js/runtime~app.1c5e2a74e7d72169c763.js",
-  "index.html": "index.html"
+  "vendors.js": "material-table/static/js/vendors.474c3751.js",
+  "app.js": "material-table/static/js/app.8429b46a.js",
+  "docz-get-started.js": "material-table/static/js/docz-get-started.06f48670.js",
+  "docz-props.js": "material-table/static/js/docz-props.89e491a4.js",
+  "docz-examples-example-actions.js": "material-table/static/js/docz-examples-example-actions.d62fda61.js",
+  "docz-examples-example-basic.js": "material-table/static/js/docz-examples-example-basic.39f47c64.js",
+  "docz-examples-example-cell-styling.js": "material-table/static/js/docz-examples-example-cell-styling.9b52683f.js",
+  "docz-examples-example-custom-render.js": "material-table/static/js/docz-examples-example-custom-render.37f7bfe8.js",
+  "docz-examples-example-localization.js": "material-table/static/js/docz-examples-example-localization.9ae0d3f6.js",
+  "docz-examples-example-options.js": "material-table/static/js/docz-examples-example-options.88075c1e.js",
+  "docz-examples-example-selection.js": "material-table/static/js/docz-examples-example-selection.bf6e51cd.js",
+  "runtime~app.js": "material-table/static/js/runtime~app.7508aa07e62f34ecf8b4.js",
+  "index.html": "material-table/index.html"
 }
