@@ -17,7 +17,7 @@ export interface Action {
 }
 
 export interface Column {
-  cellStyle: any | ((data: any) => any);
+  cellStyle?: any | ((data: any) => any);
   hidden?: boolean;
   field?: string;
   lookup?: object;
