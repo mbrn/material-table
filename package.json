@@ -9,6 +9,7 @@
     "index.d.ts"
   ],
   "scripts": {
+    "start": "npm run docz:dev",
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
     "lint": "eslint src/** --fix",
