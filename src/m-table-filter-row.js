@@ -3,8 +3,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
   TableCell, TableRow, TextField,
-  FormControl, Select, Input, 
-  MenuProps, MenuItem, Checkbox, 
+  FormControl, Select, Input,
+  MenuProps, MenuItem, Checkbox,
   ListItemText, InputAdornment, Icon
 } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
@@ -89,7 +89,7 @@ class MTableFilterRow extends React.Component {
 
 MTableFilterRow.defaultProps = {
   emptyCell: false,
-  columns: [],  
+  columns: []
 };
 
 MTableFilterRow.propTypes = {

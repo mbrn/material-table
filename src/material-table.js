@@ -192,7 +192,7 @@ class MaterialTable extends React.Component {
         {props.options.toolbar &&
           <MTableToolbar
             actions={props.actions}
-            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}            
+            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
             exportButton={props.options.exportButton}
@@ -201,13 +201,13 @@ class MaterialTable extends React.Component {
             searchText={this.state.searchText}
             title={props.title}
             onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
-            onColumnsChanged={columns => this.setState({columns})}    
-            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}        
+            onColumnsChanged={columns => this.setState({columns})}
+            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
           />
         }
         <div style={{overflowX: 'auto'}}>
           <Table>
-            <MTableHeader 
+            <MTableHeader
               localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
               columns={this.state.columns}
               hasSelection={props.options.selection}
@@ -230,7 +230,7 @@ class MaterialTable extends React.Component {
                 });
               }}
             />
-            <MTableBody 
+            <MTableBody
               actions={props.actions}
               renderData={this.state.renderData}
               currentPage={this.state.currentPage}
@@ -290,7 +290,7 @@ MaterialTable.propTypes = {
     icon: PropTypes.string.isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   })),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

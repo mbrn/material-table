@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { 
-  TableHead, TableRow, TableCell, 
+import {
+  TableHead, TableRow, TableCell,
   TableSortLabel, Checkbox, withStyles
 } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
@@ -14,19 +14,19 @@ class MTableHeader extends React.Component {
         <TableRow>
           {this.props.hasSelection
             ? <TableCell padding="checkbox" key="key-selection-column">
-                <Checkbox
-                  indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
-                  checked={this.props.selectedCount === this.props.dataCount}
-                  onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
-                />
-              </TableCell>
+              <Checkbox
+                indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
+                checked={this.props.selectedCount === this.props.dataCount}
+                onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
+              />
+            </TableCell>
             : this.props.showActionsColumn &&
               <TableCell key="key-actions-column">
-                <TableSortLabel>{this.props.localization.actions}</TableSortLabel>              
+                <TableSortLabel>{this.props.localization.actions}</TableSortLabel>
               </TableCell>
           }
           {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map((columnDef, index, arr) => (
-            <TableCell     
+            <TableCell
               key={columnDef.tableData.id}
               numeric={['numeric'].indexOf(columnDef.type) !== -1}
             >
@@ -51,7 +51,6 @@ class MTableHeader extends React.Component {
   }
 }
 
-
 MTableHeader.defaultProps = {
   dataCount: 0,
   hasSelection: false,
@@ -70,7 +69,7 @@ MTableHeader.propTypes = {
   onAllSelected: PropTypes.func,
   onOrderChanged: PropTypes.func,
   orderBy: PropTypes.number,
-  orderDirection: PropTypes.string,
+  orderDirection: PropTypes.string
 };
 
 export default MTableHeader;

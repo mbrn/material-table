@@ -28,8 +28,8 @@ export default class MTableBody extends React.Component {
         {
           renderData.map((data, index) => {
             return (
-              <MTableBodyRow 
-                data={data} 
+              <MTableBodyRow
+                data={data}
                 index={index}
                 key={index}
                 options={this.props.options}
@@ -41,7 +41,7 @@ export default class MTableBody extends React.Component {
             );
           })
         }
-        {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={"empty-" + index} />)}
+        {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={'empty-' + index} />)}
         {emptyRowCount > 0 && <div style={{height: 1}}/>}
       </TableBody>
     );
@@ -63,5 +63,5 @@ MTableBody.propTypes = {
   onRowSelected: PropTypes.func,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
-  renderData: PropTypes.array,
+  renderData: PropTypes.array
 };

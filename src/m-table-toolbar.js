@@ -24,19 +24,19 @@ class MTableToolbar extends React.Component {
 
   exportCsv = () => {
     const columns = this.props.columns
-      .filter(columnDef => { 
+      .filter(columnDef => {
         return !columnDef.hidden && columnDef.field;
-      });      
-    
+      });
+
     const data = this.props.renderData.map(rowData =>
       columns.map(columnDef => rowData[columnDef.field])
     );
 
-    const builder = new CsvBuilder((this.props.title || 'data') + ".csv")
+    const builder = new CsvBuilder((this.props.title || 'data') + '.csv') // eslint-disable-line no-unused-vars
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
       .exportFile();
-    
+
     this.setState({exportButtonAnchorEl: null});
   }
 
@@ -70,7 +70,7 @@ class MTableToolbar extends React.Component {
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
               {
-                this.props.columns.map((col, index) => {                  
+                this.props.columns.map((col, index) => {
                   return (
                     <MenuItem key={col.tableData.id}>
                       <FormControlLabel
@@ -93,7 +93,7 @@ class MTableToolbar extends React.Component {
             </Menu>
           </span>
         }
-        {this.props.exportButton && 
+        {this.props.exportButton &&
           <span>
             <Tooltip title="Export">
               <IconButton
@@ -111,7 +111,7 @@ class MTableToolbar extends React.Component {
                 Export as CSV
               </MenuItem>
             </Menu>
-          </span>            
+          </span>
 
         }
         <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
@@ -157,7 +157,7 @@ MTableToolbar.defaultProps = {
   search: true,
   searchText: '',
   selectedRows: [],
-  title: 'No Title!',
+  title: 'No Title!'
 };
 
 MTableToolbar.propTypes = {
@@ -170,7 +170,7 @@ MTableToolbar.propTypes = {
   search: PropTypes.bool.isRequired,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 const styles = theme => ({

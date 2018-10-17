@@ -38,10 +38,9 @@ export default class MTableCell extends React.Component {
 
   render() {
     let cellStyle = {};
-    if(typeof this.props.columnDef.cellStyle === "function" ) {
+    if (typeof this.props.columnDef.cellStyle === 'function') {
       cellStyle = Object.assign(cellStyle, this.props.columnDef.cellStyle(this.props.value));
-    }
-    else {
+    } else {
       cellStyle = Object.assign(cellStyle, this.props.columnDef.cellStyle);
     }
 
