@@ -4,10 +4,21 @@ import PropTypes from 'prop-types';
 import {
   TableCell, TableRow, TextField,
   FormControl, Select, Input,
-  MenuProps, MenuItem, Checkbox,
-  ListItemText, InputAdornment, Icon
+  MenuItem, Checkbox, ListItemText,
+  InputAdornment, Icon
 } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 class MTableFilterRow extends React.Component {
   getComponentForColumn(columnDef) {
