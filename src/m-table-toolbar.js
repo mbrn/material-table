@@ -9,6 +9,7 @@ import {
   Typography, withStyles, Checkbox,
   FormControlLabel, TextField, InputAdornment
 } from '@material-ui/core';
+import { CsvBuilder } from 'filefy';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 /* eslint-enable no-unused-vars */
 
@@ -16,8 +17,27 @@ class MTableToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      columnsButtonAnchorEl: null
+      columnsButtonAnchorEl: null,
+      exportButtonAnchorEl: null
     };
+  }
+
+  exportCsv = () => {
+    const columns = this.props.columns
+      .filter(columnDef => { 
+        return !columnDef.hidden && columnDef.field;
+      });      
+    
+    const data = this.props.renderData.map(rowData =>
+      columns.map(columnDef => rowData[columnDef.field])
+    );
+
+    const builder = new CsvBuilder((this.props.title || 'data') + ".csv")
+      .setColumns(columns.map(columnDef => columnDef.title))
+      .addRows(data)
+      .exportFile();
+    
+    this.setState({exportButtonAnchorEl: null});
   }
 
   renderDefaultActions() {
@@ -72,6 +92,27 @@ class MTableToolbar extends React.Component {
               }
             </Menu>
           </span>
+        }
+        {this.props.exportButton && 
+          <span>
+            <Tooltip title="Export">
+              <IconButton
+                onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget }) }
+                aria-label="Show Columns">
+                <Icon>save_alt</Icon>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={this.state.exportButtonAnchorEl}
+              open={Boolean(this.state.exportButtonAnchorEl)}
+              onClose={() => this.setState({ exportButtonAnchorEl: null })}
+            >
+              <MenuItem key="export-csv" onClick={this.exportCsv}>
+                Export as CSV
+              </MenuItem>
+            </Menu>
+          </span>            
+
         }
         <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
       </div>

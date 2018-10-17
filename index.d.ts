@@ -28,6 +28,7 @@ export interface Column {
 
 export interface Options {
   columnsButton?: boolean;
+  exportButton?: boolean;
   filtering?: boolean;
   paging?: boolean;
   pageSize?: number;

@@ -192,9 +192,11 @@ class MaterialTable extends React.Component {
         {props.options.toolbar &&
           <MTableToolbar
             actions={props.actions}
-            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
+            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}            
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
+            exportButton={props.options.exportButton}
+            renderData={this.state.renderData}
             search={props.options.search}
             searchText={this.state.searchText}
             title={props.title}
@@ -268,6 +270,7 @@ MaterialTable.defaultProps = {
   title: 'Table Title',
   options: {
     columnsButton: false,
+    exportButton: false,
     filtering: false,
     paging: true,
     pageSize: 5,
@@ -302,6 +305,7 @@ MaterialTable.propTypes = {
   title: PropTypes.string,
   options: PropTypes.shape({
     columnsButton: PropTypes.bool,
+    exportButton: PropTypes.bool,
     filtering: PropTypes.bool,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
