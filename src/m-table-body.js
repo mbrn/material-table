@@ -42,7 +42,7 @@ export default class MTableBody extends React.Component {
           })
         }
         {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={'empty-' + index} />)}
-        {emptyRowCount > 0 && <div style={{height: 1}}/>}
+        {emptyRowCount > 0 && <TableRow style={{height: 1}} key={'empty-last1'} />}
       </TableBody>
     );
   }

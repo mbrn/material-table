@@ -285,13 +285,14 @@ MaterialTable.defaultProps = {
   }
 };
 
+
 MaterialTable.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.shape({
+  actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
     icon: PropTypes.string.isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired
-  })),
+  })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     hidden: PropTypes.bool,

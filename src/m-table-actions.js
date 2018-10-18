@@ -5,7 +5,7 @@ import { Icon, IconButton, Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 class MTableActions extends React.Component {
-  renderButton(action) {
+  renderButton(action, index) {
     if (typeof action === 'function') {
       action = action(this.props.data);
       if (!action) {
@@ -15,7 +15,7 @@ class MTableActions extends React.Component {
 
     const button = (
       <IconButton
-        key={action.icon}
+        key={action.icon + "" + index}
         disabled={action.disabled}
         onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
       >
@@ -23,8 +23,8 @@ class MTableActions extends React.Component {
       </IconButton>
     );
 
-    if (action.tooltip) {
-      return <Tooltip title={action.tooltip} key={action.tooltip}>{button}</Tooltip>;
+    if (action.tooltip && !action.disabled) {
+      return <Tooltip title={action.tooltip} key={action.tooltip + "" + index}>{button}</Tooltip>;
     } else {
       return button;
     }
@@ -32,7 +32,7 @@ class MTableActions extends React.Component {
 
   render() {
     if (this.props.actions) {
-      return this.props.actions.map(action => (this.renderButton(action)));
+      return this.props.actions.map((action, index) => (this.renderButton(action, index)));
     }
 
     return null;

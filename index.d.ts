@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface MaterialTableProps {
-  actions?: Action[];
+  actions?: (Action | ((rowData:any) => Action)) [];
   columns: Column[];
   data: object;
   title: string;
