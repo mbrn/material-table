@@ -50,12 +50,14 @@
     "eslint-plugin-standard": "4.0.0",
     "buble": "0.19.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@material-ui/core": "^3.1.0",
-    "classnames": "^2.2.6",
-    "filefy": "^0.1.2",
-    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
+  },
+  "dependencies": {    
+    "classnames": "^2.2.6",
+    "filefy": "^0.1.2",
+    "prop-types": "^15.6.2"  
   }
 }
