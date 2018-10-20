@@ -20,11 +20,11 @@ To install material-table with `yarn`:
 
 
 > Add material icons url to your html:
-```html 
+```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 ```
 
-## Usage 
+## Usage
 
 ```js
 import React, { Component } from 'react';
@@ -56,6 +56,10 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 ## Documentation
 
 You can access all examples and documentation from [__docs site__](https://mbrn.github.io/material-table/)
+
+## Contributing
+
+We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 ## Licence
 
