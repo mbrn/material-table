@@ -1,0 +1,32 @@
+---
+name: Date Example
+order: 8
+menu: Examples
+---
+
+import { Playground } from 'docz'
+import MaterialTable from '../../src/material-table'
+
+# Date Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Birth Date', field: 'birthDate', type: 'date'},
+      {title: 'Birth Time', field: 'birthTime', type: 'time'}
+    ]}
+    data={[
+      {name: 'Baldi', birthDate: '08/13/1996', birthTime: '02:00'},
+      {name: 'Luiz', birthDate: '10/20/2018', birthTime: '17:00'}
+    ]}
+    title="Date Example"
+    options={{
+      filtering: true
+    }}
+  />
+</Playground>
+
+
+
+
