@@ -10,6 +10,8 @@ import {
   TableFooter, TablePagination,
   withStyles
 } from '@material-ui/core';
+import isEqualDate from 'date-fns/isEqual';
+import formatDate from 'date-fns/format';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -72,25 +74,62 @@ class MaterialTable extends React.Component {
 
     // App filter
     if (this.state) {
-      this.state.columns.filter(columnDef => { return columnDef.tableData.filterValue }).forEach(columnDef => {
-        if (columnDef.lookup) {
+      this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
+        const { lookup, type, tableData, field } = columnDef;
+
+        if (lookup) {
           renderData = renderData.filter(row => {
-            return !columnDef.tableData.filterValue ||
-              columnDef.tableData.filterValue.length === 0 ||
-              columnDef.tableData.filterValue.indexOf(row[columnDef.field] && row[columnDef.field].toString()) > -1;
+            return !tableData.filterValue ||
+              tableData.filterValue.length === 0 ||
+              tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
           });
-        } else if (columnDef.type === 'numeric') {
+        } else if (type === 'numeric') {
           renderData = renderData.filter(row => {
-            return row[columnDef.field] === columnDef.tableData.filterValue;
+            return row[field] === tableData.filterValue;
           });
-        } else if (columnDef.type === 'boolean' && columnDef.tableData.filterValue) {
+        } else if (type === 'boolean' && tableData.filterValue) {
           renderData = renderData.filter(row => {
-            return (row[columnDef.field] && columnDef.tableData.filterValue === 'checked') ||
-              (!row[columnDef.field] && columnDef.tableData.filterValue === 'unchecked');
+            return (row[field] && tableData.filterValue === 'checked') ||
+              (!row[field] && tableData.filterValue === 'unchecked');
           });
+        } else if (['date', 'datetime'].includes(type)) {
+          renderData = renderData.filter(row => {
+            const currentDate = row[field] ? new Date(row[field]) : null;
+
+            if (currentDate && currentDate.toString() !== 'Invalid Date') {
+              const selectedDate = tableData.filterValue;
+              let currentDateToCompare = '';
+              let selectedDateToCompare = '';
+
+              if (type === 'date') {
+                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
+                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
+              } else if (type === 'datetime') {
+                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
+                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
+              }
+
+              return currentDateToCompare === selectedDateToCompare;
+            }
+
+            return true;
+          });
+        } else if (type === 'time') {
+          renderData = renderData.filter(row => {
+            const currentHour = row[field] || null;
+
+            if (currentHour) {
+              const selectedHour = tableData.filterValue;
+              const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
+
+              return currentHour === currentHourToCompare;
+            }
+
+            return true;
+          })
         } else {
           renderData = renderData.filter(row => {
-            return row[columnDef.field] && row[columnDef.field].toString().toUpperCase().includes(columnDef.tableData.filterValue.toUpperCase());
+            return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
           });
         }
       });
