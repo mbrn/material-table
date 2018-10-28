@@ -11,6 +11,8 @@ Datatable for React based on https://material-ui.com/api/table/ with additional 
 [__DEMO AND DOCUMENTATION__](https://mbrn.github.io/material-table/)
 
 ## Installation
+
+#### 1.Install package
 To install material-table with `npm`:
 
     npm install material-table --save
@@ -19,8 +21,8 @@ To install material-table with `yarn`:
 
     yarn add material-table
 
+#### 2.Add material icons to your html
 
-> Add material icons url to your html:
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 ```
