@@ -15,7 +15,7 @@ import MaterialTable from '../../src/material-table'
       {title: 'Name', render: rowData => rowData.name + " " + rowData.surname },      
       {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
       {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},     
-      {title: 'Score', render: rowData => {
+      {title: 'Score', field: 'successScore', render: rowData => {
         const score = rowData.successScore + '%';
         const color = rowData.successScore > 70 ? '#4CAF50' : '#f44336';
         return (          
