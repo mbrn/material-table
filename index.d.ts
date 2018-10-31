@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IconProps } from '@material-ui/core/Icon';
 
 export interface MaterialTableProps {
   actions?: (Action | ((rowData:any) => Action)) [];
@@ -14,6 +15,7 @@ export interface Action {
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
+  iconProps: IconProps
 }
 
 export interface Column {

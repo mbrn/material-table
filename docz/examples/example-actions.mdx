@@ -6,6 +6,7 @@ menu: Examples
 
 import { Playground } from 'docz'
 import MaterialTable from '../../src/material-table'
+import red from '@material-ui/core/colors/red';
 
 # Actions Example
 
@@ -33,7 +34,19 @@ import MaterialTable from '../../src/material-table'
         tooltip: 'Show User Info',
         disabled: rowData.birthYear >= 2000,
         onClick: (event, rowData) => { alert('You clicked user ' + rowData.name)}
-      })
+      }),
+      {
+        icon: 'account_circle',
+        tooltip: 'Show User Info',
+        onClick: (event, rowData) => { alert('You clicked user ' + rowData.name)},
+        iconProps: {
+          style:{
+            fontSize: 30,
+            color: 'green'
+          }
+        }
+
+      },
     ]}
   />
 </Playground>

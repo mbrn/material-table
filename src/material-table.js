@@ -330,7 +330,8 @@ MaterialTable.propTypes = {
     icon: PropTypes.string.isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    iconProps: PropTypes.object
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
