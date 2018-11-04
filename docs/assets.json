@@ -1,5 +1,5 @@
 {
-  "vendors.js": "./static/js/vendors.3b57be77.js",
+  "vendors.js": "./static/js/vendors.6688ab82.js",
   "app.js": "./static/js/app.be064171.js",
   "docz-contributing.js": "./static/js/docz-contributing.9d3238ef.js",
   "docz-get-started.js": "./static/js/docz-get-started.db82c765.js",
@@ -13,6 +13,6 @@
   "docz-examples-example-localization.js": "./static/js/docz-examples-example-localization.d650e97e.js",
   "docz-examples-example-options.js": "./static/js/docz-examples-example-options.41296229.js",
   "docz-examples-example-selection.js": "./static/js/docz-examples-example-selection.d47dbc82.js",
-  "runtime~app.js": "./static/js/runtime~app.45b1a0e32f3722d3a752.js",
+  "runtime~app.js": "./static/js/runtime~app.dbfdae89b5a5f04d2006.js",
   "index.html": "./index.html"
 }

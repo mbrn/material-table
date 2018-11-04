@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 
 export default class MTableCell extends React.Component {
   getRenderValue() {
-    if (this.props.columnDef.type === 'boolean') {
+    if(this.props.columnDef.render) {
+      return this.props.columnDef.render(this.props.rowData)
+    }
+    else if (this.props.columnDef.type === 'boolean') {
       const style = {textAlign: 'center', width: '48px'};
       if (this.props.value) {
         return <Icon style={style}>check</Icon>;

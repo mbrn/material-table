@@ -143,10 +143,7 @@ class MaterialTable extends React.Component {
           .filter(columnDef => { return !columnDef.hidden })
           .forEach(columnDef => {
             if(columnDef.field) {
-              let value = row[columnDef.field];
-              if(columnDef.lookup) {
-                value = columnDef.lookup[value];
-              }
+              const value = this.getFieldValue(row, columnDef);
               if (value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
                 result = true;
                 return;
@@ -172,16 +169,12 @@ class MaterialTable extends React.Component {
   }
 
   getFieldValue(rowData, columnDef) {
-    if (columnDef.render) {
-      return columnDef.render(rowData);
-    } else {
-      let value = rowData[columnDef.field];
-      if (columnDef.lookup) {
-        value = columnDef.lookup[value];
-      }
-
-      return value;
+    let value = rowData[columnDef.field];
+    if (columnDef.lookup) {
+      value = columnDef.lookup[value];
     }
+
+    return value;
   }
 
   sort(a, b, type) {

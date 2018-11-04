@@ -27,7 +27,7 @@ export default class MTableBodyRow extends React.Component {
         }
         {this.props.columns.filter(columnDef => { return !columnDef.hidden }).map(columnDef => {
           const value = this.props.getFieldValue(this.props.data, columnDef);
-          return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id}/>;
+          return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data}/>;
         })}
       </TableRow>
     );
