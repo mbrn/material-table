@@ -144,7 +144,7 @@ class MaterialTable extends React.Component {
           .forEach(columnDef => {
             if(columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
-              if (value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
+              if (value && value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
                 result = true;
                 return;
               }
