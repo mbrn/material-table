@@ -19,7 +19,7 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-    this.state = Object.assign({
+    this.state = {
       columns: [],
       currentPage: 0,
       data: [],
@@ -28,8 +28,9 @@ class MaterialTable extends React.Component {
       searchText: '',
       selectedCount: 0,
       orderBy: -1,
-      orderDirection: ''
-    }, this.getDataAndColumns(calculatedProps));
+      orderDirection: '',
+      ...this.getDataAndColumns(calculatedProps)
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +55,7 @@ class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = {...(props || this.props)};
-    calculatedProps.options = Object.assign(MaterialTable.defaultProps.options, calculatedProps.options);
+    calculatedProps.options = {...MaterialTable.defaultProps.options, ...calculatedProps.options};
 
     return calculatedProps;
   }
@@ -240,13 +241,13 @@ class MaterialTable extends React.Component {
             title={props.title}
             onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
             onColumnsChanged={columns => this.setState({columns})}
-            localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
+            localization={{...MaterialTable.defaultProps.localization, ...this.props.localization}}
           />
         }
         <div style={{overflowX: 'auto'}}>
           <Table>
             <MTableHeader
-              localization={Object.assign(MaterialTable.defaultProps.localization, this.props.localization)}
+              localization={{...MaterialTable.defaultProps.localization, ...this.props.localization}}
               columns={this.state.columns}
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
