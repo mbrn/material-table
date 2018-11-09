@@ -15,7 +15,7 @@ export interface Action {
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
-  iconProps: IconProps
+  iconProps?: IconProps
 }
 
 export interface Column {
