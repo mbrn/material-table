@@ -32,11 +32,11 @@ class MTableHeader extends React.Component {
             >
               {columnDef.sort !== false
                 ? <TableSortLabel
-                  active={this.props.orderBy === index}
+                  active={this.props.orderBy === columnDef.tableData.id}
                   direction={this.props.orderDirection || 'asc'}
                   onClick={() => {
-                    const orderDirection = index !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
-                    this.props.onOrderChanged(index, orderDirection);
+                    const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
+                    this.props.onOrderChanged(columnDef.tableData.id, orderDirection);
                   }}
                 >
                   {columnDef.title}

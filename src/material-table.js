@@ -158,7 +158,7 @@ class MaterialTable extends React.Component {
 
     // Apply Sorting
     if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-      const columnDef = this.state.columns[this.state.orderBy];
+      const columnDef = this.state.columns.find(_ => _.tableData.id == this.state.orderBy);
       renderData = renderData.sort(
         this.state.orderDirection === 'desc'
           ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
