@@ -51,7 +51,7 @@ export default class MTableCell extends React.Component {
       <TableCell style={cellStyle}
         numeric={['numeric'].indexOf(this.props.columnDef.type) !== -1}
       >
-        {this.getRenderValue() || ''}
+        {this.getRenderValue()}
       </TableCell>
     );
   }
