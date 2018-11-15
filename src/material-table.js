@@ -186,6 +186,12 @@ class MaterialTable extends React.Component {
     }
   }
 
+  onSelectionChange = () => {
+    if(this.props.onSelectionChange) {
+      const selectedRows = this.state.data.filter(row => row.tableData.checked);
+      this.props.onSelectionChange(selectedRows);
+    }
+  }
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -261,7 +267,7 @@ class MaterialTable extends React.Component {
                   return row;
                 });
                 const selectedCount = checked ? data.length : 0;
-                this.setState({renderData: data, selectedCount});
+                this.setState({renderData: data, selectedCount}, () => this.onSelectionChange());
               }}
               onOrderChanged={(orderBy, orderDirection) => {
                 this.setState({orderBy, orderDirection, currentPage: 0}, () => {
@@ -290,7 +296,7 @@ class MaterialTable extends React.Component {
                 this.setState(state => ({
                   data: data,
                   selectedCount: state.selectedCount + (checked ? 1 : -1)
-                }));
+                }), () => this.onSelectionChange());
               }}
             />
           </Table>
@@ -358,7 +364,8 @@ MaterialTable.propTypes = {
   localization: PropTypes.shape({
     actions: PropTypes.string,
     nRowsSelected: PropTypes.string
-  })
+  }),
+  onSelectionChange: PropTypes.func
 };
 
 export default MaterialTable;

@@ -136,9 +136,7 @@ class MTableToolbar extends React.Component {
     return (
       <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0})}>
         <div className={classes.title}>
-          <Typography variant="title">
-            {title}
-          </Typography>
+          <Typography variant="h6">{title}</Typography>
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>

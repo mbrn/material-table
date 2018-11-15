@@ -8,6 +8,7 @@ export interface MaterialTableProps {
   title: string;
   options?: Options;
   localization?: Localization;
+  onSelectionChange?: ([]) => void;
 }
 
 export interface Action {
