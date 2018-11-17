@@ -29,6 +29,7 @@ class MaterialTable extends React.Component {
       selectedCount: 0,
       orderBy: -1,
       orderDirection: '',
+      filterSelectionChecked: false,
       ...this.getDataAndColumns(calculatedProps)
     };
   }
@@ -75,6 +76,11 @@ class MaterialTable extends React.Component {
 
     // App filter
     if (this.state) {
+      renderData = renderData.filter(row => {
+        if (this.state.filterSelectionChecked) return row.tableData.checked;
+        return row.tableData;
+      });
+
       this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
         const { lookup, type, tableData, field } = columnDef;
 
@@ -286,7 +292,14 @@ class MaterialTable extends React.Component {
               onFilterChanged={(columnId, value) => {
                 const columns = this.state.columns;
                 columns[columnId].tableData.filterValue = value;
-                this.setState({columns}, () => {
+                this.setState({ columns }, () => {
+                  this.setData();
+                });
+              }}
+              onFilterSelectionChanged={(event) => {
+                const filterSelectionChecked = event.target.checked;
+                const columns = this.state.columns;
+                this.setState({ columns, filterSelectionChecked }, () => {
                   this.setData();
                 });
               }}
@@ -297,6 +310,7 @@ class MaterialTable extends React.Component {
                   data: data,
                   selectedCount: state.selectedCount + (checked ? 1 : -1)
                 }), () => this.onSelectionChange());
+                this.setData();
               }}
             />
           </Table>
