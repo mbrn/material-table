@@ -23,6 +23,8 @@ export default class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0)}
             onFilterChanged={this.props.onFilterChanged}
+            selection={this.props.options.selection}
+            onFilterSelectionChanged={this.props.onFilterSelectionChanged}
           />
         }
         {
@@ -52,7 +54,8 @@ MTableBody.defaultProps = {
   actions: [],
   currentPage: 0,
   pageSize: 5,
-  renderData: []
+  renderData: [],
+  selection: false
 };
 
 MTableBody.propTypes = {
@@ -63,5 +66,7 @@ MTableBody.propTypes = {
   onRowSelected: PropTypes.func,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
-  renderData: PropTypes.array
+  renderData: PropTypes.array,
+  selection: PropTypes.bool.isRequired,
+  onFilterSelectionChanged: PropTypes.func.isRequired
 };

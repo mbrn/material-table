@@ -136,7 +136,10 @@ class MTableFilterRow extends React.Component {
   render() {
     return (
       <TableRow style={{height: 10}}>
-        {this.props.emptyCell && <TableCell/>}
+        {!this.props.selection && this.props.emptyCell && <TableCell />}
+        {this.props.selection && <TableCell style={{ padding: '0 12px' }}>
+          <Checkbox onChange={this.props.onFilterSelectionChanged} />
+        </TableCell>}
         {this.props.columns.map(columnDef => (
           <TableCell key={columnDef.tableData.id}>
             {this.getComponentForColumn(columnDef)}
@@ -149,13 +152,16 @@ class MTableFilterRow extends React.Component {
 
 MTableFilterRow.defaultProps = {
   emptyCell: false,
-  columns: []
+  columns: [],
+  selection: false
 };
 
 MTableFilterRow.propTypes = {
   emptyCell: PropTypes.bool,
   columns: PropTypes.array.isRequired,
-  onFilterChanged: PropTypes.func.isRequired
+  onFilterChanged: PropTypes.func.isRequired,
+  selection: PropTypes.bool.isRequired,
+  onFilterSelectionChanged: PropTypes.func.isRequired
 };
 
 export default MTableFilterRow;
