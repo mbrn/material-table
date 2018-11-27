@@ -39,6 +39,7 @@ export interface Options {
   search?: boolean;
   selection?: boolean;
   toolbar?: boolean;
+  actionsColumnIndex?:number;
 }
 
 export interface Localization {
