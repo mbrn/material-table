@@ -7,6 +7,15 @@ import { Checkbox, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBodyRow extends React.Component {
+  renderColumns(){
+      const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
+      .map((columnDef) => {
+        const value = this.props.getFieldValue(this.props.data, columnDef);
+        return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data} />;
+      });
+      return mapArr;
+  }
+
   renderActions() {
     return (
       <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} key="key-actions-column">
@@ -15,22 +24,6 @@ export default class MTableBodyRow extends React.Component {
         </div>
       </TableCell>
     );
-  }
-  renderDataFields() {
-    const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
-      .map((columnDef) => {
-        const value = this.props.getFieldValue(this.props.data, columnDef);
-        return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data} />;
-      });
-    if (this.props.actions &&
-        this.props.actions.filter(a => (!a.isFreeAction)).length > 0) {
-        if(this.props.options.actionsColumnIndex > 0){
-           mapArr.splice(this.props.options.actionsColumnIndex, 0, this.renderActions());
-        }else if(this.props.options.actionsColumnIndex === -1){
-           mapArr.push(this.renderActions());
-        }     
-    }
-    return mapArr;
   }
   renderCheckbox() {
     return (
@@ -44,16 +37,21 @@ export default class MTableBodyRow extends React.Component {
     );
   }
   render() {
+    const columnArr = this.renderColumns();
+    if(this.props.options.selection){
+      columnArr.splice(0,0,this.renderCheckbox());
+    }else if(this.props.actions &&
+             this.props.actions.filter(a => (!a.isFreeAction)).length > 0){
+          if(this.props.options.actionsColumnIndex === -1){
+            columnArr.push(this.renderActions());
+          }else if(this.props.options.actionsColumnIndex >= 0){
+            columnArr.splice(this.props.options.actionsColumnIndex,0,this.renderActions());
+          }
+
+    }
     return (
       <TableRow selected={this.props.index % 2 === 0}>
-        {   this.props.options.selection
-          ? this.renderCheckbox()
-          : (this.props.options.actionsColumnIndex === 0 &&
-            this.props.actions &&
-            this.props.actions.filter(a => (!a.isFreeAction)).length > 0) &&
-            this.renderActions()
-        }
-        {this.renderDataFields()}
+       {columnArr}
       </TableRow>
     );
   }

@@ -9,14 +9,7 @@ import {
 
 class MTableHeader extends React.Component {
 
-  renderActionsHeader() {
-    return (
-      <TableCell key="key-actions-column">
-        <TableSortLabel>{this.props.localization.actions}</TableSortLabel>
-      </TableCell>
-    );
-  }
-  renderDataFieldsHeader() {
+  renderHeader(){
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => (
         <TableCell
@@ -38,14 +31,15 @@ class MTableHeader extends React.Component {
           }
         </TableCell>
       ));
-    if (this.props.showActionsColumn) {
-        if(this.props.actionsHeaderIndex > 0){
-          mapArr.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
-        }else if(this.props.actionsHeaderIndex === -1){
-          mapArr.push(this.renderActionsHeader());
-        }    
-    }
-    return mapArr;
+      return mapArr;
+  }
+  
+  renderActionsHeader() {
+    return (
+      <TableCell key="key-actions-column">
+        <TableSortLabel>{this.props.localization.actions}</TableSortLabel>
+      </TableCell>
+    );
   }
   renderCheckBox() {
     return (
@@ -59,16 +53,21 @@ class MTableHeader extends React.Component {
     );
   }
   render() {
+    const headerArr= this.renderHeader();
+
+    if(this.props.hasSelection){
+      headerArr.splice(0,0,this.renderCheckBox());
+    }else if (this.props.showActionsColumn) {
+          if(this.props.actionsHeaderIndex >= 0){
+            headerArr.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
+          }else if(this.props.actionsHeaderIndex === -1){
+            headerArr.push(this.renderActionsHeader());
+          }
+    }    
     return (
       <TableHead>
         <TableRow>
-           {  this.props.hasSelection
-            ? this.renderCheckBox()
-            : this.props.showActionsColumn &&
-              this.props.actionsHeaderIndex === 0 &&
-              this.renderActionsHeader()
-           }
-           {  this.renderDataFieldsHeader()}
+           {headerArr}
         </TableRow>
       </TableHead>
     );
