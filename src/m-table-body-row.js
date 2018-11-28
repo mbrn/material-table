@@ -25,7 +25,7 @@ export default class MTableBodyRow extends React.Component {
       </TableCell>
     );
   }
-  renderCheckbox() {
+  renderSelectionColumn() {
     return (
       <TableCell padding="checkbox" key="key-selection-column">
         <Checkbox
@@ -37,21 +37,21 @@ export default class MTableBodyRow extends React.Component {
     );
   }
   render() {
-    const columnArr = this.renderColumns();
+    const columns = this.renderColumns();
     if(this.props.options.selection){
-      columnArr.splice(0,0,this.renderCheckbox());
+      columns.splice(0,0,this.renderSelectionColumn());
     }else if(this.props.actions &&
              this.props.actions.filter(a => (!a.isFreeAction)).length > 0){
           if(this.props.options.actionsColumnIndex === -1){
-            columnArr.push(this.renderActions());
+            columns.push(this.renderActions());
           }else if(this.props.options.actionsColumnIndex >= 0){
-            columnArr.splice(this.props.options.actionsColumnIndex,0,this.renderActions());
+            columns.splice(this.props.options.actionsColumnIndex,0,this.renderActions());
           }
 
     }
     return (
       <TableRow selected={this.props.index % 2 === 0}>
-       {columnArr}
+       {columns}
       </TableRow>
     );
   }

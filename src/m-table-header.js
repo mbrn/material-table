@@ -41,7 +41,7 @@ class MTableHeader extends React.Component {
       </TableCell>
     );
   }
-  renderCheckBox() {
+  renderSelectionHeader() {
     return (
       <TableCell padding="checkbox" key="key-selection-column">
         <Checkbox
@@ -53,21 +53,21 @@ class MTableHeader extends React.Component {
     );
   }
   render() {
-    const headerArr= this.renderHeader();
+    const headers= this.renderHeader();
 
     if(this.props.hasSelection){
-      headerArr.splice(0,0,this.renderCheckBox());
+      headers.splice(0,0,this.renderSelectionHeader());
     }else if (this.props.showActionsColumn) {
           if(this.props.actionsHeaderIndex >= 0){
-            headerArr.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
+            headers.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
           }else if(this.props.actionsHeaderIndex === -1){
-            headerArr.push(this.renderActionsHeader());
+            headers.push(this.renderActionsHeader());
           }
     }    
     return (
       <TableHead>
         <TableRow>
-           {headerArr}
+           {headers}
         </TableRow>
       </TableHead>
     );

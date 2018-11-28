@@ -30,6 +30,7 @@ export interface Column {
 }
 
 export interface Options {
+  actionsColumnIndex?:number;
   columnsButton?: boolean;
   exportButton?: boolean;
   filtering?: boolean;
@@ -39,7 +40,6 @@ export interface Options {
   search?: boolean;
   selection?: boolean;
   toolbar?: boolean;
-  actionsColumnIndex?:number;
 }
 
 export interface Localization {

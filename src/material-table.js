@@ -329,6 +329,7 @@ MaterialTable.defaultProps = {
   data: [],
   title: 'Table Title',
   options: {
+    actionsColumnIndex:0,
     columnsButton: false,
     exportButton: false,
     filtering: false,
@@ -337,8 +338,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
-    toolbar: true,
-    actionsColumnIndex:0,
+    toolbar: true, 
   },
   localization: {
     actions: 'Actions',
@@ -367,6 +367,7 @@ MaterialTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
   options: PropTypes.shape({
+    actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
     exportButton: PropTypes.bool,
     filtering: PropTypes.bool,
@@ -376,7 +377,6 @@ MaterialTable.propTypes = {
     search: PropTypes.bool,
     selection: PropTypes.bool,
     toolbar: PropTypes.bool,
-    actionsColumnIndex: PropTypes.number,
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,
