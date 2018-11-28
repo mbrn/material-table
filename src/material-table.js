@@ -280,6 +280,7 @@ class MaterialTable extends React.Component {
                   this.setData();
                 });
               }}
+              actionsHeaderIndex={props.options.actionsColumnIndex}
             />
             <MTableBody
               actions={props.actions}
@@ -328,6 +329,7 @@ MaterialTable.defaultProps = {
   data: [],
   title: 'Table Title',
   options: {
+    actionsColumnIndex:0,
     columnsButton: false,
     exportButton: false,
     filtering: false,
@@ -336,7 +338,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
-    toolbar: true
+    toolbar: true, 
   },
   localization: {
     actions: 'Actions',
@@ -365,6 +367,7 @@ MaterialTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
   options: PropTypes.shape({
+    actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
     exportButton: PropTypes.bool,
     filtering: PropTypes.bool,
@@ -373,7 +376,7 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,

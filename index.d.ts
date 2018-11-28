@@ -30,6 +30,7 @@ export interface Column {
 }
 
 export interface Options {
+  actionsColumnIndex?:number;
   columnsButton?: boolean;
   exportButton?: boolean;
   filtering?: boolean;
