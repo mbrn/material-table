@@ -8,8 +8,7 @@ import {
 /* eslint-enable no-unused-vars */
 
 class MTableHeader extends React.Component {
-
-  renderHeader(){
+  renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => (
         <TableCell
@@ -31,9 +30,9 @@ class MTableHeader extends React.Component {
           }
         </TableCell>
       ));
-      return mapArr;
+    return mapArr;
   }
-  
+
   renderActionsHeader() {
     return (
       <TableCell key="key-actions-column">
@@ -53,21 +52,21 @@ class MTableHeader extends React.Component {
     );
   }
   render() {
-    const headers= this.renderHeader();
+    const headers = this.renderHeader();
 
-    if(this.props.hasSelection){
-      headers.splice(0,0,this.renderSelectionHeader());
-    }else if (this.props.showActionsColumn) {
-          if(this.props.actionsHeaderIndex >= 0){
-            headers.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
-          }else if(this.props.actionsHeaderIndex === -1){
-            headers.push(this.renderActionsHeader());
-          }
-    }    
+    if (this.props.hasSelection) {
+      headers.splice(0, 0, this.renderSelectionHeader());
+    } else if (this.props.showActionsColumn) {
+      if (this.props.actionsHeaderIndex >= 0) {
+        headers.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
+      } else if (this.props.actionsHeaderIndex === -1) {
+        headers.push(this.renderActionsHeader());
+      }
+    }
     return (
       <TableHead>
         <TableRow>
-           {headers}
+          {headers}
         </TableRow>
       </TableHead>
     );
@@ -81,7 +80,7 @@ MTableHeader.defaultProps = {
   localization: {},
   orderBy: undefined,
   orderDirection: 'asc',
-  actionsHeaderIndex: 0,
+  actionsHeaderIndex: 0
 };
 
 MTableHeader.propTypes = {
@@ -94,7 +93,7 @@ MTableHeader.propTypes = {
   onOrderChanged: PropTypes.func,
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
-  actionsHeaderIndex: PropTypes.number,
+  actionsHeaderIndex: PropTypes.number
 };
 
 export default MTableHeader;
