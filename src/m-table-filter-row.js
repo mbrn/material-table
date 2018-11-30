@@ -26,7 +26,7 @@ const MenuProps = {
 
 class MTableFilterRow extends React.Component {
   renderLookupFilter = (columnDef) => (
-    <FormControl style={{width: '100%'}}>
+    <FormControl style={{ width: '100%' }}>
       <Select
         multiple
         value={columnDef.tableData.filterValue || []}
@@ -68,7 +68,7 @@ class MTableFilterRow extends React.Component {
 
   renderDefaultFilter = (columnDef) => (
     <TextField
-      style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
+      style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
       type={columnDef.type === 'numeric' ? 'number' : 'text'}
       value={columnDef.tableData.filterValue}
       onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
@@ -84,7 +84,7 @@ class MTableFilterRow extends React.Component {
 
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
-    const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date)
+    const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
 
     if (columnDef.type === 'date') {
       dateInputElement = (
@@ -135,7 +135,7 @@ class MTableFilterRow extends React.Component {
 
   render() {
     return (
-      <TableRow style={{height: 10}}>
+      <TableRow style={{ height: 10 }}>
         {!this.props.selection && this.props.emptyCell && <TableCell />}
         {this.props.selection && <TableCell style={{ padding: '0 12px' }}>
           <Checkbox onChange={this.props.onFilterSelectionChanged} />

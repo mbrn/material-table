@@ -6,11 +6,10 @@ import PropTypes from 'prop-types';
 
 export default class MTableCell extends React.Component {
   getRenderValue() {
-    if(this.props.columnDef.render) {
-      return this.props.columnDef.render(this.props.rowData)
-    }
-    else if (this.props.columnDef.type === 'boolean') {
-      const style = {textAlign: 'center', width: '48px'};
+    if (this.props.columnDef.render) {
+      return this.props.columnDef.render(this.props.rowData);
+    } else if (this.props.columnDef.type === 'boolean') {
+      const style = { textAlign: 'center', width: '48px' };
       if (this.props.value) {
         return <Icon style={style}>check</Icon>;
       } else {
@@ -42,9 +41,9 @@ export default class MTableCell extends React.Component {
   render() {
     let cellStyle = {};
     if (typeof this.props.columnDef.cellStyle === 'function') {
-      cellStyle = {...cellStyle, ...this.props.columnDef.cellStyle(this.props.value)}
+      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle(this.props.value) };
     } else {
-      cellStyle = {...cellStyle, ...this.props.columnDef.cellStyle};
+      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
     }
 
     return (

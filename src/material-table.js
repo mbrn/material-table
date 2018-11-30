@@ -51,12 +51,12 @@ class MaterialTable extends React.Component {
     });
 
     const renderData = this.getRenderData(data, props);
-    return {data, columns, renderData};
+    return { data, columns, renderData };
   }
 
   getProps(props) {
-    const calculatedProps = {...(props || this.props)};
-    calculatedProps.options = {...MaterialTable.defaultProps.options, ...calculatedProps.options};
+    const calculatedProps = { ...(props || this.props) };
+    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     return calculatedProps;
   }
@@ -133,7 +133,7 @@ class MaterialTable extends React.Component {
             }
 
             return true;
-          })
+          });
         } else {
           renderData = renderData.filter(row => {
             return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
@@ -149,11 +149,10 @@ class MaterialTable extends React.Component {
         this.state.columns
           .filter(columnDef => { return !columnDef.hidden })
           .forEach(columnDef => {
-            if(columnDef.field) {
+            if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
               if (value && value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
                 result = true;
-                return;
               }
             }
           });
@@ -193,7 +192,7 @@ class MaterialTable extends React.Component {
   }
 
   onSelectionChange = () => {
-    if(this.props.onSelectionChange) {
+    if (this.props.onSelectionChange) {
       const selectedRows = this.state.data.filter(row => row.tableData.checked);
       this.props.onSelectionChange(selectedRows);
     }
@@ -203,17 +202,17 @@ class MaterialTable extends React.Component {
     if (props.options.paging) {
       return (
         <Table>
-          <TableFooter style={{display: 'grid'}}>
+          <TableFooter style={{ display: 'grid' }}>
             <TableRow>
               <TablePagination
-                style={{float: 'right'}}
+                style={{ float: 'right' }}
                 colSpan={3}
                 count={this.state.renderData.length}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 page={this.state.currentPage}
                 onChangePage={(event, page) => {
-                  this.setState({currentPage: page}, () => {
+                  this.setState({ currentPage: page }, () => {
                     this.setData();
                   });
                 }}
@@ -251,15 +250,15 @@ class MaterialTable extends React.Component {
             search={props.options.search}
             searchText={this.state.searchText}
             title={props.title}
-            onSearchChanged={searchText => this.setState({searchText}, () => this.setData())}
-            onColumnsChanged={columns => this.setState({columns})}
-            localization={{...MaterialTable.defaultProps.localization, ...this.props.localization}}
+            onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
+            onColumnsChanged={columns => this.setState({ columns })}
+            localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
           />
         }
-        <div style={{overflowX: 'auto'}}>
+        <div style={{ overflowX: 'auto' }}>
           <Table>
             <MTableHeader
-              localization={{...MaterialTable.defaultProps.localization, ...this.props.localization}}
+              localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
               columns={this.state.columns}
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
@@ -273,10 +272,10 @@ class MaterialTable extends React.Component {
                   return row;
                 });
                 const selectedCount = checked ? data.length : 0;
-                this.setState({renderData: data, selectedCount}, () => this.onSelectionChange());
+                this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
               }}
               onOrderChanged={(orderBy, orderDirection) => {
-                this.setState({orderBy, orderDirection, currentPage: 0}, () => {
+                this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
                   this.setData();
                 });
               }}
@@ -329,7 +328,7 @@ MaterialTable.defaultProps = {
   data: [],
   title: 'Table Title',
   options: {
-    actionsColumnIndex:0,
+    actionsColumnIndex: 0,
     columnsButton: false,
     exportButton: false,
     filtering: false,
@@ -338,14 +337,13 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
-    toolbar: true, 
+    toolbar: true
   },
   localization: {
     actions: 'Actions',
     nRowsSelected: '{0} row(s) selected'
   }
 };
-
 
 MaterialTable.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
@@ -376,7 +374,7 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
-    toolbar: PropTypes.bool,
+    toolbar: PropTypes.bool
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,
