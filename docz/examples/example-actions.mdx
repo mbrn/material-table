@@ -15,7 +15,7 @@ import red from '@material-ui/core/colors/red';
     columns={[
       {title: 'Name', field: 'name'},
       {title: 'Surname', field: 'surname'},
-      {title: 'Birth Year', field: 'birthYear2', type: 'numeric'},
+      {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
       {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},      
     ]}
     data={[
@@ -56,7 +56,7 @@ import red from '@material-ui/core/colors/red';
     columns={[
       {title: 'Name', field: 'name'},
       {title: 'Surname', field: 'surname'},
-      {title: 'Birth Year', field: 'birthYear2', type: 'numeric'},
+      {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
       {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},      
     ]}
     data={[
@@ -90,7 +90,7 @@ import red from '@material-ui/core/colors/red';
       },
     ]}
      options= {{
-        actionsColumnIndex:-1,
+        actionsColumnIndex: -1,
      }}
   />
 </Playground>

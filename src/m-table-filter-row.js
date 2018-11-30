@@ -134,17 +134,29 @@ class MTableFilterRow extends React.Component {
   }
 
   render() {
+    const columns = this.props.columns.map(columnDef => (
+      <TableCell key={columnDef.tableData.id}>
+        {this.getComponentForColumn(columnDef)}
+      </TableCell>
+    ));
+
+    if (this.props.selection) {
+      columns.splice(0, 0, (
+        <TableCell style={{ padding: '0 12px' }}>
+          <Checkbox onChange={this.props.onFilterSelectionChanged} />
+        </TableCell>)
+      );
+    } else if (this.props.emptyCell) {
+      if (this.props.actionsColumnIndex === -1) {
+        columns.push(<TableCell />);
+      } else {
+        columns.splice(this.props.actionsColumnIndex, 0, <TableCell />);
+      }
+    }
+
     return (
       <TableRow style={{ height: 10 }}>
-        {!this.props.selection && this.props.emptyCell && <TableCell />}
-        {this.props.selection && <TableCell style={{ padding: '0 12px' }}>
-          <Checkbox onChange={this.props.onFilterSelectionChanged} />
-        </TableCell>}
-        {this.props.columns.map(columnDef => (
-          <TableCell key={columnDef.tableData.id}>
-            {this.getComponentForColumn(columnDef)}
-          </TableCell>
-        ))}
+        {columns}
       </TableRow>
     );
   }

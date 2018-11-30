@@ -41,7 +41,7 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.options.selection) {
       columns.splice(0, 0, this.renderSelectionColumn());
     } else if (this.props.actions &&
-             this.props.actions.filter(a => (!a.isFreeAction)).length > 0) {
+      this.props.actions.filter(a => (!a.isFreeAction)).length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
         columns.push(this.renderActions());
       } else if (this.props.options.actionsColumnIndex >= 0) {
