@@ -44,10 +44,10 @@ export default class MTableBody extends React.Component {
           })
         }
         {(this.props.options.showEmptyDataSourceMessage && renderData.length==0) &&
-           <TableRow style={{height: 49}} key={'empty-' + 0} >
-        <TableCell style={{paddingTop: 0, paddingBottom: 0}} colSpan={this.props.columns.length}  key="empty-"> 
-        {this.props.localization.emptyDataSourceMessage}
-           </TableCell>
+           <TableRow style={{height: 49*this.props.pageSize}} key={'empty-' + 0} >
+              <TableCell style={{paddingTop: 0, paddingBottom: 0, textAlign:'center'}} colSpan={this.props.columns.length}  key="empty-"> 
+                {this.props.localization.emptyDataSourceMessage}
+              </TableCell>
            </TableRow>}
         {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={'empty-' + index} />)}
         {emptyRowCount > 0 && <TableRow style={{height: 1}} key={'empty-last1'} />}
