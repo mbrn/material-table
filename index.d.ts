@@ -39,11 +39,13 @@ export interface Options {
   search?: boolean;
   selection?: boolean;
   toolbar?: boolean;
+  showEmptyDataSourceMessage?:boolean;
 }
 
 export interface Localization {
   actions?: string;
   nRowsSelected?: string;
+  emptyDataSourceMessage?:string;
 }
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;
