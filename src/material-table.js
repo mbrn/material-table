@@ -376,7 +376,8 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool,
+    showEmptyDataSourceMessage: PropTypes.bool
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,
