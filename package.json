@@ -59,7 +59,6 @@
     "react-dom": "^16.5.2"
   },
   "dependencies": {
-    "@material-ui/core": "^3.6.0",
     "classnames": "^2.2.6",
     "date-fns": "2.0.0-alpha.16",
     "filefy": "^0.1.2",
