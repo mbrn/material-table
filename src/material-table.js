@@ -312,6 +312,7 @@ class MaterialTable extends React.Component {
                 }), () => this.onSelectionChange());
                 this.setData();
               }}
+              localization={{...MaterialTable.defaultProps.localization, ...this.props.localization}}
             />
           </Table>
         </div>
@@ -337,11 +338,13 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
-    toolbar: true
+    toolbar: true,
+    showEmptyDataSourceMessage:true
   },
   localization: {
     actions: 'Actions',
-    nRowsSelected: '{0} row(s) selected'
+    nRowsSelected: '{0} row(s) selected',
+    emptyDataSourceMessage:'No records to display',
   }
 };
 
@@ -374,11 +377,13 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool,
+    showEmptyDataSourceMessage: PropTypes.bool
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,
-    nRowsSelected: PropTypes.string
+    nRowsSelected: PropTypes.string,
+    emptyDataSourceMessage:PropTypes.string
   }),
   onSelectionChange: PropTypes.func
 };
