@@ -22,6 +22,7 @@ export default class MTableBody extends React.Component {
           <MTableFilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0)}
+            actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
