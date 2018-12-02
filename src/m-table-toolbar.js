@@ -37,7 +37,7 @@ class MTableToolbar extends React.Component {
       .addRows(data)
       .exportFile();
 
-    this.setState({exportButtonAnchorEl: null});
+    this.setState({ exportButtonAnchorEl: null });
   }
 
   renderDefaultActions() {
@@ -134,7 +134,7 @@ class MTableToolbar extends React.Component {
     const { classes } = this.props;
     const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? this.props.localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
     return (
-      <Toolbar className={classNames(classes.root, {[classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0})}>
+      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
         <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
         </div>
