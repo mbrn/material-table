@@ -3,10 +3,29 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableFilterRow from './m-table-filter-row';
 import MTableBodyRow from './m-table-body-row';
-import { TableBody, TableRow,TableCell } from '@material-ui/core';
+import { TableBody, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBody extends React.Component {
+  renderEmpty(emptyRowCount, renderData) {
+    if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
+      return (
+        <TableRow style={{ height: 49 * (this.props.options.paging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
+          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length} key="empty-">
+            {this.props.localization.emptyDataSourceMessage}
+          </TableCell>
+        </TableRow>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{ height: 49 }} key={'empty-' + index} />)}
+          {emptyRowCount > 0 && <TableRow style={{ height: 1 }} key={'empty-last1'} />}
+        </React.Fragment>
+      );
+    }
+  }
+
   render() {
     let renderData = this.props.renderData;
     let emptyRowCount = 0;
@@ -44,14 +63,7 @@ export default class MTableBody extends React.Component {
             );
           })
         }
-        {(this.props.options.showEmptyDataSourceMessage && renderData.length==0) &&
-           <TableRow style={{height: 49*this.props.pageSize}} key={'empty-' + 0} >
-              <TableCell style={{paddingTop: 0, paddingBottom: 0, textAlign:'center'}} colSpan={this.props.columns.length}  key="empty-"> 
-                {this.props.localization.emptyDataSourceMessage}
-              </TableCell>
-           </TableRow>}
-        {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{height: 49}} key={'empty-' + index} />)}
-        {emptyRowCount > 0 && <TableRow style={{height: 1}} key={'empty-last1'} />}
+        {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
   }
@@ -63,7 +75,7 @@ MTableBody.defaultProps = {
   pageSize: 5,
   renderData: [],
   selection: false,
-  localization: {},
+  localization: {}
 };
 
 MTableBody.propTypes = {
