@@ -74,7 +74,6 @@ class MTableHeader extends React.Component {
 }
 
 MTableHeader.defaultProps = {
-  actionsHeaderIndex: 0,
   dataCount: 0,
   hasSelection: false,
   selectedCount: 0,
@@ -82,10 +81,10 @@ MTableHeader.defaultProps = {
   localization: {},
   orderBy: undefined,
   orderDirection: 'asc',
+  actionsHeaderIndex: 0
 };
 
 MTableHeader.propTypes = {
-  actionsHeaderIndex: PropTypes.number,
   columns: PropTypes.array.isRequired,
   dataCount: PropTypes.number,
   hasSelection: PropTypes.bool,
@@ -96,6 +95,7 @@ MTableHeader.propTypes = {
   onOrderChanged: PropTypes.func,
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
+  actionsHeaderIndex: PropTypes.number
 };
 
 export default MTableHeader;
