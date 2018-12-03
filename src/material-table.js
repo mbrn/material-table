@@ -363,7 +363,8 @@ MaterialTable.propTypes = {
     lookup: PropTypes.object,
     render: PropTypes.func,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time'])
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
+    currencySetting:PropTypes.object
   })).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,

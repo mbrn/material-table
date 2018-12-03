@@ -26,7 +26,8 @@ export interface Column {
   lookup?: object;
   render?: (data:any) => any;
   title: string;
-  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  currencySetting?:object;
 }
 
 export interface Options {
