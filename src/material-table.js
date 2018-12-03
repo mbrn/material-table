@@ -164,13 +164,12 @@ class MaterialTable extends React.Component {
     // Apply Sorting
     if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
       const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
-      renderData = renderData.sort(
-        this.state.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-      );
+        renderData = renderData.sort(
+          this.state.orderDirection === 'desc'
+            ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
+            : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
+        );
     }
-
     return renderData || data;
   }
 
@@ -280,6 +279,7 @@ class MaterialTable extends React.Component {
                 });
               }}
               actionsHeaderIndex={props.options.actionsColumnIndex}
+              sorting={props.options.sorting}
             />
             <MTableBody
               actions={props.actions}
@@ -338,6 +338,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
+    sorting: true,
     toolbar: true,
     showEmptyDataSourceMessage: true
   },
@@ -362,6 +363,7 @@ MaterialTable.propTypes = {
     field: PropTypes.string,
     lookup: PropTypes.object,
     render: PropTypes.func,
+    sorting: PropTypes.bool,
     title: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time'])
   })).isRequired,
@@ -377,6 +379,7 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
+    sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     showEmptyDataSourceMessage: PropTypes.bool
   }),

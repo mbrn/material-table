@@ -25,6 +25,7 @@ export interface Column {
   field?: string;
   lookup?: object;
   render?: (data:any) => any;
+  sorting?: boolean;
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
 }
@@ -39,6 +40,7 @@ export interface Options {
   pageSizeOptions?: number[];
   search?: boolean;
   selection?: boolean;
+  sorting?: boolean;
   toolbar?: boolean;
   showEmptyDataSourceMessage?:boolean;
 }

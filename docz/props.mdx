@@ -39,6 +39,7 @@ import MaterialTable from '../src/material-table'
 | field     | string          |           | Field name of data row                                                                        |
 | lookup    | object          |           | Key value pair for lookup render data from                                                    |
 | render    | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement   |
+| sorting   | boolean         | true      | Flag to activate or disable sorting feature of column                                         |
 | title     | string          |           | Header text                                                                                   |
 | type      | string          |           | Data type: 'boolean', 'numeric', 'date', 'datetime', 'time'                                   |
 
@@ -78,5 +79,6 @@ Options property could be given to component as `options` property. You can chan
 | pageSizeOptions            | array     | [5, 10, 20]   | Page size options that could be selected by user                                  |
 | search                     | boolean   | true          | Flag for search feature                                                           |
 | selection                  | boolean   | false         | Flag for selection feature                                                        |
+| sorting                    | boolean   | true          | Flag to activate or disable sorting feature of table                              |
 | toolbar                    | boolean   | true          | Flag for toolbar                                                                  |
 | showEmptyDataSourceMessage | boolean   | true          | Flag for showing message if there is no data in table                             |
