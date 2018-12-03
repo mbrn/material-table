@@ -1,0 +1,53 @@
+---
+name: Currency Example
+order: 7
+menu: Examples
+---
+
+import { Playground } from 'docz'
+import MaterialTable from '../../src/material-table'
+
+# Currency Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Expenses', field: 'expenses', type: 'currency'},    
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', expenses:1500.50 },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses:1200 },
+      {name: 'Silvia Joyce', surname: 'Balraj', expenses:1700 },
+    ]}
+    title="Currency"
+    options={{
+      toolbar: false,
+      paging: false
+    }}
+  />
+</Playground>
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Expenses', field: 'expenses', type: 'currency', currencySetting:{locale:'tr-TR',currencyCode:'TRY',minimumFractionDigits:2,maximumFractionDigits:3}},    
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', expenses:3500.555 },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses:2702.5575 },
+    ]}
+    title="Currency"
+    options={{
+      toolbar: false,
+      paging: false
+    }}
+  />
+</Playground>
+
+
+
+
