@@ -19,11 +19,11 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-    let defaultSortColumnIndex= -1;
-    let defaultSortDirection= '';
-    if(calculatedProps){
-       defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
-       defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
+    let defaultSortColumnIndex = -1;
+    let defaultSortDirection = '';
+    if (calculatedProps) {
+      defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
+      defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
     }
     this.state = {
       columns: [],
