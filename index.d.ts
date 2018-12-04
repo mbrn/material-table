@@ -28,7 +28,8 @@ export interface Column {
   sorting?: boolean;
   defaultSort?: 'asc' | 'desc';
   title: string;
-  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  currencySetting?:object;
 }
 
 export interface Options {
