@@ -49,7 +49,7 @@ export default class MTableCell extends React.Component {
             minimumFractionDigits:(currencySetting.minimumFractionDigits!==undefined)?currencySetting.minimumFractionDigits:2,
             maximumFractionDigits:(currencySetting.maximumFractionDigits!==undefined)?currencySetting.maximumFractionDigits:2
           }).format((value!==undefined)?value:0);
-    }else{
+    } else{
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format((value!==undefined)?value:0);
     }
   }

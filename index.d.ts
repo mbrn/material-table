@@ -29,7 +29,7 @@ export interface Column {
   defaultSort?: 'asc' | 'desc';
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
-  currencySetting?:object;
+  currencySetting?:CurrencySetting;
 }
 
 export interface Options {
@@ -51,6 +51,13 @@ export interface Localization {
   actions?: string;
   nRowsSelected?: string;
   emptyDataSourceMessage?:string;
+}
+
+export interface CurrencySetting {
+  locale?: string;
+  currencyCode?: string;
+  minimumFractionDigits?:number;
+  maximumFractionDigits?:number;
 }
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;

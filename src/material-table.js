@@ -377,7 +377,12 @@ MaterialTable.propTypes = {
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     title: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
-    currencySetting:PropTypes.object
+    currencySetting:PropTypes.shape({
+      locale: PropTypes.string,
+      currencyCode: PropTypes.string,
+      minimumFractionDigits:PropTypes.number,
+      maximumFractionDigits:PropTypes.number
+    })
   })).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
