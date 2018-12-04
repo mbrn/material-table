@@ -26,6 +26,7 @@ export interface Column {
   lookup?: object;
   render?: (data:any) => any;
   sorting?: boolean;
+  defaultSort?: 'asc' | 'desc';
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
 }

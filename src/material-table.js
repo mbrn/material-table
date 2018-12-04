@@ -19,6 +19,12 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
+    let defaultSortColumnIndex= -1;
+    let defaultSortDirection= '';
+    if(calculatedProps){
+       defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
+       defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
+    }
     this.state = {
       columns: [],
       currentPage: 0,
@@ -27,8 +33,8 @@ class MaterialTable extends React.Component {
       renderData: [],
       searchText: '',
       selectedCount: 0,
-      orderBy: -1,
-      orderDirection: '',
+      orderBy: defaultSortColumnIndex,
+      orderDirection: defaultSortDirection,
       filterSelectionChecked: false,
       ...this.getDataAndColumns(calculatedProps)
     };
@@ -68,7 +74,7 @@ class MaterialTable extends React.Component {
     this.setState({ data, renderData });
   }
 
-  getRenderData(data, props) {
+  getRenderData = (data, props) => {
     data = data || this.state.data;
     props = this.getProps();
 
@@ -233,6 +239,10 @@ class MaterialTable extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setData();
+  }
+
   render() {
     const props = this.getProps();
 
@@ -364,6 +374,7 @@ MaterialTable.propTypes = {
     lookup: PropTypes.object,
     render: PropTypes.func,
     sorting: PropTypes.bool,
+    defaultSort: PropTypes.oneOf(['asc', 'desc']),
     title: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time'])
   })).isRequired,
