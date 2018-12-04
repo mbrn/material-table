@@ -1,19 +1,19 @@
 ---
-name: Options Example
-order: 9
+name: Sorting Example
+order: 11
 menu: Examples
 ---
 
 import { Playground } from 'docz'
 import MaterialTable from '../../src/material-table'
 
-# Options Example
+# Sorting Example
 
 <Playground>
   <MaterialTable
     columns={[
-      {title: 'Name', field: 'name'},
-      {title: 'Surname', field: 'surname'},
+      {title: 'Name', field: 'name', defaultSort: 'desc'},
+      {title: 'Surname', field: 'surname', sorting: false},
       {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
       {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},      
     ]}
@@ -21,11 +21,10 @@ import MaterialTable from '../../src/material-table'
       {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
       {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},
     ]}
-    title="Options"
+    title="Sorting"
     options={{
-      columnsButton: true,
-      filtering: true,
-      selection: true,
+      toolbar: false,
+      paging: false
     }}
   />
 </Playground>
@@ -42,11 +41,10 @@ import MaterialTable from '../../src/material-table'
       {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
       {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},
     ]}
-    title="Options With No Sorting"
+    title="No Sorting"
     options={{
-      columnsButton: true,
-      filtering: true,
-      selection: true,
+      toolbar: false,
+      paging: false,
       sorting: false,
     }}
   />

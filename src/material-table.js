@@ -19,6 +19,12 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
+    let defaultSortColumnIndex = -1;
+    let defaultSortDirection = '';
+    if (calculatedProps) {
+      defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
+      defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
+    }
     this.state = {
       columns: [],
       currentPage: 0,
@@ -27,8 +33,8 @@ class MaterialTable extends React.Component {
       renderData: [],
       searchText: '',
       selectedCount: 0,
-      orderBy: -1,
-      orderDirection: '',
+      orderBy: defaultSortColumnIndex,
+      orderDirection: defaultSortDirection,
       filterSelectionChecked: false,
       ...this.getDataAndColumns(calculatedProps)
     };
@@ -68,7 +74,7 @@ class MaterialTable extends React.Component {
     this.setState({ data, renderData });
   }
 
-  getRenderData(data, props) {
+  getRenderData = (data, props) => {
     data = data || this.state.data;
     props = this.getProps();
 
@@ -170,7 +176,6 @@ class MaterialTable extends React.Component {
           : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
       );
     }
-
     return renderData || data;
   }
 
@@ -234,6 +239,10 @@ class MaterialTable extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setData();
+  }
+
   render() {
     const props = this.getProps();
 
@@ -280,6 +289,7 @@ class MaterialTable extends React.Component {
                 });
               }}
               actionsHeaderIndex={props.options.actionsColumnIndex}
+              sorting={props.options.sorting}
             />
             <MTableBody
               actions={props.actions}
@@ -338,6 +348,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     search: true,
     selection: false,
+    sorting: true,
     toolbar: true,
     showEmptyDataSourceMessage: true
   },
@@ -362,6 +373,8 @@ MaterialTable.propTypes = {
     field: PropTypes.string,
     lookup: PropTypes.object,
     render: PropTypes.func,
+    sorting: PropTypes.bool,
+    defaultSort: PropTypes.oneOf(['asc', 'desc']),
     title: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time'])
   })).isRequired,
@@ -377,6 +390,7 @@ MaterialTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     search: PropTypes.bool,
     selection: PropTypes.bool,
+    sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     showEmptyDataSourceMessage: PropTypes.bool
   }),
