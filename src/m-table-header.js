@@ -15,7 +15,7 @@ class MTableHeader extends React.Component {
           key={columnDef.tableData.id}
           numeric={['numeric'].indexOf(columnDef.type) !== -1}
         >
-          {columnDef.sort !== false
+          {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
@@ -77,6 +77,7 @@ MTableHeader.defaultProps = {
   dataCount: 0,
   hasSelection: false,
   selectedCount: 0,
+  sorting: true,
   localization: {},
   orderBy: undefined,
   orderDirection: 'asc',
@@ -89,6 +90,7 @@ MTableHeader.propTypes = {
   hasSelection: PropTypes.bool,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,
+  sorting: PropTypes.bool,
   onAllSelected: PropTypes.func,
   onOrderChanged: PropTypes.func,
   orderBy: PropTypes.number,
