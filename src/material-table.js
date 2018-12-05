@@ -153,7 +153,7 @@ class MaterialTable extends React.Component {
       renderData = renderData.filter(row => {
         let result = false;
         this.state.columns
-          .filter(columnDef => { return !columnDef.hidden })
+          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
           .forEach(columnDef => {
             if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
@@ -376,7 +376,8 @@ MaterialTable.propTypes = {
     sorting: PropTypes.bool,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time']),
+    searchable: PropTypes.bool,
     currencySetting:PropTypes.shape({
       locale: PropTypes.string,
       currencyCode: PropTypes.string,

@@ -28,8 +28,9 @@ export interface Column {
   sorting?: boolean;
   defaultSort?: 'asc' | 'desc';
   title: string;
-  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
-  currencySetting?:CurrencySetting;
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
+  searchable?: boolean;
+  currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
 }
 
 export interface Options {
@@ -51,13 +52,6 @@ export interface Localization {
   actions?: string;
   nRowsSelected?: string;
   emptyDataSourceMessage?:string;
-}
-
-export interface CurrencySetting {
-  locale?: string;
-  currencyCode?: string;
-  minimumFractionDigits?:number;
-  maximumFractionDigits?:number;
 }
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;
