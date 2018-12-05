@@ -29,6 +29,7 @@ export interface Column {
   defaultSort?: 'asc' | 'desc';
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
+  searchable?: boolean;
 }
 
 export interface Options {
