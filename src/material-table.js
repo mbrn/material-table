@@ -47,8 +47,7 @@ class MaterialTable extends React.Component {
 
   getDataAndColumns(props) {
     const data = props.data.map((row, index) => {
-      const checked = row.checked || false;
-      row.tableData = { id: index, checked };
+      row.tableData = { id: index };
       return row;
     });
 
