@@ -378,11 +378,11 @@ MaterialTable.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time']),
     searchable: PropTypes.bool,
-    currencySetting:PropTypes.shape({
+    currencySetting: PropTypes.shape({
       locale: PropTypes.string,
       currencyCode: PropTypes.string,
-      minimumFractionDigits:PropTypes.number,
-      maximumFractionDigits:PropTypes.number
+      minimumFractionDigits: PropTypes.number,
+      maximumFractionDigits: PropTypes.number
     })
   })).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
