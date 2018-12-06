@@ -30,6 +30,7 @@ export interface Column {
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
   searchable?: boolean;
+  currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
 }
 
 export interface Options {

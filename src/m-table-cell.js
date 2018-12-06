@@ -33,9 +33,25 @@ export default class MTableCell extends React.Component {
       } else {
         return this.props.value;
       }
+    } else if (this.props.columnDef.type === 'currency') {
+      return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
 
     return this.props.value;
+  }
+
+  getCurrencyValue(currencySetting, value) {
+    if (currencySetting !== undefined) {
+      return new Intl.NumberFormat((currencySetting.locale !== undefined) ? currencySetting.locale : 'en-US',
+        {
+          style: 'currency',
+          currency: (currencySetting.currencyCode !== undefined) ? currencySetting.currencyCode : 'USD',
+          minimumFractionDigits: (currencySetting.minimumFractionDigits !== undefined) ? currencySetting.minimumFractionDigits : 2,
+          maximumFractionDigits: (currencySetting.maximumFractionDigits !== undefined) ? currencySetting.maximumFractionDigits : 2
+        }).format((value !== undefined) ? value : 0);
+    } else {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((value !== undefined) ? value : 0);
+    }
   }
 
   render() {
