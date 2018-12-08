@@ -89,5 +89,6 @@ MTableBody.propTypes = {
   renderData: PropTypes.array,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,
-  localization: PropTypes.object
+  localization: PropTypes.object,
+  onFilterChanged: PropTypes.func
 };

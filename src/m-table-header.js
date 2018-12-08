@@ -95,7 +95,8 @@ MTableHeader.propTypes = {
   onOrderChanged: PropTypes.func,
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
-  actionsHeaderIndex: PropTypes.number
+  actionsHeaderIndex: PropTypes.number,
+  showActionsColumn: PropTypes.bool,
 };
 
 export default MTableHeader;

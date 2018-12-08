@@ -40,7 +40,7 @@ class MaterialTable extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const dataAndColumns = this.getDataAndColumns(this.getProps(nextProps));
     this.setState(dataAndColumns);
   }

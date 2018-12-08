@@ -69,5 +69,6 @@ MTableBodyRow.propTypes = {
   data: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
-  getFieldValue: PropTypes.func.isRequired
+  getFieldValue: PropTypes.func.isRequired,
+  columns: PropTypes.array,
 };
