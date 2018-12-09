@@ -9,6 +9,8 @@ import {
 
 class MTableHeader extends React.Component {
   renderHeader() {
+    // eslint-disable-next-line no-console
+    console.log(this.props.columns);
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => (
         <TableCell
@@ -30,6 +32,8 @@ class MTableHeader extends React.Component {
           }
         </TableCell>
       ));
+      // eslint-disable-next-line no-console
+      console.log(mapArr);
     return mapArr;
   }
 
@@ -53,16 +57,26 @@ class MTableHeader extends React.Component {
   }
   render() {
     const headers = this.renderHeader();
-
+    // eslint-disable-next-line no-console
+    console.log(headers);
     if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
-    } else if (this.props.showActionsColumn) {
+    }
+
+    if (this.props.showActionsColumn) {
       if (this.props.actionsHeaderIndex >= 0) {
-        headers.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
+        let endPos = 0;
+        if (this.props.hasSelection) {
+          endPos = 1;
+        }
+        headers.splice(this.props.actionsHeaderIndex + endPos, 0, this.renderActionsHeader());
+        // eslint-disable-next-line no-console
+        console.log(headers);
       } else if (this.props.actionsHeaderIndex === -1) {
         headers.push(this.renderActionsHeader());
       }
     }
+
     return (
       <TableHead>
         <TableRow>

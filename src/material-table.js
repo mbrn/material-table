@@ -5,6 +5,7 @@ import MTableBody from './m-table-body';
 import MTableToolbar from './m-table-toolbar';
 import MTablePagination from './m-table-pagination';
 import MTableHeader from './m-table-header';
+import filterActions from './filterActions';
 import {
   Paper, Table, TableRow,
   TableFooter, TablePagination,
@@ -272,7 +273,7 @@ class MaterialTable extends React.Component {
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
               dataCount={this.state.data.length}
-              showActionsColumn={props.actions && props.actions.filter(a => (!a.isFreeAction)).length > 0}
+              showActionsColumn={props.actions && props.actions.filter(filterActions(this.props.options)).length > 0}
               orderBy={this.state.orderBy}
               orderDirection={this.state.orderDirection}
               onAllSelected={(checked) => {
