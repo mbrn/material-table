@@ -168,7 +168,10 @@ MTableToolbar.propTypes = {
   search: PropTypes.bool.isRequired,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  renderData: PropTypes.func,
+  exportButton: PropTypes.bool,
+  classes: PropTypes.object
 };
 
 const styles = theme => ({

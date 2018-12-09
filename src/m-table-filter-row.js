@@ -173,7 +173,8 @@ MTableFilterRow.propTypes = {
   columns: PropTypes.array.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
-  onFilterSelectionChanged: PropTypes.func.isRequired
+  onFilterSelectionChanged: PropTypes.func.isRequired,
+  actionsColumnIndex: PropTypes.number
 };
 
 export default MTableFilterRow;

@@ -9,7 +9,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "start": "npm run docz:dev",
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
     "lint": "eslint src/**",
@@ -45,6 +45,7 @@
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
+    "babel-loader": "^8.0.4",
     "buble": "0.19.3",
     "docz": "0.12.10",
     "eslint": "5.7.0",
@@ -55,7 +56,11 @@
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
-    "husky": "^1.2.0"
+    "husky": "^1.2.0",
+    "react-hot-loader": "^4.3.12",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "peerDependencies": {
     "@material-ui/core": "^3.1.0",
@@ -66,6 +71,7 @@
     "react-dom": "^16.5.2"
   },
   "dependencies": {
+    "@material-ui/core": "^3.1.0",
     "classnames": "^2.2.6",
     "date-fns": "2.0.0-alpha.16",
     "filefy": "^0.1.2",

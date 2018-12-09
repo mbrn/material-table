@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
   Icon, IconButton,
   TableFooter, TableRow, TablePagination,
@@ -72,6 +73,14 @@ const actionsStyles = theme => ({
     marginLeft: theme.spacing.unit * 2.5
   }
 });
+
+MTablePaginationInner.propTypes = {
+  onChangePage: PropTypes.func,
+  page: PropTypes.number,
+  count: PropTypes.number,
+  rowsPerPage: PropTypes.number,
+  classes: PropTypes.object
+};
 
 const MTablePagination = withStyles(actionsStyles, { withTheme: true })(MTablePaginationInner);
 
