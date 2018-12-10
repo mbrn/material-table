@@ -3,6 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableFilterRow from './m-table-filter-row';
 import MTableBodyRow from './m-table-body-row';
+import filterActions from './filterActions';
 import { TableBody, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
@@ -40,7 +41,8 @@ export default class MTableBody extends React.Component {
         {this.props.options.filtering &&
           <MTableFilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0)}
+            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
+            hasActions={(this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}

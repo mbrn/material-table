@@ -53,16 +53,22 @@ class MTableHeader extends React.Component {
   }
   render() {
     const headers = this.renderHeader();
-
     if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
-    } else if (this.props.showActionsColumn) {
+    }
+
+    if (this.props.showActionsColumn) {
       if (this.props.actionsHeaderIndex >= 0) {
-        headers.splice(this.props.actionsHeaderIndex, 0, this.renderActionsHeader());
+        let endPos = 0;
+        if (this.props.hasSelection) {
+          endPos = 1;
+        }
+        headers.splice(this.props.actionsHeaderIndex + endPos, 0, this.renderActionsHeader());
       } else if (this.props.actionsHeaderIndex === -1) {
         headers.push(this.renderActionsHeader());
       }
     }
+
     return (
       <TableHead>
         <TableRow>

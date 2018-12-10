@@ -146,11 +146,16 @@ class MTableFilterRow extends React.Component {
           <Checkbox onChange={this.props.onFilterSelectionChanged} />
         </TableCell>)
       );
-    } else if (this.props.emptyCell) {
+    }
+    if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell />);
       } else {
-        columns.splice(this.props.actionsColumnIndex, 0, <TableCell />);
+        let endPos = 0;
+        if (this.props.selection) {
+          endPos = 1;
+        }
+        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell />);
       }
     }
 
@@ -165,7 +170,8 @@ class MTableFilterRow extends React.Component {
 MTableFilterRow.defaultProps = {
   emptyCell: false,
   columns: [],
-  selection: false
+  selection: false,
+  hasActions: false,
 };
 
 MTableFilterRow.propTypes = {
@@ -174,7 +180,8 @@ MTableFilterRow.propTypes = {
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,
-  actionsColumnIndex: PropTypes.number
+  actionsColumnIndex: PropTypes.number,
+  hasActions: PropTypes.bool,
 };
 
 export default MTableFilterRow;

@@ -123,7 +123,7 @@ class MTableToolbar extends React.Component {
     return (
       <div>
         {this.props.selectedRows && this.props.selectedRows.length > 0
-          ? <MTableActions actions={this.props.actions.filter(a => { return !a.isFreeAction })} data={this.props.selectedRows}/>
+          ? <MTableActions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction)})} data={this.props.selectedRows}/>
           : this.renderDefaultActions()
         }
       </div>
