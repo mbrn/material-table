@@ -1,18 +1,13 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import MTableBody from './m-table-body';
-import MTableToolbar from './m-table-toolbar';
-import MTablePagination from './m-table-pagination';
-import MTableHeader from './m-table-header';
-import filterActions from './filterActions';
-import {
-  Paper, Table, TableRow,
-  TableFooter, TablePagination,
-  withStyles
-} from '@material-ui/core';
-import isEqualDate from 'date-fns/isEqual';
+import { Paper, Table, TableFooter, TablePagination, TableRow } from '@material-ui/core';
 import formatDate from 'date-fns/format';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import filterActions from './filter-actions';
+import MTableBody from './m-table-body';
+import MTableHeader from './m-table-header';
+import MTablePagination from './m-table-pagination';
+import MTableToolbar from './m-table-toolbar';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -205,15 +200,15 @@ class MaterialTable extends React.Component {
   }
 
   onChangePage = (...args) => {
-    this.props.onChangePage(...args);
+    this.props.onChangePage && this.props.onChangePage(...args);
   }
 
   onChangeRowsPerPage = (...args) => {
-    this.props.onChangeRowsPerPage(...args);
+    this.props.onChangeRowsPerPage && this.props.onChangeRowsPerPage(...args);
   }
 
-  onOrderChanged = (...args) => {
-    this.props.onOrderChanged(...args);
+  onOrderChange = (...args) => {
+    this.props.onOrderChange && this.props.onOrderChange(...args);
   }
 
   renderFooter() {
@@ -233,7 +228,7 @@ class MaterialTable extends React.Component {
                 onChangePage={(event, page) => {
                   this.setState({ currentPage: page }, () => {
                     this.setData();
-                    this.onChangePage(event, page);
+                    this.onChangePage(page);
                   });
                 }}
                 onChangeRowsPerPage={(event) => {
@@ -243,7 +238,7 @@ class MaterialTable extends React.Component {
                     return state;
                   }, () => {
                     this.setData();
-                    this.onChangeRowsPerPage(event);
+                    this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
                 ActionsComponent={MTablePagination}
@@ -299,10 +294,10 @@ class MaterialTable extends React.Component {
                 const selectedCount = checked ? data.length : 0;
                 this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
               }}
-              onOrderChanged={(orderBy, orderDirection) => {
+              onOrderChange={(orderBy, orderDirection) => {
                 this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
                   this.setData();
-                  this.onOrderChanged(orderBy, orderDirection);
+                  this.onOrderChange(orderBy, orderDirection);
                 });
               }}
               actionsHeaderIndex={props.options.actionsColumnIndex}
@@ -349,8 +344,6 @@ class MaterialTable extends React.Component {
   }
 }
 
-const id = id => {};
-
 MaterialTable.defaultProps = {
   actions: [],
   classes: {},
@@ -375,10 +368,7 @@ MaterialTable.defaultProps = {
     actions: 'Actions',
     nRowsSelected: '{0} row(s) selected',
     emptyDataSourceMessage: 'No records to display'
-  },
-  onChangeRowsPerPage: id,
-  onChangePage: id,
-  onOrderChanged: id,
+  }
 };
 
 MaterialTable.propTypes = {
@@ -431,7 +421,7 @@ MaterialTable.propTypes = {
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
-  onOrderChanged: PropTypes.func,
+  onOrderChange: PropTypes.func,
 };
 
 export default MaterialTable;

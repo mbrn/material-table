@@ -21,7 +21,7 @@ class MTableHeader extends React.Component {
               direction={this.props.orderDirection || 'asc'}
               onClick={() => {
                 const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
-                this.props.onOrderChanged(columnDef.tableData.id, orderDirection);
+                this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
               {columnDef.title}
@@ -98,7 +98,7 @@ MTableHeader.propTypes = {
   selectedCount: PropTypes.number,
   sorting: PropTypes.bool,
   onAllSelected: PropTypes.func,
-  onOrderChanged: PropTypes.func,
+  onOrderChange: PropTypes.func,
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
   actionsHeaderIndex: PropTypes.number,

@@ -14,6 +14,9 @@ import MaterialTable from '../src/material-table'
 | columns             | Array  |                   | Column definitions                                                |
 | data                | Array  |                   | Data to be rendered                                               |
 | localization        | object |                   | All text for localization                                         |
+| onChangePage        | func   |                   | To handle page changes (page)                                     |
+| onChangeRowsPerPage | func   |                   | To handle rows per page changes (pageSize)                        |
+| onOrderChange       | func   |                   | To handle order changes (orderedColumnId, orderDirection)         |
 | onSelectionChange   | func   |                   | To handle selection changes                                       |
 | options             | object |                   | All options of table                                              |
 | title               | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
@@ -23,12 +26,12 @@ import MaterialTable from '../src/material-table'
 
 | Field         | Type      | Default   | Description                                                                               |
 |:--------------|:----------|:----------|:------------------------------------------------------------------------------------------|
-| icon          | string    |           | Icon of button from material icons                                                        |
-| isFreeAction  | boolean   | false     | Independent actions that will not on row' actions section                                 |
 | disabled      | boolean   | false     | Button enabled/disabled                                                                   |
+| icon          | string    |           | Icon of button from material icons                                                        |
+| iconProps     | object    |           | Props for icon as IconProps from https://material-ui.com/api/icon/                        |
+| isFreeAction  | boolean   | false     | Independent actions that will not on row' actions section                                 |
 | onClick       | func      |           | This event will be fired when button clicked. Parameters are `event` and `row or rows`    |
 | tooltip       | string    |           | Tooltip for button                                                                        |
-| iconProps     | object    |           | Props for icon as IconProps from https://material-ui.com/api/icon/                        |
 
 ## columns
 

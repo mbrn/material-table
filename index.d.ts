@@ -9,6 +9,9 @@ export interface MaterialTableProps {
   options?: Options;
   localization?: Localization;
   onSelectionChange?: (data: any[]) => void;
+  onChangeRowsPerPage?: (pageSize: number) => void;
+  onChangePage?: (page: number) => void;
+  onOrderChange?: (orderBy: columnId, orderDirection: "asc" | "desc") => void;
 }
 
 export interface Action {

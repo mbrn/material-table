@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableCell from './m-table-cell';
 import MTableActions from './m-table-actions';
-import filterActions from './filterActions';
+import filterActions from './filter-actions';
 import { Checkbox, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 

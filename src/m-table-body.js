@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MTableFilterRow from './m-table-filter-row';
 import MTableBodyRow from './m-table-body-row';
-import filterActions from './filterActions';
+import filterActions from './filter-actions';
 import { TableBody, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
