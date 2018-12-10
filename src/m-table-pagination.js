@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
+import { Icon, IconButton, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import {
-  Icon, IconButton,
-  TableFooter, TableRow, TablePagination,
-  Typography, withStyles
-} from '@material-ui/core';
+import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 class MTablePaginationInner extends React.Component {

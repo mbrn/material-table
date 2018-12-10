@@ -12,6 +12,7 @@ import MaterialTable from '../src/material-table'
 |:--------------------|:-------|:------------------|:------------------------------------------------------------------|
 | actions             | Array  |                   | Action list. An icon button will be rendered for each actions     |
 | columns             | Array  |                   | Column definitions                                                |
+| components          | object |                   | Component customization                                           |
 | data                | Array  |                   | Data to be rendered                                               |
 | localization        | object |                   | All text for localization                                         |
 | onChangePage        | func   |                   | To handle page changes (page)                                     |
@@ -52,6 +53,19 @@ import MaterialTable from '../src/material-table'
 |                 |                 |           | 'locale' represents language tag, currencyCode represents ISO 4217 currency codes,                            |
 |                 |                 |           | minimumFractionDigits represents the min number of fraction digits to use Possible values are from 0 to 20    |                                 
 |                 |                 |           | maximumFractionDigits represents the max number of fraction digits to use. Possible values are from 0 to 20   |
+
+## components
+
+| Field         | Type          | Default         | Description                                                                               |
+|:--------------|:--------------|:----------------|:------------------------------------------------------------------------------------------|
+| Actions       | React.Element | MTableActions   | Actions component                                                                         |
+| Body          | React.Element | MTableBody      | Body component                                                                            |
+| Cell          | React.Element | MTableCell      | Cell component                                                                            |
+| FilterRow     | React.Element | MTableFilterRow | FilterRow component                                                                       |
+| Header        | React.Element | MTableHeader    | Header component                                                                          |
+| Pagination    | React.Element | TablePagination | Pagination component                                                                      |
+| Row           | React.Element | MTableBodyRow   | Row component                                                                             |
+| Toolbar       | React.Element | MTableToolbar   | Toolbar component                                                                         |
 
 ## data
 

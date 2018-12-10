@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
+import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import MTableFilterRow from './m-table-filter-row';
-import MTableBodyRow from './m-table-body-row';
+import * as React from 'react';
 import filterActions from './filter-actions';
-import { TableBody, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBody extends React.Component {
@@ -39,7 +37,7 @@ export default class MTableBody extends React.Component {
     return (
       <TableBody>
         {this.props.options.filtering &&
-          <MTableFilterRow
+          <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
             hasActions={(this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
@@ -52,7 +50,8 @@ export default class MTableBody extends React.Component {
         {
           renderData.map((data, index) => {
             return (
-              <MTableBodyRow
+              <this.props.components.Row
+                components={this.props.components}
                 data={data}
                 index={index}
                 key={index}

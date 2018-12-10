@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
+import { Checkbox, TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import MTableCell from './m-table-cell';
-import MTableActions from './m-table-actions';
+import * as React from 'react';
 import filterActions from './filter-actions';
-import { Checkbox, TableRow, TableCell } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 
@@ -13,7 +11,7 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        return <MTableCell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data} />;
+        return <this.props.components.Cell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data} />;
       });
     return mapArr;
   }
@@ -22,7 +20,7 @@ export default class MTableBodyRow extends React.Component {
     return (
       <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} key="key-actions-column">
         <div style={{ display: 'flex' }}>
-          <MTableActions data={this.props.data} actions={this.props.actions.filter(filterActions(this.props.options))} />
+          <this.props.components.Actions data={this.props.data} actions={this.props.actions.filter(filterActions(this.props.options))} />
         </div>
       </TableCell>
     );

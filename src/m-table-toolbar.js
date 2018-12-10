@@ -1,16 +1,10 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
-import classNames from 'classnames';
-import MTableActions from './m-table-actions';
-import PropTypes from 'prop-types';
-import {
-  Icon, IconButton, Menu,
-  MenuItem, Toolbar, Tooltip,
-  Typography, withStyles, Checkbox,
-  FormControlLabel, TextField, InputAdornment
-} from '@material-ui/core';
-import { CsvBuilder } from 'filefy';
+import { Checkbox, FormControlLabel, Icon, IconButton, InputAdornment, Menu, MenuItem, TextField, Toolbar, Tooltip, Typography, withStyles } from '@material-ui/core';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import classNames from 'classnames';
+import { CsvBuilder } from 'filefy';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 class MTableToolbar extends React.Component {
@@ -114,7 +108,7 @@ class MTableToolbar extends React.Component {
           </span>
 
         }
-        <MTableActions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
+        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
       </div>
     );
   }
@@ -123,7 +117,7 @@ class MTableToolbar extends React.Component {
     return (
       <div>
         {this.props.selectedRows && this.props.selectedRows.length > 0
-          ? <MTableActions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction)})} data={this.props.selectedRows}/>
+          ? <this.props.components.Actions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction)})} data={this.props.selectedRows}/>
           : this.renderDefaultActions()
         }
       </div>

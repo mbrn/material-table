@@ -4,7 +4,11 @@ import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import filterActions from './filter-actions';
+import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
+import MTableBodyRow from './m-table-body-row';
+import MTableCell from './m-table-cell';
+import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableToolbar from './m-table-toolbar';
@@ -58,7 +62,8 @@ class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
-    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
+    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };    
+    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };    
 
     return calculatedProps;
   }
@@ -218,7 +223,7 @@ class MaterialTable extends React.Component {
         <Table>
           <TableFooter style={{ display: 'grid' }}>
             <TableRow>
-              <TablePagination
+              <props.components.Pagination
                 style={{ float: 'right' }}
                 colSpan={3}
                 count={this.state.renderData.length}
@@ -256,12 +261,13 @@ class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
-
+    
     return (
       <Paper>
         {props.options.toolbar &&
-          <MTableToolbar
+          <props.components.Toolbar
             actions={props.actions}
+            components={props.components}
             selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
@@ -277,7 +283,7 @@ class MaterialTable extends React.Component {
         }
         <div style={{ overflowX: 'auto' }}>
           <Table>
-            <MTableHeader
+            <props.components.Header
               localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
               columns={this.state.columns}
               hasSelection={props.options.selection}
@@ -303,8 +309,9 @@ class MaterialTable extends React.Component {
               actionsHeaderIndex={props.options.actionsColumnIndex}
               sorting={props.options.sorting}
             />
-            <MTableBody
+            <props.components.Body
               actions={props.actions}
+              components={props.components}
               renderData={this.state.renderData}
               currentPage={this.state.currentPage}
               pageSize={this.state.pageSize}
@@ -348,6 +355,16 @@ MaterialTable.defaultProps = {
   actions: [],
   classes: {},
   columns: [],
+  components: {
+    Actions: MTableActions,
+    Body: MTableBody,
+    Cell: MTableCell,
+    FilterRow: MTableFilterRow,
+    Header: MTableHeader,
+    Pagination: TablePagination,
+    Row: MTableBodyRow,
+    Toolbar: MTableToolbar,
+  },
   data: [],
   title: 'Table Title',
   options: {
@@ -397,6 +414,16 @@ MaterialTable.propTypes = {
       maximumFractionDigits: PropTypes.number
     })
   })).isRequired,
+  components: PropTypes.shape({
+    Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  }),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string,
   options: PropTypes.shape({
@@ -425,3 +452,12 @@ MaterialTable.propTypes = {
 };
 
 export default MaterialTable;
+
+export { MTableActions };
+export { MTableBody };
+export { MTableCell };
+export { MTableFilterRow };
+export { MTableHeader };
+export { MTablePagination };
+export { MTableBodyRow };
+export { MTableToolbar };

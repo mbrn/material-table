@@ -7,13 +7,21 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
+          components={{
+            // Pagination: () => <div>okdafşslk</div>
+          }}
           columns={[
             { title: 'Adı', field: 'name' },
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
           ]}
-          data={[{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
+          data={[
+            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+          ]}
           title="Demo Title"
         />
       </div>

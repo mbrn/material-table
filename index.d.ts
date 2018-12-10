@@ -4,6 +4,7 @@ import { IconProps } from '@material-ui/core/Icon';
 export interface MaterialTableProps {
   actions?: (Action | ((rowData:any) => Action)) [];
   columns: Column[];
+  components?: Components;
   data: object;
   title: string;
   options?: Options;
@@ -34,6 +35,17 @@ export interface Column {
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
   searchable?: boolean;
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
+}
+
+export interface Components {
+  Actions: React.ReactElement;
+  Body: React.ReactElement;
+  Cell: React.ReactElement;
+  FilterRow: React.ReactElement;
+  Header: React.ReactElement;
+  Pagination: React.ReactElement;
+  Row: React.ReactElement;
+  Toolbar: React.ReactElement;
 }
 
 export interface Options {
