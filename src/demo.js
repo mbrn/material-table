@@ -14,20 +14,11 @@ class App extends Component {
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
           ]}
           data={[
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
           ]}
           title="Demo Title"
-          options={{
-            selection: true
+          options={{            
+            emptyRowsWhenPaging: false
           }}
-          actions={[{
-            icon: 'save',
-            tooltip: 'Save',
-            onClick: () => {}
-          }]}
         />
       </div>
     );

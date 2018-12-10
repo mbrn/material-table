@@ -370,16 +370,17 @@ MaterialTable.defaultProps = {
   options: {
     actionsColumnIndex: 0,
     columnsButton: false,
+    emptyRowsWhenPaging: true,
     exportButton: false,
     filtering: false,
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
+    showEmptyDataSourceMessage: true,
     search: true,
     selection: false,
     sorting: true,
-    toolbar: true,
-    showEmptyDataSourceMessage: true
+    toolbar: true
   },
   localization: {
     actions: 'Actions',
@@ -429,16 +430,17 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
     filtering: PropTypes.bool,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    showEmptyDataSourceMessage: PropTypes.bool,
     search: PropTypes.bool,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
-    toolbar: PropTypes.bool,
-    showEmptyDataSourceMessage: PropTypes.bool
+    toolbar: PropTypes.bool
   }),
   localization: PropTypes.shape({
     actions: PropTypes.string,

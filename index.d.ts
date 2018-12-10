@@ -51,16 +51,17 @@ export interface Components {
 export interface Options {
   actionsColumnIndex?:number;
   columnsButton?: boolean;
+  emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
   filtering?: boolean;
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
+  showEmptyDataSourceMessage?:boolean;
   search?: boolean;
   selection?: boolean;
   sorting?: boolean;
   toolbar?: boolean;
-  showEmptyDataSourceMessage?:boolean;
 }
 
 export interface Localization {

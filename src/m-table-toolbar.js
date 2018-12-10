@@ -129,7 +129,7 @@ class MTableToolbar extends React.Component {
         {this.renderSearch()}
         <this.props.components.Actions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction) })} data={this.props.selectedRows} />
       </React.Fragment>
-    )
+    );
   }
 
   renderActions() {

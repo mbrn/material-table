@@ -8,14 +8,18 @@ import filterActions from './filter-actions';
 export default class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
+      let addColumn = 0;
+      if(this.props.options.selection || (this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)) {
+        addColumn = 1;
+      }
       return (
-        <TableRow style={{ height: 49 * (this.props.options.paging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
-          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length} key="empty-">
+        <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
+          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
             {this.props.localization.emptyDataSourceMessage}
           </TableCell>
         </TableRow>
       );
-    } else {
+    } else if(this.props.options.emptyRowsWhenPaging){
       return (
         <React.Fragment>
           {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{ height: 49 }} key={'empty-' + index} />)}
