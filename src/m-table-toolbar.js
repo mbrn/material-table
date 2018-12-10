@@ -26,7 +26,8 @@ class MTableToolbar extends React.Component {
       columns.map(columnDef => rowData[columnDef.field])
     );
 
-    const builder = new CsvBuilder((this.props.title || 'data') + '.csv') // eslint-disable-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars
+    const builder = new CsvBuilder((this.props.title || 'data') + '.csv')
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
       .exportFile();
@@ -34,27 +35,36 @@ class MTableToolbar extends React.Component {
     this.setState({ exportButtonAnchorEl: null });
   }
 
+  renderSearch() {
+    if (this.props.search) {
+      return (
+        <TextField
+          value={this.props.searchText}
+          onChange={event => this.props.onSearchChanged(event.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Icon>search</Icon>
+              </InputAdornment>
+            )
+          }}
+        />
+      );
+    }
+    else {
+      return null;
+    }
+  }
+
   renderDefaultActions() {
     return (
       <div>
-        {this.props.search &&
-          <TextField
-            value={this.props.searchText}
-            onChange={event => this.props.onSearchChanged(event.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon>search</Icon>
-                </InputAdornment>
-              )
-            }}
-          />
-        }
+        {this.renderSearch()}
         {this.props.columnsButton &&
           <span>
             <Tooltip title="Show Columns">
               <IconButton
-                onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget }) }
+                onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget })}
                 aria-label="Show Columns">
                 <Icon>view_column</Icon>
               </IconButton>
@@ -62,7 +72,7 @@ class MTableToolbar extends React.Component {
             <Menu
               anchorEl={this.state.columnsButtonAnchorEl}
               open={Boolean(this.state.columnsButtonAnchorEl)}
-              onClose={() => this.setState({ columnsButtonAnchorEl: null }) }>
+              onClose={() => this.setState({ columnsButtonAnchorEl: null })}>
               {
                 this.props.columns.map((col, index) => {
                   return (
@@ -77,7 +87,7 @@ class MTableToolbar extends React.Component {
                               columns[index].hidden = !checked;
                               this.props.onColumnsChanged(columns);
                             }
-                            }/>
+                            } />
                         }
                       />
                     </MenuItem>
@@ -91,7 +101,7 @@ class MTableToolbar extends React.Component {
           <span>
             <Tooltip title="Export">
               <IconButton
-                onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget }) }
+                onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget })}
                 aria-label="Show Columns">
                 <Icon>save_alt</Icon>
               </IconButton>
@@ -108,16 +118,25 @@ class MTableToolbar extends React.Component {
           </span>
 
         }
-        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })}/>
+        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })} />
       </div>
     );
+  }
+
+  renderSelectedActions() {
+    return (
+      <React.Fragment>
+        {this.renderSearch()}
+        <this.props.components.Actions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction) })} data={this.props.selectedRows} />
+      </React.Fragment>
+    )
   }
 
   renderActions() {
     return (
       <div>
         {this.props.selectedRows && this.props.selectedRows.length > 0
-          ? <this.props.components.Actions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction)})} data={this.props.selectedRows}/>
+          ? this.renderSelectedActions()
           : this.renderDefaultActions()
         }
       </div>

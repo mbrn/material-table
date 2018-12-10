@@ -7,9 +7,6 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
-          components={{
-            // Pagination: () => <div>okdafşslk</div>
-          }}
           columns={[
             { title: 'Adı', field: 'name' },
             { title: 'Soyadı', field: 'surname' },
@@ -23,6 +20,14 @@ class App extends Component {
             { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
           ]}
           title="Demo Title"
+          options={{
+            selection: true
+          }}
+          actions={[{
+            icon: 'save',
+            tooltip: 'Save',
+            onClick: () => {}
+          }]}
         />
       </div>
     );

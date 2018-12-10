@@ -81,6 +81,7 @@ MTableBody.defaultProps = {
 
 MTableBody.propTypes = {
   actions: PropTypes.array,
+  components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
