@@ -120,6 +120,10 @@ class MTableFilterRow extends React.Component {
   }
 
   getComponentForColumn(columnDef) {
+    if(columnDef.filtering === false) {
+      return null;
+    }
+
     if (columnDef.field) {
       if (columnDef.lookup) {
         return this.renderLookupFilter(columnDef);

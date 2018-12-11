@@ -28,6 +28,7 @@ export interface Column {
   cellStyle?: any | ((data: any) => any);
   hidden?: boolean;
   field?: string;
+  filtering?: boolean,
   lookup?: object;
   render?: (data:any) => any;
   sorting?: boolean;

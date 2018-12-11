@@ -417,6 +417,7 @@ MaterialTable.propTypes = {
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     hidden: PropTypes.bool,
     field: PropTypes.string,
+    filtering: PropTypes.bool,
     lookup: PropTypes.object,
     render: PropTypes.func,
     sorting: PropTypes.bool,
