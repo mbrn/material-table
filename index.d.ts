@@ -5,6 +5,7 @@ export interface MaterialTableProps {
   actions?: (Action | ((rowData:any) => Action)) [];
   columns: Column[];
   components?: Components;
+  icons?: Icons,
   data: object;
   title: string;
   options?: Options;
@@ -16,8 +17,8 @@ export interface MaterialTableProps {
 }
 
 export interface Action {
-  icon: string;
-  isFreeAction?: boolean;
+  icon: string | React.ReactElement;
+  isFreeAction?: boolean;    
   tooltip?: string;
   onClick: (event: any, data: any) => void;
   iconProps?: IconProps
@@ -46,6 +47,19 @@ export interface Components {
   Pagination: React.ReactElement;
   Row: React.ReactElement;
   Toolbar: React.ReactElement;
+}
+
+export interface Icons {
+  Check: React.ReactElement;
+  Export: React.ReactElement;
+  Filter: React.ReactElement;
+  FirstPage: React.ReactElement;
+  LastPage: React.ReactElement;
+  NextPage: React.ReactElement;
+  PreviousPage: React.ReactElement;
+  Search: React.ReactElement;
+  ThirdStateCheck: React.ReactElement;
+  ViewColumn: React.ReactElement;
 }
 
 export interface Options {

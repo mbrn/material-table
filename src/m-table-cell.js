@@ -11,9 +11,9 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'boolean') {
       const style = { textAlign: 'center', width: '48px' };
       if (this.props.value) {
-        return <Icon style={style}>check</Icon>;
+        return <this.props.icons.Check style={style}/>;
       } else {
-        return <Icon style={style}>remove</Icon>;
+        return <this.props.icons.ThirdStateCheck style={style}/>;
       }
     } else if (this.props.columnDef.type === 'date') {
       if (this.props.value instanceof Date) {

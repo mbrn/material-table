@@ -1,0 +1,41 @@
+---
+name: Custom Render Example
+order: 7
+menu: Examples
+---
+
+import { Playground } from 'docz'
+import MaterialTable from '../../src/material-table'
+
+## Custom Render Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', render: rowData => rowData.name + " " + rowData.surname },      
+      {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
+      {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},     
+      {title: 'Score', field: 'successScore', render: rowData => {
+        const score = rowData.successScore + '%';
+        const color = rowData.successScore > 70 ? '#4CAF50' : '#f44336';
+        return (          
+          <div style={{width: '100%', backgroundColor: '#ddd', height: 20}}>
+            <div style={{textAlign: 'left', padding: 1, color: 'white', width: score, backgroundColor: color, height: 20}}>
+              {score}
+            </div>
+          </div>
+        );
+      }},
+       
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, successScore: 58},
+      {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34, successScore: 90},
+    ]}
+    title="Custom Render"
+  />
+</Playground>
+
+
+
+

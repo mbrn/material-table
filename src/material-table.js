@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Paper, Table, TableFooter, TablePagination, TableRow } from '@material-ui/core';
+import { Icon, Paper, Table, TableFooter, TablePagination, TableRow } from '@material-ui/core';
 import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import filterActions from './filter-actions';
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
@@ -62,8 +61,9 @@ class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
-    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };    
-    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };    
+    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
+    calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
+    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     return calculatedProps;
   }
@@ -246,7 +246,7 @@ class MaterialTable extends React.Component {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
-                ActionsComponent={MTablePagination}
+                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons}/>}
               />
             </TableRow>
           </TableFooter>
@@ -261,7 +261,7 @@ class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
-    
+
     return (
       <Paper>
         {props.options.toolbar &&
@@ -271,6 +271,7 @@ class MaterialTable extends React.Component {
             selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
             columns={this.state.columns}
             columnsButton={props.options.columnsButton}
+            icons={props.icons}
             exportButton={props.options.exportButton}
             renderData={this.state.renderData}
             search={props.options.search}
@@ -289,7 +290,7 @@ class MaterialTable extends React.Component {
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
               dataCount={this.state.data.length}
-              showActionsColumn={props.actions && props.actions.filter(filterActions(this.props.options)).length > 0}
+              showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
               orderBy={this.state.orderBy}
               orderDirection={this.state.orderDirection}
               onAllSelected={(checked) => {
@@ -312,6 +313,7 @@ class MaterialTable extends React.Component {
             <props.components.Body
               actions={props.actions}
               components={props.components}
+              icons={props.icons}
               renderData={this.state.renderData}
               currentPage={this.state.currentPage}
               pageSize={this.state.pageSize}
@@ -366,6 +368,20 @@ MaterialTable.defaultProps = {
     Toolbar: MTableToolbar,
   },
   data: [],
+  icons: {
+    /* eslint-disable react/display-name */
+    Check: (props) => <Icon {...props}>check</Icon>,
+    Export: (props) => <Icon {...props}>save_alt</Icon>,
+    Filter: (props) => <Icon {...props}>filter_list</Icon>,
+    FirstPage: (props) => <Icon {...props}>first_page</Icon>,
+    LastPage: (props) => <Icon {...props}>last_page</Icon>,
+    NextPage: (props) => <Icon {...props}>chevron_right</Icon>,
+    PreviousPage: (props) => <Icon {...props}>chevron_left</Icon>,
+    Search: (props) => <Icon {...props}>search</Icon>,
+    ThirdStateCheck: (props) => <Icon {...props}>remove</Icon>,
+    ViewColumn: (props) => <Icon {...props}>view_column</Icon>
+    /* eslint-enable react/display-name */
+  },
   title: 'Table Title',
   options: {
     actionsColumnIndex: 0,
@@ -426,6 +442,18 @@ MaterialTable.propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  icons: PropTypes.shape({
+    Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  }),
   title: PropTypes.string,
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,

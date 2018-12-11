@@ -2,14 +2,13 @@
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import filterActions from './filter-actions';
 /* eslint-enable no-unused-vars */
 
 export default class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
-      if(this.props.options.selection || (this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)) {
+      if(this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
         addColumn = 1;
       }
       return (
@@ -43,8 +42,9 @@ export default class MTableBody extends React.Component {
         {this.props.options.filtering &&
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
-            hasActions={(this.props.actions && this.props.actions.filter(filterActions(this.props.options)).length > 0)}
+            icons={this.props.icons}
+            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
@@ -56,6 +56,7 @@ export default class MTableBody extends React.Component {
             return (
               <this.props.components.Row
                 components={this.props.components}
+                icons={this.props.icons}
                 data={data}
                 index={index}
                 key={index}
@@ -89,6 +90,7 @@ MTableBody.propTypes = {
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
+  icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,

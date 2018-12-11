@@ -6,7 +6,7 @@ order: 2
 import { Playground, PropsTable } from 'docz'
 import MaterialTable from '../src/material-table'
 
-# Props
+## Props
 
 | Property            | Type   | Default           | Description                                                       |
 |:--------------------|:-------|:------------------|:------------------------------------------------------------------|
@@ -14,6 +14,7 @@ import MaterialTable from '../src/material-table'
 | columns             | Array  |                   | Column definitions                                                |
 | components          | object |                   | Component customization                                           |
 | data                | Array  |                   | Data to be rendered                                               |
+| icons               | object |                   | Icons customization                                               |
 | localization        | object |                   | All text for localization                                         |
 | onChangePage        | func   |                   | To handle page changes (page)                                     |
 | onChangeRowsPerPage | func   |                   | To handle rows per page changes (pageSize)                        |
@@ -23,18 +24,18 @@ import MaterialTable from '../src/material-table'
 | title               | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
 
 
-## actions
+### actions
 
-| Field         | Type      | Default   | Description                                                                               |
-|:--------------|:----------|:----------|:------------------------------------------------------------------------------------------|
-| disabled      | boolean   | false     | Button enabled/disabled                                                                   |
-| icon          | string    |           | Icon of button from material icons                                                        |
-| iconProps     | object    |           | Props for icon as IconProps from https://material-ui.com/api/icon/                        |
-| isFreeAction  | boolean   | false     | Independent actions that will not on row' actions section                                 |
-| onClick       | func      |           | This event will be fired when button clicked. Parameters are `event` and `row or rows`    |
-| tooltip       | string    |           | Tooltip for button                                                                        |
+| Field         | Type                    | Default   | Description                                                                               |
+|:--------------|:------------------------|:----------|:------------------------------------------------------------------------------------------|
+| disabled      | boolean                 | false     | Button enabled/disabled                                                                   |
+| icon          | string or ReactElement  |           | Icon of button from material icons or custom component                                    |
+| iconProps     | object                  |           | Props for icon as IconProps from https://material-ui.com/api/icon/                        |
+| isFreeAction  | boolean                 | false     | Independent actions that will not on row' actions section                                 |
+| onClick       | func                    |           | This event will be fired when button clicked. Parameters are `event` and `row or rows`    |
+| tooltip       | string                  |           | Tooltip for button                                                                        |
 
-## columns
+### columns
 
 | Field           | Type            | Default   | Description                                                                                                   |
 |:----------------|:----------------|:----------|:--------------------------------------------------------------------------------------------------------------|
@@ -54,7 +55,7 @@ import MaterialTable from '../src/material-table'
 |                 |                 |           | minimumFractionDigits represents the min number of fraction digits to use Possible values are from 0 to 20    |                                 
 |                 |                 |           | maximumFractionDigits represents the max number of fraction digits to use. Possible values are from 0 to 20   |
 
-## components
+### components
 
 | Field         | Type          | Default         | Description                                                                               |
 |:--------------|:--------------|:----------------|:------------------------------------------------------------------------------------------|
@@ -67,7 +68,22 @@ import MaterialTable from '../src/material-table'
 | Row           | React.Element | MTableBodyRow   | Row component                                                                             |
 | Toolbar       | React.Element | MTableToolbar   | Toolbar component                                                                         |
 
-## data
+### icons
+
+| Field           | Type          | Default                         | Description           |
+|:----------------|:--------------|:--------------------------------|:----------------------|
+| Check           | React.Element | material icons 'check'          | Check icon            |
+| Export          | React.Element | material icons 'save_alt'       | Export icon           |
+| Filter          | React.Element | material icons 'filter_list'    | Filter icon           |
+| FirstPage       | React.Element | material icons 'first_page'     | FirstPage icon        |
+| LastPage        | React.Element | material icons 'last_page'      | LastPage icon         |
+| NextPage        | React.Element | material icons 'chevron_right'  | NextPage icon         |
+| PreviousPage    | React.Element | material icons 'chevron_left'   | PreviousPage icon     |
+| Search          | React.Element | material icons 'search'         | Search icon           |
+| ThirdStateCheck | React.Element | material icons 'remove'         | ThirdStateCheck icon  |
+| ViewColumn      | React.Element | material icons 'view_column'    | ViewColumn icon       |
+
+### data
 
 Data must be array of objects which has fields defined in columns. For example:
 
@@ -79,17 +95,17 @@ const data = [
 
 ```
 
-## localization
+### localization
 
 locations settings could be use to change default texts of datatable.
 
-| Field                 | Type    | Default                | Description         |
-|:----------------------|:--------|:-----------------------|:--------------------|
-| actions               | string  | 'Actions'              |                     |
-| nRowsSelected         | string  | '{0} row(s) selected'  |                     |
-|emptyDataSourceMessage | string  | 'No records to display'|                     |
+| Field                   | Type    | Default                 | Description         |
+|:------------------------|:--------|:------------------------|:--------------------|
+| actions                 | string  | 'Actions'               |                     |
+| nRowsSelected           | string  | '{0} row(s) selected'   |                     |
+| emptyDataSourceMessage  | string  | 'No records to display' |                     |
 
-## options
+### options
 
 Options property could be given to component as `options` property. You can change behaviour of grid.
 

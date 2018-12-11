@@ -75,7 +75,7 @@ class MTableFilterRow extends React.Component {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Icon>filter_list</Icon>
+            <this.props.icons.Filter/>
           </InputAdornment>
         )
       }}

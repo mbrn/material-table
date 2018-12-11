@@ -37,14 +37,15 @@ class MTableToolbar extends React.Component {
 
   renderSearch() {
     if (this.props.search) {
-      return (
+      return (        
         <TextField
           value={this.props.searchText}
           onChange={event => this.props.onSearchChanged(event.target.value)}
-          InputProps={{
+          color="inherit"          
+          InputProps={{            
             startAdornment: (
-              <InputAdornment position="start">
-                <Icon>search</Icon>
+              <InputAdornment position="start">                
+                <this.props.icons.Search color="inherit"/>
               </InputAdornment>
             )
           }}
@@ -58,15 +59,17 @@ class MTableToolbar extends React.Component {
 
   renderDefaultActions() {
     return (
-      <div>
-        {this.renderSearch()}
+      <div>        
+        {this.renderSearch()}        
         {this.props.columnsButton &&
-          <span>
-            <Tooltip title="Show Columns">
+          <span>    
+            <Tooltip title="Show Columns">            
               <IconButton
+                color="inherit"
                 onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget })}
-                aria-label="Show Columns">
-                <Icon>view_column</Icon>
+                aria-label="Show Columns">                
+                
+                <this.props.icons.ViewColumn/>
               </IconButton>
             </Tooltip>
             <Menu
@@ -101,9 +104,10 @@ class MTableToolbar extends React.Component {
           <span>
             <Tooltip title="Export">
               <IconButton
+                color="inherit"
                 onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget })}
                 aria-label="Show Columns">
-                <Icon>save_alt</Icon>
+                <this.props.icons.Export/>
               </IconButton>
             </Tooltip>
             <Menu
@@ -118,16 +122,16 @@ class MTableToolbar extends React.Component {
           </span>
 
         }
-        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => { return a.isFreeAction })} />
+        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => a.isFreeAction)} />
       </div>
     );
   }
 
   renderSelectedActions() {
     return (
-      <React.Fragment>
+      <React.Fragment>        
         {this.renderSearch()}
-        <this.props.components.Actions actions={this.props.actions.filter(a => { return !a.isFreeAction && (!a.isRowAction || a.isSelectedAction) })} data={this.props.selectedRows} />
+        <this.props.components.Actions actions={this.props.actions.filter(a => !a.isFreeAction)} data={this.props.selectedRows} />
       </React.Fragment>
     );
   }
@@ -152,7 +156,7 @@ class MTableToolbar extends React.Component {
           <Typography variant="h6">{title}</Typography>
         </div>
         <div className={classes.spacer} />
-        <div className={classes.actions}>
+        <div className={classes.actions}>    
           {this.renderActions()}
         </div>
       </Toolbar>
@@ -182,7 +186,7 @@ MTableToolbar.propTypes = {
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
   title: PropTypes.string.isRequired,
-  renderData: PropTypes.func,
+  renderData: PropTypes.array,
   exportButton: PropTypes.bool,
   classes: PropTypes.object
 };
@@ -205,7 +209,7 @@ const styles = theme => ({
     flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   title: {
     flex: '0 0 auto'

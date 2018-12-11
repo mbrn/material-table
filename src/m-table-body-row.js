@@ -2,7 +2,6 @@
 import { Checkbox, TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import filterActions from './filter-actions';
 /* eslint-enable no-unused-vars */
 
 
@@ -11,7 +10,14 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        return <this.props.components.Cell columnDef={columnDef} value={value} key={columnDef.tableData.id} rowData={this.props.data} />;
+        return (
+          <this.props.components.Cell 
+            icons={this.props.icons}
+            columnDef={columnDef} 
+            value={value}
+            key={columnDef.tableData.id}
+            rowData={this.props.data} />
+        );
       });
     return mapArr;
   }
@@ -20,7 +26,7 @@ export default class MTableBodyRow extends React.Component {
     return (
       <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} key="key-actions-column">
         <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={this.props.actions.filter(filterActions(this.props.options))} />
+          <this.props.components.Actions data={this.props.data} actions={this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection)} />
         </div>
       </TableCell>
     );
@@ -42,7 +48,7 @@ export default class MTableBodyRow extends React.Component {
       columns.splice(0, 0, this.renderSelectionColumn());
     }
     if (this.props.actions &&
-      this.props.actions.filter(filterActions(this.props.options)).length > 0) {
+      this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
         columns.push(this.renderActions());
       } else if (this.props.options.actionsColumnIndex >= 0) {
@@ -70,6 +76,7 @@ MTableBodyRow.defaultProps = {
 
 MTableBodyRow.propTypes = {
   actions: PropTypes.array,
+  icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,

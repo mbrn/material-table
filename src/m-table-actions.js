@@ -16,10 +16,15 @@ class MTableActions extends React.Component {
     const button = (
       <IconButton
         key={action.icon + '' + index}
+        color="inherit"
         disabled={action.disabled}
         onClick={(event) => action.onClick && action.onClick(event, this.props.data)}
-      >
-        <Icon {...action.iconProps}>{action.icon}</Icon>
+      >        
+        {typeof action.icon === "string" ?
+          <Icon {...action.iconProps}>{action.icon}</Icon>
+          :
+          <action.icon {...action.iconProps}/>
+        } 
       </IconButton>
     );
 
