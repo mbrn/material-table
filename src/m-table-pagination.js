@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Icon, IconButton, withStyles } from '@material-ui/core';
+import { Icon, IconButton, withStyles, Tooltip } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
@@ -26,37 +26,55 @@ class MTablePaginationInner extends React.Component {
 
   render() {
     const { classes, count, page, rowsPerPage } = this.props;
-
+    
+    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
+    
     return (
       <div className={classes.root}>
-        <IconButton
-          onClick={this.handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="First Page"
-        >          
-          <this.props.icons.FirstPage/>
-        </IconButton>
-        <IconButton
-          onClick={this.handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="Previous Page"
-        >
-          <this.props.icons.PreviousPage/>
-        </IconButton>
-        <IconButton
-          onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Next Page"
-        >
-          <this.props.icons.NextPage/>
-        </IconButton>
-        <IconButton
-          onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Last Page"
-        >
-          <this.props.icons.LastPage/>
-        </IconButton>
+        <Tooltip title={localization.firstTooltip}>
+          <span>
+            <IconButton
+              onClick={this.handleFirstPageButtonClick}
+              disabled={page === 0}
+              aria-label={localization.firstAriaLabel}
+            >
+              <this.props.icons.FirstPage/>
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={localization.previousTooltip}>
+          <span>
+            <IconButton
+              onClick={this.handleBackButtonClick}
+              disabled={page === 0}
+              aria-label={localization.previousAriaLabel}
+            >
+              <this.props.icons.PreviousPage/>
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={localization.nextTooltip}>
+          <span>
+            <IconButton
+              onClick={this.handleNextButtonClick}
+              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+              aria-label={localization.nextAriaLabel}
+            >
+              <this.props.icons.NextPage/>
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={localization.lastTooltip}>
+          <span>
+            <IconButton
+              onClick={this.handleLastPageButtonClick}
+              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+              aria-label={localization.lastAriaLabel}
+            >
+              <this.props.icons.LastPage/>
+            </IconButton>
+          </span>
+        </Tooltip>
       </div>
     );
   }
@@ -75,7 +93,21 @@ MTablePaginationInner.propTypes = {
   page: PropTypes.number,
   count: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  localization: PropTypes.object
+};
+
+MTablePaginationInner.defaultProps = {
+  localization: {
+    firstAriaLabel: 'First Page',
+    previousAriaLabel: 'Previous Page',
+    nextAriaLabel: 'Next Page',
+    lastAriaLabel: 'Last Page',
+    firstTooltip: 'First Page',
+    previousTooltip: 'Previous Page',
+    nextTooltip: 'Next Page',
+    lastTooltip: 'Last Page'
+  }
 };
 
 const MTablePagination = withStyles(actionsStyles, { withTheme: true })(MTablePaginationInner);

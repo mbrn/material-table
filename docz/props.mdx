@@ -97,13 +97,35 @@ const data = [
 
 ### localization
 
-locations settings could be use to change default texts of datatable.
+Localization settings could be used to change/translate default texts of datatable.
 
-| Field                   | Type    | Default                 | Description         |
-|:------------------------|:--------|:------------------------|:--------------------|
-| actions                 | string  | 'Actions'               |                     |
-| nRowsSelected           | string  | '{0} row(s) selected'   |                     |
-| emptyDataSourceMessage  | string  | 'No records to display' |                     |
+| Field                         | Type   | Default                   | Description                                      |
+|:------------------------------|:-------|:--------------------------|:-------------------------------------------------|
+| pagination                    | object | {}                        | Key value pair for localize pagination component |
+| pagination.labelDisplayedRows | string | {from}-{to} of {count}    |                                                  |
+| pagination.labelRowsPerPage   | string | Rows per page:            |                                                  |
+| pagination.firstAriaLabel     | string | First Page                |                                                  |
+| pagination.firstTooltip       | string | First Page                |                                                  |
+| pagination.previousAriaLabel  | string | Previous Page             |                                                  |
+| pagination.previousTooltip    | string | Previous Page             |                                                  |
+| pagination.nextAriaLabel      | string | Next Page                 |                                                  |
+| pagination.nextTooltip        | string | Next Page                 |                                                  |
+| pagination.lastAriaLabel      | string | Last Page                 |                                                  |
+| pagination.lastTooltip        | string | Last Page                 |                                                  |
+| toolbar                       | object | {}                        | Key value pair for localize toolbar component    |
+| toolbar.nRowsSelected         | string | {0} row(s) selected       |                                                  |
+| toolbar.showColumnsTitle      | string | Show Columns              |                                                  |
+| toolbar.showColumnsAriaLabel  | string | Show Columns              |                                                  |
+| toolbar.exportTitle           | string | Export                    |                                                  |
+| toolbar.exportAriaLabel       | string | Export                    |                                                  |
+| toolbar.exportName            | string | Export as CSV             |                                                  |
+| toolbar.searchTooltip         | string | Search                    |                                                  |
+| header                        | object | {}                        | Key value pair for localize header component     |
+| header.actions                | string | Actions                   |                                                  |
+| body                          | object | {}                        | Key value pair for localize body component       |
+| body.emptyDataSourceMessage   | string | No records to display     |                                                  |
+| body.filterRow                | object | {}                        | Key value pair for localize filter row component |
+| body.filterRow.filterTooltip  | string | Filter                    |                                                  |
 
 ### options
 

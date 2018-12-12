@@ -219,6 +219,7 @@ class MaterialTable extends React.Component {
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
+      const localization = { ...MaterialTable.defaultProps.localization.pagination, ...this.props.localization.pagination };
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
@@ -246,7 +247,9 @@ class MaterialTable extends React.Component {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
-                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons}/>}
+                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization}/>}
+                labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
+                labelRowsPerPage={localization.labelRowsPerPage}
               />
             </TableRow>
           </TableFooter>
@@ -279,13 +282,13 @@ class MaterialTable extends React.Component {
             title={props.title}
             onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
             onColumnsChanged={columns => this.setState({ columns })}
-            localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
+            localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
           />
         }
         <div style={{ overflowX: 'auto' }}>
           <Table>
             <props.components.Header
-              localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
+              localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
               columns={this.state.columns}
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
@@ -343,7 +346,7 @@ class MaterialTable extends React.Component {
                 }), () => this.onSelectionChange());
                 this.setData();
               }}
-              localization={{ ...MaterialTable.defaultProps.localization, ...this.props.localization }}
+              localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
             />
           </Table>
         </div>
@@ -399,9 +402,15 @@ MaterialTable.defaultProps = {
     toolbar: true
   },
   localization: {
-    actions: 'Actions',
-    nRowsSelected: '{0} row(s) selected',
-    emptyDataSourceMessage: 'No records to display'
+    pagination: {
+      labelDisplayedRows: '{from}-{to} of {count}',
+      labelRowsPerPage: 'Rows per page:'
+    },
+    toolbar: {},
+    header: {},
+    body: {
+      filterRow: {}
+    }
   }
 };
 
@@ -472,9 +481,10 @@ MaterialTable.propTypes = {
     toolbar: PropTypes.bool
   }),
   localization: PropTypes.shape({
-    actions: PropTypes.string,
-    nRowsSelected: PropTypes.string,
-    emptyDataSourceMessage: PropTypes.string
+    pagination: PropTypes.object,
+    toolbar: PropTypes.object,
+    header: PropTypes.object,
+    body: PropTypes.object
   }),
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,

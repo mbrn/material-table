@@ -5,7 +5,7 @@ import {
   TableCell, TableRow, TextField,
   FormControl, Select, Input,
   MenuItem, Checkbox, ListItemText,
-  InputAdornment, Icon
+  InputAdornment, Icon, Tooltip,
 } from '@material-ui/core';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
@@ -66,21 +66,28 @@ class MTableFilterRow extends React.Component {
     />
   )
 
-  renderDefaultFilter = (columnDef) => (
-    <TextField
-      style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
-      type={columnDef.type === 'numeric' ? 'number' : 'text'}
-      value={columnDef.tableData.filterValue}
-      onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <this.props.icons.Filter/>
-          </InputAdornment>
-        )
-      }}
-    />
-  )
+  renderDefaultFilter = (columnDef) => {
+    const localization = {...MTableFilterRow.defaultProps.localization, ...this.props.localization};
+    return (
+      <TextField
+        style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
+        type={columnDef.type === 'numeric' ? 'number' : 'text'}
+        value={columnDef.tableData.filterValue}
+        onChange={(event) => {
+          this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Tooltip title={localization.filterTooltip}>
+                <this.props.icons.Filter/>
+              </Tooltip>
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
 
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
@@ -176,6 +183,9 @@ MTableFilterRow.defaultProps = {
   columns: [],
   selection: false,
   hasActions: false,
+  localization: {
+    filterTooltip: 'Filter'
+  }
 };
 
 MTableFilterRow.propTypes = {
@@ -186,6 +196,7 @@ MTableFilterRow.propTypes = {
   onFilterSelectionChanged: PropTypes.func.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
+  localization: PropTypes.object
 };
 
 export default MTableFilterRow;

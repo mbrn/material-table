@@ -34,9 +34,10 @@ class MTableHeader extends React.Component {
   }
 
   renderActionsHeader() {
+    const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     return (
       <TableCell key="key-actions-column">
-        <TableSortLabel>{this.props.localization.actions}</TableSortLabel>
+        <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }
@@ -84,7 +85,9 @@ MTableHeader.defaultProps = {
   hasSelection: false,
   selectedCount: 0,
   sorting: true,
-  localization: {},
+  localization: {
+    actions: 'Actions'
+  },
   orderBy: undefined,
   orderDirection: 'asc',
   actionsHeaderIndex: 0

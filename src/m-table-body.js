@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-export default class MTableBody extends React.Component {
+class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
+    const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
       if(this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
@@ -14,7 +15,7 @@ export default class MTableBody extends React.Component {
       return (
         <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
           <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
-            {this.props.localization.emptyDataSourceMessage}
+            {localization.emptyDataSourceMessage}
           </TableCell>
         </TableRow>
       );
@@ -49,6 +50,7 @@ export default class MTableBody extends React.Component {
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
           />
         }
         {
@@ -81,7 +83,10 @@ MTableBody.defaultProps = {
   pageSize: 5,
   renderData: [],
   selection: false,
-  localization: {}
+  localization: {
+    emptyDataSourceMessage: 'No records to display',
+    filterRow: {}
+  }
 };
 
 MTableBody.propTypes = {
@@ -100,3 +105,5 @@ MTableBody.propTypes = {
   localization: PropTypes.object,
   onFilterChanged: PropTypes.func
 };
+
+export default MTableBody;
