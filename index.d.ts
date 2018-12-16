@@ -13,11 +13,11 @@ export interface MaterialTableProps {
   onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
-  onOrderChange?: (orderBy: columnId, orderDirection: "asc" | "desc") => void;
+  onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
 }
 
 export interface Action {
-  icon: string | React.ReactElement;
+  icon: string | React.ReactElement<any>;
   isFreeAction?: boolean;    
   tooltip?: string;
   onClick: (event: any, data: any) => void;
@@ -28,7 +28,7 @@ export interface Column {
   cellStyle?: any | ((data: any) => any);
   hidden?: boolean;
   field?: string;
-  filtering?: boolean,
+  filtering?: boolean;
   lookup?: object;
   render?: (data:any) => any;
   sorting?: boolean;
@@ -40,27 +40,27 @@ export interface Column {
 }
 
 export interface Components {
-  Actions: React.ReactElement;
-  Body: React.ReactElement;
-  Cell: React.ReactElement;
-  FilterRow: React.ReactElement;
-  Header: React.ReactElement;
-  Pagination: React.ReactElement;
-  Row: React.ReactElement;
-  Toolbar: React.ReactElement;
+  Actions?: React.ComponentType<any>;
+  Body?: React.ComponentType<any>;
+  Cell?: React.ComponentType<any>;
+  FilterRow?: React.ComponentType<any>;
+  Header?: React.ComponentType<any>;
+  Pagination?: React.ComponentType<any>;
+  Row?: React.ComponentType<any>;
+  Toolbar?: React.ComponentType<any>;
 }
 
 export interface Icons {
-  Check: React.ReactElement;
-  Export: React.ReactElement;
-  Filter: React.ReactElement;
-  FirstPage: React.ReactElement;
-  LastPage: React.ReactElement;
-  NextPage: React.ReactElement;
-  PreviousPage: React.ReactElement;
-  Search: React.ReactElement;
-  ThirdStateCheck: React.ReactElement;
-  ViewColumn: React.ReactElement;
+  Check: React.ReactElement<any>;
+  Export: React.ReactElement<any>;
+  Filter: React.ReactElement<any>;
+  FirstPage: React.ReactElement<any>;
+  LastPage: React.ReactElement<any>;
+  NextPage: React.ReactElement<any>;
+  PreviousPage: React.ReactElement<any>;
+  Search: React.ReactElement<any>;
+  ThirdStateCheck: React.ReactElement<any>;
+  ViewColumn: React.ReactElement<any>;
 }
 
 export interface Options {
@@ -87,3 +87,4 @@ export interface Localization {
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;
 export default MaterialTable;
+

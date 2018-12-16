@@ -12,7 +12,7 @@
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint src/**",
+    "lint": "eslint src/** && ./node_modules/.bin/tsc --noEmit --lib es6,dom index.d.ts",
     "lint:fix": "eslint src/** --fix",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
@@ -62,7 +62,8 @@
     "react-hot-loader": "^4.3.12",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "typescript": "^3.2.2"
   },
   "peerDependencies": {
     "react": "^16.5.2",
