@@ -80,9 +80,10 @@ export interface Options {
 }
 
 export interface Localization {
-  actions?: string;
-  nRowsSelected?: string;
-  emptyDataSourceMessage?:string;
+  pagination?: object;
+  toolbar?: object;
+  header?: object;
+  body?: object;
 }
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;

@@ -30,7 +30,36 @@ import MaterialTable from '../../src/material-table'
       }
     ]}
     localization={{
-      actions: 'Buttons'
+      pagination: {
+        labelDisplayedRows: '{from}-{to} von {count}',        // {from}-{to} of {count}
+        labelRowsPerPage: 'Zeilen pro Seite:',       // Rows per page:
+        firstAriaLabel: 'Erste Seite',       // First Page
+        firstTooltip: 'Erste Seite',       // First Page
+        previousAriaLabel: 'Vorherige Seite',       // Previous Page
+        previousTooltip: 'Vorherige Seite',       // Previous Page
+        nextAriaLabel: 'Nächste Seite',     // Next Page
+        nextTooltip: 'Nächste Seite',     // Next Page
+        lastAriaLabel: 'Letzte Seite',      // Last Page
+        lastTooltip: 'Letzte Seite'      // Last Page
+      },
+      toolbar: {
+        nRowsSelected: '{0} Zeile(n) ausgewählt',      // {0} row(s) selected
+        showColumnsTitle: 'Spalten anzeigen',        // Show Columns
+        showColumnsAriaLabel: 'Spalten anzeigen',        // Show Columns
+        exportTitle: 'Exportieren',     // Export
+        exportAriaLabel: 'Exportieren',      // Export
+        exportName: 'Als CSV exportieren',      // Export as CSV
+        searchTooltip: 'Suchen'        // Search
+      },
+      header: {
+        actions: 'Aktionen'        // Actions
+      },
+      body: {
+        emptyDataSourceMessage: 'Keine Einträge an zu zeigen',     // No records to display
+        filterRow: {
+          filterTooltip: 'Filtern'     // Filter
+        }
+      }
     }}
   />
 </Playground>

@@ -36,6 +36,7 @@ class MTableToolbar extends React.Component {
   }
 
   renderSearch() {
+    const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     if (this.props.search) {
       return (        
         <TextField
@@ -44,8 +45,10 @@ class MTableToolbar extends React.Component {
           color="inherit"          
           InputProps={{            
             startAdornment: (
-              <InputAdornment position="start">                
-                <this.props.icons.Search color="inherit"/>
+              <InputAdornment position="start">
+                <Tooltip title={localization.searchTooltip}>
+                  <this.props.icons.Search color="inherit"/>
+                </Tooltip>
               </InputAdornment>
             )
           }}
@@ -58,16 +61,17 @@ class MTableToolbar extends React.Component {
   }
 
   renderDefaultActions() {
+    const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     return (
       <div>        
         {this.renderSearch()}        
         {this.props.columnsButton &&
           <span>    
-            <Tooltip title="Show Columns">            
+            <Tooltip title={localization.showColumnsTitle}>
               <IconButton
                 color="inherit"
                 onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget })}
-                aria-label="Show Columns">                
+                aria-label={localization.showColumnsAriaLabel}>
                 
                 <this.props.icons.ViewColumn/>
               </IconButton>
@@ -102,11 +106,11 @@ class MTableToolbar extends React.Component {
         }
         {this.props.exportButton &&
           <span>
-            <Tooltip title="Export">
+            <Tooltip title={localization.exportTitle}>
               <IconButton
                 color="inherit"
                 onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget })}
-                aria-label="Show Columns">
+                aria-label={localization.exportAriaLabel}>
                 <this.props.icons.Export/>
               </IconButton>
             </Tooltip>
@@ -116,7 +120,7 @@ class MTableToolbar extends React.Component {
               onClose={() => this.setState({ exportButtonAnchorEl: null })}
             >
               <MenuItem key="export-csv" onClick={this.exportCsv}>
-                Export as CSV
+                {localization.exportName}
               </MenuItem>
             </Menu>
           </span>
@@ -149,7 +153,8 @@ class MTableToolbar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? this.props.localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
+    const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
+    const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
         <div className={classes.title}>
@@ -168,7 +173,15 @@ MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
   columnsButton: false,
-  localization: {},
+  localization: {
+    nRowsSelected: '{0} row(s) selected',
+    showColumnsTitle: 'Show Columns',
+    showColumnsAriaLabel: 'Show Columns',
+    exportTitle: 'Export',
+    exportAriaLabel: 'Export',
+    exportName: 'Export as CSV',
+    searchTooltip: 'Search'
+  },
   search: true,
   searchText: '',
   selectedRows: [],
