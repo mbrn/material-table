@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/material-table.js",
   "types": "index.d.ts",
@@ -12,7 +12,7 @@
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint src/** && ./node_modules/.bin/tsc --noEmit --lib es6,dom index.d.ts",
+    "lint": "eslint src/** && tsc --noEmit --lib es6,dom index.d.ts",
     "lint:fix": "eslint src/** --fix",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
