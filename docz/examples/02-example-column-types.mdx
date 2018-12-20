@@ -1,0 +1,67 @@
+---
+name: Column Types Example
+order: 2
+menu: Examples
+---
+
+import Playground from '../utils/Playground'
+import MaterialTable from '../../src/material-table'
+
+## Column Types Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Birth Date', field: 'birthDate', type: 'date'},
+      {title: 'Birth Time', field: 'birthTime', type: 'time'}
+    ]}
+    data={[
+      {name: 'Baldi', birthDate: '08/13/1996', birthTime: '02:00'},
+      {name: 'Luiz', birthDate: '10/20/2018', birthTime: '17:00'}
+    ]}
+    title="Date Example"
+    options={{
+      filtering: true
+    }}
+  />
+</Playground>
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Expenses', field: 'expenses', type: 'currency'},    
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', expenses:1500.50 },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses:1200 },
+      {name: 'Silvia Joyce', surname: 'Balraj', expenses:1700 },
+    ]}
+    title="Currency"
+    options={{
+      toolbar: false,
+      paging: false
+    }}
+  />
+</Playground>
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Expenses', field: 'expenses', type: 'currency', currencySetting:{locale:'tr-TR',currencyCode:'TRY',minimumFractionDigits:2,maximumFractionDigits:3}},    
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', expenses:3500.555 },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses:2702.5575 },
+    ]}
+    title="Currency"
+    options={{
+      toolbar: false,
+      paging: false
+    }}
+  />
+</Playground>

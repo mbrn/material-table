@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.4.0",
+  "version": "1.8.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/material-table.js",
   "types": "index.d.ts",
@@ -9,10 +9,10 @@
     "index.d.ts"
   ],
   "scripts": {
-    "start": "npm run docz:dev",
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint src/**",
+    "lint": "eslint src/** && tsc --noEmit --lib es6,dom index.d.ts",
     "lint:fix": "eslint src/** --fix",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
@@ -30,7 +30,8 @@
     "react",
     "material-ui",
     "material",
-    "datatable"
+    "datatable",
+    "table"
   ],
   "author": "Mehmet Baran",
   "license": "MIT",
@@ -43,10 +44,12 @@
     "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-runtime": "7.1.0",
+    "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
+    "babel-loader": "^8.0.4",
     "buble": "0.19.3",
-    "docz": "0.12.10",
+    "docz": "0.12.15",
     "eslint": "5.7.0",
     "eslint-config-defaults": "9.0.0",
     "eslint-config-standard": "12.0.0",
@@ -55,20 +58,22 @@
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
-    "husky": "^1.2.0"
+    "husky": "^1.2.0",
+    "react-hot-loader": "^4.3.12",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "typescript": "^3.2.2"
   },
   "peerDependencies": {
-    "@material-ui/core": "^3.1.0",
-    "classnames": "^2.2.6",
-    "filefy": "0.1.3",
-    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
   "dependencies": {
+    "@material-ui/core": "^3.1.0",
     "classnames": "^2.2.6",
     "date-fns": "2.0.0-alpha.16",
-    "filefy": "^0.1.2",
+    "filefy": "0.1.3",
     "material-ui-pickers": "1.0.1",
     "prop-types": "^15.6.2"
   }

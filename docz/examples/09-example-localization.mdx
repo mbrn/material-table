@@ -1,0 +1,69 @@
+---
+name: Localization Example
+order: 9
+menu: Examples
+---
+
+import Playground from '../utils/Playground'
+import MaterialTable from '../../src/material-table'
+
+## Localization Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
+      {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},      
+    ]}
+    data={[
+      {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
+      {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},
+    ]}
+    title="Localization"
+    actions={[
+      {
+        icon: 'account_circle',
+        tooltip: 'Show User Info',
+        onClick: (event, rowData) => { alert('You clicked user ' + rowData.name)}
+      }
+    ]}
+    localization={{
+      pagination: {
+        labelDisplayedRows: '{from}-{to} von {count}',        // {from}-{to} of {count}
+        labelRowsPerPage: 'Zeilen pro Seite:',       // Rows per page:
+        firstAriaLabel: 'Erste Seite',       // First Page
+        firstTooltip: 'Erste Seite',       // First Page
+        previousAriaLabel: 'Vorherige Seite',       // Previous Page
+        previousTooltip: 'Vorherige Seite',       // Previous Page
+        nextAriaLabel: 'Nächste Seite',     // Next Page
+        nextTooltip: 'Nächste Seite',     // Next Page
+        lastAriaLabel: 'Letzte Seite',      // Last Page
+        lastTooltip: 'Letzte Seite'      // Last Page
+      },
+      toolbar: {
+        nRowsSelected: '{0} Zeile(n) ausgewählt',      // {0} row(s) selected
+        showColumnsTitle: 'Spalten anzeigen',        // Show Columns
+        showColumnsAriaLabel: 'Spalten anzeigen',        // Show Columns
+        exportTitle: 'Exportieren',     // Export
+        exportAriaLabel: 'Exportieren',      // Export
+        exportName: 'Als CSV exportieren',      // Export as CSV
+        searchTooltip: 'Suchen'        // Search
+      },
+      header: {
+        actions: 'Aktionen'        // Actions
+      },
+      body: {
+        emptyDataSourceMessage: 'Keine Einträge an zu zeigen',     // No records to display
+        filterRow: {
+          filterTooltip: 'Filtern'     // Filter
+        }
+      }
+    }}
+  />
+</Playground>
+
+
+
+

@@ -5,7 +5,7 @@ import {
   TableCell, TableRow, TextField,
   FormControl, Select, Input,
   MenuItem, Checkbox, ListItemText,
-  InputAdornment, Icon
+  InputAdornment, Icon, Tooltip,
 } from '@material-ui/core';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
@@ -66,21 +66,28 @@ class MTableFilterRow extends React.Component {
     />
   )
 
-  renderDefaultFilter = (columnDef) => (
-    <TextField
-      style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
-      type={columnDef.type === 'numeric' ? 'number' : 'text'}
-      value={columnDef.tableData.filterValue}
-      onChange={(event) => { this.props.onFilterChanged(columnDef.tableData.id, event.target.value) }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <Icon>filter_list</Icon>
-          </InputAdornment>
-        )
-      }}
-    />
-  )
+  renderDefaultFilter = (columnDef) => {
+    const localization = {...MTableFilterRow.defaultProps.localization, ...this.props.localization};
+    return (
+      <TextField
+        style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
+        type={columnDef.type === 'numeric' ? 'number' : 'text'}
+        value={columnDef.tableData.filterValue}
+        onChange={(event) => {
+          this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Tooltip title={localization.filterTooltip}>
+                <this.props.icons.Filter/>
+              </Tooltip>
+            </InputAdornment>
+          )
+        }}
+      />
+    );
+  }
 
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
@@ -120,6 +127,10 @@ class MTableFilterRow extends React.Component {
   }
 
   getComponentForColumn(columnDef) {
+    if(columnDef.filtering === false) {
+      return null;
+    }
+
     if (columnDef.field) {
       if (columnDef.lookup) {
         return this.renderLookupFilter(columnDef);
@@ -146,11 +157,16 @@ class MTableFilterRow extends React.Component {
           <Checkbox onChange={this.props.onFilterSelectionChanged} />
         </TableCell>)
       );
-    } else if (this.props.emptyCell) {
+    }
+    if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell />);
       } else {
-        columns.splice(this.props.actionsColumnIndex, 0, <TableCell />);
+        let endPos = 0;
+        if (this.props.selection) {
+          endPos = 1;
+        }
+        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell />);
       }
     }
 
@@ -165,7 +181,11 @@ class MTableFilterRow extends React.Component {
 MTableFilterRow.defaultProps = {
   emptyCell: false,
   columns: [],
-  selection: false
+  selection: false,
+  hasActions: false,
+  localization: {
+    filterTooltip: 'Filter'
+  }
 };
 
 MTableFilterRow.propTypes = {
@@ -173,7 +193,10 @@ MTableFilterRow.propTypes = {
   columns: PropTypes.array.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
-  onFilterSelectionChanged: PropTypes.func.isRequired
+  onFilterSelectionChanged: PropTypes.func.isRequired,
+  actionsColumnIndex: PropTypes.number,
+  hasActions: PropTypes.bool,
+  localization: PropTypes.object
 };
 
 export default MTableFilterRow;

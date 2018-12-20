@@ -1,0 +1,35 @@
+---
+name: Other Examples
+order: 11
+menu: Examples
+---
+
+import Playground from '../utils/Playground'
+import MaterialTable from '../../src/material-table'
+
+## Other Examples Example
+
+<Playground>
+  <MaterialTable
+    columns={[
+      {title: 'Name', field: 'name'},
+      {title: 'Surname', field: 'surname'},
+      {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
+      {title: 'Birth Place', field: 'birthCity', lookup: {34: 'İstanbul', 63: 'Şanlıurfa'}},      
+    ]}
+    data={[ ]}
+    title="Empty DataSource Example"
+    options={{
+      toolbar: false,
+      paging: true,      
+      showEmptyDataSourceMessage:true
+    }}
+     localization={{
+       emptyDataSourceMessage:'No records to display'
+    }}
+  />
+</Playground>
+
+
+
+

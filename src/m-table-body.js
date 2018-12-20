@@ -1,22 +1,25 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
+import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import MTableFilterRow from './m-table-filter-row';
-import MTableBodyRow from './m-table-body-row';
-import { TableBody, TableRow, TableCell } from '@material-ui/core';
+import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-export default class MTableBody extends React.Component {
+class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
+    const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
+      let addColumn = 0;
+      if(this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+        addColumn = 1;
+      }
       return (
-        <TableRow style={{ height: 49 * (this.props.options.paging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
-          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length} key="empty-">
-            {this.props.localization.emptyDataSourceMessage}
+        <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
+          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
+            {localization.emptyDataSourceMessage}
           </TableCell>
         </TableRow>
       );
-    } else {
+    } else if(this.props.options.emptyRowsWhenPaging){
       return (
         <React.Fragment>
           {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{ height: 49 }} key={'empty-' + index} />)}
@@ -38,19 +41,24 @@ export default class MTableBody extends React.Component {
     return (
       <TableBody>
         {this.props.options.filtering &&
-          <MTableFilterRow
+          <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction)).length > 0)}
+            icons={this.props.icons}
+            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
           />
         }
         {
           renderData.map((data, index) => {
             return (
-              <MTableBodyRow
+              <this.props.components.Row
+                components={this.props.components}
+                icons={this.props.icons}
                 data={data}
                 index={index}
                 key={index}
@@ -75,19 +83,27 @@ MTableBody.defaultProps = {
   pageSize: 5,
   renderData: [],
   selection: false,
-  localization: {}
+  localization: {
+    emptyDataSourceMessage: 'No records to display',
+    filterRow: {}
+  }
 };
 
 MTableBody.propTypes = {
   actions: PropTypes.array,
+  components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
+  icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,
-  localization: PropTypes.object
+  localization: PropTypes.object,
+  onFilterChanged: PropTypes.func
 };
+
+export default MTableBody;

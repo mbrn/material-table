@@ -28,6 +28,7 @@ To install material-table with `yarn`:
 ```html
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 ```
+or use `icons` props to give icons to material-table
 
 ## Usage
 
