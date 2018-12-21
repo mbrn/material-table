@@ -13,7 +13,7 @@ class MTableHeader extends React.Component {
       .map((columnDef) => (
         <TableCell
           key={columnDef.tableData.id}
-          numeric={['numeric'].indexOf(columnDef.type) !== -1}
+          align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
