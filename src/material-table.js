@@ -247,7 +247,7 @@ class MaterialTable extends React.Component {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
-                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization}/>}
+                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -417,7 +417,7 @@ MaterialTable.defaultProps = {
 
 MaterialTable.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]).isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
