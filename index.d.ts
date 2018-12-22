@@ -43,6 +43,7 @@ export interface Components {
   Actions?: React.ComponentType<any>;
   Body?: React.ComponentType<any>;
   Cell?: React.ComponentType<any>;
+  Container?: React.ComponentType<any>;
   FilterRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;

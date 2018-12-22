@@ -49,7 +49,7 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.4",
     "buble": "0.19.3",
-    "docz": "0.12.15",
+    "docz": "0.13.5",
     "eslint": "5.7.0",
     "eslint-config-defaults": "9.0.0",
     "eslint-config-standard": "12.0.0",

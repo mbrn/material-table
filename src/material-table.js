@@ -266,7 +266,7 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <Paper>
+      <props.components.Container>
         {props.options.toolbar &&
           <props.components.Toolbar
             actions={props.actions}
@@ -351,7 +351,7 @@ class MaterialTable extends React.Component {
           </Table>
         </div>
         {this.renderFooter()}
-      </Paper>
+      </props.components.Container>
     );
   }
 }
@@ -364,6 +364,7 @@ MaterialTable.defaultProps = {
     Actions: MTableActions,
     Body: MTableBody,
     Cell: MTableCell,
+    Container: Paper,
     FilterRow: MTableFilterRow,
     Header: MTableHeader,
     Pagination: TablePagination,
@@ -445,6 +446,7 @@ MaterialTable.propTypes = {
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

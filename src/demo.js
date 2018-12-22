@@ -7,6 +7,10 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
+          components={{
+            Container: props => <div style={{background: '#AAA'}}>{props.children}</div>,
+            //Container: React.Fragment
+          }}
           columns={[
             { title: 'Adı', field: 'name', filtering: false, render: () => <div>merhaba</div> },
             { title: 'Soyadı', field: 'surname', filtering: false },
