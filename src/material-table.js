@@ -276,6 +276,7 @@ class MaterialTable extends React.Component {
             columnsButton={props.options.columnsButton}
             icons={props.icons}
             exportButton={props.options.exportButton}
+            exportDelimiter={props.options.exportDelimiter}
             renderData={this.state.renderData}
             search={props.options.search}
             searchText={this.state.searchText}
@@ -392,6 +393,7 @@ MaterialTable.defaultProps = {
     columnsButton: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
+    exportDelimiter: ',',
     filtering: false,
     paging: true,
     pageSize: 5,
@@ -472,6 +474,7 @@ MaterialTable.propTypes = {
     columnsButton: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
+    exportDelimiter: PropTypes.string,
     filtering: PropTypes.bool,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,

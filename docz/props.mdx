@@ -52,7 +52,7 @@ import MaterialTable from '../src/material-table'
 | currencySetting | object          |           | This field can be used when column type is currency. If this field doesn't set it will be set to 'USD'        |
 |                 |                 |           | as default value. Otherwise currencySetting can be used example like example-currency.mdx.                    |
 |                 |                 |           | 'locale' represents language tag, currencyCode represents ISO 4217 currency codes,                            |
-|                 |                 |           | minimumFractionDigits represents the min number of fraction digits to use Possible values are from 0 to 20    |                                 
+|                 |                 |           | minimumFractionDigits represents the min number of fraction digits to use Possible values are from 0 to 20    |
 |                 |                 |           | maximumFractionDigits represents the max number of fraction digits to use. Possible values are from 0 to 20   |
 
 ### components
@@ -137,6 +137,7 @@ Options property could be given to component as `options` property. You can chan
 | columnsButton              | boolean   | false         | Flag for columns button that controls which column could be rendered              |
 | emptyRowsWhenPaging        | boolean   | true          | Flag for rendering rows to complete page size                                     |
 | exportButton               | boolean   | false         | Flag for export button that render export buttons                                 |
+| exportDelimiter            | string    | ,             | Delimiter to use in exported CSV file                                             |
 | filtering                  | boolean   | false         | Flag for filtering row                                                            |
 | paging                     | boolean   | true          | Flag for paging feature                                                           |
 | pageSize                   | numeric   | 5             | Number of rows that would be rendered on every page                               |

@@ -28,6 +28,7 @@ class MTableToolbar extends React.Component {
 
     // eslint-disable-next-line no-unused-vars
     const builder = new CsvBuilder((this.props.title || 'data') + '.csv')
+      .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
       .exportFile();
@@ -38,12 +39,12 @@ class MTableToolbar extends React.Component {
   renderSearch() {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     if (this.props.search) {
-      return (        
+      return (
         <TextField
           value={this.props.searchText}
           onChange={event => this.props.onSearchChanged(event.target.value)}
-          color="inherit"          
-          InputProps={{            
+          color="inherit"
+          InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <Tooltip title={localization.searchTooltip}>
@@ -63,16 +64,16 @@ class MTableToolbar extends React.Component {
   renderDefaultActions() {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     return (
-      <div>        
-        {this.renderSearch()}        
+      <div>
+        {this.renderSearch()}
         {this.props.columnsButton &&
-          <span>    
+          <span>
             <Tooltip title={localization.showColumnsTitle}>
               <IconButton
                 color="inherit"
                 onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget })}
                 aria-label={localization.showColumnsAriaLabel}>
-                
+
                 <this.props.icons.ViewColumn/>
               </IconButton>
             </Tooltip>
@@ -133,7 +134,7 @@ class MTableToolbar extends React.Component {
 
   renderSelectedActions() {
     return (
-      <React.Fragment>        
+      <React.Fragment>
         {this.renderSearch()}
         <this.props.components.Actions actions={this.props.actions.filter(a => !a.isFreeAction)} data={this.props.selectedRows} />
       </React.Fragment>
@@ -161,7 +162,7 @@ class MTableToolbar extends React.Component {
           <Typography variant="h6">{title}</Typography>
         </div>
         <div className={classes.spacer} />
-        <div className={classes.actions}>    
+        <div className={classes.actions}>
           {this.renderActions()}
         </div>
       </Toolbar>
@@ -201,6 +202,7 @@ MTableToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   exportButton: PropTypes.bool,
+  exportDelimiter: PropTypes.string,
   classes: PropTypes.object
 };
 
