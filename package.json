@@ -73,7 +73,7 @@
     "@material-ui/core": "^3.1.0",
     "classnames": "^2.2.6",
     "date-fns": "2.0.0-alpha.16",
-    "filefy": "0.1.3",
+    "filefy": "0.1.6",
     "material-ui-pickers": "1.0.1",
     "prop-types": "^15.6.2"
   }
