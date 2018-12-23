@@ -34,7 +34,7 @@ export interface Column {
   sorting?: boolean;
   defaultSort?: 'asc' | 'desc';
   title: string;
-  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time';
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
   searchable?: boolean;
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
 }

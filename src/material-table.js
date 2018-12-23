@@ -435,7 +435,7 @@ MaterialTable.propTypes = {
     sorting: PropTypes.bool,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time']),
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
     searchable: PropTypes.bool,
     currencySetting: PropTypes.shape({
       locale: PropTypes.string,
