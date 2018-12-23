@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 
 export default class MTableCell extends React.Component {
   getRenderValue() {
+    if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
+      return this.getEmptyValue(this.props.columnDef.emptyValue);
+    }
     if (this.props.columnDef.render) {
       return this.props.columnDef.render(this.props.rowData);
     } else if (this.props.columnDef.type === 'boolean') {
@@ -38,6 +41,14 @@ export default class MTableCell extends React.Component {
     }
 
     return this.props.value;
+  }
+
+  getEmptyValue(emptyValue) {
+    if (typeof emptyValue === 'function') {
+      return this.props.columnDef.emptyValue(this.props.rowData);
+    } else {
+      return emptyValue;
+    }
   }
 
   getCurrencyValue(currencySetting, value) {
