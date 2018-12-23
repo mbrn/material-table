@@ -18,7 +18,7 @@ export interface MaterialTableProps {
 
 export interface Action {
   icon: string | React.ReactElement<any>;
-  isFreeAction?: boolean;    
+  isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
   iconProps?: IconProps
@@ -43,6 +43,7 @@ export interface Components {
   Actions?: React.ComponentType<any>;
   Body?: React.ComponentType<any>;
   Cell?: React.ComponentType<any>;
+  Container?: React.ComponentType<any>;
   FilterRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
@@ -68,6 +69,7 @@ export interface Options {
   columnsButton?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
+  exportDelimiter?: string;
   filtering?: boolean;
   paging?: boolean;
   pageSize?: number;
@@ -89,7 +91,7 @@ export interface Localization {
   header?: {
     actions?: string;
   };
-  pagination?: {   
+  pagination?: {
     firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;

@@ -21,6 +21,7 @@ class App extends Component {
           title="Demo Title"
           options={{
             emptyRowsWhenPaging: false,
+            exportButton: true,
             pageSize: 100,
             pageSizeOptions: [100, 150, 200],            
             filtering: true,

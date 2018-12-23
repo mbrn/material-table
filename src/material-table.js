@@ -247,7 +247,7 @@ class MaterialTable extends React.Component {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
-                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization}/>}
+                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -266,7 +266,7 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <Paper>
+      <props.components.Container>
         {props.options.toolbar &&
           <props.components.Toolbar
             actions={props.actions}
@@ -276,6 +276,7 @@ class MaterialTable extends React.Component {
             columnsButton={props.options.columnsButton}
             icons={props.icons}
             exportButton={props.options.exportButton}
+            exportDelimiter={props.options.exportDelimiter}
             renderData={this.state.renderData}
             search={props.options.search}
             searchText={this.state.searchText}
@@ -351,7 +352,7 @@ class MaterialTable extends React.Component {
           </Table>
         </div>
         {this.renderFooter()}
-      </Paper>
+      </props.components.Container>
     );
   }
 }
@@ -364,6 +365,7 @@ MaterialTable.defaultProps = {
     Actions: MTableActions,
     Body: MTableBody,
     Cell: MTableCell,
+    Container: Paper,
     FilterRow: MTableFilterRow,
     Header: MTableHeader,
     Pagination: TablePagination,
@@ -391,6 +393,7 @@ MaterialTable.defaultProps = {
     columnsButton: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
+    exportDelimiter: ',',
     filtering: false,
     paging: true,
     pageSize: 5,
@@ -416,7 +419,7 @@ MaterialTable.defaultProps = {
 
 MaterialTable.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]).isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
@@ -445,6 +448,7 @@ MaterialTable.propTypes = {
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -470,6 +474,7 @@ MaterialTable.propTypes = {
     columnsButton: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
+    exportDelimiter: PropTypes.string,
     filtering: PropTypes.bool,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
