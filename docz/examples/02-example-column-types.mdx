@@ -52,11 +52,14 @@ import MaterialTable from '../../src/material-table'
     columns={[
       {title: 'Name', field: 'name'},
       {title: 'Surname', field: 'surname'},
-      {title: 'Expenses', field: 'expenses', type: 'currency', currencySetting:{locale:'tr-TR',currencyCode:'TRY',minimumFractionDigits:2,maximumFractionDigits:3}},    
+      {title: 'Expenses', field: 'expenses', type: 'currency', currencySetting: { locale: 'tr-TR', currencyCode: 'TRY', minimumFractionDigits: 2, maximumFractionDigits: 3 }, emptyValue: 'N/A'},
+      {title: 'EmptyValue', field: 'emptyVal', emptyValue : () => 'Empty Value Function' }     
     ]}
     data={[
-      {name: 'Mehmet', surname: 'Baran', expenses:3500.555 },
-      {name: 'Selahattin', surname: 'Yıldırım', expenses:2702.5575 },
+      {name: 'Mehmet', surname: 'Baran', expenses: 3500.555, emptyVal: 'Empty' },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses: 2702.5575, emptyVal: '' },
+      {name: 'Jake', surname: 'Leventhal', expenses: null, emptyVal: null },
+      {name: 'Selahattin', surname: 'Yıldırım', expenses: null, emptyVal: null }
     ]}
     title="Currency"
     options={{

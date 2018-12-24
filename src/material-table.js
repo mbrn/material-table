@@ -442,7 +442,8 @@ MaterialTable.propTypes = {
       currencyCode: PropTypes.string,
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
-    })
+    }),
+    emptyValue:PropTypes.oneOfType([PropTypes.string,PropTypes.func])
   })).isRequired,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

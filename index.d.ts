@@ -37,6 +37,7 @@ export interface Column {
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
   searchable?: boolean;
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
+  emptyValue?:  any | ((data: any) => any);
 }
 
 export interface Components {
