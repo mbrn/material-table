@@ -35,28 +35,38 @@ class MaterialTable extends React.Component {
       orderBy: defaultSortColumnIndex,
       orderDirection: defaultSortDirection,
       filterSelectionChecked: false,
-      ...this.getDataAndColumns(calculatedProps)
+      ...this.getData(calculatedProps),
+      ...this.getColumns(calculatedProps)
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const dataAndColumns = this.getDataAndColumns(this.getProps(nextProps));
-    this.setState(dataAndColumns);
+    if (nextProps.data !== this.props.data) {
+      const data = this.getData(this.getProps(nextProps));
+      const columns = this.getColumns(this.getProps(nextProps));
+      this.setState(() => ({ ...columns, ...data }));
+    }
   }
 
-  getDataAndColumns(props) {
+  getData(props) {
     const data = props.data.map((row, index) => {
-      row.tableData = { id: index };
+      const checked = row.checked || false;
+      row.tableData = { id: index, checked };
       return row;
     });
 
+    const renderData = this.getRenderData(data, props);
+
+    return { data, renderData };
+  }
+
+  getColumns(props) {
     const columns = props.columns.map((columnDef, index) => {
       columnDef.tableData = { id: index };
       return columnDef;
     });
 
-    const renderData = this.getRenderData(data, props);
-    return { data, columns, renderData };
+    return { columns };
   }
 
   getProps(props) {
