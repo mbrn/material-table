@@ -51,7 +51,7 @@ class MaterialTable extends React.Component {
   getData(props) {
     let selectedCount = 0;
     const data = props.data.map((row, index) => {      
-      row.tableData = { id: index, ...row.tableData };
+      row.tableData = { ...row.tableData, id: index };
       if(row.tableData.checked) {
         selectedCount++;
       }
@@ -65,7 +65,7 @@ class MaterialTable extends React.Component {
 
   getColumns(props) {
     const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = { id: index };
+      columnDef.tableData = { id: index, filterValue: columnDef.defaultFilter };
       return columnDef;
     });
 
@@ -449,6 +449,7 @@ MaterialTable.propTypes = {
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    defaultFilter: PropTypes.bool,
     hidden: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,

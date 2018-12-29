@@ -5,9 +5,9 @@ import MaterialTable from './material-table';
 class App extends Component {
   state = {
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, tableData: { checked: true } },
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
     ],
     selecteds: [],
     counter: 0
@@ -18,7 +18,7 @@ class App extends Component {
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           columns={[
-            { title: 'Adı', field: 'name' },
+            { title: 'Adı', field: 'name', defaultFilter: 'G' },
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
