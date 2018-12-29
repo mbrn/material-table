@@ -13,6 +13,7 @@ import MaterialTable from '../src/material-table'
 | columns             | Array  |                   | Column definitions                                                |
 | components          | object |                   | Component customization                                           |
 | data                | Array  |                   | Data to be rendered                                               |
+| detailPanel         | func   |                   | Component to be rendered on detail panel                          |
 | icons               | object |                   | Icons customization                                               |
 | localization        | object |                   | All text for localization                                         |
 | onChangePage        | func   |                   | To handle page changes (page)                                     |
@@ -75,6 +76,7 @@ import MaterialTable from '../src/material-table'
 | Field           | Type          | Default                         | Description           |
 |:----------------|:--------------|:--------------------------------|:----------------------|
 | Check           | React.Element | material icons 'check'          | Check icon            |
+| DetailPanel     | React.Element | material icons 'chevron_right'  | DetailPanel icon      |
 | Export          | React.Element | material icons 'save_alt'       | Export icon           |
 | Filter          | React.Element | material icons 'filter_list'    | Filter icon           |
 | FirstPage       | React.Element | material icons 'first_page'     | FirstPage icon        |

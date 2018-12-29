@@ -43,7 +43,7 @@ class MTableHeader extends React.Component {
   }
   renderSelectionHeader() {
     return (
-      <TableCell padding="checkbox" key="key-selection-column">
+      <TableCell padding="none" key="key-selection-column">
         <Checkbox
           indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
           checked={this.props.selectedCount === this.props.dataCount}
@@ -68,6 +68,10 @@ class MTableHeader extends React.Component {
       } else if (this.props.actionsHeaderIndex === -1) {
         headers.push(this.renderActionsHeader());
       }
+    }
+
+    if(this.props.detailPanel) {
+      headers.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column"/>);
     }
 
     return (
@@ -96,6 +100,7 @@ MTableHeader.defaultProps = {
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
   dataCount: PropTypes.number,
+  detailPanel: PropTypes.bool.isRequired,
   hasSelection: PropTypes.bool,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,

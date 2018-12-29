@@ -51,6 +51,7 @@ class MTableBody extends React.Component {
             selection={this.props.options.selection}
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
+            detailPanel={this.props.detailPanel}
           />
         }
         {
@@ -67,6 +68,8 @@ class MTableBody extends React.Component {
                 actions={this.props.actions}
                 columns={this.props.columns}
                 getFieldValue={this.props.getFieldValue}
+                detailPanel={this.props.detailPanel}
+                onToggleDetailPanel={this.props.onToggleDetailPanel}
               />
             );
           })
@@ -94,6 +97,7 @@ MTableBody.propTypes = {
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
+  detailPanel: PropTypes.bool.isRequired,
   getFieldValue: PropTypes.func.isRequired,
   icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
@@ -103,7 +107,8 @@ MTableBody.propTypes = {
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,
   localization: PropTypes.object,
-  onFilterChanged: PropTypes.func
+  onFilterChanged: PropTypes.func,
+  onToggleDetailPanel: PropTypes.func.isRequired
 };
 
 export default MTableBody;

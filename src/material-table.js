@@ -49,15 +49,18 @@ class MaterialTable extends React.Component {
   }
 
   getData(props) {
-    const data = props.data.map((row, index) => {
-      const checked = row.checked || false;
-      row.tableData = { id: index, checked };
+    let selectedCount = 0;
+    const data = props.data.map((row, index) => {      
+      row.tableData = { id: index, ...row.tableData };
+      if(row.tableData.checked) {
+        selectedCount++;
+      }
       return row;
     });
 
     const renderData = this.getRenderData(data, props);
 
-    return { data, renderData };
+    return { data, renderData, selectedCount };
   }
 
   getColumns(props) {
@@ -304,6 +307,7 @@ class MaterialTable extends React.Component {
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
               dataCount={this.state.data.length}
+              detailPanel={props.detailPanel}
               showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
               orderBy={this.state.orderBy}
               orderDirection={this.state.orderDirection}
@@ -332,6 +336,7 @@ class MaterialTable extends React.Component {
               currentPage={this.state.currentPage}
               pageSize={this.state.pageSize}
               columns={this.state.columns}
+              detailPanel={props.detailPanel}
               options={props.options}
               getFieldValue={this.getFieldValue}
               onFilterChanged={(columnId, value) => {
@@ -356,6 +361,12 @@ class MaterialTable extends React.Component {
                   selectedCount: state.selectedCount + (checked ? 1 : -1)
                 }), () => this.onSelectionChange());
                 this.setData();
+              }}
+              onToggleDetailPanel={rowData => {
+                const data = this.state.data;
+                const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
+                targetRow.tableData.showDetailPanel = !targetRow.tableData.showDetailPanel;
+                this.setData(data);
               }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
             />
@@ -386,6 +397,7 @@ MaterialTable.defaultProps = {
   icons: {
     /* eslint-disable react/display-name */
     Check: (props) => <Icon {...props}>check</Icon>,
+    DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,    
     Export: (props) => <Icon {...props}>save_alt</Icon>,
     Filter: (props) => <Icon {...props}>filter_list</Icon>,
     FirstPage: (props) => <Icon {...props}>first_page</Icon>,
@@ -467,8 +479,10 @@ MaterialTable.propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  detailPanel: PropTypes.func,
   icons: PropTypes.shape({
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

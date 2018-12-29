@@ -4,9 +4,10 @@ import { IconProps } from '@material-ui/core/Icon';
 export interface MaterialTableProps {
   actions?: (Action | ((rowData:any) => Action)) [];
   columns: Column[];
-  components?: Components;
-  icons?: Icons,
+  components?: Components;  
   data: object;
+  detailPanel: (rowData: any) => React.ComponentType<any>;
+  icons?: Icons,
   title: string;
   options?: Options;
   localization?: Localization;
@@ -54,6 +55,7 @@ export interface Components {
 
 export interface Icons {
   Check: React.ReactElement<any>;
+  DetailPanel: React.ReactElement<any>;
   Export: React.ReactElement<any>;
   Filter: React.ReactElement<any>;
   FirstPage: React.ReactElement<any>;
