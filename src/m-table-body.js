@@ -97,7 +97,7 @@ MTableBody.propTypes = {
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
-  detailPanel: PropTypes.bool.isRequired,
+  detailPanel: PropTypes.func.isRequired,
   getFieldValue: PropTypes.func.isRequired,
   icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,

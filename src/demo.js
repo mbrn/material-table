@@ -8,9 +8,7 @@ class App extends Component {
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
       { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 63 },
       { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-    ],
-    selecteds: [],
-    counter: 0
+    ]
   }
 
   render() {
@@ -25,9 +23,6 @@ class App extends Component {
           ]}
           data={this.state.data}
           title="Demo Title"
-          onSelectionChange={(data) => {
-            this.setState({selecteds: data});
-          }}
           options={{
             emptyRowsWhenPaging: false,
             exportButton: true,
@@ -42,20 +37,7 @@ class App extends Component {
               <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
             </div>
           )}
-          actions={[
-            {
-              icon: 'save',
-              onClick: (event, data) => {
-                this.setState({counter: 0});
-              }
-            }
-          ]}
         />
-        {this.state.selecteds.length}
-        <br/>
-        Counter is {this.state.counter}
-        <br/>
-        <button onClick={() => this.setState({counter: this.state.counter + 1})}>++</button>
       </div>
     );
   }

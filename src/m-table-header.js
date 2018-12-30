@@ -100,7 +100,7 @@ MTableHeader.defaultProps = {
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
   dataCount: PropTypes.number,
-  detailPanel: PropTypes.bool.isRequired,
+  detailPanel: PropTypes.func.isRequired,
   hasSelection: PropTypes.bool,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,

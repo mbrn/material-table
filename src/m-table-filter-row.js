@@ -195,7 +195,7 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   emptyCell: PropTypes.bool,
   columns: PropTypes.array.isRequired,
-  detailPanel: PropTypes.bool.isRequired,
+  detailPanel: PropTypes.func.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,

@@ -27,7 +27,7 @@ export interface Action {
 
 export interface Column {
   cellStyle?: any | ((data: any) => any);
-  defaultFilter?: boolean;
+  defaultFilter?: any;
   hidden?: boolean;
   field?: string;
   filtering?: boolean;

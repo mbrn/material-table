@@ -110,7 +110,7 @@ MTableBodyRow.propTypes = {
   icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
-  detailPanel: PropTypes.bool.isRequired,
+  detailPanel: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   getFieldValue: PropTypes.func.isRequired,
