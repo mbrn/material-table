@@ -170,7 +170,7 @@ class MTableFilterRow extends React.Component {
       }
     }
 
-    if(this.props.detailPanel) {
+    if(this.props.hasDetailPanel) {
       columns.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column"/>);
     }
 
@@ -195,7 +195,7 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   emptyCell: PropTypes.bool,
   columns: PropTypes.array.isRequired,
-  detailPanel: PropTypes.func.isRequired,
+  hasDetailPanel: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,

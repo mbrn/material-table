@@ -51,7 +51,7 @@ class MTableBody extends React.Component {
             selection={this.props.options.selection}
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
-            detailPanel={this.props.detailPanel}
+            hasDetailPanel={!!this.props.detailPanel}
           />
         }
         {
@@ -97,7 +97,7 @@ MTableBody.propTypes = {
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
-  detailPanel: PropTypes.func.isRequired,
+  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   getFieldValue: PropTypes.func.isRequired,
   icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,

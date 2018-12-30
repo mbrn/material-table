@@ -7,21 +7,21 @@ import MaterialTable from '../src/material-table'
 
 ## Props
 
-| Property            | Type   | Default           | Description                                                       |
-|:--------------------|:-------|:------------------|:------------------------------------------------------------------|
-| actions             | Array  |                   | Action list. An icon button will be rendered for each actions     |
-| columns             | Array  |                   | Column definitions                                                |
-| components          | object |                   | Component customization                                           |
-| data                | Array  |                   | Data to be rendered                                               |
-| detailPanel         | func   |                   | Component to be rendered on detail panel                          |
-| icons               | object |                   | Icons customization                                               |
-| localization        | object |                   | All text for localization                                         |
-| onChangePage        | func   |                   | To handle page changes (page)                                     |
-| onChangeRowsPerPage | func   |                   | To handle rows per page changes (pageSize)                        |
-| onOrderChange       | func   |                   | To handle order changes (orderedColumnId, orderDirection)         |
-| onSelectionChange   | func   |                   | To handle selection changes                                       |
-| options             | object |                   | All options of table                                              |
-| title               | string | 'Table Title'     | Table Title (only render if toolbar option is true                |
+| Property            | Type                            | Default           | Description                                                       |
+|:--------------------|:--------------------------------|:------------------|:------------------------------------------------------------------|
+| actions             | Array                           |                   | Action list. An icon button will be rendered for each actions     |
+| columns             | Array                           |                   | Column definitions                                                |
+| components          | object                          |                   | Component customization                                           |
+| data                | Array                           |                   | Data to be rendered                                               |
+| detailPanel         | func or array of detailPanel    |                   | Component(s) to be rendered on detail panel                       |
+| icons               | object                          |                   | Icons customization                                               |
+| localization        | object                          |                   | All text for localization                                         |
+| onChangePage        | func                            |                   | To handle page changes (page)                                     |
+| onChangeRowsPerPage | func                            |                   | To handle rows per page changes (pageSize)                        |
+| onOrderChange       | func                            |                   | To handle order changes (orderedColumnId, orderDirection)         |
+| onSelectionChange   | func                            |                   | To handle selection changes                                       |
+| options             | object                          |                   | All options of table                                              |
+| title               | string                          | 'Table Title'     | Table Title (only render if toolbar option is true                |
 
 
 ### actions
@@ -71,6 +71,17 @@ import MaterialTable from '../src/material-table'
 | Pagination    | React.Element | TablePagination | Pagination component                                                                      |
 | Row           | React.Element | MTableBodyRow   | Row component                                                                             |
 | Toolbar       | React.Element | MTableToolbar   | Toolbar component                                                                         |
+
+### detailPanel
+
+| Field         | Type                    | Default   | Description                                                                                 |
+|:--------------|:------------------------|:----------|:--------------------------------------------------------------------------------------------|
+| icon          | string or ReactElement  |           | Icon of button from material icons or custom component                                      |
+| openIcon      | string or ReactElement  |           | Icon of button when detailPanel is open                                                     |
+| tooltip       | string                  |           | Tooltip for button                                                                          |
+| iconProps     | object                  |           | Props for icon as IconProps from https://material-ui.com/api/icon/                          |
+| isFreeAction  | boolean                 | false     | Independent actions that will not on row' actions section                                   |
+| render        | func                    |           | render result of detail panel according rowData                                             |
 
 ### icons
 

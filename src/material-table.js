@@ -307,7 +307,7 @@ class MaterialTable extends React.Component {
               hasSelection={props.options.selection}
               selectedCount={this.state.selectedCount}
               dataCount={this.state.data.length}
-              detailPanel={props.detailPanel}
+              hasDetailPanel={!!props.detailPanel}
               showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
               orderBy={this.state.orderBy}
               orderDirection={this.state.orderDirection}
@@ -362,10 +362,15 @@ class MaterialTable extends React.Component {
                 }), () => this.onSelectionChange());
                 this.setData();
               }}
-              onToggleDetailPanel={rowData => {
+              onToggleDetailPanel={(rowData, render) => {
                 const data = this.state.data;
                 const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
-                targetRow.tableData.showDetailPanel = !targetRow.tableData.showDetailPanel;
+                if(targetRow.tableData.showDetailPanel === render) {
+                  targetRow.tableData.showDetailPanel = undefined;
+                }
+                else {
+                  targetRow.tableData.showDetailPanel = render;
+                }                
                 this.setData(data);
               }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
@@ -480,7 +485,15 @@ MaterialTable.propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  detailPanel: PropTypes.func,
+  detailPanel: PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.arrayOf(PropTypes.shape({
+      icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+      openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+      tooltip: PropTypes.string,
+      render: PropTypes.func.isRequired
+    }))
+  ]),
   icons: PropTypes.shape({
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

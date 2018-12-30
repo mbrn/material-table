@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Checkbox, TableCell, TableRow, IconButton, Collapse } from '@material-ui/core';
+import { Checkbox, TableCell, TableRow, IconButton, Icon, Tooltip } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
@@ -44,18 +44,62 @@ export default class MTableBodyRow extends React.Component {
   }
 
   renderDetailPanelColumn() {
-    return (
-      <TableCell padding="none" key="key-detail-panel-column" style={{width: 48, textAlign: 'center'}}>
-        <IconButton
-          onClick={() => this.props.onToggleDetailPanel(this.props.data)} 
-          style={{            
-            transition: 'all ease 200ms', 
-            transform: this.props.data.tableData.showDetailPanel ? 'rotate(90deg)' : 'none'}}
-        >
-          <this.props.icons.DetailPanel />
-        </IconButton>
-      </TableCell>
-    );
+    const rotateIconStyle = isOpen => ({
+      transform: isOpen ? 'rotate(90deg)' : 'none'
+    });
+    const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, {style});
+
+    if (typeof this.props.detailPanel == 'function') {
+      return (
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
+          <IconButton
+            style={{transition: 'all ease 200ms', ...rotateIconStyle(this.props.data.tableData.showDetailPanel)}}
+            onClick={() => this.props.onToggleDetailPanel(this.props.data, this.props.detailPanel)}
+          >
+            <this.props.icons.DetailPanel />
+          </IconButton>
+        </TableCell>
+      );
+    }
+    else {
+      return (
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
+          {this.props.detailPanel.map((panel, index) => {
+            const isOpen = this.props.data.tableData.showDetailPanel === panel.render;
+            let iconButton = <this.props.icons.DetailPanel />;
+            let animation = true;
+            if (isOpen) {
+              if (panel.openIcon) {
+                iconButton = <CustomIcon icon={panel.openIcon} />;
+                animation = false;
+              }
+              else if (panel.icon) {
+                iconButton = <CustomIcon icon={panel.icon} />;
+              }
+            }
+            else if (panel.icon) {
+              iconButton = <CustomIcon icon={panel.icon} />;
+              animation = false;
+            }
+
+            iconButton = (
+              <IconButton
+                key={"key-detail-panel-" + index}
+                style={{transition: 'all ease 200ms', ...rotateIconStyle(animation && isOpen)}}
+                onClick={() => this.props.onToggleDetailPanel(this.props.data, panel.render)}
+              >
+              {iconButton}
+            </IconButton>);
+
+            if (panel.tooltip) {
+              iconButton = <Tooltip key={"key-detail-panel-" + index} title={panel.tooltip}>{iconButton}</Tooltip>;
+            }
+
+            return iconButton;
+          })}
+        </TableCell>
+      );
+    }
   }
 
   render() {
@@ -89,7 +133,7 @@ export default class MTableBodyRow extends React.Component {
         {this.props.data.tableData.showDetailPanel &&
           <TableRow selected={this.props.index % 2 === 0}>
             <TableCell colSpan={columns.length} padding="none">
-              {this.props.detailPanel(this.props.data)}          
+              {this.props.data.tableData.showDetailPanel(this.props.data)}
             </TableCell>
           </TableRow>
         }
@@ -110,7 +154,7 @@ MTableBodyRow.propTypes = {
   icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
-  detailPanel: PropTypes.func.isRequired,
+  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   getFieldValue: PropTypes.func.isRequired,

@@ -70,7 +70,7 @@ class MTableHeader extends React.Component {
       }
     }
 
-    if(this.props.detailPanel) {
+    if(this.props.hasDetailPanel) {
       headers.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column"/>);
     }
 
@@ -100,7 +100,7 @@ MTableHeader.defaultProps = {
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
   dataCount: PropTypes.number,
-  detailPanel: PropTypes.func.isRequired,
+  hasDetailPanel: PropTypes.bool.isRequired,
   hasSelection: PropTypes.bool,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,

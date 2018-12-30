@@ -6,7 +6,12 @@ export interface MaterialTableProps {
   columns: Column[];
   components?: Components;  
   data: object;
-  detailPanel: (rowData: any) => React.ComponentType<any>;
+  detailPanel: ((rowData: any) => React.ComponentType<any>) | {
+    icon?: string | React.ReactElement<any>,
+    openIcon?: string | React.ReactElement<any>,
+    tooltip?: string;
+    render: (rowData: any) => string | React.ReactElement<any>;
+  }[];
   icons?: Icons,
   title: string;
   options?: Options;

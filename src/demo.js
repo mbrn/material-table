@@ -16,7 +16,7 @@ class App extends Component {
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           columns={[
-            { title: 'Adı', field: 'name', defaultFilter: 'G' },
+            { title: 'Adı', field: 'name' },
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
@@ -31,12 +31,28 @@ class App extends Component {
             filtering: true,
             selection: true
           }}
-          detailPanel={rowData => (
-            <div style={{textAlign: 'center'}}>
-              {rowData.name}
-              <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
-            </div>
-          )}
+          detailPanel={[
+            {
+              tooltip: 'Show Name',
+              render: rowData => {
+                return <div>{rowData.name}</div>;
+              }
+            },
+            {
+              icon: 'save',
+              tooltip: 'Show Surname',
+              render: rowData => {
+                return <div>{rowData.surname}</div>;
+              }
+            },
+            {
+              icon: 'computer',
+              tooltip: 'Show Both',
+              render: rowData => {
+                return <div>{rowData.name} {rowData.surname}</div>;
+              }
+            }
+          ]}
         />
       </div>
     );
