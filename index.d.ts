@@ -20,6 +20,14 @@ export interface MaterialTableProps {
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onBeforeSelectionChange?: (data: any[]) => void;
+  onBeforeChangeRowsPerPage?: (pageSize: number) => void;
+  onBeforeChangePage?: (page: number) => void;
+  onBeforeOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onAfterSelectionChange?: (data: any[]) => void;
+  onAfterChangeRowsPerPage?: (pageSize: number) => void;
+  onAfterChangePage?: (page: number) => void;
+  onAfterOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
 }
 
 export interface Action {
