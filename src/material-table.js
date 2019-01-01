@@ -210,23 +210,50 @@ class MaterialTable extends React.Component {
     }
   }
 
-  onSelectionChange = () => {
-    if (this.props.onSelectionChange) {
+  // new before events
+  onBeforeSelectionChange = () => {
+    if (this.props.onBeforeSelectionChange) {
+      const selectedRows = this.state.data.filter(row => row.tableData.checked);
+      this.props.onBeforeSelectionChange(selectedRows);
+    }
+  }
+  
+  onBeforeChangePage = (...args) => {
+    this.props.onBeforeChangePage && this.props.onBeforeChangePage(...args);
+  }
+
+  onBeforeChangeRowsPerPage = (...args) => {
+    this.props.onBeforeChangeRowsPerPage && this.props.onBeforeChangeRowsPerPage(...args);
+  }
+
+  onBeforeOrderChange = (...args) => {
+    this.props.onBeforeOrderChange && this.props.onBeforeOrderChange(...args);
+  }
+
+  // new after events
+  onAfterSelectionChange = () => {
+    if (this.props.onAfterSelectionChange) {
+      const selectedRows = this.state.data.filter(row => row.tableData.checked);
+      this.props.onAfterSelectionChange(selectedRows);
+    } else if (this.props.onSelectionChange) { // backward compat.
       const selectedRows = this.state.data.filter(row => row.tableData.checked);
       this.props.onSelectionChange(selectedRows);
     }
   }
 
-  onChangePage = (...args) => {
-    this.props.onChangePage && this.props.onChangePage(...args);
+  onAfterChangePage = (...args) => {
+    this.props.onAfterChangePage && this.props.onAfterChangePage(...args) ||
+    this.props.onChangePage && this.props.onChangePage(...args); // backward compat.
   }
 
-  onChangeRowsPerPage = (...args) => {
-    this.props.onChangeRowsPerPage && this.props.onChangeRowsPerPage(...args);
+  onAfterChangeRowsPerPage = (...args) => {
+    this.props.onAfterChangeRowsPerPage && this.props.onAfterChangeRowsPerPage(...args) ||
+    this.props.onChangeRowsPerPage && this.props.onChangeRowsPerPage(...args); // backward compat.
   }
 
-  onOrderChange = (...args) => {
-    this.props.onOrderChange && this.props.onOrderChange(...args);
+  onAfterOrderChange = (...args) => {
+    this.props.onAfterOrderChange && this.props.onAfterOrderChange(...args) ||
+    this.props.onOrderChange && this.props.onOrderChange(...args); // backward compat.
   }
 
   renderFooter() {
@@ -245,19 +272,21 @@ class MaterialTable extends React.Component {
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 page={this.state.currentPage}
                 onChangePage={(event, page) => {
+                  this.onBeforeChangePage(page);
                   this.setState({ currentPage: page }, () => {
                     this.setData();
-                    this.onChangePage(page);
+                    this.onAfterChangePage(page);
                   });
                 }}
                 onChangeRowsPerPage={(event) => {
+                  this.onBeforeChangeRowsPerPage(event.target.value);
                   this.setState(state => {
                     state.pageSize = event.target.value;
                     state.currentPage = 0;
                     return state;
                   }, () => {
                     this.setData();
-                    this.onChangeRowsPerPage(event.target.value);
+                    this.onAfterChangeRowsPerPage(event.target.value);
                   });
                 }}
                 ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
@@ -317,12 +346,14 @@ class MaterialTable extends React.Component {
                   return row;
                 });
                 const selectedCount = checked ? data.length : 0;
-                this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
+                this.onBeforeSelectionChange();
+                this.setState({ renderData: data, selectedCount }, () => this.onAfterSelectionChange());
               }}
               onOrderChange={(orderBy, orderDirection) => {
+                this.onBeforeOrderChange(orderBy, orderDirection);
                 this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
                   this.setData();
-                  this.onOrderChange(orderBy, orderDirection);
+                  this.onAfterOrderChange(orderBy, orderDirection);
                 });
               }}
               actionsHeaderIndex={props.options.actionsColumnIndex}
@@ -356,10 +387,11 @@ class MaterialTable extends React.Component {
               onRowSelected={(event, checked) => {
                 const data = this.state.data;
                 data[event.target.value].tableData.checked = checked;
+                this.onBeforeSelectionChange();
                 this.setState(state => ({
                   data: data,
                   selectedCount: state.selectedCount + (checked ? 1 : -1)
-                }), () => this.onSelectionChange());
+                }), () => this.onAfterSelectionChange());
                 this.setData();
               }}
               onToggleDetailPanel={(rowData, render) => {
@@ -530,6 +562,15 @@ MaterialTable.propTypes = {
     header: PropTypes.object,
     body: PropTypes.object
   }),
+  onBeforeSelectionChange: PropTypes.func,
+  onBeforeChangeRowsPerPage: PropTypes.func,
+  onBeforeChangePage: PropTypes.func,
+  onBeforeOrderChange: PropTypes.func,
+  onAfterChangeRowsPerPage: PropTypes.func,
+  onAfterSelectionChange: PropTypes.func,
+  onAfterChangePage: PropTypes.func,
+  onAfterOrderChange: PropTypes.func,
+  // backward compat
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
