@@ -301,33 +301,35 @@ class MaterialTable extends React.Component {
         }
         <div style={{ overflowX: 'auto' }}>
           <Table>
-            <props.components.Header
-              localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
-              columns={this.state.columns}
-              hasSelection={props.options.selection}
-              selectedCount={this.state.selectedCount}
-              dataCount={this.state.data.length}
-              hasDetailPanel={!!props.detailPanel}
-              showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
-              orderBy={this.state.orderBy}
-              orderDirection={this.state.orderDirection}
-              onAllSelected={(checked) => {
-                const data = this.state.renderData.map(row => {
-                  row.tableData.checked = checked;
-                  return row;
-                });
-                const selectedCount = checked ? data.length : 0;
-                this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
-              }}
-              onOrderChange={(orderBy, orderDirection) => {
-                this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
-                  this.setData();
-                  this.onOrderChange(orderBy, orderDirection);
-                });
-              }}
-              actionsHeaderIndex={props.options.actionsColumnIndex}
-              sorting={props.options.sorting}
-            />
+            {props.options.header &&
+              <props.components.Header
+                localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                columns={this.state.columns}
+                hasSelection={props.options.selection}
+                selectedCount={this.state.selectedCount}
+                dataCount={this.state.data.length}
+                hasDetailPanel={!!props.detailPanel}
+                showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                orderBy={this.state.orderBy}
+                orderDirection={this.state.orderDirection}
+                onAllSelected={(checked) => {
+                  const data = this.state.renderData.map(row => {
+                    row.tableData.checked = checked;
+                    return row;
+                  });
+                  const selectedCount = checked ? data.length : 0;
+                  this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
+                }}
+                onOrderChange={(orderBy, orderDirection) => {
+                  this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
+                    this.setData();
+                    this.onOrderChange(orderBy, orderDirection);
+                  });
+                }}
+                actionsHeaderIndex={props.options.actionsColumnIndex}
+                sorting={props.options.sorting}
+              />
+            }
             <props.components.Body
               actions={props.actions}
               components={props.components}
@@ -422,6 +424,7 @@ MaterialTable.defaultProps = {
     exportButton: false,
     exportDelimiter: ',',
     filtering: false,
+    header: true,
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
@@ -515,6 +518,7 @@ MaterialTable.propTypes = {
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
     filtering: PropTypes.bool,
+    header: PropTypes.bool,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),

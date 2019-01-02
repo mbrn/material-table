@@ -80,6 +80,7 @@ export interface Options {
   exportButton?: boolean;
   exportDelimiter?: string;
   filtering?: boolean;
+  header?: boolean;
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
