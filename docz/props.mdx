@@ -147,19 +147,20 @@ Localization settings could be used to change/translate default texts of datatab
 
 Options property could be given to component as `options` property. You can change behaviour of grid.
 
-| Field                      | Type      | Default       | Description                                                                       |
-|:---------------------------|:----------|:--------------|:----------------------------------------------------------------------------------|
-| columnsButton              | boolean   | false         | Flag for columns button that controls which column could be rendered              |
-| emptyRowsWhenPaging        | boolean   | true          | Flag for rendering rows to complete page size                                     |
-| exportButton               | boolean   | false         | Flag for export button that render export buttons                                 |
-| exportDelimiter            | string    | ,             | Delimiter to use in exported CSV file                                             |
-| filtering                  | boolean   | false         | Flag for filtering row                                                            |
-| header                     | boolean   | true          | Flag for header visibility                                                        |
-| paging                     | boolean   | true          | Flag for paging feature                                                           |
-| pageSize                   | numeric   | 5             | Number of rows that would be rendered on every page                               |
-| pageSizeOptions            | array     | [5, 10, 20]   | Page size options that could be selected by user                                  |
-| showEmptyDataSourceMessage | boolean   | true          | Flag for showing message if there is no data in table                             |
-| search                     | boolean   | true          | Flag for search feature                                                           |
-| selection                  | boolean   | false         | Flag for selection feature                                                        |
-| sorting                    | boolean   | true          | Flag to activate or disable sorting feature of table                              |
-| toolbar                    | boolean   | true          | Flag for toolbar                                                                  |
+| Field                      | Type             | Default       | Description                                                                       |
+|:---------------------------|:-----------------|:--------------|:----------------------------------------------------------------------------------|
+| columnsButton              | boolean          | false         | Flag for columns button that controls which column could be rendered              |
+| emptyRowsWhenPaging        | boolean          | true          | Flag for rendering rows to complete page size                                     |
+| exportButton               | boolean          | false         | Flag for export button that render export buttons                                 |
+| exportDelimiter            | string           | ,             | Delimiter to use in exported CSV file                                             |
+| filtering                  | boolean          | false         | Flag for filtering row                                                            |
+| header                     | boolean          | true          | Flag for header visibility                                                        |
+| paging                     | boolean          | true          | Flag for paging feature                                                           |
+| pageSize                   | numeric          | 5             | Number of rows that would be rendered on every page                               |
+| pageSizeOptions            | array            | [5, 10, 20]   | Page size options that could be selected by user                                  |
+| rowStyle                   | object or func   |               | Css style to be applied rows                                                      |
+| showEmptyDataSourceMessage | boolean          | true          | Flag for showing message if there is no data in table                             |
+| search                     | boolean          | true          | Flag for search feature                                                           |
+| selection                  | boolean          | false         | Flag for selection feature                                                        |
+| sorting                    | boolean          | true          | Flag to activate or disable sorting feature of table                              |
+| toolbar                    | boolean          | true          | Flag for toolbar                                                                  |

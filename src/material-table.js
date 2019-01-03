@@ -522,11 +522,12 @@ MaterialTable.propTypes = {
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     search: PropTypes.bool,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool    
   }),
   localization: PropTypes.shape({
     pagination: PropTypes.object,

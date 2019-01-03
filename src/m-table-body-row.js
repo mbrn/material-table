@@ -102,6 +102,19 @@ export default class MTableBodyRow extends React.Component {
     }
   }
 
+  getStyle() {
+    if(!this.props.options.rowStyle) {
+      return {};
+    }
+
+    let style = this.props.options.rowStyle;
+    if(typeof this.props.options.rowStyle === "function") {
+      style = this.props.options.rowStyle(this.props.data);
+    } 
+
+    return style;
+  }
+
   render() {
     const columns = this.renderColumns();
     if (this.props.options.selection) {
@@ -127,7 +140,7 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <>
-        <TableRow selected={this.props.index % 2 === 0}>
+        <TableRow selected={this.props.index % 2 === 0} style={this.getStyle()}>
           {columns}
         </TableRow>
         {this.props.data.tableData.showDetailPanel &&

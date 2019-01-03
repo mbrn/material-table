@@ -84,6 +84,7 @@ export interface Options {
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
+  rowStyle?: any | ((data: any) => any);
   showEmptyDataSourceMessage?:boolean;
   search?: boolean;
   selection?: boolean;

@@ -26,7 +26,14 @@ class App extends Component {
           options={{            
             header: true,
             toolbar: false,
-            paging: false
+            paging: false,
+            rowStyle: rowData => {
+              if(rowData.name === "Mehmet") {
+                return {backgroundColor: 'yellow'}
+              }
+              
+              return {};
+            }
           }}
           detailPanel={[
             {
