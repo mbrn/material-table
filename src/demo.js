@@ -23,40 +23,16 @@ class App extends Component {
           ]}
           data={this.state.data}
           title="Demo Title"
-          options={{            
-            header: true,
-            toolbar: false,
-            paging: false,
+          options={{   
+            //rowStyle: { backgroundColor: 'green'},
             rowStyle: rowData => {
               if(rowData.name === "Mehmet") {
-                return {backgroundColor: 'yellow'}
+                return {backgroundColor: 'yellow'};
               }
               
               return {};
             }
           }}
-          detailPanel={[
-            {
-              tooltip: 'Show Name',
-              render: rowData => {
-                return <div>{rowData.name}</div>;
-              }
-            },
-            {
-              icon: 'save',
-              tooltip: 'Show Surname',
-              render: rowData => {
-                return <div>{rowData.surname}</div>;
-              }
-            },
-            {
-              icon: 'computer',
-              tooltip: 'Show Both',
-              render: rowData => {
-                return <div>{rowData.name} {rowData.surname}</div>;
-              }
-            }
-          ]}
         />
       </div>
     );
