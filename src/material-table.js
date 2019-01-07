@@ -42,11 +42,9 @@ class MaterialTable extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.props.data) {
-      const data = this.getData(this.getProps(nextProps));
-      const columns = this.getColumns(this.getProps(nextProps));
-      this.setState(() => ({ ...columns, ...data }));
-    }
+    const data = this.getData(this.getProps(nextProps));
+    const columns = this.getColumns(this.getProps(nextProps));
+    this.setState(() => ({ ...columns, ...data }));
   }
 
   getData(props) {
@@ -299,7 +297,7 @@ class MaterialTable extends React.Component {
             onColumnsChanged={columns => this.setState({ columns })}
             localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
           />
-        }        
+        }
         <ScrollBar double={props.options.doubleHorizontalScroll}>
           <Table>
             {props.options.header &&
@@ -380,7 +378,7 @@ class MaterialTable extends React.Component {
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
             />
           </Table>
-        </ScrollBar>        
+        </ScrollBar>
         {this.renderFooter()}
       </props.components.Container>
     );
@@ -399,7 +397,7 @@ const ScrollBar = ({ double, children }) => {
     return (
       <div style={{ overflowX: 'auto' }}>
         {children}
-      </div>      
+      </div>
     );
   }
 };
@@ -495,7 +493,7 @@ MaterialTable.propTypes = {
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])    
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

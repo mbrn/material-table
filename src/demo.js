@@ -23,8 +23,8 @@ class App extends Component {
           ]}
           data={this.state.data}
           title="Demo Title"
-          options={{   
-            doubleHorizontalScroll: true
+          options={{
+            selection: true
           }}
         />
       </div>
