@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Icon, Paper, Table, TableFooter, TablePagination, TableRow } from '@material-ui/core';
+import DoubleScrollbar from "react-double-scrollbar";
 import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -50,9 +51,9 @@ class MaterialTable extends React.Component {
 
   getData(props) {
     let selectedCount = 0;
-    const data = props.data.map((row, index) => {      
+    const data = props.data.map((row, index) => {
       row.tableData = { ...row.tableData, id: index };
-      if(row.tableData.checked) {
+      if (row.tableData.checked) {
         selectedCount++;
       }
       return row;
@@ -298,8 +299,8 @@ class MaterialTable extends React.Component {
             onColumnsChanged={columns => this.setState({ columns })}
             localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
           />
-        }
-        <div style={{ overflowX: 'auto' }}>
+        }        
+        <ScrollBar double={props.options.doubleHorizontalScroll}>
           <Table>
             {props.options.header &&
               <props.components.Header
@@ -368,21 +369,38 @@ class MaterialTable extends React.Component {
               onToggleDetailPanel={(rowData, render) => {
                 const data = this.state.data;
                 const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
-                if(targetRow.tableData.showDetailPanel === render) {
+                if (targetRow.tableData.showDetailPanel === render) {
                   targetRow.tableData.showDetailPanel = undefined;
                 }
                 else {
                   targetRow.tableData.showDetailPanel = render;
-                }                
+                }
                 this.setData(data);
               }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
             />
           </Table>
-        </div>
+        </ScrollBar>        
         {this.renderFooter()}
       </props.components.Container>
     );
+  }
+}
+
+const ScrollBar = ({ double, children }) => {
+  if (double) {
+    return (
+      <DoubleScrollbar>
+        {children}
+      </DoubleScrollbar>
+    );
+  }
+  else {
+    return (
+      <div style={{ overflowX: 'auto' }}>
+        {children}
+      </div>      
+    )
   }
 }
 
@@ -405,7 +423,7 @@ MaterialTable.defaultProps = {
   icons: {
     /* eslint-disable react/display-name */
     Check: (props) => <Icon {...props}>check</Icon>,
-    DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,    
+    DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,
     Export: (props) => <Icon {...props}>save_alt</Icon>,
     Filter: (props) => <Icon {...props}>filter_list</Icon>,
     FirstPage: (props) => <Icon {...props}>first_page</Icon>,
@@ -421,6 +439,7 @@ MaterialTable.defaultProps = {
   options: {
     actionsColumnIndex: 0,
     columnsButton: false,
+    doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
     exportDelimiter: ',',
@@ -458,7 +477,7 @@ MaterialTable.propTypes = {
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    defaultFilter: PropTypes.any,    
+    defaultFilter: PropTypes.any,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     field: PropTypes.string,
@@ -476,7 +495,7 @@ MaterialTable.propTypes = {
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
     }),
-    emptyValue:PropTypes.oneOfType([PropTypes.string,PropTypes.func])
+    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
   })).isRequired,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -491,7 +510,7 @@ MaterialTable.propTypes = {
   }),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   detailPanel: PropTypes.oneOfType([
-    PropTypes.func, 
+    PropTypes.func,
     PropTypes.arrayOf(PropTypes.shape({
       icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
       openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
@@ -516,6 +535,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
@@ -530,7 +550,7 @@ MaterialTable.propTypes = {
     search: PropTypes.bool,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
-    toolbar: PropTypes.bool    
+    toolbar: PropTypes.bool
   }),
   localization: PropTypes.shape({
     pagination: PropTypes.object,

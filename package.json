@@ -76,6 +76,7 @@
     "date-fns": "2.0.0-alpha.16",
     "filefy": "0.1.6",
     "material-ui-pickers": "1.0.1",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "react-double-scrollbar": "0.0.15"
   }
 }

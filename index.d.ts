@@ -77,6 +77,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?:number;
   columnsButton?: boolean;
+  doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;

@@ -13,7 +13,7 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{ maxWidth: '100%' }}>
+      <div style={{ maxWidth: '500px' }}>
         <MaterialTable
           columns={[
             { title: 'Adı', field: 'name', headerStyle: {color: 'red', fontSize: 24} },
@@ -24,15 +24,7 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{   
-            //rowStyle: { backgroundColor: 'green'},
-            rowStyle: rowData => {
-              if(rowData.name === "Mehmet") {
-                return {backgroundColor: 'yellow'};
-              }
-              
-              return {};
-            },
-            headerStyle: {color: 'green'}
+            doubleHorizontalScroll: true
           }}
         />
       </div>
