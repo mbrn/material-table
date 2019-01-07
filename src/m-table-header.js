@@ -102,6 +102,7 @@ class MTableHeader extends React.Component {
 MTableHeader.defaultProps = {
   dataCount: 0,
   hasSelection: false,
+  headerStyle: {},
   selectedCount: 0,
   sorting: true,
   localization: {
@@ -117,6 +118,7 @@ MTableHeader.propTypes = {
   dataCount: PropTypes.number,
   hasDetailPanel: PropTypes.bool.isRequired,
   hasSelection: PropTypes.bool,
+  headerStyle: PropTypes.object,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,
   sorting: PropTypes.bool,

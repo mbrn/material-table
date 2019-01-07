@@ -458,8 +458,7 @@ MaterialTable.propTypes = {
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    defaultFilter: PropTypes.any,
-    cellStyle: PropTypes.object,
+    defaultFilter: PropTypes.any,    
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     field: PropTypes.string,
