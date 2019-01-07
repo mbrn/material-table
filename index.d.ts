@@ -31,8 +31,9 @@ export interface Action {
 }
 
 export interface Column {
-  cellStyle?: any | ((data: any) => any);
+  cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   defaultFilter?: any;
+  headerStyle?: React.CSSProperties;
   hidden?: boolean;
   field?: string;
   filtering?: boolean;
@@ -81,10 +82,11 @@ export interface Options {
   exportDelimiter?: string;
   filtering?: boolean;
   header?: boolean;
+  headerStyle?: React.CSSProperties;
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
-  rowStyle?: any | ((data: any) => any);
+  rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?:boolean;
   search?: boolean;
   selection?: boolean;

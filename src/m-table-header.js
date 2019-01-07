@@ -8,12 +8,14 @@ import {
 /* eslint-enable no-unused-vars */
 
 class MTableHeader extends React.Component {
-  renderHeader() {
+  renderHeader() {    
     const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
       .map((columnDef) => (
         <TableCell
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+          
+          style={{...this.props.headerStyle, ...columnDef.headerStyle}}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
@@ -36,14 +38,21 @@ class MTableHeader extends React.Component {
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     return (
-      <TableCell key="key-actions-column">
+      <TableCell 
+        key="key-actions-column"
+        style={this.props.headerStyle}
+      >
         <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }
   renderSelectionHeader() {
     return (
-      <TableCell padding="none" key="key-selection-column">
+      <TableCell 
+        padding="none" 
+        key="key-selection-column"
+        style={this.props.headerStyle}
+      >
         <Checkbox
           indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
           checked={this.props.selectedCount === this.props.dataCount}
@@ -71,7 +80,13 @@ class MTableHeader extends React.Component {
     }
 
     if(this.props.hasDetailPanel) {
-      headers.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column"/>);
+      headers.splice(0, 0, 
+        <TableCell 
+          padding="none" 
+          key="key-detail-panel-column"
+          style={this.props.headerStyle}
+        />
+      );
     }
 
     return (

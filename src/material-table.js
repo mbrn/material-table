@@ -306,6 +306,7 @@ class MaterialTable extends React.Component {
                 localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
                 columns={this.state.columns}
                 hasSelection={props.options.selection}
+                headerStyle={props.options.headerStyle}
                 selectedCount={this.state.selectedCount}
                 dataCount={this.state.data.length}
                 hasDetailPanel={!!props.detailPanel}
@@ -458,6 +459,8 @@ MaterialTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     defaultFilter: PropTypes.any,
+    cellStyle: PropTypes.object,
+    headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,
@@ -519,6 +522,7 @@ MaterialTable.propTypes = {
     exportDelimiter: PropTypes.string,
     filtering: PropTypes.bool,
     header: PropTypes.bool,
+    headerStyle: PropTypes.object,
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
