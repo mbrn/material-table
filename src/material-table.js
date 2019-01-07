@@ -400,9 +400,9 @@ const ScrollBar = ({ double, children }) => {
       <div style={{ overflowX: 'auto' }}>
         {children}
       </div>      
-    )
+    );
   }
-}
+};
 
 MaterialTable.defaultProps = {
   actions: [],
