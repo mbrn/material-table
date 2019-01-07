@@ -85,7 +85,7 @@ export default class MTableCell extends React.Component {
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: ''
+  value: undefined
 };
 
 MTableCell.propTypes = {

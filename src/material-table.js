@@ -477,25 +477,25 @@ MaterialTable.propTypes = {
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    defaultFilter: PropTypes.any,
-    headerStyle: PropTypes.object,
-    hidden: PropTypes.bool,
-    field: PropTypes.string,
-    filtering: PropTypes.bool,
-    lookup: PropTypes.object,
-    render: PropTypes.func,
-    sorting: PropTypes.bool,
-    defaultSort: PropTypes.oneOf(['asc', 'desc']),
-    title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
-    searchable: PropTypes.bool,
     currencySetting: PropTypes.shape({
       locale: PropTypes.string,
       currencyCode: PropTypes.string,
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
     }),
-    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+    defaultFilter: PropTypes.any,
+    defaultSort: PropTypes.oneOf(['asc', 'desc']),
+    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+    field: PropTypes.string,
+    filtering: PropTypes.bool,
+    headerStyle: PropTypes.object,
+    hidden: PropTypes.bool,
+    lookup: PropTypes.object,
+    render: PropTypes.func,
+    searchable: PropTypes.bool,
+    sorting: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])    
   })).isRequired,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

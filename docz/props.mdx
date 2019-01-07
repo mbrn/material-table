@@ -40,24 +40,20 @@ import MaterialTable from '../src/material-table'
 | Field           | Type            | Default   | Description                                                                                                   |
 |:----------------|:----------------|:----------|:--------------------------------------------------------------------------------------------------------------|
 | cellStyle       | object or func  |           | Cell cellStyle                                                                                                |
+| currencySetting | object          |           | This field can be used when column type is currency.                                                          |
 | defaultFilter   | any             |           | Default Filter value for filtering column                                                                     |
-| headerStyle     | object          |           | Header cell style                                                                                             |
-| hidden          | boolean         | false     | Flag for hide column                                                                                          |
+| defaultSort     | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
+| emptyValue      | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
 | field           | string          |           | Field name of data row                                                                                        |
 | filtering       | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
+| headerStyle     | object          |           | Header cell style                                                                                             |
+| hidden          | boolean         | false     | Flag for hide column                                                                                          |
 | lookup          | object          |           | Key value pair for lookup render data from                                                                    |
 | render          | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
+| searchable      | boolean         | undefined | If true, includes the column when performing a search                                                         |
 | sorting         | boolean         | true      | Flag to activate or disable sorting feature of column                                                         |
-| defaultSort     | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
 | title           | string          |           | Header text                                                                                                   |
 | type            | string          |           | Data type: 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'                                       |
-| searchable      | boolean         | undefined | If true, includes the column when performing a search                                                         |
-| currencySetting | object          |           | This field can be used when column type is currency. If this field doesn't set it will be set to 'USD'        |
-|                 |                 |           | as default value. Otherwise currencySetting can be used example like example-currency.mdx.                    |
-|                 |                 |           | 'locale' represents language tag, currencyCode represents ISO 4217 currency codes,                            |
-|                 |                 |           | minimumFractionDigits represents the min number of fraction digits to use Possible values are from 0 to 20    |
-|                 |                 |           | maximumFractionDigits represents the max number of fraction digits to use. Possible values are from 0 to 20   |
-|emptyValue       |string or func   |           | When data is empty or undefined, string value or function result can be set as default value                  |
 
 ### components
 

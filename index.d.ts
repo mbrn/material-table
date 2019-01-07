@@ -32,20 +32,20 @@ export interface Action {
 
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
+  currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
   defaultFilter?: any;
-  headerStyle?: React.CSSProperties;
-  hidden?: boolean;
+  defaultSort?: 'asc' | 'desc';
+  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any>);
   field?: string;
   filtering?: boolean;
+  headerStyle?: React.CSSProperties;
+  hidden?: boolean;
   lookup?: object;
   render?: (data:any) => any;
+  searchable?: boolean;
   sorting?: boolean;
-  defaultSort?: 'asc' | 'desc';
   title: string;
   type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
-  searchable?: boolean;
-  currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
-  emptyValue?:  any | ((data: any) => any);
 }
 
 export interface Components {
