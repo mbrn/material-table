@@ -27,6 +27,7 @@ class App extends Component {
             selection: true
           }}
         />
+        {this.state.selectedCount}
       </div>
     );
   }
