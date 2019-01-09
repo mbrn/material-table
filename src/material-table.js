@@ -501,7 +501,7 @@ MaterialTable.propTypes = {
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
+    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
