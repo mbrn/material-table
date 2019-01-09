@@ -33,6 +33,7 @@ export interface Action {
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
+  customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   defaultFilter?: any;
   defaultSort?: 'asc' | 'desc';
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any>);

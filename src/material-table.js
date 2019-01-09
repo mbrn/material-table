@@ -103,6 +103,10 @@ class MaterialTable extends React.Component {
       this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
         const { lookup, type, tableData, field } = columnDef;
 
+        if(columnDef.customFilterAndSearch){
+          renderData = renderData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
+        }
+        else 
         if (lookup) {
           renderData = renderData.filter(row => {
             return !tableData.filterValue ||
@@ -168,7 +172,10 @@ class MaterialTable extends React.Component {
         this.state.columns
           .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
           .forEach(columnDef => {
-            if (columnDef.field) {
+            if(columnDef.customFilterAndSearch){
+              result = !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
+            }
+            else if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
               if (value && value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
                 result = true;
@@ -481,6 +488,7 @@ MaterialTable.propTypes = {
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
     }),
+    customFilterAndSearch: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),

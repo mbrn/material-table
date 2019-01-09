@@ -16,7 +16,7 @@ class App extends Component {
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           columns={[
-            { title: 'Adı', field: 'name' },
+            { title: 'Adı', field: 'name', render: rowData => "Deneme", customFilterAndSearch: (a,b,c) => "Deneme".includes(a) },
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
@@ -24,7 +24,8 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{
-            selection: true
+            selection: true,
+            filtering: true
           }}
         />
         {this.state.selectedCount}

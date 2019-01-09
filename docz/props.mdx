@@ -37,23 +37,24 @@ import MaterialTable from '../src/material-table'
 
 ### columns
 
-| Field           | Type            | Default   | Description                                                                                                   |
-|:----------------|:----------------|:----------|:--------------------------------------------------------------------------------------------------------------|
-| cellStyle       | object or func  |           | Cell cellStyle                                                                                                |
-| currencySetting | object          |           | This field can be used when column type is currency.                                                          |
-| defaultFilter   | any             |           | Default Filter value for filtering column                                                                     |
-| defaultSort     | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
-| emptyValue      | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
-| field           | string          |           | Field name of data row                                                                                        |
-| filtering       | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
-| headerStyle     | object          |           | Header cell style                                                                                             |
-| hidden          | boolean         | false     | Flag for hide column                                                                                          |
-| lookup          | object          |           | Key value pair for lookup render data from                                                                    |
-| render          | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
-| searchable      | boolean         | undefined | If true, includes the column when performing a search                                                         |
-| sorting         | boolean         | true      | Flag to activate or disable sorting feature of column                                                         |
-| title           | string          |           | Header text                                                                                                   |
-| type            | string          |           | Data type: 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'                                       |
+| Field                   | Type            | Default   | Description                                                                                                   |
+|:------------------------|:----------------|:----------|:--------------------------------------------------------------------------------------------------------------|
+| cellStyle               | object or func  |           | Cell cellStyle                                                                                                |
+| currencySetting         | object          |           | This field can be used when column type is currency.                                                          |
+| customFilterAndSearch   | func            |           | This field can be used for overriding filter and search algorithm                                             |
+| defaultFilter           | any             |           | Default Filter value for filtering column                                                                     |
+| defaultSort             | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
+| emptyValue              | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
+| field                   | string          |           | Field name of data row                                                                                        |
+| filtering               | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
+| headerStyle             | object          |           | Header cell style                                                                                             |
+| hidden                  | boolean         | false     | Flag for hide column                                                                                          |
+| lookup                  | object          |           | Key value pair for lookup render data from                                                                    |
+| render                  | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
+| searchable              | boolean         | undefined | If true, includes the column when performing a search                                                         |
+| sorting                 | boolean         | true      | Flag to activate or disable sorting feature of column                                                         |
+| title                   | string          |           | Header text                                                                                                   |
+| type                    | string          |           | Data type: 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'                                       |
 
 ### components
 
