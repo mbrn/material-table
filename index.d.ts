@@ -62,17 +62,17 @@ export interface Components {
 }
 
 export interface Icons {
-  Check: React.ReactElement<any>;
-  DetailPanel: React.ReactElement<any>;
-  Export: React.ReactElement<any>;
-  Filter: React.ReactElement<any>;
-  FirstPage: React.ReactElement<any>;
-  LastPage: React.ReactElement<any>;
-  NextPage: React.ReactElement<any>;
-  PreviousPage: React.ReactElement<any>;
-  Search: React.ReactElement<any>;
-  ThirdStateCheck: React.ReactElement<any>;
-  ViewColumn: React.ReactElement<any>;
+  Check: () => React.ReactElement<any>;
+  DetailPanel: () => React.ReactElement<any>;
+  Export: () => React.ReactElement<any>;
+  Filter: () => React.ReactElement<any>;
+  FirstPage: () => React.ReactElement<any>;
+  LastPage: () => React.ReactElement<any>;
+  NextPage: () => React.ReactElement<any>;
+  PreviousPage: () => React.ReactElement<any>;
+  Search: () => React.ReactElement<any>;
+  ThirdStateCheck: () => React.ReactElement<any>;
+  ViewColumn: () => React.ReactElement<any>;
 }
 
 export interface Options {
