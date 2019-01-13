@@ -33,10 +33,9 @@ export interface Action {
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
-  customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   defaultFilter?: any;
   defaultSort?: 'asc' | 'desc';
-  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any>);
+  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
   headerStyle?: React.CSSProperties;
@@ -46,7 +45,7 @@ export interface Column {
   searchable?: boolean;
   sorting?: boolean;
   title: string;
-  type?: 'string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
 }
 
 export interface Components {
