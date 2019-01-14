@@ -16,7 +16,9 @@ class App extends Component {
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           columns={[
-            { title: 'Adı', field: 'name' },
+            { title: 'Adı', field: 'name', customSort: (a,b) => {
+              return a.name.length - b.name.length;
+            }},
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
@@ -25,8 +27,7 @@ class App extends Component {
           title="Demo Title"
           options={{
             selection: true,
-            filtering: true,
-            headerStyle: { backgroundColor: 'black', color: 'white' }
+            filtering: true
           }}
         />
         {this.state.selectedCount}
