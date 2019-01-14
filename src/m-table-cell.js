@@ -90,6 +90,6 @@ MTableCell.defaultProps = {
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
   rowData: PropTypes.object
 };
