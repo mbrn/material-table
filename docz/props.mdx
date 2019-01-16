@@ -19,6 +19,7 @@ import MaterialTable from '../src/material-table'
 | onChangePage        | func                            |                   | To handle page changes (page)                                     |
 | onChangeRowsPerPage | func                            |                   | To handle rows per page changes (pageSize)                        |
 | onOrderChange       | func                            |                   | To handle order changes (orderedColumnId, orderDirection)         |
+| onRowClick          | func                            |                   | To handle row click (event, rowData)                              |
 | onSelectionChange   | func                            |                   | To handle selection changes                                       |
 | options             | object                          |                   | All options of table                                              |
 | title               | string                          | 'Table Title'     | Table Title (only render if toolbar option is true                |
@@ -45,6 +46,7 @@ import MaterialTable from '../src/material-table'
 | customSort              | func            |           | This field can be used for overriding sort algorithm                                                          |
 | defaultFilter           | any             |           | Default Filter value for filtering column                                                                     |
 | defaultSort             | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
+| disableClick            | boolean         | false     | Disable the 'onRowClick' event for this cell                                                                  |
 | emptyValue              | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
 | field                   | string          |           | Field name of data row                                                                                        |
 | filtering               | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
