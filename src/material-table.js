@@ -394,6 +394,7 @@ class MaterialTable extends React.Component {
                 this.setData(data);
               }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+              onRowClick={this.props.onRowClick}
             />
           </Table>
         </ScrollBar>
@@ -480,7 +481,8 @@ MaterialTable.defaultProps = {
     body: {
       filterRow: {}
     }
-  }
+  },
+  onRowClick: () => {},
 };
 
 MaterialTable.propTypes = {
@@ -580,6 +582,7 @@ MaterialTable.propTypes = {
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onRowClick: PropTypes.func,
 };
 
 export default MaterialTable;

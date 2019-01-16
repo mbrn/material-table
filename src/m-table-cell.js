@@ -65,6 +65,12 @@ export default class MTableCell extends React.Component {
     }
   }
 
+  handleClickCell = e => {
+    const { columnDef, rowData, onClick } = this.props;
+    if( columnDef.disableClick || typeof onClick !== 'function') return;
+    onClick(e, rowData);
+  }
+
   render() {
     let cellStyle = {};
     if (typeof this.props.columnDef.cellStyle === 'function') {
@@ -76,6 +82,7 @@ export default class MTableCell extends React.Component {
     return (
       <TableCell style={cellStyle}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
+        onClick={this.handleClickCell}
       >
         {this.getRenderValue()}
       </TableCell>
@@ -85,11 +92,13 @@ export default class MTableCell extends React.Component {
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: undefined
+  value: undefined,
+  onClick: () => {},
 };
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
-  rowData: PropTypes.object
+  rowData: PropTypes.object,
+  onClick: PropTypes.func,
 };

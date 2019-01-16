@@ -16,7 +16,8 @@ export default class MTableBodyRow extends React.Component {
             columnDef={columnDef}
             value={value}
             key={columnDef.tableData.id}
-            rowData={this.props.data} />
+            rowData={this.props.data} 
+            onClick={this.props.onRowClick} />
         );
       });
     return mapArr;
@@ -159,7 +160,8 @@ MTableBodyRow.defaultProps = {
   actions: [],
   index: 0,
   data: {},
-  options: {}
+  options: {},
+  onRowClick: () => {},
 };
 
 MTableBodyRow.propTypes = {
@@ -172,5 +174,6 @@ MTableBodyRow.propTypes = {
   onRowSelected: PropTypes.func,
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
-  onToggleDetailPanel: PropTypes.func.isRequired
+  onToggleDetailPanel: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func,
 };
