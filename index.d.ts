@@ -46,7 +46,7 @@ export interface Column {
   searchable?: boolean;
   sorting?: boolean;
   title: string;
-  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  type?: 'string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
 }
 
 export interface Components {
