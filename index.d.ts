@@ -27,13 +27,13 @@ export interface Action {
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
-  customSort?: (rowData1: any, rowData2: any) => number;
   iconProps?: IconProps
 }
 
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
+  customSort?: (rowData1: any, rowData2: any) => number;
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   defaultFilter?: any;
   defaultSort?: 'asc' | 'desc';
