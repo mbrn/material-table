@@ -23,6 +23,7 @@ export interface MaterialTableProps {
 }
 
 export interface Action {
+  customSort?: (rowData1: any, rowData2: any) => number;
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
