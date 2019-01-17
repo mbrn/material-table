@@ -23,7 +23,7 @@ export interface MaterialTableProps {
 }
 
 export interface Action {
-  icon: string | React.ReactElement<any>;
+  icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
