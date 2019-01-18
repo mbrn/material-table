@@ -18,7 +18,8 @@ export interface MaterialTableProps {
   localization?: Localization;
   onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number) => void;
+  onChangePage?: (page: number) => void;  
+  onRowSelected?: (rowData: any) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
 }
 
