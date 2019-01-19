@@ -138,10 +138,11 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.detailPanel) {
       columns.splice(0, 0, this.renderDetailPanelColumn());
     }
-
+    // eslint-disable-next-line no-console
+    console.log(this.props.onRowClick, this.props.onRowClick !== null);
     return (
       <>
-        <TableRow selected={this.props.index % 2 === 0} style={this.getStyle()}>
+        <TableRow selected={this.props.index % 2 === 0} hover={this.props.onRowClick ? true : false} style={this.getStyle()}>
           {columns}
         </TableRow>
         {this.props.data.tableData.showDetailPanel &&
@@ -160,8 +161,7 @@ MTableBodyRow.defaultProps = {
   actions: [],
   index: 0,
   data: {},
-  options: {},
-  onRowClick: () => {},
+  options: {}
 };
 
 MTableBodyRow.propTypes = {

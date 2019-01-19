@@ -31,6 +31,8 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
+        // eslint-disable-next-line no-console
+        // onRowClick={(event, rowData) => {console.log(event);console.log(rowData)}}
           // columns={[
           //   {
           //     title: 'Adı', field: 'name', customSort: (a, b) => {
