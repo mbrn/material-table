@@ -105,7 +105,8 @@ export default class MTableBodyRow extends React.Component {
 
   getStyle() {
     if(!this.props.options.rowStyle) {
-      return {};
+      return {
+        cursor: this.props.onRowClick ? 'pointer' : ''};
     }
 
     let style = this.props.options.rowStyle;
