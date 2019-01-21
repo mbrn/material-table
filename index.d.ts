@@ -12,6 +12,7 @@ export interface MaterialTableProps {
     tooltip?: string;
     render: (rowData: any) => string | React.ReactNode;
   }[];
+  displayLoading: boolean;
   icons?: Icons,
   title: string;
   options?: Options;

@@ -352,6 +352,7 @@ class MaterialTable extends React.Component {
               actions={props.actions}
               components={props.components}
               icons={props.icons}
+              displayLoading={props.displayLoading}
               renderData={this.state.renderData}
               currentPage={this.state.currentPage}
               pageSize={this.state.pageSize}
@@ -437,6 +438,7 @@ MaterialTable.defaultProps = {
     Toolbar: MTableToolbar,
   },
   data: [],
+  displayLoading: false,
   icons: {
     /* eslint-disable react/display-name */
     Check: (props) => <Icon {...props}>check</Icon>,
@@ -538,6 +540,7 @@ MaterialTable.propTypes = {
       render: PropTypes.func.isRequired
     }))
   ]),
+  displayLoading: PropTypes.bool,
   icons: PropTypes.shape({
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { TableBody, TableCell, TableRow } from '@material-ui/core';
+import { TableBody, TableCell, TableRow, CircularProgress } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
@@ -28,8 +28,18 @@ class MTableBody extends React.Component {
       );
     }
   }
+  renderLoading() {
+    return (
+      <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
+        <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + 1} key="empty-">
+          <CircularProgress />
+        </TableCell>
+      </TableRow>
+    );
+  }
 
   render() {
+    const displayLoading = this.props.displayLoading;
     let renderData = this.props.renderData;
     let emptyRowCount = 0;
     if (this.props.options.paging) {
@@ -55,7 +65,7 @@ class MTableBody extends React.Component {
           />
         }
         {
-          renderData.map((data, index) => {
+          !displayLoading && renderData.map((data, index) => {
             return (
               <this.props.components.Row
                 components={this.props.components}
@@ -75,7 +85,9 @@ class MTableBody extends React.Component {
             );
           })
         }
-        {this.renderEmpty(emptyRowCount, renderData)}
+        {!displayLoading && this.renderEmpty(emptyRowCount, renderData)
+        }
+        {displayLoading && this.renderLoading()}
       </TableBody>
     );
   }
@@ -84,6 +96,7 @@ class MTableBody extends React.Component {
 MTableBody.defaultProps = {
   actions: [],
   currentPage: 0,
+  displayLoading: false,
   pageSize: 5,
   renderData: [],
   selection: false,
@@ -100,6 +113,7 @@ MTableBody.propTypes = {
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
+  displayLoading: PropTypes.bool,
   getFieldValue: PropTypes.func.isRequired,
   icons: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
