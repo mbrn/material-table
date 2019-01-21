@@ -85,8 +85,7 @@ class MTableBody extends React.Component {
             );
           })
         }
-        {!displayLoading && this.renderEmpty(emptyRowCount, renderData)
-        }
+        {!displayLoading && this.renderEmpty(emptyRowCount, renderData)}
         {displayLoading && this.renderLoading()}
       </TableBody>
     );
