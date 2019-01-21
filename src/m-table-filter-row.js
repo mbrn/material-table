@@ -160,13 +160,13 @@ class MTableFilterRow extends React.Component {
     }
     if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
-        columns.push(<TableCell />);
+        columns.push(<TableCell key="key-action-column"/>);
       } else {
         let endPos = 0;
         if (this.props.selection) {
           endPos = 1;
         }
-        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell />);
+        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell key="key-action-column"/>);
       }
     }
 

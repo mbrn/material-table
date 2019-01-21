@@ -18,7 +18,8 @@ export interface MaterialTableProps {
   localization?: Localization;
   onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number) => void;
+  onChangePage?: (page: number) => void;  
+  onRowSelected?: (rowData: any) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
 }
 
@@ -34,9 +35,10 @@ export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
+  customSort?: (rowData1: any, rowData2: any) => number;
   defaultFilter?: any;
   defaultSort?: 'asc' | 'desc';
-  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any>);
+  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
   headerStyle?: React.CSSProperties;
@@ -62,17 +64,17 @@ export interface Components {
 }
 
 export interface Icons {
-  Check: React.ReactElement<any>;
-  DetailPanel: React.ReactElement<any>;
-  Export: React.ReactElement<any>;
-  Filter: React.ReactElement<any>;
-  FirstPage: React.ReactElement<any>;
-  LastPage: React.ReactElement<any>;
-  NextPage: React.ReactElement<any>;
-  PreviousPage: React.ReactElement<any>;
-  Search: React.ReactElement<any>;
-  ThirdStateCheck: React.ReactElement<any>;
-  ViewColumn: React.ReactElement<any>;
+  Check: () => React.ReactElement<any>;
+  DetailPanel: () => React.ReactElement<any>;
+  Export: () => React.ReactElement<any>;
+  Filter: () => React.ReactElement<any>;
+  FirstPage: () => React.ReactElement<any>;
+  LastPage: () => React.ReactElement<any>;
+  NextPage: () => React.ReactElement<any>;
+  PreviousPage: () => React.ReactElement<any>;
+  Search: () => React.ReactElement<any>;
+  ThirdStateCheck: () => React.ReactElement<any>;
+  ViewColumn: () => React.ReactElement<any>;
 }
 
 export interface Options {

@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/material-table.js",
   "types": "index.d.ts",
@@ -50,7 +50,7 @@
     "babel-loader": "^8.0.4",
     "buble": "0.19.3",
     "docz": "0.13.7",
-    "docz-theme-default": "^0.13.7",
+    "docz-theme-default": "0.13.7",
     "eslint": "5.7.0",
     "eslint-config-defaults": "9.0.0",
     "eslint-config-standard": "12.0.0",

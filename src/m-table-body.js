@@ -70,6 +70,7 @@ class MTableBody extends React.Component {
                 getFieldValue={this.props.getFieldValue}
                 detailPanel={this.props.detailPanel}
                 onToggleDetailPanel={this.props.onToggleDetailPanel}
+                onRowClick={this.props.onRowClick}
               />
             );
           })
@@ -89,7 +90,8 @@ MTableBody.defaultProps = {
   localization: {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {}
-  }
+  },
+  onRowClick: () => {},
 };
 
 MTableBody.propTypes = {
@@ -108,7 +110,8 @@ MTableBody.propTypes = {
   onFilterSelectionChanged: PropTypes.func.isRequired,
   localization: PropTypes.object,
   onFilterChanged: PropTypes.func,
-  onToggleDetailPanel: PropTypes.func.isRequired
+  onToggleDetailPanel: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func,
 };
 
 export default MTableBody;
