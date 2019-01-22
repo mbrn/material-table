@@ -90,8 +90,7 @@ MTableBody.defaultProps = {
   localization: {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {}
-  },
-  onRowClick: () => {},
+  }
 };
 
 MTableBody.propTypes = {

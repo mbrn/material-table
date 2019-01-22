@@ -481,8 +481,7 @@ MaterialTable.defaultProps = {
     body: {
       filterRow: {}
     }
-  },
-  onRowClick: () => {},
+  }
 };
 
 MaterialTable.propTypes = {

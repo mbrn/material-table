@@ -105,7 +105,8 @@ export default class MTableBodyRow extends React.Component {
 
   getStyle() {
     if(!this.props.options.rowStyle) {
-      return {};
+      return {
+        cursor: this.props.onRowClick ? 'pointer' : ''};
     }
 
     let style = this.props.options.rowStyle;
@@ -138,10 +139,9 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.detailPanel) {
       columns.splice(0, 0, this.renderDetailPanelColumn());
     }
-
     return (
       <>
-        <TableRow selected={this.props.index % 2 === 0} style={this.getStyle()}>
+        <TableRow selected={this.props.index % 2 === 0} hover={this.props.onRowClick ? true : false} style={this.getStyle()}>
           {columns}
         </TableRow>
         {this.props.data.tableData.showDetailPanel &&
@@ -160,8 +160,7 @@ MTableBodyRow.defaultProps = {
   actions: [],
   index: 0,
   data: {},
-  options: {},
-  onRowClick: () => {},
+  options: {}
 };
 
 MTableBodyRow.propTypes = {
