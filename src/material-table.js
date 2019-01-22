@@ -26,6 +26,7 @@ class MaterialTable extends React.Component {
     }
     this.state = {
       columns: [],
+      count: calculatedProps.count,
       currentPage: 0,
       data: [],
       pageSize: calculatedProps.options.pageSize,
@@ -267,7 +268,7 @@ class MaterialTable extends React.Component {
               <props.components.Pagination
                 style={{ float: 'right' }}
                 colSpan={3}
-                count={this.state.renderData.length}
+                count={this.state.count || this.state.renderData.length}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 page={this.state.currentPage}
@@ -419,6 +420,7 @@ MaterialTable.defaultProps = {
   actions: [],
   classes: {},
   columns: [],
+  count: 0,
   components: {
     Actions: MTableActions,
     Body: MTableBody,
@@ -505,6 +507,7 @@ MaterialTable.propTypes = {
     }),
     emptyValue:PropTypes.oneOfType([PropTypes.string,PropTypes.func])
   })).isRequired,
+  count: PropTypes.number,
   components: PropTypes.shape({
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
