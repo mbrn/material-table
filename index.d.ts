@@ -112,7 +112,9 @@ export interface Localization {
     firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
-    lastTooltip?: string;
+    lastTooltip?: string;    
+    labelDisplayedRows?: string;
+    labelRowsPerPage?: string;
   };
   toolbar?: {
     nRowsSelected?: string;
