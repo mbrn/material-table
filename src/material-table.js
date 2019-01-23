@@ -310,6 +310,7 @@ class MaterialTable extends React.Component {
             renderData={this.state.renderData}
             search={props.options.search}
             searchText={this.state.searchText}
+            searchFieldStyle={props.options.searchFieldStyle}
             title={props.title}
             onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
             onColumnsChanged={columns => this.setState({ columns })}
@@ -467,6 +468,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     showEmptyDataSourceMessage: true,
     search: true,
+    searchFieldStyle: {},
     selection: false,
     sorting: true,
     toolbar: true
@@ -567,6 +569,7 @@ MaterialTable.propTypes = {
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     search: PropTypes.bool,
+    searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool

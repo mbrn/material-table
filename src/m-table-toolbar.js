@@ -51,7 +51,8 @@ class MTableToolbar extends React.Component {
                   <this.props.icons.Search color="inherit"/>
                 </Tooltip>
               </InputAdornment>
-            )
+            ),
+            style: this.props.searchFieldStyle
           }}
         />
       );
@@ -197,6 +198,7 @@ MTableToolbar.propTypes = {
   onColumnsChanged: PropTypes.func.isRequired,
   onSearchChanged: PropTypes.func.isRequired,
   search: PropTypes.bool.isRequired,
+  searchFieldStyle: PropTypes.object,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
   title: PropTypes.string.isRequired,

@@ -93,6 +93,7 @@ export interface Options {
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?:boolean;
   search?: boolean;
+  searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   sorting?: boolean;
   toolbar?: boolean;
