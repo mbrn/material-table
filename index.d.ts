@@ -12,7 +12,8 @@ export interface MaterialTableProps {
     tooltip?: string;
     render: (rowData: any) => string | React.ReactNode;
   }[];
-  icons?: Icons,
+  icons?: Icons;
+  isLoading?: boolean;
   title: string;
   options?: Options;
   localization?: Localization;
@@ -88,6 +89,7 @@ export interface Options {
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  loadingType?: 'overlay' | 'linear';
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];

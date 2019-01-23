@@ -8,6 +8,9 @@ class App extends Component {
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
       { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 63 },
       { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
     ]
   }
 
@@ -27,6 +30,10 @@ class App extends Component {
           ]}
           data={this.state.data}
           title="Demo Title"
+          isLoading={true}
+          options={{
+            loadingType: 'linear'
+          }}
         />
         {this.state.selectedCount}
       </div>

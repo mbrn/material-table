@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Icon, Paper, Table, TableFooter, TablePagination, TableRow } from '@material-ui/core';
+import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
 import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
@@ -103,65 +103,65 @@ class MaterialTable extends React.Component {
       this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
         const { lookup, type, tableData, field } = columnDef;
 
-        if(columnDef.customFilterAndSearch){
+        if (columnDef.customFilterAndSearch) {
           renderData = renderData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
         }
-        else 
-        if (lookup) {
-          renderData = renderData.filter(row => {
-            return !tableData.filterValue ||
-              tableData.filterValue.length === 0 ||
-              tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
-          });
-        } else if (type === 'numeric') {
-          renderData = renderData.filter(row => {
-            return row[field] === tableData.filterValue;
-          });
-        } else if (type === 'boolean' && tableData.filterValue) {
-          renderData = renderData.filter(row => {
-            return (row[field] && tableData.filterValue === 'checked') ||
-              (!row[field] && tableData.filterValue === 'unchecked');
-          });
-        } else if (['date', 'datetime'].includes(type)) {
-          renderData = renderData.filter(row => {
-            const currentDate = row[field] ? new Date(row[field]) : null;
+        else
+          if (lookup) {
+            renderData = renderData.filter(row => {
+              return !tableData.filterValue ||
+                tableData.filterValue.length === 0 ||
+                tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
+            });
+          } else if (type === 'numeric') {
+            renderData = renderData.filter(row => {
+              return row[field] === tableData.filterValue;
+            });
+          } else if (type === 'boolean' && tableData.filterValue) {
+            renderData = renderData.filter(row => {
+              return (row[field] && tableData.filterValue === 'checked') ||
+                (!row[field] && tableData.filterValue === 'unchecked');
+            });
+          } else if (['date', 'datetime'].includes(type)) {
+            renderData = renderData.filter(row => {
+              const currentDate = row[field] ? new Date(row[field]) : null;
 
-            if (currentDate && currentDate.toString() !== 'Invalid Date') {
-              const selectedDate = tableData.filterValue;
-              let currentDateToCompare = '';
-              let selectedDateToCompare = '';
+              if (currentDate && currentDate.toString() !== 'Invalid Date') {
+                const selectedDate = tableData.filterValue;
+                let currentDateToCompare = '';
+                let selectedDateToCompare = '';
 
-              if (type === 'date') {
-                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
-                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
-              } else if (type === 'datetime') {
-                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
-                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
+                if (type === 'date') {
+                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
+                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
+                } else if (type === 'datetime') {
+                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
+                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
+                }
+
+                return currentDateToCompare === selectedDateToCompare;
               }
 
-              return currentDateToCompare === selectedDateToCompare;
-            }
+              return true;
+            });
+          } else if (type === 'time') {
+            renderData = renderData.filter(row => {
+              const currentHour = row[field] || null;
 
-            return true;
-          });
-        } else if (type === 'time') {
-          renderData = renderData.filter(row => {
-            const currentHour = row[field] || null;
+              if (currentHour) {
+                const selectedHour = tableData.filterValue;
+                const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
 
-            if (currentHour) {
-              const selectedHour = tableData.filterValue;
-              const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
+                return currentHour === currentHourToCompare;
+              }
 
-              return currentHour === currentHourToCompare;
-            }
-
-            return true;
-          });
-        } else {
-          renderData = renderData.filter(row => {
-            return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
-          });
-        }
+              return true;
+            });
+          } else {
+            renderData = renderData.filter(row => {
+              return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
+            });
+          }
       });
     }
 
@@ -172,7 +172,7 @@ class MaterialTable extends React.Component {
         this.state.columns
           .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
           .forEach(columnDef => {
-            if(columnDef.customFilterAndSearch){
+            if (columnDef.customFilterAndSearch) {
               result = !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
             }
             else if (columnDef.field) {
@@ -191,12 +191,12 @@ class MaterialTable extends React.Component {
     if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
       const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
 
-      if(columnDef.customSort) {
-        if(this.state.orderDirection === 'desc') {
-          renderData = renderData.sort((a,b) => columnDef.customSort(b, a));
+      if (columnDef.customSort) {
+        if (this.state.orderDirection === 'desc') {
+          renderData = renderData.sort((a, b) => columnDef.customSort(b, a));
         }
         else {
-          renderData = renderData.sort((a,b) => columnDef.customSort(a, b));
+          renderData = renderData.sort((a, b) => columnDef.customSort(a, b));
         }
       }
       else {
@@ -296,7 +296,7 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <props.components.Container>
+      <props.components.Container style={{ position: 'relative' }}>
         {props.options.toolbar &&
           <props.components.Toolbar
             actions={props.actions}
@@ -348,7 +348,7 @@ class MaterialTable extends React.Component {
                 actionsHeaderIndex={props.options.actionsColumnIndex}
                 sorting={props.options.sorting}
               />
-            }
+            }            
             <props.components.Body
               actions={props.actions}
               components={props.components}
@@ -399,7 +399,24 @@ class MaterialTable extends React.Component {
             />
           </Table>
         </ScrollBar>
+        {props.isLoading && props.options.loadingType === "linear" &&
+              <div style={{ position: 'relative', width: '100%' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
+                  <LinearProgress />
+                </div>
+              </div>
+            }
         {this.renderFooter()}
+
+        {props.isLoading && props.options.loadingType === 'overlay' &&
+          <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
+            <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: '#FFFFFFAA' }}>
+              <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
+                <CircularProgress />
+              </div>
+            </div>
+          </div>
+        }
       </props.components.Container>
     );
   }
@@ -453,6 +470,7 @@ MaterialTable.defaultProps = {
     ViewColumn: (props) => <Icon {...props}>view_column</Icon>
     /* eslint-enable react/display-name */
   },
+  isLoading: false,
   title: 'Table Title',
   options: {
     actionsColumnIndex: 0,
@@ -463,6 +481,7 @@ MaterialTable.defaultProps = {
     exportDelimiter: ',',
     filtering: false,
     header: true,
+    loadingType: 'overlay',
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
@@ -552,6 +571,7 @@ MaterialTable.propTypes = {
     ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
+  isLoading: PropTypes.bool,
   title: PropTypes.string,
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
@@ -563,6 +583,7 @@ MaterialTable.propTypes = {
     filtering: PropTypes.bool,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
+    loadingType: PropTypes.oneOf(['overlay', 'linear']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
