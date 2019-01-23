@@ -16,8 +16,8 @@ export default class MTableBodyRow extends React.Component {
             columnDef={columnDef}
             value={value}
             key={columnDef.tableData.id}
-            rowData={this.props.data} 
-            onClick={this.props.onRowClick} />
+            rowData={this.props.data}
+          />
         );
       });
     return mapArr;
@@ -37,6 +37,7 @@ export default class MTableBodyRow extends React.Component {
       <TableCell padding="none" key="key-selection-column">
         <Checkbox
           checked={this.props.data.tableData.checked === true}
+          onClick={(e) => e.stopPropagation()}
           value={`${this.props.data.tableData.id}`}
           onChange={this.props.onRowSelected}
         />
@@ -48,14 +49,17 @@ export default class MTableBodyRow extends React.Component {
     const rotateIconStyle = isOpen => ({
       transform: isOpen ? 'rotate(90deg)' : 'none'
     });
-    const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, {style});
+    const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, { style });
 
     if (typeof this.props.detailPanel == 'function') {
       return (
         <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
           <IconButton
-            style={{transition: 'all ease 200ms', ...rotateIconStyle(this.props.data.tableData.showDetailPanel)}}
-            onClick={() => this.props.onToggleDetailPanel(this.props.data, this.props.detailPanel)}
+            style={{ transition: 'all ease 200ms', ...rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
+            onClick={(event) => {
+              this.props.onToggleDetailPanel(this.props.data, this.props.detailPanel);
+              event.stopPropagation();
+            }}
           >
             <this.props.icons.DetailPanel />
           </IconButton>
@@ -86,11 +90,11 @@ export default class MTableBodyRow extends React.Component {
             iconButton = (
               <IconButton
                 key={"key-detail-panel-" + index}
-                style={{transition: 'all ease 200ms', ...rotateIconStyle(animation && isOpen)}}
+                style={{ transition: 'all ease 200ms', ...rotateIconStyle(animation && isOpen) }}
                 onClick={() => this.props.onToggleDetailPanel(this.props.data, panel.render)}
               >
-              {iconButton}
-            </IconButton>);
+                {iconButton}
+              </IconButton>);
 
             if (panel.tooltip) {
               iconButton = <Tooltip key={"key-detail-panel-" + index} title={panel.tooltip}>{iconButton}</Tooltip>;
@@ -104,15 +108,16 @@ export default class MTableBodyRow extends React.Component {
   }
 
   getStyle() {
-    if(!this.props.options.rowStyle) {
+    if (!this.props.options.rowStyle) {
       return {
-        cursor: this.props.onRowClick ? 'pointer' : ''};
+        cursor: this.props.onRowClick ? 'pointer' : ''
+      };
     }
 
     let style = this.props.options.rowStyle;
-    if(typeof this.props.options.rowStyle === "function") {
+    if (typeof this.props.options.rowStyle === "function") {
       style = this.props.options.rowStyle(this.props.data);
-    } 
+    }
 
     return style;
   }
@@ -141,7 +146,14 @@ export default class MTableBodyRow extends React.Component {
     }
     return (
       <>
-        <TableRow selected={this.props.index % 2 === 0} hover={this.props.onRowClick ? true : false} style={this.getStyle()}>
+        <TableRow
+          selected={this.props.index % 2 === 0}
+          hover={this.props.onRowClick ? true : false}
+          style={this.getStyle()}
+          onClick={(event) => {
+            this.props.onRowClick && this.props.onRowClick(event, this.props.data);
+          }}
+        >
           {columns}
         </TableRow>
         {this.props.data.tableData.showDetailPanel &&
