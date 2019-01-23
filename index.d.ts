@@ -83,7 +83,8 @@ export interface Options {
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
-  exportDelimiter?: string;
+  exportDelimiter?: string;  
+  loadingType?: 'overlay' | 'linear';
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
