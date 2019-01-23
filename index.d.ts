@@ -12,21 +12,20 @@ export interface MaterialTableProps {
     tooltip?: string;
     render: (rowData: any) => string | React.ReactNode;
   }[];
-  icons?: Icons;
-  isLoading?: boolean;
+  icons?: Icons,
+  isLoading?: boolean,
   title: string;
   options?: Options;
   localization?: Localization;
-  onSelectionChange?: (data: any[]) => void;
+  onChangePage?: (page: number) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number) => void;  
-  onRowClick?: (rowData: any) => void;
-  onRowSelected?: (rowData: any) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onRowClick?: (event: React.MouseEvent, rowData: any) => void;
+  onSelectionChange?: (data: any[]) => void;
 }
 
 export interface Action {
-  icon: string | React.ComponentType<any>;
+  icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
@@ -35,9 +34,8 @@ export interface Action {
 
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
+  customSort?: (a: any, b: any) => number
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
-  customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
-  customSort?: (rowData1: any, rowData2: any) => number;
   defaultFilter?: any;
   defaultSort?: 'asc' | 'desc';
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
@@ -50,7 +48,7 @@ export interface Column {
   searchable?: boolean;
   sorting?: boolean;
   title: string;
-  type?: 'string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  type?: 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
 }
 
 export interface Components {
@@ -89,14 +87,12 @@ export interface Options {
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
-  loadingType?: 'overlay' | 'linear';
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?:boolean;
   search?: boolean;
-  searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   sorting?: boolean;
   toolbar?: boolean;
@@ -116,7 +112,7 @@ export interface Localization {
     firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
-    lastTooltip?: string;    
+    lastTooltip?: string;     
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
   };
