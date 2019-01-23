@@ -72,7 +72,7 @@ class MTableFilterRow extends React.Component {
       <TextField
         style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'text'}
-        value={columnDef.tableData.filterValue}
+        value={columnDef.tableData.filterValue || ''}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}

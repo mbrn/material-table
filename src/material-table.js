@@ -42,9 +42,14 @@ class MaterialTable extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const data = this.getData(this.getProps(nextProps));
-    const columns = this.getColumns(this.getProps(nextProps));
-    this.setState(() => ({ ...columns, ...data }));
+    const props = this.getProps(nextProps);
+    const columns = this.getColumns(props);
+    this.setState({ ...columns }, () => {
+      const data = this.getData(props);
+      this.setState({ ...data });
+    });
+    // const data = this.getData(props);
+    // this.setState(() => ({ ...columns, ...data }));
   }
 
   getData(props) {
@@ -64,7 +69,7 @@ class MaterialTable extends React.Component {
 
   getColumns(props) {
     const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = { id: index, filterValue: columnDef.defaultFilter };
+      columnDef.tableData = { filterValue: columnDef.defaultFilter, ...columnDef.tableData ,id: index };
       return columnDef;
     });
 
