@@ -210,13 +210,28 @@ class MaterialTable extends React.Component {
     return renderData || data;
   }
 
-  getFieldValue(rowData, columnDef) {
-    let value = rowData[columnDef.field];
+  getFieldValue = (rowData, columnDef) => {
+    let value = rowData[columnDef.field] || this.byString(rowData, columnDef.field);
     if (columnDef.lookup) {
       value = columnDef.lookup[value];
     }
 
     return value;
+  }
+
+  byString(o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    for (var i = 0, n = a.length; i < n; ++i) {
+      var x = a[i];
+      if (x in o) {
+        o = o[x];
+      } else {
+        return;
+      }
+    }
+    return o;
   }
 
   sort(a, b, type) {
@@ -348,7 +363,7 @@ class MaterialTable extends React.Component {
                 actionsHeaderIndex={props.options.actionsColumnIndex}
                 sorting={props.options.sorting}
               />
-            }            
+            }
             <props.components.Body
               actions={props.actions}
               components={props.components}
@@ -400,12 +415,12 @@ class MaterialTable extends React.Component {
           </Table>
         </ScrollBar>
         {props.isLoading && props.options.loadingType === "linear" &&
-              <div style={{ position: 'relative', width: '100%' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
-                  <LinearProgress />
-                </div>
-              </div>
-            }
+          <div style={{ position: 'relative', width: '100%' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
+              <LinearProgress />
+            </div>
+          </div>
+        }
         {this.renderFooter()}
 
         {props.isLoading && props.options.loadingType === 'overlay' &&

@@ -5,12 +5,9 @@ import MaterialTable from './material-table';
 class App extends Component {
   state = {
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Mehmet', surname: 'Baran', birthYear: 1987 },
+      { name: 'Gülcan', surname: 'Baran', birthYear: 1987 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 }
     ]
   }
 
@@ -26,14 +23,10 @@ class App extends Component {
             },
             { title: 'Soyadı', field: 'surname' },
             { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
+            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
           ]}
           data={this.state.data}
           title="Demo Title"
-          isLoading={true}
-          options={{
-            loadingType: 'linear'
-          }}
         />
         {this.state.selectedCount}
       </div>
