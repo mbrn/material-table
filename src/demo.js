@@ -47,7 +47,7 @@ class App extends Component {
           options={{
             selection: true,
             filtering: true,
-            searchFieldStyle: { color: 'red'}
+            searchFieldStyle: { color: 'red' }
           }}
         />
         {this.state.selectedCount}
