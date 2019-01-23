@@ -7,13 +7,13 @@ export interface MaterialTableProps {
   components?: Components;  
   data: object;
   detailPanel?: ((rowData: any) => React.ReactNode) | {
-    icon?: string | React.ReactElement<any>,
-    openIcon?: string | React.ReactElement<any>,
+    icon?: string | React.ReactElement<any>;
+    openIcon?: string | React.ReactElement<any>;
     tooltip?: string;
     render: (rowData: any) => string | React.ReactNode;
   }[];
-  icons?: Icons,
-  isLoading?: boolean,
+  icons?: Icons;
+  isLoading?: boolean;
   title: string;
   options?: Options;
   localization?: Localization;
