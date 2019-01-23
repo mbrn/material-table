@@ -42,8 +42,14 @@ class MaterialTable extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const data = this.getData(this.getProps(nextProps));
-    const columns = this.getColumns(this.getProps(nextProps));
+    const calculatedProps = this.getProps(nextProps);
+    const data = this.getData(calculatedProps);
+    const columns = this.getColumns(calculatedProps);
+    if (this.getData(this.props) !== calculatedProps.options.pageSize){
+      this.setState({
+        pageSize: calculatedProps.options.pageSize
+      });
+    }
     this.setState(() => ({ ...columns, ...data }));
   }
 
