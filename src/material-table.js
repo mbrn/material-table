@@ -192,27 +192,56 @@ class MaterialTable extends React.Component {
       });
     }
 
-    // Apply Sorting
-    if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-      const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
+    // Apply grouping 
+    const groups = this.state && this.state.columns
+                    .filter(col => col.tableData.groupOrder > -1)
+                    .sort((col1, col2) => col1.tableData.groupOrder - col1.tableData.groupOrder);
+    if(groups && groups.length > 0) {
+      renderData = this.groupBy(renderData, groups);
+      // Apply sorting in groups data.      
+    }
+    else  {
+      // Apply Sorting
+      if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
+        const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
 
-      if (columnDef.customSort) {
-        if (this.state.orderDirection === 'desc') {
-          renderData = renderData.sort((a, b) => columnDef.customSort(b, a));
+        if (columnDef.customSort) {
+          if (this.state.orderDirection === 'desc') {
+            renderData = renderData.sort((a, b) => columnDef.customSort(b, a));
+          }
+          else {
+            renderData = renderData.sort((a, b) => columnDef.customSort(a, b));
+          }
         }
         else {
-          renderData = renderData.sort((a, b) => columnDef.customSort(a, b));
+          renderData = renderData.sort(
+            this.state.orderDirection === 'desc'
+              ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
+              : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
+          );
         }
       }
-      else {
-        renderData = renderData.sort(
-          this.state.orderDirection === 'desc'
-            ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-            : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-        );
-      }
     }
+
     return renderData || data;
+  }
+
+  groupBy(data, groups) {
+    const subData = data.reduce(function(result, current) {
+
+        let object = result;
+        object = groups.reduce(function(o, colDef) {
+          const value = current[colDef.field] || this.byString(current, colDef.field);
+          o[value] = o[value] || [];
+          return o[value];
+        }, object);
+
+        object.push(current);
+
+        return result;
+    }, {});
+
+    return subData;
   }
 
   getFieldValue = (rowData, columnDef) => {
