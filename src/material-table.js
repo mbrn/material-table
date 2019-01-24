@@ -216,7 +216,7 @@ class MaterialTable extends React.Component {
   }
 
   getFieldValue = (rowData, columnDef) => {
-    let value = rowData[columnDef.field] || this.byString(rowData, columnDef.field);
+    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : this.byString(rowData, columnDef.field));
     if (columnDef.lookup) {
       value = columnDef.lookup[value];
     }
