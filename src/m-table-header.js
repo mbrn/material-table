@@ -9,7 +9,7 @@ import {
 
 class MTableHeader extends React.Component {
   renderHeader() {    
-    const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
+    const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef) => (
         <TableCell
           key={columnDef.tableData.id}
@@ -88,6 +88,12 @@ class MTableHeader extends React.Component {
         />
       );
     }
+
+    this.props.columns
+      .filter(columnDef => columnDef.tableData.groupOrder > -1)
+      .forEach(columnDef => {
+        headers.splice(0, 0, <TableCell padding="checkbox"/>);
+      });
 
     return (
       <TableHead>

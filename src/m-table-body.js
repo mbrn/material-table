@@ -9,7 +9,7 @@ class MTableBody extends React.Component {
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
-      if(this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
         addColumn = 1;
       }
       return (
@@ -19,7 +19,7 @@ class MTableBody extends React.Component {
           </TableCell>
         </TableRow>
       );
-    } else if(this.props.options.emptyRowsWhenPaging){
+    } else if (this.props.options.emptyRowsWhenPaging) {
       return (
         <React.Fragment>
           {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{ height: 49 }} key={'empty-' + index} />)}
@@ -29,8 +29,7 @@ class MTableBody extends React.Component {
     }
   }
 
-  render() {
-    let renderData = this.props.renderData;
+  renderUngroupedRows(renderData) {
     let emptyRowCount = 0;
     if (this.props.options.paging) {
       const startIndex = this.props.currentPage * this.props.pageSize;
@@ -78,6 +77,37 @@ class MTableBody extends React.Component {
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
+  }
+
+  render() {
+    let renderData = this.props.renderData;
+    const groups = this.props.columns
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
+
+    const keys = Object.keys(renderData);
+
+    if (groups.length > 0) {
+      return keys.map(key => (
+        <this.props.components.GroupRow          
+          columns={this.props.columns}
+          components={this.props.components}
+          data={renderData[key]}
+          getFieldValue={this.props.getFieldValue}
+          groups={groups}
+          icons={this.props.icons}
+          level={0}
+          onGroupExpandChanged={this.props.onGroupExpandChanged}
+          options={this.props.options}
+          value={key}
+        />
+      ));
+    }
+    else {
+      return this.renderUngroupedRows(renderData);
+    }
+
+
   }
 }
 

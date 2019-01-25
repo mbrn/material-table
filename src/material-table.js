@@ -7,6 +7,7 @@ import * as React from 'react';
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
+import MTableGroupRow from './m-table-group-row';
 import MTableCell from './m-table-cell';
 import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
@@ -69,7 +70,12 @@ class MaterialTable extends React.Component {
 
   getColumns(props) {
     const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = { filterValue: columnDef.defaultFilter, ...columnDef.tableData ,id: index };
+      columnDef.tableData = { 
+        filterValue: columnDef.defaultFilter, 
+        ...columnDef.tableData,
+        isGroupExpanded: {},
+        id: index 
+      };
       return columnDef;
     });
 
@@ -195,7 +201,7 @@ class MaterialTable extends React.Component {
     // Apply grouping 
     const groups = this.state && this.state.columns
                     .filter(col => col.tableData.groupOrder > -1)
-                    .sort((col1, col2) => col1.tableData.groupOrder - col1.tableData.groupOrder);
+                    .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
     if(groups && groups.length > 0) {
       renderData = this.groupBy(renderData, groups);
       // Apply sorting in groups data.      
@@ -443,6 +449,12 @@ class MaterialTable extends React.Component {
                 }
                 this.setData(data);
               }}
+              onGroupExpandChanged={(groupedColumn, value) => {
+                const columns = this.state.columns;
+                const targetColumn = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
+                targetColumn.tableData.isGroupExpanded[value] = !targetColumn.tableData.isGroupExpanded[value];
+                this.setState({columns});
+              }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
               onRowClick={this.props.onRowClick}
             />
@@ -498,6 +510,7 @@ MaterialTable.defaultProps = {
     Cell: MTableCell,
     Container: Paper,
     FilterRow: MTableFilterRow,
+    GroupRow: MTableGroupRow,
     Header: MTableHeader,
     Pagination: TablePagination,
     Row: MTableBodyRow,
@@ -592,6 +605,7 @@ MaterialTable.propTypes = {
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -659,11 +673,9 @@ MaterialTable.propTypes = {
 
 export default MaterialTable;
 
-export { MTableActions };
-export { MTableBody };
-export { MTableCell };
-export { MTableFilterRow };
-export { MTableHeader };
-export { MTablePagination };
-export { MTableBodyRow };
-export { MTableToolbar };
+export { 
+  MTableActions, MTableBody, MTableCell,
+  MTableFilterRow, MTableHeader, MTablePagination,
+  MTableBodyRow, MTableToolbar, MTableGroupRow
+};
+

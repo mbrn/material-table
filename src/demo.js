@@ -6,9 +6,9 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, sex: 'E', type: 'adult' },
-      { name: 'Gülcan', surname: undefined, birthYear: 1987, sex: 'K', type: 'adult' },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'K', type: 'child' }
+      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, sex: 'Male', type: 'adult' },
+      { name: 'Gülcan', surname: undefined, birthYear: 1987, sex: 'Female', type: 'adult' },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Female', type: 'child' }
     ],
     columns: [
       { title: 'Adı', field: 'name' },
