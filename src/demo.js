@@ -6,19 +6,15 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987 },
-      { name: 'Gülcan', surname: 'Baran', birthYear: 1987 },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63 }
+      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, sex: 'Male', type: 'adult' },
+      { name: 'Gülcan', surname: undefined, birthYear: 1987, sex: 'Female', type: 'adult' },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Female', type: 'child' }
     ],
     columns: [
-      {
-        title: 'Adı',
-        field: 'name',
-        customSort: (a, b) => {
-          return a.name.length - b.name.length;
-        }
-      },
+      { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
+      { title: 'Cinsiyet', field: 'sex', tableData: { groupOrder: 0 } },
+      { title: 'Tipi', field: 'type', tableData: { groupOrder: 1 } },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
     ]
@@ -28,22 +24,13 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
-          columns={[
-            {
-              title: 'Adı',
-              field: 'name',
-              customSort: (a, b) => {
-                return a.name.length - b.name.length;
-              }
-            },
-            { title: 'Soyadı', field: 'surname' },
-            { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
-          ]}
+          columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
           options={{
-            filtering: true
+            filtering: false,
+            exportButton: true,
+            exportDelimiter: ';'
           }}
         />
         {this.state.selectedCount}

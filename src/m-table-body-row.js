@@ -7,7 +7,7 @@ import * as React from 'react';
 
 export default class MTableBodyRow extends React.Component {
   renderColumns() {
-    const mapArr = this.props.columns.filter(columnDef => { return !columnDef.hidden })
+    const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
         return (
@@ -144,6 +144,13 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.detailPanel) {
       columns.splice(0, 0, this.renderDetailPanelColumn());
     }
+
+    this.props.columns
+      .filter(columnDef => columnDef.tableData.groupOrder > -1)
+      .forEach(columnDef => {
+        columns.splice(0, 0, <TableCell padding="none"/>);
+      });
+
     return (
       <>
         <TableRow
