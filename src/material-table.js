@@ -14,6 +14,7 @@ import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableToolbar from './m-table-toolbar';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -71,11 +72,11 @@ class MaterialTable extends React.Component {
 
   getColumns(props) {
     const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = { 
-        filterValue: columnDef.defaultFilter, 
+      columnDef.tableData = {
+        filterValue: columnDef.defaultFilter,
         ...columnDef.tableData,
         isGroupExpanded: {},
-        id: index 
+        id: index
       };
       return columnDef;
     });
@@ -201,13 +202,13 @@ class MaterialTable extends React.Component {
 
     // Apply grouping 
     const groups = this.state && this.state.columns
-                    .filter(col => col.tableData.groupOrder > -1)
-                    .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    if(groups && groups.length > 0) {
-      renderData = this.groupBy(renderData, groups);      
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
+    if (groups && groups.length > 0) {
+      renderData = this.groupBy(renderData, groups);
       // Apply sorting in groups data.      
     }
-    else  {
+    else {
       // Apply Sorting
       if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
         const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
@@ -234,22 +235,22 @@ class MaterialTable extends React.Component {
   }
 
   groupBy(data, groups) {
-    const subData = data.reduce(function(result, current) {
+    const subData = data.reduce(function (result, current) {
 
-        let object = result;
-        object = groups.reduce(function(o, colDef) {
-          const value = current[colDef.field] || this.byString(current, colDef.field);
-          let group = o.groups.find(g => g.value === value);
-          if(!group) {
-            group = { value, groups: [], data: [], isExpanded: false };
-            o.groups.push(group);
-          }          
-          return group;
-        }, object);
+      let object = result;
+      object = groups.reduce(function (o, colDef) {
+        const value = current[colDef.field] || this.byString(current, colDef.field);
+        let group = o.groups.find(g => g.value === value);
+        if (!group) {
+          group = { value, groups: [], data: [], isExpanded: false };
+          o.groups.push(group);
+        }
+        return group;
+      }, object);
 
-        object.data.push(current);
+      object.data.push(current);
 
-        return result;
+      return result;
     }, { groups: [] });
 
     return subData.groups;
@@ -352,152 +353,210 @@ class MaterialTable extends React.Component {
     this.setData();
   }
 
+  reOrderGroups = result => {
+    console.log(result);
+    let start = 0;
+
+    let groups = this.state.columns
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
+
+
+    if (result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
+      start = Math.min(result.destination.index, result.source.index);
+      const end = Math.max(result.destination.index, result.source.index);
+
+      groups = groups.slice(start, end + 1);
+
+      if (result.destination.index < result.source.index) {
+        // Take last and add as first
+        const last = groups.pop();
+        groups.unshift(last);
+      }
+      else {
+        // Take first and add as last
+        const last = groups.shift();
+        groups.push(last);
+      }
+    }
+    else if(result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
+      const newGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
+      groups.splice(result.destination.index, 0, newGroup);
+    }
+    else if(result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
+      const removeGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
+      removeGroup.tableData.groupOrder = undefined;
+      groups.splice(result.source.index, 1);
+    }
+
+    for (let i = 0; i < groups.length; i++) {
+      groups[i].tableData.groupOrder = start + i;
+    }
+
+    this.setData();
+
+    console.log(groups);
+  }
+
   render() {
     const props = this.getProps();
 
     return (
-      <props.components.Container style={{ position: 'relative' }}>
-        {props.options.toolbar &&
-          <props.components.Toolbar
-            actions={props.actions}
-            components={props.components}
-            selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
-            columns={this.state.columns}
-            columnsButton={props.options.columnsButton}
-            icons={props.icons}
-            exportButton={props.options.exportButton}
-            exportDelimiter={props.options.exportDelimiter}
-            renderData={this.state.renderData}
-            search={props.options.search}
-            searchText={this.state.searchText}
-            searchFieldStyle={props.options.searchFieldStyle}
-            title={props.title}
-            onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
-            onColumnsChanged={columns => this.setState({ columns })}
-            localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
-          />
-        }
-        {props.options.grouping &&
-          <props.components.Groupbar
-            groupColumns={this.state.columns
-              .filter(col => col.tableData.groupOrder > -1)
-              .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
-            }
-          />
-        }
-        <ScrollBar double={props.options.doubleHorizontalScroll}>
-          <Table>
-            {props.options.header &&
-              <props.components.Header
-                localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
-                columns={this.state.columns}
-                hasSelection={props.options.selection}
-                headerStyle={props.options.headerStyle}
-                selectedCount={this.state.selectedCount}
-                dataCount={this.state.data.length}
-                hasDetailPanel={!!props.detailPanel}
-                showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
-                orderBy={this.state.orderBy}
-                orderDirection={this.state.orderDirection}
-                onAllSelected={(checked) => {
-                  const data = this.state.renderData.map(row => {
-                    row.tableData.checked = checked;
-                    return row;
-                  });
-                  const selectedCount = checked ? data.length : 0;
-                  this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
-                }}
-                onOrderChange={(orderBy, orderDirection) => {
-                  this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
-                    this.setData();
-                    this.onOrderChange(orderBy, orderDirection);
-                  });
-                }}
-                actionsHeaderIndex={props.options.actionsColumnIndex}
-                sorting={props.options.sorting}
-              />
-            }
-            <props.components.Body
+      <DragDropContext onDragEnd={this.reOrderGroups}>
+        <props.components.Container style={{ position: 'relative' }}>
+          {props.options.toolbar &&
+            <props.components.Toolbar
               actions={props.actions}
               components={props.components}
-              icons={props.icons}
-              renderData={this.state.renderData}
-              currentPage={this.state.currentPage}
-              pageSize={this.state.pageSize}
+              selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
               columns={this.state.columns}
-              detailPanel={props.detailPanel}
-              options={props.options}
-              getFieldValue={this.getFieldValue}
-              onFilterChanged={(columnId, value) => {
-                const columns = this.state.columns;
-                columns[columnId].tableData.filterValue = value;
-                this.setState({ columns }, () => {
-                  this.setData();
-                });
-              }}
-              onFilterSelectionChanged={(event) => {
-                const filterSelectionChecked = event.target.checked;
-                const columns = this.state.columns;
-                this.setState({ columns, filterSelectionChecked }, () => {
-                  this.setData();
-                });
-              }}
-              onRowSelected={(event, checked) => {
-                const data = this.state.data;
-                data[event.target.value].tableData.checked = checked;
-                this.setState(state => ({
-                  data: data,
-                  selectedCount: state.selectedCount + (checked ? 1 : -1)
-                }), () => this.onSelectionChange());
-                this.setData();
-              }}
-              onToggleDetailPanel={(rowData, render) => {
-                const data = this.state.data;
-                const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
-                if (targetRow.tableData.showDetailPanel === render) {
-                  targetRow.tableData.showDetailPanel = undefined;
-                }
-                else {
-                  targetRow.tableData.showDetailPanel = render;
-                }
-                this.setData(data);
-              }}
-              onGroupExpandChanged={(path) => {
-                const data = { groups: this.state.renderData };
-                
-                const node = path.reduce((result, current) => {
-                  return result.groups[current]
-                }, data);
-                node.isExpanded = !node.isExpanded;
-
-                this.setState({renderData: data.groups });
-
-                
-              }}
-              localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
-              onRowClick={this.props.onRowClick}
+              columnsButton={props.options.columnsButton}
+              icons={props.icons}
+              exportButton={props.options.exportButton}
+              exportDelimiter={props.options.exportDelimiter}
+              renderData={this.state.renderData}
+              search={props.options.search}
+              searchText={this.state.searchText}
+              searchFieldStyle={props.options.searchFieldStyle}
+              title={props.title}
+              onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
+              onColumnsChanged={columns => this.setState({ columns })}
+              localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
-          </Table>
-        </ScrollBar>
-        {props.isLoading && props.options.loadingType === "linear" &&
-          <div style={{ position: 'relative', width: '100%' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
-              <LinearProgress />
-            </div>
-          </div>
-        }
-        {this.renderFooter()}
+          }
+          {props.options.grouping &&
+            <props.components.Groupbar
+              groupColumns={this.state.columns
+                .filter(col => col.tableData.groupOrder > -1)
+                .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
+              }
+            />
+          }
+          <ScrollBar double={props.options.doubleHorizontalScroll}>
+            <Droppable droppableId="headers" direction="horizontal">
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                //style={this.getListStyle(snapshot.isDraggingOver)}
+                >
+                  <Table>
+                    {props.options.header &&
+                      <props.components.Header
+                        localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                        columns={this.state.columns}
+                        hasSelection={props.options.selection}
+                        headerStyle={props.options.headerStyle}
+                        selectedCount={this.state.selectedCount}
+                        dataCount={this.state.data.length}
+                        hasDetailPanel={!!props.detailPanel}
+                        showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                        orderBy={this.state.orderBy}
+                        orderDirection={this.state.orderDirection}
+                        onAllSelected={(checked) => {
+                          const data = this.state.renderData.map(row => {
+                            row.tableData.checked = checked;
+                            return row;
+                          });
+                          const selectedCount = checked ? data.length : 0;
+                          this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
+                        }}
+                        onOrderChange={(orderBy, orderDirection) => {
+                          this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
+                            this.setData();
+                            this.onOrderChange(orderBy, orderDirection);
+                          });
+                        }}
+                        actionsHeaderIndex={props.options.actionsColumnIndex}
+                        sorting={props.options.sorting}
+                      />
+                    }
+                    <props.components.Body
+                      actions={props.actions}
+                      components={props.components}
+                      icons={props.icons}
+                      renderData={this.state.renderData}
+                      currentPage={this.state.currentPage}
+                      pageSize={this.state.pageSize}
+                      columns={this.state.columns}
+                      detailPanel={props.detailPanel}
+                      options={props.options}
+                      getFieldValue={this.getFieldValue}
+                      onFilterChanged={(columnId, value) => {
+                        const columns = this.state.columns;
+                        columns[columnId].tableData.filterValue = value;
+                        this.setState({ columns }, () => {
+                          this.setData();
+                        });
+                      }}
+                      onFilterSelectionChanged={(event) => {
+                        const filterSelectionChecked = event.target.checked;
+                        const columns = this.state.columns;
+                        this.setState({ columns, filterSelectionChecked }, () => {
+                          this.setData();
+                        });
+                      }}
+                      onRowSelected={(event, checked) => {
+                        const data = this.state.data;
+                        data[event.target.value].tableData.checked = checked;
+                        this.setState(state => ({
+                          data: data,
+                          selectedCount: state.selectedCount + (checked ? 1 : -1)
+                        }), () => this.onSelectionChange());
+                        this.setData();
+                      }}
+                      onToggleDetailPanel={(rowData, render) => {
+                        const data = this.state.data;
+                        const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
+                        if (targetRow.tableData.showDetailPanel === render) {
+                          targetRow.tableData.showDetailPanel = undefined;
+                        }
+                        else {
+                          targetRow.tableData.showDetailPanel = render;
+                        }
+                        this.setData(data);
+                      }}
+                      onGroupExpandChanged={(path) => {
+                        const data = { groups: this.state.renderData };
 
-        {props.isLoading && props.options.loadingType === 'overlay' &&
-          <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
-            <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: '#FFFFFFAA' }}>
-              <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
-                <CircularProgress />
+                        const node = path.reduce((result, current) => {
+                          return result.groups[current]
+                        }, data);
+                        node.isExpanded = !node.isExpanded;
+
+                        this.setState({ renderData: data.groups });
+
+
+                      }}
+                      localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+                      onRowClick={this.props.onRowClick}
+                    />
+                  </Table>
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+
+          </ScrollBar>
+          {props.isLoading && props.options.loadingType === "linear" &&
+            <div style={{ position: 'relative', width: '100%' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
+                <LinearProgress />
               </div>
             </div>
-          </div>
-        }
-      </props.components.Container>
+          }
+          {this.renderFooter()}
+
+          {props.isLoading && props.options.loadingType === 'overlay' &&
+            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
+              <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: '#FFFFFFAA' }}>
+                <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
+                  <CircularProgress />
+                </div>
+              </div>
+            </div>
+          }
+        </props.components.Container>
+      </DragDropContext>
     );
   }
 }
@@ -694,7 +753,7 @@ MaterialTable.propTypes = {
 
 export default MaterialTable;
 
-export { 
+export {
   MTableActions, MTableBody, MTableCell,
   MTableFilterRow, MTableHeader, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow

@@ -17,11 +17,7 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mbrn/material-table.git"
@@ -77,6 +73,7 @@
     "filefy": "0.1.6",
     "material-ui-pickers": "1.0.1",
     "prop-types": "^15.6.2",
+    "react-beautiful-dnd": "10.0.3",
     "react-double-scrollbar": "0.0.15"
   }
 }

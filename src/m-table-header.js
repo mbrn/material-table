@@ -5,17 +5,18 @@ import {
   TableHead, TableRow, TableCell,
   TableSortLabel, Checkbox, withStyles
 } from '@material-ui/core';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
 class MTableHeader extends React.Component {
-  renderHeader() {    
+  renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
-      .map((columnDef) => (
+      .map((columnDef, index) => (
         <TableCell
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-          
-          style={{...this.props.headerStyle, ...columnDef.headerStyle}}
+
+          style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
@@ -26,7 +27,22 @@ class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-              {columnDef.title}
+
+              <Draggable
+                key={columnDef.tableData.id}
+                draggableId={columnDef.tableData.id.toString()}
+                index={index}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                  >
+                    {columnDef.title}
+                  </div>
+                )}
+              </Draggable>
             </TableSortLabel>
             : columnDef.title
           }
@@ -38,7 +54,7 @@ class MTableHeader extends React.Component {
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     return (
-      <TableCell 
+      <TableCell
         key="key-actions-column"
         style={this.props.headerStyle}
       >
@@ -48,8 +64,8 @@ class MTableHeader extends React.Component {
   }
   renderSelectionHeader() {
     return (
-      <TableCell 
-        padding="none" 
+      <TableCell
+        padding="none"
         key="key-selection-column"
         style={this.props.headerStyle}
       >
@@ -79,10 +95,10 @@ class MTableHeader extends React.Component {
       }
     }
 
-    if(this.props.hasDetailPanel) {
-      headers.splice(0, 0, 
-        <TableCell 
-          padding="none" 
+    if (this.props.hasDetailPanel) {
+      headers.splice(0, 0,
+        <TableCell
+          padding="none"
           key="key-detail-panel-column"
           style={this.props.headerStyle}
         />
@@ -92,7 +108,7 @@ class MTableHeader extends React.Component {
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        headers.splice(0, 0, <TableCell padding="checkbox"/>);
+        headers.splice(0, 0, <TableCell padding="checkbox" />);
       });
 
     return (

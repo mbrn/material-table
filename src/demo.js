@@ -6,15 +6,15 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, sex: 'Male', type: 'adult' },
-      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, sex: 'Female', type: 'adult' },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Female', type: 'child' }
+      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
+      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
     ],
     columns: [
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
-      { title: 'Cinsiyet', field: 'sex', tableData: { groupOrder: 0 } },
-      { title: 'Tipi', field: 'type', tableData: { groupOrder: 1 } },
+      { title: 'Cinsiyet', field: 'sex' },
+      { title: 'Tipi', field: 'type' },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
     ]
