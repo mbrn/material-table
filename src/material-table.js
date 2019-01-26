@@ -7,6 +7,7 @@ import * as React from 'react';
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
+import MTableGroupbar from './m-table-groupbar';
 import MTableGroupRow from './m-table-group-row';
 import MTableCell from './m-table-cell';
 import MTableFilterRow from './m-table-filter-row';
@@ -203,7 +204,7 @@ class MaterialTable extends React.Component {
                     .filter(col => col.tableData.groupOrder > -1)
                     .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
     if(groups && groups.length > 0) {
-      renderData = this.groupBy(renderData, groups);
+      renderData = this.groupBy(renderData, groups);      
       // Apply sorting in groups data.      
     }
     else  {
@@ -238,16 +239,20 @@ class MaterialTable extends React.Component {
         let object = result;
         object = groups.reduce(function(o, colDef) {
           const value = current[colDef.field] || this.byString(current, colDef.field);
-          o[value] = o[value] || [];
-          return o[value];
+          let group = o.groups.find(g => g.value === value);
+          if(!group) {
+            group = { value, groups: [], data: [], isExpanded: false };
+            o.groups.push(group);
+          }          
+          return group;
         }, object);
 
-        object.push(current);
+        object.data.push(current);
 
         return result;
-    }, {});
+    }, { groups: [] });
 
-    return subData;
+    return subData.groups;
   }
 
   getFieldValue = (rowData, columnDef) => {
@@ -372,6 +377,14 @@ class MaterialTable extends React.Component {
             localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
           />
         }
+        {props.options.grouping &&
+          <props.components.Groupbar
+            groupColumns={this.state.columns
+              .filter(col => col.tableData.groupOrder > -1)
+              .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
+            }
+          />
+        }
         <ScrollBar double={props.options.doubleHorizontalScroll}>
           <Table>
             {props.options.header &&
@@ -449,11 +462,17 @@ class MaterialTable extends React.Component {
                 }
                 this.setData(data);
               }}
-              onGroupExpandChanged={(groupedColumn, value) => {
-                const columns = this.state.columns;
-                const targetColumn = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
-                targetColumn.tableData.isGroupExpanded[value] = !targetColumn.tableData.isGroupExpanded[value];
-                this.setState({columns});
+              onGroupExpandChanged={(path) => {
+                const data = { groups: this.state.renderData };
+                
+                const node = path.reduce((result, current) => {
+                  return result.groups[current]
+                }, data);
+                node.isExpanded = !node.isExpanded;
+
+                this.setState({renderData: data.groups });
+
+                
               }}
               localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
               onRowClick={this.props.onRowClick}
@@ -510,6 +529,7 @@ MaterialTable.defaultProps = {
     Cell: MTableCell,
     Container: Paper,
     FilterRow: MTableFilterRow,
+    Groupbar: MTableGroupbar,
     GroupRow: MTableGroupRow,
     Header: MTableHeader,
     Pagination: TablePagination,
@@ -605,6 +625,7 @@ MaterialTable.propTypes = {
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

@@ -84,22 +84,20 @@ class MTableBody extends React.Component {
     const groups = this.props.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-
-    const keys = Object.keys(renderData);
-
+    
     if (groups.length > 0) {
-      return keys.map(key => (
-        <this.props.components.GroupRow          
+      return renderData.map((groupData, index) => (
+        <this.props.components.GroupRow
           columns={this.props.columns}
           components={this.props.components}
-          data={renderData[key]}
           getFieldValue={this.props.getFieldValue}
+          groupData={groupData}
           groups={groups}
           icons={this.props.icons}
           level={0}
+          path={[index]}
           onGroupExpandChanged={this.props.onGroupExpandChanged}
           options={this.props.options}
-          value={key}
         />
       ));
     }

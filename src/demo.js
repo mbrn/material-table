@@ -7,7 +7,7 @@ class App extends Component {
     selectedCount: 0,
     data: [
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, sex: 'Male', type: 'adult' },
-      { name: 'Gülcan', surname: undefined, birthYear: 1987, sex: 'Female', type: 'adult' },
+      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, sex: 'Female', type: 'adult' },
       { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Female', type: 'child' }
     ],
     columns: [
@@ -30,7 +30,8 @@ class App extends Component {
           options={{
             filtering: false,
             exportButton: true,
-            exportDelimiter: ';'
+            exportDelimiter: ';',
+            grouping: true
           }}
         />
         {this.state.selectedCount}
