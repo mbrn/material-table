@@ -28,7 +28,7 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{
-            filtering: true,
+            filtering: false,
             exportButton: true,
             exportDelimiter: ';',
             grouping: true,

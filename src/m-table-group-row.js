@@ -13,9 +13,9 @@ export default class MTableGroupRow extends React.Component {
 
   render() {
     let colSpan = this.props.columns.filter(columnDef => !columnDef.hidden).length;
-    if(this.props.options.selection) {
-      colSpan++;
-    }
+    this.props.options.selection && colSpan++;    
+    this.props.detailPanel && colSpan++;
+    this.props.actions && this.props.actions.length > 0 && colSpan++;
     const column = this.props.groups[this.props.level];
 
     let detail;
@@ -23,17 +23,20 @@ export default class MTableGroupRow extends React.Component {
       if (this.props.groups.length > (this.props.level + 1)) { // Is there another group
         detail = this.props.groupData.groups.map((groupData, index) => (
           <this.props.components.GroupRow
+            actions={this.props.actions}
             key={groupData.value}
             columns={this.props.columns}
             components={this.props.components}
+            detailPanel={this.props.detailPanel}
             getFieldValue={this.props.getFieldValue}
             groupData={groupData}
-            groups={this.props.groups}
+            groups={this.props.groups}            
             icons={this.props.icons}
             level={this.props.level + 1}
             path={[...this.props.path, index]}
             onGroupExpandChanged={this.props.onGroupExpandChanged}
             onRowSelected={this.props.onRowSelected}
+            onToggleDetailPanel={this.props.onToggleDetailPanel}
             options={this.props.options}
           />
         ));
@@ -41,13 +44,17 @@ export default class MTableGroupRow extends React.Component {
       else {
         detail = this.props.groupData.data.map((rowData, index) => (
           <this.props.components.Row
+            actions={this.props.actions}
             key={index}
             columns={this.props.columns}
             components={this.props.components}
             data={rowData}
+            detailPanel={this.props.detailPanel}
             getFieldValue={this.props.getFieldValue}
+            icons={this.props.icons}
             path={[...this.props.path, index]}
             onRowSelected={this.props.onRowSelected}
+            onToggleDetailPanel={this.props.onToggleDetailPanel}
             options={this.props.options}
           />
         ));
@@ -59,11 +66,16 @@ export default class MTableGroupRow extends React.Component {
       freeCells.push(<TableCell padding="checkbox" />);
     }
 
+    let value = this.props.groupData.value;
+    if (column.lookup) {
+      value = column.lookup[value];
+    }
+
     return (
       <>
         <TableRow>
           {freeCells}
-          <TableCell colSpan={colSpan} padding="none">
+          <this.props.components.Cell colSpan={colSpan} padding="none" value={value}>
             <IconButton
               style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
               onClick={(event) => {
@@ -72,9 +84,8 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{column.title + ": "}</b>
-            {this.props.groupData.value}
-          </TableCell>
+            <b>{column.title + ": "}</b>            
+          </this.props.components.Cell>
         </TableRow>
         {detail}
       </>
@@ -90,8 +101,10 @@ MTableGroupRow.defaultProps = {
 };
 
 MTableGroupRow.propTypes = {
+  actions: PropTypes.array,
   columns: PropTypes.arrayOf(PropTypes.object),
   components: PropTypes.object,
+  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   getFieldValue: PropTypes.func,
   groupData: PropTypes.object,
   groups: PropTypes.arrayOf(PropTypes.object),
@@ -99,6 +112,7 @@ MTableGroupRow.propTypes = {
   level: PropTypes.number,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
+  onToggleDetailPanel: PropTypes.func.isRequired,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
 };

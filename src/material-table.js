@@ -200,38 +200,56 @@ class MaterialTable extends React.Component {
       });
     }
 
-    // Apply grouping 
+    // Apply grouping & sorting
     const groups = this.state && this.state.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
     if (groups && groups.length > 0) {
       renderData = this.groupBy(renderData, groups);
-      // Apply sorting in groups data.      
-    }
-    else {
-      // Apply Sorting
-      if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-        const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
 
-        if (columnDef.customSort) {
-          if (this.state.orderDirection === 'desc') {
-            renderData = renderData.sort((a, b) => columnDef.customSort(b, a));
-          }
-          else {
-            renderData = renderData.sort((a, b) => columnDef.customSort(a, b));
-          }
-        }
-        else {
-          renderData = renderData.sort(
-            this.state.orderDirection === 'desc'
-              ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-              : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-          );
-        }
+      if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
+        const sortGroupData = (list) => {
+          list.forEach(element => {
+            if (element.groups.length > 0) {
+              sortGroupData(element.groups);
+            }
+            else {
+              element.data = this.sortList(element.data);
+            }
+          });
+        };
+
+        sortGroupData(renderData);
       }
+    }
+    else if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
+      renderData = this.sortList(renderData);
     }
 
     return renderData || data;
+  }
+
+  sortList = (list) => {
+    const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
+    let result = list;
+
+    if (columnDef.customSort) {
+      if (this.state.orderDirection === 'desc') {
+        result = list.sort((a, b) => columnDef.customSort(b, a));
+      }
+      else {
+        result = list.sort((a, b) => columnDef.customSort(a, b));
+      }
+    }
+    else {
+      result = list.sort(
+        this.state.orderDirection === 'desc'
+          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
+          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
+      );
+    }
+
+    return result;
   }
 
   groupBy(data, groups) {
@@ -353,7 +371,7 @@ class MaterialTable extends React.Component {
     this.setData();
   }
 
-  reOrderGroups = result => {    
+  reOrderGroups = result => {
     let start = 0;
 
     let groups = this.state.columns
@@ -392,14 +410,14 @@ class MaterialTable extends React.Component {
       groups[i].tableData.groupOrder = start + i;
     }
 
-    this.setData();    
+    this.setData();
   }
 
   findDataByPath = (renderData, path) => {
     const data = { groups: renderData };
 
     const node = path.reduce((result, current) => {
-      if(result.groups.length > 0) {
+      if (result.groups.length > 0) {
         return result.groups[current];
       }
       else {
@@ -464,12 +482,35 @@ class MaterialTable extends React.Component {
                         orderBy={this.state.orderBy}
                         orderDirection={this.state.orderDirection}
                         onAllSelected={(checked) => {
-                          const data = this.state.renderData.map(row => {
-                            row.tableData.checked = checked;
-                            return row;
-                          });
-                          const selectedCount = checked ? data.length : 0;
-                          this.setState({ renderData: data, selectedCount }, () => this.onSelectionChange());
+                          let renderData = this.state.renderData;
+                          let selectedCount = 0;
+                          if (this.state.columns.filter(g => g.tableData.groupOrder > -1).length > 0) {
+                            const setCheck = (data) => {
+                              data.forEach(element => {
+                                if (element.groups.length > 0) {
+                                  setCheck(element.groups);
+                                }
+                                else {
+                                  element.data.forEach(d => {
+                                    d.tableData.checked = checked;
+                                    selectedCount++;
+                                  });
+                                }
+                              });
+                            };
+
+                            setCheck(renderData);
+                          }
+                          else {
+                            renderData = renderData.map(row => {
+                              row.tableData.checked = checked;
+                              return row;
+                            });
+                            selectedCount = renderData.length;
+                          }
+
+                          selectedCount = checked ? selectedCount : 0;
+                          this.setState({ renderData, selectedCount }, () => this.onSelectionChange());
                         }}
                         onOrderChange={(orderBy, orderDirection) => {
                           this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
@@ -515,18 +556,19 @@ class MaterialTable extends React.Component {
                           renderData,
                           selectedCount: state.selectedCount + (checked ? 1 : -1)
                         }), () => this.onSelectionChange());
-                        this.setData();
+                        this.setState({ renderData });
                       }}
-                      onToggleDetailPanel={(rowData, render) => {
-                        const data = this.state.data;
-                        const targetRow = data.find(a => a.tableData.id === rowData.tableData.id);
+                      onToggleDetailPanel={(path, render) => {
+                        const renderData = this.state.renderData;
+                        const targetRow = this.findDataByPath(renderData, path);
+
                         if (targetRow.tableData.showDetailPanel === render) {
                           targetRow.tableData.showDetailPanel = undefined;
                         }
                         else {
                           targetRow.tableData.showDetailPanel = render;
                         }
-                        this.setData(data);
+                        this.setState({ renderData });
                       }}
                       onGroupExpandChanged={(path) => {
                         const renderData = this.state.renderData;

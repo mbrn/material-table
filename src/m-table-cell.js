@@ -80,10 +80,13 @@ export default class MTableCell extends React.Component {
     }
 
     return (
-      <TableCell style={cellStyle}
+      <TableCell 
+        {...this.props}
+        style={cellStyle}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}
       >
+        {this.props.children}
         {this.getRenderValue()}
       </TableCell>
     );

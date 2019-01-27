@@ -55,9 +55,11 @@ class MTableBody extends React.Component {
   renderGroupedRows(groups, renderData) {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
+        actions={this.props.actions}
         key={groupData.value}
         columns={this.props.columns}
         components={this.props.components}
+        detailPanel={this.props.detailPanel}
         getFieldValue={this.props.getFieldValue}
         groupData={groupData}
         groups={groups}
@@ -66,6 +68,7 @@ class MTableBody extends React.Component {
         path={[index]}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
+        onToggleDetailPanel={this.props.onToggleDetailPanel}
         options={this.props.options}
       />
     ));
@@ -110,11 +113,6 @@ class MTableBody extends React.Component {
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
-
-
-
-
-
   }
 }
 
