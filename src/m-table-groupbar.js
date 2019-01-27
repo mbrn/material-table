@@ -38,9 +38,9 @@ class MTableGroupbar extends React.Component {
   });
 
   render() {
-    const localization = { ...MTableGroupbar.defaultProps.localization, ...this.props.localization };
+    // const localization = { ...MTableGroupbar.defaultProps.localization, ...this.props.localization };
     return (
-      <Toolbar style={{ padding: 0 }}>
+      <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
         <Droppable droppableId="groups" direction="horizontal" placeholder="Deneme">
           {(provided, snapshot) => (
             <div
@@ -49,7 +49,7 @@ class MTableGroupbar extends React.Component {
             >
               {this.props.groupColumns.length > 0 &&
                 <Typography variant="caption" style={{ padding: 8 }}>
-                  Grouped By: 
+                  Grouped By:
                 </Typography>
               }
               {this.props.groupColumns.map((columnDef, index) => {
@@ -68,7 +68,7 @@ class MTableGroupbar extends React.Component {
                         <Button
                           size="small"
                           style={{ boxShadow: 'none', textTransform: 'none' }}
-                          onClick={() => alert('ok')}
+                          // onClick={() => alert('ok')}
                           variant="contained"
                         >
                           <div {...provided.dragHandleProps}>{columnDef.title}</div>
@@ -76,7 +76,7 @@ class MTableGroupbar extends React.Component {
                       </div>
                     )}
                   </Draggable>
-                )
+                );
               })}
               {this.props.groupColumns.length === 0 &&
                 <Typography variant="caption" style={{ padding: 8 }}>

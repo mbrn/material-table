@@ -235,10 +235,10 @@ class MaterialTable extends React.Component {
   }
 
   groupBy(data, groups) {
-    const subData = data.reduce(function (result, current) {
+    const subData = data.reduce(function(result, current) {
 
       let object = result;
-      object = groups.reduce(function (o, colDef) {
+      object = groups.reduce(function(o, colDef) {
         const value = current[colDef.field] || this.byString(current, colDef.field);
         let group = o.groups.find(g => g.value === value);
         if (!group) {
@@ -353,8 +353,7 @@ class MaterialTable extends React.Component {
     this.setData();
   }
 
-  reOrderGroups = result => {
-    console.log(result);
+  reOrderGroups = result => {    
     let start = 0;
 
     let groups = this.state.columns
@@ -379,11 +378,11 @@ class MaterialTable extends React.Component {
         groups.push(last);
       }
     }
-    else if(result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
+    else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
       groups.splice(result.destination.index, 0, newGroup);
     }
-    else if(result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
+    else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
       const removeGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
@@ -393,9 +392,21 @@ class MaterialTable extends React.Component {
       groups[i].tableData.groupOrder = start + i;
     }
 
-    this.setData();
+    this.setData();    
+  }
 
-    console.log(groups);
+  findDataByPath = (renderData, path) => {
+    const data = { groups: renderData };
+
+    const node = path.reduce((result, current) => {
+      if(result.groups.length > 0) {
+        return result.groups[current];
+      }
+      else {
+        return result.data[current];
+      }
+    }, data);
+    return node;
   }
 
   render() {
@@ -495,11 +506,13 @@ class MaterialTable extends React.Component {
                           this.setData();
                         });
                       }}
-                      onRowSelected={(event, checked) => {
-                        const data = this.state.data;
-                        data[event.target.value].tableData.checked = checked;
+                      onRowSelected={(event, path) => {
+                        const checked = event.target.checked;
+                        const renderData = this.state.renderData;
+                        const node = this.findDataByPath(renderData, path);
+                        node.tableData.checked = checked;
                         this.setState(state => ({
-                          data: data,
+                          renderData,
                           selectedCount: state.selectedCount + (checked ? 1 : -1)
                         }), () => this.onSelectionChange());
                         this.setData();
@@ -516,16 +529,11 @@ class MaterialTable extends React.Component {
                         this.setData(data);
                       }}
                       onGroupExpandChanged={(path) => {
-                        const data = { groups: this.state.renderData };
-
-                        const node = path.reduce((result, current) => {
-                          return result.groups[current]
-                        }, data);
+                        const renderData = this.state.renderData;
+                        const node = this.findDataByPath(renderData, path);
                         node.isExpanded = !node.isExpanded;
 
-                        this.setState({ renderData: data.groups });
-
-
+                        this.setState({ renderData });
                       }}
                       localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
                       onRowClick={this.props.onRowClick}

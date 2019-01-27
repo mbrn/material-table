@@ -67,10 +67,10 @@ class MTableFilterRow extends React.Component {
   )
 
   renderDefaultFilter = (columnDef) => {
-    const localization = {...MTableFilterRow.defaultProps.localization, ...this.props.localization};
+    const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
     return (
       <TextField
-        style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
+        style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'text'}
         value={columnDef.tableData.filterValue || ''}
         onChange={(event) => {
@@ -80,7 +80,7 @@ class MTableFilterRow extends React.Component {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
-                <this.props.icons.Filter/>
+                <this.props.icons.Filter />
               </Tooltip>
             </InputAdornment>
           )
@@ -127,7 +127,7 @@ class MTableFilterRow extends React.Component {
   }
 
   getComponentForColumn(columnDef) {
-    if(columnDef.filtering === false) {
+    if (columnDef.filtering === false) {
       return null;
     }
 
@@ -145,11 +145,13 @@ class MTableFilterRow extends React.Component {
   }
 
   render() {
-    const columns = this.props.columns.map(columnDef => (
-      <TableCell key={columnDef.tableData.id}>
-        {this.getComponentForColumn(columnDef)}
-      </TableCell>
-    ));
+    const columns = this.props.columns
+      .filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
+      .map(columnDef => (
+        <TableCell key={columnDef.tableData.id}>
+          {this.getComponentForColumn(columnDef)}
+        </TableCell>
+      ));
 
     if (this.props.selection) {
       columns.splice(0, 0, (
@@ -160,19 +162,25 @@ class MTableFilterRow extends React.Component {
     }
     if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
-        columns.push(<TableCell key="key-action-column"/>);
+        columns.push(<TableCell key="key-action-column" />);
       } else {
         let endPos = 0;
         if (this.props.selection) {
           endPos = 1;
         }
-        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell key="key-action-column"/>);
+        columns.splice(this.props.actionsColumnIndex + endPos, 0, <TableCell key="key-action-column" />);
       }
     }
 
-    if(this.props.hasDetailPanel) {
-      columns.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column"/>);
+    if (this.props.hasDetailPanel) {
+      columns.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column" />);
     }
+
+    this.props.columns
+      .filter(columnDef => columnDef.tableData.groupOrder > -1)
+      .forEach(columnDef => {
+        columns.splice(0, 0, <TableCell padding="checkbox" />);
+      });
 
     return (
       <TableRow style={{ height: 10 }}>

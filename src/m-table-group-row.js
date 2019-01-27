@@ -12,7 +12,10 @@ export default class MTableGroupRow extends React.Component {
   });
 
   render() {
-    const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden).length;
+    let colSpan = this.props.columns.filter(columnDef => !columnDef.hidden).length;
+    if(this.props.options.selection) {
+      colSpan++;
+    }
     const column = this.props.groups[this.props.level];
 
     let detail;
@@ -20,6 +23,7 @@ export default class MTableGroupRow extends React.Component {
       if (this.props.groups.length > (this.props.level + 1)) { // Is there another group
         detail = this.props.groupData.groups.map((groupData, index) => (
           <this.props.components.GroupRow
+            key={groupData.value}
             columns={this.props.columns}
             components={this.props.components}
             getFieldValue={this.props.getFieldValue}
@@ -29,17 +33,21 @@ export default class MTableGroupRow extends React.Component {
             level={this.props.level + 1}
             path={[...this.props.path, index]}
             onGroupExpandChanged={this.props.onGroupExpandChanged}
+            onRowSelected={this.props.onRowSelected}
             options={this.props.options}
           />
         ));
       }
       else {
-        detail = this.props.groupData.data.map(rowData => (
+        detail = this.props.groupData.data.map((rowData, index) => (
           <this.props.components.Row
+            key={index}
             columns={this.props.columns}
             components={this.props.components}
             data={rowData}
             getFieldValue={this.props.getFieldValue}
+            path={[...this.props.path, index]}
+            onRowSelected={this.props.onRowSelected}
             options={this.props.options}
           />
         ));
@@ -75,7 +83,22 @@ export default class MTableGroupRow extends React.Component {
 }
 
 MTableGroupRow.defaultProps = {
+  columns: [],
+  groups: [],
+  options: {},
+  level: 0
 };
 
 MTableGroupRow.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.object),
+  components: PropTypes.object,
+  getFieldValue: PropTypes.func,
+  groupData: PropTypes.object,
+  groups: PropTypes.arrayOf(PropTypes.object),
+  icons: PropTypes.object,
+  level: PropTypes.number,
+  onGroupExpandChanged: PropTypes.func,
+  onRowSelected: PropTypes.func,
+  options: PropTypes.object,
+  path: PropTypes.arrayOf(PropTypes.number),
 };

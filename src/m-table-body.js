@@ -30,6 +30,54 @@ class MTableBody extends React.Component {
   }
 
   renderUngroupedRows(renderData) {
+    return renderData.map((data, index) => {
+      return (
+        <this.props.components.Row
+          components={this.props.components}
+          icons={this.props.icons}
+          data={data}
+          index={index}
+          key={index}
+          options={this.props.options}
+          onRowSelected={this.props.onRowSelected}
+          actions={this.props.actions}
+          columns={this.props.columns}
+          getFieldValue={this.props.getFieldValue}
+          detailPanel={this.props.detailPanel}
+          path={[index]}
+          onToggleDetailPanel={this.props.onToggleDetailPanel}
+          onRowClick={this.props.onRowClick}
+        />
+      );
+    });
+  }
+
+  renderGroupedRows(groups, renderData) {
+    return renderData.map((groupData, index) => (
+      <this.props.components.GroupRow
+        key={groupData.value}
+        columns={this.props.columns}
+        components={this.props.components}
+        getFieldValue={this.props.getFieldValue}
+        groupData={groupData}
+        groups={groups}
+        icons={this.props.icons}
+        level={0}
+        path={[index]}
+        onGroupExpandChanged={this.props.onGroupExpandChanged}
+        onRowSelected={this.props.onRowSelected}
+        options={this.props.options}
+      />
+    ));
+
+  }
+
+  render() {
+    let renderData = this.props.renderData;
+    const groups = this.props.columns
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
+
     let emptyRowCount = 0;
     if (this.props.options.paging) {
       const startIndex = this.props.currentPage * this.props.pageSize;
@@ -37,6 +85,7 @@ class MTableBody extends React.Component {
       renderData = renderData.slice(startIndex, endIndex);
       emptyRowCount = this.props.pageSize - renderData.length;
     }
+
     return (
       <TableBody>
         {this.props.options.filtering &&
@@ -53,57 +102,17 @@ class MTableBody extends React.Component {
             hasDetailPanel={!!this.props.detailPanel}
           />
         }
-        {
-          renderData.map((data, index) => {
-            return (
-              <this.props.components.Row
-                components={this.props.components}
-                icons={this.props.icons}
-                data={data}
-                index={index}
-                key={index}
-                options={this.props.options}
-                onRowSelected={this.props.onRowSelected}
-                actions={this.props.actions}
-                columns={this.props.columns}
-                getFieldValue={this.props.getFieldValue}
-                detailPanel={this.props.detailPanel}
-                onToggleDetailPanel={this.props.onToggleDetailPanel}
-                onRowClick={this.props.onRowClick}
-              />
-            );
-          })
+        {groups.length > 0 ?
+          this.renderGroupedRows(groups, renderData) :
+          this.renderUngroupedRows(renderData)
         }
+
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
-  }
 
-  render() {
-    let renderData = this.props.renderData;
-    const groups = this.props.columns
-      .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    
-    if (groups.length > 0) {
-      return renderData.map((groupData, index) => (
-        <this.props.components.GroupRow
-          columns={this.props.columns}
-          components={this.props.components}
-          getFieldValue={this.props.getFieldValue}
-          groupData={groupData}
-          groups={groups}
-          icons={this.props.icons}
-          level={0}
-          path={[index]}
-          onGroupExpandChanged={this.props.onGroupExpandChanged}
-          options={this.props.options}
-        />
-      ));
-    }
-    else {
-      return this.renderUngroupedRows(renderData);
-    }
+
+
 
 
   }
@@ -137,6 +146,7 @@ MTableBody.propTypes = {
   onFilterSelectionChanged: PropTypes.func.isRequired,
   localization: PropTypes.object,
   onFilterChanged: PropTypes.func,
+  onGroupExpandChanged: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
 };

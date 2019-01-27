@@ -17,7 +17,11 @@
     "docz:dev": "docz dev",
     "docz:build": "docz build"
   },
-  
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mbrn/material-table.git"

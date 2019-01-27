@@ -4,7 +4,7 @@ import MaterialTable from './material-table';
 
 class App extends Component {
   state = {
-    selectedCount: 0,
+    selectedCount: 0,    
     data: [
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
       { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
@@ -28,10 +28,11 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{
-            filtering: false,
+            filtering: true,
             exportButton: true,
             exportDelimiter: ';',
-            grouping: true
+            grouping: true,
+            selection: true
           }}
         />
         {this.state.selectedCount}

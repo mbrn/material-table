@@ -39,7 +39,7 @@ export default class MTableBodyRow extends React.Component {
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={`${this.props.data.tableData.id}`}
-          onChange={this.props.onRowSelected}
+          onChange={(event) => this.props.onRowSelected(event, this.props.path)}
         />
       </TableCell>
     );
@@ -179,7 +179,8 @@ MTableBodyRow.defaultProps = {
   actions: [],
   index: 0,
   data: {},
-  options: {}
+  options: {},
+  path: []
 };
 
 MTableBodyRow.propTypes = {
@@ -190,6 +191,7 @@ MTableBodyRow.propTypes = {
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
+  path: PropTypes.arrayOf(PropTypes.number),
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
   onToggleDetailPanel: PropTypes.func.isRequired,
