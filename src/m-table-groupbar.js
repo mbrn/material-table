@@ -38,7 +38,6 @@ class MTableGroupbar extends React.Component {
   });
 
   render() {
-    // const localization = { ...MTableGroupbar.defaultProps.localization, ...this.props.localization };
     return (
       <Toolbar style={{ padding: 0, minHeight: 'unset' }}>
         <Droppable droppableId="groups" direction="horizontal" placeholder="Deneme">
@@ -89,7 +88,7 @@ class MTableGroupbar extends React.Component {
               })}
               {this.props.groupColumns.length === 0 &&
                 <Typography variant="caption" style={{ padding: 8 }}>
-                  Drag headers here to group by
+                  {this.props.localization.placeholder}
                 </Typography>
               }
               {provided.placeholder}
@@ -105,6 +104,11 @@ MTableGroupbar.defaultProps = {
 };
 
 MTableGroupbar.propTypes = {
+  localization: {
+    grouping: {
+      
+    },
+  }
 };
 
 export default MTableGroupbar;

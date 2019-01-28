@@ -46,7 +46,9 @@ import MaterialTable from '../src/material-table'
 | customFilterAndSearch   | func            |           | This field can be used for overriding filter and search algorithm                                             |
 | customSort              | func            |           | This field can be used for overriding sort algorithm                                                          |
 | defaultFilter           | any             |           | Default Filter value for filtering column                                                                     |
-| defaultSort             | string          |           | Sorting direction: 'asc', 'desc'                                                                              |
+| defaultGroupOrder       | number          |           | Default grouped column by order                                                                               |
+| defaultGroupSort        | 'asc' or 'desc' | 'asc'     | Default grouped sort direction                                                                                |
+| defaultSort             | 'asc' or 'desc' |           | Sorting direction: 'asc', 'desc'                                                                              |
 | disableClick            | boolean         | false     | Disable the 'onRowClick' event for this cell                                                                  |
 | emptyValue              | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
 | field                   | string          |           | Field name of data row                                                                                        |
@@ -119,6 +121,14 @@ Localization settings could be used to change/translate default texts of datatab
 
 | Field                         | Type   | Default                   | Description                                      |
 |:------------------------------|:-------|:--------------------------|:-------------------------------------------------|
+| body                          | object | {}                        | Key value pair for localize body component       |
+| body.emptyDataSourceMessage   | string | No records to display     |                                                  |
+| body.filterRow                | object | {}                        | Key value pair for localize filter row component |
+| body.filterRow.filterTooltip  | string | Filter                    |                                                  |
+| grouping                      | object | {}                        | Key value pair for localize grouping component   |
+| grouping.placeholder          | string | Drag headers ...          |                                                  |
+| header                        | object | {}                        | Key value pair for localize header component     |
+| header.actions                | string | Actions                   |                                                  |
 | pagination                    | object | {}                        | Key value pair for localize pagination component |
 | pagination.labelDisplayedRows | string | {from}-{to} of {count}    |                                                  |
 | pagination.labelRowsPerPage   | string | Rows per page:            |                                                  |
@@ -138,12 +148,8 @@ Localization settings could be used to change/translate default texts of datatab
 | toolbar.exportAriaLabel       | string | Export                    |                                                  |
 | toolbar.exportName            | string | Export as CSV             |                                                  |
 | toolbar.searchTooltip         | string | Search                    |                                                  |
-| header                        | object | {}                        | Key value pair for localize header component     |
-| header.actions                | string | Actions                   |                                                  |
-| body                          | object | {}                        | Key value pair for localize body component       |
-| body.emptyDataSourceMessage   | string | No records to display     |                                                  |
-| body.filterRow                | object | {}                        | Key value pair for localize filter row component |
-| body.filterRow.filterTooltip  | string | Filter                    |                                                  |
+
+
 
 ### options
 

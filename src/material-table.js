@@ -74,8 +74,9 @@ class MaterialTable extends React.Component {
     const columns = props.columns.map((columnDef, index) => {
       columnDef.tableData = {
         filterValue: columnDef.defaultFilter,
+        groupOrder: columnDef.defaultGroupOrder,
+        groupSort: columnDef.defaultGroupSort || 'asc',
         ...columnDef.tableData,
-        groupSort: 'asc',
         id: index
       };
       return columnDef;
@@ -469,6 +470,7 @@ class MaterialTable extends React.Component {
           {props.options.grouping &&
             <props.components.Groupbar
               icons={props.icons}
+              localization={{ ...MaterialTable.defaultProps.localization.grouping, ...props.localization.grouping }}
               groupColumns={this.state.columns
                 .filter(col => col.tableData.groupOrder > -1)
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
@@ -713,6 +715,9 @@ MaterialTable.defaultProps = {
     toolbar: true
   },
   localization: {
+    grouping: {
+      placeholder: 'Drag headers here to group by',
+    },
     pagination: {
       labelDisplayedRows: '{from}-{to} of {count}',
       labelRowsPerPage: 'Rows per page:'
@@ -819,6 +824,9 @@ MaterialTable.propTypes = {
     toolbar: PropTypes.bool
   }),
   localization: PropTypes.shape({
+    grouping: PropTypes.shape({
+      placeholder: PropTypes.string
+    }),
     pagination: PropTypes.object,
     toolbar: PropTypes.object,
     header: PropTypes.object,

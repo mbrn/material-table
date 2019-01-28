@@ -39,6 +39,8 @@ export interface Column {
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   customSort?: (rowData1: any, rowData2: any) => number;
   defaultFilter?: any;
+  defaultGroupOrder?: number;
+  defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
@@ -111,6 +113,9 @@ export interface Localization {
   };
   header?: {
     actions?: string;
+  };
+  grouping?: {
+    placeholder?: string;
   };
   pagination?: {
     firstTooltip?: string;
