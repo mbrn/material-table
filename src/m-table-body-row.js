@@ -148,7 +148,7 @@ export default class MTableBodyRow extends React.Component {
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        columns.splice(0, 0, <TableCell padding="none"/>);
+        columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id}/>);
       });
 
     return (

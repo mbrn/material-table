@@ -72,16 +72,21 @@ export default class MTableCell extends React.Component {
   }
 
   render() {
+
+    const { columnDef, rowData, ...cellProps } = this.props;
+
     let cellStyle = {};
-    if (typeof this.props.columnDef.cellStyle === 'function') {
-      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle(this.props.value) };
+    if (typeof columnDef.cellStyle === 'function') {
+      cellStyle = { ...cellStyle, ...columnDef.cellStyle(this.props.value) };
     } else {
-      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
+      cellStyle = { ...cellStyle, ...columnDef.cellStyle };
     }
+
+    
 
     return (
       <TableCell 
-        {...this.props}
+        {...cellProps}
         style={cellStyle}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}

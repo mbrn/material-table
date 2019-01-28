@@ -68,10 +68,19 @@ class MTableGroupbar extends React.Component {
                         <Button
                           size="small"
                           style={{ boxShadow: 'none', textTransform: 'none' }}
-                          // onClick={() => alert('ok')}
+                          onClick={() => this.props.onSortChanged(columnDef)}
                           variant="contained"
                         >
                           <div {...provided.dragHandleProps}>{columnDef.title}</div>
+                          {columnDef.tableData.groupSort &&
+                            <this.props.icons.SortArrow
+                              style={{
+                                transition: '300ms ease all',
+                                transform: columnDef.tableData.groupSort === "desc" ? 'rotate(-180deg)' : 'none',
+                                fontSize: 18
+                              }}
+                            />
+                          }
                         </Button>
                       </div>
                     )}
@@ -80,9 +89,10 @@ class MTableGroupbar extends React.Component {
               })}
               {this.props.groupColumns.length === 0 &&
                 <Typography variant="caption" style={{ padding: 8 }}>
-                  Drag your headers here to group
+                  Drag headers here to group by
                 </Typography>
               }
+              {provided.placeholder}
             </div>
           )}
         </Droppable>

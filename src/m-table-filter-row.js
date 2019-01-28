@@ -179,7 +179,7 @@ class MTableFilterRow extends React.Component {
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        columns.splice(0, 0, <TableCell padding="checkbox" />);
+        columns.splice(0, 0, <TableCell padding="checkbox" key={"key-group-filter" + columnDef.tableData.id}/>);
       });
 
     return (

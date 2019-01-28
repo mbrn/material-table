@@ -75,7 +75,7 @@ class MaterialTable extends React.Component {
       columnDef.tableData = {
         filterValue: columnDef.defaultFilter,
         ...columnDef.tableData,
-        isGroupExpanded: {},
+        groupSort: 'asc',
         id: index
       };
       return columnDef;
@@ -207,20 +207,33 @@ class MaterialTable extends React.Component {
     if (groups && groups.length > 0) {
       renderData = this.groupBy(renderData, groups);
 
-      if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-        const sortGroupData = (list) => {
-          list.forEach(element => {
-            if (element.groups.length > 0) {
-              sortGroupData(element.groups);
-            }
-            else {
+      const sortGroups = (list, columnDef) => {
+        const result = list.sort(
+          columnDef.tableData.groupSort === 'desc'
+            ? (a, b) => this.sort(b.value, a.value, columnDef.type)
+            : (a, b) => this.sort(a.value, b.value, columnDef.type)
+        );
+        return result;
+      };
+
+      renderData = sortGroups(renderData, groups[0]);
+
+      const sortGroupData = (list, level) => {
+        list.forEach(element => {
+          if (element.groups.length > 0) {
+            const column = groups[level];
+            element.groups = sortGroups(element.groups, column);
+            sortGroupData(element.groups, level + 1);
+          }
+          else {
+            if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
               element.data = this.sortList(element.data);
             }
-          });
-        };
+          }
+        });
+      };
 
-        sortGroupData(renderData);
-      }
+      sortGroupData(renderData, 1);
     }
     else if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
       renderData = this.sortList(renderData);
@@ -455,10 +468,25 @@ class MaterialTable extends React.Component {
           }
           {props.options.grouping &&
             <props.components.Groupbar
+              icons={props.icons}
               groupColumns={this.state.columns
                 .filter(col => col.tableData.groupOrder > -1)
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
               }
+              onSortChanged={(groupedColumn) => {
+                const columns = this.state.columns;
+                const column = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
+
+                if (column.tableData.groupSort === 'asc') {
+                  column.tableData.groupSort = 'desc';
+                }
+                else {
+                  column.tableData.groupSort = 'asc';
+                }
+
+                this.setState({ columns });
+                this.setData();
+              }}
             />
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>
@@ -657,6 +685,7 @@ MaterialTable.defaultProps = {
     NextPage: (props) => <Icon {...props}>chevron_right</Icon>,
     PreviousPage: (props) => <Icon {...props}>chevron_left</Icon>,
     Search: (props) => <Icon {...props}>search</Icon>,
+    SortArrow: (props) => <Icon {...props}>arrow_upward</Icon>,
     ThirdStateCheck: (props) => <Icon {...props}>remove</Icon>,
     ViewColumn: (props) => <Icon {...props}>view_column</Icon>
     /* eslint-enable react/display-name */
@@ -761,6 +790,7 @@ MaterialTable.propTypes = {
     NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
