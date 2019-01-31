@@ -11,7 +11,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 ## Key features
 
-- Actions
+- ![Actions](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
 - Component overriding
 - Custom rendering
 - DetailPanel
