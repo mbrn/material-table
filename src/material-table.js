@@ -179,25 +179,21 @@ class MaterialTable extends React.Component {
       });
     }
 
-    // Apply Search
     if (this.state && this.state.searchText) {
       renderData = renderData.filter(row => {
-        let result = false;
-        this.state.columns
+        return this.state.columns
           .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
-          .forEach(columnDef => {
+          .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
-              result = !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
+              return !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
             }
             else if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
-              if (value && value.toString().toUpperCase().includes(this.state.searchText.toUpperCase())) {
-                result = true;
+              if (value) {
+                return value.toString().toUpperCase().includes(this.state.searchText.toUpperCase());
               }
             }
           });
-
-        return result;
       });
     }
 
@@ -298,10 +294,10 @@ class MaterialTable extends React.Component {
   }
 
   byString(o, s) {
-    if(!s) {
+    if (!s) {
       return;
     }
-    
+
     s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
     s = s.replace(/^\./, '');           // strip a leading dot
     var a = s.split('.');

@@ -11,7 +11,7 @@ class App extends Component {
       { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
     ],
     columns: [
-      { title: 'Adı', field: 'name', defaultGroupOrder: 0, defaultGroupSort: 'desc' },
+      { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Cinsiyet', field: 'sex' },
       { title: 'Tipi', field: 'type' },
