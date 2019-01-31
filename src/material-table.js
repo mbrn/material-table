@@ -263,10 +263,10 @@ class MaterialTable extends React.Component {
   }
 
   groupBy(data, groups) {
-    const subData = data.reduce(function(result, current) {
+    const subData = data.reduce((result, current) => {
 
       let object = result;
-      object = groups.reduce(function(o, colDef) {
+      object = groups.reduce((o, colDef) => {
         const value = current[colDef.field] || this.byString(current, colDef.field);
         let group = o.groups.find(g => g.value === value);
         if (!group) {
