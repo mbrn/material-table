@@ -351,9 +351,10 @@ class MaterialTable extends React.Component {
                 style={{ float: 'right' }}
                 colSpan={3}
                 count={this.state.renderData.length}
+                icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
-                page={this.state.currentPage}
+                page={this.state.currentPage}                
                 onChangePage={(event, page) => {
                   this.setState({ currentPage: page }, () => {
                     this.setData();
