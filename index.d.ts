@@ -7,8 +7,8 @@ export interface MaterialTableProps {
   components?: Components;  
   data: object;
   detailPanel?: ((rowData: any) => React.ReactNode) | {
-    icon?: string | React.ReactElement<any>,
-    openIcon?: string | React.ReactElement<any>,
+    icon?: string | React.ReactElement<any>;
+    openIcon?: string | React.ReactElement<any>;
     tooltip?: string;
     render: (rowData: any) => string | React.ReactNode;
   }[];
@@ -17,16 +17,16 @@ export interface MaterialTableProps {
   title: string;
   options?: Options;
   localization?: Localization;
-  onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
+  onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
   onRowClick?: (rowData: any) => void;
   onRowSelected?: (rowData: any) => void;
-  onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onSelectionChange?: (data: any[]) => void;
 }
 
 export interface Action {
-  icon: string | React.ComponentType<any>;
+  icon: string | React.ReactElement<any>;
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
