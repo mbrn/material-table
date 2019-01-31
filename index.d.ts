@@ -16,7 +16,7 @@ export interface MaterialTableProps {
   isLoading?: boolean;
   title: string;
   options?: Options;
-  localization?: () => Localization;
+  localization?: Localization;
   onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
