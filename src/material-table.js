@@ -716,6 +716,7 @@ MaterialTable.defaultProps = {
   },
   localization: {
     grouping: {
+      groupedBy: 'Grouped By:',
       placeholder: 'Drag headers here to group by',
     },
     pagination: {
@@ -825,6 +826,7 @@ MaterialTable.propTypes = {
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
+      groupedBy: PropTypes.string,
       placeholder: PropTypes.string
     }),
     pagination: PropTypes.object,

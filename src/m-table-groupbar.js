@@ -48,7 +48,7 @@ class MTableGroupbar extends React.Component {
             >
               {this.props.groupColumns.length > 0 &&
                 <Typography variant="caption" style={{ padding: 8 }}>
-                  Grouped By:
+                  {this.props.localization.groupedBy}
                 </Typography>
               }
               {this.props.groupColumns.map((columnDef, index) => {
@@ -105,9 +105,10 @@ MTableGroupbar.defaultProps = {
 
 MTableGroupbar.propTypes = {
   localization: {
-    grouping: {
-      
-    },
+    grouping: PropTypes.shape({
+      groupedBy: PropTypes.string,
+      placeholder: PropTypes.string
+    }),
   }
 };
 

@@ -116,6 +116,7 @@ export interface Localization {
     actions?: string;
   };
   grouping?: {
+    groupedBy?: string;
     placeholder?: string;
   };
   pagination?: {
