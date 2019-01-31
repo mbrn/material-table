@@ -48,7 +48,7 @@ class MTableToolbar extends React.Component {
             startAdornment: (
               <InputAdornment position="start">
                 <Tooltip title={localization.searchTooltip}>
-                  <this.props.icons.Search color="inherit"/>
+                  <this.props.icons.Search color="inherit" />
                 </Tooltip>
               </InputAdornment>
             ),
@@ -75,17 +75,20 @@ class MTableToolbar extends React.Component {
                 onClick={event => this.setState({ columnsButtonAnchorEl: event.currentTarget })}
                 aria-label={localization.showColumnsAriaLabel}>
 
-                <this.props.icons.ViewColumn/>
+                <this.props.icons.ViewColumn />
               </IconButton>
             </Tooltip>
             <Menu
               anchorEl={this.state.columnsButtonAnchorEl}
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null })}>
+              <MenuItem key={"text"} disabled style={{opacity: 1, fontWeight: 600, fontSize: 12}}>
+                {localization.addRemoveColumns}
+              </MenuItem>
               {
                 this.props.columns.map((col, index) => {
                   return (
-                    <MenuItem key={col.tableData.id}>
+                    <MenuItem key={col.tableData.id} disabled={col.removable === false}>
                       <FormControlLabel
                         label={col.title}
                         control={
@@ -113,7 +116,7 @@ class MTableToolbar extends React.Component {
                 color="inherit"
                 onClick={event => this.setState({ exportButtonAnchorEl: event.currentTarget })}
                 aria-label={localization.exportAriaLabel}>
-                <this.props.icons.Export/>
+                <this.props.icons.Export />
               </IconButton>
             </Tooltip>
             <Menu
@@ -176,6 +179,7 @@ MTableToolbar.defaultProps = {
   columns: [],
   columnsButton: false,
   localization: {
+    addRemoveColumns: 'Add or remove columns',
     nRowsSelected: '{0} row(s) selected',
     showColumnsTitle: 'Show Columns',
     showColumnsAriaLabel: 'Show Columns',

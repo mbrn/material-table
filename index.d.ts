@@ -50,6 +50,7 @@ export interface Column {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
+  removable?: boolean;
   render?: (data:any) => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -130,6 +131,7 @@ export interface Localization {
     labelRowsPerPage?: string;
   };
   toolbar?: {
+    addRemoveColumns?: string;
     nRowsSelected?: string;
     showColumnsTitle?: string;
     showColumnsAriaLabel?: string;

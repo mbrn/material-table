@@ -56,6 +56,7 @@ import MaterialTable from '../src/material-table'
 | headerStyle             | object          |           | Header cell style                                                                                             |
 | hidden                  | boolean         | false     | Flag for hide column                                                                                          |
 | lookup                  | object          |           | Key value pair for lookup render data from                                                                    |
+| removable               | boolean         | true      | Flag for column that could be removed with columnsButton or not                                               |
 | render                  | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
 | searchable              | boolean         | undefined | If true, includes the column when performing a search                                                         |
 | sorting                 | boolean         | true      | Flag to activate or disable sorting feature of column                                                         |
@@ -141,6 +142,7 @@ Localization settings could be used to change/translate default texts of datatab
 | pagination.lastAriaLabel      | string | Last Page                 |                                                  |
 | pagination.lastTooltip        | string | Last Page                 |                                                  |
 | toolbar                       | object | {}                        | Key value pair for localize toolbar component    |
+| toolbar.addRemoveColumns      | string | Add or remove columns     |                                                  |
 | toolbar.nRowsSelected         | string | {0} row(s) selected       |                                                  |
 | toolbar.showColumnsTitle      | string | Show Columns              |                                                  |
 | toolbar.showColumnsAriaLabel  | string | Show Columns              |                                                  |

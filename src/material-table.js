@@ -759,6 +759,7 @@ MaterialTable.propTypes = {
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
+    removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
