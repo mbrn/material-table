@@ -11,18 +11,18 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 ## Key features
 
-- ![Actions](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
-- <a href="https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding" target="_blank">Component overriding</a>
-- Custom rendering
-- DetailPanel
+- [Actions](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
+- [Component overriding](https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding)
+- [Custom rendering](https://mbrn.github.io/material-table/#/docz-examples-07-example-custom-render)
+- [Detail Panel](https://mbrn.github.io/material-table/#/docz-examples-11-example-detail-panel)
 - Export
-- Filtering
-- Grouping
-- Localization
+- [Filtering](https://mbrn.github.io/material-table/#/docz-examples-06-example-filtering)
+- [Grouping](https://mbrn.github.io/material-table/#/docz-examples-12-example-grouping)
+- [Localization](https://mbrn.github.io/material-table/#/docz-examples-09-example-localization)
 - Search
-- Selection
-- Sorting
-- Styling
+- [Selection](https://mbrn.github.io/material-table/#/docz-examples-05-example-selection)
+- [Sorting](https://mbrn.github.io/material-table/#/docz-examples-04-example-sorting)
+- [Styling](https://mbrn.github.io/material-table/#/docz-examples-08-example-cell-styling)
 
 ## Demo and documentation
 You can access all examples and documentation from [__docs site__](https://mbrn.github.io/material-table/).
