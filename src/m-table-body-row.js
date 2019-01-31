@@ -38,7 +38,7 @@ export default class MTableBodyRow extends React.Component {
         <Checkbox
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
-          value={`${this.props.data.tableData.id}`}
+          value={this.props.data.tableData.id}
           onChange={(event) => this.props.onRowSelected(event, this.props.path)}
         />
       </TableCell>
@@ -127,8 +127,7 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.options.selection) {
       columns.splice(0, 0, this.renderSelectionColumn());
     }
-    if (this.props.actions &&
-      this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0) {
+    if (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
         columns.push(this.renderActions());
       } else if (this.props.options.actionsColumnIndex >= 0) {
