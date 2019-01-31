@@ -12,7 +12,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 ## Key features
 
 - ![Actions](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
-- Component overriding
+- <a href="https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding" target="_blank">Component overriding</a>
 - Custom rendering
 - DetailPanel
 - Export
