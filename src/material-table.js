@@ -760,7 +760,7 @@ MaterialTable.propTypes = {
     render: PropTypes.func,
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({

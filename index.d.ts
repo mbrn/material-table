@@ -52,7 +52,7 @@ export interface Column {
   render?: (data:any) => any;
   searchable?: boolean;
   sorting?: boolean;
-  title: string;
+  title?: string;
   type?: 'string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
 }
 
