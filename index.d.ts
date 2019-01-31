@@ -16,11 +16,11 @@ export interface MaterialTableProps {
   isLoading?: boolean;
   title: string;
   options?: Options;
-  localization?: Localization;
+  localization?: () => Localization;
   onSelectionChange?: (data: any[]) => void;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
-  onRowClick?: (rowData: any) => void;
+  onRowClick?: (event: React.MouseEvent, rowData: any) => void;
   onRowSelected?: (rowData: any) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
 }
