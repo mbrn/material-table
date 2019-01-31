@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from './material-table';
-import { TablePagination } from '@material-ui/core';
 
 class App extends Component {
   state = {
     selectedCount: 0,
-    data: [
+    data: [      
       { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
       { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
       { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
     ],
     columns: [
+      { title: '#', field: 'tableData.id' },
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Cinsiyet', field: 'sex' },
@@ -29,23 +29,8 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{
-            filtering: true,
-            search: false,
-            columnsButton: true,
-            paging: true,
-            showEmptyDataSourceMessage: true,
-            pageSize: 10
-          }}
-          components={{
-            Pagination: props => {              
-              return (
-              <TablePagination {...props} />
-            );}
-          }}
-          localization={{
-            body: {
-              emptyDataSourceMessage: 'No Records to Display'
-            }
+            exportButton: true,
+            exportFileName: 'saşdjkaslkdj'
           }}
         />
         {this.state.selectedCount}

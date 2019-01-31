@@ -458,6 +458,7 @@ class MaterialTable extends React.Component {
               icons={props.icons}
               exportButton={props.options.exportButton}
               exportDelimiter={props.options.exportDelimiter}
+              exportFileName={props.options.exportFileName}
               renderData={this.state.renderData}
               search={props.options.search}
               searchText={this.state.searchText}
@@ -810,6 +811,7 @@ MaterialTable.propTypes = {
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
+    exportFileName: PropTypes.string,
     filtering: PropTypes.bool,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,

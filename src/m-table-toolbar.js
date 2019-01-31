@@ -27,7 +27,7 @@ class MTableToolbar extends React.Component {
     );
 
     // eslint-disable-next-line no-unused-vars
-    const builder = new CsvBuilder((this.props.title || 'data') + '.csv')
+    const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv')
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
@@ -205,6 +205,7 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
+  exportFileName: PropTypes.string,
   classes: PropTypes.object
 };
 

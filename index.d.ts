@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
+import { string } from 'prop-types';
 
 export interface MaterialTableProps {
   actions?: (Action | ((rowData:any) => Action)) [];
@@ -89,6 +90,7 @@ export interface Options {
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
+  exportFileName?: string;
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
