@@ -89,6 +89,7 @@ export interface Options {
   exportButton?: boolean;
   exportDelimiter?: string;
   filtering?: boolean;
+  grouping?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
   loadingType?: 'overlay' | 'linear';
