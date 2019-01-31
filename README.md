@@ -9,6 +9,20 @@
 
 A simple and powerful Datatable for React based on [Material-UI Table](https://material-ui.com/api/table/) with some additional features.
 
+## Key features
+
+- Search
+- Filtering
+- Grouping
+- Sorting
+- Selection
+- Actions
+- Export
+- DetailPanel
+- Custom rendering
+- Component overriding
+- Localization
+
 ## Demo and documentation
 You can access all examples and documentation from [__docs site__](https://mbrn.github.io/material-table/).
 
