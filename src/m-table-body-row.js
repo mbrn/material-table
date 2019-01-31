@@ -91,7 +91,7 @@ export default class MTableBodyRow extends React.Component {
               <IconButton
                 key={"key-detail-panel-" + index}
                 style={{ transition: 'all ease 200ms', ...rotateIconStyle(animation && isOpen) }}
-                onClick={() => this.props.onToggleDetailPanel(this.props.data, panel.render)}
+                onClick={() => this.props.onToggleDetailPanel(this.props.path, panel.render)}
               >
                 {iconButton}
               </IconButton>);
