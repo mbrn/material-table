@@ -20,7 +20,7 @@ export interface MaterialTableProps {
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
-  onRowClick?: (rowData: any) => void;
+  onRowClick?: (event: React.MouseEvent, rowData: any) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
 }
@@ -45,6 +45,7 @@ export interface Column {
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
+  grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
