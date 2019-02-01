@@ -23,6 +23,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - [Selection](https://mbrn.github.io/material-table/#/docz-examples-05-example-selection)
 - [Sorting](https://mbrn.github.io/material-table/#/docz-examples-04-example-sorting)
 - [Styling](https://mbrn.github.io/material-table/#/docz-examples-08-example-cell-styling)
+- and more
 
 ## Demo and documentation
 You can access all examples and documentation from [__docs site__](https://mbrn.github.io/material-table/).
