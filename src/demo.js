@@ -30,13 +30,14 @@ class App extends Component {
           options={{
             columnsButton: true,
           }}
+          detailPanel={[
+            { render: () => <div>p0</div> },
+            { render: () => <div>p1</div> },
+            { render: () => <div>p2</div> },
+          ]}
+          onRowClick={(a,b,c) => c(1)}
         />
-        {this.state.selectedCount}
-        <button onClick={() => {
-          this.setState({ selectedCount: this.state.selectedCount + 1 });
-        }}>
-          ok
-        </button>
+       
       </div>
     );
   }

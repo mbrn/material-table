@@ -91,7 +91,10 @@ export default class MTableBodyRow extends React.Component {
               <IconButton
                 key={"key-detail-panel-" + index}
                 style={{ transition: 'all ease 200ms', ...rotateIconStyle(animation && isOpen) }}
-                onClick={() => this.props.onToggleDetailPanel(this.props.path, panel.render)}
+                onClick={(event) => {
+                  this.props.onToggleDetailPanel(this.props.path, panel.render);
+                  event.stopPropagation();
+                }}
               >
                 {iconButton}
               </IconButton>);
@@ -156,9 +159,18 @@ export default class MTableBodyRow extends React.Component {
           selected={this.props.index % 2 === 0}
           hover={this.props.onRowClick ? true : false}
           style={this.getStyle()}
-          onClick={(event) => {
-            this.props.onRowClick && this.props.onRowClick(event, this.props.data);
-          }}
+          onClick={(event) => {            
+            this.props.onRowClick && this.props.onRowClick(event, this.props.data, 
+              (panelIndex) => {
+                let panel = this.props.detailPanel;
+                if(Array.isArray(panel)) {
+                  panel = panel[panelIndex || 0].render;
+                }
+                  
+                this.props.onToggleDetailPanel(this.props.path, panel);
+              });
+            }
+          }
         >
           {columns}
         </TableRow>
