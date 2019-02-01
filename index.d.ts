@@ -21,7 +21,7 @@ export interface MaterialTableProps {
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
-  onRowClick?: (event: React.MouseEvent, rowData: any, toggleDetailPanel: (panelIndex?: number = 0) => void ) => void;
+  onRowClick?: (event: React.MouseEvent, rowData: any, toggleDetailPanel: (panelIndex?: number) => void ) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
 }
@@ -80,6 +80,7 @@ export interface Icons {
   NextPage: () => React.ReactElement<any>;
   PreviousPage: () => React.ReactElement<any>;
   Search: () => React.ReactElement<any>;
+  SortArrow: () => React.ReactElement<any>;
   ThirdStateCheck: () => React.ReactElement<any>;
   ViewColumn: () => React.ReactElement<any>;
 }
@@ -96,6 +97,7 @@ export interface Options {
   header?: boolean;
   headerStyle?: React.CSSProperties;
   loadingType?: 'overlay' | 'linear';
+  grouping?: boolean;
   paging?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
