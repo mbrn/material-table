@@ -174,7 +174,7 @@ export default class MTableBodyRow extends React.Component {
         >
           {columns}
         </TableRow>
-        {this.props.data.tableData.showDetailPanel &&
+        {this.props.data.tableData && this.props.data.tableData.showDetailPanel &&
           <TableRow selected={this.props.index % 2 === 0}>
             <TableCell colSpan={columns.length} padding="none">
               {this.props.data.tableData.showDetailPanel(this.props.data)}
