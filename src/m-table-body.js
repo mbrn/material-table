@@ -68,6 +68,7 @@ class MTableBody extends React.Component {
         path={[index]}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
+        onRowClick={this.props.onRowClick}
         onToggleDetailPanel={this.props.onToggleDetailPanel}
         options={this.props.options}
       />

@@ -36,6 +36,7 @@ export default class MTableGroupRow extends React.Component {
             path={[...this.props.path, index]}
             onGroupExpandChanged={this.props.onGroupExpandChanged}
             onRowSelected={this.props.onRowSelected}
+            onRowClick={this.props.onRowClick}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
             options={this.props.options}
           />
@@ -54,6 +55,7 @@ export default class MTableGroupRow extends React.Component {
             icons={this.props.icons}
             path={[...this.props.path, index]}
             onRowSelected={this.props.onRowSelected}
+            onRowClick={this.props.onRowClick}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
             options={this.props.options}
           />
@@ -112,6 +114,7 @@ MTableGroupRow.propTypes = {
   level: PropTypes.number,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
+  onRowClick: PropTypes.func,  
   onToggleDetailPanel: PropTypes.func.isRequired,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
