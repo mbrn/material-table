@@ -114,6 +114,7 @@ MTableGroupRow.propTypes = {
   level: PropTypes.number,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
+  onRowClick: PropTypes.func,  
   onToggleDetailPanel: PropTypes.func.isRequired,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
