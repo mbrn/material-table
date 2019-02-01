@@ -21,7 +21,7 @@ export interface MaterialTableProps {
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;  
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
-  onRowClick?: (event: React.MouseEvent, rowData: any, toggleDetailPanel: (panelIndex?: number = 0) => void ) => void;
+  onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void ) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
 }
