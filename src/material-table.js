@@ -205,12 +205,20 @@ class MaterialTable extends React.Component {
       renderData = this.groupBy(renderData, groups);
 
       const sortGroups = (list, columnDef) => {
-        const result = list.sort(
-          columnDef.tableData.groupSort === 'desc'
-            ? (a, b) => this.sort(b.value, a.value, columnDef.type)
-            : (a, b) => this.sort(a.value, b.value, columnDef.type)
-        );
-        return result;
+        if(columnDef.customSort) {
+          return list.sort(
+            columnDef.tableData.groupSort === 'desc'
+              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
+              : (a, b) => columnDef.customSort(a.value, b.value, 'group')
+          );
+        }
+        else {
+          return list.sort(
+            columnDef.tableData.groupSort === 'desc'
+              ? (a, b) => this.sort(b.value, a.value, columnDef.type)
+              : (a, b) => this.sort(a.value, b.value, columnDef.type)
+          );
+        }
       };
 
       renderData = sortGroups(renderData, groups[0]);
@@ -245,10 +253,10 @@ class MaterialTable extends React.Component {
 
     if (columnDef.customSort) {
       if (this.state.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a));
+        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
       }
       else {
-        result = list.sort((a, b) => columnDef.customSort(a, b));
+        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
       }
     }
     else {
@@ -755,7 +763,7 @@ MaterialTable.propTypes = {
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
     }),
-    customFilterAndSearch: PropTypes.func,
+    customFilterAndSearch: PropTypes.func,    
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),

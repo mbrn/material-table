@@ -38,7 +38,7 @@ export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
-  customSort?: (rowData1: any, rowData2: any) => number;
+  customSort?: (data1: any, data1: any, type: 'row' | 'group') => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: 'asc' | 'desc';
