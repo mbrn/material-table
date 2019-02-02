@@ -46,7 +46,6 @@ export interface Column {
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
-  grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
