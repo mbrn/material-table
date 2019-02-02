@@ -29,13 +29,8 @@ class App extends Component {
           title="Demo Title"
           options={{
             columnsButton: true,
+            grouping: true
           }}
-          detailPanel={[
-            { render: () => <div>p0</div> },
-            { render: () => <div>p1</div> },
-            { render: () => <div>p2</div> },
-          ]}
-          onRowClick={(a,b,c) => c(1)}
         />
        
       </div>

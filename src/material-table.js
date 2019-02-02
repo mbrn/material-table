@@ -420,6 +420,12 @@ class MaterialTable extends React.Component {
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
     }
+    else if(result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
+      // Column reordering
+    }
+    else {
+      return;
+    }
 
     for (let i = 0; i < groups.length; i++) {
       groups[i].tableData.groupOrder = start + i;
