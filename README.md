@@ -15,11 +15,11 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - [Component overriding](https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding)
 - [Custom rendering](https://mbrn.github.io/material-table/#/docz-examples-07-example-custom-render)
 - [Detail Panel](https://mbrn.github.io/material-table/#/docz-examples-11-example-detail-panel)
-- Export
+- [Export](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
 - [Filtering](https://mbrn.github.io/material-table/#/docz-examples-06-example-filtering)
 - [Grouping](https://mbrn.github.io/material-table/#/docz-examples-12-example-grouping)
 - [Localization](https://mbrn.github.io/material-table/#/docz-examples-09-example-localization)
-- Search
+- [Search](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
 - [Selection](https://mbrn.github.io/material-table/#/docz-examples-05-example-selection)
 - [Sorting](https://mbrn.github.io/material-table/#/docz-examples-04-example-sorting)
 - [Styling](https://mbrn.github.io/material-table/#/docz-examples-08-example-cell-styling)
