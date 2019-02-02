@@ -71,6 +71,7 @@ export interface Components {
 }
 
 export interface Icons {
+  SortArrow: () => React.ReactElement<any>;
   Check: () => React.ReactElement<any>;
   DetailPanel: () => React.ReactElement<any>;
   Export: () => React.ReactElement<any>;
@@ -97,6 +98,7 @@ export interface Options {
   headerStyle?: React.CSSProperties;
   loadingType?: 'overlay' | 'linear';
   paging?: boolean;
+  grouping?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
