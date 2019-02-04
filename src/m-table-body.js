@@ -44,7 +44,7 @@ class MTableBody extends React.Component {
           columns={this.props.columns}
           getFieldValue={this.props.getFieldValue}
           detailPanel={this.props.detailPanel}
-          path={[index]}
+          path={[index + this.props.pageSize * this.props.currentPage]}
           onToggleDetailPanel={this.props.onToggleDetailPanel}
           onRowClick={this.props.onRowClick}
         />
@@ -65,7 +65,7 @@ class MTableBody extends React.Component {
         groups={groups}
         icons={this.props.icons}
         level={0}
-        path={[index]}
+        path={[index + this.props.pageSize * this.props.currentPage]}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
         onRowClick={this.props.onRowClick}

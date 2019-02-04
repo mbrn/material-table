@@ -6,9 +6,12 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'C', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
-      { name: 'BB', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
-      { name: 'AAA', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
+      { name: 'a', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
+      { name: 'b', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
+      { name: 'c', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
+      { name: 'd', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
+      { name: 'e', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
+      { name: 'f', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
     ],
     columns: [
       {
@@ -16,7 +19,7 @@ class App extends Component {
           if (type === 'row') {
             return a.name.length - b.name.length;
           }
-          else if(type === 'group') {
+          else if (type === 'group') {
             return a.length - b.length;
           }
         }
@@ -40,6 +43,18 @@ class App extends Component {
             columnsButton: true,
             grouping: true
           }}
+          detailPanel={[
+            {
+              tooltip: 'Show function trace log and error log',
+              render: logData => {
+                return (
+                  <div>
+                    {logData.name}
+                  </div>
+                );
+              },
+            },
+          ]}
         />
 
       </div>
