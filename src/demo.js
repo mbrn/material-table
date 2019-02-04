@@ -6,12 +6,21 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
-      { name: 'Gülcan', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
-      { name: 'Zerya Betül', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
+      { name: 'C', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
+      { name: 'BB', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
+      { name: 'AAA', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' }
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
+      {
+        title: 'Adı', field: 'name', customSort: (a, b, type) => {
+          if (type === 'row') {
+            return a.name.length - b.name.length;
+          }
+          else if(type === 'group') {
+            return a.length - b.length;
+          }
+        }
+      },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Cinsiyet', field: 'sex' },
       { title: 'Tipi', field: 'type', removable: false },
@@ -29,15 +38,10 @@ class App extends Component {
           title="Demo Title"
           options={{
             columnsButton: true,
+            grouping: true
           }}
-          detailPanel={[
-            { render: () => <div>p0</div> },
-            { render: () => <div>p1</div> },
-            { render: () => <div>p2</div> },
-          ]}
-          onRowClick={(a,b,c) => c(1)}
         />
-       
+
       </div>
     );
   }

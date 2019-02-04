@@ -104,12 +104,10 @@ MTableGroupbar.defaultProps = {
 };
 
 MTableGroupbar.propTypes = {
-  localization: {
-    grouping: PropTypes.shape({
-      groupedBy: PropTypes.string,
-      placeholder: PropTypes.string
-    }),
-  }
+  localization: PropTypes.shape({
+    groupedBy: PropTypes.string,
+    placeholder: PropTypes.string
+  }),
 };
 
 export default MTableGroupbar;

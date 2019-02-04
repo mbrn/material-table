@@ -24,7 +24,7 @@ export default class MTableGroupRow extends React.Component {
         detail = this.props.groupData.groups.map((groupData, index) => (
           <this.props.components.GroupRow
             actions={this.props.actions}
-            key={groupData.value}
+            key={groupData.value || ("" + index)}
             columns={this.props.columns}
             components={this.props.components}
             detailPanel={this.props.detailPanel}
@@ -71,6 +71,13 @@ export default class MTableGroupRow extends React.Component {
     let value = this.props.groupData.value;
     if (column.lookup) {
       value = column.lookup[value];
+    }
+    if((value === undefined || value === null) && column.emptyValue) {
+      if (typeof column.emptyValue === 'function') {
+        value = column.emptyValue();
+      } else {
+        value = column.emptyValue;
+      }
     }
 
     return (

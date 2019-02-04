@@ -38,7 +38,7 @@ export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
-  customSort?: (rowData1: any, rowData2: any) => number;
+  customSort?: (data1: any, data2: any, type: 'row' | 'group') => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: 'asc' | 'desc';
@@ -46,7 +46,6 @@ export interface Column {
   emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
-  grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
@@ -71,6 +70,7 @@ export interface Components {
 }
 
 export interface Icons {
+  SortArrow: () => React.ReactElement<any>;
   Check: () => React.ReactElement<any>;
   DetailPanel: () => React.ReactElement<any>;
   Export: () => React.ReactElement<any>;
@@ -97,6 +97,7 @@ export interface Options {
   headerStyle?: React.CSSProperties;
   loadingType?: 'overlay' | 'linear';
   paging?: boolean;
+  grouping?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
