@@ -86,7 +86,7 @@ class MTableBody extends React.Component {
       const startIndex = this.props.currentPage * this.props.pageSize;
       const endIndex = startIndex + this.props.pageSize;
       renderData = renderData.slice(startIndex, endIndex);
-      emptyRowCount = this.props.pageSize - renderData.length;
+      emptyRowCount = Math.max(5 - renderData.length, 0);
     }
 
     return (
