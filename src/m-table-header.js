@@ -27,8 +27,8 @@ class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-
-              <Draggable
+            {(this.props.grouping)
+              ? <Draggable
                 key={columnDef.tableData.id}
                 draggableId={columnDef.tableData.id.toString()}
                 index={index}>
@@ -43,6 +43,8 @@ class MTableHeader extends React.Component {
                   </div>
                 )}
               </Draggable>
+              : columnDef.title
+            }
             </TableSortLabel>
             : columnDef.title
           }
