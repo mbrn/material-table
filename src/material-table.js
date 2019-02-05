@@ -566,6 +566,7 @@ class MaterialTable extends React.Component {
                         }}
                         actionsHeaderIndex={props.options.actionsColumnIndex}
                         sorting={props.options.sorting}
+                        grouping={props.options.grouping}
                       />
                     }
                     <props.components.Body
