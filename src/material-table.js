@@ -30,7 +30,7 @@ class MaterialTable extends React.Component {
     }
     this.state = {
       columns: [],
-      currentPage: 0,
+      currentPage: props.options.initialPage ? props.options.initialPage : 0,
       data: [],
       pageSize: calculatedProps.options.pageSize,
       renderData: [],
@@ -831,6 +831,7 @@ MaterialTable.propTypes = {
     filtering: PropTypes.bool,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
+    initialPage: PropTypes.number,
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
