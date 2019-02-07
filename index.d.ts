@@ -95,6 +95,7 @@ export interface Options {
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  initialPage?: number;
   loadingType?: 'overlay' | 'linear';
   paging?: boolean;
   grouping?: boolean;
