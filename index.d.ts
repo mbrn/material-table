@@ -3,9 +3,9 @@ import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps {
-  actions?: (Action | ((rowData:any) => Action)) [];
+  actions?: (Action | ((rowData: any) => Action))[];
   columns: Column[];
-  components?: Components;  
+  components?: Components;
   data: object;
   detailPanel?: ((rowData: any) => React.ReactNode) | {
     icon?: string | React.ReactElement<any>;
@@ -19,9 +19,9 @@ export interface MaterialTableProps {
   options?: Options;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number) => void;  
+  onChangePage?: (page: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
-  onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void ) => void;
+  onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
 }
@@ -36,21 +36,22 @@ export interface Action {
 
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
-  currencySetting?:{ locale?: string,currencyCode?: string,minimumFractionDigits?:number,maximumFractionDigits?:number};
+  currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   customSort?: (data1: any, data2: any, type: 'row' | 'group') => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: 'asc' | 'desc';
   defaultSort?: 'asc' | 'desc';
-  emptyValue?:  string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
+  emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
+  grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
   removable?: boolean;
-  render?: (data:any) => any;
+  render?: (data: any) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string;
@@ -66,7 +67,21 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
+  GroupRow?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
+}
+
+export interface ExportComponents {
+  MTableToolbar?: () => React.ReactElement<any>;
+  MTableActions?: () => React.ReactElement<any>;
+  MTableBody?: () => React.ReactElement<any>;
+  MTableCell?: () => React.ReactElement<any>;
+  Container?: () => React.ReactElement<any>;
+  MTableFilterRow?: () => React.ReactElement<any>;
+  MTableHeader?: () => React.ReactElement<any>;
+  MTablePagination?: () => React.ReactElement<any>;
+  MTableBodyRow?: () => React.ReactElement<any>;
+  MTableGroupRow?: () => React.ReactElement<any>;
 }
 
 export interface Icons {
@@ -85,7 +100,7 @@ export interface Icons {
 }
 
 export interface Options {
-  actionsColumnIndex?:number;
+  actionsColumnIndex?: number;
   columnsButton?: boolean;
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
@@ -102,7 +117,7 @@ export interface Options {
   pageSize?: number;
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
-  showEmptyDataSourceMessage?:boolean;
+  showEmptyDataSourceMessage?: boolean;
   search?: boolean;
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
@@ -128,7 +143,7 @@ export interface Localization {
     firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
-    lastTooltip?: string;    
+    lastTooltip?: string;
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
   };
@@ -146,4 +161,3 @@ export interface Localization {
 
 declare const MaterialTable: React.ComponentType<MaterialTableProps>;
 export default MaterialTable;
-
