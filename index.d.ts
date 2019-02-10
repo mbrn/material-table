@@ -71,18 +71,17 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
-export interface ExportComponents {
-  MTableToolbar?: () => React.ReactElement<any>;
-  MTableActions?: () => React.ReactElement<any>;
-  MTableBody?: () => React.ReactElement<any>;
-  MTableCell?: () => React.ReactElement<any>;
-  Container?: () => React.ReactElement<any>;
-  MTableFilterRow?: () => React.ReactElement<any>;
-  MTableHeader?: () => React.ReactElement<any>;
-  MTablePagination?: () => React.ReactElement<any>;
-  MTableBodyRow?: () => React.ReactElement<any>;
-  MTableGroupRow?: () => React.ReactElement<any>;
-}
+export const MTableToolbar: () => React.ReactElement<any>;
+export const MTableActions: () => React.ReactElement<any>;
+export const MTableBody: () => React.ReactElement<any>;
+export const MTableCell: () => React.ReactElement<any>;
+export const Container: () => React.ReactElement<any>;
+export const MTableFilterRow: () => React.ReactElement<any>;
+export const MTableHeader: () => React.ReactElement<any>;
+export const MTablePagination: () => React.ReactElement<any>;
+export const MTableBodyRow: () => React.ReactElement<any>;
+export const MTableGroupRow: () => React.ReactElement<any>;
+
 
 export interface Icons {
   SortArrow: () => React.ReactElement<any>;
