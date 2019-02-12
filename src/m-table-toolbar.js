@@ -41,6 +41,7 @@ class MTableToolbar extends React.Component {
     if (this.props.search) {
       return (
         <TextField
+          className={this.props.classes.searchField}
           value={this.props.searchText}
           onChange={event => this.props.onSearchChanged(event.target.value)}
           color="inherit"
@@ -159,13 +160,13 @@ class MTableToolbar extends React.Component {
   render() {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
-    const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title;
+    const title = this.props.showTitle ? (this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title) : null;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
-        <div className={classes.title}>
+        { title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
-        </div>
-        <div className={classes.spacer} />
+        </div>}
+        { this.props.freeButtonAlignment === 'right' && <div className={classes.spacer} />}
         <div className={classes.actions}>
           {this.renderActions()}
         </div>
@@ -189,6 +190,8 @@ MTableToolbar.defaultProps = {
     searchTooltip: 'Search'
   },
   search: true,
+  showTitle: true,
+  freeButtonAlignment: 'right',
   searchText: '',
   selectedRows: [],
   title: 'No Title!'
@@ -206,6 +209,8 @@ MTableToolbar.propTypes = {
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
   title: PropTypes.string.isRequired,
+  showTitle: PropTypes.bool.isRequired,
+  freeButtonAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
@@ -235,6 +240,9 @@ const styles = theme => ({
   },
   title: {
     flex: '0 0 auto'
+  },
+  searchField: {
+    paddingLeft: theme.spacing.unit * 2
   }
 });
 
