@@ -728,7 +728,7 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     showEmptyDataSourceMessage: true,
     search: true,
-    showTitle: false,
+    showTitle: true,
     freeButtonAlignment: 'right',
     searchFieldStyle: {},
     selection: false,
