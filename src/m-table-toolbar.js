@@ -166,7 +166,7 @@ class MTableToolbar extends React.Component {
         { title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
         </div>}
-        { this.props.freeButtonAlignment === 'right' && <div className={classes.spacer} />}
+        { this.props.toolbarButtonAlignment === 'right' && <div className={classes.spacer} />}
         <div className={classes.actions}>
           {this.renderActions()}
         </div>
@@ -191,7 +191,7 @@ MTableToolbar.defaultProps = {
   },
   search: true,
   showTitle: true,
-  freeButtonAlignment: 'right',
+  toolbarButtonAlignment: 'right',
   searchText: '',
   selectedRows: [],
   title: 'No Title!'
@@ -210,7 +210,7 @@ MTableToolbar.propTypes = {
   selectedRows: PropTypes.array,
   title: PropTypes.string.isRequired,
   showTitle: PropTypes.bool.isRequired,
-  freeButtonAlignment: PropTypes.string.isRequired,
+  toolbarButtonAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
