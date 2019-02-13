@@ -362,7 +362,7 @@ class MaterialTable extends React.Component {
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
-                page={this.state.currentPage}                
+                page={this.state.currentPage}
                 onChangePage={(event, page) => {
                   this.setState({ currentPage: page }, () => {
                     this.setData();
@@ -475,6 +475,8 @@ class MaterialTable extends React.Component {
               exportFileName={props.options.exportFileName}
               renderData={this.state.renderData}
               search={props.options.search}
+              showTitle={props.options.showTitle}
+              toolbarButtonAlignment={props.options.toolbarButtonAlignment}
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
@@ -726,6 +728,8 @@ MaterialTable.defaultProps = {
     pageSizeOptions: [5, 10, 20],
     showEmptyDataSourceMessage: true,
     search: true,
+    showTitle: true,
+    toolbarButtonAlignment: 'right',
     searchFieldStyle: {},
     selection: false,
     sorting: true,
@@ -764,7 +768,7 @@ MaterialTable.propTypes = {
       minimumFractionDigits: PropTypes.number,
       maximumFractionDigits: PropTypes.number
     }),
-    customFilterAndSearch: PropTypes.func,    
+    customFilterAndSearch: PropTypes.func,
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
@@ -839,6 +843,8 @@ MaterialTable.propTypes = {
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     search: PropTypes.bool,
+    showTitle: PropTypes.bool,
+    toolbarButtonAlignment: PropTypes.string,
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
