@@ -20,7 +20,7 @@ export interface MaterialTableProps {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
-  onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
@@ -38,11 +38,11 @@ export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
-  customSort?: (data1: any, data2: any, type: 'row' | 'group') => number;
+  customSort?: (data1: any, data2: any, type: (('row' | 'group'))) => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
-  defaultGroupSort?: 'asc' | 'desc';
-  defaultSort?: 'asc' | 'desc';
+  defaultGroupSort?: ('asc' | 'desc');
+  defaultSort?: ('asc' | 'desc');
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
@@ -50,11 +50,11 @@ export interface Column {
   hidden?: boolean;
   lookup?: object;
   removable?: boolean;
-  render?: (data: any, type: 'row' | 'group') => any;
+  render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string;
-  type?: 'string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency';
+  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
 export interface Components {
@@ -109,7 +109,7 @@ export interface Options {
   header?: boolean;
   headerStyle?: React.CSSProperties;
   initialPage?: number;
-  loadingType?: 'overlay' | 'linear';
+  loadingType?: ('overlay' | 'linear');
   paging?: boolean;
   grouping?: boolean;
   pageSize?: number;
