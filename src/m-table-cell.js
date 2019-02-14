@@ -10,7 +10,7 @@ export default class MTableCell extends React.Component {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
     if (this.props.columnDef.render) {
-      return this.props.columnDef.render(this.props.rowData);
+      return this.props.columnDef.render(this.props.rowData, 'row');
     } else if (this.props.columnDef.type === 'boolean') {
       const style = { textAlign: 'center', width: '48px' };
       if (this.props.value) {

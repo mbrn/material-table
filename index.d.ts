@@ -50,7 +50,7 @@ export interface Column {
   hidden?: boolean;
   lookup?: object;
   removable?: boolean;
-  render?: (data: any) => any;
+  render?: (data: any, type: 'row' | 'group') => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string;

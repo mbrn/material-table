@@ -24,7 +24,7 @@ class App extends Component {
           }
         }
       },
-      { title: 'Soyadı', field: 'surname' },
+      { title: 'Soyadı', field: 'surname', render: () => <div style={{display: 'inline'}}>ok</div> },
       { title: 'Cinsiyet', field: 'sex' },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
