@@ -41,7 +41,8 @@ class App extends Component {
           title="Demo Title"
           options={{
             columnsButton: true,
-            grouping: true
+            grouping: true,
+            selection: true
           }}
           detailPanel={[
             {

@@ -38,7 +38,7 @@ export default class MTableBodyRow extends React.Component {
         <Checkbox
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
-          value={this.props.data.tableData.id}
+          value={this.props.data.tableData.id.toString()}
           onChange={(event) => this.props.onRowSelected(event, this.props.path)}
         />
       </TableCell>
