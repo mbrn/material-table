@@ -15,6 +15,7 @@ import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import DataManager from './utils/data-manager';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -28,6 +29,11 @@ class MaterialTable extends React.Component {
       defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
       defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
     }
+
+    this.dataManager = new DataManager();
+    this.dataManager.setData(calculatedProps.data);
+    this.dataManager.setColumns(calculatedProps.columns);
+    
     this.state = {
       columns: [],
       currentPage: props.options.initialPage ? props.options.initialPage : 0,
@@ -38,51 +44,14 @@ class MaterialTable extends React.Component {
       selectedCount: 0,
       orderBy: defaultSortColumnIndex,
       orderDirection: defaultSortDirection,
-      filterSelectionChecked: false,
-      ...this.getData(calculatedProps),
-      ...this.getColumns(calculatedProps)
+      filterSelectionChecked: false
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const props = this.getProps(nextProps);
-    const columns = this.getColumns(props);
-    this.setState({ ...columns }, () => {
-      const data = this.getData(props);
-      this.setState({ ...data });
-    });
-    // const data = this.getData(props);
-    // this.setState(() => ({ ...columns, ...data }));
-  }
-
-  getData(props) {
-    let selectedCount = 0;
-    const data = props.data.map((row, index) => {
-      row.tableData = { ...row.tableData, id: index };
-      if (row.tableData.checked) {
-        selectedCount++;
-      }
-      return row;
-    });
-
-    const renderData = this.getRenderData(data, props);
-
-    return { data, renderData, selectedCount };
-  }
-
-  getColumns(props) {
-    const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = {
-        filterValue: columnDef.defaultFilter,
-        groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',
-        ...columnDef.tableData,
-        id: index
-      };
-      return columnDef;
-    });
-
-    return { columns };
+    this.dataManager.setData(props.data);
+    this.dataManager.setColumns(props.columns);
   }
 
   getProps(props) {
