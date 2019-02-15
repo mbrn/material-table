@@ -14,17 +14,8 @@ class App extends Component {
       { name: 'f', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
     ],
     columns: [
-      {
-        title: 'Adı', field: 'name', customSort: (a, b, type) => {
-          if (type === 'row') {
-            return a.name.length - b.name.length;
-          }
-          else if (type === 'group') {
-            return a.length - b.length;
-          }
-        }
-      },
-      { title: 'Soyadı', field: 'surname', render: () => <div style={{display: 'inline'}}>ok</div> },
+      { title: 'Adı', field: 'name' },
+      { title: 'Soyadı', field: 'surname' },
       { title: 'Cinsiyet', field: 'sex' },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
@@ -39,23 +30,6 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
-          options={{
-            columnsButton: true,
-            grouping: true,
-            selection: true
-          }}
-          detailPanel={[
-            {
-              tooltip: 'Show function trace log and error log',
-              render: logData => {
-                return (
-                  <div>
-                    {logData.name}
-                  </div>
-                );
-              },
-            },
-          ]}
         />
 
       </div>
