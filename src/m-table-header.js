@@ -31,6 +31,7 @@ class MTableHeader extends React.Component {
               ? <Draggable
                 key={columnDef.tableData.id}
                 draggableId={columnDef.tableData.id.toString()}
+                isDragDisabled={columnDef.disableGrouping}
                 index={index}>
                 {(provided, snapshot) => (
                   <div
