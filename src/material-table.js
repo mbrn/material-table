@@ -311,7 +311,7 @@ class MaterialTable extends React.Component {
     var a = s.split('.');
     for (var i = 0, n = a.length; i < n; ++i) {
       var x = a[i];
-      if (x in o) {
+      if (o && x in o) {
         o = o[x];
       } else {
         return;
