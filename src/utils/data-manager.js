@@ -43,7 +43,7 @@ export default class DataManager {
     });
   }
 
-  generateRenderData = () => {
+  getRenderState = () => {
     if(this.filtered === false) {
       this.filterData();
     }
@@ -64,7 +64,10 @@ export default class DataManager {
       this.pageData();
     }
 
-    this.renderData = [...this.pagedData];
+    return {
+      renderData: this.pagedData,
+      columns: this.columns
+    };
   }
 
   filterData = () => {

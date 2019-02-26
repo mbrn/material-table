@@ -37,7 +37,6 @@ class MaterialTable extends React.Component {
     this.state = {
       columns: [],
       currentPage: props.options.initialPage ? props.options.initialPage : 0,
-      data: [],
       pageSize: calculatedProps.options.pageSize,
       renderData: [],
       searchText: '',
@@ -63,202 +62,9 @@ class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
-  setData(data) {
-    data = data || this.state.data;
-
-    const renderData = this.getRenderData(data);
-    this.setState({ data, renderData });
-  }
-
-  getRenderData = (data, props) => {
-    data = data || this.state.data;
-    props = this.getProps();
-
-    let renderData = [...data];
-
-    // App filter
-    if (this.state) {
-      renderData = renderData.filter(row => {
-        if (this.state.filterSelectionChecked) return row.tableData.checked;
-        return row.tableData;
-      });
-
-      this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
-        const { lookup, type, tableData, field } = columnDef;
-
-        if (columnDef.customFilterAndSearch) {
-          renderData = renderData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
-        }
-        else
-          if (lookup) {
-            renderData = renderData.filter(row => {
-              return !tableData.filterValue ||
-                tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
-            });
-          } else if (type === 'numeric') {
-            renderData = renderData.filter(row => {
-              return row[field] === tableData.filterValue;
-            });
-          } else if (type === 'boolean' && tableData.filterValue) {
-            renderData = renderData.filter(row => {
-              return (row[field] && tableData.filterValue === 'checked') ||
-                (!row[field] && tableData.filterValue === 'unchecked');
-            });
-          } else if (['date', 'datetime'].includes(type)) {
-            renderData = renderData.filter(row => {
-              const currentDate = row[field] ? new Date(row[field]) : null;
-
-              if (currentDate && currentDate.toString() !== 'Invalid Date') {
-                const selectedDate = tableData.filterValue;
-                let currentDateToCompare = '';
-                let selectedDateToCompare = '';
-
-                if (type === 'date') {
-                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
-                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
-                } else if (type === 'datetime') {
-                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
-                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
-                }
-
-                return currentDateToCompare === selectedDateToCompare;
-              }
-
-              return true;
-            });
-          } else if (type === 'time') {
-            renderData = renderData.filter(row => {
-              const currentHour = row[field] || null;
-
-              if (currentHour) {
-                const selectedHour = tableData.filterValue;
-                const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
-
-                return currentHour === currentHourToCompare;
-              }
-
-              return true;
-            });
-          } else {
-            renderData = renderData.filter(row => {
-              return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
-            });
-          }
-      });
-    }
-
-    if (this.state && this.state.searchText) {
-      renderData = renderData.filter(row => {
-        return this.state.columns
-          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
-          .some(columnDef => {
-            if (columnDef.customFilterAndSearch) {
-              return !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
-            }
-            else if (columnDef.field) {
-              const value = this.getFieldValue(row, columnDef);
-              if (value) {
-                return value.toString().toUpperCase().includes(this.state.searchText.toUpperCase());
-              }
-            }
-          });
-      });
-    }
-
-    // Apply grouping & sorting
-    const groups = this.state && this.state.columns
-      .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    if (groups && groups.length > 0) {
-      renderData = this.groupBy(renderData, groups);
-
-      const sortGroups = (list, columnDef) => {
-        if(columnDef.customSort) {
-          return list.sort(
-            columnDef.tableData.groupSort === 'desc'
-              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
-              : (a, b) => columnDef.customSort(a.value, b.value, 'group')
-          );
-        }
-        else {
-          return list.sort(
-            columnDef.tableData.groupSort === 'desc'
-              ? (a, b) => this.sort(b.value, a.value, columnDef.type)
-              : (a, b) => this.sort(a.value, b.value, columnDef.type)
-          );
-        }
-      };
-
-      renderData = sortGroups(renderData, groups[0]);
-
-      const sortGroupData = (list, level) => {
-        list.forEach(element => {
-          if (element.groups.length > 0) {
-            const column = groups[level];
-            element.groups = sortGroups(element.groups, column);
-            sortGroupData(element.groups, level + 1);
-          }
-          else {
-            if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-              element.data = this.sortList(element.data);
-            }
-          }
-        });
-      };
-
-      sortGroupData(renderData, 1);
-    }
-    else if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-      renderData = this.sortList(renderData);
-    }
-
-    return renderData || data;
-  }
-
-  sortList = (list) => {
-    const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
-    let result = list;
-
-    if (columnDef.customSort) {
-      if (this.state.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
-      }
-      else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
-      }
-    }
-    else {
-      result = list.sort(
-        this.state.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-      );
-    }
-
-    return result;
-  }
-
-  groupBy(data, groups) {
-    const subData = data.reduce((result, current) => {
-
-      let object = result;
-      object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || this.byString(current, colDef.field);
-        let group = o.groups.find(g => g.value === value);
-        if (!group) {
-          group = { value, groups: [], data: [], isExpanded: false };
-          o.groups.push(group);
-        }
-        return group;
-      }, object);
-
-      object.data.push(current);
-
-      return result;
-    }, { groups: [] });
-
-    return subData.groups;
+  setData() {
+    const state = this.dataManager.getRenderState();
+    this.setState({ ...state });
   }
 
   getFieldValue = (rowData, columnDef) => {
@@ -287,14 +93,6 @@ class MaterialTable extends React.Component {
       }
     }
     return o;
-  }
-
-  sort(a, b, type) {
-    if (type === 'numeric') {
-      return a - b;
-    } else {
-      return a < b ? -1 : a > b ? 1 : 0;
-    }
   }
 
   onSelectionChange = () => {
