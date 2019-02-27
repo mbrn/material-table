@@ -55,81 +55,6 @@ class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
-  setData(callback) {
-    this.setState(this.dataManager.getRenderState(), () => {
-      callback && callback();
-    });
-  }
-
-  getRenderData = (data, props) => {
-    data = data || this.state.data;
-    props = this.getProps();
-
-    let renderData = [...data];
-
-
-    return renderData || data;
-  }
-
-  sortList = (list) => {
-    const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
-    let result = list;
-
-    if (columnDef.customSort) {
-      if (this.state.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
-      }
-      else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
-      }
-    }
-    else {
-      result = list.sort(
-        this.state.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-      );
-    }
-
-    return result;
-  }
-
-  getFieldValue = (rowData, columnDef) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : this.byString(rowData, columnDef.field));
-    if (columnDef.lookup) {
-      value = columnDef.lookup[value];
-    }
-
-    return value;
-  }
-
-  byString(o, s) {
-    if (!s) {
-      return;
-    }
-
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var x = a[i];
-      if (o && x in o) {
-        o = o[x];
-      } else {
-        return;
-      }
-    }
-    return o;
-  }
-
-  sort(a, b, type) {
-    if (type === 'numeric') {
-      return a - b;
-    } else {
-      return a < b ? -1 : a > b ? 1 : 0;
-    }
-  }
-
   onSelectionChange = () => {
     if (this.props.onSelectionChange) {
       const selectedRows = this.state.data.filter(row => row.tableData.checked);
@@ -192,20 +117,6 @@ class MaterialTable extends React.Component {
   componentDidMount() {
     this.setState(this.dataManager.getRenderState());
   }  
-
-  findDataByPath = (renderData, path) => {
-    const data = { groups: renderData };
-
-    const node = path.reduce((result, current) => {
-      if (result.groups.length > 0) {
-        return result.groups[current];
-      }
-      else {
-        return result.data[current];
-      }
-    }, data);
-    return node;
-  }
 
   render() {
     const props = this.getProps();
@@ -277,35 +188,8 @@ class MaterialTable extends React.Component {
                         orderBy={this.state.orderBy}
                         orderDirection={this.state.orderDirection}
                         onAllSelected={(checked) => {
-                          let renderData = this.state.renderData;
-                          let selectedCount = 0;
-                          if (this.state.columns.filter(g => g.tableData.groupOrder > -1).length > 0) {
-                            const setCheck = (data) => {
-                              data.forEach(element => {
-                                if (element.groups.length > 0) {
-                                  setCheck(element.groups);
-                                }
-                                else {
-                                  element.data.forEach(d => {
-                                    d.tableData.checked = checked;
-                                    selectedCount++;
-                                  });
-                                }
-                              });
-                            };
-
-                            setCheck(renderData);
-                          }
-                          else {
-                            renderData = renderData.map(row => {
-                              row.tableData.checked = checked;
-                              return row;
-                            });
-                            selectedCount = renderData.length;
-                          }
-
-                          selectedCount = checked ? selectedCount : 0;
-                          this.setState({ renderData, selectedCount }, () => this.onSelectionChange());
+                          this.dataManager.changeAllSelected(checked);
+                          this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
                         }}
                         onOrderChange={(orderBy, orderDirection) => {
                           this.dataManager.changeOrder(orderBy, orderDirection);
@@ -328,7 +212,7 @@ class MaterialTable extends React.Component {
                       columns={this.state.columns}
                       detailPanel={props.detailPanel}
                       options={props.options}
-                      getFieldValue={this.getFieldValue}
+                      getFieldValue={this.dataManager.getFieldValue}
                       onFilterChanged={(columnId, value) => {
                         this.dataManager.changeFilterValue(columnId, value);
                         this.setState(this.dataManager.getRenderState());

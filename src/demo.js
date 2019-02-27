@@ -32,7 +32,8 @@ class App extends Component {
           title="Demo Title"
           options={{
             filtering: true,
-            grouping: true
+            grouping: true,
+            selection: true
           }}
         />
 

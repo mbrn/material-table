@@ -100,6 +100,36 @@ export default class DataManager {
     this.searched = false;
   }
 
+  changeAllSelected(checked) {
+    let selectedCount = 0;
+    if (this.isDataType("grouped")) {
+      const setCheck = (data) => {
+        data.forEach(element => {
+          if (element.groups.length > 0) {
+            setCheck(element.groups);
+          }
+          else {
+            element.data.forEach(d => {
+              d.tableData.checked = checked;
+              selectedCount++;
+            });
+          }
+        });
+      };
+
+      setCheck(this.groupedData);      
+    }
+    else {
+      this.searchedData.map(row => {
+        row.tableData.checked = checked;
+        return row;
+      });
+      selectedCount = this.searchedData.length;
+    }
+
+    this.selectedCount = checked ? selectedCount : 0;    
+  }
+
   changeOrder(orderBy, orderDirection) {
     this.orderBy = orderBy;
     this.orderDirection = orderDirection;
@@ -281,7 +311,8 @@ export default class DataManager {
       orderDirection: this.orderDirection,
       pageSize: this.pageSize,
       renderData: this.pagedData,
-      searchText: this.searchText
+      searchText: this.searchText,
+      selectedCount: this.selectedCount
     };
   }
 
