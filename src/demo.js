@@ -30,6 +30,10 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
+          options={{
+            filtering: true,
+            grouping: true
+          }}
         />
 
       </div>

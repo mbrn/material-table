@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
-import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import MTableActions from './m-table-actions';
@@ -19,6 +18,8 @@ import DataManager from './utils/data-manager';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
+  dataManager = new DataManager();
+
   constructor(props) {
     super(props);
 
@@ -30,27 +31,19 @@ class MaterialTable extends React.Component {
       defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
     }
 
-    this.dataManager = new DataManager();
-    this.dataManager.setData(calculatedProps.data);
     this.dataManager.setColumns(calculatedProps.columns);
-    
-    this.state = {
-      columns: [],
-      currentPage: props.options.initialPage ? props.options.initialPage : 0,
-      pageSize: calculatedProps.options.pageSize,
-      renderData: [],
-      searchText: '',
-      selectedCount: 0,
-      orderBy: defaultSortColumnIndex,
-      orderDirection: defaultSortDirection,
-      filterSelectionChecked: false
-    };
+    this.dataManager.setData(calculatedProps.data);
+    this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
+    this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+
+    this.state = this.dataManager.getRenderState();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const props = this.getProps(nextProps);
-    this.dataManager.setData(props.data);
     this.dataManager.setColumns(props.columns);
+    this.dataManager.setData(props.data);
+    this.setState(this.dataManager.getRenderState());
   }
 
   getProps(props) {
@@ -62,9 +55,43 @@ class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
-  setData() {
-    const state = this.dataManager.getRenderState();
-    this.setState({ ...state });
+  setData(callback) {
+    this.setState(this.dataManager.getRenderState(), () => {
+      callback && callback();
+    });
+  }
+
+  getRenderData = (data, props) => {
+    data = data || this.state.data;
+    props = this.getProps();
+
+    let renderData = [...data];
+
+
+    return renderData || data;
+  }
+
+  sortList = (list) => {
+    const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
+    let result = list;
+
+    if (columnDef.customSort) {
+      if (this.state.orderDirection === 'desc') {
+        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
+      }
+      else {
+        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
+      }
+    }
+    else {
+      result = list.sort(
+        this.state.orderDirection === 'desc'
+          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
+          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
+      );
+    }
+
+    return result;
   }
 
   getFieldValue = (rowData, columnDef) => {
@@ -86,13 +113,21 @@ class MaterialTable extends React.Component {
     var a = s.split('.');
     for (var i = 0, n = a.length; i < n; ++i) {
       var x = a[i];
-      if (x in o) {
+      if (o && x in o) {
         o = o[x];
       } else {
         return;
       }
     }
     return o;
+  }
+
+  sort(a, b, type) {
+    if (type === 'numeric') {
+      return a - b;
+    } else {
+      return a < b ? -1 : a > b ? 1 : 0;
+    }
   }
 
   onSelectionChange = () => {
@@ -125,24 +160,21 @@ class MaterialTable extends React.Component {
               <props.components.Pagination
                 style={{ float: 'right' }}
                 colSpan={3}
-                count={this.state.renderData.length}
+                count={this.state.data.length}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 page={this.state.currentPage}
                 onChangePage={(event, page) => {
-                  this.setState({ currentPage: page }, () => {
-                    this.setData();
+                  this.dataManager.changeCurrentPage(page);
+                  this.setState(this.dataManager.getRenderState(), () => {
                     this.onChangePage(page);
                   });
                 }}
                 onChangeRowsPerPage={(event) => {
-                  this.setState(state => {
-                    state.pageSize = event.target.value;
-                    state.currentPage = 0;
-                    return state;
-                  }, () => {
-                    this.setData();
+                  this.dataManager.changePageSize(event.target.value);
+                  this.dataManager.changeCurrentPage(0);
+                  this.setState(this.dataManager.getRenderState(), () => {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
@@ -158,56 +190,8 @@ class MaterialTable extends React.Component {
   }
 
   componentDidMount() {
-    this.setData();
-  }
-
-  reOrderGroups = result => {
-    let start = 0;
-
-    let groups = this.state.columns
-      .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-
-
-    if (result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
-      start = Math.min(result.destination.index, result.source.index);
-      const end = Math.max(result.destination.index, result.source.index);
-
-      groups = groups.slice(start, end + 1);
-
-      if (result.destination.index < result.source.index) {
-        // Take last and add as first
-        const last = groups.pop();
-        groups.unshift(last);
-      }
-      else {
-        // Take first and add as last
-        const last = groups.shift();
-        groups.push(last);
-      }
-    }
-    else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
-      const newGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
-      groups.splice(result.destination.index, 0, newGroup);
-    }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
-      const removeGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
-      removeGroup.tableData.groupOrder = undefined;
-      groups.splice(result.source.index, 1);
-    }
-    else if(result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
-      // Column reordering
-    }
-    else {
-      return;
-    }
-
-    for (let i = 0; i < groups.length; i++) {
-      groups[i].tableData.groupOrder = start + i;
-    }
-
-    this.setData();
-  }
+    this.setState(this.dataManager.getRenderState());
+  }  
 
   findDataByPath = (renderData, path) => {
     const data = { groups: renderData };
@@ -227,7 +211,10 @@ class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={this.reOrderGroups}>
+      <DragDropContext onDragEnd={result => {
+        this.dataManager.changeByDrag(result);
+        this.setState(this.dataManager.getRenderState());
+      }}>
         <props.components.Container style={{ position: 'relative' }}>
           {props.options.toolbar &&
             <props.components.Toolbar
@@ -247,7 +234,10 @@ class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
+              onSearchChanged={searchText => {
+                this.dataManager.changeSearchText(searchText);
+                this.setState(this.dataManager.getRenderState());
+              }}
               onColumnsChanged={columns => this.setState({ columns })}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
@@ -261,18 +251,8 @@ class MaterialTable extends React.Component {
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
               }
               onSortChanged={(groupedColumn) => {
-                const columns = this.state.columns;
-                const column = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
-
-                if (column.tableData.groupSort === 'asc') {
-                  column.tableData.groupSort = 'desc';
-                }
-                else {
-                  column.tableData.groupSort = 'asc';
-                }
-
-                this.setState({ columns });
-                this.setData();
+                this.dataManager.changeGroupOrder(groupedColumn.tableData.id);
+                this.setState(this.dataManager.getRenderState());
               }}
             />
           }
@@ -328,8 +308,8 @@ class MaterialTable extends React.Component {
                           this.setState({ renderData, selectedCount }, () => this.onSelectionChange());
                         }}
                         onOrderChange={(orderBy, orderDirection) => {
-                          this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
-                            this.setData();
+                          this.dataManager.changeOrder(orderBy, orderDirection);
+                          this.setState(this.dataManager.getRenderState(), () => {
                             this.onOrderChange(orderBy, orderDirection);
                           });
                         }}
@@ -350,48 +330,24 @@ class MaterialTable extends React.Component {
                       options={props.options}
                       getFieldValue={this.getFieldValue}
                       onFilterChanged={(columnId, value) => {
-                        const columns = this.state.columns;
-                        columns[columnId].tableData.filterValue = value;
-                        this.setState({ columns }, () => {
-                          this.setData();
-                        });
+                        this.dataManager.changeFilterValue(columnId, value);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onFilterSelectionChanged={(event) => {
-                        const filterSelectionChecked = event.target.checked;
-                        const columns = this.state.columns;
-                        this.setState({ columns, filterSelectionChecked }, () => {
-                          this.setData();
-                        });
+                        this.dataManager.changeFilterSelectionChecked(event.target.checked);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onRowSelected={(event, path) => {
-                        const checked = event.target.checked;
-                        const renderData = this.state.renderData;
-                        const node = this.findDataByPath(renderData, path);
-                        node.tableData.checked = checked;
-                        this.setState(state => ({
-                          renderData,
-                          selectedCount: state.selectedCount + (checked ? 1 : -1)
-                        }), () => this.onSelectionChange());
-                        this.setState({ renderData });
+                        this.dataManager.changeRowSelected(event.target.checked, path);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onToggleDetailPanel={(path, render) => {
-                        const renderData = this.state.renderData;
-                        const targetRow = this.findDataByPath(renderData, path);
-
-                        if (targetRow.tableData.showDetailPanel === render) {
-                          targetRow.tableData.showDetailPanel = undefined;
-                        }
-                        else {
-                          targetRow.tableData.showDetailPanel = render;
-                        }
-                        this.setState({ renderData });
+                        this.dataManager.changeDetailPanelVisibility(path, render);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onGroupExpandChanged={(path) => {
-                        const renderData = this.state.renderData;
-                        const node = this.findDataByPath(renderData, path);
-                        node.isExpanded = !node.isExpanded;
-
-                        this.setState({ renderData });
+                        this.dataManager.changeGroupExpand(path);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
                       onRowClick={this.props.onRowClick}
@@ -641,4 +597,3 @@ export {
   MTableFilterRow, MTableHeader, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow
 };
-
