@@ -6,6 +6,7 @@ export default class DataManager {
   orderBy = -1;
   orderDirection = '';
   pageSize = 5;
+  paging = true;
   searchText = '';
   selectedCount = 0;
 
@@ -49,6 +50,11 @@ export default class DataManager {
       };
       return columnDef;
     });
+  }
+
+  changePaging(paging) {
+    this.paging = paging;
+    this.paged = false;
   }
 
   changeCurrentPage(currentPage) {
@@ -117,7 +123,7 @@ export default class DataManager {
         });
       };
 
-      setCheck(this.groupedData);      
+      setCheck(this.groupedData);
     }
     else {
       this.searchedData.map(row => {
@@ -127,7 +133,7 @@ export default class DataManager {
       selectedCount = this.searchedData.length;
     }
 
-    this.selectedCount = checked ? selectedCount : 0;    
+    this.selectedCount = checked ? selectedCount : 0;
   }
 
   changeOrder(orderBy, orderDirection) {
@@ -149,6 +155,11 @@ export default class DataManager {
     }
 
     this.sorted = false;
+  }
+
+  changeColumnHidden(columnId, hidden) {
+    const column = this.columns.find(c => c.tableData.id === columnId);
+    column.hidden = hidden;
   }
 
   changeByDrag(result) {
@@ -514,10 +525,14 @@ export default class DataManager {
   }
 
   pageData() {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
+    this.pagedData = [...this.sortedData];
 
-    this.pagedData = this.sortedData.slice(startIndex, endIndex);
+    if (this.paging) {
+      const startIndex = this.currentPage * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+
+      this.pagedData = this.pagedData.slice(startIndex, endIndex);
+    }
 
     this.paged = true;
   }

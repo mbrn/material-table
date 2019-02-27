@@ -35,6 +35,7 @@ class MaterialTable extends React.Component {
     this.dataManager.setData(calculatedProps.data);
     this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    this.dataManager.changePaging(calculatedProps.options.paging);
 
     this.state = this.dataManager.getRenderState();
   }
@@ -149,7 +150,10 @@ class MaterialTable extends React.Component {
                 this.dataManager.changeSearchText(searchText);
                 this.setState(this.dataManager.getRenderState());
               }}
-              onColumnsChanged={columns => this.setState({ columns })}
+              onColumnsChanged={(columnId, hidden) => {
+                this.dataManager.changeColumnHidden(columnId, hidden);
+                this.setState(this.dataManager.getRenderState());
+              }}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
           }

@@ -33,7 +33,9 @@ class App extends Component {
           options={{
             filtering: true,
             grouping: true,
-            selection: true
+            selection: true,
+            columnsButton: true,
+            paging: false
           }}
         />
 
