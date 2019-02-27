@@ -7,6 +7,7 @@ export default class DataManager {
   orderDirection = '';
   pageSize = 5;
   paging = true;
+  parentFunc = null;
   searchText = '';
   selectedCount = 0;
 
@@ -16,6 +17,7 @@ export default class DataManager {
   filteredData = [];
   searchedData = [];
   groupedData = [];
+  treefiedData = [];
   sortedData = [];
   pagedData = [];
   renderData = [];
@@ -23,6 +25,7 @@ export default class DataManager {
   filtered = false;
   searched = false;
   grouped = false;
+  treefied = false;
   sorted = false;
   paged = false;
 
@@ -67,6 +70,10 @@ export default class DataManager {
     this.paged = false;
   }
 
+  changeParentFunc(parentFunc) {
+    this.parentFunc = parentFunc;
+  }
+
   changeFilterValue(columnId, value) {
     this.columns[columnId].tableData.filterValue = value;
     this.filtered = false;
@@ -108,7 +115,7 @@ export default class DataManager {
 
   changeAllSelected(checked) {
     let selectedCount = 0;
-    if (this.isDataType("grouped")) {
+    if (this.isDataType("group")) {
       const setCheck = (data) => {
         data.forEach(element => {
           if (element.groups.length > 0) {
@@ -255,9 +262,13 @@ export default class DataManager {
   isDataType(type) {
     let dataType = "normal";
 
-    if (this.columns.find(a => a.tableData.groupOrder > -1)) {
-      dataType = "grouped";
+    if(this.parentFunc) {
+      dataType = "tree";
     }
+    else if (this.columns.find(a => a.tableData.groupOrder > -1)) {
+      dataType = "group";
+    }
+
 
     return type === dataType;
   }
@@ -302,8 +313,12 @@ export default class DataManager {
       this.searchData();
     }
 
-    if (this.grouped === false && this.isDataType("grouped")) {
+    if (this.grouped === false && this.isDataType("group")) {
       this.groupData();
+    }
+
+    if(this.treefied === false && this.isDataType("tree")) {
+      this.treefyData();
     }
 
     if (this.sorted === false) {
@@ -320,6 +335,7 @@ export default class DataManager {
       data: this.sortedData,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
+      originalData: this.data,
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,
@@ -467,11 +483,30 @@ export default class DataManager {
     this.grouped = true;
   }
 
+  treefyData() {
+    this.sorted = this.paged = false;
+
+    this.treefiedData = [];
+
+    this.searchedData.forEach(rowData => {
+      const parent = this.parentFunc(rowData, this.data);
+      if(parent) {
+        parent.tableData.childRows = parent.tableData.childRows || [];
+        parent.tableData.childRows.push(rowData);
+      }
+      else {
+        rowData.tableData.childRows = null;
+        this.treefiedData.push(rowData);
+      }
+    });
+
+    this.treefied = true;
+  }
+
   sortData() {
     this.paged = false;
 
-    // TODO search in data
-    if (this.isDataType("grouped")) {
+    if (this.isDataType("group")) {
       this.sortedData = [...this.groupedData];
 
       const groups = this.columns
@@ -513,6 +548,10 @@ export default class DataManager {
       };
 
       sortGroupData(this.sortedData, 1);
+    }
+    else if(this.isDataType("tree")) {
+      this.sortedData = [...this.treefiedData];
+      // TODO sort
     }
     else if (this.isDataType("normal")) {
       this.sortedData = [...this.searchedData];

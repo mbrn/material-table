@@ -36,6 +36,7 @@ class MaterialTable extends React.Component {
     this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     this.dataManager.changePaging(calculatedProps.options.paging);
+    this.dataManager.changeParentFunc(calculatedProps.parentChildData);
 
     this.state = this.dataManager.getRenderState();
   }
@@ -132,7 +133,7 @@ class MaterialTable extends React.Component {
             <props.components.Toolbar
               actions={props.actions}
               components={props.components}
-              selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
+              selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked }) : []}
               columns={this.state.columns}
               columnsButton={props.options.columnsButton}
               icons={props.icons}
