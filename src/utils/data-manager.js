@@ -441,7 +441,6 @@ export default class DataManager {
   searchData = () => {
     this.grouped = this.treeStyled = this.sorted = this.paged = false;
 
-    // TODO search in data
     this.searchedData = [...this.filteredData];
 
     if (this.searchText) {
