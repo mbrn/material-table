@@ -2,7 +2,7 @@ import formatDate from 'date-fns/format';
 
 export default class DataManager {
   currentPage = 0;
-  filterSelectionChecked = false;  
+  filterSelectionChecked = false;
   orderBy = -1;
   orderDirection = '';
   pageSize = 5;
@@ -228,7 +228,7 @@ export default class DataManager {
         return result.tableData.childRows[current];
       }, { tableData: { childRows: renderData } });
 
-      return node;      
+      return node;
     }
     else {
       const data = { groups: renderData };
@@ -345,7 +345,7 @@ export default class DataManager {
     return {
       columns: this.columns,
       currentPage: this.currentPage,
-      data: this.sortedData,      
+      data: this.sortedData,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
       originalData: this.data,
@@ -499,20 +499,20 @@ export default class DataManager {
   treefyData() {
     this.sorted = this.paged = false;
 
-    this.treefiedData = [];    
+    this.treefiedData = [];
 
     this.searchedData.forEach(rowData => {
       const parent = this.parentFunc(rowData, this.data);
       if (parent) {
-        parent.tableData.childRows = parent.tableData.childRows || [];        
-        parent.tableData.isTreeExpanded = false;        
+        parent.tableData.childRows = parent.tableData.childRows || [];
+        parent.tableData.isTreeExpanded = false;
         parent.tableData.childRows.push(rowData);
       }
       else {
         rowData.tableData.childRows = null;
-        rowData.tableData.isTreeExpanded = false;        
+        rowData.tableData.isTreeExpanded = false;
         this.treefiedData.push(rowData);
-      }      
+      }
     });
 
     this.treefied = true;
@@ -566,7 +566,20 @@ export default class DataManager {
     }
     else if (this.isDataType("tree")) {
       this.sortedData = [...this.treefiedData];
-      // TODO sort
+      if (this.orderBy != -1) {
+        this.sortedData = this.sortList(this.sortedData);
+
+        const sortTree = (list) => {
+          list.forEach(item => {
+            if (item.tableData.childRows) {
+              item.tableData.childRows = this.sortList(item.tableData.childRows);
+              sortTree(item.tableData.childRows);
+            }
+          });
+        };
+
+        sortTree(this.sortedData);
+      }
     }
     else if (this.isDataType("normal")) {
       this.sortedData = [...this.searchedData];
