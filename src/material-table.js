@@ -118,7 +118,7 @@ class MaterialTable extends React.Component {
 
   componentDidMount() {
     this.setState(this.dataManager.getRenderState());
-  }  
+  }
 
   render() {
     const props = this.getProps();
@@ -205,6 +205,7 @@ class MaterialTable extends React.Component {
                         actionsHeaderIndex={props.options.actionsColumnIndex}
                         sorting={props.options.sorting}
                         grouping={props.options.grouping}
+                        isTreeData={this.props.parentChildData !== undefined}
                       />
                     }
                     <props.components.Body
@@ -218,6 +219,7 @@ class MaterialTable extends React.Component {
                       detailPanel={props.detailPanel}
                       options={props.options}
                       getFieldValue={this.dataManager.getFieldValue}
+                      isTreeData={this.props.parentChildData !== undefined}
                       onFilterChanged={(columnId, value) => {
                         this.dataManager.changeFilterValue(columnId, value);
                         this.setState(this.dataManager.getRenderState());
@@ -236,6 +238,10 @@ class MaterialTable extends React.Component {
                       }}
                       onGroupExpandChanged={(path) => {
                         this.dataManager.changeGroupExpand(path);
+                        this.setState(this.dataManager.getRenderState());
+                      }}
+                      onTreeExpandChanged={(path) => {
+                        this.dataManager.changeTreeExpand(path);
                         this.setState(this.dataManager.getRenderState());
                       }}
                       localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}

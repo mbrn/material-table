@@ -33,9 +33,9 @@ class App extends Component {
           parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
           options={{
             filtering: true,
-            grouping: true,
+            grouping: false,
             selection: true,
-            columnsButton: true
+            columnsButton: true,            
           }}
         />
 

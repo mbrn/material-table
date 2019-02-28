@@ -2,7 +2,7 @@ import formatDate from 'date-fns/format';
 
 export default class DataManager {
   currentPage = 0;
-  filterSelectionChecked = false;
+  filterSelectionChecked = false;  
   orderBy = -1;
   orderDirection = '';
   pageSize = 5;
@@ -105,7 +105,7 @@ export default class DataManager {
 
   changeGroupExpand(path) {
     const rowData = this.findDataByPath(this.sortedData, path);
-    rowData.isExpanded = !rowData.isExpanded;
+    rowData.tableData.isExpanded = !rowData.tableData.isExpanded;
   }
 
   changeSearchText(searchText) {
@@ -169,6 +169,11 @@ export default class DataManager {
     column.hidden = hidden;
   }
 
+  changeTreeExpand(path) {
+    const rowData = this.findDataByPath(this.sortedData, path);
+    rowData.tableData.isTreeExpanded = !rowData.tableData.isTreeExpanded;
+  }
+
   changeByDrag(result) {
     let start = 0;
 
@@ -218,17 +223,26 @@ export default class DataManager {
   }
 
   findDataByPath = (renderData, path) => {
-    const data = { groups: renderData };
+    if (this.isDataType("tree")) {
+      const node = path.reduce((result, current) => {
+        return result.tableData.childRows[current];
+      }, { tableData: { childRows: renderData } });
 
-    const node = path.reduce((result, current) => {
-      if (result.groups.length > 0) {
-        return result.groups[current];
-      }
-      else {
-        return result.data[current];
-      }
-    }, data);
-    return node;
+      return node;      
+    }
+    else {
+      const data = { groups: renderData };
+
+      const node = path.reduce((result, current) => {
+        if (result.groups.length > 0) {
+          return result.groups[current];
+        }
+        else {
+          return result.data[current];
+        }
+      }, data);
+      return node;
+    }
   }
 
   getFieldValue = (rowData, columnDef) => {
@@ -262,13 +276,12 @@ export default class DataManager {
   isDataType(type) {
     let dataType = "normal";
 
-    if(this.parentFunc) {
+    if (this.parentFunc) {
       dataType = "tree";
     }
     else if (this.columns.find(a => a.tableData.groupOrder > -1)) {
       dataType = "group";
     }
-
 
     return type === dataType;
   }
@@ -317,7 +330,7 @@ export default class DataManager {
       this.groupData();
     }
 
-    if(this.treefied === false && this.isDataType("tree")) {
+    if (this.treefied === false && this.isDataType("tree")) {
       this.treefyData();
     }
 
@@ -332,7 +345,7 @@ export default class DataManager {
     return {
       columns: this.columns,
       currentPage: this.currentPage,
-      data: this.sortedData,
+      data: this.sortedData,      
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
       originalData: this.data,
@@ -486,18 +499,20 @@ export default class DataManager {
   treefyData() {
     this.sorted = this.paged = false;
 
-    this.treefiedData = [];
+    this.treefiedData = [];    
 
     this.searchedData.forEach(rowData => {
       const parent = this.parentFunc(rowData, this.data);
-      if(parent) {
-        parent.tableData.childRows = parent.tableData.childRows || [];
+      if (parent) {
+        parent.tableData.childRows = parent.tableData.childRows || [];        
+        parent.tableData.isTreeExpanded = false;        
         parent.tableData.childRows.push(rowData);
       }
       else {
         rowData.tableData.childRows = null;
+        rowData.tableData.isTreeExpanded = false;        
         this.treefiedData.push(rowData);
-      }
+      }      
     });
 
     this.treefied = true;
@@ -549,7 +564,7 @@ export default class DataManager {
 
       sortGroupData(this.sortedData, 1);
     }
-    else if(this.isDataType("tree")) {
+    else if (this.isDataType("tree")) {
       this.sortedData = [...this.treefiedData];
       // TODO sort
     }

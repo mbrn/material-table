@@ -38,15 +38,18 @@ class MTableBody extends React.Component {
           data={data}
           index={index}
           key={index}
+          level={0}
           options={this.props.options}
           onRowSelected={this.props.onRowSelected}
           actions={this.props.actions}
           columns={this.props.columns}
           getFieldValue={this.props.getFieldValue}
           detailPanel={this.props.detailPanel}
-          path={[index + this.props.pageSize * this.props.currentPage]}
+          path={[index + this.props.pageSize * this.props.currentPage]}          
           onToggleDetailPanel={this.props.onToggleDetailPanel}
           onRowClick={this.props.onRowClick}
+          isTreeData={this.props.isTreeData}
+          onTreeExpandChanged={this.props.onTreeExpandChanged}
         />
       );
     });
@@ -70,6 +73,7 @@ class MTableBody extends React.Component {
         onRowSelected={this.props.onRowSelected}
         onRowClick={this.props.onRowClick}
         onToggleDetailPanel={this.props.onToggleDetailPanel}
+        onTreeExpandChanged={this.props.onTreeExpandChanged}
         options={this.props.options}
       />
     ));
@@ -100,6 +104,7 @@ class MTableBody extends React.Component {
             onFilterSelectionChanged={this.props.onFilterSelectionChanged}
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
             hasDetailPanel={!!this.props.detailPanel}
+            isTreeData={this.props.isTreeData}
           />
         }
         {groups.length > 0 ?
@@ -133,6 +138,7 @@ MTableBody.propTypes = {
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   getFieldValue: PropTypes.func.isRequired,
   icons: PropTypes.object.isRequired,
+  isTreeData: PropTypes.bool.isRequired,
   onRowSelected: PropTypes.func,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
@@ -143,6 +149,7 @@ MTableBody.propTypes = {
   onFilterChanged: PropTypes.func,
   onGroupExpandChanged: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
+  onTreeExpandChanged: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
 };
 
