@@ -27,6 +27,7 @@ export interface MaterialTableProps {
 }
 
 export interface Action {
+  disabled?: boolean;
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;

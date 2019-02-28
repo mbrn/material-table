@@ -95,10 +95,8 @@ class MTableToolbar extends React.Component {
                         control={
                           <Checkbox
                             checked={!col.hidden}
-                            onChange={(event, checked) => {
-                              const columns = this.props.columns;
-                              columns[index].hidden = !checked;
-                              this.props.onColumnsChanged(columns);
+                            onChange={(event, checked) => {                              
+                              this.props.onColumnsChanged(col.tableData.id, !checked);
                             }
                             } />
                         }
