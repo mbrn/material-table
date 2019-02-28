@@ -81,7 +81,7 @@ class MTableHeader extends React.Component {
   }
   render() {
     const headers = this.renderHeader();
-    if (this.props.hasSelection) {
+    if (this.props.hasSelection && this.props.dataCount) {
       headers.splice(0, 0, this.renderSelectionHeader());
     }
 
