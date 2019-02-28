@@ -361,7 +361,7 @@ export default class DataManager {
   // =====================================================================================================
 
   filterData = () => {
-    this.searched = this.grouped = this.treeStyled = this.sorted = this.paged = false;
+    this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
 
@@ -439,7 +439,7 @@ export default class DataManager {
   }
 
   searchData = () => {
-    this.grouped = this.treeStyled = this.sorted = this.paged = false;
+    this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.searchedData = [...this.filteredData];
 
@@ -497,21 +497,25 @@ export default class DataManager {
 
   treefyData() {
     this.sorted = this.paged = false;
-
+    this.data.forEach(a => a.tableData.childRows = null);
     this.treefiedData = [];
 
-    this.searchedData.forEach(rowData => {
-      const parent = this.parentFunc(rowData, this.data);
+    const addRow = (rowData) => {
+      let parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
         parent.tableData.isTreeExpanded = false;
-        parent.tableData.childRows.push(rowData);
+        !parent.tableData.childRows.includes(rowData) && parent.tableData.childRows.push(rowData);
+
+        addRow(parent);        
       }
       else {
-        rowData.tableData.childRows = null;
-        rowData.tableData.isTreeExpanded = false;
-        this.treefiedData.push(rowData);
+        !this.treefiedData.includes(rowData) && this.treefiedData.push(rowData);
       }
+    };
+
+    this.searchedData.forEach(rowData => {
+      addRow(rowData);      
     });
 
     this.treefied = true;
