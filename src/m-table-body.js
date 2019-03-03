@@ -75,6 +75,7 @@ class MTableBody extends React.Component {
         onToggleDetailPanel={this.props.onToggleDetailPanel}
         onTreeExpandChanged={this.props.onTreeExpandChanged}
         options={this.props.options}
+        isTreeData={this.props.isTreeData}
       />
     ));
   }

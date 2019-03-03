@@ -30,13 +30,9 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
-          parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+          // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
           options={{
-            filtering: true,
-            grouping: false,
-            selection: true,
-            columnsButton: true,
-            pageSize: 10
+            grouping: true
           }}
         />
 
