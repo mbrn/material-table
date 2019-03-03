@@ -35,7 +35,8 @@ class App extends Component {
             filtering: true,
             grouping: false,
             selection: true,
-            columnsButton: true,            
+            columnsButton: true,
+            pageSize: 10
           }}
         />
 

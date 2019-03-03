@@ -24,27 +24,32 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-    let defaultSortColumnIndex = -1;
-    let defaultSortDirection = '';
-    if (calculatedProps) {
-      defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
-      defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
-    }
-
-    this.dataManager.setColumns(calculatedProps.columns);
-    this.dataManager.setData(calculatedProps.data);
-    this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
-    this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
-    this.dataManager.changePaging(calculatedProps.options.paging);
-    this.dataManager.changeParentFunc(calculatedProps.parentChildData);
+    this.setDataManagerFields(calculatedProps);
 
     this.state = this.dataManager.getRenderState();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const props = this.getProps(nextProps);
+  setDataManagerFields(props) {
+
+    let defaultSortColumnIndex = -1;
+    let defaultSortDirection = '';
+    if (props) {
+      defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
+      defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
+    }
+
     this.dataManager.setColumns(props.columns);
     this.dataManager.setData(props.data);
+    this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
+    this.dataManager.changePageSize(props.options.pageSize);
+    this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    this.dataManager.changePaging(props.options.paging);
+    this.dataManager.changeParentFunc(props.parentChildData);
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const props = this.getProps(nextProps);
+    this.setDataManagerFields(props);    
     this.setState(this.dataManager.getRenderState());
   }
 
