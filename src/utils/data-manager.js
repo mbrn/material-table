@@ -104,7 +104,7 @@ export default class DataManager {
   }
 
   changeGroupExpand(path) {
-    const rowData = this.findDataByPath(this.sortedData, path);    
+    const rowData = this.findDataByPath(this.sortedData, path);
     rowData.isExpanded = !rowData.isExpanded;
   }
 
