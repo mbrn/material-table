@@ -493,13 +493,18 @@ class MaterialTable extends React.Component {
                 .filter(col => col.tableData.groupOrder > -1)
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
               }
-              onGroupRemoved={groupedColumn => {                
-                const columns = this.state.columns;
-                const column = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
-                column.tableData.groupOrder = undefined;
-
-                this.setState({ columns });
-                this.setData();
+              onGroupRemoved={(groupedColumn, index )=> {
+               const result = {
+                  combine: null,
+                  destination: {droppableId: "headers", index: 0},
+                  draggableId: groupedColumn.tableData.id,
+                  mode: "FLUID",
+                  reason: "DROP",
+                  source: {index, droppableId: "groups"},
+                  type: "DEFAULT"   
+                };             
+                this.dataManager.changeByDrag(result);
+                this.setState(this.dataManager.getRenderState());
               }}
               onSortChanged={(groupedColumn) => {
                 const columns = this.state.columns;
