@@ -35,7 +35,16 @@ class App extends Component {
             grouping: true
           }}
         />
+        <button
+          onClick={() => {
+            const data = [...this.state.data];
+            data.push({ id: 7, name: 'ex2', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' });
 
+            this.setState({ data });
+          }}
+        >
+          Add
+        </button>
       </div>
     );
   }

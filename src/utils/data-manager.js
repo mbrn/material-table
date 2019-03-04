@@ -40,6 +40,8 @@ export default class DataManager {
       }
       return row;
     });
+
+    this.filtered = false;
   }
 
   setColumns(columns) {
