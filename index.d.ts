@@ -45,7 +45,7 @@ export interface Column {
   defaultGroupOrder?: number;
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
-  disableGrouping?: boolean;
+  grouping?: boolean;
   disableClick?: boolean;
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;

@@ -396,7 +396,7 @@ MaterialTable.propTypes = {
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
-    disableGrouping: PropTypes.bool,
+    grouping: PropTypes.bool,
     emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
     field: PropTypes.string,
     filtering: PropTypes.bool,
