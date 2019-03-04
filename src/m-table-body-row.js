@@ -29,10 +29,11 @@ export default class MTableBodyRow extends React.Component {
   }
 
   renderActions() {
+    const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
     return (
-      <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} key="key-actions-column">
+      <TableCell padding="checkbox" key="key-actions-column" style={{ width: 48 * actions.length }}>
         <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection)} />
+          <this.props.components.Actions data={this.props.data} actions={actions} />
         </div>
       </TableCell>
     );

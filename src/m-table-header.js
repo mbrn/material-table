@@ -58,7 +58,8 @@ class MTableHeader extends React.Component {
     return (
       <TableCell
         key="key-actions-column"
-        style={this.props.headerStyle}
+        padding="checkbox"
+        style={{...this.props.headerStyle, textAlign: 'center'}}
       >
         <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>

@@ -34,6 +34,9 @@ class App extends Component {
           // onRowClick={() => {
           //   alert('ok');
           // }}
+          options={{
+            // selection: true
+          }}
         />
       </div>
     );
