@@ -23,6 +23,7 @@ import MaterialTable from '../src/material-table'
 | onRowClick          | func                            |                   | To handle row click (event, rowData)                              |
 | onSelectionChange   | func                            |                   | To handle selection changes                                       |
 | options             | object                          |                   | All options of table                                              |
+| parentChildData     | func                            |                   | Func that makes table parent-child table                          |
 | title               | string                          | 'Table Title'     | Table Title (only render if toolbar option is true                |
 
 
@@ -162,6 +163,7 @@ Options property could be given to component as `options` property. You can chan
 |:---------------------------|:-----------------------|:--------------|:----------------------------------------------------------------------------------|
 | actionsColumnIndex         | number                 | 0             | Order of actions column                                                           |
 | columnsButton              | boolean                | false         | Flag for columns button that controls which column could be rendered              |
+| detailPanelType            | `single` or `multiple` | `multiple`    | Detail panel visibility type.                                                     |
 | doubleHorizontalScroll     | boolean                | false         | Flag for double scroll bar for long tables                                        |
 | emptyRowsWhenPaging        | boolean                | true          | Flag for rendering rows to complete page size                                     |
 | exportButton               | boolean                | false         | Flag for export button that render export buttons                                 |

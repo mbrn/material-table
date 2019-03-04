@@ -17,6 +17,7 @@ export interface MaterialTableProps {
   isLoading?: boolean;
   title: string;
   options?: Options;
+  parentChildData?: (row: any, rows: any[]) => any;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
@@ -27,6 +28,7 @@ export interface MaterialTableProps {
 }
 
 export interface Action {
+  disabled?: boolean;
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
@@ -44,6 +46,7 @@ export interface Column {
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
   disableGrouping?: boolean;
+  disableClick?: boolean;
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   field?: string;
   filtering?: boolean;
@@ -101,6 +104,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?: number;
   columnsButton?: boolean;
+  detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;

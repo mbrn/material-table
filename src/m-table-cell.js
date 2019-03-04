@@ -66,28 +66,35 @@ export default class MTableCell extends React.Component {
   }
 
   handleClickCell = e => {
-    const { columnDef, rowData, onClick } = this.props;
-    if( columnDef.disableClick || typeof onClick !== 'function') return;
-    onClick(e, rowData);
+    if (this.props.columnDef.disableClick) {
+      e.stopPropagation();
+    }
+  }
+
+  getStyle = () => {
+    let cellStyle = {};
+
+    if (typeof this.props.columnDef.cellStyle === 'function') {
+      this.props.cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle(this.props.value) };
+    } else {
+      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
+    }
+
+    if (this.props.columnDef.disableClick) {
+      cellStyle.cursor = 'default';
+    }
+
+    return { ...this.props.style, ...cellStyle };
   }
 
   render() {
 
     const { columnDef, rowData, ...cellProps } = this.props;
 
-    let cellStyle = {};
-    if (typeof columnDef.cellStyle === 'function') {
-      cellStyle = { ...cellStyle, ...columnDef.cellStyle(this.props.value) };
-    } else {
-      cellStyle = { ...cellStyle, ...columnDef.cellStyle };
-    }
-
-    
-
     return (
-      <TableCell 
+      <TableCell
         {...cellProps}
-        style={cellStyle}
+        style={this.getStyle()}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}
       >
@@ -100,13 +107,11 @@ export default class MTableCell extends React.Component {
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: undefined,
-  onClick: () => {},
+  value: undefined
 };
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
-  rowData: PropTypes.object,
-  onClick: PropTypes.func,
+  rowData: PropTypes.object
 };

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
-import formatDate from 'date-fns/format';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import MTableActions from './m-table-actions';
@@ -15,74 +14,43 @@ import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import DataManager from './utils/data-manager';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
+  dataManager = new DataManager();
+
   constructor(props) {
     super(props);
 
     const calculatedProps = this.getProps(props);
+    this.setDataManagerFields(calculatedProps);
+
+    this.state = this.dataManager.getRenderState();
+  }
+
+  setDataManagerFields(props) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
-    if (calculatedProps) {
-      defaultSortColumnIndex = calculatedProps.columns.findIndex(a => a.defaultSort);
-      defaultSortDirection = defaultSortColumnIndex > -1 ? calculatedProps.columns[defaultSortColumnIndex].defaultSort : '';
+    if (props) {
+      defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
+      defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
     }
-    this.state = {
-      columns: [],
-      currentPage: props.options.initialPage ? props.options.initialPage : 0,
-      data: [],
-      pageSize: calculatedProps.options.pageSize,
-      renderData: [],
-      searchText: '',
-      selectedCount: 0,
-      orderBy: defaultSortColumnIndex,
-      orderDirection: defaultSortDirection,
-      filterSelectionChecked: false,
-      ...this.getData(calculatedProps),
-      ...this.getColumns(calculatedProps)
-    };
+
+    this.dataManager.setColumns(props.columns);
+    this.dataManager.setData(props.data);
+    this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
+    this.dataManager.changePageSize(props.options.pageSize);
+    this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    this.dataManager.changePaging(props.options.paging);
+    this.dataManager.changeParentFunc(props.parentChildData);
+    this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const props = this.getProps(nextProps);
-    const columns = this.getColumns(props);
-    this.setState({ ...columns }, () => {
-      const data = this.getData(props);
-      this.setState({ ...data });
-    });
-    // const data = this.getData(props);
-    // this.setState(() => ({ ...columns, ...data }));
-  }
-
-  getData(props) {
-    let selectedCount = 0;
-    const data = props.data.map((row, index) => {
-      row.tableData = { ...row.tableData, id: index };
-      if (row.tableData.checked) {
-        selectedCount++;
-      }
-      return row;
-    });
-
-    const renderData = this.getRenderData(data, props);
-
-    return { data, renderData, selectedCount };
-  }
-
-  getColumns(props) {
-    const columns = props.columns.map((columnDef, index) => {
-      columnDef.tableData = {
-        filterValue: columnDef.defaultFilter,
-        groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',
-        ...columnDef.tableData,
-        id: index
-      };
-      return columnDef;
-    });
-
-    return { columns };
+    this.setDataManagerFields(props);    
+    this.setState(this.dataManager.getRenderState());
   }
 
   getProps(props) {
@@ -92,240 +60,6 @@ class MaterialTable extends React.Component {
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     return calculatedProps;
-  }
-
-  setData(data) {
-    data = data || this.state.data;
-
-    const renderData = this.getRenderData(data);
-    this.setState({ data, renderData });
-  }
-
-  getRenderData = (data, props) => {
-    data = data || this.state.data;
-    props = this.getProps();
-
-    let renderData = [...data];
-
-    // App filter
-    if (this.state) {
-      renderData = renderData.filter(row => {
-        if (this.state.filterSelectionChecked) return row.tableData.checked;
-        return row.tableData;
-      });
-
-      this.state.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
-        const { lookup, type, tableData, field } = columnDef;
-
-        if (columnDef.customFilterAndSearch) {
-          renderData = renderData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
-        }
-        else
-          if (lookup) {
-            renderData = renderData.filter(row => {
-              return !tableData.filterValue ||
-                tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
-            });
-          } else if (type === 'numeric') {
-            renderData = renderData.filter(row => {
-              return row[field] === tableData.filterValue;
-            });
-          } else if (type === 'boolean' && tableData.filterValue) {
-            renderData = renderData.filter(row => {
-              return (row[field] && tableData.filterValue === 'checked') ||
-                (!row[field] && tableData.filterValue === 'unchecked');
-            });
-          } else if (['date', 'datetime'].includes(type)) {
-            renderData = renderData.filter(row => {
-              const currentDate = row[field] ? new Date(row[field]) : null;
-
-              if (currentDate && currentDate.toString() !== 'Invalid Date') {
-                const selectedDate = tableData.filterValue;
-                let currentDateToCompare = '';
-                let selectedDateToCompare = '';
-
-                if (type === 'date') {
-                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
-                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
-                } else if (type === 'datetime') {
-                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
-                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
-                }
-
-                return currentDateToCompare === selectedDateToCompare;
-              }
-
-              return true;
-            });
-          } else if (type === 'time') {
-            renderData = renderData.filter(row => {
-              const currentHour = row[field] || null;
-
-              if (currentHour) {
-                const selectedHour = tableData.filterValue;
-                const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
-
-                return currentHour === currentHourToCompare;
-              }
-
-              return true;
-            });
-          } else {
-            renderData = renderData.filter(row => {
-              return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
-            });
-          }
-      });
-    }
-
-    if (this.state && this.state.searchText) {
-      renderData = renderData.filter(row => {
-        return this.state.columns
-          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
-          .some(columnDef => {
-            if (columnDef.customFilterAndSearch) {
-              return !!columnDef.customFilterAndSearch(this.state.searchText, row, columnDef);
-            }
-            else if (columnDef.field) {
-              const value = this.getFieldValue(row, columnDef);
-              if (value) {
-                return value.toString().toUpperCase().includes(this.state.searchText.toUpperCase());
-              }
-            }
-          });
-      });
-    }
-
-    // Apply grouping & sorting
-    const groups = this.state && this.state.columns
-      .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    if (groups && groups.length > 0) {
-      renderData = this.groupBy(renderData, groups);
-
-      const sortGroups = (list, columnDef) => {
-        if(columnDef.customSort) {
-          return list.sort(
-            columnDef.tableData.groupSort === 'desc'
-              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
-              : (a, b) => columnDef.customSort(a.value, b.value, 'group')
-          );
-        }
-        else {
-          return list.sort(
-            columnDef.tableData.groupSort === 'desc'
-              ? (a, b) => this.sort(b.value, a.value, columnDef.type)
-              : (a, b) => this.sort(a.value, b.value, columnDef.type)
-          );
-        }
-      };
-
-      renderData = sortGroups(renderData, groups[0]);
-
-      const sortGroupData = (list, level) => {
-        list.forEach(element => {
-          if (element.groups.length > 0) {
-            const column = groups[level];
-            element.groups = sortGroups(element.groups, column);
-            sortGroupData(element.groups, level + 1);
-          }
-          else {
-            if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-              element.data = this.sortList(element.data);
-            }
-          }
-        });
-      };
-
-      sortGroupData(renderData, 1);
-    }
-    else if (this.state && this.state.orderBy >= 0 && this.state.orderDirection) {
-      renderData = this.sortList(renderData);
-    }
-
-    return renderData || data;
-  }
-
-  sortList = (list) => {
-    const columnDef = this.state.columns.find(_ => _.tableData.id === this.state.orderBy);
-    let result = list;
-
-    if (columnDef.customSort) {
-      if (this.state.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
-      }
-      else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
-      }
-    }
-    else {
-      result = list.sort(
-        this.state.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-      );
-    }
-
-    return result;
-  }
-
-  groupBy(data, groups) {
-    const subData = data.reduce((result, current) => {
-
-      let object = result;
-      object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || this.byString(current, colDef.field);
-        let group = o.groups.find(g => g.value === value);
-        if (!group) {
-          group = { value, groups: [], data: [], isExpanded: false };
-          o.groups.push(group);
-        }
-        return group;
-      }, object);
-
-      object.data.push(current);
-
-      return result;
-    }, { groups: [] });
-
-    return subData.groups;
-  }
-
-  getFieldValue = (rowData, columnDef) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : this.byString(rowData, columnDef.field));
-    if (columnDef.lookup) {
-      value = columnDef.lookup[value];
-    }
-
-    return value;
-  }
-
-  byString(o, s) {
-    if (!s) {
-      return;
-    }
-
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var x = a[i];
-      if (x in o) {
-        o = o[x];
-      } else {
-        return;
-      }
-    }
-    return o;
-  }
-
-  sort(a, b, type) {
-    if (type === 'numeric') {
-      return a - b;
-    } else {
-      return a < b ? -1 : a > b ? 1 : 0;
-    }
   }
 
   onSelectionChange = () => {
@@ -358,24 +92,21 @@ class MaterialTable extends React.Component {
               <props.components.Pagination
                 style={{ float: 'right' }}
                 colSpan={3}
-                count={this.state.renderData.length}
+                count={this.state.data.length}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 page={this.state.currentPage}
                 onChangePage={(event, page) => {
-                  this.setState({ currentPage: page }, () => {
-                    this.setData();
+                  this.dataManager.changeCurrentPage(page);
+                  this.setState(this.dataManager.getRenderState(), () => {
                     this.onChangePage(page);
                   });
                 }}
                 onChangeRowsPerPage={(event) => {
-                  this.setState(state => {
-                    state.pageSize = event.target.value;
-                    state.currentPage = 0;
-                    return state;
-                  }, () => {
-                    this.setData();
+                  this.dataManager.changePageSize(event.target.value);
+                  this.dataManager.changeCurrentPage(0);
+                  this.setState(this.dataManager.getRenderState(), () => {
                     this.onChangeRowsPerPage(event.target.value);
                   });
                 }}
@@ -391,82 +122,23 @@ class MaterialTable extends React.Component {
   }
 
   componentDidMount() {
-    this.setData();
-  }
-
-  reOrderGroups = result => {
-    let start = 0;
-
-    let groups = this.state.columns
-      .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-
-
-    if (result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
-      start = Math.min(result.destination.index, result.source.index);
-      const end = Math.max(result.destination.index, result.source.index);
-
-      groups = groups.slice(start, end + 1);
-
-      if (result.destination.index < result.source.index) {
-        // Take last and add as first
-        const last = groups.pop();
-        groups.unshift(last);
-      }
-      else {
-        // Take first and add as last
-        const last = groups.shift();
-        groups.push(last);
-      }
-    }
-    else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
-      const newGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
-      groups.splice(result.destination.index, 0, newGroup);
-    }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
-      const removeGroup = this.state.columns.find(c => c.tableData.id == result.draggableId);
-      removeGroup.tableData.groupOrder = undefined;
-      groups.splice(result.source.index, 1);
-    }
-    else if(result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
-      // Column reordering
-    }
-    else {
-      return;
-    }
-
-    for (let i = 0; i < groups.length; i++) {
-      groups[i].tableData.groupOrder = start + i;
-    }
-
-    this.setData();
-  }
-
-  findDataByPath = (renderData, path) => {
-    const data = { groups: renderData };
-
-    const node = path.reduce((result, current) => {
-      if (result.groups.length > 0) {
-        return result.groups[current];
-      }
-      else {
-        return result.data[current];
-      }
-    }, data);
-    return node;
+    this.setState(this.dataManager.getRenderState());
   }
 
   render() {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={this.reOrderGroups}>
+      <DragDropContext onDragEnd={result => {
+        this.dataManager.changeByDrag(result);
+        this.setState(this.dataManager.getRenderState());
+      }}>
         <props.components.Container style={{ position: 'relative' }}>
           {props.options.toolbar &&
             <props.components.Toolbar
               actions={props.actions}
               components={props.components}
-              selectedRows={this.state.selectedCount > 0 ? this.state.data.filter(a => { return a.tableData.checked }) : []}
+              selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked }) : []}
               columns={this.state.columns}
               columnsButton={props.options.columnsButton}
               icons={props.icons}
@@ -480,8 +152,14 @@ class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              onSearchChanged={searchText => this.setState({ searchText }, () => this.setData())}
-              onColumnsChanged={columns => this.setState({ columns })}
+              onSearchChanged={searchText => {
+                this.dataManager.changeSearchText(searchText);
+                this.setState(this.dataManager.getRenderState());
+              }}
+              onColumnsChanged={(columnId, hidden) => {
+                this.dataManager.changeColumnHidden(columnId, hidden);
+                this.setState(this.dataManager.getRenderState());
+              }}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
           }
@@ -494,18 +172,8 @@ class MaterialTable extends React.Component {
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
               }
               onSortChanged={(groupedColumn) => {
-                const columns = this.state.columns;
-                const column = columns.find(c => c.tableData.id === groupedColumn.tableData.id);
-
-                if (column.tableData.groupSort === 'asc') {
-                  column.tableData.groupSort = 'desc';
-                }
-                else {
-                  column.tableData.groupSort = 'asc';
-                }
-
-                this.setState({ columns });
-                this.setData();
+                this.dataManager.changeGroupOrder(groupedColumn.tableData.id);
+                this.setState(this.dataManager.getRenderState());
               }}
             />
           }
@@ -530,45 +198,19 @@ class MaterialTable extends React.Component {
                         orderBy={this.state.orderBy}
                         orderDirection={this.state.orderDirection}
                         onAllSelected={(checked) => {
-                          let renderData = this.state.renderData;
-                          let selectedCount = 0;
-                          if (this.state.columns.filter(g => g.tableData.groupOrder > -1).length > 0) {
-                            const setCheck = (data) => {
-                              data.forEach(element => {
-                                if (element.groups.length > 0) {
-                                  setCheck(element.groups);
-                                }
-                                else {
-                                  element.data.forEach(d => {
-                                    d.tableData.checked = checked;
-                                    selectedCount++;
-                                  });
-                                }
-                              });
-                            };
-
-                            setCheck(renderData);
-                          }
-                          else {
-                            renderData = renderData.map(row => {
-                              row.tableData.checked = checked;
-                              return row;
-                            });
-                            selectedCount = renderData.length;
-                          }
-
-                          selectedCount = checked ? selectedCount : 0;
-                          this.setState({ renderData, selectedCount }, () => this.onSelectionChange());
+                          this.dataManager.changeAllSelected(checked);
+                          this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
                         }}
                         onOrderChange={(orderBy, orderDirection) => {
-                          this.setState({ orderBy, orderDirection, currentPage: 0 }, () => {
-                            this.setData();
+                          this.dataManager.changeOrder(orderBy, orderDirection);
+                          this.setState(this.dataManager.getRenderState(), () => {
                             this.onOrderChange(orderBy, orderDirection);
                           });
                         }}
                         actionsHeaderIndex={props.options.actionsColumnIndex}
                         sorting={props.options.sorting}
                         grouping={props.options.grouping}
+                        isTreeData={this.props.parentChildData !== undefined}
                       />
                     }
                     <props.components.Body
@@ -581,50 +223,31 @@ class MaterialTable extends React.Component {
                       columns={this.state.columns}
                       detailPanel={props.detailPanel}
                       options={props.options}
-                      getFieldValue={this.getFieldValue}
+                      getFieldValue={this.dataManager.getFieldValue}
+                      isTreeData={this.props.parentChildData !== undefined}
                       onFilterChanged={(columnId, value) => {
-                        const columns = this.state.columns;
-                        columns[columnId].tableData.filterValue = value;
-                        this.setState({ columns }, () => {
-                          this.setData();
-                        });
+                        this.dataManager.changeFilterValue(columnId, value);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onFilterSelectionChanged={(event) => {
-                        const filterSelectionChecked = event.target.checked;
-                        const columns = this.state.columns;
-                        this.setState({ columns, filterSelectionChecked }, () => {
-                          this.setData();
-                        });
+                        this.dataManager.changeFilterSelectionChecked(event.target.checked);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onRowSelected={(event, path) => {
-                        const checked = event.target.checked;
-                        const renderData = this.state.renderData;
-                        const node = this.findDataByPath(renderData, path);
-                        node.tableData.checked = checked;
-                        this.setState(state => ({
-                          renderData,
-                          selectedCount: state.selectedCount + (checked ? 1 : -1)
-                        }), () => this.onSelectionChange());
-                        this.setState({ renderData });
+                        this.dataManager.changeRowSelected(event.target.checked, path);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onToggleDetailPanel={(path, render) => {
-                        const renderData = this.state.renderData;
-                        const targetRow = this.findDataByPath(renderData, path);
-
-                        if (targetRow.tableData.showDetailPanel === render) {
-                          targetRow.tableData.showDetailPanel = undefined;
-                        }
-                        else {
-                          targetRow.tableData.showDetailPanel = render;
-                        }
-                        this.setState({ renderData });
+                        this.dataManager.changeDetailPanelVisibility(path, render);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       onGroupExpandChanged={(path) => {
-                        const renderData = this.state.renderData;
-                        const node = this.findDataByPath(renderData, path);
-                        node.isExpanded = !node.isExpanded;
-
-                        this.setState({ renderData });
+                        this.dataManager.changeGroupExpand(path);
+                        this.setState(this.dataManager.getRenderState());
+                      }}
+                      onTreeExpandChanged={(path) => {
+                        this.dataManager.changeTreeExpand(path);
+                        this.setState(this.dataManager.getRenderState());
                       }}
                       localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
                       onRowClick={this.props.onRowClick}
@@ -716,6 +339,7 @@ MaterialTable.defaultProps = {
   options: {
     actionsColumnIndex: 0,
     columnsButton: false,
+    detailPanelType: 'multiple',
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
@@ -828,6 +452,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,
@@ -875,4 +500,3 @@ export {
   MTableFilterRow, MTableHeader, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow
 };
-

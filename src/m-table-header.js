@@ -39,13 +39,13 @@ class MTableHeader extends React.Component {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                  >
-                    {columnDef.title}
-                  </div>
-                )}
-              </Draggable>
-              : columnDef.title
-            }
+                    >
+                      {columnDef.title}
+                    </div>
+                  )}
+                </Draggable>
+                : columnDef.title
+              }
             </TableSortLabel>
             : columnDef.title
           }
@@ -103,6 +103,16 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key="key-detail-panel-column"
+          style={this.props.headerStyle}
+        />
+      );
+    }
+
+    if (this.props.isTreeData > 0) {
+      headers.splice(0, 0,
+        <TableCell
+          padding="none"
+          key={"key-tree-data-header"}
           style={this.props.headerStyle}
         />
       );
