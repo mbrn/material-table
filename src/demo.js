@@ -16,7 +16,7 @@ class App extends Component {
     columns: [
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
-      { title: 'Cinsiyet', field: 'sex' },
+      { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
@@ -31,24 +31,10 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-          options={{
-            grouping: true,
-            detailPanelType: 'single'
-          }}
-          detailPanel={() => {
-            return <div>ok</div>;
-          }}
+          // onRowClick={() => {
+          //   alert('ok');
+          // }}
         />
-        <button
-          onClick={() => {
-            const data = [...this.state.data];
-            data.push({ id: 7, name: 'ex2', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' });
-
-            this.setState({ data });
-          }}
-        >
-          Add
-        </button>
       </div>
     );
   }
