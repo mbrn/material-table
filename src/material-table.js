@@ -30,7 +30,6 @@ class MaterialTable extends React.Component {
   }
 
   setDataManagerFields(props) {
-
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
     if (props) {
@@ -45,6 +44,7 @@ class MaterialTable extends React.Component {
     this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     this.dataManager.changePaging(props.options.paging);
     this.dataManager.changeParentFunc(props.parentChildData);
+    this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -339,6 +339,7 @@ MaterialTable.defaultProps = {
   options: {
     actionsColumnIndex: 0,
     columnsButton: false,
+    detailPanelType: 'multiple',
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
@@ -450,6 +451,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,

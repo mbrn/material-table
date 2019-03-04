@@ -102,6 +102,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?: number;
   columnsButton?: boolean;
+  detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;

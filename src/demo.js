@@ -32,7 +32,11 @@ class App extends Component {
           title="Demo Title"
           // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
           options={{
-            grouping: true
+            grouping: true,
+            detailPanelType: 'single'
+          }}
+          detailPanel={() => {
+            return <div>ok</div>;
           }}
         />
         <button

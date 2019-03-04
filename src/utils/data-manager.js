@@ -10,6 +10,8 @@ export default class DataManager {
   parentFunc = null;
   searchText = '';
   selectedCount = 0;
+  detailPanelType = 'multiple'
+  lastDetailPanelRow = undefined;
 
   data = [];
   columns = [];
@@ -103,6 +105,12 @@ export default class DataManager {
     else {
       rowData.tableData.showDetailPanel = render;
     }
+
+    if(this.detailPanelType === 'single' && this.lastDetailPanelRow && this.lastDetailPanelRow != rowData) {
+      this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
+    }
+
+    this.lastDetailPanelRow = rowData;
   }
 
   changeGroupExpand(path) {
@@ -174,6 +182,10 @@ export default class DataManager {
   changeTreeExpand(path) {
     const rowData = this.findDataByPath(this.sortedData, path);
     rowData.tableData.isTreeExpanded = !rowData.tableData.isTreeExpanded;
+  }
+
+  changeDetailPanelType(type) {
+    this.detailPanelType = type;
   }
 
   changeByDrag(result) {
