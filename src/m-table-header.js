@@ -27,24 +27,24 @@ class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-            {(this.props.grouping && columnDef.field)
-              ? <Draggable
-                key={columnDef.tableData.id}
-                draggableId={columnDef.tableData.id.toString()}
-                index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
+              {(this.props.grouping && columnDef.field)
+                ? <Draggable
+                  key={columnDef.tableData.id}
+                  draggableId={columnDef.tableData.id.toString()}
+                  index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
                     // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                  >
-                    {columnDef.title}
-                  </div>
-                )}
-              </Draggable>
-              : columnDef.title
-            }
+                    >
+                      {columnDef.title}
+                    </div>
+                  )}
+                </Draggable>
+                : columnDef.title
+              }
             </TableSortLabel>
             : columnDef.title
           }
@@ -102,6 +102,16 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key="key-detail-panel-column"
+          style={this.props.headerStyle}
+        />
+      );
+    }
+
+    if (this.props.isTreeData > 0) {
+      headers.splice(0, 0,
+        <TableCell
+          padding="none"
+          key={"key-tree-data-header"}
           style={this.props.headerStyle}
         />
       );
