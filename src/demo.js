@@ -15,7 +15,7 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname' },
+      { title: 'Soyadı', field: 'surname', export: false },
       { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
@@ -35,7 +35,8 @@ class App extends Component {
           //   alert('ok');
           // }}
           options={{
-            // selection: true
+            // selection: true,
+            exportButton: true
           }}
         />
       </div>

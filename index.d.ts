@@ -47,6 +47,7 @@ export interface Column {
   defaultSort?: ('asc' | 'desc');
   disableClick?: boolean;
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
+  export?: boolean;
   field?: string;
   filtering?: boolean;
   headerStyle?: React.CSSProperties;

@@ -398,6 +398,7 @@ MaterialTable.propTypes = {
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+    export: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,
     headerStyle: PropTypes.object,
