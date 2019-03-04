@@ -176,10 +176,19 @@ class MTableFilterRow extends React.Component {
       columns.splice(0, 0, <TableCell padding="none" key="key-detail-panel-column" />);
     }
 
+    if (this.props.isTreeData > 0) {
+      columns.splice(0, 0,
+        <TableCell
+          padding="none"
+          key={"key-tree-data-filter"}          
+        />
+      );
+    }
+
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        columns.splice(0, 0, <TableCell padding="checkbox" key={"key-group-filter" + columnDef.tableData.id}/>);
+        columns.splice(0, 0, <TableCell padding="checkbox" key={"key-group-filter" + columnDef.tableData.id} />);
       });
 
     return (
@@ -204,6 +213,7 @@ MTableFilterRow.propTypes = {
   emptyCell: PropTypes.bool,
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
+  isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   selection: PropTypes.bool.isRequired,
   onFilterSelectionChanged: PropTypes.func.isRequired,

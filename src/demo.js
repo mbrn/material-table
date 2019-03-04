@@ -6,26 +6,17 @@ class App extends Component {
   state = {
     selectedCount: 0,
     data: [
-      { name: 'a', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
-      { name: 'b', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult' },
-      { name: 'c', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
-      { name: 'd', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
-      { name: 'e', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
-      { name: 'f', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
+      { id: 1, name: 'ax', surname: 'Baran', birthYear: 1987, birthCity: 63, sex: 'Male', type: 'adult' },
+      { id: 2, name: 'bx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'adult', parentId: 1 },
+      { id: 3, name: 'cx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 1 },
+      { id: 4, name: 'dx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 3 },
+      { id: 5, name: 'ex', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
+      { id: 6, name: 'fx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 5 },
     ],
     columns: [
-      {
-        title: 'Adı', field: 'name', customSort: (a, b, type) => {
-          if (type === 'row') {
-            return a.name.length - b.name.length;
-          }
-          else if (type === 'group') {
-            return a.length - b.length;
-          }
-        }
-      },
-      { title: 'Soyadı', field: 'surname', render: () => <div style={{display: 'inline'}}>ok</div> },
-      { title: 'Cinsiyet', field: 'sex' },
+      { title: 'Adı', field: 'name' },
+      { title: 'Soyadı', field: 'surname' },
+      { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
@@ -39,25 +30,11 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
-          options={{
-            columnsButton: true,
-            grouping: true,
-            selection: true
-          }}
-          detailPanel={[
-            {
-              tooltip: 'Show function trace log and error log',
-              render: logData => {
-                return (
-                  <div>
-                    {logData.name}
-                  </div>
-                );
-              },
-            },
-          ]}
+          // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+          // onRowClick={() => {
+          //   alert('ok');
+          // }}
         />
-
       </div>
     );
   }

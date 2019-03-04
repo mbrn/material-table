@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.18.0",
+  "version": "1.19.2",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/material-table.js",
   "types": "index.d.ts",
@@ -74,10 +74,10 @@
     "@material-ui/core": "^3.4.0",
     "classnames": "^2.2.6",
     "date-fns": "2.0.0-alpha.16",
-    "filefy": "0.1.6",
+    "filefy": "0.1.7",
     "material-ui-pickers": "1.0.1",
     "prop-types": "^15.6.2",
-    "react-beautiful-dnd": "10.0.3",
+    "react-beautiful-dnd": "10.0.4",
     "react-double-scrollbar": "0.0.15"
   }
 }
