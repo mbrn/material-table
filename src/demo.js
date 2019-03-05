@@ -15,8 +15,8 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname' },
-      { title: 'Cinsiyet', field: 'sex' },
+      { title: 'Soyadı', field: 'surname', export: false },
+      { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
@@ -31,11 +31,14 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+          // onRowClick={() => {
+          //   alert('ok');
+          // }}
           options={{
-            selection: true
+            // selection: true,
+            exportButton: true
           }}
         />
-
       </div>
     );
   }

@@ -19,7 +19,7 @@ class MTableToolbar extends React.Component {
   exportCsv = () => {
     const columns = this.props.columns
       .filter(columnDef => {
-        return !columnDef.hidden && columnDef.field;
+        return !columnDef.hidden && columnDef.field && columnDef.export !== false; 
       });
 
     const data = this.props.renderData.map(rowData =>
@@ -53,6 +53,16 @@ class MTableToolbar extends React.Component {
                 </Tooltip>
               </InputAdornment>
             ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  disabled={!this.props.searchText}
+                  onClick={() => this.props.onSearchChanged("")}
+                >
+                  <this.props.icons.ResetSearch color="inherit" />
+                </IconButton>
+              </InputAdornment>
+            ),
             style: this.props.searchFieldStyle
           }}
         />
@@ -83,7 +93,7 @@ class MTableToolbar extends React.Component {
               anchorEl={this.state.columnsButtonAnchorEl}
               open={Boolean(this.state.columnsButtonAnchorEl)}
               onClose={() => this.setState({ columnsButtonAnchorEl: null })}>
-              <MenuItem key={"text"} disabled style={{opacity: 1, fontWeight: 600, fontSize: 12}}>
+              <MenuItem key={"text"} disabled style={{ opacity: 1, fontWeight: 600, fontSize: 12 }}>
                 {localization.addRemoveColumns}
               </MenuItem>
               {
@@ -95,7 +105,7 @@ class MTableToolbar extends React.Component {
                         control={
                           <Checkbox
                             checked={!col.hidden}
-                            onChange={(event, checked) => {                              
+                            onChange={(event, checked) => {
                               this.props.onColumnsChanged(col.tableData.id, !checked);
                             }
                             } />
@@ -161,10 +171,10 @@ class MTableToolbar extends React.Component {
     const title = this.props.showTitle ? (this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title) : null;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
-        { title && <div className={classes.title}>
+        {title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
         </div>}
-        { this.props.toolbarButtonAlignment === 'right' && <div className={classes.spacer} />}
+        {this.props.toolbarButtonAlignment === 'right' && <div className={classes.spacer} />}
         <div className={classes.actions}>
           {this.renderActions()}
         </div>

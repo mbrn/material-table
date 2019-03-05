@@ -30,7 +30,6 @@ class MaterialTable extends React.Component {
   }
 
   setDataManagerFields(props) {
-
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
     if (props) {
@@ -45,6 +44,7 @@ class MaterialTable extends React.Component {
     this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     this.dataManager.changePaging(props.options.paging);
     this.dataManager.changeParentFunc(props.parentChildData);
+    this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -328,6 +328,7 @@ MaterialTable.defaultProps = {
     LastPage: (props) => <Icon {...props}>last_page</Icon>,
     NextPage: (props) => <Icon {...props}>chevron_right</Icon>,
     PreviousPage: (props) => <Icon {...props}>chevron_left</Icon>,
+    ResetSearch: (props) => <Icon {...props}>clear</Icon>,
     Search: (props) => <Icon {...props}>search</Icon>,
     SortArrow: (props) => <Icon {...props}>arrow_upward</Icon>,
     ThirdStateCheck: (props) => <Icon {...props}>remove</Icon>,
@@ -339,6 +340,7 @@ MaterialTable.defaultProps = {
   options: {
     actionsColumnIndex: 0,
     columnsButton: false,
+    detailPanelType: 'multiple',
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
@@ -395,7 +397,9 @@ MaterialTable.propTypes = {
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
+    grouping: PropTypes.bool,
     emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+    export: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,
     headerStyle: PropTypes.object,
@@ -440,6 +444,7 @@ MaterialTable.propTypes = {
     LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    ResetSearch: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -450,6 +455,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportButton: PropTypes.bool,

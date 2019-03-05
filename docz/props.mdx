@@ -51,7 +51,9 @@ import MaterialTable from '../src/material-table'
 | defaultGroupSort        | 'asc' or 'desc' | 'asc'     | Default grouped sort direction                                                                                |
 | defaultSort             | 'asc' or 'desc' |           | Sorting direction: 'asc', 'desc'                                                                              |
 | disableClick            | boolean         | false     | Disable the 'onRowClick' event for this cell                                                                  |
+| grouping                | boolean         | true      | Flag to activate or disable grouping feature of column
 | emptyValue              | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
+| export                  | boolean         | true      | Flag for make column exportable or not                                                                        |
 | field                   | string          |           | Field name of data row                                                                                        |
 | filtering               | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
 | headerStyle             | object          |           | Header cell style                                                                                             |
@@ -101,6 +103,7 @@ import MaterialTable from '../src/material-table'
 | LastPage        | React.Element | material icons 'last_page'      | LastPage icon         |
 | NextPage        | React.Element | material icons 'chevron_right'  | NextPage icon         |
 | PreviousPage    | React.Element | material icons 'chevron_left'   | PreviousPage icon     |
+| ResetSearch     | React.Element | material icons 'clear'          | ResetSearch icon      |
 | Search          | React.Element | material icons 'search'         | Search icon           |
 | ThirdStateCheck | React.Element | material icons 'remove'         | ThirdStateCheck icon  |
 | ViewColumn      | React.Element | material icons 'view_column'    | ViewColumn icon       |
@@ -162,6 +165,7 @@ Options property could be given to component as `options` property. You can chan
 |:---------------------------|:-----------------------|:--------------|:----------------------------------------------------------------------------------|
 | actionsColumnIndex         | number                 | 0             | Order of actions column                                                           |
 | columnsButton              | boolean                | false         | Flag for columns button that controls which column could be rendered              |
+| detailPanelType            | `single` or `multiple` | `multiple`    | Detail panel visibility type.                                                     |
 | doubleHorizontalScroll     | boolean                | false         | Flag for double scroll bar for long tables                                        |
 | emptyRowsWhenPaging        | boolean                | true          | Flag for rendering rows to complete page size                                     |
 | exportButton               | boolean                | false         | Flag for export button that render export buttons                                 |

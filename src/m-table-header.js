@@ -27,16 +27,17 @@ class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-              {(this.props.grouping && columnDef.field)
-                ? <Draggable
-                  key={columnDef.tableData.id}
-                  draggableId={columnDef.tableData.id.toString()}
-                  index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
+            {(this.props.grouping && columnDef.field)
+              ? <Draggable
+                key={columnDef.tableData.id}
+                draggableId={columnDef.tableData.id.toString()}
+                isDragDisabled={columnDef.grouping === false}
+                index={index}>
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                     // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
                       {columnDef.title}
@@ -58,7 +59,8 @@ class MTableHeader extends React.Component {
     return (
       <TableCell
         key="key-actions-column"
-        style={this.props.headerStyle}
+        padding="checkbox"
+        style={{...this.props.headerStyle, textAlign: 'center'}}
       >
         <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>

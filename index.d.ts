@@ -45,7 +45,10 @@ export interface Column {
   defaultGroupOrder?: number;
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
+  grouping?: boolean;
+  disableClick?: boolean;
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
+  export?: boolean;
   field?: string;
   filtering?: boolean;
   headerStyle?: React.CSSProperties;
@@ -94,6 +97,7 @@ export interface Icons {
   LastPage: () => React.ReactElement<any>;
   NextPage: () => React.ReactElement<any>;
   PreviousPage: () => React.ReactElement<any>;
+  ResetSearch: () => React.ReactElement<any>;
   Search: () => React.ReactElement<any>;
   ThirdStateCheck: () => React.ReactElement<any>;
   ViewColumn: () => React.ReactElement<any>;
@@ -102,6 +106,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?: number;
   columnsButton?: boolean;
+  detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportButton?: boolean;
