@@ -189,24 +189,26 @@ export default class MTableBodyRow extends React.Component {
         columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
+    const { detailPanel, getFieldValue, isTreeData, onRowClick, onRowSelected, onTreeExpandChanged, onToggleDetailPanel, ...rowProps } = this.props;
+
     return (
       <>
         <TableRow
           // selected={this.props.index % 2 === 0}
-          hover={this.props.onRowClick ? true : false}
+          {...rowProps}
+          hover={onRowClick ? true : false}
           style={this.getStyle()}
           onClick={(event) => {
-            this.props.onRowClick && this.props.onRowClick(event, this.props.data,
+            onRowClick && onRowClick(event, this.props.data,
               (panelIndex) => {
-                let panel = this.props.detailPanel;
+                let panel = detailPanel;
                 if (Array.isArray(panel)) {
                   panel = panel[panelIndex || 0].render;
                 }
 
-                this.props.onToggleDetailPanel(this.props.path, panel);
+                onToggleDetailPanel(this.props.path, panel);
               });
-          }
-          }
+          }}
         >
           {columns}
         </TableRow>
