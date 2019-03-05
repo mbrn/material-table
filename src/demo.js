@@ -35,8 +35,8 @@ class App extends Component {
           //   alert('ok');
           // }}
           options={{
-            // selection: true,
-            exportButton: true
+            selection: true,
+            exportButton: true,
           }}
         />
       </div>

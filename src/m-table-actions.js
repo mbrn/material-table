@@ -14,7 +14,7 @@ class MTableActions extends React.Component {
     }
 
     const button = (
-      <div>
+      <span>
         <IconButton
           key={action.icon + '' + index}
           color="inherit"
@@ -32,7 +32,7 @@ class MTableActions extends React.Component {
             <action.icon {...action.iconProps} />
           }
         </IconButton>
-      </div>
+      </span>
     );
 
     if (action.tooltip) {
