@@ -235,7 +235,7 @@ class MaterialTable extends React.Component {
                       }}
                       onRowSelected={(event, path) => {
                         this.dataManager.changeRowSelected(event.target.checked, path);
-                        this.setState(this.dataManager.getRenderState());
+                        this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
                       }}
                       onToggleDetailPanel={(path, render) => {
                         this.dataManager.changeDetailPanelVisibility(path, render);
