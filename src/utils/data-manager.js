@@ -1,6 +1,7 @@
 import formatDate from 'date-fns/format';
 
 export default class DataManager {
+  applySearch = false;
   currentPage = 0;
   filterSelectionChecked = false;
   orderBy = -1;
@@ -57,6 +58,11 @@ export default class DataManager {
       };
       return columnDef;
     });
+  }
+
+  changeApplySearch(applySearch) {
+    this.applySearch = applySearch;
+    this.searched = false;
   }
 
   changePaging(paging) {
@@ -457,7 +463,7 @@ export default class DataManager {
 
     this.searchedData = [...this.filteredData];
 
-    if (this.searchText) {
+    if (this.searchText && this.applySearch) {
       this.searchedData = this.searchedData.filter(row => {
         return this.columns
           .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })

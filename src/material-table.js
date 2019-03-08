@@ -15,6 +15,7 @@ import MTablePagination from './m-table-pagination';
 import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
+import { debounce } from 'debounce';
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -26,7 +27,24 @@ class MaterialTable extends React.Component {
     const calculatedProps = this.getProps(props);
     this.setDataManagerFields(calculatedProps);
 
-    this.state = this.dataManager.getRenderState();
+    this.state = {
+      data: [],
+      ...this.dataManager.getRenderState(),
+      query: {
+        page: 0,
+        pageSize: calculatedProps.options.pageSize,
+        search: '',
+        totalCount: 0
+      }
+    };
+  }
+
+  componentDidMount() {
+    this.setState(this.dataManager.getRenderState(), () => {
+      if (this.isRemoteData()) {
+        this.onQueryChange(this.state.query);
+      }
+    });
   }
 
   setDataManagerFields(props) {
@@ -38,7 +56,15 @@ class MaterialTable extends React.Component {
     }
 
     this.dataManager.setColumns(props.columns);
-    this.dataManager.setData(props.data);
+
+    if (this.isRemoteData()) {
+      this.dataManager.changeApplySearch(false);
+    }
+    else {
+      this.dataManager.changeApplySearch(true);
+      this.dataManager.setData(props.data);
+    }
+
     this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     this.dataManager.changePageSize(props.options.pageSize);
     this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
@@ -49,7 +75,7 @@ class MaterialTable extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const props = this.getProps(nextProps);
-    this.setDataManagerFields(props);    
+    this.setDataManagerFields(props);
     this.setState(this.dataManager.getRenderState());
   }
 
@@ -81,6 +107,38 @@ class MaterialTable extends React.Component {
     this.props.onOrderChange && this.props.onOrderChange(...args);
   }
 
+  isRemoteData = () => !Array.isArray(this.props.data)
+
+  onQueryChange = (query) => {
+    this.setState({ isLoading: true }, () => {
+      this.props.data(query).then((result) => {
+        query.totalCount = result.totalCount;
+        query.page = result.page;
+        this.dataManager.setData(result.data);
+        this.setState({
+          isLoading: false,
+          ...this.dataManager.getRenderState(),
+          query
+        });
+      });
+    });
+  }
+
+  onSearchChange = debounce(() => {
+    this.dataManager.changeSearchText(this.state.searchText);
+
+    if (this.isRemoteData()) {
+      const query = { ...this.state.query };
+      query.page = 0;
+      query.search = this.state.searchText;
+
+      this.onQueryChange(query);
+    }
+    else {
+      this.setState(this.dataManager.getRenderState());
+    }
+  }, 200)
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -92,23 +150,39 @@ class MaterialTable extends React.Component {
               <props.components.Pagination
                 style={{ float: 'right' }}
                 colSpan={3}
-                count={this.state.data.length}
+                count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
-                page={this.state.currentPage}
+                page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
                 onChangePage={(event, page) => {
-                  this.dataManager.changeCurrentPage(page);
-                  this.setState(this.dataManager.getRenderState(), () => {
-                    this.onChangePage(page);
-                  });
+                  if (this.isRemoteData()) {
+                    const query = { ...this.state.query };
+                    query.page = page;
+                    this.onQueryChange(query);
+                  }
+                  else {
+                    this.dataManager.changeCurrentPage(page);
+                    this.setState(this.dataManager.getRenderState(), () => {
+                      this.onChangePage(page);
+                    });
+                  }
                 }}
                 onChangeRowsPerPage={(event) => {
                   this.dataManager.changePageSize(event.target.value);
-                  this.dataManager.changeCurrentPage(0);
-                  this.setState(this.dataManager.getRenderState(), () => {
-                    this.onChangeRowsPerPage(event.target.value);
-                  });
+
+                  if (this.isRemoteData()) {
+                    const query = { ...this.state.query };
+                    query.pageSize = event.target.value;
+                    query.page = 0;
+                    this.onQueryChange(query);
+                  }
+                  else {
+                    this.dataManager.changeCurrentPage(0);
+                    this.setState(this.dataManager.getRenderState(), () => {
+                      this.onChangeRowsPerPage(event.target.value);
+                    });
+                  }
                 }}
                 ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
@@ -119,10 +193,6 @@ class MaterialTable extends React.Component {
         </Table>
       );
     }
-  }
-
-  componentDidMount() {
-    this.setState(this.dataManager.getRenderState());
   }
 
   render() {
@@ -152,10 +222,7 @@ class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              onSearchChanged={searchText => {
-                this.dataManager.changeSearchText(searchText);
-                this.setState(this.dataManager.getRenderState());
-              }}
+              onSearchChanged={searchText => this.setState({ searchText }, this.onSearchChange)}
               onColumnsChanged={(columnId, hidden) => {
                 this.dataManager.changeColumnHidden(columnId, hidden);
                 this.setState(this.dataManager.getRenderState());
@@ -203,9 +270,19 @@ class MaterialTable extends React.Component {
                         }}
                         onOrderChange={(orderBy, orderDirection) => {
                           this.dataManager.changeOrder(orderBy, orderDirection);
-                          this.setState(this.dataManager.getRenderState(), () => {
-                            this.onOrderChange(orderBy, orderDirection);
-                          });
+
+                          if (this.isRemoteData()) {
+                            const query = { ...this.state.query };
+                            query.page = 0;
+                            query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
+                            query.orderDirection = orderDirection;
+                            this.onQueryChange(query);
+                          }
+                          else {
+                            this.setState(this.dataManager.getRenderState(), () => {
+                              this.onOrderChange(orderBy, orderDirection);
+                            });
+                          }
                         }}
                         actionsHeaderIndex={props.options.actionsColumnIndex}
                         sorting={props.options.sorting}
@@ -259,7 +336,7 @@ class MaterialTable extends React.Component {
             </Droppable>
 
           </ScrollBar>
-          {props.isLoading && props.options.loadingType === "linear" &&
+          {(this.state.isLoading || props.isLoading) && props.options.loadingType === "linear" &&
             <div style={{ position: 'relative', width: '100%' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
                 <LinearProgress />
@@ -268,7 +345,7 @@ class MaterialTable extends React.Component {
           }
           {this.renderFooter()}
 
-          {props.isLoading && props.options.loadingType === 'overlay' &&
+          {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
             <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
               <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: '#FFFFFFAA' }}>
                 <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
@@ -425,7 +502,7 @@ MaterialTable.propTypes = {
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.shape({

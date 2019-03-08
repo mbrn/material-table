@@ -6,7 +6,7 @@ export interface MaterialTableProps {
   actions?: (Action | ((rowData: any) => Action))[];
   columns: Column[];
   components?: Components;
-  data: object;
+  data: any[] | ((query: Query) => QueryResult);
   detailPanel?: ((rowData: any) => React.ReactNode) | {
     icon?: string | React.ReactElement<any>;
     openIcon?: string | React.ReactElement<any>;
@@ -25,6 +25,20 @@ export interface MaterialTableProps {
   onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
+}
+
+export interface Query {
+  page: number;
+  pageSize: number;
+  search: string;
+  orderBy: Column;
+  orderDirection: "asc" | "desc";
+}
+
+export interface QueryResult {
+  data: any[];
+  page: number;
+  totalCount: number;
 }
 
 export interface Action {

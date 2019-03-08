@@ -20,6 +20,12 @@ class App extends Component {
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
+    ],
+    remoteColumns: [
+      { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} /> },
+      { title: 'Id', field: 'id' },
+      { title: 'First Name', field: 'first_name' },
+      { title: 'Last Name', field: 'last_name' },
     ]
   }
 
@@ -27,18 +33,35 @@ class App extends Component {
     return (
       <div style={{ maxWidth: '100%' }}>
         <MaterialTable
-          columns={this.state.columns}
-          data={this.state.data}
+          // columns={this.state.columns}
+          // data={this.state.data}
+          columns={this.state.remoteColumns}
+          data={(query) => new Promise((resolve, reject) => {
+            let url = "https://reqres.in/api/users?";
+            url += "per_page=" + query.pageSize;
+            url += "&page=" + (query.page + 1);
+          
+            /*global fetch:false*/
+            fetch(url).then(response => response.json()).then(result => {
+              resolve({
+                data: result.data,
+                page: result.page - 1,
+                totalCount: result.total
+              });
+            });
+          })}
           title="Demo Title"
-          // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-          // onRowClick={() => {
-          //   alert('ok');
-          // }}
           options={{
-            selection: true,
-            exportButton: true,
+            filtering: true,
+            grouping: true
           }}
         />
+        <button
+          onClick={() => this.setState({ selectedCount: this.state.selectedCount + 1 })}
+        >
+          ok
+        </button>
+        {this.state.selectedCount}
       </div>
     );
   }
