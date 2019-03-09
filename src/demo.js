@@ -51,17 +51,77 @@ class App extends Component {
             });
           })}
           title="Demo Title"
-          options={{
-            filtering: true,
-            grouping: true
-          }}
         />
         <button
           onClick={() => this.setState({ selectedCount: this.state.selectedCount + 1 })}
         >
           ok
         </button>
+
         {this.state.selectedCount}
+
+        <MaterialTable
+          columns={this.state.columns}
+          data={this.state.data}               
+          title="Demo Title"
+          detailPanel={[
+            {
+              tooltip: 'Show Name',
+              render: rowData => {
+                return (
+                  <div
+                    style={{
+                      fontSize: 100,
+                      textAlign: 'center',
+                      color: 'white',
+                      backgroundColor: '#43A047',
+                    }}
+                  >
+                    {rowData.name}
+                  </div>
+                );
+              },
+            },
+            {
+              icon: 'account_circle',
+              tooltip: 'Show Surname',
+              render: rowData => {
+                return (
+                  <div
+                    style={{
+                      fontSize: 100,
+                      textAlign: 'center',
+                      color: 'white',
+                      backgroundColor: '#E53935',
+                    }}
+                  >
+                    {rowData.surname}
+                  </div>
+                );
+              },
+            },
+            rowData => ({
+              disabled: rowData.name === "ax",
+              icon: 'favorite_border',
+              openIcon: 'favorite',
+              tooltip: 'Show Both',              
+              render: rowData => {
+                return (
+                  <div
+                    style={{
+                      fontSize: 100,
+                      textAlign: 'center',
+                      color: 'white',
+                      backgroundColor: '#FDD835',
+                    }}
+                  >
+                    {rowData.name} {rowData.surname}
+                  </div>
+                );
+              },
+            }),
+          ]}
+        />
       </div>
     );
   }

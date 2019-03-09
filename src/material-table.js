@@ -527,13 +527,17 @@ MaterialTable.propTypes = {
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   detailPanel: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.arrayOf(PropTypes.shape({
-      icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-      openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-      tooltip: PropTypes.string,
-      render: PropTypes.func.isRequired
-    }))
+    PropTypes.func, 
+    PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.func, 
+      PropTypes.shape({
+        disabled: PropTypes.bool,
+        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+        tooltip: PropTypes.string,
+        render: PropTypes.func.isRequired
+      })
+    ]))
   ]),
   icons: PropTypes.shape({
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

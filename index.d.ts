@@ -7,12 +7,7 @@ export interface MaterialTableProps {
   columns: Column[];
   components?: Components;
   data: any[] | ((query: Query) => QueryResult);
-  detailPanel?: ((rowData: any) => React.ReactNode) | {
-    icon?: string | React.ReactElement<any>;
-    openIcon?: string | React.ReactElement<any>;
-    tooltip?: string;
-    render: (rowData: any) => string | React.ReactNode;
-  }[];
+  detailPanel?: ((rowData: any) => React.ReactNode) | (DetailPanel | ((rowData: any) => DetailPanel))[];
   icons?: Icons;
   isLoading?: boolean;
   title: string;
@@ -39,6 +34,14 @@ export interface QueryResult {
   data: any[];
   page: number;
   totalCount: number;
+}
+
+export interface DetailPanel {
+  disabled?: boolean;
+  icon?: string | React.ReactElement<any>;
+  openIcon?: string | React.ReactElement<any>;
+  tooltip?: string;
+  render: (rowData: any) => string | React.ReactNode;
 }
 
 export interface Action {

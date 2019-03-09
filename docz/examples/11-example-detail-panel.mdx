@@ -118,14 +118,26 @@ import MaterialTable from '../../src/material-table'
           return <div style={{fontSize: 100, textAlign: 'center', color: 'white', backgroundColor: '#E53935'}}>{rowData.surname}</div>
         }
       },
-      {
+      rowData => ({
+        disabled: rowData.name === "ax",
         icon: 'favorite_border',
         openIcon: 'favorite',
-        tooltip: 'Show Both',
+        tooltip: 'Show Both',              
         render: rowData => {
-          return <div style={{fontSize: 100, textAlign: 'center', color: 'white', backgroundColor: '#FDD835'}}>{rowData.name} {rowData.surname}</div>
-        }
-      }
+          return (
+            <div
+              style={{
+                fontSize: 100,
+                textAlign: 'center',
+                color: 'white',
+                backgroundColor: '#FDD835',
+              }}
+            >
+              {rowData.name} {rowData.surname}
+            </div>
+          )
+        },
+      }),
     ]}
     onRowClick={(event, rowData, togglePanel) => togglePanel(1)}
   />

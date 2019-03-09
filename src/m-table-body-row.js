@@ -81,6 +81,11 @@ export default class MTableBodyRow extends React.Component {
       return (
         <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
           {this.props.detailPanel.map((panel, index) => {
+
+            if(typeof panel === "function") {
+              panel = panel(this.props.data);
+            }
+
             const isOpen = this.props.data.tableData.showDetailPanel === panel.render;
             let iconButton = <this.props.icons.DetailPanel />;
             let animation = true;
@@ -102,6 +107,7 @@ export default class MTableBodyRow extends React.Component {
               <IconButton
                 key={"key-detail-panel-" + index}
                 style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
+                disabled={panel.disabled}
                 onClick={(event) => {
                   this.props.onToggleDetailPanel(this.props.path, panel.render);
                   event.stopPropagation();
@@ -251,7 +257,7 @@ MTableBodyRow.propTypes = {
   icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
-  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
+  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
