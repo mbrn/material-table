@@ -19,10 +19,12 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - [Filtering](https://mbrn.github.io/material-table/#/docz-examples-06-example-filtering)
 - [Grouping](https://mbrn.github.io/material-table/#/docz-examples-12-example-grouping)
 - [Localization](https://mbrn.github.io/material-table/#/docz-examples-09-example-localization)
+- [Remote Data](https://mbrn.github.io/material-table/#/docz-examples-14-example-remote-data)
 - [Search](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
 - [Selection](https://mbrn.github.io/material-table/#/docz-examples-05-example-selection)
 - [Sorting](https://mbrn.github.io/material-table/#/docz-examples-04-example-sorting)
 - [Styling](https://mbrn.github.io/material-table/#/docz-examples-08-example-cell-styling)
+- [Tree Data](https://mbrn.github.io/material-table/#/docz-examples-13-example-tree-data)
 - and more
 
 ## Demo and documentation
