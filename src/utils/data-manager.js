@@ -1,6 +1,7 @@
 import formatDate from 'date-fns/format';
 
 export default class DataManager {
+  applyFilters = false;
   applySearch = false;
   currentPage = 0;
   filterSelectionChecked = false;
@@ -65,6 +66,11 @@ export default class DataManager {
     this.searched = false;
   }
 
+  changeApplyFilters(applyFilters) {
+    this.applyFilters = applyFilters;
+    this.filtered = false;
+  }
+
   changePaging(paging) {
     this.paging = paging;
     this.paged = false;
@@ -112,7 +118,7 @@ export default class DataManager {
       rowData.tableData.showDetailPanel = render;
     }
 
-    if(this.detailPanelType === 'single' && this.lastDetailPanelRow && this.lastDetailPanelRow != rowData) {
+    if (this.detailPanelType === 'single' && this.lastDetailPanelRow && this.lastDetailPanelRow != rowData) {
       this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
     }
 
@@ -391,69 +397,71 @@ export default class DataManager {
       });
     }
 
-    this.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
-      const { lookup, type, tableData, field } = columnDef;
-      if (columnDef.customFilterAndSearch) {
-        this.filteredData = this.filteredData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
-      }
-      else {
-        if (lookup) {
-          this.filteredData = this.filteredData.filter(row => {
-            return !tableData.filterValue ||
-              tableData.filterValue.length === 0 ||
-              tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
-          });
-        } else if (type === 'numeric') {
-          this.filteredData = this.filteredData.filter(row => {
-            return row[field] === tableData.filterValue;
-          });
-        } else if (type === 'boolean' && tableData.filterValue) {
-          this.filteredData = this.filteredData.filter(row => {
-            return (row[field] && tableData.filterValue === 'checked') ||
-              (!row[field] && tableData.filterValue === 'unchecked');
-          });
-        } else if (['date', 'datetime'].includes(type)) {
-          this.filteredData = this.filteredData.filter(row => {
-            const currentDate = row[field] ? new Date(row[field]) : null;
+    if (this.applyFilters) {
+      this.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
+        const { lookup, type, tableData, field } = columnDef;
+        if (columnDef.customFilterAndSearch) {
+          this.filteredData = this.filteredData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
+        }
+        else {
+          if (lookup) {
+            this.filteredData = this.filteredData.filter(row => {
+              return !tableData.filterValue ||
+                tableData.filterValue.length === 0 ||
+                tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
+            });
+          } else if (type === 'numeric') {
+            this.filteredData = this.filteredData.filter(row => {
+              return row[field] === tableData.filterValue;
+            });
+          } else if (type === 'boolean' && tableData.filterValue) {
+            this.filteredData = this.filteredData.filter(row => {
+              return (row[field] && tableData.filterValue === 'checked') ||
+                (!row[field] && tableData.filterValue === 'unchecked');
+            });
+          } else if (['date', 'datetime'].includes(type)) {
+            this.filteredData = this.filteredData.filter(row => {
+              const currentDate = row[field] ? new Date(row[field]) : null;
 
-            if (currentDate && currentDate.toString() !== 'Invalid Date') {
-              const selectedDate = tableData.filterValue;
-              let currentDateToCompare = '';
-              let selectedDateToCompare = '';
+              if (currentDate && currentDate.toString() !== 'Invalid Date') {
+                const selectedDate = tableData.filterValue;
+                let currentDateToCompare = '';
+                let selectedDateToCompare = '';
 
-              if (type === 'date') {
-                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
-                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
-              } else if (type === 'datetime') {
-                currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
-                selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
+                if (type === 'date') {
+                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
+                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
+                } else if (type === 'datetime') {
+                  currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
+                  selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
+                }
+
+                return currentDateToCompare === selectedDateToCompare;
               }
 
-              return currentDateToCompare === selectedDateToCompare;
-            }
+              return true;
+            });
+          } else if (type === 'time') {
+            this.filteredData = this.filteredData.filter(row => {
+              const currentHour = row[field] || null;
 
-            return true;
-          });
-        } else if (type === 'time') {
-          this.filteredData = this.filteredData.filter(row => {
-            const currentHour = row[field] || null;
+              if (currentHour) {
+                const selectedHour = tableData.filterValue;
+                const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
 
-            if (currentHour) {
-              const selectedHour = tableData.filterValue;
-              const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
+                return currentHour === currentHourToCompare;
+              }
 
-              return currentHour === currentHourToCompare;
-            }
-
-            return true;
-          });
-        } else {
-          this.filteredData = this.filteredData.filter(row => {
-            return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
-          });
+              return true;
+            });
+          } else {
+            this.filteredData = this.filteredData.filter(row => {
+              return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
+            });
+          }
         }
-      }
-    });
+      });
+    }
 
     this.filtered = true;
   }
@@ -527,7 +535,7 @@ export default class DataManager {
         parent.tableData.isTreeExpanded = false;
         !parent.tableData.childRows.includes(rowData) && parent.tableData.childRows.push(rowData);
 
-        addRow(parent);        
+        addRow(parent);
       }
       else {
         !this.treefiedData.includes(rowData) && this.treefiedData.push(rowData);
@@ -535,7 +543,7 @@ export default class DataManager {
     };
 
     this.searchedData.forEach(rowData => {
-      addRow(rowData);      
+      addRow(rowData);
     });
 
     this.treefied = true;

@@ -40,7 +40,7 @@ class App extends Component {
             let url = "https://reqres.in/api/users?";
             url += "per_page=" + query.pageSize;
             url += "&page=" + (query.page + 1);
-          
+
             /*global fetch:false*/
             fetch(url).then(response => response.json()).then(result => {
               resolve({

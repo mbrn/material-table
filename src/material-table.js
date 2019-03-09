@@ -31,9 +31,13 @@ class MaterialTable extends React.Component {
       data: [],
       ...this.dataManager.getRenderState(),
       query: {
+        filters: [],
+        orderBy: null,
+        orderDirection: 'asc',
         page: 0,
         pageSize: calculatedProps.options.pageSize,
         search: '',
+
         totalCount: 0
       }
     };
@@ -131,6 +135,24 @@ class MaterialTable extends React.Component {
       const query = { ...this.state.query };
       query.page = 0;
       query.search = this.state.searchText;
+
+      this.onQueryChange(query);
+    }
+    else {
+      this.setState(this.dataManager.getRenderState());
+    }
+  }, 200)
+
+  onFilterChange = debounce(() => {
+    if (this.isRemoteData()) {
+      const query = { ...this.state.query };
+      query.filters = this.state.columns
+        .filter(a => a.tableData.filterValue)
+        .map(a => ({
+          column: a,
+          operator: "=",
+          value: a.tableData.filterValue
+        }));
 
       this.onQueryChange(query);
     }
@@ -304,7 +326,8 @@ class MaterialTable extends React.Component {
                       isTreeData={this.props.parentChildData !== undefined}
                       onFilterChanged={(columnId, value) => {
                         this.dataManager.changeFilterValue(columnId, value);
-                        this.setState(this.dataManager.getRenderState());
+                        this.setState({}, () => this.onFilterChange());
+
                       }}
                       onFilterSelectionChanged={(event) => {
                         this.dataManager.changeFilterSelectionChecked(event.target.checked);
