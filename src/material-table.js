@@ -25,7 +25,7 @@ class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-    this.setDataManagerFields(calculatedProps);
+    this.setDataManagerFields(calculatedProps, true);
 
     this.state = {
       data: [],
@@ -51,7 +51,7 @@ class MaterialTable extends React.Component {
     });
   }
 
-  setDataManagerFields(props) {
+  setDataManagerFields(props, isInit) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
     if (props) {
@@ -69,11 +69,11 @@ class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
-    this.dataManager.changePageSize(props.options.pageSize);
-    this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
-    this.dataManager.changePaging(props.options.paging);
-    this.dataManager.changeParentFunc(props.parentChildData);
+    isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
+    isInit && this.dataManager.changePageSize(props.options.pageSize);
+    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    isInit && this.dataManager.changePaging(props.options.paging);
+    isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
