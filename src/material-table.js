@@ -64,9 +64,11 @@ class MaterialTable extends React.Component {
 
     if (this.isRemoteData()) {
       this.dataManager.changeApplySearch(false);
+      this.dataManager.changeApplyFilters(false);
     }
     else {
       this.dataManager.changeApplySearch(true);
+      this.dataManager.changeApplyFilters(true);
       this.dataManager.setData(props.data);
     }
 
