@@ -11,14 +11,22 @@ class App extends Component {
       { id: 3, name: 'cx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 1 },
       { id: 4, name: 'dx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 3 },
       { id: 5, name: 'ex', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child' },
-      { id: 6, name: 'fx', surname: 'Baran', birthYear: 1987, birthCity: 34, sex: 'Female', type: 'child', parentId: 5 },
+      { id: 6, name: 'fx', surname: 'Baran', birthYear: 2012, birthCity: 34, sex: 'Female', type: 'child', parentId: 5 },
     ],
     columns: [
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname', export: false },
       { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
-      { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+      {
+        title: 'Doğum Yılı', field: 'birthYear', type: 'numeric', cellStyle: data => {
+          if (data > 2000) {
+            return {
+              color: 'red',
+            };
+          }
+        },
+      },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } },
     ],
     remoteColumns: [
