@@ -123,6 +123,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?: number;
   columnsButton?: boolean;
+  debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;

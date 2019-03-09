@@ -16,6 +16,7 @@ import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+
 /* eslint-enable no-unused-vars */
 
 class MaterialTable extends React.Component {
@@ -141,7 +142,7 @@ class MaterialTable extends React.Component {
     else {
       this.setState(this.dataManager.getRenderState());
     }
-  }, 200)
+  }, this.props.options.debounceInterval)
 
   onFilterChange = debounce(() => {
     if (this.isRemoteData()) {
@@ -159,7 +160,7 @@ class MaterialTable extends React.Component {
     else {
       this.setState(this.dataManager.getRenderState());
     }
-  }, 200)
+  }, this.props.options.debounceInterval)
 
   renderFooter() {
     const props = this.getProps();
@@ -441,6 +442,7 @@ MaterialTable.defaultProps = {
     actionsColumnIndex: 0,
     columnsButton: false,
     detailPanelType: 'multiple',
+    debounceInterval: 200,
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportButton: false,
@@ -559,6 +561,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
