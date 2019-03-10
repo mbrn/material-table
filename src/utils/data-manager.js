@@ -412,7 +412,7 @@ export default class DataManager {
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
-              return row[field] === tableData.filterValue;
+              return (row[field] + "") === tableData.filterValue;
             });
           } else if (type === 'boolean' && tableData.filterValue) {
             this.filteredData = this.filteredData.filter(row => {
