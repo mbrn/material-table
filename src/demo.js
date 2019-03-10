@@ -45,7 +45,8 @@ class App extends Component {
           data={this.state.data}
           title="Demo Title"
           options={{
-            filtering: true
+            filtering: true,
+            columnsButton: true
           }}
         />
         <button
