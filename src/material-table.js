@@ -91,7 +91,7 @@ class MaterialTable extends React.Component {
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
 
-    calculatedProps.actions = (calculatedProps.actions || []);
+    calculatedProps.actions = [...(calculatedProps.actions || [])];
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
