@@ -15,6 +15,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - [Component overriding](https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding)
 - [Custom rendering](https://mbrn.github.io/material-table/#/docz-examples-07-example-custom-render)
 - [Detail Panel](https://mbrn.github.io/material-table/#/docz-examples-11-example-detail-panel)
+- [Editable](https://mbrn.github.io/material-table/#/docz-examples-15-example-editables)
 - [Export](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
 - [Filtering](https://mbrn.github.io/material-table/#/docz-examples-06-example-filtering)
 - [Grouping](https://mbrn.github.io/material-table/#/docz-examples-12-example-grouping)
