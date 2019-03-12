@@ -18,7 +18,7 @@ class MTableActions extends React.Component {
         <IconButton
           key={action.icon + '' + index}
           color="inherit"
-          disabled={action.disabled}
+          disabled={action.disabled}          
           onClick={(event) => {
             if (action.onClick) {
               action.onClick(event, this.props.data);
@@ -27,7 +27,7 @@ class MTableActions extends React.Component {
           }}
         >
           {typeof action.icon === "string" ?
-            <Icon {...action.iconProps}>{action.icon}</Icon>
+            <Icon {...action.iconProps} fontSize="small">{action.icon}</Icon>
             :
             <action.icon {...action.iconProps} />
           }

@@ -14,6 +14,7 @@ import MaterialTable from '../src/material-table'
 | components          | object                          |                   | Component customization                                           |
 | data                | Array or func for remote data   |                   | Data to be rendered                                               |
 | detailPanel         | func or array of detailPanel    |                   | Component(s) to be rendered on detail panel                       |
+| editable            | object                          |                   | object for add, update and delete functions                       |
 | icons               | object                          |                   | Icons customization                                               |
 | isLoading           | boolean                         | false             | Flag for loading animation                                        |
 | localization        | object                          |                   | All text for localization                                         |
@@ -74,6 +75,7 @@ import MaterialTable from '../src/material-table'
 | Body          | React.Element | MTableBody      | Body component                                                                            |
 | Cell          | React.Element | MTableCell      | Cell component                                                                            |
 | Container     | React.Element | Paper           | Container that everything renders in                                                      |
+| EditRow       | React.Element | MTableEditRow   | EditRow component                                                                         |
 | FilterRow     | React.Element | MTableFilterRow | FilterRow component                                                                       |
 | Header        | React.Element | MTableHeader    | Header component                                                                          |
 | Pagination    | React.Element | TablePagination | Pagination component                                                                      |
@@ -96,8 +98,12 @@ import MaterialTable from '../src/material-table'
 
 | Field           | Type          | Default                         | Description           |
 |:----------------|:--------------|:--------------------------------|:----------------------|
+| Add             | React.Element | material icons 'add'            | Add icon              |
 | Check           | React.Element | material icons 'check'          | Check icon            |
+| Clear           | React.Element | material icons 'clear'          | Clear icon            |
+| Delete          | React.Element | material icons 'delete_outline' | Delete icon           |
 | DetailPanel     | React.Element | material icons 'chevron_right'  | DetailPanel icon      |
+| Edit            | React.Element | material icons 'edit'           | Edit icon             |
 | Export          | React.Element | material icons 'save_alt'       | Export icon           |
 | Filter          | React.Element | material icons 'filter_list'    | Filter icon           |
 | FirstPage       | React.Element | material icons 'first_page'     | FirstPage icon        |
@@ -130,6 +136,7 @@ Localization settings could be used to change/translate default texts of datatab
 | body                          | object | {}                        | Key value pair for localize body component       |
 | body.emptyDataSourceMessage   | string | No records to display     |                                                  |
 | body.filterRow                | object | {}                        | Key value pair for localize filter row component |
+| body.filterRow.filterTooltip  | string | Filter                    |                                                  |
 | body.filterRow.filterTooltip  | string | Filter                    |                                                  |
 | grouping                      | object | {}                        | Key value pair for localize grouping component   |
 | grouping.placeholder          | string | Drag headers ...          |                                                  |

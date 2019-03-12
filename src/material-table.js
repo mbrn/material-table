@@ -9,6 +9,7 @@ import MTableBodyRow from './m-table-body-row';
 import MTableGroupbar from './m-table-groupbar';
 import MTableGroupRow from './m-table-group-row';
 import MTableCell from './m-table-cell';
+import MTableEditRow from './m-table-edit-row';
 import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
@@ -40,7 +41,8 @@ class MaterialTable extends React.Component {
         search: '',
 
         totalCount: 0
-      }
+      },
+      showAddRow: false
     };
   }
 
@@ -88,6 +90,51 @@ class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
+
+    calculatedProps.actions = (calculatedProps.action || []);
+    if (calculatedProps.editable) {
+      if (calculatedProps.editable.onRowAdd) {
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Add,
+          tooltip: 'Add',
+          isFreeAction: true,
+          onClick: () => {
+            this.dataManager.changeRowEditing();
+            this.setState({
+              ...this.dataManager.getRenderState(),
+              showAddRow: !this.state.showAddRow
+            });
+          }
+        });
+      }
+      if (calculatedProps.editable.onRowUpdate) {
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Edit,
+          tooltip: 'Edit',
+          onClick: (e, rowData) => {
+            this.dataManager.changeRowEditing(rowData, "update");
+            this.setState({
+              ...this.dataManager.getRenderState(),
+              showAddRow: false
+            });
+          }
+        });
+      }
+      if (calculatedProps.editable.onRowDelete) {
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Delete,
+          tooltip: 'Delete',
+          onClick: (e, rowData) => {
+            this.dataManager.changeRowEditing(rowData, "delete");
+            this.setState({
+              ...this.dataManager.getRenderState(),
+              showAddRow: false
+            });
+          }
+        });
+      }
+    }
+
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
@@ -352,8 +399,75 @@ class MaterialTable extends React.Component {
                         this.dataManager.changeTreeExpand(path);
                         this.setState(this.dataManager.getRenderState());
                       }}
+                      onEditingCanceled={(mode, rowData) => {
+                        if (mode === "add") {
+                          this.setState({ showAddRow: false });
+                        }
+                        else if (mode === "update" || mode === "delete") {
+                          this.dataManager.changeRowEditing(rowData);
+                          this.setState(this.dataManager.getRenderState());
+                        }
+                      }}
+                      onEditingApproved={(mode, newData, oldData) => {
+                        if (mode === "add") {
+                          this.setState({ isLoading: true }, () => {
+                            this.props.editable.onRowAdd(newData)
+                              .then(result => {
+                                this.setState({ isLoading: false, showAddRow: false }, () => {
+                                  if (this.isRemoteData()) {
+                                    this.onQueryChange(this.state.query);
+                                  }
+                                });
+                              })
+                              .catch(reason => {
+                                this.setState({ isLoading: false });
+                              });
+                          });
+                        }
+                        else if (mode === "update") {
+                          this.setState({ isLoading: true }, () => {
+                            this.props.editable.onRowUpdate(newData, oldData)
+                              .then(result => {
+                                this.dataManager.changeRowEditing(oldData);
+                                this.setState({
+                                  isLoading: false,
+                                  ...this.dataManager.getRenderState()
+                                }, () => {
+                                  if (this.isRemoteData()) {
+                                    this.onQueryChange(this.state.query);
+                                  }
+                                });
+                              })
+                              .catch(reason => {
+                                this.setState({ isLoading: false });
+                              });
+                          });
+
+                        }
+                        else if (mode === "delete") {
+                          this.setState({ isLoading: true }, () => {
+                            this.props.editable.onRowDelete(oldData)
+                              .then(result => {
+                                this.dataManager.changeRowEditing(oldData);
+                                this.setState({
+                                  isLoading: false,
+                                  ...this.dataManager.getRenderState()
+                                }, () => {
+                                  if (this.isRemoteData()) {
+                                    this.onQueryChange(this.state.query);
+                                  }
+                                });
+                              })
+                              .catch(reason => {
+                                this.setState({ isLoading: false });
+                              });
+                          });
+                        }
+                      }}
                       localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
                       onRowClick={this.props.onRowClick}
+                      showAddRow={this.state.showAddRow}
+                      hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
                     />
                   </Table>
                   {provided.placeholder}
@@ -412,6 +526,7 @@ MaterialTable.defaultProps = {
     Body: MTableBody,
     Cell: MTableCell,
     Container: Paper,
+    EditRow: MTableEditRow,
     FilterRow: MTableFilterRow,
     Groupbar: MTableGroupbar,
     GroupRow: MTableGroupRow,
@@ -423,8 +538,12 @@ MaterialTable.defaultProps = {
   data: [],
   icons: {
     /* eslint-disable react/display-name */
+    Add: (props) => <Icon {...props}>add_box</Icon>,
     Check: (props) => <Icon {...props}>check</Icon>,
+    Clear: (props) => <Icon {...props}>clear</Icon>,
+    Delete: (props) => <Icon {...props}>delete_outline</Icon>,
     DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,
+    Edit: (props) => <Icon {...props}>edit</Icon>,
     Export: (props) => <Icon {...props}>save_alt</Icon>,
     Filter: (props) => <Icon {...props}>filter_list</Icon>,
     FirstPage: (props) => <Icon {...props}>first_page</Icon>,
@@ -521,6 +640,7 @@ MaterialTable.propTypes = {
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    EditRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -530,10 +650,15 @@ MaterialTable.propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
+  editable: PropTypes.shape({
+    onRowAdd: PropTypes.func,
+    onRowUpdate: PropTypes.func,
+    onRowDelete: PropTypes.func
+  }),
   detailPanel: PropTypes.oneOfType([
-    PropTypes.func, 
+    PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.func, 
+      PropTypes.func,
       PropTypes.shape({
         disabled: PropTypes.bool,
         icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
@@ -544,8 +669,12 @@ MaterialTable.propTypes = {
     ]))
   ]),
   icons: PropTypes.shape({
+    Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Delete: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Edit: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),

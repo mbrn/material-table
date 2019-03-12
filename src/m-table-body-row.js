@@ -10,10 +10,6 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        const style = {};
-        if (index === 0) {
-          style.paddingLeft = 24 + this.props.level * 20;
-        }
         return (
           <this.props.components.Cell
             icons={this.props.icons}
@@ -21,7 +17,6 @@ export default class MTableBodyRow extends React.Component {
             value={value}
             key={columnDef.tableData.id}
             rowData={this.props.data}
-            style={style}
           />
         );
       });
@@ -82,7 +77,7 @@ export default class MTableBodyRow extends React.Component {
         <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
           {this.props.detailPanel.map((panel, index) => {
 
-            if(typeof panel === "function") {
+            if (typeof panel === "function") {
               panel = panel(this.props.data);
             }
 
@@ -128,15 +123,29 @@ export default class MTableBodyRow extends React.Component {
   }
 
   getStyle() {
-    if (!this.props.options.rowStyle) {
-      return {
-        cursor: this.props.onRowClick ? 'pointer' : ''
+    let style = {       
+      transition: 'all ease 300ms',      
+    };
+
+    if (typeof this.props.options.rowStyle === "function") {
+      style = {
+        ...style,
+        ...this.props.options.rowStyle(this.props.data)
+      };
+    }
+    else if(this.props.options.rowStyle) {
+      style = {
+        ...style,
+        ...this.props.options.rowStyle
       };
     }
 
-    let style = this.props.options.rowStyle;
-    if (typeof this.props.options.rowStyle === "function") {
-      style = this.props.options.rowStyle(this.props.data);
+    if (this.props.onRowClick) {
+      style.cursor = 'pointer';
+    }
+    
+    if(this.props.hasAnyEditingRow) {
+      style.opacity = 0.2;
     }
 
     return style;
@@ -195,12 +204,23 @@ export default class MTableBodyRow extends React.Component {
         columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
-    const { detailPanel, getFieldValue, isTreeData, onRowClick, onRowSelected, onTreeExpandChanged, onToggleDetailPanel, ...rowProps } = this.props;
+    const { 
+      detailPanel, 
+      getFieldValue, 
+      isTreeData, 
+      onRowClick, 
+      onRowSelected, 
+      onTreeExpandChanged, 
+      onToggleDetailPanel, 
+      onEditingCanceled,
+      onEditingApproved,
+      hasAnyEditingRow, 
+      ...rowProps } = this.props;
 
     return (
       <>
         <TableRow
-          // selected={this.props.index % 2 === 0}
+          selected={hasAnyEditingRow}
           {...rowProps}
           hover={onRowClick ? true : false}
           style={this.getStyle()}
@@ -227,6 +247,9 @@ export default class MTableBodyRow extends React.Component {
               key={index}
               level={this.props.level + 1}
               path={[...this.props.path, index]}
+              onEditingCanceled={onEditingCanceled}
+              onEditingApproved={onEditingApproved}
+              hasAnyEditingRow={this.props.hasAnyEditingRow}
             />
           ))
         }
@@ -258,6 +281,7 @@ MTableBodyRow.propTypes = {
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
+  hasAnyEditingRow: PropTypes.bool,
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
@@ -265,4 +289,6 @@ MTableBodyRow.propTypes = {
   columns: PropTypes.array,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
+  onEditingApproved: PropTypes.func,
+  onEditingCanceled: PropTypes.func,
 };

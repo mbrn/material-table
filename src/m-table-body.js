@@ -31,27 +31,47 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      return (
-        <this.props.components.Row
-          components={this.props.components}
-          icons={this.props.icons}
-          data={data}
-          index={index}
-          key={index}
-          level={0}
-          options={this.props.options}
-          onRowSelected={this.props.onRowSelected}
-          actions={this.props.actions}
-          columns={this.props.columns}
-          getFieldValue={this.props.getFieldValue}
-          detailPanel={this.props.detailPanel}
-          path={[index + this.props.pageSize * this.props.currentPage]}          
-          onToggleDetailPanel={this.props.onToggleDetailPanel}
-          onRowClick={this.props.onRowClick}
-          isTreeData={this.props.isTreeData}
-          onTreeExpandChanged={this.props.onTreeExpandChanged}
-        />
-      );
+      if (data.tableData.editing) {
+        return (
+          <this.props.components.EditRow
+            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            components={this.props.components}
+            data={data}
+            icons={this.props.icons}
+            key={index}
+            mode={data.tableData.editing}
+            options={this.props.options}
+            onEditingCanceled={this.props.onEditingCanceled}
+            onEditingApproved={this.props.onEditingApproved}
+          />
+        );
+      }
+      else {
+        return (
+          <this.props.components.Row
+            components={this.props.components}
+            icons={this.props.icons}
+            data={data}
+            index={index}
+            key={index}
+            level={0}
+            options={this.props.options}
+            onRowSelected={this.props.onRowSelected}
+            actions={this.props.actions}
+            columns={this.props.columns}
+            getFieldValue={this.props.getFieldValue}
+            detailPanel={this.props.detailPanel}
+            path={[index + this.props.pageSize * this.props.currentPage]}
+            onToggleDetailPanel={this.props.onToggleDetailPanel}
+            onRowClick={this.props.onRowClick}
+            isTreeData={this.props.isTreeData}
+            onTreeExpandChanged={this.props.onTreeExpandChanged}
+            onEditingCanceled={this.props.onEditingCanceled}
+            onEditingApproved={this.props.onEditingApproved}
+            hasAnyEditingRow={this.props.hasAnyEditingRow}
+          />
+        );
+      }
     });
   }
 
@@ -72,10 +92,13 @@ class MTableBody extends React.Component {
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
         onRowClick={this.props.onRowClick}
+        onEditingCanceled={this.props.onEditingCanceled}
+        onEditingApproved={this.props.onEditingApproved}
         onToggleDetailPanel={this.props.onToggleDetailPanel}
         onTreeExpandChanged={this.props.onTreeExpandChanged}
         options={this.props.options}
         isTreeData={this.props.isTreeData}
+        hasAnyEditingRow={this.props.hasAnyEditingRow}
       />
     ));
   }
@@ -113,6 +136,18 @@ class MTableBody extends React.Component {
           this.renderUngroupedRows(renderData)
         }
 
+        {this.props.showAddRow &&
+          <this.props.components.EditRow
+            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            components={this.props.components}
+            icons={this.props.icons}
+            key="key-add-row"
+            mode="add"
+            options={this.props.options}
+            onEditingCanceled={this.props.onEditingCanceled}
+            onEditingApproved={this.props.onEditingApproved}
+          />
+        }
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
@@ -135,9 +170,10 @@ MTableBody.propTypes = {
   actions: PropTypes.array,
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
-  currentPage: PropTypes.number,  
+  currentPage: PropTypes.number,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
   getFieldValue: PropTypes.func.isRequired,
+  hasAnyEditingRow: PropTypes.bool,
   icons: PropTypes.object.isRequired,
   isTreeData: PropTypes.bool.isRequired,
   onRowSelected: PropTypes.func,
@@ -145,6 +181,7 @@ MTableBody.propTypes = {
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
   selection: PropTypes.bool.isRequired,
+  showAddRow: PropTypes.bool,
   onFilterSelectionChanged: PropTypes.func.isRequired,
   localization: PropTypes.object,
   onFilterChanged: PropTypes.func,
@@ -152,6 +189,8 @@ MTableBody.propTypes = {
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
+  onEditingCanceled: PropTypes.func,
+  onEditingApproved: PropTypes.func,
 };
 
 export default MTableBody;

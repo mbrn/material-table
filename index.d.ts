@@ -6,8 +6,13 @@ export interface MaterialTableProps {
   actions?: (Action | ((rowData: any) => Action))[];
   columns: Column[];
   components?: Components;
-  data: any[] | ((query: Query) => QueryResult);
+  data: any[] | ((query: Query) => Promise<QueryResult>);
   detailPanel?: ((rowData: any) => React.ReactNode) | (DetailPanel | ((rowData: any) => DetailPanel))[];
+  editable?: {
+    onRowAdd?: (newData: any) => Promise;
+    onRowUpdate?: (newData: any, oldData?: any) => Promise;
+    onRowDelete?: (oldData: any) => Promise;
+  }
   icons?: Icons;
   isLoading?: boolean;
   title: string;
@@ -84,6 +89,7 @@ export interface Components {
   Body?: React.ComponentType<any>;
   Cell?: React.ComponentType<any>;
   Container?: React.ComponentType<any>;
+  EditRow?: React.ComponentType<any>;
   FilterRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
@@ -92,11 +98,12 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
+export const Container: () => React.ReactElement<any>;
 export const MTableToolbar: () => React.ReactElement<any>;
 export const MTableActions: () => React.ReactElement<any>;
 export const MTableBody: () => React.ReactElement<any>;
 export const MTableCell: () => React.ReactElement<any>;
-export const Container: () => React.ReactElement<any>;
+export const MTableEditRow: () => React.ReactElement<any>;
 export const MTableFilterRow: () => React.ReactElement<any>;
 export const MTableHeader: () => React.ReactElement<any>;
 export const MTablePagination: () => React.ReactElement<any>;
@@ -105,12 +112,15 @@ export const MTableGroupRow: () => React.ReactElement<any>;
 
 
 export interface Icons {
-  SortArrow: () => React.ReactElement<any>;
+  Add: () => React.ReactElement<any>;
   Check: () => React.ReactElement<any>;
+  Deşete: () => React.ReactElement<any>;
   DetailPanel: () => React.ReactElement<any>;
+  Edit: () => React.ReactElement<any>;
   Export: () => React.ReactElement<any>;
   Filter: () => React.ReactElement<any>;
   FirstPage: () => React.ReactElement<any>;
+  SortArrow: () => React.ReactElement<any>;
   LastPage: () => React.ReactElement<any>;
   NextPage: () => React.ReactElement<any>;
   PreviousPage: () => React.ReactElement<any>;

@@ -12,7 +12,7 @@ export default class MTableCell extends React.Component {
     if (this.props.columnDef.render) {
       return this.props.columnDef.render(this.props.rowData, 'row');
     } else if (this.props.columnDef.type === 'boolean') {
-      const style = { textAlign: 'center', width: '48px' };
+      const style = { textAlign: 'left', width: '48px' };
       if (this.props.value) {
         return <this.props.icons.Check style={style} />;
       } else {
@@ -30,7 +30,7 @@ export default class MTableCell extends React.Component {
       } else {
         return this.props.value;
       }
-    } else if (this.props.columnDef.type === 'dateTime') {
+    } else if (this.props.columnDef.type === 'datetime') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
       } else {

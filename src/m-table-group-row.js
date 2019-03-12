@@ -38,7 +38,10 @@ export default class MTableGroupRow extends React.Component {
             onRowSelected={this.props.onRowSelected}
             onRowClick={this.props.onRowClick}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
+            onEditingCanceled={this.props.onEditingCanceled}
+            onEditingApproved={this.props.onEditingApproved}
             options={this.props.options}
+            hasAnyEditingRow={this.props.hasAnyEditingRow}
           />
         ));
       }
@@ -60,6 +63,9 @@ export default class MTableGroupRow extends React.Component {
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             onTreeExpandChanged={this.props.onTreeExpandChanged}
+            onEditingCanceled={this.props.onEditingCanceled}
+            onEditingApproved={this.props.onEditingApproved}
+            hasAnyEditingRow={this.props.hasAnyEditingRow}
           />
         ));
       }
@@ -122,6 +128,7 @@ MTableGroupRow.propTypes = {
   getFieldValue: PropTypes.func,
   groupData: PropTypes.object,
   groups: PropTypes.arrayOf(PropTypes.object),
+  hasAnyEditingRow: PropTypes.bool,
   icons: PropTypes.object,
   isTreeData: PropTypes.bool.isRequired,
   level: PropTypes.number,
@@ -130,6 +137,8 @@ MTableGroupRow.propTypes = {
   onRowClick: PropTypes.func,  
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
+  onEditingCanceled: PropTypes.func,
+  onEditingApproved: PropTypes.func,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
 };

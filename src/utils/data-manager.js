@@ -14,6 +14,7 @@ export default class DataManager {
   selectedCount = 0;
   detailPanelType = 'multiple'
   lastDetailPanelRow = undefined;
+  lastEditingRow = undefined;
 
   data = [];
   columns = [];
@@ -133,6 +134,27 @@ export default class DataManager {
   changeSearchText(searchText) {
     this.searchText = searchText;
     this.searched = false;
+  }
+
+  changeRowEditing(rowData, mode) {
+    if(rowData) {
+      rowData.tableData.editing = mode;
+
+      if (this.lastEditingRow && this.lastEditingRow != rowData) {
+        this.lastEditingRow.tableData.editing = undefined;
+      }
+
+      if(mode) {
+        this.lastEditingRow = rowData;
+      }
+      else {
+        this.lastEditingRow = undefined;
+      }
+    }
+    else if(this.lastEditingRow) {
+      this.lastEditingRow.tableData.editing = undefined;
+      this.lastEditingRow = undefined;
+    }    
   }
 
   changeAllSelected(checked) {
@@ -372,6 +394,7 @@ export default class DataManager {
       columns: this.columns,
       currentPage: this.currentPage,
       data: this.sortedData,
+      lastEditingRow: this.lastEditingRow,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
       originalData: this.data,
