@@ -3,6 +3,7 @@ import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularPro
 import DoubleScrollbar from "react-double-scrollbar";
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import ReactTableContainer from "react-table-container";
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
@@ -216,53 +217,55 @@ class MaterialTable extends React.Component {
     if (props.options.paging) {
       const localization = { ...MaterialTable.defaultProps.localization.pagination, ...this.props.localization.pagination };
       return (
-        <Table>
-          <TableFooter style={{ display: 'grid' }}>
-            <TableRow>
-              <props.components.Pagination
-                style={{ float: 'right' }}
-                colSpan={3}
-                count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
-                icons={props.icons}
-                rowsPerPage={this.state.pageSize}
-                rowsPerPageOptions={props.options.pageSizeOptions}
-                page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
-                onChangePage={(event, page) => {
-                  if (this.isRemoteData()) {
-                    const query = { ...this.state.query };
-                    query.page = page;
-                    this.onQueryChange(query);
-                  }
-                  else {
-                    this.dataManager.changeCurrentPage(page);
-                    this.setState(this.dataManager.getRenderState(), () => {
-                      this.onChangePage(page);
-                    });
-                  }
-                }}
-                onChangeRowsPerPage={(event) => {
-                  this.dataManager.changePageSize(event.target.value);
+        <ReactTableContainer width={props.options.width ? props.options.width: '100%'} height={props.options.height ? props.options.height : '100%'} customHeader={[props.components.Header]}>
+          <Table style={{backgroundColor: "#ffffff"}}>
+            <TableFooter style={{ display: 'grid' }}>
+              <TableRow>
+                <props.components.Pagination
+                  style={{ float: 'right' }}
+                  colSpan={3}
+                  count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
+                  icons={props.icons}
+                  rowsPerPage={this.state.pageSize}
+                  rowsPerPageOptions={props.options.pageSizeOptions}
+                  page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
+                  onChangePage={(event, page) => {
+                    if (this.isRemoteData()) {
+                      const query = { ...this.state.query };
+                      query.page = page;
+                      this.onQueryChange(query);
+                    }
+                    else {
+                      this.dataManager.changeCurrentPage(page);
+                      this.setState(this.dataManager.getRenderState(), () => {
+                        this.onChangePage(page);
+                      });
+                    }
+                  }}
+                  onChangeRowsPerPage={(event) => {
+                    this.dataManager.changePageSize(event.target.value);
 
-                  if (this.isRemoteData()) {
-                    const query = { ...this.state.query };
-                    query.pageSize = event.target.value;
-                    query.page = 0;
-                    this.onQueryChange(query);
-                  }
-                  else {
-                    this.dataManager.changeCurrentPage(0);
-                    this.setState(this.dataManager.getRenderState(), () => {
-                      this.onChangeRowsPerPage(event.target.value);
-                    });
-                  }
-                }}
-                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
-                labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
-                labelRowsPerPage={localization.labelRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+                    if (this.isRemoteData()) {
+                      const query = { ...this.state.query };
+                      query.pageSize = event.target.value;
+                      query.page = 0;
+                      this.onQueryChange(query);
+                    }
+                    else {
+                      this.dataManager.changeCurrentPage(0);
+                      this.setState(this.dataManager.getRenderState(), () => {
+                        this.onChangeRowsPerPage(event.target.value);
+                      });
+                    }
+                  }}
+                  ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
+                  labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
+                  labelRowsPerPage={localization.labelRowsPerPage}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </ReactTableContainer>
       );
     }
   }
@@ -715,7 +718,9 @@ MaterialTable.propTypes = {
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool,
+    width: PropTypes.string,
+    height: PropTypes.string,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
