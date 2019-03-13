@@ -50,6 +50,7 @@ class App extends Component {
             }
           ]}
           options={{
+            grouping: true
           }}
           // editable={{
           //   onRowAdd: (newData) => new Promise((resolve, reject) => {

@@ -314,6 +314,19 @@ class MaterialTable extends React.Component {
                 this.dataManager.changeGroupOrder(groupedColumn.tableData.id);
                 this.setState(this.dataManager.getRenderState());
               }}
+              onGroupRemoved={(groupedColumn, index) => {
+                const result = {
+                  combine: null,
+                  destination: { droppableId: "headers", index: 0 },
+                  draggableId: groupedColumn.tableData.id,
+                  mode: "FLUID",
+                  reason: "DROP",
+                  source: { index, droppableId: "groups" },
+                  type: "DEFAULT"
+                };
+                this.dataManager.changeByDrag(result);
+                this.setState(this.dataManager.getRenderState());
+              }}
             />
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>

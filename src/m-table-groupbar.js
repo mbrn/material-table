@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Toolbar, Button, Typography } from '@material-ui/core';
+import { Icon, Toolbar, Chip, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -64,23 +64,27 @@ class MTableGroupbar extends React.Component {
                         {...provided.dragHandleProps}
                         style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                       >
-                        <Button
-                          size="small"
-                          style={{ boxShadow: 'none', textTransform: 'none' }}
+                        <Chip
+                          {...provided.dragHandleProps}
                           onClick={() => this.props.onSortChanged(columnDef)}
-                          variant="contained"
-                        >
-                          <div {...provided.dragHandleProps}>{columnDef.title}</div>
-                          {columnDef.tableData.groupSort &&
-                            <this.props.icons.SortArrow
-                              style={{
-                                transition: '300ms ease all',
-                                transform: columnDef.tableData.groupSort === "desc" ? 'rotate(-180deg)' : 'none',
-                                fontSize: 18
-                              }}
-                            />
+                          label={
+                            <div>
+                              <div style={{ float: 'left' }}>{columnDef.title}</div>
+                              {columnDef.tableData.groupSort &&
+                                <this.props.icons.SortArrow
+                                  style={{
+                                    transition: '300ms ease all',
+                                    transform: columnDef.tableData.groupSort === "desc" ? 'rotate(-180deg)' : 'none',
+                                    fontSize: 18
+                                  }}
+                                />
+                              }
+                            </div>
                           }
-                        </Button>
+                          style={{ boxShadow: 'none', textTransform: 'none' }}
+                          variant="contained"
+                          onDelete={() => this.props.onGroupRemoved(columnDef, index)}
+                        />
                       </div>
                     )}
                   </Draggable>
