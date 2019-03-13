@@ -137,24 +137,24 @@ export default class DataManager {
   }
 
   changeRowEditing(rowData, mode) {
-    if(rowData) {
+    if (rowData) {
       rowData.tableData.editing = mode;
 
       if (this.lastEditingRow && this.lastEditingRow != rowData) {
         this.lastEditingRow.tableData.editing = undefined;
       }
 
-      if(mode) {
+      if (mode) {
         this.lastEditingRow = rowData;
       }
       else {
         this.lastEditingRow = undefined;
       }
     }
-    else if(this.lastEditingRow) {
+    else if (this.lastEditingRow) {
       this.lastEditingRow.tableData.editing = undefined;
       this.lastEditingRow = undefined;
-    }    
+    }
   }
 
   changeAllSelected(checked) {
@@ -285,12 +285,29 @@ export default class DataManager {
         if (result.groups.length > 0) {
           return result.groups[current];
         }
-        else {
+        else if (result.data) {
           return result.data[current];
+        }
+        else {
+          return undefined;
         }
       }, data);
       return node;
     }
+  }
+
+  findGroupByGroupPath(renderData, path) {
+    const data = { groups: renderData };
+
+    const node = path.reduce((result, current) => {
+      if (!result) {
+        return undefined;
+      }
+
+      const group = result.groups.find(a => a.value === current);
+      return group;
+    }, data);
+    return node;
   }
 
   getFieldValue = (rowData, columnDef) => {
@@ -414,11 +431,11 @@ export default class DataManager {
 
     this.filteredData = [...this.data];
 
-    if (this.filterSelectionChecked) {
-      this.filterData = this.filterData.filter(row => {
-        return row.tableData.checked;
-      });
-    }
+    // if (this.filterSelectionChecked) {
+    //   this.filterData = this.filterData.filter(row => {
+    //     return row.tableData.checked;
+    //   });
+    // }
 
     if (this.applyFilters) {
       this.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
@@ -518,20 +535,23 @@ export default class DataManager {
   groupData() {
     this.sorted = this.paged = false;
 
-    this.groupedData = [...this.searchedData];
+    const tmpData = [...this.searchedData];
 
     const groups = this.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
-    const subData = this.groupedData.reduce((result, current) => {
+    const subData = tmpData.reduce((result, current) => {
 
       let object = result;
       object = groups.reduce((o, colDef) => {
         const value = current[colDef.field] || this.byString(current, colDef.field);
         let group = o.groups.find(g => g.value === value);
         if (!group) {
-          group = { value, groups: [], data: [], isExpanded: false };
+          const path = [...(o.path || []), value];
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};          
+
+          group = { value, groups: [], data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
         }
         return group;

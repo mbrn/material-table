@@ -39,34 +39,36 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
-          // options={{
-          //   filtering: true
-          // }}
-          editable={{
-            onRowAdd: (newData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const data = this.state.data;
-                data.push(newData);
-                this.setState({ data }, () => resolve());
-              }, 1000);
-            }),
-            onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const data = this.state.data;
-                const index = data.indexOf(oldData);
-                data[index] = newData;                
-                this.setState({ data }, () => resolve());
-              }, 1000);
-            }),
-            onRowDelete: (oldData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                let data = this.state.data;
-                const index = data.indexOf(oldData);
-                data.splice(index, 1);
-                this.setState({ data }, () => resolve());
-              }, 1000);
-            }),
+          options={{
+            filtering: true,
+            grouping: true,
+            selection: true,
           }}
+          // editable={{
+          //   onRowAdd: (newData) => new Promise((resolve, reject) => {
+          //     setTimeout(() => {
+          //       const data = this.state.data;
+          //       data.push(newData);
+          //       this.setState({ data }, () => resolve());
+          //     }, 1000);
+          //   }),
+          //   onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
+          //     setTimeout(() => {
+          //       const data = this.state.data;
+          //       const index = data.indexOf(oldData);
+          //       data[index] = newData;                
+          //       this.setState({ data }, () => resolve());
+          //     }, 1000);
+          //   }),
+          //   onRowDelete: (oldData) => new Promise((resolve, reject) => {
+          //     setTimeout(() => {
+          //       let data = this.state.data;
+          //       const index = data.indexOf(oldData);
+          //       data.splice(index, 1);
+          //       this.setState({ data }, () => resolve());
+          //     }, 1000);
+          //   }),
+          // }}
         />
         <button
           onClick={() => this.setState({ selectedCount: this.state.selectedCount + 1 })}
