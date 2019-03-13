@@ -9,9 +9,9 @@ export interface MaterialTableProps {
   data: any[] | ((query: Query) => Promise<QueryResult>);
   detailPanel?: ((rowData: any) => React.ReactNode) | (DetailPanel | ((rowData: any) => DetailPanel))[];
   editable?: {
-    onRowAdd?: (newData: any) => Promise;
-    onRowUpdate?: (newData: any, oldData?: any) => Promise;
-    onRowDelete?: (oldData: any) => Promise;
+    onRowAdd?: (newData: any) => Promise<void>;
+    onRowUpdate?: (newData: any, oldData?: any) => Promise<void>;
+    onRowDelete?: (oldData: any) => Promise<void>;
   }
   icons?: Icons;
   isLoading?: boolean;
