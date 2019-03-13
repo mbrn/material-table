@@ -39,10 +39,17 @@ class App extends Component {
           columns={this.state.columns}
           data={this.state.data}
           title="Demo Title"
+          actions={[
+            {
+              icon: 'save',
+              onClick: () => {}
+            },
+            {
+              icon: 'save',
+              onClick: () => {}
+            }
+          ]}
           options={{
-            filtering: true,
-            grouping: true,
-            selection: true,
           }}
           // editable={{
           //   onRowAdd: (newData) => new Promise((resolve, reject) => {

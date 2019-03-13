@@ -26,7 +26,7 @@ export default class MTableBodyRow extends React.Component {
   renderActions() {
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
     return (
-      <TableCell padding="checkbox" key="key-actions-column" style={{ width: 48 * actions.length }}>
+      <TableCell padding="dense" key="key-actions-column" style={{ width: 48 * actions.length, padding: '0px 5px' }}>
         <div style={{ display: 'flex' }}>
           <this.props.components.Actions data={this.props.data} actions={actions} />
         </div>

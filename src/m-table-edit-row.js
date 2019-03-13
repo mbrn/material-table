@@ -65,7 +65,7 @@ export default class MTableEditRow extends React.Component {
       }
     ];
     return (
-      <TableCell padding="checkbox" key="key-actions-column" style={{ width: 48 * actions.length }}>
+      <TableCell padding="dense" key="key-actions-column" style={{ width: 48 * actions.length, padding: '0px 5px' }}>
         <div style={{ display: 'flex' }}>
           <this.props.components.Actions data={this.props.data} actions={actions} />
         </div>
@@ -91,7 +91,7 @@ export default class MTableEditRow extends React.Component {
       const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)).length;
       columns = [
         <TableCell padding="none" key="key-selection-cell" colSpan={colSpan}>
-          <Typography variant="headline">
+          <Typography variant="h6">
             Are you sure delete this row?
           </Typography>
         </TableCell>
