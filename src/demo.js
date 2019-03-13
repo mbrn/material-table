@@ -43,6 +43,8 @@ class App extends Component {
             filtering: true,
             grouping: true,
             selection: true,
+            height: 200,
+            //width: 560
           }}
           // editable={{
           //   onRowAdd: (newData) => new Promise((resolve, reject) => {
