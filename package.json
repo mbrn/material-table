@@ -80,6 +80,7 @@
     "material-ui-pickers": "2.2.4",
     "prop-types": "^15.6.2",
     "react-beautiful-dnd": "10.0.4",
-    "react-double-scrollbar": "0.0.15"
+    "react-double-scrollbar": "0.0.15",
+    "react-table-container": "^2.0.2"    
   }
 }
