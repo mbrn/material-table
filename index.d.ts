@@ -114,7 +114,7 @@ export const MTableGroupRow: () => React.ReactElement<any>;
 export interface Icons {
   Add: () => React.ReactElement<any>;
   Check: () => React.ReactElement<any>;
-  Deşete: () => React.ReactElement<any>;
+  Delete: () => React.ReactElement<any>;
   DetailPanel: () => React.ReactElement<any>;
   Edit: () => React.ReactElement<any>;
   Export: () => React.ReactElement<any>;
