@@ -50,17 +50,9 @@ class App extends Component {
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
-                actions={[
-                  {
-                    icon: 'save',
-                    onClick: () => { }
-                  },
-                  {
-                    icon: 'save',
-                    onClick: () => { }
-                  }
-                ]}
+                parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 options={{
+                  selection: true
                 }}
               // editable={{
               //   onRowAdd: (newData) => new Promise((resolve, reject) => {

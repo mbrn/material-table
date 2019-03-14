@@ -575,7 +575,7 @@ export default class DataManager {
       let parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
-        parent.tableData.isTreeExpanded = false;
+        // parent.tableData.isTreeExpanded = false;
         !parent.tableData.childRows.includes(rowData) && parent.tableData.childRows.push(rowData);
 
         addRow(parent);
