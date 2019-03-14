@@ -13,7 +13,7 @@ export default class MTableEditRow extends React.Component {
 
     this.state = {
       data: props.data ? JSON.parse(JSON.stringify(props.data)) : {}
-    };
+    };    
   }
 
   renderColumns() {
@@ -27,7 +27,6 @@ export default class MTableEditRow extends React.Component {
         return (
           <TableCell
             key={columnDef.tableData.id}
-            padding="dense"
             align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
           >
             <FormField
@@ -45,11 +44,12 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {
+  renderActions() {    
+    const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
         icon: this.props.icons.Check,
-        tooltip: 'Save',
+        tooltip: localization.saveTooltip,
         onClick: () => {
           const newData = this.state.data;
           delete newData.tableData;
@@ -58,7 +58,7 @@ export default class MTableEditRow extends React.Component {
       },
       {
         icon: this.props.icons.Clear,
-        tooltip: 'Cancel',
+        tooltip: localization.cancelTooltip,
         onClick: () => {
           this.props.onEditingCanceled(this.props.mode, this.props.data);
         }
@@ -83,6 +83,8 @@ export default class MTableEditRow extends React.Component {
   }
 
   render() {
+    const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
+
     let columns;
     if (this.props.mode === "add" || this.props.mode === "update") {
       columns = this.renderColumns();
@@ -92,7 +94,7 @@ export default class MTableEditRow extends React.Component {
       columns = [
         <TableCell padding="none" key="key-selection-cell" colSpan={colSpan}>
           <Typography variant="h6">
-            Are you sure delete this row?
+            {localization.deleteText}
           </Typography>
         </TableCell>
       ];
@@ -153,7 +155,12 @@ MTableEditRow.defaultProps = {
   actions: [],
   index: 0,
   options: {},
-  path: []
+  path: [],
+  localization: {
+    saveTooltip: 'Save',
+    cancelTooltip: 'Cancel',
+    deleteText: 'Are you sure delete this row?',
+  }
 };
 
 MTableEditRow.propTypes = {
@@ -168,5 +175,6 @@ MTableEditRow.propTypes = {
   columns: PropTypes.array,
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  onEditingCanceled: PropTypes.func,
+  onEditingCanceled: PropTypes.func,  
+  localization: PropTypes.object
 };
