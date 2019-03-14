@@ -4,7 +4,10 @@ export default class DataManager {
   applyFilters = false;
   applySearch = false;
   currentPage = 0;
+  detailPanelType = 'multiple'
   filterSelectionChecked = false;
+  lastDetailPanelRow = undefined;
+  lastEditingRow = undefined;
   orderBy = -1;
   orderDirection = '';
   pageSize = 5;
@@ -12,9 +15,7 @@ export default class DataManager {
   parentFunc = null;
   searchText = '';
   selectedCount = 0;
-  detailPanelType = 'multiple'
-  lastDetailPanelRow = undefined;
-  lastEditingRow = undefined;
+  treefiedDataLength = 0;
 
   data = [];
   columns = [];
@@ -105,6 +106,18 @@ export default class DataManager {
     const rowData = this.findDataByPath(this.sortedData, path);
     rowData.tableData.checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+
+    const checkChildRows = rowData => {
+      if(rowData.tableData.childRows) {
+        rowData.tableData.childRows.forEach(childRow => {
+          childRow.tableData.checked = checked;
+          this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+          checkChildRows(childRow);
+        });
+      }
+    };
+
+    checkChildRows(rowData);
 
     this.filtered = false;
   }
@@ -418,7 +431,8 @@ export default class DataManager {
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,
-      selectedCount: this.selectedCount
+      selectedCount: this.selectedCount,
+      treefiedDataLength: this.treefiedDataLength
     };
   }
 
@@ -570,18 +584,26 @@ export default class DataManager {
     this.sorted = this.paged = false;
     this.data.forEach(a => a.tableData.childRows = null);
     this.treefiedData = [];
+    this.treefiedDataLength = 0;
 
     const addRow = (rowData) => {
-      let parent = this.parentFunc(rowData, this.data);
+      let parent = this.parentFunc(rowData, this.data);      
+
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
         // parent.tableData.isTreeExpanded = false;
-        !parent.tableData.childRows.includes(rowData) && parent.tableData.childRows.push(rowData);
+        if(!parent.tableData.childRows.includes(rowData)) {
+          parent.tableData.childRows.push(rowData);
+          this.treefiedDataLength++;
+        }
 
         addRow(parent);
       }
       else {
-        !this.treefiedData.includes(rowData) && this.treefiedData.push(rowData);
+        if(!this.treefiedData.includes(rowData)) {
+          this.treefiedData.push(rowData);
+          this.treefiedDataLength++;
+        }
       }
     };
 

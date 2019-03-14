@@ -346,8 +346,8 @@ class MaterialTable extends React.Component {
                         columns={this.state.columns}
                         hasSelection={props.options.selection}
                         headerStyle={props.options.headerStyle}
-                        selectedCount={this.state.selectedCount}
-                        dataCount={this.state.data.length}
+                        selectedCount={this.state.selectedCount}                        
+                        dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                         hasDetailPanel={!!props.detailPanel}
                         showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
                         orderBy={this.state.orderBy}
