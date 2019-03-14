@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress } from '@material-ui/core';
+import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress, withStyles } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
 import PropTypes from 'prop-types';
 import * as React from 'react';
@@ -220,7 +220,10 @@ class MaterialTable extends React.Component {
           <TableFooter style={{ display: 'grid' }}>
             <TableRow>
               <props.components.Pagination
-                style={{ float: 'right' }}
+                classes={{
+                  toolbar: props.classes.paginationToolbar
+                }}
+                style={{ float: props.theme.direction === "rtl" ? "left" : "right", overflowX: 'auto' }}
                 colSpan={3}
                 count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
                 icons={props.icons}
@@ -747,7 +750,16 @@ MaterialTable.propTypes = {
   onRowClick: PropTypes.func,
 };
 
-export default MaterialTable;
+
+const styles = theme => ({
+  paginationToolbar: {
+    padding: 0
+  }
+});
+
+
+
+export default withStyles(styles, { withTheme: true })(MaterialTable);
 
 export {
   MTableActions, MTableBody, MTableCell,

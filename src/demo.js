@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from './material-table';
+import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+let direction = 'ltr';
+// direction = 'rtl';
+const theme = createMuiTheme({
+  direction: direction
+});
 
 class App extends Component {
   state = {
@@ -34,96 +42,59 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{ maxWidth: '100%' }}>
-        <MaterialTable
-          columns={this.state.columns}
-          data={this.state.data}
-          title="Demo Title"
-          actions={[
-            {
-              icon: 'save',
-              onClick: () => {}
-            },
-            {
-              icon: 'save',
-              onClick: () => {}
-            }
-          ]}
-          options={{
-            grouping: true
-          }}
-          // editable={{
-          //   onRowAdd: (newData) => new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       const data = this.state.data;
-          //       data.push(newData);
-          //       this.setState({ data }, () => resolve());
-          //     }, 1000);
-          //   }),
-          //   onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       const data = this.state.data;
-          //       const index = data.indexOf(oldData);
-          //       data[index] = newData;                
-          //       this.setState({ data }, () => resolve());
-          //     }, 1000);
-          //   }),
-          //   onRowDelete: (oldData) => new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       let data = this.state.data;
-          //       const index = data.indexOf(oldData);
-          //       data.splice(index, 1);
-          //       this.setState({ data }, () => resolve());
-          //     }, 1000);
-          //   }),
-          // }}
-        />
-        <button
-          onClick={() => this.setState({ selectedCount: this.state.selectedCount + 1 })}
-        >
-          {this.state.selectedCount}
-        </button>
-        <MaterialTable
-          // columns={this.state.columns}
-          // data={this.state.data}
-          columns={this.state.remoteColumns}
-          data={(query) => new Promise((resolve, reject) => {
-            let url = "https://reqres.in/api/users?";
-            url += "per_page=" + query.pageSize;
-            url += "&page=" + (query.page + 1);
-
-            /*global fetch:false*/
-            fetch(url).then(response => response.json()).then(result => {
-              resolve({
-                data: result.data,
-                page: result.page - 1,
-                totalCount: result.total
-              });
-            });
-          })}
-          editable={{
-            onRowAdd: (newData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                resolve();
-              }, 1000);
-            }),
-            onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                resolve();
-              }, 1000);
-            }),
-            onRowDelete: (oldData) => new Promise((resolve, reject) => {
-              setTimeout(() => {
-                resolve();
-              }, 1000);
-            }),
-          }}
-          title="Demo Title"
-        />
+      <MuiThemeProvider theme={theme}>
+        <div style={{ maxWidth: '100%', direction }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <MaterialTable
+                columns={this.state.columns}
+                data={this.state.data}
+                title="Demo Title"
+                actions={[
+                  {
+                    icon: 'save',
+                    onClick: () => { }
+                  },
+                  {
+                    icon: 'save',
+                    onClick: () => { }
+                  }
+                ]}
+                options={{
+                }}
+              // editable={{
+              //   onRowAdd: (newData) => new Promise((resolve, reject) => {
+              //     setTimeout(() => {
+              //       const data = this.state.data;
+              //       data.push(newData);
+              //       this.setState({ data }, () => resolve());
+              //     }, 1000);
+              //   }),
+              //   onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
+              //     setTimeout(() => {
+              //       const data = this.state.data;
+              //       const index = data.indexOf(oldData);
+              //       data[index] = newData;                
+              //       this.setState({ data }, () => resolve());
+              //     }, 1000);
+              //   }),
+              //   onRowDelete: (oldData) => new Promise((resolve, reject) => {
+              //     setTimeout(() => {
+              //       let data = this.state.data;
+              //       const index = data.indexOf(oldData);
+              //       data.splice(index, 1);
+              //       this.setState({ data }, () => resolve());
+              //     }, 1000);
+              //   }),
+              // }}
+              />
+            </Grid>
 
 
+          </Grid>
 
-      </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
