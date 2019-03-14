@@ -686,8 +686,8 @@ MaterialTable.propTypes = {
   ]),
   icons: PropTypes.shape({
     Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Delete: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Edit: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
