@@ -165,6 +165,14 @@ export interface Localization {
     filterRow?: {
       filterTooltip?: string;
     };
+    editRow?: {        
+      saveTooltip?: string;
+      cancelTooltip?: string;
+      deleteText?: string;
+    },      
+    addTooltip?: string;
+    deleteTooltip?: string;
+    editTooltip?: string;
   };
   header?: {
     actions?: string;

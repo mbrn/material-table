@@ -38,6 +38,7 @@ class MTableBody extends React.Component {
             components={this.props.components}
             data={data}
             icons={this.props.icons}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -113,7 +114,6 @@ class MTableBody extends React.Component {
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
-
     return (
       <TableBody>
         {this.props.options.filtering &&
@@ -143,6 +143,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             options={this.props.options}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
@@ -162,7 +163,8 @@ MTableBody.defaultProps = {
   selection: false,
   localization: {
     emptyDataSourceMessage: 'No records to display',
-    filterRow: {}
+    filterRow: {},
+    editRow: {}
   }
 };
 
