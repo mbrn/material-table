@@ -91,12 +91,14 @@ class MaterialTable extends React.Component {
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
 
+    const localization = calculatedProps.localization.body;
+
     calculatedProps.actions = [...(calculatedProps.actions || [])];
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Add,
-          tooltip: 'Add',
+          tooltip: localization.addTooltip,
           isFreeAction: true,
           onClick: () => {
             this.dataManager.changeRowEditing();
@@ -110,7 +112,7 @@ class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowUpdate) {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Edit,
-          tooltip: 'Edit',
+          tooltip: localization.editTooltip,
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "update");
             this.setState({
@@ -123,7 +125,7 @@ class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowDelete) {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Delete,
-          tooltip: 'Delete',
+          tooltip: localization.deleteTooltip,
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "delete");
             this.setState({
@@ -272,7 +274,7 @@ class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
-
+    
     return (
       <DragDropContext onDragEnd={result => {
         this.dataManager.changeByDrag(result);
@@ -611,7 +613,15 @@ MaterialTable.defaultProps = {
     toolbar: {},
     header: {},
     body: {
-      filterRow: {}
+      filterRow: {},
+      editRow: {        
+        saveTooltip: 'Save',
+        cancelTooltip: 'Cancel',
+        deleteText: 'Are you sure delete this row?',
+      },      
+      addTooltip: 'Add',
+      deleteTooltip: 'Delete',
+      editTooltip: 'Edit'
     }
   }
 };
