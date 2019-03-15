@@ -174,10 +174,8 @@ export interface Localization {
     placeholder?: string;
   };
   pagination?: {
-    firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
-    lastTooltip?: string;
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
   };

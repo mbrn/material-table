@@ -51,29 +51,29 @@ class MTablePaginationInner extends React.Component {
             <IconButton
               onClick={this.handleFirstPageButtonClick}
               aria-label={localization.firstAriaLabel}
-            ><Typography variant={page === 0 ? 'h6' : 'body1'}>0</Typography></IconButton></span>
+            ><Typography variant={page === 0 ? 'h6' : 'body1'}>1</Typography></IconButton></span>
             {page > 2 && <span>..</span>}  
             {page > 1 && <span><IconButton
                 onClick={this.handleNumberButtonClick(page-1)}
                 aria-label={localization.lastAriaLabel}
-              ><Typography variant='body1'>{page -1}</Typography></IconButton></span>}   
+              ><Typography variant='body1'>{page}</Typography></IconButton></span>}   
             {page > 0 && page < maxPages &&<span> <IconButton
                 onClick={this.handleNumberButtonClick(page)}
                 aria-label={localization.lastAriaLabel}
               >
-              <Typography variant='h6'>{page}</Typography>
+              <Typography variant='h6'>{page + 1}</Typography>
             </IconButton></span>}    
             {page < maxPages -1 && <span><IconButton
                 onClick={this.handleNumberButtonClick(page+1)}
                 aria-label={localization.lastAriaLabel}
-              ><Typography variant='body1'>{page +1}</Typography></IconButton></span>}  
-              {page < maxPages -1 && <span>..</span>}  
-            <span> <IconButton
+              ><Typography variant='body1'>{page + 2}</Typography></IconButton></span>}  
+              {page < maxPages -2 && <span>..</span>}  
+            {maxPages > 0 && <span> <IconButton
                 onClick={this.handleLastPageButtonClick}
                 aria-label={localization.lastAriaLabel}
               >
-              <Typography variant={page === maxPages ? 'h6' : 'body1'}>{maxPages}</Typography>
-            </IconButton></span>
+              <Typography variant={page === maxPages ? 'h6' : 'body1'}>{maxPages + 1}</Typography>
+            </IconButton></span>}
         </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
@@ -110,10 +110,8 @@ MTablePaginationInner.propTypes = {
 
 MTablePaginationInner.defaultProps = {
   localization: {
-    firstTooltip: 'First Page',
     previousTooltip: 'Previous Page',
     nextTooltip: 'Next Page',
-    lastTooltip: 'Last Page',
     labelDisplayedRows: '{from}-{to} of {count}',
     labelRowsPerPage: 'Rows per page:'
   }
