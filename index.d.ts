@@ -152,6 +152,7 @@ export interface Options {
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
+  showTitle?: boolean;
   search?: boolean;
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
