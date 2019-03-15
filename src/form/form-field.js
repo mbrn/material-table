@@ -143,7 +143,7 @@ class FormField extends React.Component {
 }
 
 FormField.propTypes = {
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   columnDef: PropTypes.object.isRequired
 };
