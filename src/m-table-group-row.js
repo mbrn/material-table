@@ -90,6 +90,17 @@ export default class MTableGroupRow extends React.Component {
         value = column.emptyValue;
       }
     }
+    // Adds group count on each level
+    if(this.props.options.groupingCount){
+      let group_count = "";
+      if(this.props.groupData.groups.length===0){
+        group_count = this.props.groupData.data.length ;        
+      }
+      else{
+        group_count = this.props.groupData.groups.length ;
+      }
+      value = value + "  (" + group_count + ")";
+    }
 
     return (
       <>

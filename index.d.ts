@@ -148,6 +148,7 @@ export interface Options {
   loadingType?: ('overlay' | 'linear');
   paging?: boolean;
   grouping?: boolean;
+  groupingCount?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
