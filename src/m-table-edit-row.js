@@ -88,8 +88,6 @@ export default class MTableEditRow extends React.Component {
       columns = this.renderColumns();
     }
     else {
-      // eslint-disable-next-line no-console
-      console.log(this.props.options);
       const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)).length;
       columns = [
         <TableCell
