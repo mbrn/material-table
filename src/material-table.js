@@ -13,6 +13,7 @@ import MTableEditRow from './m-table-edit-row';
 import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
+import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
@@ -259,7 +260,9 @@ class MaterialTable extends React.Component {
                     });
                   }
                 }}
-                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} localization={localization} />}
+                ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
+                      <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                      <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -590,6 +593,7 @@ MaterialTable.defaultProps = {
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
+    paginationType: 'normal',
     showEmptyDataSourceMessage: true,
     search: true,
     showTitle: true,
@@ -723,6 +727,7 @@ MaterialTable.propTypes = {
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    paginationType: PropTypes.oneOf(['normal', 'stepped']),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     search: PropTypes.bool,
@@ -763,6 +768,6 @@ export default withStyles(styles, { withTheme: true })(MaterialTable);
 
 export {
   MTableActions, MTableBody, MTableCell,
-  MTableFilterRow, MTableHeader, MTablePagination,
+  MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow
 };
