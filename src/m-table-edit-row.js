@@ -88,9 +88,14 @@ export default class MTableEditRow extends React.Component {
       columns = this.renderColumns();
     }
     else {
+      // eslint-disable-next-line no-console
+      console.log(this.props.options);
       const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)).length;
       columns = [
-        <TableCell padding="none" key="key-selection-cell" colSpan={colSpan}>
+        <TableCell
+          padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
+          key="key-selection-cell"
+          colSpan={colSpan}>
           <Typography variant="h6">
             Are you sure delete this row?
           </Typography>
