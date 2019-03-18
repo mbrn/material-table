@@ -152,14 +152,10 @@ Localization settings could be used to change/translate default texts of datatab
 | pagination                    | object | {}                        | Key value pair for localize pagination component |
 | pagination.labelDisplayedRows | string | {from}-{to} of {count}    |                                                  |
 | pagination.labelRowsPerPage   | string | Rows per page:            |                                                  |
-| pagination.firstAriaLabel     | string | First Page                |                                                  |
-| pagination.firstTooltip       | string | First Page                |                                                  |
 | pagination.previousAriaLabel  | string | Previous Page             |                                                  |
 | pagination.previousTooltip    | string | Previous Page             |                                                  |
 | pagination.nextAriaLabel      | string | Next Page                 |                                                  |
 | pagination.nextTooltip        | string | Next Page                 |                                                  |
-| pagination.lastAriaLabel      | string | Last Page                 |                                                  |
-| pagination.lastTooltip        | string | Last Page                 |                                                  |
 | toolbar                       | object | {}                        | Key value pair for localize toolbar component    |
 | toolbar.addRemoveColumns      | string | Add or remove columns     |                                                  |
 | toolbar.nRowsSelected         | string | {0} row(s) selected       |                                                  |
@@ -195,6 +191,7 @@ Options property could be given to component as `options` property. You can chan
 | paging                     | boolean                | true          | Flag for paging feature                                                           |
 | pageSize                   | numeric                | 5             | Number of rows that would be rendered on every page                               |
 | pageSizeOptions            | array                  | [5, 10, 20]   | Page size options that could be selected by user                                  |
+| paginationType             | `normal` or `stepped`  | `normal`      | Flag for pagination type                                                          |
 | rowStyle                   | object or func         |               | Css style to be applied rows                                                      |
 | showEmptyDataSourceMessage | boolean                | true          | Flag for showing message if there is no data in table                             |
 | search                     | boolean                | true          | Flag for search feature                                                           |

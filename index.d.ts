@@ -93,6 +93,7 @@ export interface Components {
   FilterRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
+  SteppedPagination?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   GroupRow?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
@@ -150,6 +151,7 @@ export interface Options {
   grouping?: boolean;
   pageSize?: number;
   pageSizeOptions?: number[];
+  paginationType?: ('normal' | 'stepped');
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showTitle?: boolean;
@@ -183,10 +185,8 @@ export interface Localization {
     placeholder?: string;
   };
   pagination?: {
-    firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
-    lastTooltip?: string;
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
   };
