@@ -108,6 +108,7 @@ export const MTableEditRow: () => React.ReactElement<any>;
 export const MTableFilterRow: () => React.ReactElement<any>;
 export const MTableHeader: () => React.ReactElement<any>;
 export const MTablePagination: () => React.ReactElement<any>;
+export const MTableSteppedPagination: () => React.ReactElement<any>;
 export const MTableBodyRow: () => React.ReactElement<any>;
 export const MTableGroupRow: () => React.ReactElement<any>;
 
