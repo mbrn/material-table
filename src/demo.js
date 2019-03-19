@@ -12,7 +12,7 @@ const theme = createMuiTheme({
 
 class App extends Component {
   state = {
-    selectedCount: 0,
+    selecteds: 0,
     data: [
       { id: 1, name: 'axxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 63, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'bxxxxxasdasdasdasd', surname: 'Baran', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
@@ -51,32 +51,10 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  exportButton: true
+                  selection: true
                 }}
-                editable={{
-                  onRowAdd: (newData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const data = this.state.data;
-                      data.push(newData);
-                      this.setState({ data }, () => resolve());
-                    }, 1000);
-                  }),
-                  onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const data = this.state.data;
-                      const index = data.indexOf(oldData);
-                      data[index] = newData;
-                      this.setState({ data }, () => resolve());
-                    }, 1000);
-                  }),
-                  onRowDelete: (oldData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      let data = this.state.data;
-                      const index = data.indexOf(oldData);
-                      data.splice(index, 1);
-                      this.setState({ data }, () => resolve());
-                    }, 1000);
-                  }),
+                onSelectionChange={list => {
+                  this.setState({ selecteds: list });
                 }}
               />
             </Grid>
