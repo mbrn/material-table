@@ -186,10 +186,12 @@ export interface Localization {
     placeholder?: string;
   };
   pagination?: {
+    firstTooltip?: string;
     previousTooltip?: string;
     nextTooltip?: string;
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
+    lastTooltip?: string;
   };
   toolbar?: {
     addRemoveColumns?: string;
