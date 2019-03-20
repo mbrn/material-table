@@ -9,6 +9,13 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
 class MTableHeader extends React.Component {
+  stickyStyle = {
+    position: 'sticky',
+    top: 0,
+    zIndex: 10,
+    backgroundColor: 'white', // Change according to theme,    
+  }
+
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => (
@@ -16,7 +23,7 @@ class MTableHeader extends React.Component {
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
 
-          style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+          style={{ ...this.props.headerStyle, ...columnDef.headerStyle, ...this.stickyStyle }}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
@@ -27,17 +34,17 @@ class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-            {(this.props.grouping && columnDef.field)
-              ? <Draggable
-                key={columnDef.tableData.id}
-                draggableId={columnDef.tableData.id.toString()}
-                isDragDisabled={columnDef.grouping === false}
-                index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
+              {(this.props.grouping && columnDef.field)
+                ? <Draggable
+                  key={columnDef.tableData.id}
+                  draggableId={columnDef.tableData.id.toString()}
+                  isDragDisabled={columnDef.grouping === false}
+                  index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
                     // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
                       {columnDef.title}
@@ -60,7 +67,7 @@ class MTableHeader extends React.Component {
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        style={{...this.props.headerStyle, textAlign: 'center'}}
+        style={{ ...this.props.headerStyle, textAlign: 'center', ...this.stickyStyle }}
       >
         <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>
@@ -71,7 +78,7 @@ class MTableHeader extends React.Component {
       <TableCell
         padding="none"
         key="key-selection-column"
-        style={this.props.headerStyle}
+        style={{ ...this.props.headerStyle, ...this.stickyStyle }}
       >
         <Checkbox
           indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
@@ -104,7 +111,7 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key="key-detail-panel-column"
-          style={this.props.headerStyle}
+          style={{ ...this.props.headerStyle, ...this.stickyStyle }}
         />
       );
     }
@@ -114,7 +121,7 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key={"key-tree-data-header"}
-          style={this.props.headerStyle}
+          style={{ ...this.props.headerStyle, ...this.stickyStyle }}
         />
       );
     }
@@ -122,7 +129,7 @@ class MTableHeader extends React.Component {
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        headers.splice(0, 0, <TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} />);
+        headers.splice(0, 0, <TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} style={this.stickyStyle} />);
       });
 
     return (
