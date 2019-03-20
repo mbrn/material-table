@@ -148,6 +148,7 @@ export interface Options {
   headerStyle?: React.CSSProperties;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
+  maxBodyHeight?: number | string;
   paging?: boolean;
   grouping?: boolean;
   pageSize?: number;

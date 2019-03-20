@@ -263,8 +263,8 @@ class MaterialTable extends React.Component {
                   }
                 }}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                      <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
-                      <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -276,8 +276,8 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const props = this.getProps();
-    
+    const props = this.getProps();    
+
     return (
       <DragDropContext onDragEnd={result => {
         this.dataManager.changeByDrag(result);
@@ -344,153 +344,157 @@ class MaterialTable extends React.Component {
                   ref={provided.innerRef}
                 //style={this.getListStyle(snapshot.isDraggingOver)}
                 >
-                  <Table>
-                    {props.options.header &&
-                      <props.components.Header
-                        localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                  <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
+                    <Table>
+                      {props.options.header &&
+                        <props.components.Header
+                          localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                          columns={this.state.columns}
+                          hasSelection={props.options.selection}
+                          headerStyle={props.options.headerStyle}
+                          selectedCount={this.state.selectedCount}
+                          dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
+                          hasDetailPanel={!!props.detailPanel}
+                          showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                          orderBy={this.state.orderBy}
+                          orderDirection={this.state.orderDirection}
+                          onAllSelected={(checked) => {
+                            this.dataManager.changeAllSelected(checked);
+                            this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
+                          }}
+                          onOrderChange={(orderBy, orderDirection) => {
+                            this.dataManager.changeOrder(orderBy, orderDirection);
+
+                            if (this.isRemoteData()) {
+                              const query = { ...this.state.query };
+                              query.page = 0;
+                              query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
+                              query.orderDirection = orderDirection;
+                              this.onQueryChange(query);
+                            }
+                            else {
+                              this.setState(this.dataManager.getRenderState(), () => {
+                                this.onOrderChange(orderBy, orderDirection);
+                              });
+                            }
+                          }}
+                          actionsHeaderIndex={props.options.actionsColumnIndex}
+                          sorting={props.options.sorting}
+                          grouping={props.options.grouping}
+                          isTreeData={this.props.parentChildData !== undefined}
+                        />
+                      }
+
+
+                      <props.components.Body
+                        actions={props.actions}
+                        components={props.components}
+                        icons={props.icons}
+                        renderData={this.state.renderData}
+                        currentPage={this.state.currentPage}
+                        pageSize={this.state.pageSize}
                         columns={this.state.columns}
-                        hasSelection={props.options.selection}
-                        headerStyle={props.options.headerStyle}
-                        selectedCount={this.state.selectedCount}                        
-                        dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
-                        hasDetailPanel={!!props.detailPanel}
-                        showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
-                        orderBy={this.state.orderBy}
-                        orderDirection={this.state.orderDirection}
-                        onAllSelected={(checked) => {
-                          this.dataManager.changeAllSelected(checked);
+                        detailPanel={props.detailPanel}
+                        options={props.options}
+                        getFieldValue={this.dataManager.getFieldValue}
+                        isTreeData={this.props.parentChildData !== undefined}
+                        onFilterChanged={(columnId, value) => {
+                          this.dataManager.changeFilterValue(columnId, value);
+                          this.setState({}, () => this.onFilterChange());
+
+                        }}
+                        onFilterSelectionChanged={(event) => {
+                          this.dataManager.changeFilterSelectionChecked(event.target.checked);
+                          this.setState(this.dataManager.getRenderState());
+                        }}
+                        onRowSelected={(event, path) => {
+                          this.dataManager.changeRowSelected(event.target.checked, path);
                           this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
                         }}
-                        onOrderChange={(orderBy, orderDirection) => {
-                          this.dataManager.changeOrder(orderBy, orderDirection);
-
-                          if (this.isRemoteData()) {
-                            const query = { ...this.state.query };
-                            query.page = 0;
-                            query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
-                            query.orderDirection = orderDirection;
-                            this.onQueryChange(query);
+                        onToggleDetailPanel={(path, render) => {
+                          this.dataManager.changeDetailPanelVisibility(path, render);
+                          this.setState(this.dataManager.getRenderState());
+                        }}
+                        onGroupExpandChanged={(path) => {
+                          this.dataManager.changeGroupExpand(path);
+                          this.setState(this.dataManager.getRenderState());
+                        }}
+                        onTreeExpandChanged={(path) => {
+                          this.dataManager.changeTreeExpand(path);
+                          this.setState(this.dataManager.getRenderState());
+                        }}
+                        onEditingCanceled={(mode, rowData) => {
+                          if (mode === "add") {
+                            this.setState({ showAddRow: false });
                           }
-                          else {
-                            this.setState(this.dataManager.getRenderState(), () => {
-                              this.onOrderChange(orderBy, orderDirection);
+                          else if (mode === "update" || mode === "delete") {
+                            this.dataManager.changeRowEditing(rowData);
+                            this.setState(this.dataManager.getRenderState());
+                          }
+                        }}
+                        onEditingApproved={(mode, newData, oldData) => {
+                          if (mode === "add") {
+                            this.setState({ isLoading: true }, () => {
+                              this.props.editable.onRowAdd(newData)
+                                .then(result => {
+                                  this.setState({ isLoading: false, showAddRow: false }, () => {
+                                    if (this.isRemoteData()) {
+                                      this.onQueryChange(this.state.query);
+                                    }
+                                  });
+                                })
+                                .catch(reason => {
+                                  this.setState({ isLoading: false });
+                                });
+                            });
+                          }
+                          else if (mode === "update") {
+                            this.setState({ isLoading: true }, () => {
+                              this.props.editable.onRowUpdate(newData, oldData)
+                                .then(result => {
+                                  this.dataManager.changeRowEditing(oldData);
+                                  this.setState({
+                                    isLoading: false,
+                                    ...this.dataManager.getRenderState()
+                                  }, () => {
+                                    if (this.isRemoteData()) {
+                                      this.onQueryChange(this.state.query);
+                                    }
+                                  });
+                                })
+                                .catch(reason => {
+                                  this.setState({ isLoading: false });
+                                });
+                            });
+
+                          }
+                          else if (mode === "delete") {
+                            this.setState({ isLoading: true }, () => {
+                              this.props.editable.onRowDelete(oldData)
+                                .then(result => {
+                                  this.dataManager.changeRowEditing(oldData);
+                                  this.setState({
+                                    isLoading: false,
+                                    ...this.dataManager.getRenderState()
+                                  }, () => {
+                                    if (this.isRemoteData()) {
+                                      this.onQueryChange(this.state.query);
+                                    }
+                                  });
+                                })
+                                .catch(reason => {
+                                  this.setState({ isLoading: false });
+                                });
                             });
                           }
                         }}
-                        actionsHeaderIndex={props.options.actionsColumnIndex}
-                        sorting={props.options.sorting}
-                        grouping={props.options.grouping}
-                        isTreeData={this.props.parentChildData !== undefined}
+                        localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+                        onRowClick={this.props.onRowClick}
+                        showAddRow={this.state.showAddRow}
+                        hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
                       />
-                    }
-                    <props.components.Body
-                      actions={props.actions}
-                      components={props.components}
-                      icons={props.icons}
-                      renderData={this.state.renderData}
-                      currentPage={this.state.currentPage}
-                      pageSize={this.state.pageSize}
-                      columns={this.state.columns}
-                      detailPanel={props.detailPanel}
-                      options={props.options}
-                      getFieldValue={this.dataManager.getFieldValue}
-                      isTreeData={this.props.parentChildData !== undefined}
-                      onFilterChanged={(columnId, value) => {
-                        this.dataManager.changeFilterValue(columnId, value);
-                        this.setState({}, () => this.onFilterChange());
-
-                      }}
-                      onFilterSelectionChanged={(event) => {
-                        this.dataManager.changeFilterSelectionChecked(event.target.checked);
-                        this.setState(this.dataManager.getRenderState());
-                      }}
-                      onRowSelected={(event, path) => {
-                        this.dataManager.changeRowSelected(event.target.checked, path);
-                        this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
-                      }}
-                      onToggleDetailPanel={(path, render) => {
-                        this.dataManager.changeDetailPanelVisibility(path, render);
-                        this.setState(this.dataManager.getRenderState());
-                      }}
-                      onGroupExpandChanged={(path) => {
-                        this.dataManager.changeGroupExpand(path);
-                        this.setState(this.dataManager.getRenderState());
-                      }}
-                      onTreeExpandChanged={(path) => {
-                        this.dataManager.changeTreeExpand(path);
-                        this.setState(this.dataManager.getRenderState());
-                      }}
-                      onEditingCanceled={(mode, rowData) => {
-                        if (mode === "add") {
-                          this.setState({ showAddRow: false });
-                        }
-                        else if (mode === "update" || mode === "delete") {
-                          this.dataManager.changeRowEditing(rowData);
-                          this.setState(this.dataManager.getRenderState());
-                        }
-                      }}
-                      onEditingApproved={(mode, newData, oldData) => {
-                        if (mode === "add") {
-                          this.setState({ isLoading: true }, () => {
-                            this.props.editable.onRowAdd(newData)
-                              .then(result => {
-                                this.setState({ isLoading: false, showAddRow: false }, () => {
-                                  if (this.isRemoteData()) {
-                                    this.onQueryChange(this.state.query);
-                                  }
-                                });
-                              })
-                              .catch(reason => {
-                                this.setState({ isLoading: false });
-                              });
-                          });
-                        }
-                        else if (mode === "update") {
-                          this.setState({ isLoading: true }, () => {
-                            this.props.editable.onRowUpdate(newData, oldData)
-                              .then(result => {
-                                this.dataManager.changeRowEditing(oldData);
-                                this.setState({
-                                  isLoading: false,
-                                  ...this.dataManager.getRenderState()
-                                }, () => {
-                                  if (this.isRemoteData()) {
-                                    this.onQueryChange(this.state.query);
-                                  }
-                                });
-                              })
-                              .catch(reason => {
-                                this.setState({ isLoading: false });
-                              });
-                          });
-
-                        }
-                        else if (mode === "delete") {
-                          this.setState({ isLoading: true }, () => {
-                            this.props.editable.onRowDelete(oldData)
-                              .then(result => {
-                                this.dataManager.changeRowEditing(oldData);
-                                this.setState({
-                                  isLoading: false,
-                                  ...this.dataManager.getRenderState()
-                                }, () => {
-                                  if (this.isRemoteData()) {
-                                    this.onQueryChange(this.state.query);
-                                  }
-                                });
-                              })
-                              .catch(reason => {
-                                this.setState({ isLoading: false });
-                              });
-                          });
-                        }
-                      }}
-                      localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
-                      onRowClick={this.props.onRowClick}
-                      showAddRow={this.state.showAddRow}
-                      hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
-                    />
-                  </Table>
+                    </Table>
+                  </div>
                   {provided.placeholder}
                 </div>
               )}
@@ -618,11 +622,11 @@ MaterialTable.defaultProps = {
     header: {},
     body: {
       filterRow: {},
-      editRow: {        
+      editRow: {
         saveTooltip: 'Save',
         cancelTooltip: 'Cancel',
         deleteText: 'Are you sure delete this row?',
-      },      
+      },
       addTooltip: 'Add',
       deleteTooltip: 'Delete',
       editTooltip: 'Edit'
@@ -733,6 +737,7 @@ MaterialTable.propTypes = {
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
     initialPage: PropTypes.number,
+    maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,

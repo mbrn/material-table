@@ -1,8 +1,8 @@
+import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from './material-table';
-import { Grid, MuiThemeProvider } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -42,7 +42,7 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}>        
         <div style={{ maxWidth: '100%', direction }}>
           <Grid container>
             <Grid item xs={12}>
@@ -51,14 +51,14 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  selection: true
+                  selection: true,
+                  maxBodyHeight: 204
                 }}
                 onSelectionChange={list => {
                   this.setState({ selecteds: list });
                 }}
               />
             </Grid>
-
 
           </Grid>
 
