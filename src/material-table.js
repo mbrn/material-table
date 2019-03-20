@@ -492,6 +492,7 @@ class MaterialTable extends React.Component {
                         onRowClick={this.props.onRowClick}
                         showAddRow={this.state.showAddRow}
                         hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
+                        hasDetailPanel={!!props.detailPanel}
                       />
                     </Table>
                   </div>

@@ -10,7 +10,10 @@ class MTableBody extends React.Component {
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
       if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
-        addColumn = 1;
+        addColumn++;
+      }
+      if(this.props.hasDetailPanel) {
+        addColumn++;
       }
       return (
         <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
@@ -176,6 +179,7 @@ MTableBody.propTypes = {
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
+  hasDetailPanel: PropTypes.bool.isRequired,
   icons: PropTypes.object.isRequired,
   isTreeData: PropTypes.bool.isRequired,
   onRowSelected: PropTypes.func,

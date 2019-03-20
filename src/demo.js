@@ -57,6 +57,9 @@ class App extends Component {
                 onSelectionChange={list => {
                   this.setState({ selecteds: list });
                 }}
+                components={{
+                  Container: props => props.children
+                }}
               />
             </Grid>
 
