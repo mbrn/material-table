@@ -276,7 +276,7 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const props = this.getProps();
+    const props = this.getProps();    
 
     return (
       <DragDropContext onDragEnd={result => {
@@ -344,7 +344,7 @@ class MaterialTable extends React.Component {
                   ref={provided.innerRef}
                 //style={this.getListStyle(snapshot.isDraggingOver)}
                 >
-                  <div style={{ height: 200, overflowY: 'auto' }}>
+                  <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
                     <Table>
                       {props.options.header &&
                         <props.components.Header
@@ -737,6 +737,7 @@ MaterialTable.propTypes = {
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
     initialPage: PropTypes.number,
+    maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
