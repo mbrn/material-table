@@ -80,11 +80,13 @@ class MTableHeader extends React.Component {
         key="key-selection-column"
         style={{ ...this.props.headerStyle, ...this.stickyStyle }}
       >
-        <Checkbox
-          indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
-          checked={this.props.selectedCount === this.props.dataCount}
-          onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
-        />
+        {this.props.showSelectAllCheckbox &&
+          <Checkbox
+            indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
+            checked={this.props.selectedCount === this.props.dataCount}
+            onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
+          />
+        }
       </TableCell>
     );
   }
@@ -171,6 +173,7 @@ MTableHeader.propTypes = {
   orderDirection: PropTypes.string,
   actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
+  showSelectAllCheckbox: PropTypes.bool,
 };
 
 export default MTableHeader;

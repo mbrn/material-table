@@ -357,6 +357,7 @@ class MaterialTable extends React.Component {
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
                           showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                          showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
                           orderDirection={this.state.orderDirection}
                           onAllSelected={(checked) => {
@@ -602,8 +603,9 @@ MaterialTable.defaultProps = {
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
-    paginationType: 'normal',
+    paginationType: 'normal',    
     showEmptyDataSourceMessage: true,
+    showSelectAllCheckbox: true,
     search: true,
     showTitle: true,
     toolbarButtonAlignment: 'right',
@@ -749,6 +751,7 @@ MaterialTable.propTypes = {
     paginationType: PropTypes.oneOf(['normal', 'stepped']),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
+    showSelectAllCheckbox: PropTypes.bool,
     search: PropTypes.bool,
     showTitle: PropTypes.bool,
     toolbarButtonAlignment: PropTypes.string,

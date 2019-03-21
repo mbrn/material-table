@@ -51,7 +51,7 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  // selection: true,
+                  selection: true,                  
                   maxBodyHeight: 204,                  
                 }}
                 onSelectionChange={list => {
