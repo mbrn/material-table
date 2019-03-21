@@ -81,6 +81,7 @@ class MTableHeader extends React.Component {
         style={{ ...this.props.headerStyle, ...this.stickyStyle }}
       >
         <Checkbox
+          style={this.props.displaySelectAll ? {}:{display:'none'}}
           indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
           checked={this.props.selectedCount === this.props.dataCount}
           onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
@@ -146,6 +147,7 @@ MTableHeader.defaultProps = {
   dataCount: 0,
   hasSelection: false,
   headerStyle: {},
+  displaySelectAll: true,
   selectedCount: 0,
   sorting: true,
   localization: {
