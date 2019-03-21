@@ -158,6 +158,7 @@ export interface Options {
   paginationType?: ('normal' | 'stepped');
   rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
+  showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   search?: boolean;
   searchFieldStyle?: React.CSSProperties;
