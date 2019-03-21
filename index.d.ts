@@ -85,6 +85,7 @@ export interface Column {
 }
 
 export interface Components {
+  Action?: React.ComponentType<any>;
   Actions?: React.ComponentType<any>;
   Body?: React.ComponentType<any>;
   Cell?: React.ComponentType<any>;
@@ -101,6 +102,7 @@ export interface Components {
 
 export const Container: () => React.ReactElement<any>;
 export const MTableToolbar: () => React.ReactElement<any>;
+export const MTableAction: () => React.ReactElement<any>;
 export const MTableActions: () => React.ReactElement<any>;
 export const MTableBody: () => React.ReactElement<any>;
 export const MTableCell: () => React.ReactElement<any>;

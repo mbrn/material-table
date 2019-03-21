@@ -51,14 +51,11 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  selection: true,
-                  maxBodyHeight: 204
+                  // selection: true,
+                  maxBodyHeight: 204,                  
                 }}
                 onSelectionChange={list => {
                   this.setState({ selecteds: list });
-                }}
-                components={{
-                  Container: props => props.children
                 }}
               />
             </Grid>

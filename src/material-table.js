@@ -3,6 +3,7 @@ import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularPro
 import DoubleScrollbar from "react-double-scrollbar";
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import MTableAction from './m-table-action';
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
@@ -548,6 +549,7 @@ MaterialTable.defaultProps = {
   classes: {},
   columns: [],
   components: {
+    Action: MTableAction,
     Actions: MTableActions,
     Body: MTableBody,
     Cell: MTableCell,
@@ -671,6 +673,7 @@ MaterialTable.propTypes = {
     type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({
+    Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -783,7 +786,7 @@ const styles = theme => ({
 export default withStyles(styles, { withTheme: true })(MaterialTable);
 
 export {
-  MTableActions, MTableBody, MTableCell,
+  MTableAction, MTableActions, MTableBody, MTableCell,
   MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow
 };
