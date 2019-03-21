@@ -225,14 +225,20 @@ class MaterialTable extends React.Component {
             <TableRow>
               <props.components.Pagination
                 classes={{
-                  toolbar: props.classes.paginationToolbar
+                  root: props.classes.paginationRoot,
+                  toolbar: props.classes.paginationToolbar,
+                  caption: props.classes.paginationCaption,
+                  selectRoot: props.classes.paginationSelectRoot,
                 }}
-                style={{ float: props.theme.direction === "rtl" ? "left" : "right", overflowX: 'auto' }}
+                style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
                 colSpan={3}
                 count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
+                SelectProps={{
+                  renderValue: value => <div style={{padding: '0px 5px'}}>{value + " rows "}</div>
+                }}
                 page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
                 onChangePage={(event, page) => {
                   if (this.isRemoteData()) {
@@ -779,8 +785,18 @@ MaterialTable.propTypes = {
 
 
 const styles = theme => ({
+  paginationRoot: {
+    width: '100%'
+  },
   paginationToolbar: {
-    padding: 0
+    padding: 0,
+    width: '100%'
+  },
+  paginationCaption: {
+    display: 'none'
+  },
+  paginationSelectRoot: {
+    margin: 0
   }
 });
 

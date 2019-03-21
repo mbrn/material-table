@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Icon, IconButton, withStyles, Tooltip } from '@material-ui/core';
+import { Icon, IconButton, withStyles, Tooltip, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
+class MTablePaginationInner extends React.Component {  
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -18,10 +18,7 @@ class MTablePaginationInner extends React.Component {
   };
 
   handleLastPageButtonClick = event => {
-    this.props.onChangePage(
-      event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
-    );
+    this.props.onChangePage(event, Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1));
   };
 
   render() {
@@ -53,6 +50,9 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
+          <Typography variant="caption" style={{flex: 1, textAlign: 'center', lineHeight: '48px'}}>
+            {this.props.page * this.props.rowsPerPage + 1}-{Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)} of {this.props.count}
+          </Typography>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
@@ -84,8 +84,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.direction === 'rtl' ? 0 : theme.spacing.unit * 2.5,
-    marginRight: theme.direction === 'rtl' ? theme.spacing.unit * 2.5 : 0,
+    display: 'flex',
   }
 });
 
