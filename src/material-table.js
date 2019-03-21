@@ -741,6 +741,7 @@ MaterialTable.propTypes = {
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.string,
+    exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
