@@ -22,7 +22,11 @@ class App extends Component {
       { id: 6, name: 'fxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
+      {
+        title: 'Adı', 
+        render: rowData => rowData.name + ' ' + rowData.surname,
+        customFilterAndSearch: (term, rowData) => false
+      },
       { title: 'Soyadı', field: 'surname', export: false },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true },
@@ -42,7 +46,7 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>        
+      <MuiThemeProvider theme={theme}>
         <div style={{ maxWidth: '100%', direction }}>
           <Grid container>
             <Grid item xs={12}>
@@ -51,7 +55,8 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  selection: true,                  
+                  selection: true,
+                  filtering: true
                 }}
               />
             </Grid>

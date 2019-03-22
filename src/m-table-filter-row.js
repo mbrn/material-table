@@ -128,7 +128,7 @@ class MTableFilterRow extends React.Component {
       return null;
     }
 
-    if (columnDef.field) {
+    if (columnDef.field || columnDef.customFilterAndSearch) {
       if (columnDef.lookup) {
         return this.renderLookupFilter(columnDef);
       } else if (columnDef.type === 'boolean') {

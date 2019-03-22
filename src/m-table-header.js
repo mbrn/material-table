@@ -83,7 +83,7 @@ class MTableHeader extends React.Component {
         {this.props.showSelectAllCheckbox &&
           <Checkbox
             indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
-            checked={this.props.selectedCount === this.props.dataCount}
+            checked={this.props.dataCount > 0 && this.props.selectedCount === this.props.dataCount}
             onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
           />
         }
@@ -92,7 +92,7 @@ class MTableHeader extends React.Component {
   }
   render() {
     const headers = this.renderHeader();
-    if (this.props.hasSelection && this.props.dataCount) {
+    if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
     }
 
