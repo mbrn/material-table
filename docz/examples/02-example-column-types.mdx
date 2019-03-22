@@ -7,7 +7,9 @@ menu: Examples
 import Playground from '../utils/Playground'
 import MaterialTable from '../../src/material-table'
 
-## Column Types Example
+# Column Types Example
+
+## Date Example
 
 <Playground>
   <MaterialTable
@@ -27,6 +29,8 @@ import MaterialTable from '../../src/material-table'
   />
 </Playground>
 
+## Currency Example
+
 <Playground>
   <MaterialTable
     columns={[
@@ -39,12 +43,14 @@ import MaterialTable from '../../src/material-table'
       {name: 'Selahattin', surname: 'Yıldırım', expenses:1200 },
       {name: 'Silvia Joyce', surname: 'Balraj', expenses:1700 },
     ]}
-    title="Currency"
+    title="Currency Example"
     options={{
       paging: false
     }}
   />
 </Playground>
+
+## Custom Currency Example
 
 <Playground>
   <MaterialTable
@@ -60,7 +66,7 @@ import MaterialTable from '../../src/material-table'
       {name: 'Jake', surname: 'Leventhal', expenses: null, emptyVal: null },
       {name: 'Selahattin', surname: 'Yıldırım', expenses: null, emptyVal: null }
     ]}
-    title="Currency"
+    title="Custom Currency Example"
     options={{
       paging: false
     }}

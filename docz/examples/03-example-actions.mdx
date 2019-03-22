@@ -1,5 +1,5 @@
 ---
-name: Actions Example
+name: Actions Examples
 order: 3
 menu: Examples
 ---
@@ -8,7 +8,11 @@ import Playground from '../utils/Playground'
 import MaterialTable from '../../src/material-table'
 import red from '@material-ui/core/colors/red';
 
-## Actions Example
+# Actions Examples
+
+## Default Actions
+
+Table has export, column show/hide actions by default.
 
 <Playground>
   <MaterialTable
@@ -30,6 +34,10 @@ import red from '@material-ui/core/colors/red';
   />
 </Playground>
 
+## Custom Actions
+
+You can add your custom actions. 
+
 <Playground>
   <MaterialTable
     columns={[
@@ -42,7 +50,7 @@ import red from '@material-ui/core/colors/red';
       {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
       {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},
     ]}
-    title="More Actions"
+    title="Custom Actions"
     actions={[
       {
         icon: 'account_circle',
@@ -71,6 +79,10 @@ import red from '@material-ui/core/colors/red';
   />
 </Playground>
 
+## Actions with Column Index
+
+You can change place of actions.
+
 <Playground>
   <MaterialTable
     columns={[
@@ -83,7 +95,7 @@ import red from '@material-ui/core/colors/red';
       {name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63},
       {name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34},
     ]}
-    title="Actions With Column Index"
+    title="Actions with Column Index"
     actions={[
       {
         icon: 'account_circle',
