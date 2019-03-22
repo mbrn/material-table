@@ -166,6 +166,7 @@ export interface Options {
   selection?: boolean;
   sorting?: boolean;
   toolbar?: boolean;
+  toolbarButtonAlignment?: string;
 }
 
 export interface Localization {
