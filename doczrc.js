@@ -18,7 +18,8 @@ export default {
     'Props',
     'Contributing',
     {
-      name: 'Examples', menu: [
+      name: 'Examples', 
+      menu: [
         "Actions Examples",
         "Basic Example",
         "Cell Styling Example",
@@ -39,5 +40,5 @@ export default {
     }
   ],
   hashRouter: true,
-  base: './'
+  base: '.'
 }
