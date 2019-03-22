@@ -302,6 +302,8 @@ class MaterialTable extends React.Component {
               exportButton={props.options.exportButton}
               exportDelimiter={props.options.exportDelimiter}
               exportFileName={props.options.exportFileName}
+              exportCsv={props.options.exportCsv}
+              data={this.state.data}
               renderData={this.state.renderData}
               search={props.options.search}
               showTitle={props.options.showTitle}
@@ -745,6 +747,7 @@ MaterialTable.propTypes = {
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.string,
+    exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,

@@ -16,7 +16,7 @@ class MTableToolbar extends React.Component {
     };
   }
 
-  exportCsv = () => {
+  defaultExportCsv = () => {
     const columns = this.props.columns
       .filter(columnDef => {
         return !columnDef.hidden && columnDef.field && columnDef.export !== false; 
@@ -34,6 +34,15 @@ class MTableToolbar extends React.Component {
       .exportFile();
 
     this.setState({ exportButtonAnchorEl: null });
+  }
+
+  exportCsv = () => {
+    const _this = this;
+    if(this.props.exportCsv) {
+      this.props.exportCsv(_this, this.props.columns, this.props.data);
+    } else {
+      this.defaultExportCsv();
+    }
   }
 
   renderSearch() {
@@ -221,9 +230,11 @@ MTableToolbar.propTypes = {
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
+  data: PropTypes.array,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,
+  exportCsv: PropTypes.func,
   classes: PropTypes.object
 };
 

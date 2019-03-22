@@ -145,6 +145,7 @@ export interface Options {
   exportButton?: boolean;
   exportDelimiter?: string;
   exportFileName?: string;
+  exportCsv?: (toolbar: MTableToolbar, columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   header?: boolean;
   headerStyle?: React.CSSProperties;
