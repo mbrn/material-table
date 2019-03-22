@@ -40,5 +40,5 @@ export default {
     }
   ],
   hashRouter: true,
-  base: '.'
+  base: '/material-table'
 }
