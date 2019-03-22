@@ -13,6 +13,31 @@ export default {
   themeConfig: {
     mode: 'dark'
   },
+  menu: [
+    'Get Started',
+    'Props',
+    'Contributing',
+    {
+      name: 'Examples', menu: [
+        "Actions Examples",
+        "Basic Example",
+        "Cell Styling Example",
+        "Column Types Example",
+        "Component Overriding Example",
+        "Custom Render Example",
+        "Detail Panel Examples",
+        "Editable Examples",
+        "Filtering Example",
+        "Grouping Examples",
+        "Localization Example",
+        "Remote Data Examples",
+        "Selection Example",
+        "Sorting Example",
+        "Tree Data Examples",
+        "Other Examples",
+      ]
+    }
+  ],
   hashRouter: true,
-  base: '.'
+  base: './'
 }
