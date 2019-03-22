@@ -16,7 +16,7 @@ import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 
@@ -148,7 +148,19 @@ class MaterialTable extends React.Component {
 
   onSelectionChange = () => {
     if (this.props.onSelectionChange) {
-      const selectedRows = this.state.data.filter(row => row.tableData.checked);
+      const selectedRows = [];
+
+      const findSelecteds = list => {
+        list.forEach(row => {
+          if(row.tableData.checked) {
+            selectedRows.push(row);
+          }
+
+          row.tableData.childRows && findSelecteds(row.tableData.childRows);
+        });
+      };
+
+      findSelecteds(this.state.data);
       this.props.onSelectionChange(selectedRows);
     }
   }
@@ -237,7 +249,7 @@ class MaterialTable extends React.Component {
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
-                  renderValue: value => <div style={{padding: '0px 5px'}}>{value + " rows "}</div>
+                  renderValue: value => <div style={{ padding: '0px 5px' }}>{value + " rows "}</div>
                 }}
                 page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
                 onChangePage={(event, page) => {
@@ -283,7 +295,7 @@ class MaterialTable extends React.Component {
   }
 
   render() {
-    const props = this.getProps();    
+    const props = this.getProps();
 
     return (
       <DragDropContext onDragEnd={result => {
@@ -611,7 +623,7 @@ MaterialTable.defaultProps = {
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
-    paginationType: 'normal',    
+    paginationType: 'normal',
     showEmptyDataSourceMessage: true,
     showSelectAllCheckbox: true,
     search: true,

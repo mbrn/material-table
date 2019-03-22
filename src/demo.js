@@ -52,10 +52,6 @@ class App extends Component {
                 title="Demo Title"
                 options={{
                   selection: true,                  
-                  maxBodyHeight: 204,                  
-                }}
-                onSelectionChange={list => {
-                  this.setState({ selecteds: list });
                 }}
               />
             </Grid>
