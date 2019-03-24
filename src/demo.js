@@ -1,4 +1,4 @@
-import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { Grid, MuiThemeProvider, TablePagination } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -51,6 +51,9 @@ class App extends Component {
           <Grid container>
             <Grid item xs={12}>
               <MaterialTable
+                components={{
+                  Pagination: props => <TablePagination {...props} count={1000} page={7} onChangePage={(e, page) => { /* handle page changes */ }} onChangeRowsPerPage={(event) => { /* handle page size change : event.target.value */}}/>
+                }}
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"

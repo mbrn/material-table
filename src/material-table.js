@@ -820,7 +820,7 @@ const styles = theme => ({
 export default withStyles(styles, { withTheme: true })(MaterialTable);
 
 export {
-  MTableAction, MTableActions, MTableBody, MTableCell,
+  MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow,
   MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
   MTableBodyRow, MTableToolbar, MTableGroupRow
 };
