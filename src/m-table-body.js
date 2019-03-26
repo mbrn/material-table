@@ -45,6 +45,7 @@ class MTableBody extends React.Component {
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
+            detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
           />
@@ -148,6 +149,7 @@ class MTableBody extends React.Component {
             mode="add"
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             options={this.props.options}
+            detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
           />
