@@ -23,7 +23,7 @@ class MTableHeader extends React.Component {
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
 
-          style={{ ...this.props.headerStyle, ...columnDef.headerStyle, ...this.stickyStyle }}
+          style={{ ...this.stickyStyle, ...this.props.headerStyle, ...columnDef.headerStyle }}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
