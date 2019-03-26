@@ -249,7 +249,7 @@ class MaterialTable extends React.Component {
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
-                  renderValue: value => <div style={{ padding: '0px 5px' }}>{value + " rows "}</div>
+                  renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
                 }}
                 page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
                 onChangePage={(event, page) => {
@@ -641,7 +641,8 @@ MaterialTable.defaultProps = {
     },
     pagination: {
       labelDisplayedRows: '{from}-{to} of {count}',
-      labelRowsPerPage: 'Rows per page:'
+      labelRowsPerPage: 'Rows per page:',
+      labelRowsSelect: 'rows'
     },
     toolbar: {},
     header: {},

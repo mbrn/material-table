@@ -198,6 +198,7 @@ export interface Localization {
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
     lastTooltip?: string;
+    labelRowsSelect?: string;
   };
   toolbar?: {
     addRemoveColumns?: string;
