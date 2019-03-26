@@ -37,9 +37,8 @@ class MTableToolbar extends React.Component {
   }
 
   exportCsv = () => {
-    const _this = this;
     if(this.props.exportCsv) {
-      this.props.exportCsv(_this, this.props.columns, this.props.data);
+      this.props.exportCsv(this.props.columns, this.props.data);
     } else {
       this.defaultExportCsv();
     }
