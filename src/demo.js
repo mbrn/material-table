@@ -1,8 +1,8 @@
-import { Grid, MuiThemeProvider, TablePagination } from '@material-ui/core';
+import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from './material-table';
+import MaterialTable, { MTableBody } from './material-table';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -11,6 +11,8 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
+  tableRef = React.createRef();
+
   state = {
     selecteds: 0,
     data: [
@@ -23,7 +25,7 @@ class App extends Component {
     ],
     columns: [
       {
-        title: 'Adı', 
+        title: 'Adı',
         render: rowData => rowData.name + ' ' + rowData.surname,
         customFilterAndSearch: (term, rowData) => false
       },
@@ -52,7 +54,10 @@ class App extends Component {
             <Grid item xs={12}>
               <MaterialTable
                 components={{
-                  Pagination: props => <TablePagination {...props} count={1000} page={7} onChangePage={(e, page) => { /* handle page changes */ }} onChangeRowsPerPage={(event) => { /* handle page size change : event.target.value */}}/>
+                  Body: props => <MTableBody {...props} onFilterChanged={(columnId, value) => {
+                    props.onFilterChanged(columnId, value);
+                    // Do you job here :)
+                  }} />
                 }}
                 columns={this.state.columns}
                 data={this.state.data}
@@ -64,8 +69,52 @@ class App extends Component {
               />
             </Grid>
 
-          </Grid>
+            <Grid item xs={12}>
+              <MaterialTable
+                tableRef={this.tableRef}
+                columns={[
+                  {
+                    title: 'Avatar',
+                    field: 'avatar',
+                    render: rowData => (
+                      <img
+                        style={{ height: 36, borderRadius: '50%' }}
+                        src={rowData.avatar}
+                      />
+                    ),
+                  },
+                  { title: 'Id', field: 'id' },
+                  { title: 'First Name', field: 'first_name' },
+                  { title: 'Last Name', field: 'last_name' },
+                ]}
+                data={query =>
+                  new Promise((resolve, reject) => {
+                    let url = 'https://reqres.in/api/users?';
+                    url += 'per_page=' + query.pageSize;
+                    url += '&page=' + (query.page + 1);
+                    fetch(url)
+                      .then(response => response.json())
+                      .then(result => {
+                        resolve({
+                          data: result.data,
+                          page: result.page - 1,
+                          totalCount: result.total,
+                        })
+                      });
+                  })
+                }
+                title="Remote Data Example"
+              />
+            </Grid>
 
+          </Grid>
+          <button
+            onClick={() => {
+              this.tableRef.current.onQueryChange();
+            }}
+          >
+            ok
+          </button>
         </div>
       </MuiThemeProvider>
     );

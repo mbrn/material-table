@@ -152,7 +152,7 @@ class MaterialTable extends React.Component {
 
       const findSelecteds = list => {
         list.forEach(row => {
-          if(row.tableData.checked) {
+          if (row.tableData.checked) {
             selectedRows.push(row);
           }
 
@@ -180,6 +180,8 @@ class MaterialTable extends React.Component {
   isRemoteData = () => !Array.isArray(this.props.data)
 
   onQueryChange = (query) => {
+    query = { ...this.state.query, ...query };
+
     this.setState({ isLoading: true }, () => {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
@@ -423,7 +425,6 @@ class MaterialTable extends React.Component {
                         onFilterChanged={(columnId, value) => {
                           this.dataManager.changeFilterValue(columnId, value);
                           this.setState({}, () => this.onFilterChange());
-
                         }}
                         onFilterSelectionChanged={(event) => {
                           this.dataManager.changeFilterSelectionChecked(event.target.checked);
@@ -797,6 +798,7 @@ MaterialTable.propTypes = {
   onChangePage: PropTypes.func,
   onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
+  tableRef: PropTypes.any
 };
 
 
@@ -818,7 +820,7 @@ const styles = theme => ({
 
 
 
-export default withStyles(styles, { withTheme: true })(MaterialTable);
+export default withStyles(styles, { withTheme: true })(props => <MaterialTable {...props} ref={props.tableRef} />);
 
 export {
   MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow,
