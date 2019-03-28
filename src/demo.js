@@ -53,6 +53,7 @@ class App extends Component {
           <Grid container>
             <Grid item xs={12}>
               <MaterialTable
+                ref={this.tableRef}
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
@@ -63,12 +64,12 @@ class App extends Component {
               />
             </Grid>
 
-           
+
 
           </Grid>
           <button
             onClick={() => {
-              // this.tableRef.current.onQueryChange();
+              this.tableRef.current.onQueryChange();
             }}
           >
             ok
