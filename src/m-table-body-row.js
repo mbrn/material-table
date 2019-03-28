@@ -152,25 +152,25 @@ export default class MTableBodyRow extends React.Component {
   }
 
   render() {
-    const columns = this.renderColumns();
+    const renderColumns = this.renderColumns();
     if (this.props.options.selection) {
-      columns.splice(0, 0, this.renderSelectionColumn());
+      renderColumns.splice(0, 0, this.renderSelectionColumn());
     }
     if (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
-        columns.push(this.renderActions());
+        renderColumns.push(this.renderActions());
       } else if (this.props.options.actionsColumnIndex >= 0) {
         let endPos = 0;
         if (this.props.options.selection) {
           endPos = 1;
         }
-        columns.splice(this.props.options.actionsColumnIndex + endPos, 0, this.renderActions());
+        renderColumns.splice(this.props.options.actionsColumnIndex + endPos, 0, this.renderActions());
       }
     }
 
     if (this.props.isTreeData) {
       if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
-        columns.splice(0, 0, (
+        renderColumns.splice(0, 0, (
           <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 }}>
             <IconButton
               style={{
@@ -189,22 +189,26 @@ export default class MTableBodyRow extends React.Component {
         ));
       }
       else {
-        columns.splice(0, 0, <TableCell padding="none" key={"key-tree-data-column"} />);
+        renderColumns.splice(0, 0, <TableCell padding="none" key={"key-tree-data-column"} />);
       }
     }
 
     // Lastly we add detail panel icon
     if (this.props.detailPanel) {
-      columns.splice(0, 0, this.renderDetailPanelColumn());
+      renderColumns.splice(0, 0, this.renderDetailPanelColumn());
     }
 
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
+        renderColumns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
     const { 
+      icons,
+      data,
+      columns,
+      components,
       detailPanel, 
       getFieldValue, 
       isTreeData, 
@@ -214,6 +218,7 @@ export default class MTableBodyRow extends React.Component {
       onToggleDetailPanel, 
       onEditingCanceled,
       onEditingApproved,
+      options,
       hasAnyEditingRow, 
       ...rowProps } = this.props;
 
@@ -236,7 +241,7 @@ export default class MTableBodyRow extends React.Component {
               });
           }}          
         >
-          {columns}
+          {renderColumns}
         </TableRow>
         {this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded &&
           this.props.data.tableData.childRows.map((data, index) => (
