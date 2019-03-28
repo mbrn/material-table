@@ -464,7 +464,7 @@ export default class DataManager {
             this.filteredData = this.filteredData.filter(row => {
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(row[field] && row[field].toString()) > -1;
+                tableData.filterValue.indexOf(row[field] !== undefined && row[field].toString()) > -1;
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
