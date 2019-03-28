@@ -38,10 +38,12 @@ export default class MTableGroupRow extends React.Component {
             onRowSelected={this.props.onRowSelected}
             onRowClick={this.props.onRowClick}
             onToggleDetailPanel={this.props.onToggleDetailPanel}
+            onTreeExpandChanged={this.props.onTreeExpandChanged}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
             options={this.props.options}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
+            isTreeData={this.props.isTreeData}
           />
         ));
       }

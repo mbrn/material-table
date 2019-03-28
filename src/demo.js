@@ -29,8 +29,8 @@ class App extends Component {
         render: rowData => rowData.name + ' ' + rowData.surname,
         customFilterAndSearch: (term, rowData) => false
       },
-      { title: 'Soyadı', field: 'surname', export: false },
-      { title: 'Evli', field: 'isMarried', type: 'boolean' },
+      { title: 'Soyadı', field: 'surname', defaultGroupOrder: 0 },
+      { title: 'Evli', field: 'isMarried', type: 'boolean', defaultGroupOrder: 1 },
       { title: 'Cinsiyet', field: 'sex', disableClick: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
@@ -58,9 +58,9 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  selection: true,
-                  filtering: true,
+                  grouping: true
                 }}
+                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
               />
             </Grid>
 
