@@ -2,7 +2,7 @@ import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable, { MTableBody } from './material-table';
+import MaterialTable from './material-table';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -53,18 +53,12 @@ class App extends Component {
           <Grid container>
             <Grid item xs={12}>
               <MaterialTable
-                components={{
-                  Body: props => <MTableBody {...props} onFilterChanged={(columnId, value) => {
-                    props.onFilterChanged(columnId, value);
-                    // Do you job here :)
-                  }} />
-                }}
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
                 options={{
                   selection: true,
-                  filtering: true
+                  filtering: true,
                 }}
               />
             </Grid>
