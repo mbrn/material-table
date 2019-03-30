@@ -49,7 +49,7 @@ MTableAction.defaultProps = {
 };
 
 MTableAction.propTypes = {
-  action: PropTypes.object.isRequired,
+  action: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
 };
 
