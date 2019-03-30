@@ -32,8 +32,6 @@ class MTableToolbar extends React.Component {
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
       .exportFile();
-
-    this.setState({ exportButtonAnchorEl: null });
   }
 
   exportCsv = () => {
@@ -42,6 +40,8 @@ class MTableToolbar extends React.Component {
     } else {
       this.defaultExportCsv();
     }
+
+    this.setState({ exportButtonAnchorEl: null });
   }
 
   renderSearch() {
