@@ -23,24 +23,27 @@ class MTableToolbar extends React.Component {
       });
 
     const data = this.props.renderData.map(rowData =>
-      columns.map(columnDef => rowData[columnDef.field])
+      columns.map(columnDef => {
+        return columnDef.lookup
+          ? columnDef.lookup[rowData[columnDef.field]]
+          : rowData[columnDef.field];
+      })
     );
 
-    // eslint-disable-next-line no-unused-vars
-    const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv')
+    const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv');
+    builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map(columnDef => columnDef.title))
       .addRows(data)
       .exportFile();
   }
-
+    
   exportCsv = () => {
     if(this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
     } else {
       this.defaultExportCsv();
     }
-
     this.setState({ exportButtonAnchorEl: null });
   }
 
