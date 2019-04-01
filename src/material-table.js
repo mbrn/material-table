@@ -322,6 +322,7 @@ class MaterialTable extends React.Component {
               search={props.options.search}
               showTitle={props.options.showTitle}
               toolbarButtonAlignment={props.options.toolbarButtonAlignment}
+              searchFieldAlignment={props.options.searchFieldAlignment}
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
@@ -630,6 +631,7 @@ MaterialTable.defaultProps = {
     search: true,
     showTitle: true,
     toolbarButtonAlignment: 'right',
+    searchFieldAlignment: 'right',
     searchFieldStyle: {},
     selection: false,
     sorting: true,
@@ -778,6 +780,7 @@ MaterialTable.propTypes = {
     search: PropTypes.bool,
     showTitle: PropTypes.bool,
     toolbarButtonAlignment: PropTypes.string,
+    searchFieldAlignment: PropTypes.string,
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
