@@ -2,12 +2,15 @@ import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from './material-table';
+import MaterialTable, { MTableBody } from './material-table';
 
 let direction = 'ltr';
 // direction = 'rtl';
 const theme = createMuiTheme({
-  direction: direction
+  direction: direction,
+  palette: {
+    type: 'dark'
+  }
 });
 
 class App extends Component {
@@ -58,9 +61,16 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  filtering: true
+                  filtering: true,
+                  selection: true
                 }}
-              // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                components={{
+                  Body: props => <MTableBody {...props} onFilterChanged={(columnId, value) => {
+                    props.onFilterChanged(columnId, value);
+                    // Do you job here :)
+                  }} />
+                }}
               />
             </Grid>
 
