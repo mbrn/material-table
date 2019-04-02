@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {  
+class MTablePaginationInner extends React.Component {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -24,9 +24,9 @@ class MTablePaginationInner extends React.Component {
   render() {
     const { classes, count, page, rowsPerPage, theme } = this.props;
 
-    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };    
+    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
 
-    return (      
+    return (
       <div className={classes.root}>
         <Tooltip title={localization.firstTooltip}>
           <span>
@@ -51,7 +51,7 @@ class MTablePaginationInner extends React.Component {
           </span>
         </Tooltip>
           <Typography variant="caption" style={{flex: 1, textAlign: 'center', lineHeight: '48px'}}>
-            {this.props.page * this.props.rowsPerPage + 1}-{Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)} of {this.props.count}
+            {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
           </Typography>
         <Tooltip title={localization.nextTooltip}>
           <span>
