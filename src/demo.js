@@ -2,14 +2,14 @@ import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable, { MTableBody } from './material-table';
+import MaterialTable from './material-table';
 
 let direction = 'ltr';
 // direction = 'rtl';
 const theme = createMuiTheme({
   direction: direction,
   palette: {
-    type: 'dark'
+    type: 'light'
   }
 });
 
@@ -33,8 +33,8 @@ class App extends Component {
         customFilterAndSearch: (term, rowData) => false
       },
       { title: 'Soyadı', field: 'surname' },
-      { title: 'Evli', field: 'isMarried', type: 'boolean' },
-      { title: 'Cinsiyet', field: 'sex', disableClick: true },
+      { title: 'Evli', field: 'isMarried', type: 'boolean', readonly: true },
+      { title: 'Cinsiyet', field: 'sex', disableClick: true, readonly: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
@@ -61,17 +61,40 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  filtering: true,
-                  selection: true
                 }}
                 // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                components={{
-                  Body: props => <MTableBody {...props} onFilterChanged={(columnId, value) => {
-                    props.onFilterChanged(columnId, value);
-                    // Do you job here :)
-                  }} />
+                editable={{
+                  onRowAdd: (newData) => new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      {/* const data = this.state.data;
+                      data.push(newData);
+                      this.setState({ data }, () => resolve()); */}
+
+                      resolve();
+                    }, 1000);
+                  }),
+                  onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      {/* const data = this.state.data;
+                      const index = data.indexOf(oldData);
+                      data[index] = newData;                
+                      this.setState({ data }, () => resolve()); */}
+                      resolve();
+                    }, 1000);
+                  }),
+                  onRowDelete: (oldData) => new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      {/* let data = this.state.data;
+                      const index = data.indexOf(oldData);
+                      data.splice(index, 1);
+                      this.setState({ data }, () => resolve()); */}
+                      resolve();
+                    }, 1000);
+                  }),
                 }}
               />
+
+
             </Grid>
 
 

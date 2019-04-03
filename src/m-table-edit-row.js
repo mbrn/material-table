@@ -26,7 +26,7 @@ export default class MTableEditRow extends React.Component {
           style.paddingLeft = 24 + this.props.level * 20;
         }
 
-        if (this.props.mode !== 'add' && columnDef.readonly) {
+        if (!columnDef.field || (this.props.mode !== 'add' && columnDef.readonly)) {
           return (
             <this.props.components.Cell
               icons={this.props.icons}
