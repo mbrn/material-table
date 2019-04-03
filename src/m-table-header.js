@@ -9,21 +9,14 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
 class MTableHeader extends React.Component {
-  stickyStyle = {
-    position: 'sticky',
-    top: 0,
-    zIndex: 10,
-    backgroundColor: 'white', // Change according to theme,    
-  }
-
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => (
         <TableCell
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-
-          style={{ ...this.stickyStyle, ...this.props.headerStyle, ...columnDef.headerStyle }}
+          className={this.props.classes.header}
+          style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel
@@ -67,7 +60,8 @@ class MTableHeader extends React.Component {
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        style={{ ...this.props.headerStyle, textAlign: 'center', ...this.stickyStyle }}
+        className={this.props.classes.header}
+        style={{ ...this.props.headerStyle, textAlign: 'center' }}
       >
         <TableSortLabel>{localization.actions}</TableSortLabel>
       </TableCell>
@@ -78,7 +72,8 @@ class MTableHeader extends React.Component {
       <TableCell
         padding="none"
         key="key-selection-column"
-        style={{ ...this.props.headerStyle, ...this.stickyStyle }}
+        className={this.props.classes.header}
+        style={{ ...this.props.headerStyle }}
       >
         {this.props.showSelectAllCheckbox &&
           <Checkbox
@@ -113,7 +108,8 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key="key-detail-panel-column"
-          style={{ ...this.props.headerStyle, ...this.stickyStyle }}
+          className={this.props.classes.header}
+          style={{ ...this.props.headerStyle }}
         />
       );
     }
@@ -123,7 +119,8 @@ class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key={"key-tree-data-header"}
-          style={{ ...this.props.headerStyle, ...this.stickyStyle }}
+          className={this.props.classes.header}
+          style={{ ...this.props.headerStyle }}
         />
       );
     }
@@ -131,7 +128,7 @@ class MTableHeader extends React.Component {
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        headers.splice(0, 0, <TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} style={this.stickyStyle} />);
+        headers.splice(0, 0, <TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} className={this.props.classes.header} />);
       });
 
     return (
@@ -176,4 +173,14 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
 };
 
-export default MTableHeader;
+
+const styles = theme => ({
+  header: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 10,
+    backgroundColor: theme.palette.background.paper, // Change according to theme,  
+  }
+});
+
+export default withStyles(styles)(MTableHeader);

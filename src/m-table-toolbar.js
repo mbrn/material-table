@@ -19,7 +19,7 @@ class MTableToolbar extends React.Component {
   defaultExportCsv = () => {
     const columns = this.props.columns
       .filter(columnDef => {
-        return !columnDef.hidden && columnDef.field && columnDef.export !== false; 
+        return !columnDef.hidden && columnDef.field && columnDef.export !== false;
       });
 
     const data = this.props.renderData.map(rowData =>
@@ -37,9 +37,9 @@ class MTableToolbar extends React.Component {
       .addRows(data)
       .exportFile();
   }
-    
+
   exportCsv = () => {
-    if(this.props.exportCsv) {
+    if (this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
     } else {
       this.defaultExportCsv();
@@ -52,7 +52,7 @@ class MTableToolbar extends React.Component {
     if (this.props.search) {
       return (
         <TextField
-          className={this.props.classes.searchField}
+          className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
           value={this.props.searchText}
           onChange={event => this.props.onSearchChanged(event.target.value)}
           color="inherit"
@@ -70,7 +70,7 @@ class MTableToolbar extends React.Component {
                   disabled={!this.props.searchText}
                   onClick={() => this.props.onSearchChanged("")}
                 >
-                  <this.props.icons.ResetSearch color="inherit" fontSize="small"/>
+                  <this.props.icons.ResetSearch color="inherit" fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
@@ -88,7 +88,6 @@ class MTableToolbar extends React.Component {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     return (
       <div>
-        {this.renderSearch()}
         {this.props.columnsButton &&
           <span>
             <Tooltip title={localization.showColumnsTitle}>
@@ -166,12 +165,16 @@ class MTableToolbar extends React.Component {
   }
 
   renderActions() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        {this.props.selectedRows && this.props.selectedRows.length > 0
-          ? this.renderSelectedActions()
-          : this.renderDefaultActions()
-        }
+      <div className={classes.actions}>
+        <div>
+          {this.props.selectedRows && this.props.selectedRows.length > 0
+            ? this.renderSelectedActions()
+            : this.renderDefaultActions()
+          }
+        </div>
       </div>
     );
   }
@@ -185,11 +188,12 @@ class MTableToolbar extends React.Component {
         {title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
         </div>}
-        {this.props.toolbarButtonAlignment === 'right' && <div className={classes.spacer} />}
-        <div className={classes.actions}>
-          {this.renderActions()}
-        </div>
-      </Toolbar>
+        {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
+        {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
+        <div className={classes.spacer} />
+        {this.props.searchFieldAlignment === 'right' && this.renderSearch()}
+        {this.props.toolbarButtonAlignment === 'right' && this.renderActions()}
+      </Toolbar >
     );
   }
 }
@@ -211,6 +215,7 @@ MTableToolbar.defaultProps = {
   search: true,
   showTitle: true,
   toolbarButtonAlignment: 'right',
+  searchFieldAlignment: 'right',
   searchText: '',
   selectedRows: [],
   title: 'No Title!'
@@ -231,6 +236,7 @@ MTableToolbar.propTypes = {
   title: PropTypes.string.isRequired,
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
+  searchFieldAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportButton: PropTypes.bool,

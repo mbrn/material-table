@@ -61,6 +61,7 @@ import MaterialTable from '../src/material-table'
 | headerStyle             | object          |           | Header cell style                                                                                             |
 | hidden                  | boolean         | false     | Flag for hide column                                                                                          |
 | lookup                  | object          |           | Key value pair for lookup render data from                                                                    |
+| readonly                | boolean         | false     | Flag to make column readonly when editing, the column will still be editable when adding a row                |
 | removable               | boolean         | true      | Flag for column that could be removed with columnsButton or not                                               |
 | render                  | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
 | searchable              | boolean         | undefined | If true, includes the column when performing a search                                                         |
@@ -205,9 +206,11 @@ Options property could be given to component as `options` property. You can chan
 | showEmptyDataSourceMessage | boolean                | true          | Flag for showing message if there is no data in table                             |
 | showSelectAllCheckbox      | boolean                | true          | Flag for showing select all checkbox                                              |
 | search                     | boolean                | true          | Flag for search feature                                                           |
+| searchFieldAlignment       | string                 | 'right'       | Alignment for search text field in toolbar                                        |
 | searchFieldStyle           | object                 | {}            | Search field css style                                                            |
 | selection                  | boolean                | false         | Flag for selection feature                                                        |
 | sorting                    | boolean                | true          | Flag to activate or disable sorting feature of table                              |
 | toolbar                    | boolean                | true          | Flag for toolbar                                                                  |
 | showTitle                  | boolean                | true          | Flag for title                                                                    |
 | toolbarButtonAlignment     | string                 | 'right'       | Alignment for buttons in toolbar                                                  |
+

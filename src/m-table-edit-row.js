@@ -3,6 +3,7 @@ import { Checkbox, TableCell, TableRow, IconButton, Icon, Tooltip, Typography } 
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import FormField from './form/form-field';
+import MTableCell from './m-table-cell';
 /* eslint-enable no-unused-vars */
 
 
@@ -24,22 +25,36 @@ export default class MTableEditRow extends React.Component {
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
         }
-        return (
-          <TableCell
-            key={columnDef.tableData.id}
-            align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-          >
-            <FormField
-              key={columnDef.tableData.id}
+
+        if (!columnDef.field || (this.props.mode !== 'add' && columnDef.readonly)) {
+          return (
+            <this.props.components.Cell
+              icons={this.props.icons}
               columnDef={columnDef}
               value={value}
-              onChange={value => {
-                const data = { ...this.state.data };
-                data[columnDef.field] = value;
-                this.setState({ data });
-              }} />
-          </TableCell>
-        );
+              key={columnDef.tableData.id}
+              rowData={this.props.data}
+            />
+          );
+        }
+        else {
+          return (
+            <TableCell
+              key={columnDef.tableData.id}
+              align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+            >
+              <FormField
+                key={columnDef.tableData.id}
+                columnDef={columnDef}
+                value={value}
+                onChange={value => {
+                  const data = { ...this.state.data };
+                  data[columnDef.field] = value;
+                  this.setState({ data });
+                }} />
+            </TableCell>
+          );
+        }
       });
     return mapArr;
   }
