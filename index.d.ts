@@ -77,6 +77,7 @@ export interface Column {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
+  readonly?: boolean;
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
