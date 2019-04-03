@@ -37,9 +37,9 @@ class MTableToolbar extends React.Component {
       .addRows(data)
       .exportFile();
   }
-    
+
   exportCsv = () => {
-    if(this.props.exportCsv) {
+    if (this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
     } else {
       this.defaultExportCsv();
@@ -70,7 +70,7 @@ class MTableToolbar extends React.Component {
                   disabled={!this.props.searchText}
                   onClick={() => this.props.onSearchChanged("")}
                 >
-                  <this.props.icons.ResetSearch color="inherit" fontSize="small"/>
+                  <this.props.icons.ResetSearch color="inherit" fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
@@ -165,12 +165,16 @@ class MTableToolbar extends React.Component {
   }
 
   renderActions() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        {this.props.selectedRows && this.props.selectedRows.length > 0
-          ? this.renderSelectedActions()
-          : this.renderDefaultActions()
-        }
+      <div className={classes.actions}>
+        <div>
+          {this.props.selectedRows && this.props.selectedRows.length > 0
+            ? this.renderSelectedActions()
+            : this.renderDefaultActions()
+          }
+        </div>
       </div>
     );
   }
@@ -185,12 +189,11 @@ class MTableToolbar extends React.Component {
           <Typography variant="h6">{title}</Typography>
         </div>}
         {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
-        {this.props.toolbarButtonAlignment === 'right' && <div className={classes.spacer} />}
+        {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
+        <div className={classes.spacer} />
         {this.props.searchFieldAlignment === 'right' && this.renderSearch()}
-        <div className={classes.actions}>
-          {this.renderActions()}
-        </div>
-      </Toolbar>
+        {this.props.toolbarButtonAlignment === 'right' && this.renderActions()}
+      </Toolbar >
     );
   }
 }

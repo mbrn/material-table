@@ -164,11 +164,12 @@ export interface Options {
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   search?: boolean;
+  searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   sorting?: boolean;
   toolbar?: boolean;
-  toolbarButtonAlignment?: string;
+  toolbarButtonAlignment?: 'left' | 'right';
 }
 
 export interface Localization {
