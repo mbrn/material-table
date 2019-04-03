@@ -60,7 +60,7 @@ class App extends Component {
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
-                options={{
+                options={{                  
                 }}
                 // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 editable={{
