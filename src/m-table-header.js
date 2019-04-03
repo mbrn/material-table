@@ -8,7 +8,7 @@ import {
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
-class MTableHeader extends React.Component {
+export class MTableHeader extends React.Component {
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => (
@@ -174,12 +174,12 @@ MTableHeader.propTypes = {
 };
 
 
-const styles = theme => ({
+export const styles = theme => ({
   header: {
     position: 'sticky',
     top: 0,
     zIndex: 10,
-    backgroundColor: theme.palette.background.paper, // Change according to theme,  
+    backgroundColor: theme.palette.background.paper, // Change according to theme,
   }
 });
 
