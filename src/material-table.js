@@ -326,7 +326,6 @@ class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              customTitle={props.customTitle}
               onSearchChanged={searchText => this.setState({ searchText }, this.onSearchChange)}
               onColumnsChanged={(columnId, hidden) => {
                 this.dataManager.changeColumnHidden(columnId, hidden);
@@ -754,7 +753,7 @@ MaterialTable.propTypes = {
     ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   isLoading: PropTypes.bool,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,

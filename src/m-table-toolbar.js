@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, Icon, IconButton, InputAdornment, Menu, Men
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 import { CsvBuilder } from 'filefy';
-import PropTypes from 'prop-types';
+import PropTypes, { oneOf } from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
@@ -183,12 +183,11 @@ export class MTableToolbar extends React.Component {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     const title = this.props.showTitle ? (this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title) : null;
-    const customTitle = this.props.customTitle;
     return (
-      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>        
-        {(customTitle && <>{customTitle}</>) || (title && <div className={classes.title}>
+      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
+        {title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
-        </div>)}
+        </div>}
         {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
         {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
         <div className={classes.spacer} />
@@ -219,8 +218,7 @@ MTableToolbar.defaultProps = {
   searchFieldAlignment: 'right',
   searchText: '',
   selectedRows: [],
-  title: 'No Title!',
-  customTitle: null,
+  title: 'No Title!'
 };
 
 MTableToolbar.propTypes = {
@@ -235,8 +233,7 @@ MTableToolbar.propTypes = {
   searchFieldStyle: PropTypes.object,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
-  title: PropTypes.string.isRequired,
-  customTitle: PropTypes.object,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,
