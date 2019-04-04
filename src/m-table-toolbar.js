@@ -183,11 +183,12 @@ export class MTableToolbar extends React.Component {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     const title = this.props.showTitle ? (this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title) : null;
+    const customTitle = this.props.customTitle;
     return (
-      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
-        {title && <div className={classes.title}>
+      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>        
+        {(customTitle && <>{customTitle}</>) || (title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
-        </div>}
+        </div>)}
         {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
         {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
         <div className={classes.spacer} />
@@ -218,7 +219,8 @@ MTableToolbar.defaultProps = {
   searchFieldAlignment: 'right',
   searchText: '',
   selectedRows: [],
-  title: 'No Title!'
+  title: 'No Title!',
+  customTitle: null,
 };
 
 MTableToolbar.propTypes = {
@@ -234,6 +236,7 @@ MTableToolbar.propTypes = {
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
   title: PropTypes.string.isRequired,
+  customTitle: PropTypes.object,
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,

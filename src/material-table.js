@@ -326,6 +326,7 @@ class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
+              customTitle={props.customTitle}
               onSearchChanged={searchText => this.setState({ searchText }, this.onSearchChange)}
               onColumnsChanged={(columnId, hidden) => {
                 this.dataManager.changeColumnHidden(columnId, hidden);
