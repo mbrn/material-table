@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTableToolbar extends React.Component {
+export class MTableToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -246,7 +246,7 @@ MTableToolbar.propTypes = {
   classes: PropTypes.object
 };
 
-const styles = theme => ({
+export const styles = theme => ({
   root: {
     paddingRight: theme.spacing.unit
   },
