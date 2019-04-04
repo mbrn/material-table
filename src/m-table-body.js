@@ -40,6 +40,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             components={this.props.components}
             data={data}
+            getFieldValue={this.props.getFieldValue}
             icons={this.props.icons}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             key={index}
@@ -144,6 +145,7 @@ class MTableBody extends React.Component {
           <this.props.components.EditRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             components={this.props.components}
+            getFieldValue={this.props.getFieldValue}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"

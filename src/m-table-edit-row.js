@@ -20,7 +20,7 @@ export default class MTableEditRow extends React.Component {
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => {
-        const value = this.state.data[columnDef.field];
+        const value = this.props.getFieldValue(this.state.data, columnDef);
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
