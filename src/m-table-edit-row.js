@@ -14,13 +14,13 @@ export default class MTableEditRow extends React.Component {
 
     this.state = {
       data: props.data ? JSON.parse(JSON.stringify(props.data)) : {}
-    };    
+    };
   }
 
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => {
-        const value = this.state.data[columnDef.field];
+        const value = this.state.data[columnDef.field] || '';
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
@@ -59,7 +59,7 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {    
+  renderActions() {
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
@@ -144,16 +144,16 @@ export default class MTableEditRow extends React.Component {
         columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
-    const { 
-      detailPanel, 
-      isTreeData, 
-      onRowClick, 
-      onRowSelected, 
-      onTreeExpandChanged, 
-      onToggleDetailPanel, 
+    const {
+      detailPanel,
+      isTreeData,
+      onRowClick,
+      onRowSelected,
+      onTreeExpandChanged,
+      onToggleDetailPanel,
       onEditingApproved,
       onEditingCanceled,
-      ...rowProps 
+      ...rowProps
     } = this.props;
 
     return (
@@ -193,6 +193,6 @@ MTableEditRow.propTypes = {
   columns: PropTypes.array,
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  onEditingCanceled: PropTypes.func,  
+  onEditingCanceled: PropTypes.func,
   localization: PropTypes.object
 };
