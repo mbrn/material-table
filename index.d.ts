@@ -15,7 +15,7 @@ export interface MaterialTableProps {
   }
   icons?: Icons;
   isLoading?: boolean;
-  title: string;
+  title?: string | React.ReactElement;
   options?: Options;
   parentChildData?: (row: any, rows: any[]) => any;
   localization?: Localization;

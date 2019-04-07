@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, Icon, IconButton, InputAdornment, Menu, Men
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 import { CsvBuilder } from 'filefy';
-import PropTypes from 'prop-types';
+import PropTypes, { oneOf } from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
@@ -233,7 +233,7 @@ MTableToolbar.propTypes = {
   searchFieldStyle: PropTypes.object,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,

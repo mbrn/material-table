@@ -753,7 +753,7 @@ MaterialTable.propTypes = {
     ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   isLoading: PropTypes.bool,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
