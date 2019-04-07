@@ -123,8 +123,8 @@ export default class MTableBodyRow extends React.Component {
   }
 
   getStyle() {
-    let style = {       
-      transition: 'all ease 300ms',      
+    let style = {
+      transition: 'all ease 300ms',
     };
 
     if (typeof this.props.options.rowStyle === "function") {
@@ -143,7 +143,7 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.onRowClick) {
       style.cursor = 'pointer';
     }
-    
+
     if(this.props.hasAnyEditingRow) {
       style.opacity = 0.2;
     }
@@ -204,22 +204,22 @@ export default class MTableBodyRow extends React.Component {
         renderColumns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
-    const { 
+    const {
       icons,
       data,
       columns,
       components,
-      detailPanel, 
-      getFieldValue, 
-      isTreeData, 
-      onRowClick, 
-      onRowSelected, 
-      onTreeExpandChanged, 
-      onToggleDetailPanel, 
+      detailPanel,
+      getFieldValue,
+      isTreeData,
+      onRowClick,
+      onRowSelected,
+      onTreeExpandChanged,
+      onToggleDetailPanel,
       onEditingCanceled,
       onEditingApproved,
       options,
-      hasAnyEditingRow, 
+      hasAnyEditingRow,
       ...rowProps } = this.props;
 
     return (
@@ -239,24 +239,45 @@ export default class MTableBodyRow extends React.Component {
 
                 onToggleDetailPanel(this.props.path, panel);
               });
-          }}          
+          }}
         >
           {renderColumns}
         </TableRow>
         {this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded &&
-          this.props.data.tableData.childRows.map((data, index) => (
-            <this.props.components.Row
-              {...this.props}
-              data={data}
-              index={index}
-              key={index}
-              level={this.props.level + 1}
-              path={[...this.props.path, index]}
-              onEditingCanceled={onEditingCanceled}
-              onEditingApproved={onEditingApproved}
-              hasAnyEditingRow={this.props.hasAnyEditingRow}
-            />
-          ))
+          this.props.data.tableData.childRows.map((data, index) => {
+            if (data.tableData.editing) {
+              return (
+                <this.props.components.EditRow
+                  columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+                  components={this.props.components}
+                  data={data}
+                  icons={this.props.icons}
+                  localization={this.props.localization}
+                  key={index}
+                  mode={data.tableData.editing}
+                  options={this.props.options}
+                  isTreeData={this.props.isTreeData}
+                  detailPanel={this.props.detailPanel}
+                  onEditingCanceled={onEditingCanceled}
+                  onEditingApproved={onEditingApproved}
+                />
+              );
+            } else {
+              return (
+                <this.props.components.Row
+                  {...this.props}
+                  data={data}
+                  index={index}
+                  key={index}
+                  level={this.props.level + 1}
+                  path={[...this.props.path, index]}
+                  onEditingCanceled={onEditingCanceled}
+                  onEditingApproved={onEditingApproved}
+                  hasAnyEditingRow={this.props.hasAnyEditingRow}
+                />
+              );
+            }
+          })
         }
         {this.props.data.tableData && this.props.data.tableData.showDetailPanel &&
           <TableRow
