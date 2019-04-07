@@ -5,7 +5,6 @@ import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from 
 import PropTypes from 'prop-types';
 
 class FormField extends React.Component {
-
   renderLookupField() {
     return (
       <Select
@@ -115,7 +114,10 @@ class FormField extends React.Component {
   render() {
     let component = "ok";
 
-    if (this.props.columnDef.lookup) {
+    if (this.props.columnDef.editRender) {
+      // pass in all props to custom edit component
+      component = this.props.columnDef.editRender(this.props);
+    } else if (this.props.columnDef.lookup) {
       component = this.renderLookupField();
     }
     else if (this.props.columnDef.type === "boolean") {

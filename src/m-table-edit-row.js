@@ -3,7 +3,7 @@ import { Checkbox, TableCell, TableRow, IconButton, Icon, Tooltip, Typography } 
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import FormField from './form/form-field';
-import MTableCell from './m-table-cell';
+
 /* eslint-enable no-unused-vars */
 
 

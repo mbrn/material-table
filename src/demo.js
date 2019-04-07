@@ -1,4 +1,4 @@
-import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { Grid, MuiThemeProvider, TextField } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -32,8 +32,22 @@ class App extends Component {
         render: rowData => rowData.name + ' ' + rowData.surname,
         customFilterAndSearch: (term, rowData) => false
       },
-      { title: 'Soyadı', field: 'surname' },
-      { title: 'Evli', field: 'isMarried', type: 'boolean', readonly: true },
+      { title: 'Soyadı', field: 'surname', editRender: p => { 
+        return (
+          <TextField
+          style={p.columnDef.type === 'numeric' ? { float: 'right' } : {}}
+          type={p.columnDef.type === 'numeric' ? 'number' : 'text'}
+          placeholder={p.columnDef.title}
+          value={p.value}
+          onChange={event => p.onChange(event.target.value)}
+          InputProps={{
+            style: {
+              fontSize: 13,
+            }
+          }}
+        />);
+      }},
+      { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, readonly: true },
       { title: 'Tipi', field: 'type', removable: false },
       { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
