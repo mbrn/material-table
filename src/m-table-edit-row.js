@@ -2,7 +2,6 @@
 import { Checkbox, TableCell, TableRow, IconButton, Icon, Tooltip, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import FormField from './form/form-field';
 import MTableCell from './m-table-cell';
 /* eslint-enable no-unused-vars */
 
@@ -14,7 +13,7 @@ export default class MTableEditRow extends React.Component {
 
     this.state = {
       data: props.data ? JSON.parse(JSON.stringify(props.data)) : {}
-    };    
+    };
   }
 
   renderColumns() {
@@ -43,7 +42,7 @@ export default class MTableEditRow extends React.Component {
               key={columnDef.tableData.id}
               align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             >
-              <FormField
+              <this.props.components.FormField
                 key={columnDef.tableData.id}
                 columnDef={columnDef}
                 value={value}
@@ -59,7 +58,7 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {    
+  renderActions() {
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
@@ -144,16 +143,16 @@ export default class MTableEditRow extends React.Component {
         columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
-    const { 
-      detailPanel, 
-      isTreeData, 
-      onRowClick, 
-      onRowSelected, 
-      onTreeExpandChanged, 
-      onToggleDetailPanel, 
+    const {
+      detailPanel,
+      isTreeData,
+      onRowClick,
+      onRowSelected,
+      onTreeExpandChanged,
+      onToggleDetailPanel,
       onEditingApproved,
       onEditingCanceled,
-      ...rowProps 
+      ...rowProps
     } = this.props;
 
     return (
@@ -193,6 +192,6 @@ MTableEditRow.propTypes = {
   columns: PropTypes.array,
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  onEditingCanceled: PropTypes.func,  
+  onEditingCanceled: PropTypes.func,
   localization: PropTypes.object
 };

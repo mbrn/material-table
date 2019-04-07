@@ -5,10 +5,15 @@ import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from 
 import PropTypes from 'prop-types';
 
 class FormField extends React.Component {
+  getProps() {
+    const { columnDef, ...props } = this.props;
+    return props;
+  }
 
   renderLookupField() {
     return (
       <Select
+        {...this.getProps()}
         value={this.props.value || ''}
         onChange={event => this.props.onChange(event.target.value)}
         style={{
@@ -26,6 +31,7 @@ class FormField extends React.Component {
   renderBooleanField() {
     return (
       <Checkbox
+        {...this.getProps()}
         checked={this.props.value}
         onChange={event => this.props.onChange(event.target.checked)}
         style={{
@@ -41,6 +47,7 @@ class FormField extends React.Component {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
+          {...this.getProps()}
           format="dd.MM.yyyy"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -59,6 +66,7 @@ class FormField extends React.Component {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <TimePicker
+          {...this.getProps()}
           format="HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -77,6 +85,7 @@ class FormField extends React.Component {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DateTimePicker
+          {...this.getProps()}
           format="dd.MM.yyyy HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -94,6 +103,7 @@ class FormField extends React.Component {
   renderTextField() {
     return (
       <TextField
+        {...this.getProps()}
         style={this.props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
         placeholder={this.props.columnDef.title}
