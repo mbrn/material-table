@@ -58,6 +58,22 @@ export interface Action {
   onClick: (event: any, data: any) => void;
   iconProps?: IconProps;
 }
+export interface FormFieldProps {
+  value: any,
+  onChange: (event: any) => void,
+  columnDef: EditColumn,
+}
+
+export interface EditColumn {
+  field: string,
+  title: string,
+  tableData: {
+    filterValue: any,
+    groupOrder: any,
+    groupSort: string,
+    id: number,
+  }
+}
 
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
@@ -80,6 +96,7 @@ export interface Column {
   readonly?: boolean;
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
+  editRender?: (props: FormFieldProps) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string;

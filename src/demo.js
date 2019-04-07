@@ -32,7 +32,7 @@ class App extends Component {
         render: rowData => rowData.name + ' ' + rowData.surname,
         customFilterAndSearch: (term, rowData) => false
       },
-      { title: 'Soyadı', field: 'surname', editRender: p => { 
+      { title: 'Soyadı', field: 'surname', editRender: p => {
         return (
           <TextField
           style={p.columnDef.type === 'numeric' ? { float: 'right' } : {}}
