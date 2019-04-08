@@ -16,6 +16,7 @@ export default class DataManager {
   searchText = '';
   selectedCount = 0;
   treefiedDataLength = 0;
+  defaultExpanded = false;
 
   data = [];
   columns = [];
@@ -63,6 +64,10 @@ export default class DataManager {
       };
       return columnDef;
     });
+  }
+
+  setDefaultExpanded(expanded) {
+    this.defaultExpanded = expanded;
   }
 
   changeApplySearch(applySearch) {
@@ -565,7 +570,7 @@ export default class DataManager {
         let group = o.groups.find(g => g.value === value);
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};          
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};
 
           group = { value, groups: [], data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -589,11 +594,11 @@ export default class DataManager {
     this.treefiedDataLength = 0;
 
     const addRow = (rowData) => {
-      let parent = this.parentFunc(rowData, this.data);      
+      let parent = this.parentFunc(rowData, this.data);
 
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
-        // parent.tableData.isTreeExpanded = false;
+        parent.tableData.isTreeExpanded = this.defaultExpanded ? true : false;
         if(!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
           this.treefiedDataLength++;
