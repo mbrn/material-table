@@ -115,7 +115,10 @@ class FormField extends React.Component {
   render() {
     let component = "ok";
 
-    if (this.props.columnDef.lookup) {
+    if (this.props.columnDef.renderEditCell) {
+      component = this.props.columnDef.renderEditCell(this.props);
+    }
+    else if (this.props.columnDef.lookup) {
       component = this.renderLookupField();
     }
     else if (this.props.columnDef.type === "boolean") {
