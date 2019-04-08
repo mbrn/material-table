@@ -60,11 +60,11 @@ export interface Action {
 }
 export interface FormFieldProps {
   value: any,
-  onChange: (event: any) => void,
-  columnDef: EditColumn,
+  onChange: (newValue: any) => void,
+  columnDef: EditCellColumn,
 }
 
-export interface EditColumn {
+export interface EditCellColumn {
   field: string,
   title: string,
   tableData: {
@@ -96,7 +96,7 @@ export interface Column {
   readonly?: boolean;
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
-  editRender?: (props: FormFieldProps) => any;
+  renderEditCell?: (props: FormFieldProps) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string;

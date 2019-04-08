@@ -114,9 +114,9 @@ class FormField extends React.Component {
   render() {
     let component = "ok";
 
-    if (this.props.columnDef.editRender) {
+    if (this.props.columnDef.renderEditCell) {
       // pass in all props to custom edit component
-      component = this.props.columnDef.editRender(this.props);
+      component = this.props.columnDef.renderEditCell(this.props);
     } else if (this.props.columnDef.lookup) {
       component = this.renderLookupField();
     }
