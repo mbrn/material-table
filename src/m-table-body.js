@@ -108,6 +108,22 @@ class MTableBody extends React.Component {
     ));
   }
 
+  renderEditRow() {
+    return this.props.showAddRow &&
+      <this.props.components.EditRow
+        columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+        components={this.props.components}
+        icons={this.props.icons}
+        key="key-add-row"
+        mode="add"
+        localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+        options={this.props.options}
+        detailPanel={this.props.detailPanel}
+        onEditingCanceled={this.props.onEditingCanceled}
+        onEditingApproved={this.props.onEditingApproved}
+      />;
+  }
+
   render() {
     let renderData = this.props.renderData;
     const groups = this.props.columns
@@ -135,24 +151,10 @@ class MTableBody extends React.Component {
             isTreeData={this.props.isTreeData}
           />
         }
+        {this.renderEditRow()}
         {groups.length > 0 ?
           this.renderGroupedRows(groups, renderData) :
           this.renderUngroupedRows(renderData)
-        }
-
-        {this.props.showAddRow &&
-          <this.props.components.EditRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-            components={this.props.components}
-            icons={this.props.icons}
-            key="key-add-row"
-            mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
-            options={this.props.options}
-            detailPanel={this.props.detailPanel}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-          />
         }
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
