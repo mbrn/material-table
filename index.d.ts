@@ -140,6 +140,7 @@ export interface Icons {
 export interface Options {
   actionsColumnIndex?: number;
   columnsButton?: boolean;
+  defaultExpanded?: boolean;
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;

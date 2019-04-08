@@ -759,6 +759,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    defaultExpanded: PropTypes.bool,
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
@@ -788,7 +789,6 @@ MaterialTable.propTypes = {
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
-    defaultExpanded: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
