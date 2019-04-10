@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import FormField from './form/form-field';
 import MTableCell from './m-table-cell';
+import { byString } from './utils';
 /* eslint-enable no-unused-vars */
 
 
@@ -19,8 +20,8 @@ export default class MTableEditRow extends React.Component {
 
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
-      .map((columnDef, index) => {
-        const value = this.state.data[columnDef.field];
+      .map((columnDef, index) => {        
+        const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;

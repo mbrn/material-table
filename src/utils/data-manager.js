@@ -1,4 +1,5 @@
 import formatDate from 'date-fns/format';
+import { byString } from './';
 
 export default class DataManager {
   applyFilters = false;
@@ -331,31 +332,12 @@ export default class DataManager {
   }
 
   getFieldValue = (rowData, columnDef) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : this.byString(rowData, columnDef.field));
+    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field));
     if (columnDef.lookup) {
       value = columnDef.lookup[value];
     }
 
     return value;
-  }
-
-  byString(o, s) {
-    if (!s) {
-      return;
-    }
-
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var x = a[i];
-      if (o && x in o) {
-        o = o[x];
-      } else {
-        return;
-      }
-    }
-    return o;
   }
 
   isDataType(type) {
@@ -566,7 +548,7 @@ export default class DataManager {
 
       let object = result;
       object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || this.byString(current, colDef.field);
+        const value = current[colDef.field] || byString(current, colDef.field);
         let group = o.groups.find(g => g.value === value);
         if (!group) {
           const path = [...(o.path || []), value];
