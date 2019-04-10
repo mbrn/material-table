@@ -1,4 +1,5 @@
 import formatDate from 'date-fns/format';
+import { byString } from './';
 
 export default class DataManager {
   applyFilters = false;
@@ -16,6 +17,7 @@ export default class DataManager {
   searchText = '';
   selectedCount = 0;
   treefiedDataLength = 0;
+  defaultExpanded = false;
 
   data = [];
   columns = [];
@@ -63,6 +65,10 @@ export default class DataManager {
       };
       return columnDef;
     });
+  }
+
+  setDefaultExpanded(expanded) {
+    this.defaultExpanded = expanded;
   }
 
   changeApplySearch(applySearch) {
@@ -326,31 +332,12 @@ export default class DataManager {
   }
 
   getFieldValue = (rowData, columnDef) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : this.byString(rowData, columnDef.field));
+    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field));
     if (columnDef.lookup) {
       value = columnDef.lookup[value];
     }
 
     return value;
-  }
-
-  byString(o, s) {
-    if (!s) {
-      return;
-    }
-
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-      var x = a[i];
-      if (o && x in o) {
-        o = o[x];
-      } else {
-        return;
-      }
-    }
-    return o;
   }
 
   isDataType(type) {
@@ -561,11 +548,11 @@ export default class DataManager {
 
       let object = result;
       object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || this.byString(current, colDef.field);
+        const value = current[colDef.field] || byString(current, colDef.field);
         let group = o.groups.find(g => g.value === value);
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};          
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};
 
           group = { value, groups: [], data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -589,11 +576,11 @@ export default class DataManager {
     this.treefiedDataLength = 0;
 
     const addRow = (rowData) => {
-      let parent = this.parentFunc(rowData, this.data);      
+      let parent = this.parentFunc(rowData, this.data);
 
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
-        // parent.tableData.isTreeExpanded = false;
+        parent.tableData.isTreeExpanded = this.defaultExpanded ? true : false;
         if(!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
           this.treefiedDataLength++;

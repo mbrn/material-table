@@ -73,17 +73,14 @@ class App extends Component {
                 ref={this.tableRef}
                 columns={this.state.columns}
                 data={this.state.data}
-                title="Demo Title"
-                options={{
-                }}
-                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                title="Demo Title"                
                 editable={{
                   onRowAdd: (newData) => new Promise((resolve, reject) => {
                     setTimeout(() => {
                       {/* const data = this.state.data;
                       data.push(newData);
                       this.setState({ data }, () => resolve()); */}
-
+            
                       resolve();
                     }, 1000);
                   }),
@@ -107,12 +104,7 @@ class App extends Component {
                   }),
                 }}
               />
-
-
             </Grid>
-
-
-
           </Grid>
           <button
             onClick={() => {

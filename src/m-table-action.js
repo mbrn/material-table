@@ -14,22 +14,29 @@ class MTableAction extends React.Component {
       }
     }
 
+    const handleOnClick = event => {
+      if (action.onClick) {
+        action.onClick(event, this.props.data);
+        event.stopPropagation();
+      }
+    };
+
     const button = (
       <span>
         <IconButton
           color="inherit"
           disabled={action.disabled}
-          onClick={(event) => {
-            if (action.onClick) {
-              action.onClick(event, this.props.data);
-              event.stopPropagation();
-            }
-          }}
+          onClick={(event) => handleOnClick(event)}
         >
-          {typeof action.icon === "string" ?
+          {typeof action.icon === "string" ? (
             <Icon {...action.iconProps} fontSize="small">{action.icon}</Icon>
-            :
-            <action.icon {...action.iconProps} />
+          ) : (
+              <action.icon
+                {...action.iconProps}
+                disabled={action.disabled}
+                onClick={(event) => handleOnClick(event)}
+              />
+            )
           }
         </IconButton>
       </span>

@@ -65,6 +65,7 @@ class MaterialTable extends React.Component {
     }
 
     this.dataManager.setColumns(props.columns);
+    this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
     if (this.isRemoteData()) {
       this.dataManager.changeApplySearch(false);
@@ -635,7 +636,8 @@ MaterialTable.defaultProps = {
     searchFieldStyle: {},
     selection: false,
     sorting: true,
-    toolbar: true
+    toolbar: true,
+    defaultExpanded: false
   },
   localization: {
     grouping: {
@@ -757,6 +759,7 @@ MaterialTable.propTypes = {
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
     columnsButton: PropTypes.bool,
+    defaultExpanded: PropTypes.bool,
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
@@ -785,7 +788,7 @@ MaterialTable.propTypes = {
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     sorting: PropTypes.bool,
-    toolbar: PropTypes.bool
+    toolbar: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
