@@ -9,7 +9,7 @@ class FormField extends React.Component {
   renderLookupField() {
     return (
       <Select
-        value={this.props.value || ''}
+        value={this.props.value === undefined ? '' :  this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
         style={{
           fontSize: 13,

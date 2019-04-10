@@ -19,7 +19,7 @@ class App extends Component {
   state = {
     selecteds: 0,
     data: [
-      { id: 1, name: 'axxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 1, name: 'axxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'bxxxxxasdasdasdasd', surname: 'Baran', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 3, name: 'cxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 4, name: 'dxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
