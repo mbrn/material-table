@@ -15,6 +15,9 @@ class MTableBody extends React.Component {
       if(this.props.hasDetailPanel) {
         addColumn++;
       }
+      if(this.props.isTreeData) {
+        addColumn++;
+      }
       return (
         <TableRow style={{ height: 49 * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
           <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
@@ -45,6 +48,7 @@ class MTableBody extends React.Component {
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
+            isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
@@ -61,6 +65,7 @@ class MTableBody extends React.Component {
             key={index}
             level={0}
             options={this.props.options}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
             columns={this.props.columns}
@@ -149,6 +154,7 @@ class MTableBody extends React.Component {
             mode="add"
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             options={this.props.options}
+            isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
