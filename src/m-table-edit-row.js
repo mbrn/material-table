@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import FormField from './form/form-field';
 import MTableCell from './m-table-cell';
+import { byString } from './utils';
 /* eslint-enable no-unused-vars */
 
 
@@ -14,13 +15,13 @@ export default class MTableEditRow extends React.Component {
 
     this.state = {
       data: props.data ? JSON.parse(JSON.stringify(props.data)) : {}
-    };    
+    };
   }
 
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
-      .map((columnDef, index) => {
-        const value = this.state.data[columnDef.field];
+      .map((columnDef, index) => {        
+        const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
@@ -59,7 +60,7 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {    
+  renderActions() {
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
@@ -122,6 +123,9 @@ export default class MTableEditRow extends React.Component {
     if (this.props.options.selection) {
       columns.splice(0, 0, <TableCell padding="none" key="key-selection-cell" />);
     }
+    if (this.props.isTreeData) {
+      columns.splice(0, 0, <TableCell padding="none" key="key-tree-data-cell" />);
+    }
 
     if (this.props.options.actionsColumnIndex === -1) {
       columns.push(this.renderActions());
@@ -129,6 +133,12 @@ export default class MTableEditRow extends React.Component {
       let endPos = 0;
       if (this.props.options.selection) {
         endPos = 1;
+      }
+      if (this.props.isTreeData) {
+        endPos = 1;
+        if (this.props.options.selection) {
+          columns.splice(1, 1);
+        }
       }
       columns.splice(this.props.options.actionsColumnIndex + endPos, 0, this.renderActions());
     }
@@ -144,16 +154,16 @@ export default class MTableEditRow extends React.Component {
         columns.splice(0, 0, <TableCell padding="none" key={"key-group-cell" + columnDef.tableData.id} />);
       });
 
-    const { 
-      detailPanel, 
-      isTreeData, 
-      onRowClick, 
-      onRowSelected, 
-      onTreeExpandChanged, 
-      onToggleDetailPanel, 
+    const {
+      detailPanel,
+      isTreeData,
+      onRowClick,
+      onRowSelected,
+      onTreeExpandChanged,
+      onToggleDetailPanel,
       onEditingApproved,
       onEditingCanceled,
-      ...rowProps 
+      ...rowProps
     } = this.props;
 
     return (
@@ -193,6 +203,6 @@ MTableEditRow.propTypes = {
   columns: PropTypes.array,
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  onEditingCanceled: PropTypes.func,  
+  onEditingCanceled: PropTypes.func,
   localization: PropTypes.object
 };

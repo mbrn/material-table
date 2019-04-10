@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, Icon, IconButton, InputAdornment, Menu, Men
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 import { CsvBuilder } from 'filefy';
-import PropTypes from 'prop-types';
+import PropTypes, { oneOf } from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
@@ -158,7 +158,6 @@ export class MTableToolbar extends React.Component {
   renderSelectedActions() {
     return (
       <React.Fragment>
-        {this.renderSearch()}
         <this.props.components.Actions actions={this.props.actions.filter(a => !a.isFreeAction)} data={this.props.selectedRows} components={this.props.components} />
       </React.Fragment>
     );
@@ -233,7 +232,7 @@ MTableToolbar.propTypes = {
   searchFieldStyle: PropTypes.object,
   searchText: PropTypes.string.isRequired,
   selectedRows: PropTypes.array,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,
