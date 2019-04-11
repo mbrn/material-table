@@ -35,14 +35,14 @@ export default class MTableBodyRow extends React.Component {
   }
   renderSelectionColumn() {
     return (
-      <TableCell padding="none" key="key-selection-column" style={{ width: 48 }}>
+      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
         <Checkbox
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
           onChange={(event) => this.props.onRowSelected(event, this.props.path)}
           style={{
-            paddingLeft: 12 + this.props.level * 20
+            paddingLeft: 12 + this.props.level * 12
           }}
         />
       </TableCell>
@@ -172,11 +172,11 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.isTreeData) {
       if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
         renderColumns.splice(0, 0, (
-          <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 }}>
+          <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 2) }}>
             <IconButton
               style={{
                 transition: 'all ease 200ms',
-                marginLeft: this.props.level * 20,
+                marginLeft: this.props.level * 12,
                 ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
               }}
               onClick={(event) => {
@@ -221,6 +221,7 @@ export default class MTableBodyRow extends React.Component {
       onEditingApproved,
       options,
       hasAnyEditingRow,
+      treeDataMaxLevel,
       ...rowProps } = this.props;
 
     return (
@@ -275,6 +276,7 @@ export default class MTableBodyRow extends React.Component {
                   onEditingCanceled={onEditingCanceled}
                   onEditingApproved={onEditingApproved}
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
+                  treeDataMaxLevel={treeDataMaxLevel}
                 />
               );
             }
@@ -312,6 +314,7 @@ MTableBodyRow.propTypes = {
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
   path: PropTypes.arrayOf(PropTypes.number),
+  treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
   columns: PropTypes.array,
   onToggleDetailPanel: PropTypes.func.isRequired,

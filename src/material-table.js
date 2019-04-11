@@ -523,6 +523,7 @@ class MaterialTable extends React.Component {
                         showAddRow={this.state.showAddRow}
                         hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
                         hasDetailPanel={!!props.detailPanel}
+                        treeDataMaxLevel={this.state.treeDataMaxLevel}
                       />
                     </Table>
                   </div>

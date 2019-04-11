@@ -17,6 +17,7 @@ export default class DataManager {
   searchText = '';
   selectedCount = 0;
   treefiedDataLength = 0;
+  treeDataMaxLevel = 0;
   defaultExpanded = false;
 
   data = [];
@@ -357,9 +358,9 @@ export default class DataManager {
     if (type === 'numeric') {
       return a - b;
     } else {
-      if(a !== b) { // to find nulls
-        if(!a) return -1;
-        if(!b) return 1;
+      if (a !== b) { // to find nulls
+        if (!a) return -1;
+        if (!b) return 1;
       }
       return a < b ? -1 : a > b ? 1 : 0;
     }
@@ -425,7 +426,8 @@ export default class DataManager {
       renderData: this.pagedData,
       searchText: this.searchText,
       selectedCount: this.selectedCount,
-      treefiedDataLength: this.treefiedDataLength
+      treefiedDataLength: this.treefiedDataLength,
+      treeDataMaxLevel: this.treeDataMaxLevel
     };
   }
 
@@ -450,10 +452,10 @@ export default class DataManager {
         if (columnDef.customFilterAndSearch) {
           this.filteredData = this.filteredData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
         }
-        else {          
+        else {
           if (lookup) {
             this.filteredData = this.filteredData.filter(row => {
-              const value = this.getFieldValue(row, columnDef);              
+              const value = this.getFieldValue(row, columnDef);
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
                 tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;
@@ -585,6 +587,7 @@ export default class DataManager {
     this.data.forEach(a => a.tableData.childRows = null);
     this.treefiedData = [];
     this.treefiedDataLength = 0;
+    this.treeDataMaxLevel = 0;
 
     const addRow = (rowData) => {
       let parent = this.parentFunc(rowData, this.data);
@@ -603,6 +606,7 @@ export default class DataManager {
         addRow(parent);
 
         rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
+        this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowData.tableData.path.length);
       }
       else {
         if (!this.treefiedData.includes(rowData)) {
