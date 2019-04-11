@@ -61,13 +61,8 @@ class App extends Component {
                 data={this.state.data}
                 title="Demo Title"
                 options={{
-                  grouping: {
-                    defaultExpanded: true
-                  },
-                  filtering: true,
-                  actionsColumnIndex: -1,
-                  pageSize: 5,
-                  toolbar: false
+                  pageSize: 3, 
+                  initialPage: 1
                 }}
                 actions={[
                   {
