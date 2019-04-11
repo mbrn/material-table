@@ -59,39 +59,28 @@ class App extends Component {
                 ref={this.tableRef}
                 columns={this.state.columns}
                 data={this.state.data}
-                title="Demo Title"          
+                title="Demo Title"
                 options={{
-                  addRowPosition: 'first'
-                }}      
-                editable={{
-                  onRowAdd: (newData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      {/* const data = this.state.data;
-                      data.push(newData);
-                      this.setState({ data }, () => resolve()); */}
-            
-                      resolve();
-                    }, 1000);
-                  }),
-                  onRowUpdate: (newData, oldData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      {/* const data = this.state.data;
-                      const index = data.indexOf(oldData);
-                      data[index] = newData;                
-                      this.setState({ data }, () => resolve()); */}
-                      resolve();
-                    }, 1000);
-                  }),
-                  onRowDelete: (oldData) => new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      {/* let data = this.state.data;
-                      const index = data.indexOf(oldData);
-                      data.splice(index, 1);
-                      this.setState({ data }, () => resolve()); */}
-                      resolve();
-                    }, 1000);
-                  }),
+                  grouping: {
+                    defaultExpanded: true
+                  },
+                  filtering: true,
+                  actionsColumnIndex: -1,
+                  pageSize: 5,
+                  toolbar: false
                 }}
+                actions={[
+                  {
+                    icon: 'settings_backup_restore',
+                    tooltip: 'Show User Info',
+                    onClick: (event, rowData) => {
+                      this.setState({
+                        open: true,
+                        userToRevoke: rowData
+                      });
+                    },
+                  }
+                ]}
               />
             </Grid>
           </Grid>

@@ -82,7 +82,6 @@ class MTableGroupbar extends React.Component {
                             </div>
                           }
                           style={{ boxShadow: 'none', textTransform: 'none' }}
-                          variant="contained"
                           onDelete={() => this.props.onGroupRemoved(columnDef, index)}
                         />
                       </div>
