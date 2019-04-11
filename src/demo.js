@@ -60,22 +60,10 @@ class App extends Component {
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
+                parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 options={{
-                  pageSize: 3, 
-                  initialPage: 1
+                  selection: true,
                 }}
-                actions={[
-                  {
-                    icon: 'settings_backup_restore',
-                    tooltip: 'Show User Info',
-                    onClick: (event, rowData) => {
-                      this.setState({
-                        open: true,
-                        userToRevoke: rowData
-                      });
-                    },
-                  }
-                ]}
               />
             </Grid>
           </Grid>
