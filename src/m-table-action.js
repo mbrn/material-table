@@ -33,8 +33,7 @@ class MTableAction extends React.Component {
           ) : (
               <action.icon
                 {...action.iconProps}
-                disabled={action.disabled}
-                onClick={(event) => handleOnClick(event)}
+                disabled={action.disabled}                
               />
             )
           }
