@@ -357,6 +357,10 @@ export default class DataManager {
     if (type === 'numeric') {
       return a - b;
     } else {
+      if(a !== b) { // to find nulls
+        if(!a) return -1;
+        if(!b) return 1;
+      }
       return a < b ? -1 : a > b ? 1 : 0;
     }
   }

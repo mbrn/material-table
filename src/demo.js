@@ -19,19 +19,15 @@ class App extends Component {
   state = {
     selecteds: 0,
     data: [
-      { id: 1, name: 'axxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 2, name: 'bxxxxxasdasdasdasd', surname: 'Baran', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 3, name: 'cxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 4, name: 'dxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
-      { id: 5, name: 'exxxxxasdasdasdasd', surname: 'Baran', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 6, name: 'fxxxxxasdasdasdasd', surname: 'Baran', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
+      { id: 1, name: 'a', surname: 'a', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 2, name: 'b', surname: null, isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 3, name: 'c', surname: 'c', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 4, name: 'd', surname: null, isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
+      { id: 5, name: 'e', surname: 'e', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 6, name: 'f', surname: null, isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      {
-        title: 'Adı',
-        render: rowData => rowData && (rowData.name + ' ' + rowData.surname),
-        customFilterAndSearch: (term, rowData) => false
-      },
+      { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Evli', field: 'isMarried', type: 'boolean', readonly: true },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, readonly: true },
@@ -60,11 +56,6 @@ class App extends Component {
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
-                parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                options={{
-                  selection: true,
-                  defaultExpanded: true,
-                }}
               />
             </Grid>
           </Grid>
@@ -75,86 +66,6 @@ class App extends Component {
           >
             ok
           </button>
-          <MaterialTable
-            columns={[
-              { title: "Adı", field: "name" },
-              { title: "Soyadı", field: "surname" },
-              { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
-              {
-                title: "Doğum Yeri",
-                field: "birthCity",
-                lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
-              }
-            ]}
-            data={[
-              { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 },
-              {
-                name: "Zerya Betül",
-                surname: "Baran",
-                birthYear: 1987,
-                birthCity: 63
-              }
-            ]}
-            title="Multiple Detail Panel With RowClickExample"
-            detailPanel={[
-              {
-                tooltip: "Show Name",
-                render: rowData => {
-                  return (
-                    <div
-                      style={{
-                        fontSize: 100,
-                        textAlign: "center",
-                        color: "white",
-                        backgroundColor: "#43A047"
-                      }}
-                    >
-                      {rowData.name}
-                    </div>
-                  );
-                }
-              },
-              {
-                icon: "account_circle",
-                tooltip: "Show Surname",
-                render: rowData => {
-                  return (
-                    <div
-                      style={{
-                        fontSize: 100,
-                        textAlign: "center",
-                        color: "white",
-                        backgroundColor: "#E53935"
-                      }}
-                    >
-                      {rowData.surname}
-                    </div>
-                  );
-                }
-              },
-              rowData => ({
-                disabled: rowData.name === "ax",
-                icon: "favorite_border",
-                openIcon: "favorite",
-                tooltip: "Show Both",
-                render: rowData => {
-                  return (
-                    <div
-                      style={{
-                        fontSize: 100,
-                        textAlign: "center",
-                        color: "white",
-                        backgroundColor: "#FDD835"
-                      }}
-                    >
-                      {rowData.name} {rowData.surname}
-                    </div>
-                  );
-                }
-              })
-            ]}
-            onRowClick={(event, rowData, togglePanel) => togglePanel(1)}
-          />
         </div>
       </MuiThemeProvider>
     );
