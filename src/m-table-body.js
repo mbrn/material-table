@@ -148,6 +148,7 @@ class MTableBody extends React.Component {
         {this.props.showAddRow &&
           <this.props.components.EditRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            data={this.props.initialFormData}
             components={this.props.components}
             icons={this.props.icons}
             key="key-add-row"
@@ -194,6 +195,7 @@ MTableBody.propTypes = {
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
+  initialFormData: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   showAddRow: PropTypes.bool,
   onFilterSelectionChanged: PropTypes.func.isRequired,

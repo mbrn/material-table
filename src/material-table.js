@@ -16,6 +16,7 @@ import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
+import FormField from './form/form-field';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
@@ -418,6 +419,7 @@ class MaterialTable extends React.Component {
                         icons={props.icons}
                         renderData={this.state.renderData}
                         currentPage={this.state.currentPage}
+                        initialFormData={props.initialFormData}
                         pageSize={this.state.pageSize}
                         columns={this.state.columns}
                         detailPanel={props.detailPanel}
@@ -586,6 +588,7 @@ MaterialTable.defaultProps = {
     Pagination: TablePagination,
     Row: MTableBodyRow,
     Toolbar: MTableToolbar,
+    FormField: FormField,
   },
   data: [],
   icons: {
@@ -715,6 +718,7 @@ MaterialTable.propTypes = {
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    FormField: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
@@ -800,6 +804,7 @@ MaterialTable.propTypes = {
     header: PropTypes.object,
     body: PropTypes.object
   }),
+  initialFormData: PropTypes.object,
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
@@ -832,5 +837,5 @@ export default withStyles(styles, { withTheme: true })(props => <MaterialTable {
 export {
   MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow,
   MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
-  MTableBodyRow, MTableToolbar, MTableGroupRow
+  MTableBodyRow, MTableToolbar, MTableGroupRow, FormField
 };
