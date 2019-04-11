@@ -11,12 +11,12 @@ import MTableGroupbar from './m-table-groupbar';
 import MTableGroupRow from './m-table-group-row';
 import MTableCell from './m-table-cell';
 import MTableEditRow from './m-table-edit-row';
+import MTableEditField from './m-table-edit-field';
 import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
-import FormField from './form/form-field';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
@@ -580,6 +580,7 @@ MaterialTable.defaultProps = {
     Body: MTableBody,
     Cell: MTableCell,
     Container: Paper,
+    EditField: MTableEditField,
     EditRow: MTableEditRow,
     FilterRow: MTableFilterRow,
     Groupbar: MTableGroupbar,
@@ -587,8 +588,7 @@ MaterialTable.defaultProps = {
     Header: MTableHeader,
     Pagination: TablePagination,
     Row: MTableBodyRow,
-    Toolbar: MTableToolbar,
-    FormField: FormField,
+    Toolbar: MTableToolbar    
   },
   data: [],
   icons: {
@@ -688,11 +688,12 @@ MaterialTable.propTypes = {
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
-    grouping: PropTypes.bool,
-    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
+    editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),    
     export: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,
+    grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
@@ -710,6 +711,7 @@ MaterialTable.propTypes = {
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    EditField: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     EditRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
@@ -717,8 +719,7 @@ MaterialTable.propTypes = {
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    FormField: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])    
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
@@ -835,7 +836,7 @@ const styles = theme => ({
 export default withStyles(styles, { withTheme: true })(props => <MaterialTable {...props} ref={props.tableRef} />);
 
 export {
-  MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow,
+  MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow, MTableEditField,
   MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
-  MTableBodyRow, MTableToolbar, MTableGroupRow, FormField
+  MTableBodyRow, MTableToolbar, MTableGroupRow
 };

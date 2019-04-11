@@ -38,12 +38,14 @@ export default class MTableEditRow extends React.Component {
           );
         }
         else {
+          const EditComponent = columnDef.editComponent || this.props.components.EditField;
+
           return (
             <TableCell
               key={columnDef.tableData.id}
               align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             >
-              <this.props.components.FormField
+              <EditComponent
                 key={columnDef.tableData.id}
                 columnDef={columnDef}
                 value={value}

@@ -53,11 +53,12 @@ import MaterialTable from '../src/material-table'
 | defaultGroupSort        | 'asc' or 'desc' | 'asc'     | Default grouped sort direction                                                                                |
 | defaultSort             | 'asc' or 'desc' |           | Sorting direction: 'asc', 'desc'                                                                              |
 | disableClick            | boolean         | false     | Disable the 'onRowClick' event for this cell                                                                  |
-| grouping                | boolean         | true      | Flag to activate or disable grouping feature of column
+| editComponent           | React.Element   |           | Editable custom component                                                                                     |
 | emptyValue              | React.Element   |           | When data is empty or undefined, string value, React.Element or function result can be set as default value   |
 | export                  | boolean         | true      | Flag for make column exportable or not                                                                        |
 | field                   | string          |           | Field name of data row                                                                                        |
 | filtering               | boolean         | true      | Flag to activate or disable filtering feature of column                                                       |
+| grouping                | boolean         | true      | Flag to activate or disable grouping feature of column
 | headerStyle             | object          |           | Header cell style                                                                                             |
 | hidden                  | boolean         | false     | Flag for hide column                                                                                          |
 | lookup                  | object          |           | Key value pair for lookup render data from                                                                    |
@@ -78,6 +79,7 @@ import MaterialTable from '../src/material-table'
 | Body          | React.Element | MTableBody      | Body component                                                                            |
 | Cell          | React.Element | MTableCell      | Cell component                                                                            |
 | Container     | React.Element | Paper           | Container that everything renders in                                                      |
+| EditField     | React.Element | MTableEditField | EditField component                                                                       |
 | EditRow       | React.Element | MTableEditRow   | EditRow component                                                                         |
 | FilterRow     | React.Element | MTableFilterRow | FilterRow component                                                                       |
 | Header        | React.Element | MTableHeader    | Header component                                                                          |
