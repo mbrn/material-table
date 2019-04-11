@@ -181,7 +181,7 @@ export class MTableToolbar extends React.Component {
   render() {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
-    const title = this.props.showTitle ? (this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.title) : null;
+    const title = this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.selectedRows && this.props.selectedRows.length > 0 })}>
         {title && <div className={classes.title}>
