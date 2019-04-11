@@ -81,7 +81,8 @@ export default class MTableBodyRow extends React.Component {
               panel = panel(this.props.data);
             }
 
-            const isOpen = this.props.data.tableData.showDetailPanel === panel.render;
+            const isOpen = (this.props.data.tableData.showDetailPanel || '').toString() === panel.render.toString();
+            
             let iconButton = <this.props.icons.DetailPanel />;
             let animation = true;
             if (isOpen) {

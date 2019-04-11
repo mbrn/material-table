@@ -133,7 +133,7 @@ export default class DataManager {
   changeDetailPanelVisibility(path, render) {
     const rowData = this.findDataByPath(this.sortedData, path);
 
-    if (rowData.tableData.showDetailPanel === render) {
+    if ((rowData.tableData.showDetailPanel || '').toString() === render.toString()) {
       rowData.tableData.showDetailPanel = undefined;
     }
     else {
