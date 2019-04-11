@@ -29,7 +29,7 @@ class App extends Component {
     columns: [
       {
         title: 'Adı',
-        render: rowData => rowData.name + ' ' + rowData.surname,
+        render: rowData => rowData && (rowData.name + ' ' + rowData.surname),
         customFilterAndSearch: (term, rowData) => false
       },
       { title: 'Soyadı', field: 'surname' },
@@ -59,7 +59,10 @@ class App extends Component {
                 ref={this.tableRef}
                 columns={this.state.columns}
                 data={this.state.data}
-                title="Demo Title"                
+                title="Demo Title"          
+                options={{
+                  addRowPosition: 'first'
+                }}      
                 editable={{
                   onRowAdd: (newData) => new Promise((resolve, reject) => {
                     setTimeout(() => {

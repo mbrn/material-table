@@ -142,6 +142,7 @@ export interface Icons {
 
 export interface Options {
   actionsColumnIndex?: number;
+  addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
   defaultExpanded?: boolean;
   debounceInterval?: number;
@@ -182,11 +183,11 @@ export interface Localization {
     filterRow?: {
       filterTooltip?: string;
     };
-    editRow?: {        
+    editRow?: {
       saveTooltip?: string;
       cancelTooltip?: string;
       deleteText?: string;
-    },      
+    },
     addTooltip?: string;
     deleteTooltip?: string;
     editTooltip?: string;

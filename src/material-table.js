@@ -616,6 +616,7 @@ MaterialTable.defaultProps = {
   title: 'Table Title',
   options: {
     actionsColumnIndex: 0,
+    addRowPosition: 'last',
     columnsButton: false,
     detailPanelType: 'multiple',
     debounceInterval: 200,
@@ -763,6 +764,7 @@ MaterialTable.propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsColumnIndex: PropTypes.number,
+    addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
     defaultExpanded: PropTypes.bool,
     debounceInterval: PropTypes.number,
