@@ -181,7 +181,7 @@ class MaterialTable extends React.Component {
 
   isRemoteData = () => !Array.isArray(this.props.data)
 
-  onQueryChange = (query) => {
+  onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query };
 
     this.setState({ isLoading: true }, () => {
@@ -193,6 +193,8 @@ class MaterialTable extends React.Component {
           isLoading: false,
           ...this.dataManager.getRenderState(),
           query
+        }, () => {
+          callback && callback();
         });
       });
     });
@@ -260,7 +262,7 @@ class MaterialTable extends React.Component {
                   if (this.isRemoteData()) {
                     const query = { ...this.state.query };
                     query.page = page;
-                    this.onQueryChange(query);
+                    this.onQueryChange(query, () => this.onChangePage(page));
                   }
                   else {
                     this.dataManager.changeCurrentPage(page);
