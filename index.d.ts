@@ -25,6 +25,7 @@ export interface MaterialTableProps {
   onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[]) => void;
+  onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   tableRef?: any;
 }
 

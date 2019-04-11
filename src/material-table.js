@@ -445,13 +445,15 @@ class MaterialTable extends React.Component {
                           this.dataManager.changeDetailPanelVisibility(path, render);
                           this.setState(this.dataManager.getRenderState());
                         }}
-                        onGroupExpandChanged={(path) => {
+                        onGroupExpandChanged={(path) => {                          
                           this.dataManager.changeGroupExpand(path);
                           this.setState(this.dataManager.getRenderState());
                         }}
-                        onTreeExpandChanged={(path) => {
+                        onTreeExpandChanged={(path, data) => {                          
                           this.dataManager.changeTreeExpand(path);
-                          this.setState(this.dataManager.getRenderState());
+                          this.setState(this.dataManager.getRenderState(), () => {
+                            this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
+                          });
                         }}
                         onEditingCanceled={(mode, rowData) => {
                           if (mode === "add") {
@@ -817,6 +819,7 @@ MaterialTable.propTypes = {
   onChangePage: PropTypes.func,
   onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
+  onTreeExpandChange: PropTypes.func,
   tableRef: PropTypes.any
 };
 

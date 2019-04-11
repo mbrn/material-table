@@ -180,7 +180,7 @@ export default class MTableBodyRow extends React.Component {
                 ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
               }}
               onClick={(event) => {
-                this.props.onTreeExpandChanged(this.props.path);
+                this.props.onTreeExpandChanged(this.props.path, this.props.data);
                 event.stopPropagation();
               }}
             >
