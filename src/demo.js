@@ -63,6 +63,7 @@ class App extends Component {
                 parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 options={{
                   selection: true,
+                  defaultExpanded: true,
                 }}
               />
             </Grid>
