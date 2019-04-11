@@ -24,9 +24,7 @@ export class MTableToolbar extends React.Component {
 
     const data = this.props.renderData.map(rowData =>
       columns.map(columnDef => {
-        return columnDef.lookup
-          ? columnDef.lookup[rowData[columnDef.field]]
-          : rowData[columnDef.field];
+        return this.props.getFieldValue(rowData, columnDef);
       })
     );
 
@@ -225,6 +223,7 @@ MTableToolbar.propTypes = {
   columns: PropTypes.array,
   columnsButton: PropTypes.bool,
   components: PropTypes.object.isRequired,
+  getFieldValue: PropTypes.func.isRequired,
   localization: PropTypes.object.isRequired,
   onColumnsChanged: PropTypes.func.isRequired,
   onSearchChanged: PropTypes.func.isRequired,

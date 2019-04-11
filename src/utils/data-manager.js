@@ -446,29 +446,34 @@ export default class DataManager {
 
     if (this.applyFilters) {
       this.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {
-        const { lookup, type, tableData, field } = columnDef;
+        const { lookup, type, tableData } = columnDef;
         if (columnDef.customFilterAndSearch) {
           this.filteredData = this.filteredData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
         }
-        else {
+        else {          
           if (lookup) {
             this.filteredData = this.filteredData.filter(row => {
+              const value = this.getFieldValue(row, columnDef);              
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(row[field] !== undefined && row[field].toString()) > -1;
+                tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
-              return (row[field] + "") === tableData.filterValue;
+              const value = this.getFieldValue(row, columnDef);
+              return (value + "") === tableData.filterValue;
             });
           } else if (type === 'boolean' && tableData.filterValue) {
             this.filteredData = this.filteredData.filter(row => {
-              return (row[field] && tableData.filterValue === 'checked') ||
-                (!row[field] && tableData.filterValue === 'unchecked');
+              const value = this.getFieldValue(row, columnDef);
+              return (value && tableData.filterValue === 'checked') ||
+                (!value && tableData.filterValue === 'unchecked');
             });
           } else if (['date', 'datetime'].includes(type)) {
             this.filteredData = this.filteredData.filter(row => {
-              const currentDate = row[field] ? new Date(row[field]) : null;
+              const value = this.getFieldValue(row, columnDef);
+
+              const currentDate = value ? new Date(value) : null;
 
               if (currentDate && currentDate.toString() !== 'Invalid Date') {
                 const selectedDate = tableData.filterValue;
@@ -490,7 +495,8 @@ export default class DataManager {
             });
           } else if (type === 'time') {
             this.filteredData = this.filteredData.filter(row => {
-              const currentHour = row[field] || null;
+              const value = this.getFieldValue(row, columnDef);
+              const currentHour = value || null;
 
               if (currentHour) {
                 const selectedHour = tableData.filterValue;
@@ -503,7 +509,8 @@ export default class DataManager {
             });
           } else {
             this.filteredData = this.filteredData.filter(row => {
-              return row[field] && row[field].toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
+              const value = this.getFieldValue(row, columnDef);
+              return value && value.toString().toUpperCase().includes(tableData.filterValue.toUpperCase());
             });
           }
         }

@@ -95,6 +95,20 @@ class App extends Component {
           >
             ok
           </button>
+          <MaterialTable
+            data={[
+              { "name": { "first": "Hello", "last": "World" } },
+            ]}
+            columns={[
+              { "field": "name.first", "title": "First Name" },
+              { "field": "name.last", "title": "Last Name" },
+            ]}
+            options={{
+              filtering: true,
+              exportButton: true,
+              exportDelimeter: '#'
+            }}
+          />
         </div>
       </MuiThemeProvider>
     );
