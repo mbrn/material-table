@@ -23,7 +23,6 @@ class MTablePaginationInner extends React.Component {
 
   render() {
     const { classes, count, page, rowsPerPage, theme } = this.props;
-
     const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
 
     return (
@@ -35,7 +34,7 @@ class MTablePaginationInner extends React.Component {
               disabled={page === 0}
               aria-label={localization.firstAriaLabel}
             >
-              { theme.direction === 'rtl' ? <this.props.icons.LastPage /> : <this.props.icons.FirstPage /> }
+              {theme.direction === 'rtl' ? <this.props.icons.LastPage /> : <this.props.icons.FirstPage />}
             </IconButton>
           </span>
         </Tooltip>
@@ -46,13 +45,13 @@ class MTablePaginationInner extends React.Component {
               disabled={page === 0}
               aria-label={localization.previousAriaLabel}
             >
-              { theme.direction === 'rtl' ? <this.props.icons.NextPage /> : <this.props.icons.PreviousPage /> }
+              {theme.direction === 'rtl' ? <this.props.icons.NextPage /> : <this.props.icons.PreviousPage />}
             </IconButton>
           </span>
         </Tooltip>
-          <Typography variant="caption" style={{flex: 1, textAlign: 'center', lineHeight: '48px'}}>
-            {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
-          </Typography>
+        <Typography variant="caption" style={{ flex: 1, textAlign: 'center', lineHeight: 'inherit' }} >
+          {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
+        </Typography>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
@@ -60,7 +59,7 @@ class MTablePaginationInner extends React.Component {
               disabled={page >= Math.ceil(count / rowsPerPage) - 1}
               aria-label={localization.nextAriaLabel}
             >
-              { theme.direction === 'rtl' ? <this.props.icons.PreviousPage /> : <this.props.icons.NextPage /> }
+              {theme.direction === 'rtl' ? <this.props.icons.PreviousPage /> : <this.props.icons.NextPage />}
             </IconButton>
           </span>
         </Tooltip>
@@ -71,11 +70,11 @@ class MTablePaginationInner extends React.Component {
               disabled={page >= Math.ceil(count / rowsPerPage) - 1}
               aria-label={localization.lastAriaLabel}
             >
-              { theme.direction === 'rtl' ? <this.props.icons.FirstPage /> : <this.props.icons.LastPage /> }
+              {theme.direction === 'rtl' ? <this.props.icons.FirstPage /> : <this.props.icons.LastPage />}
             </IconButton>
           </span>
         </Tooltip>
-      </div>
+      </div >
     );
   }
 }
@@ -84,7 +83,8 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    display: 'flex',
+    display: 'flex', 
+    lineHeight: '48px'
   }
 });
 

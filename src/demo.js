@@ -56,9 +56,11 @@ class App extends Component {
                 columns={this.state.columns}
                 data={this.state.data}
                 title="Demo Title"
-                parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 options={{
-                  selection: true,
+                  maxBodyHeight: 100,
+                  headerStyle: {
+                    zIndex: 8
+                  }
                 }}
               />
             </Grid>
