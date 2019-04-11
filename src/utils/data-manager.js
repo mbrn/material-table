@@ -582,7 +582,6 @@ export default class DataManager {
         parent.tableData.childRows = parent.tableData.childRows || [];
         let oldParent = parent.tableData.path && this.findDataByPath(this.treefiedData, parent.tableData.path);
 
-        // parent.tableData.isTreeExpanded = this.defaultExpanded ? true : false;
         parent.tableData.isTreeExpanded = oldParent ? oldParent.tableData.isTreeExpanded : (this.defaultExpanded ? true : false);
         if (!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
