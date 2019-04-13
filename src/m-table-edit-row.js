@@ -38,8 +38,8 @@ export default class MTableEditRow extends React.Component {
           );
         }
         else {
-          const EditComponent = columnDef.editComponent || this.props.components.EditField;
-
+          const { editComponent, ...cellProps } = columnDef;
+          const EditComponent = editComponent || this.props.components.EditField;
           return (
             <TableCell
               key={columnDef.tableData.id}
@@ -47,7 +47,7 @@ export default class MTableEditRow extends React.Component {
             >
               <EditComponent
                 key={columnDef.tableData.id}
-                columnDef={columnDef}
+                columnDef={cellProps}
                 value={value}
                 onChange={value => {
                   const data = { ...this.state.data };
