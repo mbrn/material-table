@@ -101,7 +101,7 @@ export interface Column {
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string;
+  title?: string | React.ReactElement;
   type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
