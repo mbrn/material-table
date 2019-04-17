@@ -705,6 +705,7 @@ MaterialTable.propTypes = {
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
     readonly: PropTypes.bool,
+    disabled: PropTypes.bool,
     removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,

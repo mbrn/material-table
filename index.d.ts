@@ -97,6 +97,7 @@ export interface Column {
   hidden?: boolean;
   lookup?: object;
   readonly?: boolean;
+  disabled?: boolean;
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
