@@ -19,14 +19,29 @@ export default class MTableEditRow extends React.Component {
 
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
-      .map((columnDef, index) => {        
+      .map((columnDef, index) => {
         const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
         }
 
-        if (!columnDef.field || (this.props.mode !== 'add' && columnDef.readonly)) {
+        let allowEditing = false;
+
+        if (columnDef.editable === undefined) {
+          allowEditing = true;
+        }
+        if (columnDef.editable === 'always') {
+          allowEditing = true;
+        }
+        if (columnDef.editable === 'onAdd' && this.props.mode === 'add') {
+          allowEditing = true;
+        }
+        if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
+          allowEditing = true;
+        }
+
+        if (!columnDef.field || !allowEditing) {
           return (
             <this.props.components.Cell
               icons={this.props.icons}

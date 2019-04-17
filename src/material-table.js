@@ -704,7 +704,7 @@ MaterialTable.propTypes = {
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
-    readonly: PropTypes.bool,
+    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never']),
     removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,

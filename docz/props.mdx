@@ -63,7 +63,7 @@ import MaterialTable from '../src/material-table'
 | headerStyle             | object          |           | Header cell style                                                                                             |
 | hidden                  | boolean         | false     | Flag for hide column                                                                                          |
 | lookup                  | object          |           | Key value pair for lookup render data from                                                                    |
-| readonly                | boolean         | false     | Flag to make column readonly when editing, the column will still be editable when adding a row                |
+| editable                | string          | 'always'  | Flag editable of column: 'always', 'onUpdate', 'onAdd', 'never'                                          |
 | removable               | boolean         | true      | Flag for column that could be removed with columnsButton or not                                               |
 | render                  | func            |           | Render a custom node for cell. Parameter is `rowData` and return value must be ReactElement                   |
 | searchable              | boolean         | undefined | If true, includes the column when performing a search                                                         |
