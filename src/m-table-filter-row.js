@@ -6,9 +6,11 @@ import {
   FormControl, Select, Input,
   MenuItem, Checkbox, ListItemText,
   InputAdornment, Icon, Tooltip,
+  withStyles
 } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from 'material-ui-pickers';
+import classNames from "classnames";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -145,7 +147,14 @@ class MTableFilterRow extends React.Component {
     const columns = this.props.columns
       .filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map(columnDef => (
-        <TableCell key={columnDef.tableData.id}>
+        <TableCell 
+          key={columnDef.tableData.id}
+          className={classNames(
+            ...[]
+              .concat(columnDef.leftSticky ? this.props.classes.leftSticky : [])
+              .concat(columnDef.rightSticky ? this.props.classes.rightSticky : [])
+          )}
+        >
           {this.getComponentForColumn(columnDef)}
         </TableCell>
       ));
@@ -208,6 +217,7 @@ MTableFilterRow.defaultProps = {
 
 MTableFilterRow.propTypes = {
   emptyCell: PropTypes.bool,
+  classes: PropTypes.object,
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
   isTreeData: PropTypes.bool.isRequired,
@@ -219,4 +229,19 @@ MTableFilterRow.propTypes = {
   localization: PropTypes.object
 };
 
-export default MTableFilterRow;
+export const styles = theme => ({
+  leftSticky: {
+    position: 'sticky',
+    left: 0,
+    zIndex: 5,
+    backgroundColor: theme.palette.background.paper, // Change according to theme,
+  },
+  rightSticky: {
+    position: 'sticky',
+    right: 0,
+    zIndex: 5,
+    backgroundColor: theme.palette.background.paper, // Change according to theme,
+  },
+});
+
+export default withStyles(styles)(MTableFilterRow);

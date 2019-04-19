@@ -6,6 +6,7 @@ import {
   TableSortLabel, Checkbox, withStyles
 } from '@material-ui/core';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import classNames from "classnames";
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
@@ -15,7 +16,11 @@ export class MTableHeader extends React.Component {
         <TableCell
           key={columnDef.tableData.id}
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-          className={this.props.classes.header}
+          className={classNames(
+            ...[this.props.classes.header]
+              .concat(columnDef.leftSticky ? this.props.classes.leftSticky : [])
+              .concat(columnDef.rightSticky ? this.props.classes.rightSticky : [])
+          )}
           style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
@@ -180,7 +185,15 @@ export const styles = theme => ({
     top: 0,
     zIndex: 10,
     backgroundColor: theme.palette.background.paper, // Change according to theme,
-  }
+  },
+  leftSticky: {
+    left: 0,
+    zIndex: 11,
+  },
+  rightSticky: {
+    right: 0,
+    zIndex: 11,
+  },
 });
 
 export default withStyles(styles)(MTableHeader);

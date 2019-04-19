@@ -27,7 +27,7 @@ class App extends Component {
       { id: 6, name: 'f', surname: 'baran', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
+      { title: 'Adı', field: 'name', leftSticky: true },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },

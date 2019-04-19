@@ -95,10 +95,12 @@ export interface Column {
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  leftSticky?: boolean;
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never');
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
+  rightSticky?: boolean;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement;

@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Icon, TableCell } from '@material-ui/core';
+import { Icon, TableCell, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import classNames from "classnames";
 /* eslint-enable no-unused-vars */
 
-export default class MTableCell extends React.Component {
+class MTableCell extends React.Component {
   getRenderValue() {
     if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
@@ -89,14 +90,19 @@ export default class MTableCell extends React.Component {
 
   render() {
 
-    const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const { icons, columnDef, rowData, classes, ...cellProps } = this.props;
 
     return (
       <TableCell
         {...cellProps}
         style={this.getStyle()}
-        align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
+        align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}
+        className={classNames(
+          ...[]
+            .concat(columnDef.leftSticky ? classes.leftSticky : [])
+            .concat(columnDef.rightSticky ? classes.rightSticky : [])
+        )}
       >
         {this.props.children}
         {this.getRenderValue()}
@@ -115,3 +121,20 @@ MTableCell.propTypes = {
   value: PropTypes.any,
   rowData: PropTypes.object
 };
+
+export const styles = theme => ({
+  leftSticky: {
+    position: 'sticky',
+    left: 0,
+    zIndex: 1,
+    backgroundColor: theme.palette.background.paper, // Change according to theme,
+  },
+  rightSticky: {
+    position: 'sticky',
+    right: 0,
+    zIndex: 1,
+    backgroundColor: theme.palette.background.paper, // Change according to theme,
+  },
+});
+
+export default withStyles(styles)(MTableCell);
