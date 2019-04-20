@@ -29,7 +29,14 @@ export interface MaterialTableProps {
   tableRef?: any;
 }
 
+export interface Filter {
+  column: Column;
+  operator: "=";
+  value: any;
+}
+
 export interface Query {
+  filters: Filter[];
   page: number;
   pageSize: number;
   search: string;
