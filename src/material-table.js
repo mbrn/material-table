@@ -445,11 +445,11 @@ class MaterialTable extends React.Component {
                           this.dataManager.changeDetailPanelVisibility(path, render);
                           this.setState(this.dataManager.getRenderState());
                         }}
-                        onGroupExpandChanged={(path) => {                          
+                        onGroupExpandChanged={(path) => {
                           this.dataManager.changeGroupExpand(path);
                           this.setState(this.dataManager.getRenderState());
                         }}
-                        onTreeExpandChanged={(path, data) => {                          
+                        onTreeExpandChanged={(path, data) => {
                           this.dataManager.changeTreeExpand(path);
                           this.setState(this.dataManager.getRenderState(), () => {
                             this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
@@ -594,7 +594,7 @@ MaterialTable.defaultProps = {
     Header: MTableHeader,
     Pagination: TablePagination,
     Row: MTableBodyRow,
-    Toolbar: MTableToolbar    
+    Toolbar: MTableToolbar
   },
   data: [],
   icons: {
@@ -696,7 +696,7 @@ MaterialTable.propTypes = {
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),    
+    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
     export: PropTypes.bool,
     field: PropTypes.string,
     filtering: PropTypes.bool,
@@ -704,12 +704,12 @@ MaterialTable.propTypes = {
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
-    readonly: PropTypes.bool,
+    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never']),
     removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
     type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({
@@ -726,7 +726,7 @@ MaterialTable.propTypes = {
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])    
+    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({

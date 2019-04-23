@@ -19,7 +19,7 @@ class App extends Component {
   state = {
     selecteds: 0,
     data: [
-      { tableData: { checked: true }, id: 1, name: 'a', surname: 'baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 1, name: 'a', surname: 'baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'b', surname: 'baran', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 3, name: 'c', surname: 'baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 4, name: 'd', surname: 'baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
@@ -30,8 +30,8 @@ class App extends Component {
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
-      { title: 'Cinsiyet', field: 'sex', disableClick: true, readonly: true },
-      { title: 'Tipi', field: 'type', removable: false },
+      { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
+      { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
       { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
       { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
@@ -47,6 +47,7 @@ class App extends Component {
 
   render() {
     return (
+
       <>
         <MuiThemeProvider theme={theme}>
           <div style={{ maxWidth: '100%', direction }}>
@@ -63,6 +64,7 @@ class App extends Component {
                   }}
                 />
               </Grid>
+
             </Grid>
             <button
               onClick={() => {

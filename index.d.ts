@@ -96,12 +96,12 @@ export interface Column {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
-  readonly?: boolean;
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never');
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string;
+  title?: string | React.ReactElement;
   type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
