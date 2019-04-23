@@ -47,32 +47,47 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <div style={{ maxWidth: '100%', direction }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <MaterialTable
-                ref={this.tableRef}
-                columns={this.state.columns}
-                data={this.state.data}
-                title="Demo Title"
-                parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                options={{
-                  selection: true,
-                }}
-              />
+      <>
+        <MuiThemeProvider theme={theme}>
+          <div style={{ maxWidth: '100%', direction }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <MaterialTable
+                  ref={this.tableRef}
+                  columns={this.state.columns}
+                  data={this.state.data}
+                  title="Demo Title"
+                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  options={{
+                    selection: true,
+                  }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <button
-            onClick={() => {
-              this.tableRef.current.onQueryChange();
-            }}
-          >
-            ok
+            <button
+              onClick={() => {
+                this.tableRef.current.onQueryChange();
+              }}
+            >
+              ok
           </button>
 
-        </div>
-      </MuiThemeProvider>
+          </div>
+        </MuiThemeProvider>
+        <MuiThemeProvider theme={createMuiTheme({ palette: { primary: { main: '#abc' } } })}>
+          <MaterialTable
+            ref={this.tableRef}
+            columns={this.state.columns}
+            data={this.state.data}
+            title="Demo Title"
+            parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+            options={{
+              selection: true,
+            }}
+            isLoading
+          />
+        </MuiThemeProvider>
+      </>
     );
   }
 }
