@@ -32,7 +32,8 @@ class MTableEditField extends React.Component {
     return (
       <Checkbox
         {...this.getProps()}
-        checked={this.props.value}
+        value={String(this.props.value)}
+        checked={Boolean(this.props.value)}
         onChange={event => this.props.onChange(event.target.checked)}
         style={{
           paddingLeft: 0,

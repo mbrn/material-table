@@ -60,6 +60,23 @@ export interface Action {
   iconProps?: IconProps;
 }
 
+export interface EditComponentProps {
+  value: any,
+  onChange: (newValue: any) => void,
+  columnDef: EditCellColumnDef,
+}
+
+export interface EditCellColumnDef {
+  field: string,
+  title: string,
+  tableData: {
+    filterValue: any,
+    groupOrder: any,
+    groupSort: string,
+    id: number,
+  }
+}
+
 export interface Column {
   cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
@@ -70,7 +87,7 @@ export interface Column {
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
   disableClick?: boolean;
-  editComponent?: React.ComponentType<any>;
+  editComponent?: ((props: EditComponentProps) => React.ReactElement<any>);
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
   field?: string;
@@ -79,12 +96,12 @@ export interface Column {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
-  readonly?: boolean;
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never');
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string;
+  title?: string | React.ReactElement;
   type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
