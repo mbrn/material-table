@@ -29,7 +29,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - and more
 
 ## Demo and documentation
-You can access all examples and documentation from [__docs site__](http://material-table.com/).
+You can access all examples and documentation from [__docs site__](https://material-table.com/).
 
 ## Installation
 
