@@ -79,6 +79,7 @@ class MaterialTable extends React.Component {
       this.dataManager.changeApplyFilters(true);
       this.dataManager.setData(props.data);
     }
+    this.dataManager.setDataAge(props.dataAge);
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
@@ -89,10 +90,9 @@ class MaterialTable extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    const props = this.getProps(nextProps);
-    this.dataAge = nextProps.dataAge;
+    const props = this.getProps(nextProps);            
     this.setDataManagerFields(props);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState());    
   }
 
   getProps(props) {
@@ -310,16 +310,17 @@ class MaterialTable extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if (this.invalidated) {      
-      this.invalidated = false;
-      return true;
-    }
-    
+  shouldComponentUpdate(nextProps, nextState, nextContext) {            
+    // backward compatibility
+    if (this.state.dataAge === -1) { return true }    
+
     if (this.renderedDataAge < this.props.dataAge) {
-      this.renderedDataAge = this.props.dataAge;      
+      this.renderedDataAge = this.props.dataAge;
+      this.invalidated = false;
       return true;      
     }
+
+    if (this.invalidated) { this.invalidated = false; return true }        
 
     return false;
   }

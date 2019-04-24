@@ -21,6 +21,7 @@ export default class DataManager {
   defaultExpanded = false;
 
   data = [];
+  dataAge = -1;
   columns = [];
 
   filteredData = [];
@@ -53,6 +54,10 @@ export default class DataManager {
     });
 
     this.filtered = false;
+  }
+
+  setDataAge(age) {    
+    this.dataAge = age;
   }
 
   setColumns(columns) {
@@ -418,6 +423,7 @@ export default class DataManager {
       columns: this.columns,
       currentPage: this.currentPage,
       data: this.sortedData,
+      dataAge: this.dataAge,
       lastEditingRow: this.lastEditingRow,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
