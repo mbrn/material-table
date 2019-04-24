@@ -7,6 +7,7 @@ export interface MaterialTableProps {
   columns: Column[];
   components?: Components;
   data: any[] | ((query: Query) => Promise<QueryResult>);
+  dataAge?: number;
   detailPanel?: ((rowData: any) => React.ReactNode) | (DetailPanel | ((rowData: any) => DetailPanel))[];
   editable?: {
     onRowAdd?: (newData: any) => Promise<void>;

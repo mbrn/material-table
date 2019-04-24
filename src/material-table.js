@@ -25,6 +25,8 @@ import { debounce } from 'debounce';
 
 class MaterialTable extends React.Component {
   dataManager = new DataManager();
+  renderedDataAge = -1;  
+  invalidated = true;
 
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ class MaterialTable extends React.Component {
     this.state = {
       data: [],
       ...this.dataManager.getRenderState(),
-      query: {
+      query: {        
         filters: [],
         orderBy: null,
         orderDirection: 'asc',
@@ -88,6 +90,7 @@ class MaterialTable extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const props = this.getProps(nextProps);
+    this.dataAge = nextProps.dataAge;
     this.setDataManagerFields(props);
     this.setState(this.dataManager.getRenderState());
   }
@@ -149,6 +152,7 @@ class MaterialTable extends React.Component {
   }
 
   onSelectionChange = () => {
+    this.invalidated = true;    
     if (this.props.onSelectionChange) {
       const selectedRows = [];
 
@@ -168,20 +172,24 @@ class MaterialTable extends React.Component {
   }
 
   onChangePage = (...args) => {
+    this.invalidated = true;    
     this.props.onChangePage && this.props.onChangePage(...args);
   }
 
   onChangeRowsPerPage = (...args) => {
+    this.invalidated = true;    
     this.props.onChangeRowsPerPage && this.props.onChangeRowsPerPage(...args);
   }
 
   onOrderChange = (...args) => {
+    this.invalidated = true;    
     this.props.onOrderChange && this.props.onOrderChange(...args);
   }
 
   isRemoteData = () => !Array.isArray(this.props.data)
 
   onQueryChange = (query, callback) => {
+    this.invalidated = true;    
     query = { ...this.state.query, ...query };
 
     this.setState({ isLoading: true }, () => {
@@ -201,6 +209,7 @@ class MaterialTable extends React.Component {
   }
 
   onSearchChange = debounce(() => {
+    this.invalidated = true;    
     this.dataManager.changeSearchText(this.state.searchText);
 
     if (this.isRemoteData()) {
@@ -216,6 +225,7 @@ class MaterialTable extends React.Component {
   }, this.props.options.debounceInterval)
 
   onFilterChange = debounce(() => {
+    this.invalidated = true;    
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.filters = this.state.columns
@@ -298,6 +308,20 @@ class MaterialTable extends React.Component {
         </Table>
       );
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if (this.invalidated) {      
+      this.invalidated = false;
+      return true;
+    }
+    
+    if (this.renderedDataAge < this.props.dataAge) {
+      this.renderedDataAge = this.props.dataAge;      
+      return true;      
+    }
+
+    return false;
   }
 
   render() {
@@ -597,6 +621,7 @@ MaterialTable.defaultProps = {
     Toolbar: MTableToolbar
   },
   data: [],
+  dataAge: -1,
   icons: {
     /* eslint-disable react/display-name */
     Add: (props) => <Icon {...props}>add_box</Icon>,
@@ -729,6 +754,7 @@ MaterialTable.propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
+  dataAge: PropTypes.number,
   editable: PropTypes.shape({
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
