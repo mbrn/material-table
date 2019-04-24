@@ -11,21 +11,21 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 ## Key features
 
-- [Actions](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
-- [Component overriding](https://mbrn.github.io/material-table/#/docz-examples-10-example-component-overriding)
-- [Custom rendering](https://mbrn.github.io/material-table/#/docz-examples-07-example-custom-render)
-- [Detail Panel](https://mbrn.github.io/material-table/#/docz-examples-11-example-detail-panel)
-- [Editable](https://mbrn.github.io/material-table/#/docz-examples-15-example-editable)
-- [Export](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
-- [Filtering](https://mbrn.github.io/material-table/#/docz-examples-06-example-filtering)
-- [Grouping](https://mbrn.github.io/material-table/#/docz-examples-12-example-grouping)
-- [Localization](https://mbrn.github.io/material-table/#/docz-examples-09-example-localization)
-- [Remote Data](https://mbrn.github.io/material-table/#/docz-examples-14-example-remote-data)
-- [Search](https://mbrn.github.io/material-table/#/docz-examples-03-example-actions)
-- [Selection](https://mbrn.github.io/material-table/#/docz-examples-05-example-selection)
-- [Sorting](https://mbrn.github.io/material-table/#/docz-examples-04-example-sorting)
-- [Styling](https://mbrn.github.io/material-table/#/docz-examples-08-example-cell-styling)
-- [Tree Data](https://mbrn.github.io/material-table/#/docz-examples-13-example-tree-data)
+- [Actions](https://material-table.com/#/docs/features/actions)
+- [Component overriding](https://material-table.com/#/docs/features/component-overriding)
+- [Custom column rendering](https://material-table.com/#/docs/features/custom-column-rendering)
+- [Detail Panel](https://material-table.com/#/docs/features/detail-panel)
+- [Editable](https://material-table.com/#/docs/features/editable)
+- [Export](https://material-table.com/#/docs/features/export)
+- [Filtering](https://material-table.com/#/docs/features/filtering)
+- [Grouping](https://material-table.com/#/docs/features/grouping)
+- [Localization](https://material-table.com/#/docs/features/localization)
+- [Remote Data](https://material-table.com/#/docs/features/remote-data)
+- [Search](https://material-table.com/#/docs/features/search)
+- [Selection](https://material-table.com/#/docs/features/selection)
+- [Sorting](https://material-table.com/#/docs/features/sorting)
+- [Styling](https://material-table.com/#/docs/features/styling)
+- [Tree Data](https://material-table.com/#/docs/features/tree-data)
 - and more
 
 ## Demo and documentation
