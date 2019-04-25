@@ -1,5 +1,5 @@
 <p align="center" style="box-shadow: 2px 2px;">
-  <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://material-table.com/assets/logo-back.png" alt="material-table"></a></p>
+  <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://raw.githubusercontent.com/mbrn/material-table.com/master/docs/assets/logo-back.png" alt="material-table"></a></p>
 </p>
 
 <h1 align="center">material-table</h1>
