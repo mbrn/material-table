@@ -167,6 +167,7 @@ export interface Options {
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
+  exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
   exportFileName?: string;
