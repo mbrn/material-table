@@ -78,7 +78,7 @@ export interface EditCellColumnDef {
 }
 
 export interface Column {
-  cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
+  cellStyle?: React.CSSProperties | ((data: any, rowData: any) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   customSort?: (data1: any, data2: any, type: (('row' | 'group'))) => number;
