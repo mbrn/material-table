@@ -26,7 +26,7 @@ import { debounce } from 'debounce';
 class MaterialTable extends React.Component {
   dataManager = new DataManager();
   renderedDataAge = -1;  
-  invalidated = true;
+  invalidated = 1;
 
   constructor(props) {
     super(props);
@@ -152,7 +152,7 @@ class MaterialTable extends React.Component {
   }
 
   onSelectionChange = () => {
-    this.invalidated = true;    
+    this.invalidated++;
     if (this.props.onSelectionChange) {
       const selectedRows = [];
 
@@ -172,24 +172,24 @@ class MaterialTable extends React.Component {
   }
 
   onChangePage = (...args) => {
-    this.invalidated = true;    
+    this.invalidated++;
     this.props.onChangePage && this.props.onChangePage(...args);
   }
 
   onChangeRowsPerPage = (...args) => {
-    this.invalidated = true;    
+    this.invalidated++;
     this.props.onChangeRowsPerPage && this.props.onChangeRowsPerPage(...args);
   }
 
   onOrderChange = (...args) => {
-    this.invalidated = true;    
+    this.invalidated++;
     this.props.onOrderChange && this.props.onOrderChange(...args);
   }
 
   isRemoteData = () => !Array.isArray(this.props.data)
 
   onQueryChange = (query, callback) => {
-    this.invalidated = true;    
+    this.invalidated++;    
     query = { ...this.state.query, ...query };
 
     this.setState({ isLoading: true }, () => {
@@ -209,7 +209,7 @@ class MaterialTable extends React.Component {
   }
 
   onSearchChange = debounce(() => {
-    this.invalidated = true;    
+    this.invalidated++;    
     this.dataManager.changeSearchText(this.state.searchText);
 
     if (this.isRemoteData()) {
@@ -225,7 +225,7 @@ class MaterialTable extends React.Component {
   }, this.props.options.debounceInterval)
 
   onFilterChange = debounce(() => {
-    this.invalidated = true;    
+    this.invalidated++;    
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.filters = this.state.columns
@@ -314,13 +314,15 @@ class MaterialTable extends React.Component {
     // backward compatibility
     if (this.state.dataAge === -1) { return true }    
 
+    if (this.state.searchText !== nextState.searchText) { this.invalidated++ }    
+
     if (this.renderedDataAge < this.props.dataAge) {
       this.renderedDataAge = this.props.dataAge;
-      this.invalidated = false;
+      this.invalidated--;
       return true;      
     }
 
-    if (this.invalidated) { this.invalidated = false; return true }        
+    if (this.invalidated > 0) { this.invalidated--; return true }        
 
     return false;
   }
