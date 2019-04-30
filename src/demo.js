@@ -57,10 +57,9 @@ class App extends Component {
                   ref={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
-                  title="Demo Title"
-                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                  options={{
-                    selection: true,
+                  title="Demo Title"                  
+                  options={{                    
+                    filtering: true
                   }}
                 />
               </Grid>
