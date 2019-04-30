@@ -295,7 +295,12 @@ export default class DataManager {
   findDataByPath = (renderData, path) => {
     if (this.isDataType("tree")) {
       const node = path.reduce((result, current) => {
-        return result.tableData.childRows[current];
+        return (
+          result &&
+          result.tableData &&
+          result.tableData.childRows &&
+          result.tableData.childRows[current]
+        );
       }, { tableData: { childRows: renderData } });
 
       return node;
