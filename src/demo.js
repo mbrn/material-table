@@ -79,9 +79,9 @@ class App extends Component {
           <MaterialTable
             ref={this.tableRef}
             columns={this.state.columns}
-            data={this.state.data}
-            title="Demo Title"
-            parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+            data={(query) => new Promise(() => {
+            })}
+            title="Demo Title"            
             options={{
               selection: true,
             }}

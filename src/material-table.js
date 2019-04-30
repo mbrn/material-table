@@ -31,17 +31,18 @@ class MaterialTable extends React.Component {
 
     const calculatedProps = this.getProps(props);
     this.setDataManagerFields(calculatedProps, true);
+    const renderState = this.dataManager.getRenderState();
 
     this.state = {
       data: [],
-      ...this.dataManager.getRenderState(),
+      ...renderState,
       query: {
         filters: [],
-        orderBy: null,
-        orderDirection: 'asc',
+        orderBy: renderState.orderBy,
+        orderDirection: renderState.orderDirection,
         page: 0,
         pageSize: calculatedProps.options.pageSize,
-        search: '',
+        search: renderState.searchText,
 
         totalCount: 0
       },
