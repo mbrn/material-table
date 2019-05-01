@@ -318,11 +318,11 @@ class MaterialTable extends React.Component {
 
     if (this.renderedDataAge < this.props.dataAge) {
       this.renderedDataAge = this.props.dataAge;
-      this.invalidated--;
+      this.invalidated = 0;
       return true;      
     }
 
-    if (this.invalidated > 0) { this.invalidated--; return true }        
+    if (this.invalidated > 0) { this.invalidated = 0; return true }        
 
     return false;
   }
