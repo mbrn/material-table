@@ -1,4 +1,12 @@
-# material-table
+<p align="center" style="box-shadow: 2px 2px;">
+  <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://raw.githubusercontent.com/mbrn/material-table.com/master/docs/assets/logo-back.png" alt="material-table"></a></p>
+</p>
+
+<h1 align="center">material-table</h1>
+
+<div align="center">
+
+A simple and powerful Datatable for React based on [Material-UI Table](https://material-ui.com/api/table/) with some additional features.
 
 [![Build Status](https://travis-ci.org/mbrn/material-table.svg?branch=master)](https://travis-ci.org/mbrn/material-table)
 [![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
@@ -7,7 +15,7 @@
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/material-table/Lobby)
 
-A simple and powerful Datatable for React based on [Material-UI Table](https://material-ui.com/api/table/) with some additional features.
+</div>
 
 ## Key features
 
@@ -30,6 +38,10 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 ## Demo and documentation
 You can access all examples and documentation from [__docs site__](https://material-table.com/).
+
+## Support material-table
+
+To support material-table visit [SUPPORT](https://www.patreon.com/mbrn) page.
 
 ## Installation
 

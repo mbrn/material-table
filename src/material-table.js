@@ -33,17 +33,18 @@ class MaterialTable extends React.Component {
 
     const calculatedProps = this.getProps(props);
     this.setDataManagerFields(calculatedProps, true);
+    const renderState = this.dataManager.getRenderState();
 
     this.state = {
       data: [],
-      ...this.dataManager.getRenderState(),
-      query: {        
+      ...renderState,
+      query: {
         filters: [],
-        orderBy: null,
-        orderDirection: 'asc',
+        orderBy: renderState.orderBy,
+        orderDirection: renderState.orderDirection,
         page: 0,
         pageSize: calculatedProps.options.pageSize,
-        search: '',
+        search: renderState.searchText,
 
         totalCount: 0
       },
@@ -337,6 +338,7 @@ class MaterialTable extends React.Component {
               columns={this.state.columns}
               columnsButton={props.options.columnsButton}
               icons={props.icons}
+              exportAllData={props.options.exportAllData}
               exportButton={props.options.exportButton}
               exportDelimiter={props.options.exportDelimiter}
               exportFileName={props.options.exportFileName}
@@ -662,6 +664,7 @@ MaterialTable.defaultProps = {
     debounceInterval: 200,
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
+    exportAllData: false,
     exportButton: false,
     exportDelimiter: ',',
     filtering: false,
@@ -812,6 +815,7 @@ MaterialTable.propTypes = {
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
+    exportAllData: PropTypes.bool,
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.string,

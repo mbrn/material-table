@@ -22,7 +22,9 @@ export class MTableToolbar extends React.Component {
         return !columnDef.hidden && columnDef.field && columnDef.export !== false;
       });
 
-    const data = this.props.renderData.map(rowData =>
+    const dataToExport = this.props.exportAllData ? this.props.data : this.props.renderData;
+
+    const data = dataToExport.map(rowData =>
       columns.map(columnDef => {
         return this.props.getFieldValue(rowData, columnDef);
       })
@@ -237,6 +239,7 @@ MTableToolbar.propTypes = {
   searchFieldAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
   data: PropTypes.array,
+  exportAllData: PropTypes.bool,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,

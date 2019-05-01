@@ -300,7 +300,12 @@ export default class DataManager {
   findDataByPath = (renderData, path) => {
     if (this.isDataType("tree")) {
       const node = path.reduce((result, current) => {
-        return result.tableData.childRows[current];
+        return (
+          result &&
+          result.tableData &&
+          result.tableData.childRows &&
+          result.tableData.childRows[current]
+        );
       }, { tableData: { childRows: renderData } });
 
       return node;
@@ -337,9 +342,9 @@ export default class DataManager {
     return node;
   }
 
-  getFieldValue = (rowData, columnDef) => {
+  getFieldValue = (rowData, columnDef, lookup = true) => {
     let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field));
-    if (columnDef.lookup) {
+    if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
 
@@ -461,7 +466,7 @@ export default class DataManager {
         else {
           if (lookup) {
             this.filteredData = this.filteredData.filter(row => {
-              const value = this.getFieldValue(row, columnDef);
+              const value = this.getFieldValue(row, columnDef, false);
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
                 tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;

@@ -30,7 +30,14 @@ export interface MaterialTableProps {
   tableRef?: any;
 }
 
+export interface Filter {
+  column: Column;
+  operator: "=";
+  value: any;
+}
+
 export interface Query {
+  filters: Filter[];
   page: number;
   pageSize: number;
   search: string;
@@ -79,7 +86,7 @@ export interface EditCellColumnDef {
 }
 
 export interface Column {
-  cellStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
+  cellStyle?: React.CSSProperties | ((data: any, rowData: any) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
   customSort?: (data1: any, data2: any, type: (('row' | 'group'))) => number;
@@ -168,6 +175,7 @@ export interface Options {
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
   emptyRowsWhenPaging?: boolean;
+  exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
   exportFileName?: string;
