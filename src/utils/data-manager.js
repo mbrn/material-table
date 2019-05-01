@@ -566,7 +566,7 @@ export default class DataManager {
 
       let object = result;
       object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || byString(current, colDef.field);
+        const value = colDef.render ? colDef.render(current) : (current[colDef.field] || byString(current, colDef.field));
         let group = o.groups.find(g => g.value === value);
         if (!group) {
           const path = [...(o.path || []), value];

@@ -79,10 +79,7 @@ export default class MTableGroupRow extends React.Component {
     }
 
     let value = this.props.groupData.value;
-    if(column.render) {
-      value = column.render(value, 'group');
-    }
-    else if (column.lookup) {
+    if (column.lookup) {
       value = column.lookup[value];
     }
     if((value === undefined || value === null) && column.emptyValue) {
