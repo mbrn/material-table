@@ -38,7 +38,7 @@ class MaterialTable extends React.Component {
       ...renderState,
       query: {
         filters: [],
-        orderBy: renderState.orderBy,
+        orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
         page: 0,
         pageSize: calculatedProps.options.pageSize,
