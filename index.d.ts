@@ -146,23 +146,23 @@ export const MTableGroupRow: () => React.ReactElement<any>;
 
 
 export interface Icons {
-  Add: () => React.ReactElement<any>;
-  Check: () => React.ReactElement<any>;
-  Clear: () => React.ReactElement<any>;
-  Delete: () => React.ReactElement<any>;
-  DetailPanel: () => React.ReactElement<any>;
-  Edit: () => React.ReactElement<any>;
-  Export: () => React.ReactElement<any>;
-  Filter: () => React.ReactElement<any>;
-  FirstPage: () => React.ReactElement<any>;
-  SortArrow: () => React.ReactElement<any>;
-  LastPage: () => React.ReactElement<any>;
-  NextPage: () => React.ReactElement<any>;
-  PreviousPage: () => React.ReactElement<any>;
-  ResetSearch: () => React.ReactElement<any>;
-  Search: () => React.ReactElement<any>;
-  ThirdStateCheck: () => React.ReactElement<any>;
-  ViewColumn: () => React.ReactElement<any>;
+  Add?: () => React.ReactElement<any>;
+  Check?: () => React.ReactElement<any>;
+  Clear?: () => React.ReactElement<any>;
+  Delete?: () => React.ReactElement<any>;
+  DetailPanel?: () => React.ReactElement<any>;
+  Edit?: () => React.ReactElement<any>;
+  Export?: () => React.ReactElement<any>;
+  Filter?: () => React.ReactElement<any>;
+  FirstPage?: () => React.ReactElement<any>;
+  SortArrow?: () => React.ReactElement<any>;
+  LastPage?: () => React.ReactElement<any>;
+  NextPage?: () => React.ReactElement<any>;
+  PreviousPage?: () => React.ReactElement<any>;
+  ResetSearch?: () => React.ReactElement<any>;
+  Search?: () => React.ReactElement<any>;
+  ThirdStateCheck?: () => React.ReactElement<any>;
+  ViewColumn?: () => React.ReactElement<any>;
 }
 
 export interface Options {
