@@ -99,6 +99,7 @@ export interface Column {
   export?: boolean;
   field?: string;
   filtering?: boolean;
+  filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
@@ -180,6 +181,7 @@ export interface Options {
   exportFileName?: string;
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
+  filterCellStyle?: React.CSSProperties;
   header?: boolean;
   headerStyle?: React.CSSProperties;
   initialPage?: number;
