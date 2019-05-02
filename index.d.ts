@@ -15,7 +15,7 @@ export interface MaterialTableProps {
   }
   icons?: Icons;
   isLoading?: boolean;
-  title?: string | React.ReactElement;
+  title?: string | React.ReactElement<any>;
   options?: Options;
   parentChildData?: (row: any, rows: any[]) => any;
   localization?: Localization;
@@ -108,7 +108,7 @@ export interface Column {
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
-  title?: string | React.ReactElement;
+  title?: string | React.ReactElement<any>;
   type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
