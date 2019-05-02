@@ -139,6 +139,7 @@ class MTableBody extends React.Component {
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
+            filterCellStyle={this.props.options.filterCellStyle}
           />
         }
 

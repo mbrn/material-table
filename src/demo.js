@@ -17,6 +17,7 @@ class App extends Component {
   tableRef = React.createRef();
 
   state = {
+    text: 'text',
     selecteds: 0,
     data: [
       { id: 1, name: 'a', surname: 'baran', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
@@ -57,8 +58,9 @@ class App extends Component {
                   ref={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
-                  title="Demo Title"                  
-                  options={{                    
+                  title="Demo Title"
+                  options={{
+                    filtering: true,
                   }}
                 />
               </Grid>
@@ -74,19 +76,19 @@ class App extends Component {
 
           </div>
         </MuiThemeProvider>
-        <MuiThemeProvider theme={createMuiTheme({ palette: { primary: { main: '#abc' } } })}>
+        {/* <MuiThemeProvider theme={createMuiTheme({ palette: { primary: { main: '#abc' } } })}>
           <MaterialTable
             ref={this.tableRef}
             columns={this.state.columns}
             data={(query) => new Promise(() => {
             })}
-            title="Demo Title"            
+            title="Demo Title"
             options={{
               selection: true,
             }}
             isLoading
           />
-        </MuiThemeProvider>
+        </MuiThemeProvider> */}
       </>
     );
   }
