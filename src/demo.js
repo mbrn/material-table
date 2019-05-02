@@ -59,8 +59,13 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"                  
                   options={{                    
-                    filtering: true
                   }}
+                  actions={[
+                    {
+                      icon: 'save',
+                      onClick: () => alert('ok')
+                    }
+                  ]}
                 />
               </Grid>
 
