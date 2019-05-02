@@ -60,12 +60,6 @@ class App extends Component {
                   title="Demo Title"                  
                   options={{                    
                   }}
-                  actions={[
-                    {
-                      icon: 'save',
-                      onClick: () => alert('ok')
-                    }
-                  ]}
                 />
               </Grid>
 
