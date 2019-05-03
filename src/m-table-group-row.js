@@ -79,25 +79,21 @@ export default class MTableGroupRow extends React.Component {
     }
 
     let value = this.props.groupData.value;
-    if(column.render) {
-      value = column.render(value, 'group');
-    }
-    else if (column.lookup) {
+    if (column.lookup) {
       value = column.lookup[value];
-    }
-    if((value === undefined || value === null) && column.emptyValue) {
-      if (typeof column.emptyValue === 'function') {
-        value = column.emptyValue();
-      } else {
-        value = column.emptyValue;
-      }
     }
 
     return (
       <>
         <TableRow>
           {freeCells}
-          <this.props.components.Cell colSpan={colSpan} padding="none" value={value}>
+          <this.props.components.Cell 
+            colSpan={colSpan} 
+            padding="none" 
+            columnDef={column} 
+            value={value}
+            icons={this.props.icons}
+          >
             <IconButton
               style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
               onClick={(event) => {
@@ -106,7 +102,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{column.title + ": "}</b>            
+            <b>{column.title + ": "}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}

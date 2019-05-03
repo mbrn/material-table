@@ -10,9 +10,15 @@ export default class MTableCell extends React.Component {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
     if (this.props.columnDef.render) {
-      return this.props.columnDef.render(this.props.rowData, 'row');
+      if(this.props.rowData) {
+        return this.props.columnDef.render(this.props.rowData, 'row');
+      }
+      else {
+        return this.props.columnDef.render(this.props.value, 'group');
+      }
+      
     } else if (this.props.columnDef.type === 'boolean') {
-      const style = { textAlign: 'left', width: '48px' };
+      const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
       if (this.props.value) {
         return <this.props.icons.Check style={style} />;
       } else {
