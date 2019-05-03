@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Icon, IconButton, withStyles, Tooltip, Hidden, Typography } from '@material-ui/core';
+import { Icon, IconButton, withStyles, Tooltip, Hidden, Typography, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
@@ -28,11 +28,39 @@ class MTablePaginationInner extends React.Component {
     );
   };
 
+  renderPagesButton(start, end) {
+    const buttons = [];
+
+    for (let p = start; p <= end; p++) {
+      const buttonVariant = p === this.props.page ? "contained" : "default";
+      buttons.push(
+        <Button
+          size="small"
+          style={{
+            boxShadow: 'none',
+            maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'            
+          }}
+          disabled={p === this.props.page}
+          variant={buttonVariant}
+          onClick={this.handleNumberButtonClick(p)}
+        >
+          {p + 1}
+        </Button>
+      );
+    }
+
+    return <span>{buttons}</span>;
+  }
+
   render() {
     const { classes, count, page, rowsPerPage } = this.props;
-    
+
     const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
     const maxPages = Math.ceil(count / rowsPerPage) - 1;
+
+    const pageStart = Math.max(page - 1, 0);
+    const pageEnd = Math.min(maxPages, page + 1);
+
     return (
       <div className={classes.root}>
         <Tooltip title={localization.previousTooltip}>
@@ -42,38 +70,12 @@ class MTablePaginationInner extends React.Component {
               disabled={page === 0}
               aria-label={localization.previousAriaLabel}
             >
-              <this.props.icons.PreviousPage/>
+              <this.props.icons.PreviousPage />
             </IconButton>
           </span>
         </Tooltip>
         <Hidden smDown={true}>
-          <span>
-            <IconButton
-              onClick={this.handleFirstPageButtonClick}
-              aria-label={localization.firstAriaLabel}
-            ><Typography variant={page === 0 ? 'h6' : 'body1'}>1</Typography></IconButton></span>
-            {page > 2 && <span>..</span>}  
-            {page > 1 && <span><IconButton
-                onClick={this.handleNumberButtonClick(page-1)}
-                aria-label={localization.lastAriaLabel}
-              ><Typography variant='body1'>{page}</Typography></IconButton></span>}   
-            {page > 0 && page < maxPages &&<span> <IconButton
-                onClick={this.handleNumberButtonClick(page)}
-                aria-label={localization.lastAriaLabel}
-              >
-              <Typography variant='h6'>{page + 1}</Typography>
-            </IconButton></span>}    
-            {page < maxPages -1 && <span><IconButton
-                onClick={this.handleNumberButtonClick(page+1)}
-                aria-label={localization.lastAriaLabel}
-              ><Typography variant='body1'>{page + 2}</Typography></IconButton></span>}  
-              {page < maxPages -2 && <span>..</span>}  
-            {maxPages > 0 && <span> <IconButton
-                onClick={this.handleLastPageButtonClick}
-                aria-label={localization.lastAriaLabel}
-              >
-              <Typography variant={page === maxPages ? 'h6' : 'body1'}>{maxPages + 1}</Typography>
-            </IconButton></span>}
+          {this.renderPagesButton(pageStart, pageEnd)}
         </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
@@ -82,7 +84,7 @@ class MTablePaginationInner extends React.Component {
               disabled={page >= maxPages}
               aria-label={localization.nextAriaLabel}
             >
-              <this.props.icons.NextPage/>
+              <this.props.icons.NextPage />
             </IconButton>
           </span>
         </Tooltip>
