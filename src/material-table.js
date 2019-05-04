@@ -166,7 +166,7 @@ class MaterialTable extends React.Component {
         });
       };
 
-      findSelecteds(this.state.data);
+      findSelecteds(this.state.originalData);
       this.props.onSelectionChange(selectedRows);
     }
   }
