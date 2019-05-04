@@ -20,6 +20,7 @@ import MTableToolbar from './m-table-toolbar';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 /* eslint-enable no-unused-vars */
 
@@ -549,8 +550,8 @@ class MaterialTable extends React.Component {
           {this.renderFooter()}
 
           {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
-            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
-              <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: '#FFFFFFAA' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
+              <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
                 <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
                   <CircularProgress />
                 </div>
