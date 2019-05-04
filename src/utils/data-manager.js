@@ -570,7 +570,7 @@ export default class DataManager {
         let group = o.groups.find(g => g.value === value);
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {};
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (this.defaultExpanded ? true : false) };
 
           group = { value, groups: [], data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);

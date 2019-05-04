@@ -29,7 +29,7 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname' },
+      { title: 'Soyadı', field: 'surname', defaultGroupOrder: 0 },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -60,7 +60,8 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    grouping: true
+                    grouping: true,
+                    defaultExpanded: true
                   }}
                 />
               </Grid>
