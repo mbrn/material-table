@@ -38,6 +38,8 @@ export default class DataManager {
   sorted = false;
   paged = false;
 
+  rootGroupsIndex = {};
+
   constructor() {
   }
 
@@ -324,15 +326,19 @@ export default class DataManager {
   }
 
   findGroupByGroupPath(renderData, path) {
-    const data = { groups: renderData };
+    const data = { groups: renderData, groupsIndex: this.rootGroupsIndex };
 
     const node = path.reduce((result, current) => {
       if (!result) {
         return undefined;
       }
 
-      const group = result.groups.find(a => a.value === current);
-      return group;
+      if(result.groupsIndex[current] !== undefined){
+        return result.groups[result.groupsIndex[current]];
+      }
+      return undefined;
+      // const group = result.groups.find(a => a.value === current);
+      // return group;
     }, data);
     return node;
   }
@@ -561,30 +567,36 @@ export default class DataManager {
     const groups = this.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-
-    const subData = tmpData.reduce((result, current) => {
-
+    
+    const subData = tmpData.reduce((result, currentRow) => {
       let object = result;
       object = groups.reduce((o, colDef) => {
-        const value = current[colDef.field] || byString(current, colDef.field);
-        let group = o.groups.find(g => g.value === value);
+        const value = currentRow[colDef.field] || byString(currentRow, colDef.field);
+
+        let group;
+        if(o.groupsIndex[value]) {
+          group = o.groups[o.groupsIndex[value]];
+        }
+
         if (!group) {
           const path = [...(o.path || []), value];
           let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (this.defaultExpanded ? true : false) };
 
-          group = { value, groups: [], data: [], isExpanded: oldGroup.isExpanded, path: path };
+          group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
+          o.groupsIndex[value] = o.groups.length - 1;
         }
         return group;
       }, object);
 
-      object.data.push(current);
+      object.data.push(currentRow);
 
       return result;
-    }, { groups: [] });
+    }, { groups: [], groupsIndex: {} });
 
     this.groupedData = subData.groups;
     this.grouped = true;
+    this.rootGroupsIndex = subData.groupsIndex;
   }
 
   treefyData() {
