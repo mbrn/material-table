@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/demo.js',
+  entry: ['babel-polyfill', './src/demo.js'],
   module: {
     rules: [
       {

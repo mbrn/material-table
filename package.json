@@ -48,6 +48,7 @@
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.4",
+    "babel-polyfill": "^6.26.0",
     "buble": "0.19.3",
     "docz": "0.13.7",
     "docz-theme-default": "0.13.7",

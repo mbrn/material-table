@@ -49,7 +49,7 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        <Typography variant="caption" style={{ flex: 1, textAlign: 'center', lineHeight: 'inherit' }} >
+        <Typography variant="caption" style={{ flex: 1, textAlign: 'center', alignSelf: 'center', flexBasis: 'inherit' }} >
           {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
         </Typography>
         <Tooltip title={localization.nextTooltip}>
@@ -84,7 +84,7 @@ const actionsStyles = theme => ({
     flexShrink: 0,
     color: theme.palette.text.secondary,
     display: 'flex', 
-    lineHeight: '48px'
+    // lineHeight: '48px'
   }
 });
 

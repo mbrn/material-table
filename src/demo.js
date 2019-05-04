@@ -61,30 +61,11 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                   }}
-                  isLoading
                 />
               </Grid>
-
             </Grid>
-            <button
-              onClick={() => {
-                this.tableRef.current.onQueryChange();
-              }}
-            >
-              ok
-          </button>
-
           </div>
-          <MaterialTable
-          ref={this.tableRef}
-          columns={this.state.columns}
-          data={this.state.data}
-          title="Demo Title"
-          options={{
-          }}
-        />
         </MuiThemeProvider>
-       
       </>
     );
   }
