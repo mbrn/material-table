@@ -1,26 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Icon, Paper, Table, TableFooter, TablePagination, TableRow, CircularProgress, LinearProgress, withStyles } from '@material-ui/core';
+import { Table, TableFooter, TableRow, LinearProgress, withStyles } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
-import PropTypes from 'prop-types';
 import * as React from 'react';
-import MTableAction from './m-table-action';
-import MTableActions from './m-table-actions';
-import MTableBody from './m-table-body';
-import MTableBodyRow from './m-table-body-row';
-import MTableGroupbar from './m-table-groupbar';
-import MTableGroupRow from './m-table-group-row';
-import MTableCell from './m-table-cell';
-import MTableEditRow from './m-table-edit-row';
-import MTableEditField from './m-table-edit-field';
-import MTableFilterRow from './m-table-filter-row';
-import MTableHeader from './m-table-header';
-import MTablePagination from './m-table-pagination';
-import MTableSteppedPagination from './m-table-stepped-pagination';
-import MTableToolbar from './m-table-toolbar';
+import * as MComponents from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { defaultProps } from './default-props';
+import { propTypes } from './prop-types';
 
 /* eslint-enable no-unused-vars */
 
@@ -292,8 +279,8 @@ class MaterialTable extends React.Component {
                   }
                 }}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
-                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                  <MComponents.MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                  <MComponents.MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -374,10 +361,7 @@ class MaterialTable extends React.Component {
           <ScrollBar double={props.options.doubleHorizontalScroll}>
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                //style={this.getListStyle(snapshot.isDraggingOver)}
-                >
+                <div ref={provided.innerRef}>
                   <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
                     <Table>
                       {props.options.header &&
@@ -577,271 +561,8 @@ const ScrollBar = ({ double, children }) => {
   }
 };
 
-const OverlayLoading = props => (
-  <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
-    <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
-      <CircularProgress />
-    </div>
-  </div>
-);
-OverlayLoading.propTypes = {
-  theme: PropTypes.any
-};
-
-MaterialTable.defaultProps = {
-  actions: [],
-  classes: {},
-  columns: [],
-  components: {
-    Action: MTableAction,
-    Actions: MTableActions,
-    Body: MTableBody,
-    Cell: MTableCell,
-    Container: Paper,
-    EditField: MTableEditField,
-    EditRow: MTableEditRow,
-    FilterRow: MTableFilterRow,
-    Groupbar: MTableGroupbar,
-    GroupRow: MTableGroupRow,
-    Header: MTableHeader,
-    OverlayLoading: OverlayLoading,
-    Pagination: TablePagination,
-    Row: MTableBodyRow,
-    Toolbar: MTableToolbar
-  },
-  data: [],
-  icons: {
-    /* eslint-disable react/display-name */
-    Add: (props) => <Icon {...props}>add_box</Icon>,
-    Check: (props) => <Icon {...props}>check</Icon>,
-    Clear: (props) => <Icon {...props}>clear</Icon>,
-    Delete: (props) => <Icon {...props}>delete_outline</Icon>,
-    DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,
-    Edit: (props) => <Icon {...props}>edit</Icon>,
-    Export: (props) => <Icon {...props}>save_alt</Icon>,
-    Filter: (props) => <Icon {...props}>filter_list</Icon>,
-    FirstPage: (props) => <Icon {...props}>first_page</Icon>,
-    LastPage: (props) => <Icon {...props}>last_page</Icon>,
-    NextPage: (props) => <Icon {...props}>chevron_right</Icon>,
-    PreviousPage: (props) => <Icon {...props}>chevron_left</Icon>,
-    ResetSearch: (props) => <Icon {...props}>clear</Icon>,
-    Search: (props) => <Icon {...props}>search</Icon>,
-    SortArrow: (props) => <Icon {...props}>arrow_upward</Icon>,
-    ThirdStateCheck: (props) => <Icon {...props}>remove</Icon>,
-    ViewColumn: (props) => <Icon {...props}>view_column</Icon>
-    /* eslint-enable react/display-name */
-  },
-  isLoading: false,
-  title: 'Table Title',
-  options: {
-    actionsColumnIndex: 0,
-    addRowPosition: 'last',
-    columnsButton: false,
-    detailPanelType: 'multiple',
-    debounceInterval: 200,
-    doubleHorizontalScroll: false,
-    emptyRowsWhenPaging: true,
-    exportAllData: false,
-    exportButton: false,
-    exportDelimiter: ',',
-    filtering: false,
-    header: true,
-    loadingType: 'overlay',
-    paging: true,
-    pageSize: 5,
-    pageSizeOptions: [5, 10, 20],
-    paginationType: 'normal',
-    showEmptyDataSourceMessage: true,
-    showSelectAllCheckbox: true,
-    search: true,
-    showTitle: true,
-    toolbarButtonAlignment: 'right',
-    searchFieldAlignment: 'right',
-    searchFieldStyle: {},
-    selection: false,
-    sorting: true,
-    toolbar: true,
-    defaultExpanded: false
-  },
-  localization: {
-    grouping: {
-      groupedBy: 'Grouped By:',
-      placeholder: 'Drag headers here to group by',
-    },
-    pagination: {
-      labelDisplayedRows: '{from}-{to} of {count}',
-      labelRowsPerPage: 'Rows per page:',
-      labelRowsSelect: 'rows'
-    },
-    toolbar: {},
-    header: {},
-    body: {
-      filterRow: {},
-      editRow: {
-        saveTooltip: 'Save',
-        cancelTooltip: 'Cancel',
-        deleteText: 'Are you sure delete this row?',
-      },
-      addTooltip: 'Add',
-      deleteTooltip: 'Delete',
-      editTooltip: 'Edit'
-    }
-  }
-};
-
-MaterialTable.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
-    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]).isRequired,
-    isFreeAction: PropTypes.bool,
-    tooltip: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
-    iconProps: PropTypes.object
-  })])),
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    currencySetting: PropTypes.shape({
-      locale: PropTypes.string,
-      currencyCode: PropTypes.string,
-      minimumFractionDigits: PropTypes.number,
-      maximumFractionDigits: PropTypes.number
-    }),
-    customFilterAndSearch: PropTypes.func,
-    customSort: PropTypes.func,
-    defaultFilter: PropTypes.any,
-    defaultSort: PropTypes.oneOf(['asc', 'desc']),
-    editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
-    export: PropTypes.bool,
-    field: PropTypes.string,
-    filtering: PropTypes.bool,
-    filterCellStyle: PropTypes.object,
-    grouping: PropTypes.bool,
-    headerStyle: PropTypes.object,
-    hidden: PropTypes.bool,
-    lookup: PropTypes.object,
-    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never']),
-    removable: PropTypes.bool,
-    render: PropTypes.func,
-    searchable: PropTypes.bool,
-    sorting: PropTypes.bool,
-    title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
-  })).isRequired,
-  components: PropTypes.shape({
-    Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    EditField: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    EditRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    OverlayLoading: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
-  }),
-  data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
-  editable: PropTypes.shape({
-    onRowAdd: PropTypes.func,
-    onRowUpdate: PropTypes.func,
-    onRowDelete: PropTypes.func
-  }),
-  detailPanel: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({
-        disabled: PropTypes.bool,
-        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-        tooltip: PropTypes.string,
-        render: PropTypes.func.isRequired
-      })
-    ]))
-  ]),
-  icons: PropTypes.shape({
-    Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Delete: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Edit: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ResetSearch: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  }),
-  isLoading: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  options: PropTypes.shape({
-    actionsCellStyle: PropTypes.object,
-    actionsColumnIndex: PropTypes.number,
-    addRowPosition: PropTypes.oneOf(['first', 'last']),
-    columnsButton: PropTypes.bool,
-    defaultExpanded: PropTypes.bool,
-    debounceInterval: PropTypes.number,
-    detailPanelType: PropTypes.oneOf(['single', 'multiple']),
-    doubleHorizontalScroll: PropTypes.bool,
-    emptyRowsWhenPaging: PropTypes.bool,
-    exportAllData: PropTypes.bool,
-    exportButton: PropTypes.bool,
-    exportDelimiter: PropTypes.string,
-    exportFileName: PropTypes.string,
-    exportCsv: PropTypes.func,
-    filtering: PropTypes.bool,
-    filterCellStyle: PropTypes.object,
-    header: PropTypes.bool,
-    headerStyle: PropTypes.object,
-    initialPage: PropTypes.number,
-    maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    loadingType: PropTypes.oneOf(['overlay', 'linear']),
-    paging: PropTypes.bool,
-    pageSize: PropTypes.number,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
-    paginationType: PropTypes.oneOf(['normal', 'stepped']),
-    rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    showEmptyDataSourceMessage: PropTypes.bool,
-    showSelectAllCheckbox: PropTypes.bool,
-    search: PropTypes.bool,
-    showTitle: PropTypes.bool,
-    toolbarButtonAlignment: PropTypes.oneOf(['left', 'right']),
-    searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
-    searchFieldStyle: PropTypes.object,
-    selection: PropTypes.bool,
-    sorting: PropTypes.bool,
-    toolbar: PropTypes.bool,
-  }),
-  localization: PropTypes.shape({
-    grouping: PropTypes.shape({
-      groupedBy: PropTypes.string,
-      placeholder: PropTypes.string
-    }),
-    pagination: PropTypes.object,
-    toolbar: PropTypes.object,
-    header: PropTypes.object,
-    body: PropTypes.object
-  }),
-  initialFormData: PropTypes.object,
-  onSelectionChange: PropTypes.func,
-  onChangeRowsPerPage: PropTypes.func,
-  onChangePage: PropTypes.func,
-  onOrderChange: PropTypes.func,
-  onRowClick: PropTypes.func,
-  onTreeExpandChange: PropTypes.func,
-  tableRef: PropTypes.any
-};
-
+MaterialTable.defaultProps = defaultProps;
+MaterialTable.propTypes = propTypes;
 
 const styles = theme => ({
   paginationRoot: {
@@ -860,21 +581,5 @@ const styles = theme => ({
 });
 
 
-
 export default withStyles(styles, { withTheme: true })(props => <MaterialTable {...props} ref={props.tableRef} />);
-
-export {
-  MTableAction, 
-  MTableActions, 
-  MTableBody, 
-  MTableBodyRow, 
-  MTableCell, 
-  MTableEditRow, 
-  MTableEditField,
-  MTableFilterRow, 
-  MTableGroupbar, 
-  MTableGroupRow, 
-  MTableHeader,   
-  MTablePagination,
-  MTableToolbar  
-};
+export * from './components';
