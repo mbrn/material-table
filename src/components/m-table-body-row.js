@@ -241,7 +241,7 @@ export default class MTableBodyRow extends React.Component {
 
                 onToggleDetailPanel(this.props.path, panel);
               });
-          }}
+          }}          
         >
           {renderColumns}
         </TableRow>

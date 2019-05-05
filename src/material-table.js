@@ -2,7 +2,7 @@
 import { Table, TableFooter, TableRow, LinearProgress } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
 import * as React from 'react';
-import * as MComponents from './components';
+import { MTablePagination, MTableSteppedPagination } from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
@@ -428,8 +428,8 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MComponents.MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
-                  <MComponents.MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />

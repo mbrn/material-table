@@ -79,19 +79,20 @@ class App extends Component {
             <Grid container>
               <Grid item xs={12}>
                 <MaterialTable
-                  ref={this.tableRef}
+                  tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
+                  title="Demo Title"
                   options={{
-                    filtering: true,
-                    grouping: true,
                     selection: true
                   }}
-                  title="Demo Title"                  
                 />
               </Grid>
             </Grid>
             {this.state.text}
+            <button onClick={() => this.tableRef.current.onAllSelected(true)}>
+              Select
+            </button>
           </div>
         </MuiThemeProvider>
       </>
