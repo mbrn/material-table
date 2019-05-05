@@ -87,6 +87,7 @@ class App extends Component {
                   options={{
                     grouping: true
                   }}
+                  isLoading
                 />
               </Grid>
             </Grid>

@@ -551,11 +551,7 @@ class MaterialTable extends React.Component {
 
           {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
             <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
-              <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
-                <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
-                  <CircularProgress />
-                </div>
-              </div>
+              <this.props.components.OverlayLoading theme={props.theme} />
             </div>
           }
         </props.components.Container>
@@ -581,6 +577,17 @@ const ScrollBar = ({ double, children }) => {
   }
 };
 
+const OverlayLoading = props => (
+  <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
+    <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
+      <CircularProgress />
+    </div>
+  </div>
+)
+OverlayLoading.propTypes = {
+  theme: PropTypes.any
+}
+
 MaterialTable.defaultProps = {
   actions: [],
   classes: {},
@@ -597,6 +604,7 @@ MaterialTable.defaultProps = {
     Groupbar: MTableGroupbar,
     GroupRow: MTableGroupRow,
     Header: MTableHeader,
+    OverlayLoading: OverlayLoading,
     Pagination: TablePagination,
     Row: MTableBodyRow,
     Toolbar: MTableToolbar
@@ -731,6 +739,7 @@ MaterialTable.propTypes = {
     Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    OverlayLoading: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
@@ -854,7 +863,17 @@ const styles = theme => ({
 export default withStyles(styles, { withTheme: true })(props => <MaterialTable {...props} ref={props.tableRef} />);
 
 export {
-  MTableAction, MTableActions, MTableBody, MTableCell, MTableEditRow, MTableEditField,
-  MTableFilterRow, MTableHeader, MTableSteppedPagination, MTablePagination,
-  MTableBodyRow, MTableToolbar, MTableGroupRow
+  MTableAction, 
+  MTableActions, 
+  MTableBody, 
+  MTableBodyRow, 
+  MTableCell, 
+  MTableEditRow, 
+  MTableEditField,
+  MTableFilterRow, 
+  MTableGroupbar, 
+  MTableGroupRow, 
+  MTableHeader,   
+  MTablePagination,
+  MTableToolbar  
 };

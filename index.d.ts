@@ -124,28 +124,28 @@ export interface Components {
   EditField?: React.ComponentType<any>;
   EditRow?: React.ComponentType<any>;
   FilterRow?: React.ComponentType<any>;
+  Groupbar?: React.ComponentType<any>;
+  GroupRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
-  SteppedPagination?: React.ComponentType<any>;
+  OverlayLoading?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
-  GroupRow?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
 
-export const Container: () => React.ReactElement<any>;
-export const MTableToolbar: () => React.ReactElement<any>;
 export const MTableAction: () => React.ReactElement<any>;
 export const MTableActions: () => React.ReactElement<any>;
 export const MTableBody: () => React.ReactElement<any>;
+export const MTableBodyRow: () => React.ReactElement<any>;
 export const MTableCell: () => React.ReactElement<any>;
 export const MTableEditField: () => React.ReactElement<any>;
 export const MTableEditRow: () => React.ReactElement<any>;
 export const MTableFilterRow: () => React.ReactElement<any>;
+export const MTableGroupbar: () => React.ReactElement<any>;
+export const MTableGroupRow: () => React.ReactElement<any>;
 export const MTableHeader: () => React.ReactElement<any>;
 export const MTablePagination: () => React.ReactElement<any>;
-export const MTableSteppedPagination: () => React.ReactElement<any>;
-export const MTableBodyRow: () => React.ReactElement<any>;
-export const MTableGroupRow: () => React.ReactElement<any>;
+export const MTableToolbar: () => React.ReactElement<any>;
 
 
 export interface Icons {
