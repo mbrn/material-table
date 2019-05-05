@@ -2,7 +2,7 @@ import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from './material-table';
+import MaterialTable from './src';
 
 let direction = 'ltr';
 // direction = 'rtl';

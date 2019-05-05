@@ -1,17 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { Table, TableFooter, TableRow, LinearProgress, withStyles } from '@material-ui/core';
+import { Table, TableFooter, TableRow, LinearProgress } from '@material-ui/core';
 import DoubleScrollbar from "react-double-scrollbar";
 import * as React from 'react';
 import * as MComponents from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
-import { defaultProps } from './default-props';
-import { propTypes } from './prop-types';
-
 /* eslint-enable no-unused-vars */
 
-class MaterialTable extends React.Component {
+export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
 
   constructor(props) {
@@ -560,26 +557,3 @@ const ScrollBar = ({ double, children }) => {
     );
   }
 };
-
-MaterialTable.defaultProps = defaultProps;
-MaterialTable.propTypes = propTypes;
-
-const styles = theme => ({
-  paginationRoot: {
-    width: '100%'
-  },
-  paginationToolbar: {
-    padding: 0,
-    width: '100%'
-  },
-  paginationCaption: {
-    display: 'none'
-  },
-  paginationSelectRoot: {
-    margin: 0
-  }
-});
-
-
-export default withStyles(styles, { withTheme: true })(props => <MaterialTable {...props} ref={props.tableRef} />);
-export * from './components';
