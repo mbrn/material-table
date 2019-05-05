@@ -583,10 +583,10 @@ const OverlayLoading = props => (
       <CircularProgress />
     </div>
   </div>
-)
+);
 OverlayLoading.propTypes = {
   theme: PropTypes.any
-}
+};
 
 MaterialTable.defaultProps = {
   actions: [],
@@ -785,6 +785,7 @@ MaterialTable.propTypes = {
   isLoading: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
+    actionsCellStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,

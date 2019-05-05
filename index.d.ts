@@ -169,6 +169,7 @@ export interface Icons {
 }
 
 export interface Options {
+  actionsCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;

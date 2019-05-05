@@ -83,11 +83,7 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   // data={bigData}
-                  title="Demo Title"
-                  options={{
-                    grouping: true
-                  }}
-                  isLoading
+                  title="Demo Title"                  
                 />
               </Grid>
             </Grid>
