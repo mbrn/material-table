@@ -209,6 +209,16 @@ export default class MaterialTable extends React.Component {
     }
   }
 
+  onDragEnd = result => {
+    this.dataManager.changeByDrag(result);
+    this.setState(this.dataManager.getRenderState());
+  }
+
+  onGroupExpandChanged = (path) => {
+    this.dataManager.changeGroupExpand(path);
+    this.setState(this.dataManager.getRenderState());
+  }
+
   onGroupRemoved = (groupedColumn, index) => {
     const result = {
       combine: null,
@@ -309,6 +319,11 @@ export default class MaterialTable extends React.Component {
     });
   }
 
+  onRowSelected = (event, path) => {
+    this.dataManager.changeRowSelected(event.target.checked, path);
+    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
+  }
+
   onSelectionChange = () => {
     if (this.props.onSelectionChange) {
       const selectedRows = [];
@@ -328,7 +343,9 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = debounce(() => {
+  onSearchChange = searchText => this.setState({ searchText }, this.onSearchChangeDebounce)
+
+  onSearchChangeDebounce = debounce(() => {
     this.dataManager.changeSearchText(this.state.searchText);
 
     if (this.isRemoteData()) {
@@ -343,7 +360,12 @@ export default class MaterialTable extends React.Component {
     }
   }, this.props.options.debounceInterval)
 
-  onFilterChange = debounce(() => {
+  onFilterChange = (columnId, value) => {
+    this.dataManager.changeFilterValue(columnId, value);
+    this.setState({}, this.onFilterChangeDebounce);
+  }
+
+  onFilterChangeDebounce = debounce(() => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.filters = this.state.columns
@@ -360,6 +382,23 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
     }
   }, this.props.options.debounceInterval)
+
+  onFilterSelectionChanged = (event) => {
+    this.dataManager.changeFilterSelectionChecked(event.target.checked);
+    this.setState(this.dataManager.getRenderState());
+  }
+
+  onTreeExpandChanged = (path, data) => {
+    this.dataManager.changeTreeExpand(path);
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
+    });
+  }
+
+  onToggleDetailPanel = (path, render) => {
+    this.dataManager.changeDetailPanelVisibility(path, render);
+    this.setState(this.dataManager.getRenderState());
+  }
 
   renderFooter() {
     const props = this.getProps();
@@ -405,10 +444,7 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={result => {
-        this.dataManager.changeByDrag(result);
-        this.setState(this.dataManager.getRenderState());
-      }}>
+      <DragDropContext onDragEnd={this.onDragEnd}>
         <props.components.Container style={{ position: 'relative' }}>
           {props.options.toolbar &&
             <props.components.Toolbar
@@ -433,7 +469,7 @@ export default class MaterialTable extends React.Component {
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              onSearchChanged={searchText => this.setState({ searchText }, this.onSearchChange)}
+              onSearchChanged={this.onSearchChange}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
@@ -477,7 +513,6 @@ export default class MaterialTable extends React.Component {
                           isTreeData={this.props.parentChildData !== undefined}
                         />
                       }
-
                       <props.components.Body
                         actions={props.actions}
                         components={props.components}
@@ -491,32 +526,12 @@ export default class MaterialTable extends React.Component {
                         options={props.options}
                         getFieldValue={this.dataManager.getFieldValue}
                         isTreeData={this.props.parentChildData !== undefined}
-                        onFilterChanged={(columnId, value) => {
-                          this.dataManager.changeFilterValue(columnId, value);
-                          this.setState({}, () => this.onFilterChange());
-                        }}
-                        onFilterSelectionChanged={(event) => {
-                          this.dataManager.changeFilterSelectionChecked(event.target.checked);
-                          this.setState(this.dataManager.getRenderState());
-                        }}
-                        onRowSelected={(event, path) => {
-                          this.dataManager.changeRowSelected(event.target.checked, path);
-                          this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
-                        }}
-                        onToggleDetailPanel={(path, render) => {
-                          this.dataManager.changeDetailPanelVisibility(path, render);
-                          this.setState(this.dataManager.getRenderState());
-                        }}
-                        onGroupExpandChanged={(path) => {
-                          this.dataManager.changeGroupExpand(path);
-                          this.setState(this.dataManager.getRenderState());
-                        }}
-                        onTreeExpandChanged={(path, data) => {
-                          this.dataManager.changeTreeExpand(path);
-                          this.setState(this.dataManager.getRenderState(), () => {
-                            this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
-                          });
-                        }}
+                        onFilterChanged={this.onFilterChange}
+                        onFilterSelectionChanged={this.onFilterSelectionChanged}
+                        onRowSelected={this.onRowSelected}
+                        onToggleDetailPanel={this.onToggleDetailPanel}
+                        onGroupExpandChanged={this.onGroupExpandChanged}
+                        onTreeExpandChanged={this.onTreeExpandChanged}
                         onEditingCanceled={this.onEditingCanceled}
                         onEditingApproved={this.onEditingApproved}
                         localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}

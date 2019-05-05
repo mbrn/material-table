@@ -82,7 +82,11 @@ class App extends Component {
                   ref={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
-                  // data={bigData}
+                  options={{
+                    filtering: true,
+                    grouping: true,
+                    selection: true
+                  }}
                   title="Demo Title"                  
                 />
               </Grid>
