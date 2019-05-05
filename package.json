@@ -8,11 +8,15 @@
     "dist",
     "index.d.ts"
   ],
+  "babel": { 
+    "extends": "./configs/.babelrc"
+  },
   "scripts": {
     "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
-    "copy": "robocopy dist docs/node_modules/material-table/dist",
-    "lint": "eslint src/** && tsc --noEmit --lib es6,dom --skipLibCheck index.d.ts",
+    "lint": "npm run eslint && npm run tsc",
+    "eslint": "eslint src/** -c ./configs/.eslintrc",
+    "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck index.d.ts",
     "lint:fix": "eslint src/** --fix"
   },
   "husky": {
