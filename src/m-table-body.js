@@ -62,7 +62,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             data={data}
             index={index}
-            key={index}
+            key={"row-" + data.tableData.id}
             level={0}
             options={this.props.options}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
