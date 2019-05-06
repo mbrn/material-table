@@ -79,7 +79,7 @@
     "filefy": "0.1.9",
     "material-ui-pickers": "2.2.4",
     "prop-types": "^15.6.2",
-    "react-beautiful-dnd": "10.0.4",
+    "react-beautiful-dnd": "11.0.2",
     "react-double-scrollbar": "0.0.15"
   }
 }
