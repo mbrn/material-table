@@ -84,7 +84,8 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    selection: true
+                    selection: true,
+                    grouping: true
                   }}
                 />
               </Grid>

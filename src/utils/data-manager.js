@@ -60,6 +60,7 @@ export default class DataManager {
   setColumns(columns) {
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
+        columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || 'asc',
@@ -281,7 +282,30 @@ export default class DataManager {
       groups.splice(result.source.index, 1);
     }
     else if (result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
-      // Column reordering
+      start = Math.min(result.destination.index, result.source.index);
+      const end = Math.max(result.destination.index, result.source.index);
+
+      const colsToMov = this.columns
+        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+        .filter(column => column.tableData.groupOrder === undefined)
+        .slice(start, end + 1);
+
+      if (result.destination.index < result.source.index) {
+        // Take last and add as first
+        const last = colsToMov.pop();
+        colsToMov.unshift(last);
+      }
+      else {
+        // Take first and add as last
+        const last = colsToMov.shift();
+        colsToMov.push(last);
+      }
+
+      for (let i = 0; i < colsToMov.length; i++) {
+        colsToMov[i].tableData.columnOrder = start + i;
+      }
+
+      return;
     }
     else {
       return;
@@ -333,7 +357,7 @@ export default class DataManager {
         return undefined;
       }
 
-      if(result.groupsIndex[current] !== undefined){
+      if (result.groupsIndex[current] !== undefined) {
         return result.groups[result.groupsIndex[current]];
       }
       return undefined;
@@ -567,14 +591,14 @@ export default class DataManager {
     const groups = this.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    
+
     const subData = tmpData.reduce((result, currentRow) => {
       let object = result;
       object = groups.reduce((o, colDef) => {
         const value = currentRow[colDef.field] || byString(currentRow, colDef.field);
 
         let group;
-        if(o.groupsIndex[value]) {
+        if (o.groupsIndex[value] !== undefined) {
           group = o.groups[o.groupsIndex[value]];
         }
 

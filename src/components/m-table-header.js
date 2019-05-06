@@ -11,6 +11,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 export class MTableHeader extends React.Component {
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
+      .sort((a,b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => (
         <TableCell
           key={columnDef.tableData.id}
@@ -27,11 +28,10 @@ export class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-              {(this.props.grouping && columnDef.field)
-                ? <Draggable
+              
+                <Draggable
                   key={columnDef.tableData.id}
                   draggableId={columnDef.tableData.id.toString()}
-                  isDragDisabled={columnDef.grouping === false}
                   index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -44,8 +44,6 @@ export class MTableHeader extends React.Component {
                     </div>
                   )}
                 </Draggable>
-                : columnDef.title
-              }
             </TableSortLabel>
             : columnDef.title
           }
