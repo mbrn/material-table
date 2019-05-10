@@ -368,7 +368,14 @@ export default class DataManager {
   }
 
   getFieldValue = (rowData, columnDef, lookup = true) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field));
+    let value;
+    if (typeof rowData[columnDef.field] !== 'undefined') {
+      value = rowData[columnDef.field]; // normal fields
+    } else if (typeof columnDef.render !== 'undefined') {
+      value = columnDef.render(rowData); // for custom field
+    } else {
+      value = byString(rowData, columnDef.field);
+    }
     if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
