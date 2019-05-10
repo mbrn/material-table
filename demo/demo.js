@@ -57,12 +57,8 @@ class App extends Component {
         columns: [
             { title: 'Adı', field: 'name', render: (rowData) => {
                     this.colRenderCount++;
-                    const divStyle = {
-                        color: 'black',
-                        backgroundColor: 'green'
-                    };
-                    return <div style={divStyle}>{rowData.name}</div>;
-                }},
+                    return rowData.name;
+            }},
             { title: 'Soyadı', field: 'surname' },
             { title: 'Evli', field: 'isMarried', type: 'boolean' },
             { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
@@ -71,7 +67,7 @@ class App extends Component {
             { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
             { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
             { title: 'Zaman', field: 'time', type: 'time' },
-            { title: 'Age', headerStyle: { paddingRight: 4, minWidth: '80px'},
+            { title: 'Age', headerStyle: {paddingRight: 4, minWidth: '80px'},
                 cellStyle: data => { return {paddingRight: 4, minWidth: '80px'} },
                 render: rowData => this.dateDiffInYears(rowData.birthDate, new Date())
             }
