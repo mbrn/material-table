@@ -36,7 +36,6 @@ class App extends Component {
     colRenderCount = 0;
 
     dateDiffInYears(a, b) {
-        console.log(a, b)
         // Discard the time and time-zone information.
         const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
         const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
