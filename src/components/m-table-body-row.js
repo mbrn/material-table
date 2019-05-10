@@ -41,7 +41,7 @@ export default class MTableBodyRow extends React.Component {
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
-          onChange={(event) => this.props.onRowSelected(event, this.props.path)}
+          onChange={(event) => this.props.onRowSelected(event, this.props.path,this.props.data)}
           style={{
             paddingLeft: 12 + this.props.level * 12
           }}
