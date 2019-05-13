@@ -92,7 +92,7 @@ ReactDOM.render(<App />, document.getElementById('react-div'));
 
 ## Contributing
 
-We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 If you have any sort of doubt, idea or just want to talk about the project, feel free to join [our chat on Gitter](https://gitter.im/material-table/Lobby) :)
 
