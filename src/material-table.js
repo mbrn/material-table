@@ -319,12 +319,12 @@ export default class MaterialTable extends React.Component {
     });
   }
 
-  onRowSelected = (event, path) => {
+  onRowSelected = (event, path, dataClicked) => {
     this.dataManager.changeRowSelected(event.target.checked, path);
-    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
+    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange(dataClicked));
   }
 
-  onSelectionChange = () => {
+  onSelectionChange = (dataClicked) => {
     if (this.props.onSelectionChange) {
       const selectedRows = [];
 
@@ -339,7 +339,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows);
+      this.props.onSelectionChange(selectedRows,dataClicked);
     }
   }
 
