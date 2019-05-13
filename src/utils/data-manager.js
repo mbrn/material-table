@@ -370,14 +370,19 @@ export default class DataManager {
   getFieldValue = (rowData, columnDef, lookup = true) => {
     let value;
     if (typeof rowData[columnDef.field] !== 'undefined') {
-      value = rowData[columnDef.field]; // normal fields
+      return value = rowData[columnDef.field]; // normal fields
     } else if (typeof columnDef.render !== 'undefined') {
-      value = columnDef.render(rowData); // for custom field
+        if(columnDef.dataAccessor) {
+            return value = columnDef.dataAccessor(rowData); // for custom field
+        }
+        else {
+          throw 'Unable to get field value. render method without field attribute needs dataAccessor function';
+        }
     } else {
       value = byString(rowData, columnDef.field);
     }
     if (columnDef.lookup && lookup) {
-      value = columnDef.lookup[value];
+      return value = columnDef.lookup[value];
     }
 
     return value;

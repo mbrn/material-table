@@ -69,7 +69,8 @@ class App extends Component {
             { title: 'Zaman', field: 'time', type: 'time' },
             { title: 'Age', headerStyle: {paddingRight: 4, minWidth: '80px'},
                 cellStyle: data => { return {paddingRight: 4, minWidth: '80px'} },
-                render: rowData => this.dateDiffInYears(rowData.birthDate, new Date())
+                render: rowData => <div>{this.dateDiffInYears(rowData.birthDate, new Date())}</div>,
+                dataAccessor: rowData => this.dateDiffInYears(rowData.birthDate, new Date())
             }
         ],
         remoteColumns: [

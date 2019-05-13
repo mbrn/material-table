@@ -18,6 +18,7 @@ export const propTypes = {
     }),
     customFilterAndSearch: PropTypes.func,
     customSort: PropTypes.func,
+    dataAccessor: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
     editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
