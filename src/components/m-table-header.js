@@ -11,16 +11,33 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 export class MTableHeader extends React.Component {
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
-      .sort((a,b) => a.tableData.columnOrder - b.tableData.columnOrder)
-      .map((columnDef, index) => (
-        <TableCell
-          key={columnDef.tableData.id}
-          align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-          className={this.props.classes.header}
-          style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
-        >
-          {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
-            ? <TableSortLabel
+      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+      .map((columnDef, index) => {
+        let content = columnDef.title;
+
+        if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
+          content = (
+            <Draggable
+              key={columnDef.tableData.id}
+              draggableId={columnDef.tableData.id.toString()}
+              index={index}>
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                >
+                  {columnDef.title}
+                </div>
+              )}
+            </Draggable>
+          );
+        }
+
+        if (columnDef.sorting !== false && this.props.sorting) {
+          content = (
+            <TableSortLabel
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
               onClick={() => {
@@ -28,27 +45,22 @@ export class MTableHeader extends React.Component {
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
-              
-                <Draggable
-                  key={columnDef.tableData.id}
-                  draggableId={columnDef.tableData.id.toString()}
-                  index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                    >
-                      {columnDef.title}
-                    </div>
-                  )}
-                </Draggable>
+              {content}
             </TableSortLabel>
-            : columnDef.title
-          }
-        </TableCell>
-      ));
+          );
+        }
+
+        return (
+          <TableCell
+            key={columnDef.tableData.id}
+            align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+            className={this.props.classes.header}
+            style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+          >
+            {content}
+          </TableCell>
+        );
+      });
     return mapArr;
   }
 
