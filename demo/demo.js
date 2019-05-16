@@ -71,7 +71,7 @@ class App extends Component {
       <>
         <MuiThemeProvider theme={theme}>
           <input type="text" value={this.state.text} onChange={e => this.setState({ text: e.target.value, colRenderCount: this.colRenderCount })} />
-          {this.state.colRenderCount}          
+          {this.state.colRenderCount}
           <div style={{ maxWidth: '100%', direction }}>
             <Grid container>
               <Grid item xs={12}>
@@ -81,9 +81,8 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    selection: true,
-                    grouping: true,
-                    filtering: true
+                    maxBodyHeight: '200px',
+                    grouping: true
                   }}
                 />
               </Grid>
@@ -92,6 +91,43 @@ class App extends Component {
             <button onClick={() => this.tableRef.current.onAllSelected(true)}>
               Select
             </button>
+            <MaterialTable
+              title="Remote Data Preview"
+              columns={[
+                {
+                  title: 'Avatar',
+                  field: 'avatar',
+                  render: rowData => (
+                    <img
+                      style={{ height: 36, borderRadius: '50%' }}
+                      src={rowData.avatar}
+                    />
+                  ),
+                },
+                { title: 'Id', field: 'id' },
+                { title: 'First Name', field: 'first_name' },
+                { title: 'Last Name', field: 'last_name' },
+              ]}
+              options={{
+                grouping: true
+              }}
+              data={query =>
+                new Promise((resolve, reject) => {
+                  let url = 'https://reqres.in/api/users?'
+                  url += 'per_page=' + query.pageSize
+                  url += '&page=' + (query.page + 1)
+                  fetch(url)
+                    .then(response => response.json())
+                    .then(result => {
+                      resolve({
+                        data: result.data,
+                        page: result.page - 1,
+                        totalCount: result.total,
+                      })
+                    })
+                })
+              }
+            />
           </div>
         </MuiThemeProvider>
       </>
