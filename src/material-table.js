@@ -501,6 +501,7 @@ export default class MaterialTable extends React.Component {
                           selectedCount={this.state.selectedCount}
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
+                          detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
                           showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}

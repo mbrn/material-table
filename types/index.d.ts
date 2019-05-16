@@ -206,6 +206,7 @@ export interface Options {
   sorting?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
+  detailPanelColumnAlignment?: 'left' | 'right';
 }
 
 export interface Localization {
