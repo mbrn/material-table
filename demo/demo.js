@@ -82,7 +82,8 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                     selection: true,
-                    grouping: true
+                    grouping: true,
+                    filtering: true
                   }}
                 />
               </Grid>
