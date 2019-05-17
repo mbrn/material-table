@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.36.1",
+  "version": "1.36.4",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -62,7 +62,7 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
     "husky": "^1.2.0",
-    "react": "^16.8.0",
+    "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-hot-loader": "^4.3.12",
     "typescript": "^3.2.2",

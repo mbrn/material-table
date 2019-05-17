@@ -319,12 +319,12 @@ export default class MaterialTable extends React.Component {
     });
   }
 
-  onRowSelected = (event, path) => {
+  onRowSelected = (event, path, dataClicked) => {
     this.dataManager.changeRowSelected(event.target.checked, path);
-    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
+    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange(dataClicked));
   }
 
-  onSelectionChange = () => {
+  onSelectionChange = (dataClicked) => {
     if (this.props.onSelectionChange) {
       const selectedRows = [];
 
@@ -339,7 +339,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows);
+      this.props.onSelectionChange(selectedRows,dataClicked);
     }
   }
 
@@ -501,6 +501,7 @@ export default class MaterialTable extends React.Component {
                           selectedCount={this.state.selectedCount}
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
+                          detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
                           showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
@@ -560,7 +561,7 @@ export default class MaterialTable extends React.Component {
 
           {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
             <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
-              <this.props.components.OverlayLoading theme={props.theme} />
+              <props.components.OverlayLoading theme={props.theme} />
             </div>
           }
         </props.components.Container>
