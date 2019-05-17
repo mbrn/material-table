@@ -2,6 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, IconButton, Tooltip } from '@material-ui/core';
+import './m-table-action.css';
 /* eslint-enable no-unused-vars */
 
 class MTableAction extends React.Component {
@@ -33,8 +34,15 @@ class MTableAction extends React.Component {
           ) : (
               <action.icon
                 {...action.iconProps}
-                disabled={action.disabled}                
+                disabled={action.disabled}
               />
+            )
+          }
+          {
+            typeof action.label === "string"?(
+              <div style={{textAlign:"center"}}>{action.label}</div>
+            ):(
+              <action.label />
             )
           }
         </IconButton>

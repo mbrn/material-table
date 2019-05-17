@@ -6,7 +6,8 @@ export const propTypes = {
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    iconProps: PropTypes.object
+    iconProps: PropTypes.object,
+    label: PropTypes.oneOfType([PropTypes.element,PropTypes.string])
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

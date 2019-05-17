@@ -125,8 +125,17 @@ class App extends Component {
                         totalCount: result.total,
                       })
                     })
-                })
-              }
+			  })}
+				actions={
+							[
+								{
+									tooltip: 'Test Action',
+									icon: 'cloud_download',
+									onClick: (evt, data) => alert('This is a test asction'),
+									label: 'Test Action'
+								}
+							]
+						}
             />
           </div>
         </MuiThemeProvider>
