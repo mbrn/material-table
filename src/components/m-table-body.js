@@ -90,7 +90,7 @@ class MTableBody extends React.Component {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
         actions={this.props.actions}
-        key={groupData.value || ("" + index)}
+        key={groupData.value == null ? ('' + index) : groupData.value}
         columns={this.props.columns}
         components={this.props.components}
         detailPanel={this.props.detailPanel}
