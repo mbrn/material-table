@@ -70,6 +70,7 @@ export interface Action {
 }
 
 export interface EditComponentProps {
+  rowData: any;
   value: any,
   onChange: (newValue: any) => void,
   columnDef: EditCellColumnDef,
