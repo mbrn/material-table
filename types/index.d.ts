@@ -147,6 +147,7 @@ export const MTableGroupRow: () => React.ReactElement<any>;
 export const MTableHeader: () => React.ReactElement<any>;
 export const MTablePagination: () => React.ReactElement<any>;
 export const MTableToolbar: () => React.ReactElement<any>;
+export const MTableFilterButton: () => React.ReactElement<any>;
 
 
 export interface Icons {
@@ -185,6 +186,7 @@ export interface Options {
   exportFileName?: string;
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
+  filterType?: ('row' | 'header');
   filterCellStyle?: React.CSSProperties;
   header?: boolean;
   headerStyle?: React.CSSProperties;

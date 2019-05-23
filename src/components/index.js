@@ -12,6 +12,7 @@ import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
 import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
+import MTableFilterButton from './m-table-filter-button';
 
 export {
   MTableAction,
@@ -28,4 +29,5 @@ export {
   MTablePagination,
   MTableSteppedPagination,
   MTableToolbar,
+  MTableFilterButton,
 };

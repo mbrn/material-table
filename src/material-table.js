@@ -493,7 +493,7 @@ export default class MaterialTable extends React.Component {
                   <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
                     <Table>
                       {props.options.header &&
-                        <props.components.Header
+                        <props.components.Header                        
                           localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
                           columns={this.state.columns}
                           hasSelection={props.options.selection}
@@ -511,7 +511,12 @@ export default class MaterialTable extends React.Component {
                           actionsHeaderIndex={props.options.actionsColumnIndex}
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
+                          filtering={props.options.filtering}
+                          filterType={props.options.filterType}
                           isTreeData={this.props.parentChildData !== undefined}
+                          icons={this.props.icons}
+                          onFilterChanged={this.onFilterChange}
+                          components={props.components}
                         />
                       }
                       <props.components.Body

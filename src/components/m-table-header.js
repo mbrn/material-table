@@ -7,8 +7,8 @@ import {
 } from '@material-ui/core';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
-
 export class MTableHeader extends React.Component {
+
   renderHeader() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
@@ -50,12 +50,26 @@ export class MTableHeader extends React.Component {
           );
         }
 
+        if (this.props.filtering && this.props.filterType == 'header') {
+          content = (
+            <>
+              {content}
+              <this.props.components.FilterButton
+                icons={this.props.icons}
+                columnDef={columnDef}
+                onFilterChanged={this.props.onFilterChanged}
+              >
+              </this.props.components.FilterButton>
+            </>
+          );
+        }
+
         return (
           <TableCell
             key={columnDef.tableData.id}
             align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             className={this.props.classes.header}
-            style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+            style={{ ...this.props.headerStyle, ...columnDef.headerStyle, whiteSpace: 'nowrap' }}
           >
             {content}
           </TableCell>
