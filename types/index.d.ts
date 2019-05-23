@@ -70,6 +70,7 @@ export interface Action {
 }
 
 export interface EditComponentProps {
+  rowData: any;
   value: any,
   onChange: (newValue: any) => void,
   columnDef: EditCellColumnDef,
@@ -206,6 +207,7 @@ export interface Options {
   sorting?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
+  detailPanelColumnAlignment?: 'left' | 'right';
 }
 
 export interface Localization {

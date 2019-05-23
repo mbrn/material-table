@@ -144,6 +144,7 @@ class MTableFilterRow extends React.Component {
   render() {
     const columns = this.props.columns
       .filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
+      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map(columnDef => (
         <TableCell key={columnDef.tableData.id} style={{ ...this.props.filterCellStyle, ...columnDef.filterCellStyle }}>
           {this.getComponentForColumn(columnDef)}
