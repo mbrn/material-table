@@ -82,7 +82,7 @@ export default class MTableGroupRow extends React.Component {
     if (column.lookup) {
       value = column.lookup[value];
     }
-    const aggregations = this.props.groupData.aggregations;
+    // const aggregations = this.props.groupData.aggregations;
     return (
       <>
         <TableRow>
