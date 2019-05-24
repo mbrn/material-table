@@ -620,9 +620,12 @@ export default class DataManager {
           for (const key in aggregatedColumns) {
             if (aggregatedColumns.hasOwnProperty(key)) {
               const aggregatedColumn = aggregatedColumns[key];
-              group.aggregations[aggregatedColumn.field] = {
+              const colId = aggregatedColumn.tableData.id;
+              group.aggregations[colId] = {
                 label: aggregatedColumn.aggregation.label,
-                getValue: aggregatedColumn.aggregation.GetResult
+                getValue: aggregatedColumn.aggregation.GetResult,
+                field: aggregatedColumn.field,
+                colId: aggregatedColumn.tableData.id
               };
             }
           }
@@ -633,7 +636,8 @@ export default class DataManager {
         for (const key in aggregatedColumns) {
           if (aggregatedColumns.hasOwnProperty(key)) {
             const aggregatedColumn = aggregatedColumns[key];
-            group.aggregations[aggregatedColumn.field].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[aggregatedColumn.field].accumulator, currentRow[aggregatedColumn.field]);
+            const colId = aggregatedColumn.tableData.id;
+            group.aggregations[colId].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[colId].accumulator, currentRow[aggregatedColumn.field]);
           }
         }
         return group;

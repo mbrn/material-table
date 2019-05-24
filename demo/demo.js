@@ -65,16 +65,16 @@ class App extends Component {
       { id: 6, name: 'A6', surname: 'C', salary: 524364, isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname' },
-      { title: 'Evli', field: 'isMarried', type: 'boolean', aggregation: Aggregations.Count("Nb") },
-      { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
-      { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
-      { title: 'Doğum Yılı', field: 'birthDate', type: 'date', grouping: false },
-      { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
-      { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
+      { title: 'First Name', field: 'name' },
+      { title: 'Last Name', field: 'surname' },
+      { title: 'Married', field: 'isMarried', type: 'boolean', aggregation: Aggregations.Count("Nb") },
+      { title: 'Gender', field: 'sex', disableClick: true, editable: 'onAdd' },
+      { title: 'Type', field: 'type', removable: false, editable: 'never' },
+      { title: 'Birthday', field: 'birthDate', type: 'date', grouping: false },
+      { title: 'Birth place', field: 'birthCity', lookup: { 34: 'Lagnieu', 0: 'Ambérieu-en-Bugey' } },
+      { title: 'Created On', field: 'insertDateTime', type: 'datetime' },
       { title: 'Salary', field: 'salary', aggregation: Aggregations.Avg() },
-      { title: 'Zaman', field: 'time', type: 'time' }
+      { title: 'Time', field: 'time', type: 'time' }
     ],
     remoteColumns: [
       { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} /> },

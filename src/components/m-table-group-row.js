@@ -13,7 +13,7 @@ export default class MTableGroupRow extends React.Component {
 
   render() {
     let colSpan = this.props.columns.filter(columnDef => !columnDef.hidden).length;
-    this.props.options.selection && colSpan++;    
+    this.props.options.selection && colSpan++;
     this.props.detailPanel && colSpan++;
     this.props.actions && this.props.actions.length > 0 && colSpan++;
     const column = this.props.groups[this.props.level];
@@ -30,7 +30,7 @@ export default class MTableGroupRow extends React.Component {
             detailPanel={this.props.detailPanel}
             getFieldValue={this.props.getFieldValue}
             groupData={groupData}
-            groups={this.props.groups}            
+            groups={this.props.groups}
             icons={this.props.icons}
             level={this.props.level + 1}
             path={[...this.props.path, index]}
@@ -82,15 +82,15 @@ export default class MTableGroupRow extends React.Component {
     if (column.lookup) {
       value = column.lookup[value];
     }
-
+    const aggregations = this.props.groupData.aggregations;
     return (
       <>
         <TableRow>
           {freeCells}
-          <this.props.components.Cell 
-            colSpan={colSpan} 
-            padding="none" 
-            columnDef={column} 
+          <this.props.components.Cell
+            colSpan={colSpan}
+            padding="none"
+            columnDef={column}
             value={value}
             icons={this.props.icons}
           >
@@ -102,8 +102,15 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{column.title + ": "}</b>
+            <b>{column.title}:&nbsp;</b>
           </this.props.components.Cell>
+          {
+            // {aggregations && <this.props.components.Cell colSpan={colSpan - 1}>
+            //   {aggregations && Object.keys(aggregations).map((i, idx) => (<span key={String(idx)}>
+            //     <b>{aggregations[i].label && <>{aggregations[i].label}</>} {this.props.columns[aggregations[i].colId].title}: </b>{aggregations[i].value}
+            //   </span>))}
+            // </this.props.components.Cell>}
+          }
         </TableRow>
         {detail}
       </>
@@ -132,7 +139,7 @@ MTableGroupRow.propTypes = {
   level: PropTypes.number,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
-  onRowClick: PropTypes.func,  
+  onRowClick: PropTypes.func,
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
   onEditingCanceled: PropTypes.func,
