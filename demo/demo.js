@@ -30,6 +30,24 @@ for (let i = 0; i < 1; i++) {
   bigData.push(d);
 }
 
+const Aggregations = {
+  Count: (label) => ({
+    Accumulate: (accumulator = 0) => ++accumulator,
+    GetResult: (accumulator) => accumulator,
+    label
+  }),
+  Sum: (label) => ({
+    Accumulate: (accumulator = 0, currentValue) => accumulator + (currentValue || 0),
+    GetResult: (accumulator) => accumulator,
+    label
+  }),
+  Avg: (label) => ({
+    Accumulate: (accumulator = { sum: 0, count: 0 }, currentValue) => ({ sum: accumulator.sum + (currentValue || 0), count: accumulator.count + 1 }),
+    GetResult: (accumulator) => accumulator.sum / accumulator.count,
+    label
+  }),
+};
+
 class App extends Component {
   tableRef = React.createRef();
 
@@ -39,22 +57,23 @@ class App extends Component {
     text: 'text',
     selecteds: 0,
     data: [
-      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 4, name: 'A4', surname: 'C', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
-      { id: 5, name: 'A5', surname: 'C', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
+      { id: 1, name: 'A1', surname: 'B', salary: 54654635, isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 2, name: 'A2', surname: 'B', salary: 12434513, isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 3, name: 'A3', surname: 'B', salary: 115626, isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 4, name: 'A4', surname: 'C', salary: 7412699, isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
+      { id: 5, name: 'A5', surname: 'C', salary: 965434, isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 6, name: 'A6', surname: 'C', salary: 524364, isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
       { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname', grouping: false },
-      { title: 'Evli', field: 'isMarried', type: 'boolean' },
+      { title: 'Soyadı', field: 'surname' },
+      { title: 'Evli', field: 'isMarried', type: 'boolean', aggregation: Aggregations.Count("Nb") },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
-      { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
+      { title: 'Doğum Yılı', field: 'birthDate', type: 'date', grouping: false },
       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
       { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
+      { title: 'Salary', field: 'salary', aggregation: Aggregations.Avg() },
       { title: 'Zaman', field: 'time', type: 'time' }
     ],
     remoteColumns: [
@@ -81,7 +100,7 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    maxBodyHeight: '200px',
+                    maxBodyHeight: '400px',
                     grouping: true
                   }}
                 />

@@ -255,7 +255,7 @@ export default class DataManager {
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
 
-    if (result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
+    if (result.destination && result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
@@ -272,16 +272,16 @@ export default class DataManager {
         groups.push(last);
       }
     }
-    else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
+    else if (result.destination && result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
       groups.splice(result.destination.index, 0, newGroup);
     }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
+    else if (result.destination && result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
       const removeGroup = this.columns.find(c => c.tableData.id == result.draggableId);
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
     }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
+    else if (result.destination && result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
@@ -592,6 +592,8 @@ export default class DataManager {
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
+    const aggregatedColumns = this.columns.filter(i => i.aggregation);
+
     const subData = tmpData.reduce((result, currentRow) => {
       let object = result;
       object = groups.reduce((o, colDef) => {
@@ -606,9 +608,33 @@ export default class DataManager {
           const path = [...(o.path || []), value];
           let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (this.defaultExpanded ? true : false) };
 
-          group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
+          group = {
+            value,
+            aggregations: {},
+            groups: [],
+            groupsIndex: {},
+            data: [],
+            isExpanded: oldGroup.isExpanded,
+            path: path
+          };
+          for (const key in aggregatedColumns) {
+            if (aggregatedColumns.hasOwnProperty(key)) {
+              const aggregatedColumn = aggregatedColumns[key];
+              group.aggregations[aggregatedColumn.field] = {
+                label: aggregatedColumn.aggregation.label,
+                getValue: aggregatedColumn.aggregation.GetResult
+              };
+            }
+          }
           o.groups.push(group);
           o.groupsIndex[value] = o.groups.length - 1;
+        }
+
+        for (const key in aggregatedColumns) {
+          if (aggregatedColumns.hasOwnProperty(key)) {
+            const aggregatedColumn = aggregatedColumns[key];
+            group.aggregations[aggregatedColumn.field].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[aggregatedColumn.field].accumulator, currentRow[aggregatedColumn.field]);
+          }
         }
         return group;
       }, object);
@@ -619,6 +645,25 @@ export default class DataManager {
     }, { groups: [], groupsIndex: {} });
 
     this.groupedData = subData.groups;
+
+    setAggregationValues(this.groupedData);
+
+    function setAggregationValues(groupedData) {
+      if (!groupedData) return;
+      for (let index = 0; index < groupedData.length; index++) {
+        const group = groupedData[index];
+        for (const key in group.aggregations) {
+          if (group.aggregations.hasOwnProperty(key)) {
+            const aggregation = group.aggregations[key];
+            aggregation.value = aggregation.getValue(aggregation.accumulator);
+            delete aggregation.getValue;
+            delete aggregation.accumulator;
+          }
+        }
+        setAggregationValues(group.groups);
+      }
+    }
+
     this.grouped = true;
     this.rootGroupsIndex = subData.groupsIndex;
   }

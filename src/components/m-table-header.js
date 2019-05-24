@@ -15,7 +15,8 @@ export class MTableHeader extends React.Component {
       .map((columnDef, index) => {
         let content = columnDef.title;
 
-        if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
+        if ((this.props.grouping && !this.props.aggregation) && (columnDef.grouping !== false && !columnDef.aggregation) && columnDef.field) {
+          // if ((this.props.grouping) && (columnDef.grouping !== false) && columnDef.field) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
@@ -98,11 +99,11 @@ export class MTableHeader extends React.Component {
 
   renderDetailPanelColumnCell() {
     return <TableCell
-            padding="none"
-            key="key-detail-panel-column"
-            className={this.props.classes.header}
-            style={{ ...this.props.headerStyle }}
-          />;
+      padding="none"
+      key="key-detail-panel-column"
+      className={this.props.classes.header}
+      style={{ ...this.props.headerStyle }}
+    />;
   }
 
   render() {
