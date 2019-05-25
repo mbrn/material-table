@@ -82,6 +82,7 @@ export const defaultProps = {
     showSelectAllCheckbox: true,
     search: true,
     showTitle: true,
+    showTextRowsSelected: true,
     toolbarButtonAlignment: 'right',
     searchFieldAlignment: 'right',
     searchFieldStyle: {},

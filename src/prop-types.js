@@ -126,6 +126,7 @@ export const propTypes = {
     showSelectAllCheckbox: PropTypes.bool,
     search: PropTypes.bool,
     showTitle: PropTypes.bool,
+    showTextRowsSelected: PropTypes.bool,
     toolbarButtonAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldStyle: PropTypes.object,

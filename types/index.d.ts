@@ -26,7 +26,7 @@ export interface MaterialTableProps {
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
-  onSelectionChange?: (data: any[]) => void;
+  onSelectionChange?: (data: any[], rowData?: any) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   tableRef?: any;
 }
@@ -200,6 +200,7 @@ export interface Options {
   showEmptyDataSourceMessage?: boolean;
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
+  showTextRowsSelected?:boolean;
   search?: boolean;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
