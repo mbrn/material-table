@@ -66,47 +66,8 @@ class App extends Component {
   }
 
   render() {
-    this.theme = createMuiTheme({
-      palette: {
-        primary: {
-          main: '#4caf50',
-        },
-        secondary: {
-          main: '#ff9100',
-        },
-      },
-
-    });
-    
     return (
-
       <>
-<MuiThemeProvider theme={this.theme}>
-        <MaterialTable
-          title="Styling with MuiThemeProvider Preview"
-          columns={[
-            {
-              title: 'Name', field: 'name',
-            },
-            { title: 'Surname', field: 'surname' },
-            { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-            {
-              title: 'Birth Place',
-              field: 'birthCity',
-              lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-            },
-          ]}
-          data={[
-            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-          ]}
-          options={{
-            selection: true
-          }}
-        />
-      </MuiThemeProvider>
-
-
         <MuiThemeProvider theme={theme}>
           <input type="text" value={this.state.text} onChange={e => this.setState({ text: e.target.value, colRenderCount: this.colRenderCount })} />
           {this.state.colRenderCount}
@@ -120,7 +81,7 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                     maxBodyHeight: '200px',
-                    grouping: true
+                    grouping: false
                   }}
                 />
               </Grid>

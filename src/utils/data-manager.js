@@ -274,6 +274,11 @@ export default class DataManager {
     }
     else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
+
+      if(newGroup.grouping === false || !newGroup.field){
+        return;
+      }
+      
       groups.splice(result.destination.index, 0, newGroup);
     }
     else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {

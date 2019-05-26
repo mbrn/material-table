@@ -13,27 +13,43 @@ export class MTableHeader extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        let content = columnDef.title;
+        let content = (
+          <Draggable
+            key={columnDef.tableData.id}
+            draggableId={columnDef.tableData.id.toString()}
+            index={index}>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+              >
+                {columnDef.title}
+              </div>
+            )}
+          </Draggable>
+        );
 
-        if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
-          content = (
-            <Draggable
-              key={columnDef.tableData.id}
-              draggableId={columnDef.tableData.id.toString()}
-              index={index}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                >
-                  {columnDef.title}
-                </div>
-              )}
-            </Draggable>
-          );
-        }
+        // if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
+        //   content = (
+        //     <Draggable
+        //       key={columnDef.tableData.id}
+        //       draggableId={columnDef.tableData.id.toString()}
+        //       index={index}>
+        //       {(provided, snapshot) => (
+        //         <div
+        //           ref={provided.innerRef}
+        //           {...provided.draggableProps}
+        //           {...provided.dragHandleProps}
+        //         // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+        //         >
+        //           {columnDef.title}
+        //         </div>
+        //       )}
+        //     </Draggable>
+        //   );
+        // }
 
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
