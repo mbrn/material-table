@@ -15,6 +15,8 @@ OverlayLoading.propTypes = {
   theme: PropTypes.any
 };
 
+const Container = (props) => <Paper {...props}/>;
+
 export const defaultProps = {
   actions: [],
   classes: {},
@@ -24,7 +26,7 @@ export const defaultProps = {
     Actions: MComponents.MTableActions,
     Body: MComponents.MTableBody,
     Cell: MComponents.MTableCell,
-    Container: Paper,
+    Container: Container,
     EditField: MComponents.MTableEditField,
     EditRow: MComponents.MTableEditRow,
     FilterRow: MComponents.MTableFilterRow,
