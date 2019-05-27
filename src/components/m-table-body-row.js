@@ -41,7 +41,7 @@ export default class MTableBodyRow extends React.Component {
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
-          onChange={(event) => this.props.onRowSelected(event, this.props.path,this.props.data)}
+          onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
           style={{
             paddingLeft: 12 + this.props.level * 12
           }}
@@ -75,50 +75,52 @@ export default class MTableBodyRow extends React.Component {
     }
     else {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
-          {this.props.detailPanel.map((panel, index) => {
+        <TableCell padding="none" key="key-detail-panel-column">
+          <div style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
+            {this.props.detailPanel.map((panel, index) => {
 
-            if (typeof panel === "function") {
-              panel = panel(this.props.data);
-            }
+              if (typeof panel === "function") {
+                panel = panel(this.props.data);
+              }
 
-            const isOpen = (this.props.data.tableData.showDetailPanel || '').toString() === panel.render.toString();
-            
-            let iconButton = <this.props.icons.DetailPanel />;
-            let animation = true;
-            if (isOpen) {
-              if (panel.openIcon) {
-                iconButton = <CustomIcon icon={panel.openIcon} />;
-                animation = false;
+              const isOpen = (this.props.data.tableData.showDetailPanel || '').toString() === panel.render.toString();
+
+              let iconButton = <this.props.icons.DetailPanel />;
+              let animation = true;
+              if (isOpen) {
+                if (panel.openIcon) {
+                  iconButton = <CustomIcon icon={panel.openIcon} />;
+                  animation = false;
+                }
+                else if (panel.icon) {
+                  iconButton = <CustomIcon icon={panel.icon} />;
+                }
               }
               else if (panel.icon) {
                 iconButton = <CustomIcon icon={panel.icon} />;
+                animation = false;
               }
-            }
-            else if (panel.icon) {
-              iconButton = <CustomIcon icon={panel.icon} />;
-              animation = false;
-            }
 
-            iconButton = (
-              <IconButton
-                key={"key-detail-panel-" + index}
-                style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
-                disabled={panel.disabled}
-                onClick={(event) => {
-                  this.props.onToggleDetailPanel(this.props.path, panel.render);
-                  event.stopPropagation();
-                }}
-              >
-                {iconButton}
-              </IconButton>);
+              iconButton = (
+                <IconButton
+                  key={"key-detail-panel-" + index}
+                  style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
+                  disabled={panel.disabled}
+                  onClick={(event) => {
+                    this.props.onToggleDetailPanel(this.props.path, panel.render);
+                    event.stopPropagation();
+                  }}
+                >
+                  {iconButton}
+                </IconButton>);
 
-            if (panel.tooltip) {
-              iconButton = <Tooltip key={"key-detail-panel-" + index} title={panel.tooltip}>{iconButton}</Tooltip>;
-            }
+              if (panel.tooltip) {
+                iconButton = <Tooltip key={"key-detail-panel-" + index} title={panel.tooltip}>{iconButton}</Tooltip>;
+              }
 
-            return iconButton;
-          })}
+              return iconButton;
+            })}
+          </div>
         </TableCell>
       );
     }
@@ -135,7 +137,7 @@ export default class MTableBodyRow extends React.Component {
         ...this.props.options.rowStyle(this.props.data)
       };
     }
-    else if(this.props.options.rowStyle) {
+    else if (this.props.options.rowStyle) {
       style = {
         ...style,
         ...this.props.options.rowStyle
@@ -146,7 +148,7 @@ export default class MTableBodyRow extends React.Component {
       style.cursor = 'pointer';
     }
 
-    if(this.props.hasAnyEditingRow) {
+    if (this.props.hasAnyEditingRow) {
       style.opacity = 0.2;
     }
 
@@ -246,7 +248,7 @@ export default class MTableBodyRow extends React.Component {
 
                 onToggleDetailPanel(this.props.path, panel);
               });
-          }}          
+          }}
         >
           {renderColumns}
         </TableRow>

@@ -79,10 +79,13 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  options={{
-                    maxBodyHeight: '200px',
+                  options={{                    
                     grouping: false
                   }}
+                  detailPanel={[
+                    { render: rowData => rowData.name },
+                    { render: rowData => rowData.surname },
+                  ]}
                 />
               </Grid>
             </Grid>
