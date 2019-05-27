@@ -89,6 +89,7 @@ export const defaultProps = {
     searchFieldAlignment: 'right',
     searchFieldStyle: {},
     selection: false,
+    selectionProps: {},
     sorting: true,
     toolbar: true,
     defaultExpanded: false,

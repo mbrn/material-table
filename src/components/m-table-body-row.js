@@ -35,9 +35,14 @@ export default class MTableBodyRow extends React.Component {
     );
   }
   renderSelectionColumn() {
+    let checkboxProps = this.props.options.selectionProps || {};
+    if(typeof checkboxProps === 'function') {
+      checkboxProps = checkboxProps(this.props.data);
+    }
+
     return (
       <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
-        <Checkbox
+        <Checkbox        
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
@@ -45,6 +50,7 @@ export default class MTableBodyRow extends React.Component {
           style={{
             paddingLeft: 12 + this.props.level * 12
           }}
+          {...checkboxProps}
         />
       </TableCell>
     );

@@ -79,6 +79,12 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
+                  options={{
+                    selection: true,
+                    selectionProps: rowData => ({
+                      disabled: rowData.name === "A2",                      
+                    })
+                  }}
                 />
               </Grid>
             </Grid>

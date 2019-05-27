@@ -205,6 +205,7 @@ export interface Options {
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
+  selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
