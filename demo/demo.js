@@ -1,4 +1,4 @@
-import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -39,15 +39,14 @@ class App extends Component {
     text: 'text',
     selecteds: 0,
     data: [
-      { school: { name: 's1' }, id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { school: { name: 's2' }, id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { school: { name: 's3' }, id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { school: { name: 's4' }, id: 4, name: 'A4', surname: 'C', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
-      { school: { name: 's5' }, id: 5, name: 'A5', surname: 'C', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { school: { name: 's6' }, id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
+      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
+      { id: 4, name: 'A4', surname: 'C', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
+      { id: 5, name: 'A5', surname: 'C', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Nested', field: 'school.name' },
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname', grouping: false },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
@@ -80,45 +79,25 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  editable={{
-                    onRowAdd: newData =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowUpdate: (newData, oldData) => {
-                      console.log(oldData);
-                      console.log(newData);
-                      return new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data[index] = newData;                
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      })
-                    },
-                    onRowDelete: oldData =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* let data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data.splice(index, 1);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      })
+                  actions={[
+                    {
+                      icon: 'save',
+                      tooltip: 'Save User',
+                      onClick: (event, rowData) => console.log(rowData)
+                    }
+                  ]}
+                  components={{
+                    Action: props => (
+                      <Button
+                        onClick={(event) => props.action.onClick(event, props.data)}
+                        color="primary"
+                        variant="contained"
+                        style={{ textTransform: 'none' }}
+                        size="small"
+                      >
+                        My Button
+                      </Button>
+                    ),
                   }}
                 />
               </Grid>
