@@ -2,8 +2,7 @@
 import { Checkbox, TableCell, TableRow, IconButton, Icon, Tooltip, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import MTableCell from './m-table-cell';
-import { byString } from '../utils';
+import { byString, setByString } from '../utils';
 /* eslint-enable no-unused-vars */
 
 
@@ -67,7 +66,8 @@ export default class MTableEditRow extends React.Component {
                 rowData={this.props.data}
                 onChange={value => {
                   const data = { ...this.state.data };
-                  data[columnDef.field] = value;
+                  setByString(data, columnDef.field, value);
+                  // data[columnDef.field] = value;
                   this.setState({ data });
                 }} />
             </TableCell>
