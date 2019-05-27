@@ -77,7 +77,7 @@
     "date-fns": "^2.0.0-alpha.27",
     "debounce": "^1.2.0",
     "filefy": "0.1.9",
-    "material-ui-pickers": "2.2.4",
+    "material-ui-pickers": "3.0.0",
     "prop-types": "^15.6.2",
     "react-beautiful-dnd": "11.0.3",
     "react-double-scrollbar": "0.0.15"
