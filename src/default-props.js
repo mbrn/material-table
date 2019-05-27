@@ -15,7 +15,7 @@ OverlayLoading.propTypes = {
   theme: PropTypes.any
 };
 
-const Container = (props) => <Paper {...props}/>;
+const Container = (props) => <Paper elevation={2} {...props}/>;
 
 export const defaultProps = {
   actions: [],
@@ -41,23 +41,23 @@ export const defaultProps = {
   data: [],
   icons: {
     /* eslint-disable react/display-name */
-    Add: (props) => <Icon {...props}>add_box</Icon>,
-    Check: (props) => <Icon {...props}>check</Icon>,
-    Clear: (props) => <Icon {...props}>clear</Icon>,
-    Delete: (props) => <Icon {...props}>delete_outline</Icon>,
-    DetailPanel: (props) => <Icon {...props}>chevron_right</Icon>,
-    Edit: (props) => <Icon {...props}>edit</Icon>,
-    Export: (props) => <Icon {...props}>save_alt</Icon>,
-    Filter: (props) => <Icon {...props}>filter_list</Icon>,
-    FirstPage: (props) => <Icon {...props}>first_page</Icon>,
-    LastPage: (props) => <Icon {...props}>last_page</Icon>,
-    NextPage: (props) => <Icon {...props}>chevron_right</Icon>,
-    PreviousPage: (props) => <Icon {...props}>chevron_left</Icon>,
-    ResetSearch: (props) => <Icon {...props}>clear</Icon>,
-    Search: (props) => <Icon {...props}>search</Icon>,
-    SortArrow: (props) => <Icon {...props}>arrow_upward</Icon>,
-    ThirdStateCheck: (props) => <Icon {...props}>remove</Icon>,
-    ViewColumn: (props) => <Icon {...props}>view_column</Icon>
+    Add: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>add_box</Icon>),
+    Check: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>check</Icon>),
+    Clear: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
+    Delete: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>delete_outline</Icon>),
+    DetailPanel: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
+    Edit: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>edit</Icon>),
+    Export: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>save_alt</Icon>),
+    Filter: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>filter_list</Icon>),
+    FirstPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>first_page</Icon>),
+    LastPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>last_page</Icon>),
+    NextPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
+    PreviousPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_left</Icon>),
+    ResetSearch: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
+    Search: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>search</Icon>),
+    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_upward</Icon>),
+    ThirdStateCheck: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>remove</Icon>),
+    ViewColumn: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>view_column</Icon>)
     /* eslint-enable react/display-name */
   },
   isLoading: false,

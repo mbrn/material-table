@@ -8,7 +8,7 @@ import {
   InputAdornment, Icon, Tooltip,
 } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from '@material-ui/pickers';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
