@@ -79,26 +79,6 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  actions={[
-                    {
-                      icon: 'save',
-                      tooltip: 'Save User',
-                      onClick: (event, rowData) => console.log(rowData)
-                    }
-                  ]}
-                  components={{
-                    Action: props => (
-                      <Button
-                        onClick={(event) => props.action.onClick(event, props.data)}
-                        color="primary"
-                        variant="contained"
-                        style={{ textTransform: 'none' }}
-                        size="small"
-                      >
-                        My Button
-                      </Button>
-                    ),
-                  }}
                 />
               </Grid>
             </Grid>
