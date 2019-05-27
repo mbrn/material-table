@@ -38,7 +38,7 @@ class MTablePaginationInner extends React.Component {
           size="small"
           style={{
             boxShadow: 'none',
-            maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'            
+            maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'
           }}
           disabled={p === this.props.page}
           variant={buttonVariant}
@@ -97,7 +97,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5
+    marginLeft: theme.spacing(2.5)
   }
 });
 

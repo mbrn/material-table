@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
 
+const RefComponent = PropTypes.shape({ current: PropTypes.element });
+const StyledComponent = PropTypes.shape({
+  classes: PropTypes.object,
+  innerRef: RefComponent
+});
+
 export const propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
     icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]).isRequired,
@@ -39,21 +45,21 @@ export const propTypes = {
     type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
   })).isRequired,
   components: PropTypes.shape({
-    Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    EditField: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    EditRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    OverlayLoading: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    EditField: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    EditRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    FilterRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Groupbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    OverlayLoading: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent])
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
@@ -75,23 +81,23 @@ export const propTypes = {
     ]))
   ]),
   icons: PropTypes.shape({
-    Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Delete: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Edit: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ResetSearch: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Check: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Clear: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Delete: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    DetailPanel: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Edit: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Export: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Filter: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    FirstPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    ResetSearch: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
   }),
   isLoading: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
