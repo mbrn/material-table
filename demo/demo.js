@@ -38,7 +38,6 @@ class App extends Component {
   state = {
     text: 'text',
     selecteds: 0,
-    isRemote: true,
     data: [
       { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
@@ -76,37 +75,17 @@ class App extends Component {
             <Grid container>
               <Grid item xs={12}>
                 <MaterialTable
+                  style={{padding: 20}}
                   tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  actions={[
-                    rowData => ({
-                      icon: 'save',
-                      tooltip: 'Save',
-                      onClick: (E, rowData) => alert(rowData.name),
-                      hidden: rowData.name === "A2",
-                      disabled: rowData.name === "A3",
-                    }),
-                    {
-                      icon: 'remove',
-                      tooltip: 'Save',
-                      onClick: (E, rowData) => alert(rowData.name),
-                      hidden: false,
-                      disabled: true,
-                    }
-                  ]}
                 />
               </Grid>
             </Grid>
             {this.state.text}
             <button onClick={() => this.tableRef.current.onAllSelected(true)}>
               Select
-            </button>
-            <button
-              onClick={() => this.setState(prevState => ({ isRemote: !prevState.isRemote }))}
-            >
-              {this.state.isRemote ? "Remote" : "Local"}
             </button>
             <MaterialTable
               title="Remote Data Preview"
@@ -128,23 +107,20 @@ class App extends Component {
               options={{
                 grouping: true
               }}
-              data={this.state.isRemote ?
-                query => new Promise((resolve, reject) => {
-                  let url = 'https://reqres.in/api/users?'
-                  url += 'per_page=' + query.pageSize
-                  url += '&page=' + (query.page + 1)
-                  fetch(url)
-                    .then(response => response.json())
-                    .then(result => {
-                      resolve({
-                        data: result.data,
-                        page: result.page - 1,
-                        totalCount: result.total,
-                      })
+              data={query => new Promise((resolve, reject) => {
+                let url = 'https://reqres.in/api/users?'
+                url += 'per_page=' + query.pageSize
+                url += '&page=' + (query.page + 1)
+                fetch(url)
+                  .then(response => response.json())
+                  .then(result => {
+                    resolve({
+                      data: result.data,
+                      page: result.page - 1,
+                      totalCount: result.total,
                     })
-                })
-                : this.state.data
-              }
+                  })
+              })}
             />
 
           </div>

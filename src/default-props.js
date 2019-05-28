@@ -118,5 +118,7 @@ export const defaultProps = {
       deleteTooltip: 'Delete',
       editTooltip: 'Edit'
     }
+  },
+  style: {
   }
 };

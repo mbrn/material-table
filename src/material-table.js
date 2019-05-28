@@ -445,7 +445,7 @@ export default class MaterialTable extends React.Component {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <props.components.Container style={{ position: 'relative' }}>
+        <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
               actions={props.actions}

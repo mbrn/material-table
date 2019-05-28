@@ -28,6 +28,7 @@ export interface MaterialTableProps {
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[], rowData?: any) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
+  style?: React.CSSProperties;
   tableRef?: any;
 }
 
