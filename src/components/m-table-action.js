@@ -14,6 +14,10 @@ class MTableAction extends React.Component {
       }
     }
 
+    if(action.hidden) {
+      return null;
+    }
+
     const handleOnClick = event => {
       if (action.onClick) {
         action.onClick(event, this.props.data);

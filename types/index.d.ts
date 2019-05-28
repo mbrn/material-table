@@ -67,6 +67,7 @@ export interface Action {
   tooltip?: string;
   onClick: (event: any, data: any) => void;
   iconProps?: IconProps;
+  hidden?: boolean;
 }
 
 export interface EditComponentProps {

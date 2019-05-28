@@ -47,7 +47,7 @@ class App extends Component {
       { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
+      { title: <div>Deneme</div>, field: 'name' },
       { title: 'Soyadı', field: 'surname', grouping: false },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
@@ -79,12 +79,22 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  options={{
-                    selection: true,
-                    selectionProps: rowData => ({
-                      disabled: rowData.name === "A2",                      
-                    })
-                  }}
+                  actions={[
+                    rowData => ({
+                      icon: 'save',
+                      tooltip: 'Save',
+                      onClick: (E, rowData) => alert(rowData.name),
+                      hidden: rowData.name === "A2",
+                      disabled: rowData.name === "A3",
+                    }),
+                    {
+                      icon: 'remove',
+                      tooltip: 'Save',
+                      onClick: (E, rowData) => alert(rowData.name),
+                      hidden: false,
+                      disabled: true,
+                    }
+                  ]}
                 />
               </Grid>
             </Grid>

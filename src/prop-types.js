@@ -12,7 +12,9 @@ export const propTypes = {
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    iconProps: PropTypes.object
+    iconProps: PropTypes.object,
+    disabled: PropTypes.bool,
+    hidden: PropTypes.bool,
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
