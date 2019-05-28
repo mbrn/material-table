@@ -37,7 +37,8 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - and more
 
 ## Demo and documentation
-You can access all examples and documentation from [__docs site__](https://material-table.com/).
+
+You can access all examples and documentation from [**docs site**](https://material-table.com/).
 
 ## Support material-table
 
@@ -46,6 +47,7 @@ To support material-table visit [SUPPORT](https://www.patreon.com/mbrn) page.
 ## Installation
 
 #### 1.Install package
+
 To install material-table with `npm`:
 
     npm install material-table --save
@@ -54,40 +56,128 @@ To install material-table with `yarn`:
 
     yarn add material-table
 
-#### 2.Add material icons to your html
+#### 2.Add material icons
+
+There are two ways to use icons in material-table either import the material icons font via html OR import material icons and use the material-table `icons` prop.
+
+##### HTML
 
 ```html
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
 ```
-or use `icons` props to give icons to material-table
+
+OR
+
+##### Import Material icons
+
+Icons can be imported to be used in material-table offering more flexibility for customising the look and feel of material table over using a font library.
+
+To install @material-ui/icons with `npm`:
+
+    npm install material-table --save
+
+To install @material-ui/icons with `yarn`:
+
+    yarn add @material-ui/icons
+
+If your environment doesn't support tree-shaking, the **recommended** way to import the icons is the following:
+
+```jsx
+import AddBox from "@material-ui/icons/AddBox";
+import ArrowUpward from "@material-ui/icons/ArrowUpward";
+```
+
+If your environment support tree-shaking you can also import the icons this way:
+
+```jsx
+import { AddBox, ArrowUpward } from "@material-ui/icons";
+```
+
+Note: Importing named exports in this way will result in the code for _every icon_ being included in your project, so is not recommended unless you configure [tree-shaking](https://webpack.js.org/guides/tree-shaking/). It may also impact Hot Module Reload performance. Source: [@material-ui/icons](https://github.com/mui-org/material-ui/blob/master/packages/material-ui-icons/README.md#imports)
+
+Example
+
+```jsx
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
+
+const tableIcons = {
+  Add: AddBox,
+  Check: Check,
+  Clear: Clear,
+  Delete: DeleteOutline,
+  DetailPanel: ChevronRight,
+  Edit: Edit,
+  Export: SaveAlt,
+  Filter: FilterList,
+  FirstPage: FirstPage,
+  LastPage: LastPage,
+  NextPage: ChevronRight,
+  PreviousPage: ChevronLeft,
+  ResetSearch: Clear,
+  Search: Search,
+  SortArrow: ArrowUpward,
+  ThirdStateCheck: Remove,
+  ViewColumn: ViewColumn
+};
+
+<MaterialTable
+  icons={tableIcons}
+  ...
+/>
+```
 
 ## Usage
 
-```js
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import MaterialTable from 'material-table'
+Here is a basic example of using material-table within a react application.
+
+```jsx
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import MaterialTable from "material-table";
 
 class App extends Component {
   render() {
     return (
-      <div style={{ maxWidth: '100%' }}>
+      <div style={{ maxWidth: "100%" }}>
         <MaterialTable
           columns={[
-            { title: 'Adı', field: 'name' },
-            { title: 'Soyadı', field: 'surname' },
-            { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
+            { title: "Adı", field: "name" },
+            { title: "Soyadı", field: "surname" },
+            { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
+            {
+              title: "Doğum Yeri",
+              field: "birthCity",
+              lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
+            }
           ]}
-          data={[{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
+          data={[
+            { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 }
+          ]}
           title="Demo Title"
         />
       </div>
-    )
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('react-div'));
+ReactDOM.render(<App />, document.getElementById("react-div"));
 ```
 
 ## Contributing
