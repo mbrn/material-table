@@ -38,6 +38,7 @@ class App extends Component {
   state = {
     text: 'text',
     selecteds: 0,
+    isRemote: true,
     data: [
       { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
@@ -102,6 +103,11 @@ class App extends Component {
             <button onClick={() => this.tableRef.current.onAllSelected(true)}>
               Select
             </button>
+            <button
+              onClick={() => this.setState(prevState => ({ isRemote: !prevState.isRemote }))}
+            >
+              {this.state.isRemote ? "Remote" : "Local"}
+            </button>
             <MaterialTable
               title="Remote Data Preview"
               columns={[
@@ -122,8 +128,8 @@ class App extends Component {
               options={{
                 grouping: true
               }}
-              data={query =>
-                new Promise((resolve, reject) => {
+              data={this.state.isRemote ?
+                query => new Promise((resolve, reject) => {
                   let url = 'https://reqres.in/api/users?'
                   url += 'per_page=' + query.pageSize
                   url += '&page=' + (query.page + 1)
@@ -137,8 +143,10 @@ class App extends Component {
                       })
                     })
                 })
+                : this.state.data
               }
             />
+
           </div>
         </MuiThemeProvider>
       </>

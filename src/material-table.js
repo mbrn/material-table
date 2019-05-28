@@ -54,7 +54,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
-    if (this.isRemoteData()) {
+    if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
     }
@@ -136,7 +136,7 @@ export default class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
-  isRemoteData = () => !Array.isArray(this.props.data)
+  isRemoteData = (props) => !Array.isArray((props || this.props).data)
 
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(checked);
