@@ -77,6 +77,13 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
+                  options={{
+                    rowStyle: (x, i) => {
+                        if (i % 2) {
+                            return {backgroundColor: "#f2f2f2"}
+                        }
+                    }
+                }}
                 />
               </Grid>
             </Grid>
