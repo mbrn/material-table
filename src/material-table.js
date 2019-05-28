@@ -22,7 +22,13 @@ export default class MaterialTable extends React.Component {
       data: [],
       ...renderState,
       query: {
-        filters: [],
+        filters: renderState.columns
+          .filter(a => a.tableData.filterValue)
+          .map(a => ({
+            column: a,
+            operator: "=",
+            value: a.tableData.filterValue
+          })),
         orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
         page: 0,
@@ -339,7 +345,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows,dataClicked);
+      this.props.onSelectionChange(selectedRows, dataClicked);
     }
   }
 
