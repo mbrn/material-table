@@ -434,7 +434,7 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons}/> :
                   <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}

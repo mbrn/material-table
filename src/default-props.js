@@ -81,6 +81,7 @@ export const defaultProps = {
     pageSizeOptions: [5, 10, 20],
     paginationType: 'normal',
     showEmptyDataSourceMessage: true,
+    showFirstLastPageButtons: true,
     showSelectAllCheckbox: true,
     search: true,
     showTitle: true,

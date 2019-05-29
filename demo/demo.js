@@ -78,11 +78,7 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    rowStyle: (x, i) => {
-                        if (i % 2) {
-                            return {backgroundColor: "#f2f2f2"}
-                        }
-                    }
+                    showFirstLastPageButtons: false
                 }}
                 />
               </Grid>
