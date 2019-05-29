@@ -63,13 +63,17 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
-                rowData={this.props.data}
+                rowData={this.state.data}
                 onChange={value => {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
                   this.setState({ data });
-                }} />
+                }}
+                onRowDataChange={data => {
+                  this.setState({ data });
+                }}
+              />
             </TableCell>
           );
         }
