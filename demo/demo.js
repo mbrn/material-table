@@ -55,7 +55,7 @@ class App extends Component {
               onChange={e => {
                 var data = { ...props.rowData };
                 data.name = e.target.value;
-                data.surname = e.target.value.toLocaleUpperCase();        
+                data.surname = e.target.value.toLocaleUpperCase();
                 props.onRowDataChange(data);
               }}
             />
@@ -65,7 +65,6 @@ class App extends Component {
       {
         title: 'Soyadı', field: 'surname', editComponent: props => {
           this.inputBProps = props;
-          console.log(props);
           return (
             <input
               value={props.value}
