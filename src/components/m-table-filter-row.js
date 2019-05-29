@@ -152,12 +152,9 @@ class MTableFilterRow extends React.Component {
       ));
 
     if (this.props.selection) {
-      columns.splice(0, 0, (
-        <TableCell padding="none" key="key-selection-column">
-          <Checkbox onChange={this.props.onFilterSelectionChanged} />
-        </TableCell>)
-      );
+      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column"/>);
     }
+    
     if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);

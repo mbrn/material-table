@@ -389,11 +389,6 @@ export default class MaterialTable extends React.Component {
     }
   }, this.props.options.debounceInterval)
 
-  onFilterSelectionChanged = (event) => {
-    this.dataManager.changeFilterSelectionChecked(event.target.checked);
-    this.setState(this.dataManager.getRenderState());
-  }
-
   onTreeExpandChanged = (path, data) => {
     this.dataManager.changeTreeExpand(path);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -535,7 +530,6 @@ export default class MaterialTable extends React.Component {
                         getFieldValue={this.dataManager.getFieldValue}
                         isTreeData={this.props.parentChildData !== undefined}
                         onFilterChanged={this.onFilterChange}
-                        onFilterSelectionChanged={this.onFilterSelectionChanged}
                         onRowSelected={this.onRowSelected}
                         onToggleDetailPanel={this.onToggleDetailPanel}
                         onGroupExpandChanged={this.onGroupExpandChanged}
