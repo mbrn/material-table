@@ -212,7 +212,6 @@ MTableFilterRow.propTypes = {
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,
   selection: PropTypes.bool.isRequired,
-  onFilterSelectionChanged: PropTypes.func.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
   localization: PropTypes.object
