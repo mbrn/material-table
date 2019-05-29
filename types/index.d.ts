@@ -200,6 +200,7 @@ export interface Options {
   paginationType?: ('normal' | 'stepped');
   rowStyle?: React.CSSProperties | ((data: any, index: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
+  showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   showTextRowsSelected?:boolean;
