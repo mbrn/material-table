@@ -83,7 +83,7 @@ Icons can be imported to be used in material-table offering more flexibility for
 
 To install @material-ui/icons with `npm`:
 
-    npm install material-table --save
+    npm install @material-ui/icons --save
 
 To install @material-ui/icons with `yarn`:
 
