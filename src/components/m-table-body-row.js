@@ -27,7 +27,7 @@ export default class MTableBodyRow extends React.Component {
   renderActions() {
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
     return (
-      <TableCell padding="none" key="key-actions-column" style={{ width: 48 * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
+      <TableCell padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
         <div style={{ display: 'flex' }}>
           <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} />
         </div>
@@ -41,14 +41,14 @@ export default class MTableBodyRow extends React.Component {
     }
 
     return (
-      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
+      <TableCell padding="none" key="key-selection-column" style={{ width: 42 + 9 * (this.props.treeDataMaxLevel - 1) }}>
         <Checkbox        
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
           onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
           style={{
-            paddingLeft: 12 + this.props.level * 12
+            paddingLeft: 9 + this.props.level * 9
           }}
           {...checkboxProps}
         />
@@ -66,7 +66,7 @@ export default class MTableBodyRow extends React.Component {
 
     if (typeof this.props.detailPanel == 'function') {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 42, textAlign: 'center' }}>
           <IconButton
             style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
             onClick={(event) => {
@@ -82,7 +82,7 @@ export default class MTableBodyRow extends React.Component {
     else {
       return (
         <TableCell padding="none" key="key-detail-panel-column">
-          <div style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
+          <div style={{ width: 42 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
             {this.props.detailPanel.map((panel, index) => {
 
               if (typeof panel === "function") {
@@ -181,11 +181,11 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.isTreeData) {
       if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
         renderColumns.splice(0, 0, (
-          <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 2) }}>
+          <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}>
             <IconButton
               style={{
                 transition: 'all ease 200ms',
-                marginLeft: this.props.level * 12,
+                marginLeft: this.props.level * 9,
                 ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
               }}
               onClick={(event) => {
