@@ -1,4 +1,4 @@
-import { Grid, MuiThemeProvider } from '@material-ui/core';
+import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -47,8 +47,32 @@ class App extends Component {
       { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name' },
-      { title: 'Soyadı', field: 'surname', grouping: false },
+      {
+        title: 'Adı', field: 'name', editComponent: props => {
+          return (
+            <input
+              value={props.value}
+              onChange={e => {
+                var data = { ...props.rowData };
+                data.name = e.target.value;
+                data.surname = e.target.value.toLocaleUpperCase();
+                props.onRowDataChange(data);
+              }}
+            />
+          )
+        }
+      },
+      {
+        title: 'Soyadı', field: 'surname', editComponent: props => {
+          this.inputBProps = props;
+          return (
+            <input
+              value={props.value}
+              onChange={e => props.onChange(e.target.value)}
+            />
+          )
+        }
+      },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -60,18 +84,15 @@ class App extends Component {
     remoteColumns: [
       { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} /> },
       { title: 'Id', field: 'id' },
-      { title: 'First Name', field: 'first_name' },
+      { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
       { title: 'Last Name', field: 'last_name' },
     ]
   }
 
   render() {
     return (
-
       <>
         <MuiThemeProvider theme={theme}>
-          <input type="text" value={this.state.text} onChange={e => this.setState({ text: e.target.value, colRenderCount: this.colRenderCount })} />
-          {this.state.colRenderCount}
           <div style={{ maxWidth: '100%', direction }}>
             <Grid container>
               <Grid item xs={12}>
@@ -81,14 +102,13 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    maxBodyHeight: '200px',
-                    grouping: true
+                    selection: true,
                   }}
                 />
               </Grid>
             </Grid>
             {this.state.text}
-            <button onClick={() => this.tableRef.current.onAllSelected(true)}>
+            <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
               Select
             </button>
             <MaterialTable
@@ -109,25 +129,26 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                grouping: true
+                grouping: true,
+                filtering: true
               }}
-              data={query =>
-                new Promise((resolve, reject) => {
-                  let url = 'https://reqres.in/api/users?'
-                  url += 'per_page=' + query.pageSize
-                  url += '&page=' + (query.page + 1)
-                  fetch(url)
-                    .then(response => response.json())
-                    .then(result => {
-                      resolve({
-                        data: result.data,
-                        page: result.page - 1,
-                        totalCount: result.total,
-                      })
+              data={query => new Promise((resolve, reject) => {
+                let url = 'https://reqres.in/api/users?'
+                url += 'per_page=' + query.pageSize
+                url += '&page=' + (query.page + 1)
+                console.log(query);
+                fetch(url)
+                  .then(response => response.json())
+                  .then(result => {
+                    resolve({
+                      data: result.data,
+                      page: result.page - 1,
+                      totalCount: result.total,
                     })
-                })
-              }
+                  })
+              })}
             />
+
           </div>
         </MuiThemeProvider>
       </>

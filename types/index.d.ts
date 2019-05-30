@@ -28,6 +28,7 @@ export interface MaterialTableProps {
   onRowSelected?: (rowData: any) => void;
   onSelectionChange?: (data: any[], rowData?: any) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
+  style?: React.CSSProperties;
   tableRef?: any;
 }
 
@@ -67,9 +68,11 @@ export interface Action {
   tooltip?: string;
   onClick: (event: any, data: any) => void;
   iconProps?: IconProps;
+  hidden?: boolean;
 }
 
 export interface EditComponentProps {
+  rowData: any;
   value: any,
   onChange: (newValue: any) => void,
   columnDef: EditCellColumnDef,
@@ -195,8 +198,9 @@ export interface Options {
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: ('normal' | 'stepped');
-  rowStyle?: React.CSSProperties | ((data: any) => React.CSSProperties);
+  rowStyle?: React.CSSProperties | ((data: any, index: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
+  showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   showTextRowsSelected?:boolean;
@@ -204,6 +208,7 @@ export interface Options {
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
+  selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';

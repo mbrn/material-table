@@ -90,7 +90,7 @@ class MTableBody extends React.Component {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
         actions={this.props.actions}
-        key={groupData.value || ("" + index)}
+        key={groupData.value == null ? ('' + index) : groupData.value}
         columns={this.props.columns}
         components={this.props.components}
         detailPanel={this.props.detailPanel}
@@ -134,8 +134,7 @@ class MTableBody extends React.Component {
             hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
-            selection={this.props.options.selection}
-            onFilterSelectionChanged={this.props.onFilterSelectionChanged}
+            selection={this.props.options.selection} 
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
@@ -218,8 +217,7 @@ MTableBody.propTypes = {
   initialFormData: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   showAddRow: PropTypes.bool,
-  treeDataMaxLevel: PropTypes.number,
-  onFilterSelectionChanged: PropTypes.func.isRequired,
+  treeDataMaxLevel: PropTypes.number,  
   localization: PropTypes.object,
   onFilterChanged: PropTypes.func,
   onGroupExpandChanged: PropTypes.func,

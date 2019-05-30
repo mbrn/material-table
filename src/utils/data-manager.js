@@ -5,8 +5,7 @@ export default class DataManager {
   applyFilters = false;
   applySearch = false;
   currentPage = 0;
-  detailPanelType = 'multiple'
-  filterSelectionChecked = false;
+  detailPanelType = 'multiple'  
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -106,11 +105,6 @@ export default class DataManager {
 
   changeFilterValue(columnId, value) {
     this.columns[columnId].tableData.filterValue = value;
-    this.filtered = false;
-  }
-
-  changeFilterSelectionChecked(checked) {
-    this.filterSelectionChecked = checked;
     this.filtered = false;
   }
 
@@ -274,6 +268,11 @@ export default class DataManager {
     }
     else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
+
+      if(newGroup.grouping === false || !newGroup.field){
+        return;
+      }
+      
       groups.splice(result.destination.index, 0, newGroup);
     }
     else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
@@ -474,12 +473,6 @@ export default class DataManager {
     this.searched = this.grouped = this.treefied = this.sorted = this.paged = false;
 
     this.filteredData = [...this.data];
-
-    // if (this.filterSelectionChecked) {
-    //   this.filterData = this.filterData.filter(row => {
-    //     return row.tableData.checked;
-    //   });
-    // }
 
     if (this.applyFilters) {
       this.columns.filter(columnDef => columnDef.tableData.filterValue).forEach(columnDef => {

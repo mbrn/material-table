@@ -253,7 +253,7 @@ MTableToolbar.propTypes = {
 
 export const styles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit
+    paddingRight: theme.spacing(1)
   },
   highlight:
     theme.palette.type === 'light'
@@ -275,7 +275,7 @@ export const styles = theme => ({
     flex: '0 0 auto'
   },
   searchField: {
-    paddingLeft: theme.spacing.unit * 2
+    paddingLeft: theme.spacing(2)
   }
 });
 

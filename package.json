@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.36.4",
+  "version": "1.39.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -62,8 +62,8 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
     "husky": "^1.2.0",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-hot-loader": "^4.3.12",
     "typescript": "^3.2.2",
     "webpack": "^4.27.1",
@@ -72,14 +72,14 @@
   },
   "dependencies": {
     "@date-io/date-fns": "^1.1.0",
-    "@material-ui/core": "^3.9.3",
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/pickers": "^3.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
     "debounce": "^1.2.0",
     "filefy": "0.1.9",
-    "material-ui-pickers": "2.2.4",
     "prop-types": "^15.6.2",
-    "react-beautiful-dnd": "11.0.2",
+    "react-beautiful-dnd": "11.0.3",
     "react-double-scrollbar": "0.0.15"
   }
 }

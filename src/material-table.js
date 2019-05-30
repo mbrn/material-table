@@ -22,7 +22,13 @@ export default class MaterialTable extends React.Component {
       data: [],
       ...renderState,
       query: {
-        filters: [],
+        filters: renderState.columns
+          .filter(a => a.tableData.filterValue)
+          .map(a => ({
+            column: a,
+            operator: "=",
+            value: a.tableData.filterValue
+          })),
         orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
         page: 0,
@@ -54,7 +60,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
-    if (this.isRemoteData()) {
+    if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
     }
@@ -136,7 +142,7 @@ export default class MaterialTable extends React.Component {
     return calculatedProps;
   }
 
-  isRemoteData = () => !Array.isArray(this.props.data)
+  isRemoteData = (props) => !Array.isArray((props || this.props).data)
 
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(checked);
@@ -339,7 +345,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows,dataClicked);
+      this.props.onSelectionChange(selectedRows, dataClicked);
     }
   }
 
@@ -383,11 +389,6 @@ export default class MaterialTable extends React.Component {
     }
   }, this.props.options.debounceInterval)
 
-  onFilterSelectionChanged = (event) => {
-    this.dataManager.changeFilterSelectionChecked(event.target.checked);
-    this.setState(this.dataManager.getRenderState());
-  }
-
   onTreeExpandChanged = (path, data) => {
     this.dataManager.changeTreeExpand(path);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -428,7 +429,7 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} /> :
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons}/> :
                   <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
@@ -445,7 +446,7 @@ export default class MaterialTable extends React.Component {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <props.components.Container style={{ position: 'relative' }}>
+        <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
               actions={props.actions}
@@ -529,7 +530,6 @@ export default class MaterialTable extends React.Component {
                         getFieldValue={this.dataManager.getFieldValue}
                         isTreeData={this.props.parentChildData !== undefined}
                         onFilterChanged={this.onFilterChange}
-                        onFilterSelectionChanged={this.onFilterSelectionChanged}
                         onRowSelected={this.onRowSelected}
                         onToggleDetailPanel={this.onToggleDetailPanel}
                         onGroupExpandChanged={this.onGroupExpandChanged}
