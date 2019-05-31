@@ -10,47 +10,20 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 export class MTableHeader extends React.Component {
   renderHeader() {
+    /*hasAggregation && <TableRow key="aggr">
+       <this.props.components.Cell colSpan={colSpan - 1}>
+         {Object.keys(aggregations).map((i, idx) => (<span key={String(idx)}>
+           <b>{aggregations[i].label && <>{aggregations[i].label}</>} {this.props.columns[aggregations[i].colId].title}: </b>{aggregations[i].value}
+         </span>))}
+       </this.props.components.Cell>
+     </TableRow>*/
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        let content = columnDef.title;
-
-        if ((this.props.grouping && !this.props.aggregation) && (columnDef.grouping !== false && !columnDef.aggregation) && columnDef.field) {
-          // if ((this.props.grouping) && (columnDef.grouping !== false) && columnDef.field) {
-          content = (
-            <Draggable
-              key={columnDef.tableData.id}
-              draggableId={columnDef.tableData.id.toString()}
-              index={index}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                >
-                  {columnDef.title}
-                </div>
-              )}
-            </Draggable>
-          );
-        }
-
-        if (columnDef.sorting !== false && this.props.sorting) {
-          content = (
-            <TableSortLabel
-              active={this.props.orderBy === columnDef.tableData.id}
-              direction={this.props.orderDirection || 'asc'}
-              onClick={() => {
-                const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
-                this.props.onOrderChange(columnDef.tableData.id, orderDirection);
-              }}
-            >
-              {content}
-            </TableSortLabel>
-          );
-        }
-
+        const aggregation = this.props.aggregations[columnDef.tableData.id];
+        const cellContent = aggregation ? (<span>
+          {aggregation.label && <>{aggregation.label}: </>}<b>{aggregation.value}</b>
+        </span>) : null;
         return (
           <TableCell
             key={columnDef.tableData.id}
@@ -58,7 +31,7 @@ export class MTableHeader extends React.Component {
             className={this.props.classes.header}
             style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
           >
-            {content}
+            {cellContent}
           </TableCell>
         );
       });
@@ -66,34 +39,23 @@ export class MTableHeader extends React.Component {
   }
 
   renderActionsHeader() {
-    const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     return (
       <TableCell
         key="key-actions-column"
         padding="checkbox"
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle, textAlign: 'center' }}
-      >
-        <TableSortLabel disabled>{localization.actions}</TableSortLabel>
-      </TableCell>
+      />
     );
   }
   renderSelectionHeader() {
     return (
       <TableCell
-        padding="none"
+        padding="checkbox"
         key="key-selection-column"
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle }}
-      >
-        {this.props.showSelectAllCheckbox &&
-          <Checkbox
-            indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
-            checked={this.props.dataCount > 0 && this.props.selectedCount === this.props.dataCount}
-            onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
-          />
-        }
-      </TableCell>
+      />
     );
   }
 
@@ -150,47 +112,31 @@ export class MTableHeader extends React.Component {
       });
 
     return (
-      <TableHead>
-        <TableRow>
-          {headers}
-        </TableRow>
-      </TableHead>
+      <TableRow>
+        {headers}
+      </TableRow>
     );
   }
 }
 
 MTableHeader.defaultProps = {
-  dataCount: 0,
   hasSelection: false,
   headerStyle: {},
-  selectedCount: 0,
-  sorting: true,
-  localization: {
-    actions: 'Actions'
-  },
-  orderBy: undefined,
-  orderDirection: 'asc',
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: "left"
 };
 
 MTableHeader.propTypes = {
+  aggregations: PropTypes.object,
+  isTreeData: PropTypes.bool,
   columns: PropTypes.array.isRequired,
-  dataCount: PropTypes.number,
   hasDetailPanel: PropTypes.bool.isRequired,
-  hasSelection: PropTypes.bool,
+  classes:PropTypes.object,
   detailPanelColumnAlignment: PropTypes.string,
+  hasSelection: PropTypes.bool,
   headerStyle: PropTypes.object,
-  localization: PropTypes.object,
-  selectedCount: PropTypes.number,
-  sorting: PropTypes.bool,
-  onAllSelected: PropTypes.func,
-  onOrderChange: PropTypes.func,
-  orderBy: PropTypes.number,
-  orderDirection: PropTypes.string,
   actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
-  showSelectAllCheckbox: PropTypes.bool,
 };
 
 

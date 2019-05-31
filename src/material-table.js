@@ -339,7 +339,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows,dataClicked);
+      this.props.onSelectionChange(selectedRows, dataClicked);
     }
   }
 
@@ -515,6 +515,8 @@ export default class MaterialTable extends React.Component {
                         />
                       }
                       <props.components.Body
+                        detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
+                        hasSelection={props.options.selection}
                         actions={props.actions}
                         components={props.components}
                         icons={props.icons}

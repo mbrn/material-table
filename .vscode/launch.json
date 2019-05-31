@@ -11,7 +11,7 @@
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}",
             "sourceMaps": true,
-            "preLaunchTask": "npm: start"
+            // "preLaunchTask": "npm: start"
         }
     ]
 }

@@ -73,19 +73,22 @@ export default class MTableGroupRow extends React.Component {
       }
     }
 
+    const aggregations = this.props.groupData.aggregations;
+    const hasAggregation = aggregations && !!Object.keys(aggregations).length;
+    const topStyle = hasAggregation ? { borderBottom: 0 } : undefined;
+
     const freeCells = [];
     for (let i = 0; i < this.props.level; i++) {
-      freeCells.push(<TableCell padding="checkbox" />);
+      freeCells.push(<TableCell padding="checkbox" style={topStyle} />);
     }
 
     let value = this.props.groupData.value;
     if (column.lookup) {
       value = column.lookup[value];
     }
-    // const aggregations = this.props.groupData.aggregations;
     return (
       <>
-        <TableRow>
+        <TableRow key="h" >
           {freeCells}
           <this.props.components.Cell
             colSpan={colSpan}
@@ -93,6 +96,7 @@ export default class MTableGroupRow extends React.Component {
             columnDef={column}
             value={value}
             icons={this.props.icons}
+            style={topStyle}
           >
             <IconButton
               style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
@@ -112,22 +116,45 @@ export default class MTableGroupRow extends React.Component {
             // </this.props.components.Cell>}
           }
         </TableRow>
+        {hasAggregation && <this.props.components.AggregationHeader
+          aggregations={aggregations}
+          columns={this.props.columns}
+          hasDetailPanel={!!this.props.detailPanel}
+          detailPanelColumnAlignment={this.props.detailPanelColumnAlignment}
+          hasSelection={this.props.hasSelection}
+          headerStyle={this.props.headerStyle}
+          localization={this.props.localization}
+          actionsHeaderIndex={this.props.actionsHeaderIndex}
+          showActionsColumn={this.props.showActionsColumn} />}
         {detail}
       </>
     );
   }
 }
-
+/*hasAggregation && <TableRow key="aggr">
+   <this.props.components.Cell colSpan={colSpan - 1}>
+     {Object.keys(aggregations).map((i, idx) => (<span key={String(idx)}>
+       <b>{aggregations[i].label && <>{aggregations[i].label}</>} {this.props.columns[aggregations[i].colId].title}: </b>{aggregations[i].value}
+     </span>))}
+   </this.props.components.Cell>
+ </TableRow>*/
 MTableGroupRow.defaultProps = {
   columns: [],
   groups: [],
   options: {},
-  level: 0
+  level: 0,
+  detailPanelColumnAlignment: "left"
 };
 
 MTableGroupRow.propTypes = {
+  detailPanelColumnAlignment: PropTypes.string,
+  hasSelection: PropTypes.bool,
+  headerStyle: PropTypes.object,
   actions: PropTypes.array,
+  localization: PropTypes.string,
   columns: PropTypes.arrayOf(PropTypes.object),
+  actionsHeaderIndex: PropTypes.number,
+  showActionsColumn: PropTypes.bool,
   components: PropTypes.object,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.object)]),
   getFieldValue: PropTypes.func,

@@ -89,6 +89,8 @@ class MTableBody extends React.Component {
   renderGroupedRows(groups, renderData) {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
+        hasSelection={this.props.hasSelection}
+        hasDetailPanel={this.props.hasDetailPanel}
         actions={this.props.actions}
         key={groupData.value == null ? ('' + index) : groupData.value}
         columns={this.props.columns}
@@ -100,6 +102,7 @@ class MTableBody extends React.Component {
         icons={this.props.icons}
         level={0}
         path={[index + this.props.pageSize * this.props.currentPage]}
+        detailPanelColumnAlignment={this.props.detailPanelColumnAlignment}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
         onRowClick={this.props.onRowClick}
@@ -197,10 +200,14 @@ MTableBody.defaultProps = {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
     editRow: {}
-  }
+  },
+  detailPanelColumnAlignment: "left"
 };
 
 MTableBody.propTypes = {
+  detailPanelColumnAlignment: PropTypes.string,
+  hasSelection: PropTypes.bool,
+  hasDetailPanel: PropTypes.bool.isRequired,
   actions: PropTypes.array,
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
@@ -208,7 +215,6 @@ MTableBody.propTypes = {
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
-  hasDetailPanel: PropTypes.bool.isRequired,
   icons: PropTypes.object.isRequired,
   isTreeData: PropTypes.bool.isRequired,
   onRowSelected: PropTypes.func,

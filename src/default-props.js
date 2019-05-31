@@ -31,10 +31,12 @@ export const defaultProps = {
     Groupbar: MComponents.MTableGroupbar,
     GroupRow: MComponents.MTableGroupRow,
     Header: MComponents.MTableHeader,
+    AggregationHeader: MComponents.MTableAggregationHeader,
     OverlayLoading: OverlayLoading,
     Pagination: TablePagination,
     Row: MComponents.MTableBodyRow,
-    Toolbar: MComponents.MTableToolbar
+    Toolbar: MComponents.MTableToolbar,
+
   },
   data: [],
   icons: {
