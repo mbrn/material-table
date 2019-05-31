@@ -87,7 +87,15 @@ export interface EditCellColumnDef {
   }
 }
 
+
+export interface IAggregation {
+  Accumulate: (accumulator: any, currentValue?: any) => any;
+  GetResult: (accumulator: any) => any;
+  label?: string;
+}
+
 export interface Column {
+  aggregation?: IAggregation;
   cellStyle?: React.CSSProperties | ((data: any, rowData: any) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;

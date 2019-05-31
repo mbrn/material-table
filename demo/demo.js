@@ -2,7 +2,7 @@ import { Grid, MuiThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from '../src';
+import MaterialTable, { Aggregations } from '../src';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -29,24 +29,6 @@ for (let i = 0; i < 1; i++) {
   };
   bigData.push(d);
 }
-
-const Aggregations = {
-  Count: (label) => ({
-    Accumulate: (accumulator = 0) => ++accumulator,
-    GetResult: (accumulator) => accumulator,
-    label
-  }),
-  Sum: (label) => ({
-    Accumulate: (accumulator = 0, currentValue) => accumulator + (currentValue || 0),
-    GetResult: (accumulator) => accumulator,
-    label
-  }),
-  Avg: (label) => ({
-    Accumulate: (accumulator = { sum: 0, count: 0 }, currentValue) => ({ sum: accumulator.sum + (currentValue || 0), count: accumulator.count + 1 }),
-    GetResult: (accumulator) => accumulator.sum / accumulator.count,
-    label
-  }),
-};
 
 class App extends Component {
   tableRef = React.createRef();
