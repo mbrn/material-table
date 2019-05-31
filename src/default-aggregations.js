@@ -20,7 +20,7 @@ export default {
         GetResult: (accumulator) => accumulator,
         label
     }),
-    Min: (label) => ({
+    Max: (label) => ({
         Accumulate: (accumulator = undefined, currentValue) => accumulator ? Math.max(accumulator, currentValue) : currentValue,
         GetResult: (accumulator) => accumulator,
         label
