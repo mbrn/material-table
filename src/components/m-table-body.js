@@ -37,7 +37,8 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      if (data.tableData.editing) {
+      const rowTableData=this.props.dataManager.getRowTableData(data);
+      if (rowTableData.editing) {
         return (
           <this.props.components.EditRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
@@ -46,23 +47,26 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             key={index}
-            mode={data.tableData.editing}
+            mode={rowTableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
+            rowTableData={rowTableData}
+            dataManager={this.props.dataManager}
           />
         );
       }
       else {
+        const rowTableData=this.props.dataManager.getRowTableData(data);
         return (
           <this.props.components.Row
             components={this.props.components}
             icons={this.props.icons}
             data={data}
             index={index}
-            key={"row-" + data.tableData.id}
+            key={"row-" + rowTableData.id}
             level={0}
             options={this.props.options}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
@@ -80,6 +84,8 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             treeDataMaxLevel={this.props.treeDataMaxLevel}
+            rowTableData={rowTableData}
+            dataManager={this.props.dataManager}
           />
         );
       }
@@ -232,6 +238,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  dataManager: PropTypes.object.isRequired // TODO: implement this parameter
 };
 
 export default MTableBody;

@@ -56,7 +56,7 @@ export default class MaterialTable extends React.Component {
       defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
       defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
     }
-
+    this.dataManager.setKeyGetter(props.options ? props.options.getRowKey : undefined);
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
@@ -336,11 +336,12 @@ export default class MaterialTable extends React.Component {
 
       const findSelecteds = list => {
         list.forEach(row => {
-          if (row.tableData.checked) {
+          const rowTableData = this.dataManager.getRowTableData(row);
+          if (rowTableData.checked) {
             selectedRows.push(row);
           }
 
-          row.tableData.childRows && findSelecteds(row.tableData.childRows);
+          rowTableData.childRows && findSelecteds(rowTableData.childRows);
         });
       };
 
@@ -392,7 +393,8 @@ export default class MaterialTable extends React.Component {
   onTreeExpandChanged = (path, data) => {
     this.dataManager.changeTreeExpand(path);
     this.setState(this.dataManager.getRenderState(), () => {
-      this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
+      const dataTableData = this.dataManager.getRowTableData(data);
+      this.props.onTreeExpandChange && this.props.onTreeExpandChange(data, dataTableData.isTreeExpanded);
     });
   }
 
@@ -429,7 +431,7 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons}/> :
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
                   <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
@@ -451,7 +453,7 @@ export default class MaterialTable extends React.Component {
             <props.components.Toolbar
               actions={props.actions}
               components={props.components}
-              selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked }) : []}
+              selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => this.dataManager.getChecked(a)) : []}
               columns={this.state.columns}
               columnsButton={props.options.columnsButton}
               icons={props.icons}
@@ -544,6 +546,7 @@ export default class MaterialTable extends React.Component {
                         hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
                         hasDetailPanel={!!props.detailPanel}
                         treeDataMaxLevel={this.state.treeDataMaxLevel}
+                        dataManager={this.dataManager}
                       />
                     </Table>
                   </div>
