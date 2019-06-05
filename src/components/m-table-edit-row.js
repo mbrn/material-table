@@ -88,8 +88,8 @@ export default class MTableEditRow extends React.Component {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
         onClick: () => {
-          // const newData = this.state.data;
-          // delete newData.tableData;
+          const newData = this.state.data;
+          delete newData.tableData;
           this.props.onEditingApproved(this.props.mode, this.state.data, this.props.data);
         }
       },
@@ -225,5 +225,5 @@ MTableEditRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
-  localization: PropTypes.object,
+  localization: PropTypes.object
 };

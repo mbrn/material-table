@@ -5,7 +5,7 @@ export default class DataManager {
   applyFilters = false;
   applySearch = false;
   currentPage = 0;
-  detailPanelType = 'multiple'
+  detailPanelType = 'multiple'  
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -39,61 +39,20 @@ export default class DataManager {
 
   rootGroupsIndex = {};
 
-  keyedRows = false;
-
-  getKey = () => { };
-
-  allTableData = {};
-
   constructor() {
-  }
-
-  setChecked(row, checked) {
-    this.getRowTableData(row).checked = checked;
-  }
-  getChecked(row) {
-    return this.getRowTableData(row).checked;
-  }
-
-  setKeyGetter(getKey) {
-    this.keyedRows = !!getKey;
-    if (this.keyedRows) {
-      this.getKey = getKey;
-    }
-  }
-
-  getRowTableData(row) {
-    if (this.keyedRows) {
-      return this.allTableData[this.getKey(row)];
-    }
-    else {
-      return row.tableData;
-    }
-  }
-
-  setRowTableData(row, tableData) {
-    if (this.keyedRows) {
-      this.allTableData[this.getKey(row)] = tableData;
-    }
-    else {
-      row.tableData = tableData;
-    }
   }
 
   setData(data) {
     this.selectedCount = 0;
 
-    this.data = data;
+    this.data = data.map((row, index) => {
+      row.tableData = { ...row.tableData, id: index };
+      if (row.tableData.checked) {
+        this.selectedCount++;
+      }
+      return row;
+    });
 
-    if (data) {
-      data.forEach((row, index) => {
-        const tableData = { ...this.getRowTableData(row) || {}, id: index };
-        this.setRowTableData(row, tableData);
-        if (tableData.checked) {
-          this.selectedCount++;
-        }
-      });
-    }
     this.filtered = false;
   }
 
@@ -151,18 +110,15 @@ export default class DataManager {
 
   changeRowSelected(checked, path) {
     const rowData = this.findDataByPath(this.sortedData, path);
-    const tableData = this.getRowTableData(rowData);
-    tableData.checked = checked;
+    rowData.tableData.checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
 
-    const checkChildRows = dr => {
-      const drTableData = this.getRowTableData(dr);
-      if (drTableData.childRows) {
-        drTableData.childRows.forEach(cr => {
-          const crTableData = this.getRowTableData(cr);
-          crTableData.checked = checked;
+    const checkChildRows = rowData => {
+      if (rowData.tableData.childRows) {
+        rowData.tableData.childRows.forEach(childRow => {
+          childRow.tableData.checked = checked;
           this.selectedCount = this.selectedCount + (checked ? 1 : -1);
-          checkChildRows(cr);
+          checkChildRows(childRow);
         });
       }
     };
@@ -175,18 +131,15 @@ export default class DataManager {
   changeDetailPanelVisibility(path, render) {
     const rowData = this.findDataByPath(this.sortedData, path);
 
-    const rowDataTableData = this.getRowTableData(rowData);
-
-    if ((rowDataTableData.showDetailPanel || '').toString() === render.toString()) {
-      rowDataTableData.showDetailPanel = undefined;
+    if ((rowData.tableData.showDetailPanel || '').toString() === render.toString()) {
+      rowData.tableData.showDetailPanel = undefined;
     }
     else {
-      rowDataTableData.showDetailPanel = render;
+      rowData.tableData.showDetailPanel = render;
     }
 
     if (this.detailPanelType === 'single' && this.lastDetailPanelRow && this.lastDetailPanelRow != rowData) {
-      const lastDetailPanelRowTableData = this.getRowTableData(this.lastDetailPanelRow);
-      lastDetailPanelRowTableData.showDetailPanel = undefined;
+      this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
     }
 
     this.lastDetailPanelRow = rowData;
@@ -204,12 +157,10 @@ export default class DataManager {
 
   changeRowEditing(rowData, mode) {
     if (rowData) {
-      const tableData = this.getRowTableData(rowData);
-      tableData.editing = mode;
+      rowData.tableData.editing = mode;
 
       if (this.lastEditingRow && this.lastEditingRow != rowData) {
-        const lastEditingRowTableData = this.getRowTableData(this.lastEditingRow);
-        lastEditingRowTableData.editing = undefined;
+        this.lastEditingRow.tableData.editing = undefined;
       }
 
       if (mode) {
@@ -220,8 +171,8 @@ export default class DataManager {
       }
     }
     else if (this.lastEditingRow) {
-      const lastEditingRowTableData = this.getRowTableData(this.lastEditingRow);
-      lastEditingRowTableData.editing = undefined;
+      this.lastEditingRow.tableData.editing = undefined;
+      this.lastEditingRow = undefined;
     }
   }
 
@@ -235,7 +186,7 @@ export default class DataManager {
           }
           else {
             element.data.forEach(d => {
-              this.setChecked(d, checked);
+              d.tableData.checked = checked;
               selectedCount++;
             });
           }
@@ -246,7 +197,7 @@ export default class DataManager {
     }
     else {
       this.searchedData.map(row => {
-        this.setChecked(row, checked);
+        row.tableData.checked = checked;
         return row;
       });
       selectedCount = this.searchedData.length;
@@ -283,8 +234,7 @@ export default class DataManager {
 
   changeTreeExpand(path) {
     const rowData = this.findDataByPath(this.sortedData, path);
-    const rowDataTableData = this.getRowTableData(rowData);
-    rowDataTableData.isTreeExpanded = !rowDataTableData.isTreeExpanded;
+    rowData.tableData.isTreeExpanded = !rowData.tableData.isTreeExpanded;
   }
 
   changeDetailPanelType(type) {
@@ -319,10 +269,10 @@ export default class DataManager {
     else if (result.destination && result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
 
-      if (newGroup.grouping === false || !newGroup.field) {
+      if(newGroup.grouping === false || !newGroup.field){
         return;
       }
-
+      
       groups.splice(result.destination.index, 0, newGroup);
     }
     else if (result.destination && result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
@@ -680,7 +630,7 @@ export default class DataManager {
           if (aggregatedColumns.hasOwnProperty(key)) {
             const aggregatedColumn = aggregatedColumns[key];
             const colId = aggregatedColumn.tableData.id;
-            group.aggregations[colId].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[colId].accumulator, this.getFieldValue(aggregatedColumn, aggregatedColumn));
+            group.aggregations[colId].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[colId].accumulator, currentRow[aggregatedColumn.field]);
           }
         }
         return group;
@@ -717,10 +667,7 @@ export default class DataManager {
 
   treefyData() {
     this.sorted = this.paged = false;
-    this.data.forEach(a => {
-      const tableData = this.getRowTableData(a);
-      tableData.childRows = null;
-    });
+    this.data.forEach(a => a.tableData.childRows = null);
     this.treefiedData = [];
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
@@ -729,29 +676,26 @@ export default class DataManager {
       let parent = this.parentFunc(rowData, this.data);
 
       if (parent) {
-        const parentTableData = this.getRowTableData(parent);
-        parentTableData.childRows = parentTableData.childRows || [];
-        let oldParent = parentTableData.path && this.findDataByPath(this.treefiedData, parentTableData.path);
-        const oldParentTableData = this.getRowTableData(oldParent);
-        let isDefined = oldParent && oldParentTableData.isTreeExpanded !== undefined;
+        parent.tableData.childRows = parent.tableData.childRows || [];
+        let oldParent = parent.tableData.path && this.findDataByPath(this.treefiedData, parent.tableData.path);
+        let isDefined = oldParent && oldParent.tableData.isTreeExpanded !== undefined;
 
-        parentTableData.isTreeExpanded = isDefined ? oldParentTableData.isTreeExpanded : (this.defaultExpanded ? true : false);
-        if (!parentTableData.childRows.includes(rowData)) {
-          parentTableData.childRows.push(rowData);
+        parent.tableData.isTreeExpanded = isDefined ? oldParent.tableData.isTreeExpanded : (this.defaultExpanded ? true : false);
+        if (!parent.tableData.childRows.includes(rowData)) {
+          parent.tableData.childRows.push(rowData);
           this.treefiedDataLength++;
         }
 
         addRow(parent);
-        const rowDataTableData = this.getRowTableData(rowData);
-        rowDataTableData.path = [...parentTableData.path, parentTableData.childRows.length - 1];
-        this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowDataTableData.path.length);
+
+        rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
+        this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowData.tableData.path.length);
       }
       else {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
           this.treefiedDataLength++;
-          const rowDataTableData = this.getRowTableData(rowData);
-          rowDataTableData.path = [this.treefiedData.length - 1];
+          rowData.tableData.path = [this.treefiedData.length - 1];
         }
       }
     };
@@ -816,10 +760,9 @@ export default class DataManager {
 
         const sortTree = (list) => {
           list.forEach(item => {
-            const itemTableData = this.getRowTableData(item);
-            if (itemTableData.childRows) {
-              itemTableData.childRows = this.sortList(itemTableData.childRows);
-              sortTree(itemTableData.childRows);
+            if (item.tableData.childRows) {
+              item.tableData.childRows = this.sortList(item.tableData.childRows);
+              sortTree(item.tableData.childRows);
             }
           });
         };
