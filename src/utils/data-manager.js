@@ -5,7 +5,7 @@ export default class DataManager {
   applyFilters = false;
   applySearch = false;
   currentPage = 0;
-  detailPanelType = 'multiple'  
+  detailPanelType = 'multiple'
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -269,10 +269,10 @@ export default class DataManager {
     else if (result.destination && result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
 
-      if(newGroup.grouping === false || !newGroup.field){
+      if (newGroup.grouping === false || !newGroup.field) {
         return;
       }
-      
+
       groups.splice(result.destination.index, 0, newGroup);
     }
     else if (result.destination && result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
@@ -590,7 +590,8 @@ export default class DataManager {
     const subData = tmpData.reduce((result, currentRow) => {
       let object = result;
       object = groups.reduce((o, colDef) => {
-        const value = currentRow[colDef.field] || byString(currentRow, colDef.field);
+        const value = this.getFieldValue(currentRow, colDef);
+        // const value = currentRow[colDef.field] || byString(currentRow, colDef.field);
 
         let group;
         if (o.groupsIndex[value] !== undefined) {
@@ -615,9 +616,10 @@ export default class DataManager {
               const aggregatedColumn = aggregatedColumns[key];
               const colId = aggregatedColumn.tableData.id;
               group.aggregations[colId] = {
+                colDef:aggregatedColumn,
                 label: aggregatedColumn.aggregation.label,
-                getValue: aggregatedColumn.aggregation.GetResult,
-                field: aggregatedColumn.field,
+                // getValue: aggregatedColumn.aggregation.GetResult,
+                // field: aggregatedColumn.field,
                 colId: aggregatedColumn.tableData.id
               };
             }
@@ -630,7 +632,7 @@ export default class DataManager {
           if (aggregatedColumns.hasOwnProperty(key)) {
             const aggregatedColumn = aggregatedColumns[key];
             const colId = aggregatedColumn.tableData.id;
-            group.aggregations[colId].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[colId].accumulator, currentRow[aggregatedColumn.field]);
+            group.aggregations[colId].accumulator = aggregatedColumn.aggregation.Accumulate(group.aggregations[colId].accumulator, this.getFieldValue(currentRow, aggregatedColumn));
           }
         }
         return group;
@@ -652,7 +654,8 @@ export default class DataManager {
         for (const key in group.aggregations) {
           if (group.aggregations.hasOwnProperty(key)) {
             const aggregation = group.aggregations[key];
-            aggregation.value = aggregation.getValue(aggregation.accumulator);
+            aggregation.value = aggregation.colDef.aggregation.GetResult(aggregation.accumulator);
+            delete aggregation.colDef;
             delete aggregation.getValue;
             delete aggregation.accumulator;
           }

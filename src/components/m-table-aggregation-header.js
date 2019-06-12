@@ -1,25 +1,13 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TableHead, TableRow, TableCell,
-  TableSortLabel, Checkbox, withStyles
-} from '@material-ui/core';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
-/* eslint-enable no-unused-vars */
+import { TableRow, TableCell, withStyles } from '@material-ui/core';
 
-export class MTableHeader extends React.Component {
+export class MTableAggregationHeader extends React.Component {
   renderHeader() {
-    /*hasAggregation && <TableRow key="aggr">
-       <this.props.components.Cell colSpan={colSpan - 1}>
-         {Object.keys(aggregations).map((i, idx) => (<span key={String(idx)}>
-           <b>{aggregations[i].label && <>{aggregations[i].label}</>} {this.props.columns[aggregations[i].colId].title}: </b>{aggregations[i].value}
-         </span>))}
-       </this.props.components.Cell>
-     </TableRow>*/
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-      .map((columnDef, index) => {
+      .map(columnDef => {
         const aggregation = this.props.aggregations[columnDef.tableData.id];
         const cellContent = aggregation ? (<span>
           {aggregation.label && <>{aggregation.label}: </>}<b>{aggregation.value}</b>
@@ -38,40 +26,31 @@ export class MTableHeader extends React.Component {
     return mapArr;
   }
 
-  renderActionsHeader() {
+  renderEmptyHeaderCell(key) {
     return (
       <TableCell
-        key="key-actions-column"
+        key={key}//"key-actions-column"
         padding="checkbox"
-        className={this.props.classes.header}
-        style={{ ...this.props.headerStyle, textAlign: 'center' }}
-      />
-    );
-  }
-  renderSelectionHeader() {
-    return (
-      <TableCell
-        padding="checkbox"
-        key="key-selection-column"
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle }}
       />
     );
   }
-
-  renderDetailPanelColumnCell() {
-    return <TableCell
-      padding="none"
-      key="key-detail-panel-column"
-      className={this.props.classes.header}
-      style={{ ...this.props.headerStyle }}
-    />;
-  }
+  // renderSelectionHeader() {
+  //   return (
+  //     <TableCell
+  //       padding="checkbox"
+  //       key="key-selection-column"
+  //       className={this.props.classes.header}
+  //       style={{ ...this.props.headerStyle }}
+  //     />
+  //   );
+  // }
 
   render() {
     const headers = this.renderHeader();
     if (this.props.hasSelection) {
-      headers.splice(0, 0, this.renderSelectionHeader());
+      headers.unshift(this.renderEmptyHeaderCell("checkbox"));
     }
 
     if (this.props.showActionsColumn) {
@@ -80,35 +59,16 @@ export class MTableHeader extends React.Component {
         if (this.props.hasSelection) {
           endPos = 1;
         }
-        headers.splice(this.props.actionsHeaderIndex + endPos, 0, this.renderActionsHeader());
+        headers.splice(this.props.actionsHeaderIndex + endPos, 0, this.renderEmptyHeaderCell("key-actions-column"));
       } else if (this.props.actionsHeaderIndex === -1) {
-        headers.push(this.renderActionsHeader());
+        headers.push(this.renderEmptyHeaderCell("key-actions-column"));
       }
-    }
-
-    if (this.props.hasDetailPanel) {
-      if (this.props.detailPanelColumnAlignment === 'right') {
-        headers.push(this.renderDetailPanelColumnCell());
-      } else {
-        headers.splice(0, 0, this.renderDetailPanelColumnCell());
-      }
-    }
-
-    if (this.props.isTreeData > 0) {
-      headers.splice(0, 0,
-        <TableCell
-          padding="none"
-          key={"key-tree-data-header"}
-          className={this.props.classes.header}
-          style={{ ...this.props.headerStyle }}
-        />
-      );
     }
 
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
-        headers.splice(0, 0, <TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} className={this.props.classes.header} />);
+        headers.unshift(<TableCell padding="checkbox" key={"key-group-header" + columnDef.tableData.id} className={this.props.classes.header} />);
       });
 
     return (
@@ -119,20 +79,16 @@ export class MTableHeader extends React.Component {
   }
 }
 
-MTableHeader.defaultProps = {
+MTableAggregationHeader.defaultProps = {
   hasSelection: false,
   headerStyle: {},
   actionsHeaderIndex: 0,
-  detailPanelColumnAlignment: "left"
 };
 
-MTableHeader.propTypes = {
+MTableAggregationHeader.propTypes = {
   aggregations: PropTypes.object,
-  isTreeData: PropTypes.bool,
   columns: PropTypes.array.isRequired,
-  hasDetailPanel: PropTypes.bool.isRequired,
-  classes:PropTypes.object,
-  detailPanelColumnAlignment: PropTypes.string,
+  classes: PropTypes.object,
   hasSelection: PropTypes.bool,
   headerStyle: PropTypes.object,
   actionsHeaderIndex: PropTypes.number,
@@ -149,4 +105,4 @@ export const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(MTableHeader);
+export default withStyles(styles)(MTableAggregationHeader);

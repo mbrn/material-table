@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}",
+            "webRoot": "${workspaceFolder}/demo",
             "sourceMaps": true,
             // "preLaunchTask": "npm: start"
         }
