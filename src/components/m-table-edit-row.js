@@ -39,7 +39,9 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
           allowEditing = true;
         }
-
+        if (typeof columnDef.editable == 'function'){
+            allowEditing = columnDef.editable(columnDef, this.props.data);
+        }
         if (!columnDef.field || !allowEditing) {
           return (
             <this.props.components.Cell

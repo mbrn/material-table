@@ -38,7 +38,7 @@ export const propTypes = {
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
     lookup: PropTypes.object,
-    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never']),
+    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never', PropTypes.func]),
     removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,
