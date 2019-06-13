@@ -255,6 +255,7 @@ export interface Localization {
     exportAriaLabel?: string;
     exportName?: string;
     searchTooltip?: string;
+    searchPlaceholder?: string;
   };
 }
 
