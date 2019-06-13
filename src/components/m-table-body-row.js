@@ -16,7 +16,7 @@ export default class MTableBodyRow extends React.Component {
             icons={this.props.icons}
             columnDef={columnDef}
             value={value}
-            key={"cell-" + this.props.data.tableData.di + "-" + columnDef.tableData.id}
+            key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
           />
         );
