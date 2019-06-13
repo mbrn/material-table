@@ -109,7 +109,7 @@ export interface Column {
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
-  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never');
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column, rowData: any) => boolean));
   removable?: boolean;
   render?: (data: any, type: ('row' | 'group')) => any;
   searchable?: boolean;
