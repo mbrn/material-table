@@ -44,16 +44,25 @@ export default class MTableBodyRow extends React.Component {
       checkboxProps = checkboxProps(this.props.data);
     }
 
+    const size = this.getElementSize();
+    const baseIconSize = size === 'medium' ? 42 : 26;
+
+    const styles = size === 'medium' ? {
+      marginLeft: this.props.level * 9
+    } : {
+        padding: "4px",
+        marginLeft: 5 + this.props.level * 9
+      }
+
     return (
-      <TableCell size={this.getElementSize()} padding="none" key="key-selection-column" style={{ width: 42 + 9 * (this.props.treeDataMaxLevel - 1) }}>
+      <TableCell size={this.getElementSize()} padding="none" key="key-selection-column" style={{ width: baseIconSize + 9 * (this.props.treeDataMaxLevel - 1) }}>
         <Checkbox
+          size={size}
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
           onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
-          style={{
-            marginLeft: this.props.level * 9
-          }}
+          style={styles}
           {...checkboxProps}
         />
       </TableCell>
