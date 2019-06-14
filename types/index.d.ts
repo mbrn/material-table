@@ -152,23 +152,23 @@ export const MTableToolbar: () => React.ReactElement<any>;
 
 
 export interface Icons {
-  Add?: () => React.ReactElement<any>;
-  Check?: () => React.ReactElement<any>;
-  Clear?: () => React.ReactElement<any>;
-  Delete?: () => React.ReactElement<any>;
-  DetailPanel?: () => React.ReactElement<any>;
-  Edit?: () => React.ReactElement<any>;
-  Export?: () => React.ReactElement<any>;
-  Filter?: () => React.ReactElement<any>;
-  FirstPage?: () => React.ReactElement<any>;
-  SortArrow?: () => React.ReactElement<any>;
-  LastPage?: () => React.ReactElement<any>;
-  NextPage?: () => React.ReactElement<any>;
-  PreviousPage?: () => React.ReactElement<any>;
-  ResetSearch?: () => React.ReactElement<any>;
-  Search?: () => React.ReactElement<any>;
-  ThirdStateCheck?: () => React.ReactElement<any>;
-  ViewColumn?: () => React.ReactElement<any>;
+  Add?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Check?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Clear?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Delete?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  DetailPanel?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Edit?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Export?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Filter?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  FirstPage?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  SortArrow?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  LastPage?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  NextPage?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  PreviousPage?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  ResetSearch?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  Search?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  ThirdStateCheck?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
+  ViewColumn?: ForwardRefExoticComponent<RefAttributes<SVGSVGElement>>;
 }
 
 export interface Options {
