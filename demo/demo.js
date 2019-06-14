@@ -7,6 +7,7 @@ import MaterialTable from '../src';
 let direction = 'ltr';
 // direction = 'rtl';
 const theme = createMuiTheme({
+  spacing: 2,
   direction: direction,
   palette: {
     type: 'light'
@@ -102,8 +103,26 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  actions={[
+                    {
+                      icon: 'save',
+                      tooltip: 'Save',
+                      onClick: (event, rowData) => {
+                        // do nothing
+                      }
+                    },
+                    {
+                      icon: 'delete',
+                      tooltip: 'Delete',
+                      onClick: (event, rowData) => {
+                        // do nothing
+                      }
+                    }
+                  ]}
                   options={{
-                    selection: true
+                    actionsColumnIndex: -1,
+                    padding: 'dense'
+                    //selection: true
                   }}
                 />
               </Grid>
@@ -131,7 +150,8 @@ class App extends Component {
               ]}
               options={{
                 grouping: true,
-                filtering: true
+                filtering: true,
+                padding: "dense"
               }}
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
