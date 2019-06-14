@@ -52,6 +52,7 @@ class MTableBody extends React.Component {
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
+            getFieldValue={this.props.getFieldValue}            
           />
         );
       }
@@ -156,6 +157,7 @@ class MTableBody extends React.Component {
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
+            getFieldValue={this.props.getFieldValue}
           />
         }
 
@@ -178,6 +180,7 @@ class MTableBody extends React.Component {
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
+            getFieldValue={this.props.getFieldValue}
           />
         }
         {this.renderEmpty(emptyRowCount, renderData)}

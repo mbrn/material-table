@@ -77,7 +77,7 @@ class App extends Component {
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
       { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
-      { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
+      { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' }, editable: 'never' },
       { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
       { title: 'Zaman', field: 'time', type: 'time' }
     ],
