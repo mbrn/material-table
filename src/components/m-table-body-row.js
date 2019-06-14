@@ -48,7 +48,7 @@ export default class MTableBodyRow extends React.Component {
           value={this.props.data.tableData.id.toString()}
           onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
           style={{
-            paddingLeft: 9 + this.props.level * 9
+            marginLeft: this.props.level * 9
           }}
           {...checkboxProps}
         />
