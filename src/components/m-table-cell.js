@@ -10,13 +10,13 @@ export default class MTableCell extends React.Component {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
     if (this.props.columnDef.render) {
-      if(this.props.rowData) {
+      if (this.props.rowData) {
         return this.props.columnDef.render(this.props.rowData, 'row');
       }
       else {
         return this.props.columnDef.render(this.props.value, 'group');
       }
-      
+
     } else if (this.props.columnDef.type === 'boolean') {
       const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
       if (this.props.value) {
@@ -99,6 +99,7 @@ export default class MTableCell extends React.Component {
 
     return (
       <TableCell
+        size={this.props.size}
         {...cellProps}
         style={this.getStyle()}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}

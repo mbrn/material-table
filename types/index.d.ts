@@ -193,6 +193,7 @@ export interface Options {
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;
+  padding?: ('default' | 'dense');
   paging?: boolean;
   grouping?: boolean;
   pageSize?: number;
@@ -203,7 +204,7 @@ export interface Options {
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
-  showTextRowsSelected?:boolean;
+  showTextRowsSelected?: boolean;
   search?: boolean;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
