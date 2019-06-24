@@ -60,7 +60,8 @@ class App extends Component {
               }}
             />
           )
-        }
+        },
+        filterPlaceholder: 'Adı filter'
       },
       {
         title: 'Soyadı', field: 'surname', editComponent: props => {
@@ -104,7 +105,7 @@ class App extends Component {
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                   options={{
                     selection: true,
-                    padding: "dense"
+                    filtering: 'true'
                   }}
                 />
               </Grid>
@@ -126,7 +127,7 @@ class App extends Component {
                     />
                   ),
                 },
-                { title: 'Id', field: 'id' },
+                { title: 'Id', field: 'id', filterPlaceholder:'placeholder' },
                 { title: 'First Name', field: 'first_name' },
                 { title: 'Last Name', field: 'last_name' },
               ]}

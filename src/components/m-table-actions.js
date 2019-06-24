@@ -22,7 +22,8 @@ MTableActions.defaultProps = {
 MTableActions.propTypes = {
   components: PropTypes.object.isRequired,
   actions: PropTypes.array.isRequired,
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)])
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  size: PropTypes.string
 };
 
 export default MTableActions;
