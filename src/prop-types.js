@@ -34,6 +34,7 @@ export const propTypes = {
     field: PropTypes.string,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
+    filterPlaceholder: PropTypes.string,
     grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
