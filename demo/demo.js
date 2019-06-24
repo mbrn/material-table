@@ -103,7 +103,8 @@ class App extends Component {
                   title="Demo Title"
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                   options={{
-                    selection: true
+                    selection: true,
+                    padding: "dense"
                   }}
                 />
               </Grid>
@@ -131,7 +132,7 @@ class App extends Component {
               ]}
               options={{
                 grouping: true,
-                filtering: true
+                filtering: true,
               }}
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
