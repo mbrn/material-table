@@ -561,7 +561,7 @@ export default class DataManager {
       })
       this.searchedData = this.searchedData.filter(row => {
         return this.columns
-          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
+          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable; })
           .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(this.searchText, row, columnDef);
