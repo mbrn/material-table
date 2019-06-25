@@ -87,7 +87,31 @@ class App extends Component {
       { title: 'Id', field: 'id' },
       { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
       { title: 'Last Name', field: 'last_name' },
-    ]
+    ],
+    multiSort: {
+      columns: [
+        { title: 'strings', field: 'strings', defaultSort: 'asc', defaultSortOrder: 0 },
+        { title: 'letters', field: 'letters', defaultSort: 'desc', defaultSortOrder: 1 },
+        { title: 'bools', field: 'bools', defaultSort: 'asc', defaultSortOrder: 2, type: 'boolean' },
+        { title: 'dates', field: 'dates', defaultSort: 'desc', defaultSortOrder: 3, type: 'date' },
+        { title: 'date & time', field: 'datetime', defaultSort: 'asc', defaultSortOrder: 4, type: 'datetime' },
+        { title: 'times', field: 'time', defaultSort: 'desc', defaultSortOrder: 5, type: 'time' },
+        { title: 'numbers', field: 'numbers', defaultSort: 'asc', defaultSortOrder: 6, type: 'numeric' },
+        { title: 'currencies', field: 'currencies', type: 'currency' }
+      ],
+      data: [
+        { strings: "material-table", letters: "A", bools: false, dates: new Date(2001, 1, 1), datetime: new Date(2019, 1, 1, 12, 1, 0), time: new Date(1900, 1, 1, 17, 0, 0), numbers: 99, currencies: 0.99 },
+        { strings: "material-table", letters: "A", bools: true, dates: new Date(2001, 1, 1), datetime: new Date(2019, 1, 1, 12, 1, 0), time: new Date(1900, 1, 1, 17, 1, 0), numbers: 99 , currencies: 9.99 },
+        { strings: "material-table", letters: "A", bools: true, dates: new Date(2001, 1, 1), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 18, 0, 0), numbers: 10, currencies: 0.00 },
+        { strings: "material-table", letters: "A", bools: true, dates: new Date(2001, 1, 1), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 17, 0, 0), numbers: 99 , currencies: 9.99 },
+        { strings: "material-table", letters: "A", bools: true, dates: new Date(2001, 1, 1), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 18, 0, 0), numbers: 10, currencies: 0.00 },
+        { strings: "material-table", letters: "X", bools: false, dates: new Date(2001, 2, 2), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 18, 1, 0), numbers: 10, currencies: 100.00 },
+        { strings: "material-table", letters: "X", bools: true, dates: new Date(2001, 2, 2), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 19, 0, 0), numbers: 999, currencies: 1000.00 },
+        { strings: "material-ui", letters: "X", bools: false, dates: new Date(2001, 2, 2), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 18, 1, 0), numbers: 10, currencies: 100.00 },
+        { strings: "material-ui", letters: "X", bools: true, dates: new Date(2001, 2, 2), datetime: new Date(2019, 1, 1, 12, 2, 0), time: new Date(1900, 1, 1, 19, 0, 0), numbers: 999, currencies: 1000.00 },
+        { strings: "material-ui", letters: "X", bools: false, dates: new Date(2001, 3, 3), datetime: new Date(2019, 1, 1, 12, 10, 1), time: new Date(1900, 1, 1, 20, 0, 1), numbers: 1000, currencies: 1000.01 },
+      ]
+    }
   }
 
   render() {
@@ -151,7 +175,16 @@ class App extends Component {
                   })
               })}
             />
-
+            <MaterialTable
+              tableRef={this.tableRef}
+              columns={this.state.multiSort.columns}
+              data={this.state.multiSort.data}
+              title="MultiSort Columns"
+              options={{
+                pageSize: 10,
+                grouping: true,
+              }}
+            />
           </div>
         </MuiThemeProvider>
       </>

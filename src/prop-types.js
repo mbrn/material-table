@@ -28,6 +28,7 @@ export const propTypes = {
     customSort: PropTypes.func,
     defaultFilter: PropTypes.any,
     defaultSort: PropTypes.oneOf(['asc', 'desc']),
+    defaultSortOrder: PropTypes.number,
     editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
     export: PropTypes.bool,

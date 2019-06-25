@@ -52,13 +52,22 @@ export class MTableHeader extends React.Component {
         // }
 
         if (columnDef.sorting !== false && this.props.sorting) {
+          let active = false;
+          let direction = 'asc';
+  
+          const existingSortedIndex = this.props.sortOrder.findIndex(item => item.orderBy === columnDef.tableData.id);
+          if (existingSortedIndex > -1) {
+            active = true;
+            direction = this.props.sortOrder[existingSortedIndex].orderDirection;
+          }
+
           content = (
             <TableSortLabel
-              active={this.props.orderBy === columnDef.tableData.id}
-              direction={this.props.orderDirection || 'asc'}
-              onClick={() => {
+              active={active}
+              direction={direction}
+              onClick={(event) => {
                 const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
-                this.props.onOrderChange(columnDef.tableData.id, orderDirection);
+                this.props.onOrderChange(columnDef.tableData.id, orderDirection, event.shiftKey);
               }}
             >
               {content}
@@ -203,6 +212,7 @@ MTableHeader.propTypes = {
   onOrderChange: PropTypes.func,
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
+  sortOrder: PropTypes.array,
   actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,

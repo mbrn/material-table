@@ -15,6 +15,7 @@ export default class DataManager {
   parentFunc = null;
   searchText = '';
   selectedCount = 0;
+  sortOrder = [];
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
   defaultExpanded = false;
@@ -72,6 +73,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setDefaultSortOrder(sortOrder) {
+    this.sortOrder = sortOrder;
   }
 
   changeApplySearch(applySearch) {
@@ -206,11 +211,21 @@ export default class DataManager {
     this.selectedCount = checked ? selectedCount : 0;
   }
 
-  changeOrder(orderBy, orderDirection) {
+  changeOrder(orderBy, orderDirection, multiSort) {
     this.orderBy = orderBy;
     this.orderDirection = orderDirection;
-    this.currentPage = 0;
+    if (multiSort) {
+      const existingSortedIndex = this.sortOrder.findIndex(sorted => sorted.orderBy === orderBy);
+      if (existingSortedIndex > -1) {
+        this.sortOrder[existingSortedIndex].orderDirection = orderDirection;
+      } else {
+        this.sortOrder.push({ orderBy, orderDirection });
+      }    
+    } else {
+      this.sortOrder = [{ orderBy, orderDirection }];
+    }
 
+    this.currentPage = 0;
     this.sorted = false;
   }
 
@@ -389,7 +404,8 @@ export default class DataManager {
   }
 
   sort(a, b, type) {
-    if (type === 'numeric') {
+
+    if (type === 'numeric' || type === 'currency') {
       return a - b;
     } else {
       if (a !== b) { // to find nulls
@@ -401,26 +417,25 @@ export default class DataManager {
   }
 
   sortList(list) {
-    const columnDef = this.columns.find(_ => _.tableData.id === this.orderBy);
-    let result = list;
+    return list.sort((a, b) => {
+      let i = 0; 
+      let result = 0;
+      while(i < this.sortOrder.length && result === 0) {
+        const columnDef = this.columns.find(_ => _.tableData.id === this.sortOrder[i].orderBy);
+        const direction = this.sortOrder[i].orderDirection === 'asc' ? 1 : -1;
 
-    if (columnDef.customSort) {
-      if (this.orderDirection === 'desc') {
-        result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
+        if (columnDef.customSort) {
+          result = columnDef.customSort(a, b, 'row');
+        } else {
+          const aFieldValue = this.getFieldValue(a, columnDef).toString();
+          const bFieldValue = this.getFieldValue(b, columnDef).toString();
+          result = this.sort(aFieldValue, bFieldValue, columnDef.type);
+        }
+        result = direction * result;
+        i++;
       }
-      else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
-      }
-    }
-    else {
-      result = list.sort(
-        this.orderDirection === 'desc'
-          ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
-          : (a, b) => this.sort(this.getFieldValue(a, columnDef), this.getFieldValue(b, columnDef), columnDef.type)
-      );
-    }
-
-    return result;
+      return result;
+    });
   }
 
   getRenderState = () => {
@@ -455,6 +470,7 @@ export default class DataManager {
       lastEditingRow: this.lastEditingRow,
       orderBy: this.orderBy,
       orderDirection: this.orderDirection,
+      sortOrder: this.sortOrder,
       originalData: this.data,
       pageSize: this.pageSize,
       renderData: this.pagedData,

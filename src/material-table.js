@@ -34,7 +34,7 @@ export default class MaterialTable extends React.Component {
         page: 0,
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
-
+        sortOrder: renderState.sortOrder,
         totalCount: 0
       },
       showAddRow: false
@@ -52,13 +52,34 @@ export default class MaterialTable extends React.Component {
   setDataManagerFields(props, isInit) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
+    let defaultSortColumns = [];
+    let defaultSortOrder = [];
+
     if (props) {
-      defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
+      defaultSortColumns = props.columns.filter(c => c.defaultSort && c.defaultSortOrder !== undefined);
+      defaultSortColumns.sort((c1, c2) => (c1.defaultSortOrder.toString() > c2.defaultSortOrder.toString()) ? 1 : -1);
+      const lastSortColumn = defaultSortColumns.pop();
+      
+      if (defaultSortColumns.length > 0) {
+        defaultSortColumnIndex = props.columns.findIndex(c => c.field === lastSortColumn.field);
+        defaultSortColumns.reduce((acc, sortColumn) => {
+           const sortColumnIndex = props.columns.findIndex(c => c.field === sortColumn.field);
+           acc.push({
+            orderBy: sortColumnIndex,
+            orderDirection: defaultSortColumns[sortColumnIndex].defaultSort
+           });
+           return acc;
+         }, defaultSortOrder);
+      } else {
+        defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
+      }
+      
       defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
     }
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.setDefaultSortOrder(defaultSortOrder);
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -70,7 +91,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection, defaultSortColumns.length > 0);
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     isInit && this.dataManager.changePageSize(props.options.pageSize);
     isInit && this.dataManager.changePaging(props.options.paging);
@@ -169,21 +190,22 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   }
 
-  onChangeOrder = (orderBy, orderDirection) => {
-    this.dataManager.changeOrder(orderBy, orderDirection);
+  onChangeOrder = (orderBy, orderDirection, multiSort = false) => {
+    this.dataManager.changeOrder(orderBy, orderDirection, multiSort);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
       query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
       query.orderDirection = orderDirection;
+      query.sortOrder = [...this.state.sortOrder];
       this.onQueryChange(query, () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection, [...this.state.sortOrder]);
       });
     }
     else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection, [...this.state.sortOrder]);
       });
     }
   }
@@ -524,6 +546,7 @@ export default class MaterialTable extends React.Component {
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}
+                          sortOrder={this.state.sortOrder}
                         />
                       }
                       <props.components.Body
