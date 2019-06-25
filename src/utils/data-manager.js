@@ -5,7 +5,7 @@ export default class DataManager {
   applyFilters = false;
   applySearch = false;
   currentPage = 0;
-  detailPanelType = 'multiple'  
+  detailPanelType = 'multiple'
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -153,6 +153,7 @@ export default class DataManager {
   changeSearchText(searchText) {
     this.searchText = searchText;
     this.searched = false;
+    this.currentPage = 0;
   }
 
   changeRowEditing(rowData, mode) {
@@ -269,10 +270,10 @@ export default class DataManager {
     else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
 
-      if(newGroup.grouping === false || !newGroup.field){
+      if (newGroup.grouping === false || !newGroup.field) {
         return;
       }
-      
+
       groups.splice(result.destination.index, 0, newGroup);
     }
     else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
