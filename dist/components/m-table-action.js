@@ -66,14 +66,14 @@ function (_React$Component) {
         }
       };
 
-      var button = React.createElement("span", null, React.createElement(_core.IconButton, {
+      var button = React.createElement("span", null, React.createElement(_core.IconButton, (0, _extends2["default"])({
         size: this.props.size,
         color: "inherit",
         disabled: action.disabled,
         onClick: function onClick(event) {
           return handleOnClick(event);
         }
-      }, typeof action.icon === "string" ? React.createElement(_core.Icon, (0, _extends2["default"])({}, action.iconProps, {
+      }, action.iconButtonProps || {}), typeof action.icon === "string" ? React.createElement(_core.Icon, (0, _extends2["default"])({}, action.iconProps, {
         fontSize: "small"
       }), action.icon) : React.createElement(action.icon, (0, _extends2["default"])({}, action.iconProps, {
         disabled: action.disabled

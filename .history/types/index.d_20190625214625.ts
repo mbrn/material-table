@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
-import { IconButtonProps } from '@material-ui/core/IconButton';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps {
@@ -68,7 +67,6 @@ export interface Action {
   isFreeAction?: boolean;
   tooltip?: string;
   onClick: (event: any, data: any) => void;
-  iconButtonProps?: IconButtonProps;
   iconProps?: IconProps;
   hidden?: boolean;
 }
@@ -210,7 +208,6 @@ export interface Options {
   search?: boolean;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
-  searchFieldProps?: object;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;

@@ -210,7 +210,7 @@ export interface Options {
   search?: boolean;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
-  searchFieldProps?: object;
+  searchFieldClasses?: object;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;

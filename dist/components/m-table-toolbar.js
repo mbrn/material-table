@@ -61,7 +61,7 @@ function (_React$Component) {
           return _this.props.getFieldValue(rowData, columnDef);
         });
       });
-      var builder = new _filefy.CsvBuilder((_this.props.exportFileName || _this.props.title || 'data') + '.csv');
+      var builder = new _filefy.CsvBuilder((_this.props.exportFileName || _this.props.title || "data") + ".csv");
       builder.setDelimeter(_this.props.exportDelimiter).setColumns(columns.map(function (columnDef) {
         return columnDef.title;
       })).addRows(data).exportFile();
@@ -93,7 +93,7 @@ function (_React$Component) {
 
       if (this.props.search) {
         return React.createElement(_core.TextField, {
-          className: this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField,
+          className: this.props.searchFieldAlignment === "left" && this.props.showTitle === false ? null : this.props.classes.searchField,
           value: this.props.searchText,
           onChange: function onChange(event) {
             return _this2.props.onSearchChanged(event.target.value);
@@ -120,7 +120,8 @@ function (_React$Component) {
               color: "inherit",
               fontSize: "small"
             }))),
-            style: this.props.searchFieldStyle
+            style: this.props.searchFieldStyle,
+            classes: this.props.searchFieldProps
           }
         });
       } else {
@@ -224,16 +225,16 @@ function (_React$Component) {
     value: function render() {
       var classes = this.props.classes;
       var localization = (0, _objectSpread2["default"])({}, MTableToolbar.defaultProps.localization, this.props.localization);
-      var title = this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
+      var title = this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace("{0}", this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
       return React.createElement(_core.Toolbar, {
         className: (0, _classnames["default"])(classes.root, (0, _defineProperty2["default"])({}, classes.highlight, this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0))
       }, title && React.createElement("div", {
         className: classes.title
       }, React.createElement(_core.Typography, {
         variant: "h6"
-      }, title)), this.props.searchFieldAlignment === 'left' && this.renderSearch(), this.props.toolbarButtonAlignment === 'left' && this.renderActions(), React.createElement("div", {
+      }, title)), this.props.searchFieldAlignment === "left" && this.renderSearch(), this.props.toolbarButtonAlignment === "left" && this.renderActions(), React.createElement("div", {
         className: classes.spacer
-      }), this.props.searchFieldAlignment === 'right' && this.renderSearch(), this.props.toolbarButtonAlignment === 'right' && this.renderActions());
+      }), this.props.searchFieldAlignment === "right" && this.renderSearch(), this.props.toolbarButtonAlignment === "right" && this.renderActions());
     }
   }]);
   return MTableToolbar;
@@ -245,24 +246,25 @@ MTableToolbar.defaultProps = {
   columns: [],
   columnsButton: false,
   localization: {
-    addRemoveColumns: 'Add or remove columns',
-    nRowsSelected: '{0} row(s) selected',
-    showColumnsTitle: 'Show Columns',
-    showColumnsAriaLabel: 'Show Columns',
-    exportTitle: 'Export',
-    exportAriaLabel: 'Export',
-    exportName: 'Export as CSV',
-    searchTooltip: 'Search',
-    searchPlaceholder: 'Search'
+    addRemoveColumns: "Add or remove columns",
+    nRowsSelected: "{0} row(s) selected",
+    showColumnsTitle: "Show Columns",
+    showColumnsAriaLabel: "Show Columns",
+    exportTitle: "Export",
+    exportAriaLabel: "Export",
+    exportName: "Export as CSV",
+    searchTooltip: "Search",
+    searchPlaceholder: "Search"
   },
   search: true,
   showTitle: true,
   showTextRowsSelected: true,
-  toolbarButtonAlignment: 'right',
-  searchFieldAlignment: 'right',
-  searchText: '',
+  toolbarButtonAlignment: "right",
+  searchFieldAlignment: "right",
+  searchText: "",
   selectedRows: [],
-  title: 'No Title!'
+  title: "No Title!",
+  searchFieldProps: {}
 };
 MTableToolbar.propTypes = {
   actions: _propTypes["default"].array,
@@ -275,6 +277,7 @@ MTableToolbar.propTypes = {
   onSearchChanged: _propTypes["default"].func.isRequired,
   search: _propTypes["default"].bool.isRequired,
   searchFieldStyle: _propTypes["default"].object,
+  searchFieldProps: _propTypes["default"].object,
   searchText: _propTypes["default"].string.isRequired,
   selectedRows: _propTypes["default"].array,
   title: _propTypes["default"].oneOfType([_propTypes["default"].element, _propTypes["default"].string]),
@@ -297,7 +300,7 @@ var styles = function styles(theme) {
     root: {
       paddingRight: theme.spacing(1)
     },
-    highlight: theme.palette.type === 'light' ? {
+    highlight: theme.palette.type === "light" ? {
       color: theme.palette.secondary.main,
       backgroundColor: (0, _colorManipulator.lighten)(theme.palette.secondary.light, 0.85)
     } : {
@@ -305,13 +308,13 @@ var styles = function styles(theme) {
       backgroundColor: theme.palette.secondary.dark
     },
     spacer: {
-      flex: '1 1 10%'
+      flex: "1 1 10%"
     },
     actions: {
       color: theme.palette.text.secondary
     },
     title: {
-      flex: '0 0 auto'
+      flex: "0 0 auto"
     },
     searchField: {
       paddingLeft: theme.spacing(2)
