@@ -100,7 +100,7 @@ function (_React$Component) {
           },
           placeholder: localization.searchPlaceholder,
           color: "inherit",
-          InputProps: {
+          InputProps: (0, _objectSpread2["default"])({
             startAdornment: React.createElement(_core.InputAdornment, {
               position: "start"
             }, React.createElement(_core.Tooltip, {
@@ -120,9 +120,8 @@ function (_React$Component) {
               color: "inherit",
               fontSize: "small"
             }))),
-            style: this.props.searchFieldStyle,
-            classes: this.props.searchFieldProps
-          }
+            style: this.props.searchFieldStyle
+          }, this.props.searchFieldProps)
         });
       } else {
         return null;
