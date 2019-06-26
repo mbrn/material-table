@@ -2,77 +2,77 @@ import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
-export interface MaterialTableProps {
-  actions?: (Action | ((rowData: any) => Action))[];
-  columns: Column[];
+export interface MaterialTableProps<RowData extends object> {
+  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
+  columns: Column<RowData>[];
   components?: Components;
-  data: any[] | ((query: Query) => Promise<QueryResult>);
-  detailPanel?: ((rowData: any) => React.ReactNode) | (DetailPanel | ((rowData: any) => DetailPanel))[];
+  data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
+  detailPanel?: ((rowData: RowData) => React.ReactNode) | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
   editable?: {
-    isEditable?: (rowData: any) => boolean;
-    isDeletable?: (rowData: any) => boolean;
-    onRowAdd?: (newData: any) => Promise<void>;
-    onRowUpdate?: (newData: any, oldData?: any) => Promise<void>;
-    onRowDelete?: (oldData: any) => Promise<void>;
+    isEditable?: (rowData: RowData) => boolean;
+    isDeletable?: (rowData: RowData) => boolean;
+    onRowAdd?: (newData: RowData) => Promise<void>;
+    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<void>;
+    onRowDelete?: (oldData: RowData) => Promise<void>;
   }
   icons?: Icons;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
   options?: Options;
-  parentChildData?: (row: any, rows: any[]) => any;
+  parentChildData?: (row: RowData, rows: RowData[]) => RowData[];
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
-  onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
-  onRowSelected?: (rowData: any) => void;
-  onSelectionChange?: (data: any[], rowData?: any) => void;
+  onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
+  onRowSelected?: (rowData: RowData) => void;
+  onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   style?: React.CSSProperties;
   tableRef?: any;
 }
 
-export interface Filter {
-  column: Column;
+export interface Filter<RowData extends object> {
+  column: Column<RowData>;
   operator: "=";
   value: any;
 }
 
-export interface Query {
-  filters: Filter[];
+export interface Query<RowData extends object> {
+  filters: Filter<RowData>[];
   page: number;
   pageSize: number;
   search: string;
-  orderBy: Column;
+  orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
 }
 
-export interface QueryResult {
-  data: any[];
+export interface QueryResult<RowData extends object> {
+  data: RowData[];
   page: number;
   totalCount: number;
 }
 
-export interface DetailPanel {
+export interface DetailPanel<RowData extends object> {
   disabled?: boolean;
   icon?: string | React.ReactElement<any>;
   openIcon?: string | React.ReactElement<any>;
   tooltip?: string;
-  render: (rowData: any) => string | React.ReactNode;
+  render: (rowData: RowData) => string | React.ReactNode;
 }
 
-export interface Action {
+export interface Action<RowData extends object> {
   disabled?: boolean;
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
-  onClick: (event: any, data: any) => void;
+  onClick: (event: any, data: RowData[]) => void;
   iconProps?: IconProps;
   hidden?: boolean;
 }
 
-export interface EditComponentProps {
-  rowData: any;
+export interface EditComponentProps<RowData extends object> {
+  rowData: RowData;
   value: any,
   onChange: (newValue: any) => void,
   columnDef: EditCellColumnDef,
@@ -89,29 +89,29 @@ export interface EditCellColumnDef {
   }
 }
 
-export interface Column {
-  cellStyle?: React.CSSProperties | ((data: any, rowData: any) => React.CSSProperties);
+export interface Column<RowData extends object> {
+  cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
-  customFilterAndSearch?: (filter: any, rowData: any, columnDef: Column) => boolean;
-  customSort?: (data1: any, data2: any, type: (('row' | 'group'))) => number;
+  customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
+  customSort?: (data1: RowData, data2: RowData, type: (('row' | 'group'))) => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
   disableClick?: boolean;
-  editComponent?: ((props: EditComponentProps) => React.ReactElement<any>);
+  editComponent?: ((props: EditComponentProps<RowData>) => React.ReactElement<any>);
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
-  field?: string;
+  field?: keyof RowData;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   lookup?: object;
-  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column, rowData: any) => boolean));
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
-  render?: (data: any, type: ('row' | 'group')) => any;
+  render?: (data: RowData, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
@@ -260,5 +260,4 @@ export interface Localization {
   };
 }
 
-declare const MaterialTable: React.ComponentType<MaterialTableProps>;
-export default MaterialTable;
+export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}
