@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import { IconButtonProps } from '@material-ui/core/IconButton';
+import { TextFieldProps } from '@material-ui/core/TextField';
+import { ToolbarProps } from '@material-ui/core/Toolbar';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps {
@@ -212,12 +214,12 @@ export interface Options {
   search?: boolean;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
-  searchFieldProps?: object;
+  searchFieldProps?: searchFieldProps;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
   toolbar?: boolean;
-  toolbarProps?: object;
+  toolbarProps?: ToolbarProps;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
 }
