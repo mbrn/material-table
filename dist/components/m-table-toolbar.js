@@ -94,6 +94,7 @@ function (_React$Component) {
       var localization = (0, _objectSpread2["default"])({}, MTableToolbar.defaultProps.localization, this.props.localization);
 
       if (this.props.search) {
+        console.warn("this.props.searchFieldProps", this.props.searchFieldProps);
         return React.createElement(_core.TextField, (0, _extends2["default"])({
           className: this.props.searchFieldAlignment === "left" && this.props.showTitle === false ? null : this.props.classes.searchField,
           value: this.props.searchText,
