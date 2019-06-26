@@ -9,6 +9,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = exports.styles = exports.MTableToolbar = void 0;
 
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
@@ -92,7 +94,7 @@ function (_React$Component) {
       var localization = (0, _objectSpread2["default"])({}, MTableToolbar.defaultProps.localization, this.props.localization);
 
       if (this.props.search) {
-        return React.createElement(_core.TextField, {
+        return React.createElement(_core.TextField, (0, _extends2["default"])({
           className: this.props.searchFieldAlignment === "left" && this.props.showTitle === false ? null : this.props.classes.searchField,
           value: this.props.searchText,
           onChange: function onChange(event) {
@@ -100,7 +102,7 @@ function (_React$Component) {
           },
           placeholder: localization.searchPlaceholder,
           color: "inherit",
-          InputProps: (0, _objectSpread2["default"])({
+          InputProps: {
             startAdornment: React.createElement(_core.InputAdornment, {
               position: "start"
             }, React.createElement(_core.Tooltip, {
@@ -121,8 +123,8 @@ function (_React$Component) {
               fontSize: "small"
             }))),
             style: this.props.searchFieldStyle
-          }, this.props.searchFieldProps)
-        });
+          }
+        }, this.props.searchFieldProps));
       } else {
         return null;
       }
