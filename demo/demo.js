@@ -200,6 +200,9 @@ class App extends Component {
                   options={{
                     selection: true,
                     filtering: true,
+                    toolbarProps: {
+                      variant: "dense"
+                    },
                     searchFieldStyle: {
                       marginRight: 10
                     },
@@ -210,36 +213,6 @@ class App extends Component {
                       }
                     }
                   }}
-                  actions={[
-                    {
-                      icon: "add",
-                      tooltip: "add item",
-                      onClick: () => alert("added!"),
-                      isFreeAction: true,
-                      fab: true,
-                      iconButtonProps: {
-                        color: "primary",
-                        size: "small",
-                        style: {
-                          marginLeft: 5
-                        }
-                      }
-                    },
-                    {
-                      icon: "star",
-                      tooltip: "add item",
-                      onClick: () => alert("favorite!"),
-                      isFreeAction: true,
-                      fab: true,
-                      iconButtonProps: {
-                        color: "secondary",
-                        size: "small",
-                        style: {
-                          marginLeft: 5
-                        }
-                      }
-                    }
-                  ]}
                 />
               </Grid>
             </Grid>
@@ -252,6 +225,88 @@ class App extends Component {
             </button>
             <MaterialTable
               title="Remote Data Preview"
+              actions={[
+                {
+                  icon: "add",
+                  tooltip: "add item",
+                  onClick: () => alert("added!"),
+                  isFreeAction: true,
+                  fab: true,
+                  iconButtonProps: {
+                    color: "primary",
+                    size: "small",
+                    variant: "extended",
+                    style: {
+                      marginLeft: 5
+                    }
+                  },
+                  title: "Add",
+                  iconProps: {
+                    style: {
+                      marginRight: 8
+                    }
+                  }
+                },
+                {
+                  icon: "star",
+                  tooltip: "favorite",
+                  onClick: () => alert("favorite!"),
+                  isFreeAction: true,
+                  fab: true,
+                  iconButtonProps: {
+                    color: "secondary",
+                    size: "small",
+                    style: {
+                      marginLeft: 5
+                    }
+                  }
+                },
+                {
+                  icon: "delete",
+                  tooltip: "delete item",
+                  onClick: () => alert("deleted!"),
+                  fab: true,
+                  iconButtonProps: {
+                    size: "small",
+                    style: {
+                      marginRight: 5
+                    }
+                  }
+                },
+                {
+                  icon: "edit",
+                  tooltip: "edit item",
+                  onClick: () => alert("updated!"),
+                  fab: true,
+                  iconButtonProps: {
+                    size: "small",
+                    style: {
+                      marginRight: 5
+                    }
+                  }
+                },
+                {
+                  icon: "remove_red_eye",
+                  tooltip: "visit item",
+                  onClick: () => alert("visited!"),
+                  fab: true,
+                  iconButtonProps: {
+                    color: "primary",
+                    size: "small",
+                    variant: "extended",
+                    style: {
+                      marginTop: 3,
+                      marginRight: 5
+                    }
+                  },
+                  title: "view",
+                  iconProps: {
+                    style: {
+                      marginRight: 8
+                    }
+                  }
+                }
+              ]}
               columns={[
                 {
                   title: "Avatar",

@@ -71,7 +71,7 @@ export interface Action {
   iconProps?: IconProps;
   iconButtonProps?: IconButtonProps;
   fab?: boolean;
-  title?: string;
+  title?: string | React.ReactElement<any>;
   hidden?: boolean;
 }
 
