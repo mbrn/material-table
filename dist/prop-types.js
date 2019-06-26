@@ -26,6 +26,8 @@ var propTypes = {
     onClick: _propTypes["default"].func.isRequired,
     iconProps: _propTypes["default"].object,
     iconButtonProps: _propTypes["default"].object,
+    fab: _propTypes["default"].bool,
+    title: _propTypes["default"].string,
     disabled: _propTypes["default"].bool,
     hidden: _propTypes["default"].bool
   })])),

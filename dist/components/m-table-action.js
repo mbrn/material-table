@@ -47,7 +47,7 @@ function (_React$Component) {
 
       var action = this.props.action;
 
-      if (typeof action === 'function') {
+      if (typeof action === "function") {
         action = action(this.props.data);
 
         if (!action) {
@@ -66,7 +66,9 @@ function (_React$Component) {
         }
       };
 
-      var button = React.createElement("span", null, React.createElement(_core.IconButton, (0, _extends2["default"])({
+      var IconButtonComponent = action.fab ? _core.Fab : _core.IconButton;
+      var title = action.fab && action.title ? action.title : null;
+      var button = React.createElement("span", null, React.createElement(IconButtonComponent, (0, _extends2["default"])({
         size: this.props.size,
         color: "inherit",
         disabled: action.disabled,
@@ -77,7 +79,7 @@ function (_React$Component) {
         fontSize: "small"
       }), action.icon) : React.createElement(action.icon, (0, _extends2["default"])({}, action.iconProps, {
         disabled: action.disabled
-      }))));
+      })), title));
 
       if (action.tooltip) {
         return React.createElement(_core.Tooltip, {

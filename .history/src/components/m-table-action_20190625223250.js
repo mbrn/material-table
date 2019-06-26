@@ -26,7 +26,6 @@ class MTableAction extends React.Component {
     };
 
     const IconButtonComponent = action.fab ? Fab : IconButton;
-    const title = action.fab && action.title ? action.title : null;
 
     const button = (
       <span>
@@ -44,7 +43,7 @@ class MTableAction extends React.Component {
           ) : (
             <action.icon {...action.iconProps} disabled={action.disabled} />
           )}
-          {title}
+          {action.fab && action.title ? action.title : null}
         </IconButtonComponent>
       </span>
     );
