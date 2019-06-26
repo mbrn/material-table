@@ -256,6 +256,11 @@ export class MTableToolbar extends React.Component {
             this.props.selectedRows &&
             this.props.selectedRows.length > 0
         })}
+        { ...this.props.toolbarProps }
+        style={ {
+          zIndex: 60,
+          ...(this.props.toolbarProps.styles || {})
+        } }
       >
         {title && (
           <div className={classes.title}>
@@ -290,6 +295,7 @@ MTableToolbar.defaultProps = {
   search: true,
   showTitle: true,
   showTextRowsSelected: true,
+  toolbarProps: {},
   toolbarButtonAlignment: "right",
   searchFieldAlignment: "right",
   searchText: "",
@@ -315,6 +321,7 @@ MTableToolbar.propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
   showTextRowsSelected: PropTypes.bool.isRequired,
+  toolbarProps: PropTypes.object.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,

@@ -199,11 +199,47 @@ class App extends Component {
                   }
                   options={{
                     selection: true,
-                    filtering: "true",
+                    filtering: true,
+                    searchFieldStyle: {
+                      marginRight: 10
+                    },
                     searchFieldProps: {
-                      variant: "outlined"
+                      type: "search",
+                      InputProps: {
+                        endAdornment: null
+                      }
                     }
                   }}
+                  actions={[
+                    {
+                      icon: "add",
+                      tooltip: "add item",
+                      onClick: () => alert("added!"),
+                      isFreeAction: true,
+                      fab: true,
+                      iconButtonProps: {
+                        color: "primary",
+                        size: "small",
+                        style: {
+                          marginLeft: 5
+                        }
+                      }
+                    },
+                    {
+                      icon: "star",
+                      tooltip: "add item",
+                      onClick: () => alert("favorite!"),
+                      isFreeAction: true,
+                      fab: true,
+                      iconButtonProps: {
+                        color: "secondary",
+                        size: "small",
+                        style: {
+                          marginLeft: 5
+                        }
+                      }
+                    }
+                  ]}
                 />
               </Grid>
             </Grid>

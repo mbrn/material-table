@@ -476,6 +476,7 @@ export default class MaterialTable extends React.Component {
               search={props.options.search}
               showTitle={props.options.showTitle}
               showTextRowsSelected={props.options.showTextRowsSelected}
+              toolbarProps={props.options.toolbarProps}
               toolbarButtonAlignment={props.options.toolbarButtonAlignment}
               searchFieldAlignment={props.options.searchFieldAlignment}
               searchText={this.state.searchText}
