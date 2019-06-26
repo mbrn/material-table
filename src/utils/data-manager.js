@@ -558,10 +558,10 @@ export default class DataManager {
     if (this.searchText && this.applySearch) {
       this.searchedData.forEach(row => {
         row.tableData.isTreeExpanded = false;
-      })
+      });
       this.searchedData = this.searchedData.filter(row => {
         return this.columns
-          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable; })
+          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
           .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(this.searchText, row, columnDef);
@@ -672,19 +672,19 @@ export default class DataManager {
         if (pointer.tableData && pointer.tableData.childRows) {
           pointer = pointer.tableData.childRows;
         }
-        pointer = pointer[pathPart]
-      })
+        pointer = pointer[pathPart];
+      });
       pointer.tableData.markedForTreeRemove = true;
-    }
+    };
 
     const traverseChildrenAndUnmark = (rowData) => {
       if (rowData.tableData.childRows) {
         rowData.tableData.childRows.forEach(row => {
           traverseChildrenAndUnmark(row);
-        })
+        });
       }
       rowData.tableData.markedForTreeRemove = false;
-    }
+    };
 
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
     this.data.forEach(rowData => {
@@ -700,7 +700,7 @@ export default class DataManager {
     // preserve all children of nodes that are matched by search
     this.data.forEach(rowData => {
       if (this.searchedData.indexOf(rowData) > -1) {
-        traverseChildrenAndUnmark(rowData)
+        traverseChildrenAndUnmark(rowData);
       }
     });
 
@@ -713,7 +713,7 @@ export default class DataManager {
         if (item.tableData.markedForTreeRemove)
           rowDataArray.splice(i, 1);
       }
-    }
+    };
 
     traverseTreeAndDeleteMarked(this.treefiedData);
 
