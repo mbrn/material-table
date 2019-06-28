@@ -1,16 +1,28 @@
 /* eslint-disable no-unused-vars */
-import { TableBody, TableCell, TableRow } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import * as React from 'react';
+import { TableBody, TableCell, TableRow } from "@material-ui/core";
+import PropTypes from "prop-types";
+import * as React from "react";
 /* eslint-enable no-unused-vars */
 
 class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
-    const rowHeight = this.props.options.padding === 'default' ? 49 : 36;
-    const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
-    if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
+    const rowHeight = this.props.options.padding === "default" ? 49 : 36;
+    const localization = {
+      ...MTableBody.defaultProps.localization,
+      ...this.props.localization
+    };
+    if (
+      this.props.options.showEmptyDataSourceMessage &&
+      renderData.length === 0
+    ) {
       let addColumn = 0;
-      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+      if (
+        this.props.options.selection ||
+        (this.props.actions &&
+          this.props.actions.filter(
+            a => !a.isFreeAction && !this.props.options.selection
+          ).length > 0)
+      ) {
         addColumn++;
       }
       if (this.props.hasDetailPanel) {
@@ -20,17 +32,37 @@ class MTableBody extends React.Component {
         addColumn++;
       }
       return (
-        <TableRow style={{ height: rowHeight * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
-          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
+        <TableRow
+          style={{
+            height:
+              rowHeight *
+              (this.props.options.paging &&
+              this.props.options.emptyRowsWhenPaging
+                ? this.props.pageSize
+                : 1)
+          }}
+          key={"empty-" + 0}
+        >
+          <TableCell
+            style={{ paddingTop: 0, paddingBottom: 0, textAlign: "center" }}
+            colSpan={this.props.columns.length + addColumn}
+            key="empty-"
+          >
             {localization.emptyDataSourceMessage}
           </TableCell>
         </TableRow>
       );
+    } else if (this.props.options.notShowEmptyRows) {
+      return null;
     } else if (this.props.options.emptyRowsWhenPaging) {
       return (
         <React.Fragment>
-          {[...Array(emptyRowCount)].map((r, index) => <TableRow style={{ height: rowHeight }} key={'empty-' + index} />)}
-          {emptyRowCount > 0 && <TableRow style={{ height: 1 }} key={'empty-last1'} />}
+          {[...Array(emptyRowCount)].map((r, index) => (
+            <TableRow style={{ height: rowHeight }} key={"empty-" + index} />
+          ))}
+          {emptyRowCount > 0 && (
+            <TableRow style={{ height: 1 }} key={"empty-last1"} />
+          )}
         </React.Fragment>
       );
     }
@@ -41,11 +73,16 @@ class MTableBody extends React.Component {
       if (data.tableData.editing) {
         return (
           <this.props.components.EditRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            columns={this.props.columns.filter(columnDef => {
+              return !columnDef.hidden;
+            })}
             components={this.props.components}
             data={data}
             icons={this.props.icons}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{
+              ...MTableBody.defaultProps.localization.editRow,
+              ...this.props.localization.editRow
+            }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -56,8 +93,7 @@ class MTableBody extends React.Component {
             getFieldValue={this.props.getFieldValue}
           />
         );
-      }
-      else {
+      } else {
         return (
           <this.props.components.Row
             components={this.props.components}
@@ -67,7 +103,10 @@ class MTableBody extends React.Component {
             key={"row-" + data.tableData.id}
             level={0}
             options={this.props.options}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{
+              ...MTableBody.defaultProps.localization.editRow,
+              ...this.props.localization.editRow
+            }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
             columns={this.props.columns}
@@ -92,7 +131,7 @@ class MTableBody extends React.Component {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
         actions={this.props.actions}
-        key={groupData.value == null ? ('' + index) : groupData.value}
+        key={groupData.value == null ? "" + index : groupData.value}
         columns={this.props.columns}
         components={this.props.components}
         detailPanel={this.props.detailPanel}
@@ -120,39 +159,90 @@ class MTableBody extends React.Component {
     let renderData = this.props.renderData;
     const groups = this.props.columns
       .filter(col => col.tableData.groupOrder > -1)
-      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
+      .sort(
+        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
+      );
 
     let emptyRowCount = 0;
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
     return (
-      <TableBody { ...(this.props.options.tableBodyProps || {}) }>
-        {this.props.options.filtering &&
+      <TableBody {...this.props.options.tableBodyProps || {}}>
+        {this.props.options.filtering && (
           <this.props.components.FilterRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            columns={this.props.columns.filter(columnDef => {
+              return !columnDef.hidden;
+            })}
             icons={this.props.icons}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
-            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            emptyCell={
+              this.props.options.selection ||
+              (this.props.actions &&
+                this.props.actions.filter(
+                  a => !a.isFreeAction && !this.props.options.selection
+                ).length > 0)
+            }
+            hasActions={
+              this.props.actions &&
+              this.props.actions.filter(
+                a => !a.isFreeAction && !this.props.options.selection
+              ).length > 0
+            }
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
-            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
+            localization={{
+              ...MTableBody.defaultProps.localization.filterRow,
+              ...this.props.localization.filterRow
+            }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
           />
-        }
+        )}
 
-        {this.props.showAddRow && this.props.options.addRowPosition === "first" &&
+        {this.props.showAddRow &&
+          this.props.options.addRowPosition === "first" && (
+            <this.props.components.EditRow
+              columns={this.props.columns.filter(columnDef => {
+                return !columnDef.hidden;
+              })}
+              data={this.props.initialFormData}
+              components={this.props.components}
+              icons={this.props.icons}
+              key="key-add-row"
+              mode="add"
+              localization={{
+                ...MTableBody.defaultProps.localization.editRow,
+                ...this.props.localization.editRow
+              }}
+              options={this.props.options}
+              isTreeData={this.props.isTreeData}
+              detailPanel={this.props.detailPanel}
+              onEditingCanceled={this.props.onEditingCanceled}
+              onEditingApproved={this.props.onEditingApproved}
+              getFieldValue={this.props.getFieldValue}
+            />
+          )}
+
+        {groups.length > 0
+          ? this.renderGroupedRows(groups, renderData)
+          : this.renderUngroupedRows(renderData)}
+
+        {this.props.showAddRow && this.props.options.addRowPosition === "last" && (
           <this.props.components.EditRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            columns={this.props.columns.filter(columnDef => {
+              return !columnDef.hidden;
+            })}
             data={this.props.initialFormData}
             components={this.props.components}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{
+              ...MTableBody.defaultProps.localization.editRow,
+              ...this.props.localization.editRow
+            }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -160,30 +250,7 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
           />
-        }
-
-        {groups.length > 0 ?
-          this.renderGroupedRows(groups, renderData) :
-          this.renderUngroupedRows(renderData)
-        }
-
-        {this.props.showAddRow && this.props.options.addRowPosition === "last" &&
-          <this.props.components.EditRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-            data={this.props.initialFormData}
-            components={this.props.components}
-            icons={this.props.icons}
-            key="key-add-row"
-            mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
-            options={this.props.options}
-            isTreeData={this.props.isTreeData}
-            detailPanel={this.props.detailPanel}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-            getFieldValue={this.props.getFieldValue}
-          />
-        }
+        )}
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
@@ -197,7 +264,7 @@ MTableBody.defaultProps = {
   renderData: [],
   selection: false,
   localization: {
-    emptyDataSourceMessage: 'No records to display',
+    emptyDataSourceMessage: "No records to display",
     filterRow: {},
     editRow: {}
   },
@@ -209,7 +276,10 @@ MTableBody.propTypes = {
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
-  detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
+  detailPanel: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
+  ]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
   hasDetailPanel: PropTypes.bool.isRequired,
