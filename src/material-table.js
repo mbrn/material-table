@@ -84,6 +84,16 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   }
 
+  componentDidUpdate() {
+    const count = this.isRemoteData() ? this.state.query.totalCount : this.state.data.length;
+    const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
+    const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
+
+    if (count <= pageSize * currentPage && currentPage !== 0) {
+      this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
+    }
+  }
+
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
 
@@ -429,7 +439,7 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons}/> :
+                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
                   <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
