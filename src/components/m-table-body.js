@@ -127,7 +127,7 @@ class MTableBody extends React.Component {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
     return (
-      <TableBody>
+      <TableBody { ...(this.props.options.tableBodyProps || {}) }>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
@@ -200,7 +200,8 @@ MTableBody.defaultProps = {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
     editRow: {}
-  }
+  },
+  tableBodyProps: {}
 };
 
 MTableBody.propTypes = {
@@ -229,7 +230,7 @@ MTableBody.propTypes = {
   onTreeExpandChanged: PropTypes.func.isRequired,
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
-  onEditingApproved: PropTypes.func,
+  onEditingApproved: PropTypes.func
 };
 
 export default MTableBody;

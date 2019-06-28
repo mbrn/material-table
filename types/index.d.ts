@@ -3,6 +3,7 @@ import { IconProps } from '@material-ui/core/Icon';
 import { IconButtonProps } from '@material-ui/core/IconButton';
 import { TextFieldProps } from '@material-ui/core/TextField';
 import { ToolbarProps } from '@material-ui/core/Toolbar';
+import { TableBodyProps } from '@material-ui/core/TableBody';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps {
@@ -222,6 +223,7 @@ export interface Options {
   toolbarProps?: ToolbarProps;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
+  tableBodyProps: TableBodyProps
 }
 
 export interface Localization {
