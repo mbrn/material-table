@@ -499,7 +499,7 @@ export default class MaterialTable extends React.Component {
             />
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>
-            <Droppable droppableId="headers" direction="horizontal">
+            <Droppable droppableId="headers" direction="horizontal" isDropDisabled={!props.options.draggable}>
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
                   <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
@@ -523,6 +523,7 @@ export default class MaterialTable extends React.Component {
                           actionsHeaderIndex={props.options.actionsColumnIndex}
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
+                          draggable={props.options.draggable}
                           isTreeData={this.props.parentChildData !== undefined}
                         />
                       }

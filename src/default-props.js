@@ -93,6 +93,7 @@ export const defaultProps = {
     selection: false,
     selectionProps: {},
     sorting: true,
+    draggable: true,
     toolbar: true,
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left'

@@ -17,7 +17,8 @@ export class MTableHeader extends React.Component {
           <Draggable
             key={columnDef.tableData.id}
             draggableId={columnDef.tableData.id.toString()}
-            index={index}>
+            index={index}
+            isDragDisabled={!this.props.draggable}>
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
