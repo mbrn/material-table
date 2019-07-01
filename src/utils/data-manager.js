@@ -318,6 +318,19 @@ export default class DataManager {
     this.sorted = this.grouped = false;
   }
 
+  expandTreeForNodes = (data) => {
+    data.forEach(row => {
+      let currentRow = row;
+      while (this.parentFunc(currentRow, this.data)) {
+        let parent = this.parentFunc(currentRow, this.data);
+        if (parent) {
+          parent.tableData.isTreeExpanded = true;
+        }
+        currentRow = parent;
+      }
+    });
+  }
+
   findDataByPath = (renderData, path) => {
     if (this.isDataType("tree")) {
       const node = path.reduce((result, current) => {
@@ -546,6 +559,7 @@ export default class DataManager {
           }
         }
       });
+
     }
 
     this.filtered = true;
@@ -573,7 +587,6 @@ export default class DataManager {
           });
       });
     }
-
     this.searched = true;
   }
 
@@ -624,15 +637,20 @@ export default class DataManager {
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
 
-    const addRow = (rowData) => {
-      let parent = this.parentFunc(rowData, this.data);
+    // if filter or search is enabled, collapse the tree
+    if (this.searchText || this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+      this.data.forEach(row => {
+        row.tableData.isTreeExpanded = false;
+      });
+    }
+    // expand the tree for all nodes present after filtering and searching
+    this.expandTreeForNodes(this.searchedData);
 
+    const addRow = (rowData) => {
+      rowData.tableData.markedForTreeRemove = false;
+      let parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
-        let oldParent = parent.tableData.path && this.findDataByPath(this.treefiedData, parent.tableData.path);
-        let isDefined = oldParent && oldParent.tableData.isTreeExpanded !== undefined;
-
-        parent.tableData.isTreeExpanded = isDefined ? oldParent.tableData.isTreeExpanded : (this.defaultExpanded ? true : false);
         if (!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
           this.treefiedDataLength++;
@@ -652,10 +670,61 @@ export default class DataManager {
       }
     };
 
-    this.searchedData.forEach(rowData => {
+    // Add all rows initially
+    this.data.forEach(rowData => {
       addRow(rowData);
     });
+    const markForTreeRemove = (rowData) => {
+      let pointer = this.treefiedData;
+      rowData.tableData.path.forEach(pathPart => {
+        if (pointer.tableData && pointer.tableData.childRows) {
+          pointer = pointer.tableData.childRows;
+        }
+        pointer = pointer[pathPart];
+      });
+      pointer.tableData.markedForTreeRemove = true;
+    };
 
+    const traverseChildrenAndUnmark = (rowData) => {
+      if (rowData.tableData.childRows) {
+        rowData.tableData.childRows.forEach(row => {
+          traverseChildrenAndUnmark(row);
+        });
+      }
+      rowData.tableData.markedForTreeRemove = false;
+    };
+
+    // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
+    this.data.forEach(rowData => {
+      if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+        rowData.tableData.isTreeExpanded = this.defaultExpanded;
+      }
+      const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
+
+      if (!hasSearchMatchedChildren && this.searchedData.indexOf(rowData) < 0) {
+        markForTreeRemove(rowData);
+      }
+    });
+
+    // preserve all children of nodes that are matched by search or filters
+    this.data.forEach(rowData => {
+      if (this.searchedData.indexOf(rowData) > -1) {
+        traverseChildrenAndUnmark(rowData);
+      }
+    });
+
+    const traverseTreeAndDeleteMarked = (rowDataArray) => {
+      for (var i = rowDataArray.length - 1; i >= 0; i--) {
+        const item = rowDataArray[i];
+        if (item.tableData.childRows) {
+          traverseTreeAndDeleteMarked(item.tableData.childRows);
+        }
+        if (item.tableData.markedForTreeRemove)
+          rowDataArray.splice(i, 1);
+      }
+    };
+
+    traverseTreeAndDeleteMarked(this.treefiedData);
     this.treefied = true;
   }
 
