@@ -318,6 +318,19 @@ export default class DataManager {
     this.sorted = this.grouped = false;
   }
 
+  expandTreeForNodes = (data) => {
+    data.forEach(row => {
+      let currentRow = row;
+      while (this.parentFunc(currentRow, this.data)) {
+        let parent = this.parentFunc(currentRow, this.data);
+        if (parent) {
+          parent.tableData.isTreeExpanded = true;
+        }
+        currentRow = parent;
+      }
+    });
+  }
+
   findDataByPath = (renderData, path) => {
     if (this.isDataType("tree")) {
       const node = path.reduce((result, current) => {
@@ -550,19 +563,6 @@ export default class DataManager {
     }
 
     this.filtered = true;
-  }
-
-  expandTreeForNodes = (data) => {
-    data.forEach(row => {
-      let currentRow = row;
-      while (this.parentFunc(currentRow, this.data)) {
-        let parent = this.parentFunc(currentRow, this.data);
-        if (parent) {
-          parent.tableData.isTreeExpanded = true;
-        }
-        currentRow = parent;
-      }
-    });
   }
 
   searchData = () => {
