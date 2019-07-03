@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ForwardRefExoticComponent, RefAttributes } from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
@@ -104,6 +104,7 @@ export interface Column {
   export?: boolean;
   field?: string;
   filtering?: boolean;
+  filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
