@@ -116,6 +116,12 @@ export const defaultProps = {
         cancelTooltip: 'Cancel',
         deleteText: 'Are you sure delete this row?',
       },
+      picker: {
+        okLabel: 'Ok',
+        cancelLabel: 'Cancel',
+        clearLabel: 'Clear',
+        todayLabel: 'Today'
+      },
       addTooltip: 'Add',
       deleteTooltip: 'Delete',
       editTooltip: 'Edit'

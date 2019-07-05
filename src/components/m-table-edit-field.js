@@ -49,6 +49,7 @@ class MTableEditField extends React.Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           {...this.getProps()}
+          {...this.props.localization}
           format="dd.MM.yyyy"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -68,6 +69,7 @@ class MTableEditField extends React.Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <TimePicker
           {...this.getProps()}
+          {...this.props.localization}
           format="HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -87,6 +89,7 @@ class MTableEditField extends React.Component {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DateTimePicker
           {...this.getProps()}
+          {...this.props.localization}
           format="dd.MM.yyyy HH:mm:ss"
           value={this.props.value || null}
           onChange={this.props.onChange}
@@ -156,7 +159,8 @@ class MTableEditField extends React.Component {
 MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  columnDef: PropTypes.object.isRequired
+  columnDef: PropTypes.object.isRequired,
+  localization: PropTypes.object.isRequired
 };
 
 export default MTableEditField;

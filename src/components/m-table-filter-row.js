@@ -90,6 +90,13 @@ class MTableFilterRow extends React.Component {
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
+    const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
+    const pickerLabels = {
+      okLabel: localization.okLabel,
+      cancelLabel: localization.cancelLabel,
+      clearLabel: localization.clearLabel,
+      todayLabel: localization.todayLabel
+    };
 
     if (columnDef.type === 'date') {
       dateInputElement = (
@@ -97,6 +104,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...pickerLabels}
         />
       );
     } else if (columnDef.type === 'datetime') {
@@ -105,6 +113,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...pickerLabels}
         />
       );
     } else if (columnDef.type === 'time') {
@@ -113,6 +122,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...pickerLabels}
         />
       );
     }

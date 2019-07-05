@@ -58,6 +58,14 @@ export default class MTableEditRow extends React.Component {
         else {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent = editComponent || this.props.components.EditField;
+          const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
+          const pickerLabels = {
+              okLabel: localization.okLabel,
+              cancelLabel: localization.cancelLabel,
+              clearLabel: localization.clearLabel,
+              todayLabel: localization.todayLabel
+            };
+
           return (
             <TableCell
               key={columnDef.tableData.id}
@@ -68,6 +76,7 @@ export default class MTableEditRow extends React.Component {
                 columnDef={cellProps}
                 value={value}
                 rowData={this.state.data}
+                localization={pickerLabels}
                 onChange={value => {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);

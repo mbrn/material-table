@@ -45,7 +45,7 @@ class MTableBody extends React.Component {
             components={this.props.components}
             data={data}
             icons={this.props.icons}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, ...this.props.localization.picker }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -137,7 +137,7 @@ class MTableBody extends React.Component {
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
-            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, ...this.props.localization.picker }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
@@ -152,7 +152,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, ...this.props.localization.picker }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -175,7 +175,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, ...this.props.localization.picker }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}

@@ -105,7 +105,7 @@ class App extends Component {
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                   options={{
                     selection: true,
-                    filtering: 'true'
+                    filtering: true
                   }}
                 />
               </Grid>
@@ -150,6 +150,7 @@ class App extends Component {
                     })
                   })
               })}
+              
             />
 
           </div>

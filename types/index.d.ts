@@ -226,7 +226,13 @@ export interface Localization {
       saveTooltip?: string;
       cancelTooltip?: string;
       deleteText?: string;
-    },
+    };
+    picker?: {
+      okLabel?: string;
+      cancelLabel?: string;
+      clearLabel?: string;
+      todayLabel?: string;
+    };
     addTooltip?: string;
     deleteTooltip?: string;
     editTooltip?: string;
