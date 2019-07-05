@@ -26,6 +26,7 @@ export interface MaterialTableProps {
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: any, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: any) => void;
+  onSearchChange?: (query: string) => void;
   onSelectionChange?: (data: any[], rowData?: any) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   style?: React.CSSProperties;
