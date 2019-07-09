@@ -119,6 +119,7 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push(rowData => ({
           icon: calculatedProps.icons.Edit,
           tooltip: localization.editTooltip,
+          hidden: calculatedProps.editable.isEditableHidden && calculatedProps.editable.isEditableHidden(rowData),
           disabled: calculatedProps.editable.isEditable && !calculatedProps.editable.isEditable(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "update");
@@ -133,6 +134,7 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push(rowData => ({
           icon: calculatedProps.icons.Delete,
           tooltip: localization.deleteTooltip,
+          hidden: calculatedProps.editable.isDeletableHidden && calculatedProps.editable.isDeletableHidden(rowData),
           disabled: calculatedProps.editable.isDeletable && !calculatedProps.editable.isDeletable(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "delete");
