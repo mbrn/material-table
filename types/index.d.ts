@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ForwardRefExoticComponent, RefAttributes} from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
