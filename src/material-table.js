@@ -15,7 +15,7 @@ export default class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
-    this.setDataManagerFields(calculatedProps, true);
+    this.setDataManagerFields(calculatedProps, true); // ⚠️ this function mutates props
     const renderState = this.dataManager.getRenderState();
 
     this.state = {
@@ -62,6 +62,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
       this.dataManager.setData(props.data);
+      this.dataManager.setFooterData(props.footerData);
     }
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
@@ -79,7 +80,7 @@ export default class MaterialTable extends React.Component {
   }
 
   getProps(props) {
-    const calculatedProps = { ...(props || this.props) };
+    const calculatedProps = { ...(props || this.props) }; // ⚠️ props are spread into a new object, but since this is not a deep clone they can still get mutated
 
     const localization = calculatedProps.localization.body;
 
@@ -520,6 +521,7 @@ export default class MaterialTable extends React.Component {
                         components={props.components}
                         icons={props.icons}
                         renderData={this.state.renderData}
+                        footerData={this.props.footerData}
                         currentPage={this.state.currentPage}
                         initialFormData={props.initialFormData}
                         pageSize={this.state.pageSize}

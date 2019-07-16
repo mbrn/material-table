@@ -57,6 +57,20 @@ export default class DataManager {
     this.filtered = false;
   }
 
+  setFooterData(data) { // c&p of `setData` above
+    this.selectedCount = 0;
+
+    this.footerData = data.map((row, index) => {
+      row.tableData = { ...row.tableData, id: index };
+      if (row.tableData.checked) {
+        this.selectedCount++;
+      }
+      return row;
+    });
+
+    this.filtered = false;
+  }
+
   setColumns(columns) {
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {

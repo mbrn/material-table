@@ -56,6 +56,7 @@ export const propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
+  footerData: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]),
   editable: PropTypes.shape({
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,

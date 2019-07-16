@@ -182,6 +182,11 @@ class MTableBody extends React.Component {
           />
         }
         {this.renderEmpty(emptyRowCount, renderData)}
+
+        {this.props.footerData && (groups.length > 0 ?
+          this.renderGroupedRows(groups, this.props.footerData) :
+          this.renderUngroupedRows(this.props.footerData)
+        )}
       </TableBody>
     );
   }
@@ -215,6 +220,7 @@ MTableBody.propTypes = {
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
+  footerData: PropTypes.array,
   initialFormData: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   showAddRow: PropTypes.bool,

@@ -62,6 +62,9 @@ class App extends Component {
       { title: 'Id', field: 'id' },
       { title: 'First Name', field: 'first_name' },
       { title: 'Last Name', field: 'last_name' },
+    ],
+    footerData: [
+      { name: '5 unique', surname: '2 unique', sex: '2 male / 3 female', type: '2 adult / 3 children' }
     ]
   }
 
@@ -78,7 +81,8 @@ class App extends Component {
                   tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
-                  title="Demo Title"
+                  title="Demo Title"              
+                  footerData={this.state.footerData}
                 />
               </Grid>
             </Grid>
