@@ -123,6 +123,7 @@ export const propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     paginationType: PropTypes.oneOf(['normal', 'stepped']),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    footerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     showSelectAllCheckbox: PropTypes.bool,
     search: PropTypes.bool,

@@ -83,6 +83,13 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"              
                   footerData={this.state.footerData}
+                  options={{
+                    footerStyle: {
+                      backgroundColor: '#EEE',
+                      borderTop: "2px black solid",
+                      fontWeight: 'bold'
+                    }
+                  }}
                 />
               </Grid>
             </Grid>

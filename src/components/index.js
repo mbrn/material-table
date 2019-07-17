@@ -2,6 +2,7 @@ import MTableAction from './m-table-action';
 import MTableActions from './m-table-actions';
 import MTableBody from './m-table-body';
 import MTableBodyRow from './m-table-body-row';
+import MTableBodyFooterRow from './m-table-body-footer-row';
 import MTableGroupbar from './m-table-groupbar';
 import MTableGroupRow from './m-table-group-row';
 import MTableCell from './m-table-cell';
@@ -18,6 +19,7 @@ export {
   MTableActions,
   MTableBody,
   MTableBodyRow,
+  MTableBodyFooterRow,
   MTableGroupbar,
   MTableGroupRow,
   MTableCell,
