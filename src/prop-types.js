@@ -10,6 +10,7 @@ export const propTypes = {
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    footerCellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     currencySetting: PropTypes.shape({
       locale: PropTypes.string,
       currencyCode: PropTypes.string,

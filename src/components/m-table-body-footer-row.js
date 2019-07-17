@@ -12,7 +12,7 @@ export default class MTableBodyFooterRow extends React.Component {
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
         return (
-          <this.props.components.Cell
+          <this.props.components.FooterCell
             icons={this.props.icons}
             columnDef={columnDef}
             value={value}
