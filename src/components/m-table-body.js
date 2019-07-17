@@ -48,20 +48,11 @@ class MTableBody extends React.Component {
             level={0}
             options={this.props.options}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
-            onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
             columns={this.props.columns}
             getFieldValue={this.props.getFieldValue}
-            detailPanel={this.props.detailPanel}
             path={[index + this.props.pageSize * this.props.currentPage]}
-            onToggleDetailPanel={this.props.onToggleDetailPanel}
             onRowClick={this.props.onRowClick}
-            isTreeData={this.props.isTreeData}
-            onTreeExpandChanged={this.props.onTreeExpandChanged}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-            hasAnyEditingRow={this.props.hasAnyEditingRow}
-            treeDataMaxLevel={this.props.treeDataMaxLevel}
           />
         );
       });
