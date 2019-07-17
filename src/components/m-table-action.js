@@ -34,7 +34,7 @@ class MTableAction extends React.Component {
           onClick={(event) => handleOnClick(event)}
         >
           {typeof action.icon === "string" ? (
-            <Icon {...action.iconProps} fontSize="small">{action.icon}</Icon>
+            <Icon {...action.iconProps}>{action.icon}</Icon>
           ) : (
               <action.icon
                 {...action.iconProps}
