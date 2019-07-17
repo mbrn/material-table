@@ -24,107 +24,9 @@ export default class MTableBodyFooterRow extends React.Component {
     return mapArr;
   }
 
-  renderActions() {
-    const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
-    return (
-      <TableCell padding="none" key="key-actions-column" style={{ width: 48 * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
-        <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} />
-        </div>
-      </TableCell>
-    );
-  }
-  renderSelectionColumn() {
-    return (
-      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
-        <Checkbox
-          checked={this.props.data.tableData.checked === true}
-          onClick={(e) => e.stopPropagation()}
-          value={this.props.data.tableData.id.toString()}
-          onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
-          style={{
-            paddingLeft: 12 + this.props.level * 12
-          }}
-        />
-      </TableCell>
-    );
-  }
-
   rotateIconStyle = isOpen => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'
   });
-
-  renderDetailPanelColumn() {
-
-    const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, { style });
-
-    if (typeof this.props.detailPanel == 'function') {
-      return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
-          <IconButton
-            style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
-            onClick={(event) => {
-              this.props.onToggleDetailPanel(this.props.path, this.props.detailPanel);
-              event.stopPropagation();
-            }}
-          >
-            <this.props.icons.DetailPanel />
-          </IconButton>
-        </TableCell>
-      );
-    }
-    else {
-      return (
-        <TableCell padding="none" key="key-detail-panel-column">
-          <div style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
-            {this.props.detailPanel.map((panel, index) => {
-
-              if (typeof panel === "function") {
-                panel = panel(this.props.data);
-              }
-
-              const isOpen = (this.props.data.tableData.showDetailPanel || '').toString() === panel.render.toString();
-
-              let iconButton = <this.props.icons.DetailPanel />;
-              let animation = true;
-              if (isOpen) {
-                if (panel.openIcon) {
-                  iconButton = <CustomIcon icon={panel.openIcon} />;
-                  animation = false;
-                }
-                else if (panel.icon) {
-                  iconButton = <CustomIcon icon={panel.icon} />;
-                }
-              }
-              else if (panel.icon) {
-                iconButton = <CustomIcon icon={panel.icon} />;
-                animation = false;
-              }
-
-              iconButton = (
-                <IconButton
-                  key={"key-detail-panel-" + index}
-                  style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
-                  disabled={panel.disabled}
-                  onClick={(event) => {
-                    this.props.onToggleDetailPanel(this.props.path, panel.render);
-                    event.stopPropagation();
-                  }}
-                >
-                  {iconButton}
-                </IconButton>);
-
-              if (panel.tooltip) {
-                iconButton = <Tooltip key={"key-detail-panel-" + index} title={panel.tooltip}>{iconButton}</Tooltip>;
-              }
-
-              return iconButton;
-            })}
-          </div>
-        </TableCell>
-      );
-    }
-  }
 
   getStyle() {
     let style = {
@@ -157,54 +59,6 @@ export default class MTableBodyFooterRow extends React.Component {
 
   render() {
     const renderColumns = this.renderColumns();
-    if (this.props.options.selection) {
-      renderColumns.splice(0, 0, this.renderSelectionColumn());
-    }
-    if (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0) {
-      if (this.props.options.actionsColumnIndex === -1) {
-        renderColumns.push(this.renderActions());
-      } else if (this.props.options.actionsColumnIndex >= 0) {
-        let endPos = 0;
-        if (this.props.options.selection) {
-          endPos = 1;
-        }
-        renderColumns.splice(this.props.options.actionsColumnIndex + endPos, 0, this.renderActions());
-      }
-    }
-
-    if (this.props.isTreeData) {
-      if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
-        renderColumns.splice(0, 0, (
-          <TableCell padding="none" key={"key-tree-data-column"} style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 2) }}>
-            <IconButton
-              style={{
-                transition: 'all ease 200ms',
-                marginLeft: this.props.level * 12,
-                ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
-              }}
-              onClick={(event) => {
-                this.props.onTreeExpandChanged(this.props.path, this.props.data);
-                event.stopPropagation();
-              }}
-            >
-              <this.props.icons.DetailPanel />
-            </IconButton>
-          </TableCell>
-        ));
-      }
-      else {
-        renderColumns.splice(0, 0, <TableCell padding="none" key={"key-tree-data-column"} />);
-      }
-    }
-
-    // Lastly we add detail panel icon
-    if (this.props.detailPanel) {
-      if (this.props.options.detailPanelColumnAlignment === 'right') {
-        renderColumns.push(this.renderDetailPanelColumn());
-      } else {
-        renderColumns.splice(0, 0, this.renderDetailPanelColumn());
-      }
-    }
 
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
