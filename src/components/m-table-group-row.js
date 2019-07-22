@@ -83,6 +83,11 @@ export default class MTableGroupRow extends React.Component {
       value = column.lookup[value];
     }
 
+    let title = column.title;
+    if (typeof title !== "string") {
+      title = React.cloneElement(title);
+    }
+
     return (
       <>
         <TableRow>
@@ -102,7 +107,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{column.title + ": "}</b>
+            <b>{title}{": "}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}
