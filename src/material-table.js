@@ -367,7 +367,7 @@ export default class MaterialTable extends React.Component {
     this.setState({ searchText });
     clearTimeout(timeoutForSearching);
 
-    timeoutForSearching = setTimeout( function () {
+    timeoutForSearching = setTimeout(function(){
       _this.setState(_this.onSearchChangeDebounce);
     }, this.props.searchProps.waitForTyping);
   }
