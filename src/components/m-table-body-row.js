@@ -96,7 +96,7 @@ export default class MTableBodyRow extends React.Component {
     else {
       return (
         <TableCell size={this.getElementSize()} padding="none" key="key-detail-panel-column">
-          <div style={{ width: 42 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
+          <div style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
             {this.props.detailPanel.map((panel, index) => {
 
               if (typeof panel === "function") {
