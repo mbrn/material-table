@@ -85,6 +85,9 @@ export const defaultProps = {
     showFirstLastPageButtons: true,
     showSelectAllCheckbox: true,
     search: true,
+    searchProps: {
+      waitForTyping: 500
+    },
     showTitle: true,
     showTextRowsSelected: true,
     toolbarButtonAlignment: 'right',

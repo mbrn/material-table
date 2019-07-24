@@ -6,6 +6,9 @@ import { MTablePagination, MTableSteppedPagination } from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+
+    
+var timeoutForSearching = null;
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -359,7 +362,16 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = searchText => this.setState({ searchText }, this.onSearchChangeDebounce)
+  onSearchChange = searchText => {
+    var _this = this;
+    this.setState({ searchText })
+    clearTimeout(timeoutForSearching);
+
+    timeoutForSearching = setTimeout(function () {
+      _this.setState(_this.onSearchChangeDebounce)
+    }, this.props.searchProps.waitForTyping);
+
+  }
 
   onSearchChangeDebounce = debounce(() => {
     this.dataManager.changeSearchText(this.state.searchText);
