@@ -69,6 +69,9 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplyFilters(true);
       this.dataManager.setData(props.data);
     }
+    if (!isInit) {
+      this.dataManager.changeSearchText('');
+    }
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
