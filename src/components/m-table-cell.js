@@ -9,13 +9,11 @@ export default class MTableCell extends React.Component {
     if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
-    if (this.props.columnDef.render) {
-      if (this.props.rowData) {
-        return this.props.columnDef.render(this.props.rowData, 'row');
-      }
-      else {
-        return this.props.columnDef.render(this.props.value, 'group');
-      }
+    if (this.props.columnDef.render && this.props.rowData) {
+      return this.props.columnDef.render(this.props.rowData);
+
+    } else if (this.props.columnDef.renderGroup && this.props.groupData) {
+      return this.props.columnDef.renderGroup(this.props.value, this.props.groupData);
 
     } else if (this.props.columnDef.type === 'boolean') {
       const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
@@ -120,5 +118,6 @@ MTableCell.defaultProps = {
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
-  rowData: PropTypes.object
+  rowData: PropTypes.object,
+  groupData: PropTypes.object
 };

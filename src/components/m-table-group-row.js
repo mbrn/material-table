@@ -92,6 +92,7 @@ export default class MTableGroupRow extends React.Component {
             padding="none" 
             columnDef={column} 
             value={value}
+            groupData={this.props.groupData.data}
             icons={this.props.icons}
           >
             <IconButton

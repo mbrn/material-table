@@ -126,6 +126,13 @@ class App extends Component {
                       src={rowData.avatar}
                     />
                   ),
+                  renderGroup: (avatar, groupData) => (
+                    <img
+                      style={{ height: 36, borderRadius: '50%', bottom: -10, position: 'relative' }}
+                      src={avatar}
+                    />
+
+                  )
                 },
                 { title: 'Id', field: 'id', filterPlaceholder: 'placeholder' },
                 { title: 'First Name', field: 'first_name' },

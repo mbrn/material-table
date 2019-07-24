@@ -111,7 +111,8 @@ export interface Column {
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column, rowData: any) => boolean));
   removable?: boolean;
-  render?: (data: any, type: ('row' | 'group')) => any;
+  render?: (data: any) => any;
+  renderGroup?: (data: any, groupData: any[]) => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
