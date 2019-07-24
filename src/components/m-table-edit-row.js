@@ -20,7 +20,7 @@ export default class MTableEditRow extends React.Component {
     return this.props.columns.filter(column=>column.emptyValue && column.field).reduce((prev,column)=>{
       prev[column.field]=column.emptyValue;
       return prev;
-    },{})
+    },{});
   }
 
   renderColumns() {
