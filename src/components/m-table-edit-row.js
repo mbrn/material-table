@@ -6,7 +6,7 @@ import { byString, setByString } from '../utils';
 /* eslint-enable no-unused-vars */
 
 
-export default class MTableEditRow extends React.Component {
+export default class MTableEditRow extends React.PureComponent {
 
   constructor(props) {
     super(props);

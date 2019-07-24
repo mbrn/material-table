@@ -4,7 +4,7 @@ import { Icon, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
 /* eslint-enable no-unused-vars */
 
-export default class MTableCell extends React.Component {
+export default class MTableCell extends React.PureComponent {
   getRenderValue() {
     if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);

@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 /* eslint-enable no-unused-vars */
 
-class MTableActions extends React.Component {
+class MTableActions extends React.PureComponent {
 
   render() {
     if (this.props.actions) {

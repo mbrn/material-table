@@ -5,7 +5,7 @@ import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 
-export default class MTableBodyRow extends React.Component {
+export default class MTableBodyRow extends React.PureComponent {
   renderColumns() {
     const size = this.getElementSize();
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))

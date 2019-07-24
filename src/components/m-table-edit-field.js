@@ -4,7 +4,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 
-class MTableEditField extends React.Component {
+class MTableEditField extends React.PureComponent {
   getProps() {
     const { columnDef, rowData, ...props } = this.props;
     return props;

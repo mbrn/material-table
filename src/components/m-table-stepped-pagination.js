@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
+class MTablePaginationInner extends React.PureComponent {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };

@@ -7,7 +7,7 @@ import PropTypes, { oneOf } from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-export class MTableToolbar extends React.Component {
+export class MTableToolbar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

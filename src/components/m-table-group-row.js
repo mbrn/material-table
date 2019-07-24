@@ -5,7 +5,7 @@ import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 
-export default class MTableGroupRow extends React.Component {
+export default class MTableGroupRow extends React.PureComponent {
 
   rotateIconStyle = isOpen => ({
     transform: isOpen ? 'rotate(90deg)' : 'none'

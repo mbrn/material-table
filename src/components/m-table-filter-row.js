@@ -21,7 +21,7 @@ const MenuProps = {
   }
 };
 
-class MTableFilterRow extends React.Component {
+class MTableFilterRow extends React.PureComponent {
   renderLookupFilter = (columnDef) => (
     <FormControl style={{ width: '100%' }}>
       <Select

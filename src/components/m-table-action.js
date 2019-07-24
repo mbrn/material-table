@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, IconButton, Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
-class MTableAction extends React.Component {
+class MTableAction extends React.PureComponent {
   render() {
     let action = this.props.action;
     if (typeof action === 'function') {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTableBody extends React.Component {
+class MTableBody extends React.PureComponent {
   renderEmpty(emptyRowCount, renderData) {
     const rowHeight = this.props.options.padding === 'default' ? 49 : 36;
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
