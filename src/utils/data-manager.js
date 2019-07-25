@@ -116,9 +116,11 @@ export default class DataManager {
     const checkChildRows = rowData => {
       if (rowData.tableData.childRows) {
         rowData.tableData.childRows.forEach(childRow => {
-          childRow.tableData.checked = checked;
-          this.selectedCount = this.selectedCount + (checked ? 1 : -1);
-          checkChildRows(childRow);
+          if (childRow.tableData.checked !== checked) {
+            childRow.tableData.checked = checked;
+            this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+            checkChildRows(childRow);
+          }
         });
       }
     };
