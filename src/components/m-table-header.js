@@ -186,7 +186,14 @@ MTableHeader.defaultProps = {
   orderBy: undefined,
   orderDirection: 'asc',
   actionsHeaderIndex: 0,
-  detailPanelColumnAlignment: "left"
+  detailPanelColumnAlignment: "left",
+  classes: {
+    header: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 10
+    }
+  }
 };
 
 MTableHeader.propTypes = {
@@ -206,6 +213,7 @@ MTableHeader.propTypes = {
   actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
+  classes: PropTypes.object,
 };
 
 

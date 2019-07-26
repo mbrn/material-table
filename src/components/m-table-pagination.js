@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
+export class MTablePagination extends React.Component {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -23,7 +23,7 @@ class MTablePaginationInner extends React.Component {
 
   render() {
     const { classes, count, page, rowsPerPage, theme, showFirstLastPageButtons } = this.props;
-    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
+    const localization = { ...MTablePagination.defaultProps.localization, ...this.props.localization };
 
     return (
       <div className={classes.root}>
@@ -65,7 +65,7 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        {showFirstLastPageButtons && 
+        {showFirstLastPageButtons &&
           <Tooltip title={localization.lastTooltip}>
             <span>
               <IconButton
@@ -87,12 +87,12 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    display: 'flex', 
+    display: 'flex',
     // lineHeight: '48px'
   }
 });
 
-MTablePaginationInner.propTypes = {
+MTablePagination.propTypes = {
   onChangePage: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
@@ -103,7 +103,7 @@ MTablePaginationInner.propTypes = {
   showFirstLastPageButtons: PropTypes.bool
 };
 
-MTablePaginationInner.defaultProps = {
+MTablePagination.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
     firstTooltip: 'First Page',
@@ -115,6 +115,4 @@ MTablePaginationInner.defaultProps = {
   }
 };
 
-const MTablePagination = withStyles(actionsStyles, { withTheme: true })(MTablePaginationInner);
-
-export default MTablePagination;
+export default withStyles(actionsStyles, { withTheme: true })(MTablePagination);

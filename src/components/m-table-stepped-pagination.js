@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
-class MTablePaginationInner extends React.Component {
+class MTableSteppedPagination extends React.Component {
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -55,7 +55,7 @@ class MTablePaginationInner extends React.Component {
   render() {
     const { classes, count, page, rowsPerPage } = this.props;
 
-    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
+    const localization = { ...MTableSteppedPagination.defaultProps.localization, ...this.props.localization };
     const maxPages = Math.ceil(count / rowsPerPage) - 1;
 
     const pageStart = Math.max(page - 1, 0);
@@ -101,7 +101,7 @@ const actionsStyles = theme => ({
   }
 });
 
-MTablePaginationInner.propTypes = {
+MTableSteppedPagination.propTypes = {
   onChangePage: PropTypes.func,
   page: PropTypes.number,
   count: PropTypes.number,
@@ -110,15 +110,18 @@ MTablePaginationInner.propTypes = {
   localization: PropTypes.object
 };
 
-MTablePaginationInner.defaultProps = {
+MTableSteppedPagination.defaultProps = {
   localization: {
     previousTooltip: 'Previous Page',
     nextTooltip: 'Next Page',
     labelDisplayedRows: '{from}-{to} of {count}',
     labelRowsPerPage: 'Rows per page:'
+  },
+  classes: {
+    root: {
+      flexShrink: 0
+    }
   }
 };
 
-const MTablePagination = withStyles(actionsStyles, { withTheme: true })(MTablePaginationInner);
-
-export default MTablePagination;
+export default withStyles(actionsStyles, { withTheme: true })(MTableSteppedPagination);

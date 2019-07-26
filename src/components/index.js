@@ -1,31 +1,14 @@
-import MTableAction from './m-table-action';
-import MTableActions from './m-table-actions';
-import MTableBody from './m-table-body';
-import MTableBodyRow from './m-table-body-row';
-import MTableGroupbar from './m-table-groupbar';
-import MTableGroupRow from './m-table-group-row';
-import MTableCell from './m-table-cell';
-import MTableEditRow from './m-table-edit-row';
-import MTableEditField from './m-table-edit-field';
-import MTableFilterRow from './m-table-filter-row';
-import MTableHeader from './m-table-header';
-import MTablePagination from './m-table-pagination';
-import MTableSteppedPagination from './m-table-stepped-pagination';
-import MTableToolbar from './m-table-toolbar';
-
-export {
-  MTableAction,
-  MTableActions,
-  MTableBody,
-  MTableBodyRow,
-  MTableGroupbar,
-  MTableGroupRow,
-  MTableCell,
-  MTableEditRow,
-  MTableEditField,
-  MTableFilterRow,
-  MTableHeader,
-  MTablePagination,
-  MTableSteppedPagination,
-  MTableToolbar,
-};
+export {default as MTableAction} from './m-table-action';
+export {default as MTableActions} from './m-table-actions';
+export {default as MTableBody} from './m-table-body';
+export {default as MTableBodyRow} from './m-table-body-row';
+export {default as MTableGroupbar} from './m-table-groupbar';
+export {default as MTableGroupRow} from './m-table-group-row';
+export {default as MTableCell} from './m-table-cell';
+export {default as MTableEditRow} from './m-table-edit-row';
+export {default as MTableEditField} from './m-table-edit-field';
+export {default as MTableFilterRow} from './m-table-filter-row';
+export {default as MTableHeader, MTableHeader as MTableHeaderUnstyled} from './m-table-header';
+export {default as MTablePagination, MTablePagination as MTablePaginationUnstyled} from './m-table-pagination';
+export {default as MTableSteppedPagination, MTableSteppedPagination as MTableSteppedPaginationUnstyled} from './m-table-stepped-pagination';
+export {default as MTableToolbar, MTableToolbar as MTableToolbarUnstyled} from './m-table-toolbar';
