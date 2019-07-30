@@ -3,8 +3,11 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
   TableHead, TableRow, TableCell,
-  TableSortLabel, Checkbox, withStyles
+  TableSortLabel, Checkbox
 } from '@material-ui/core';
+import {
+  withStyles
+} from '@material-ui/core/styles';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 /* eslint-enable no-unused-vars */
 
