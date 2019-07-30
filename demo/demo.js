@@ -1,4 +1,5 @@
-import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -9,7 +10,8 @@ let direction = 'ltr';
 const theme = createMuiTheme({
   direction: direction,
   palette: {
-    type: 'light'
+    type: 'light',
+    primary: {main: '#ff0000'}
   }
 });
 
