@@ -104,6 +104,7 @@ export interface Column<RowData extends object> {
   export?: boolean;
   field?: keyof RowData;
   filtering?: boolean;
+  filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
