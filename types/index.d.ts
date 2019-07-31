@@ -150,7 +150,7 @@ export const MTableGroupRow: () => React.ReactElement<any>;
 export const MTableHeader: () => React.ReactElement<any>;
 export const MTablePagination: () => React.ReactElement<any>;
 export const MTableToolbar: () => React.ReactElement<any>;
-
+export const MTable: () => React.ReactElement<any>;
 
 export interface Icons {
   Add?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
