@@ -524,6 +524,7 @@ export default class MaterialTable extends React.Component {
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}
+                          draggable={props.options.draggable}
                         />
                       }
                       <props.components.Body
