@@ -3,7 +3,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
   TableCell, TableRow, TextField,
-  FormControl, Select, Input,
+  FormControl, Select, Input, InputLabel,
   MenuItem, Checkbox, ListItemText,
   InputAdornment, Icon, Tooltip,
 } from '@material-ui/core';
@@ -24,6 +24,7 @@ const MenuProps = {
 class MTableFilterRow extends React.Component {
   renderLookupFilter = (columnDef) => (
     <FormControl style={{ width: '100%' }}>
+      <InputLabel htmlFor="select-multiple-checkbox">{columnDef.filterPlaceholder}</InputLabel>
       <Select
         multiple
         value={columnDef.tableData.filterValue || []}
