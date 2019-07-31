@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, ...props } = this.props;
+    const { columnDef, rowData, onRowDataChange,  ...props } = this.props;
     return props;
   }
 
