@@ -131,7 +131,7 @@ export const propTypes = {
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
     paginationType: PropTypes.oneOf(['normal', 'stepped']),
-    rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.func]),
     search: PropTypes.bool,
     toolbarButtonAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),

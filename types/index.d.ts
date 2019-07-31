@@ -200,7 +200,7 @@ export interface Options {
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: ('normal' | 'stepped');
-  rowStyle?: React.CSSProperties | ((data: any, index: number) => React.CSSProperties);
+  rowStyle?: React.CSSProperties | ((data: any, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
