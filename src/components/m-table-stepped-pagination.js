@@ -47,6 +47,7 @@ class MTablePaginationInner extends React.Component {
           disabled={p === this.props.page}
           variant={buttonVariant}
           onClick={this.handleNumberButtonClick(p)}
+          key={p}
         >
           {p + 1}
         </Button>

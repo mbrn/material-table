@@ -7,6 +7,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 MaterialTable.defaultProps = defaultProps;
 MaterialTable.propTypes = propTypes;
 
+export { MaterialTable as MTable };
+
 const styles = theme => ({
   paginationRoot: {
     width: '100%'

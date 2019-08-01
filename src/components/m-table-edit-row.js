@@ -190,6 +190,7 @@ export default class MTableEditRow extends React.Component {
       onToggleDetailPanel,
       onEditingApproved,
       onEditingCanceled,
+      getFieldValue,
       ...rowProps
     } = this.props;
 

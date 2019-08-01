@@ -157,6 +157,7 @@ export const propTypes = {
     body: PropTypes.object
   }),
   initialFormData: PropTypes.object,
+  onSearchChange: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,

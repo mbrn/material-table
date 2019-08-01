@@ -375,7 +375,9 @@ export default class MaterialTable extends React.Component {
       this.onQueryChange(query);
     }
     else {
-      this.setState(this.dataManager.getRenderState());
+      this.setState(this.dataManager.getRenderState(), () => {
+        this.props.onSearchChange && this.props.onSearchChange(this.state.searchText);
+      });
     }
   }, this.props.options.debounceInterval)
 
@@ -527,6 +529,7 @@ export default class MaterialTable extends React.Component {
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}
+                          draggable={props.options.draggable}
                         />
                       }
                       <props.components.Body
