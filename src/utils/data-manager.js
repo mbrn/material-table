@@ -46,6 +46,7 @@ export default class DataManager {
     this.selectedCount = 0;
 
     this.data = data.map((row, index) => {
+      row = { ...row };
       row.tableData = { ...row.tableData, id: index };
       if (row.tableData.checked) {
         this.selectedCount++;
