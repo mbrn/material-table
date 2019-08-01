@@ -18,6 +18,7 @@ export default class DataManager {
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
   defaultExpanded = false;
+  expandedRows = [];
 
   data = [];
   columns = [];
@@ -72,6 +73,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setExpandedRows(rows) {
+    this.expandedRows = rows;
   }
 
   changeApplySearch(applySearch) {
@@ -697,7 +702,7 @@ export default class DataManager {
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
     this.data.forEach(rowData => {
       if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
-        rowData.tableData.isTreeExpanded = this.defaultExpanded;
+        rowData.tableData.isTreeExpanded = this.defaultExpanded || (this.expandedRows.indexOf(rowData.tableData.id) > -1);
       }
       const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
 

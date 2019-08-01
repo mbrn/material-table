@@ -114,6 +114,7 @@ export const propTypes = {
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
+    expandedRows: PropTypes.array,
     exportAllData: PropTypes.bool,
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,

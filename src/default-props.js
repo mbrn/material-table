@@ -73,6 +73,7 @@ export const defaultProps = {
     debounceInterval: 200,
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
+    expandedRows: [],
     exportAllData: false,
     exportButton: false,
     exportDelimiter: ',',
