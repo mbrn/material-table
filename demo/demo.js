@@ -107,6 +107,7 @@ class App extends Component {
                     selection: true,
                     filtering: 'true'
                   }}
+                  onSearchChange={(e) => console.log("search changed: " + e)}
                 />
               </Grid>
             </Grid>
