@@ -105,9 +105,11 @@ class App extends Component {
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                   options={{
                     selection: true,
+                    columnsButton: true,
                     filtering: 'true'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
+                  onChangeColumnHidden={(columnId, hidden) => console.log("column " + columnId + " is now hidden:" + hidden)}
                 />
               </Grid>
             </Grid>
