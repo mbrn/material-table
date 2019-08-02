@@ -15,7 +15,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -105,6 +105,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+         format= columnDef.format
         />
       );
     } else if (columnDef.type === 'datetime') {
@@ -113,6 +114,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+         format= columnDef.format
         />
       );
     } else if (columnDef.type === 'time') {
@@ -121,6 +123,18 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+         format= columnDef.format
+        />
+      );
+    }
+    else if (columnDef.type === 'keyboarddatetime') {
+      dateInputElement = (
+        <DateTimePicker
+          value={columnDef.tableData.filterValue || null}
+          onChange={onDateInputChange}
+          clearable
+        format= columnDef.format
+		  ampm={false}
         />
       );
     }
