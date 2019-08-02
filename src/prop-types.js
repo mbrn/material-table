@@ -45,7 +45,8 @@ export const propTypes = {
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
     title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
+    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency', 'keyboaddatetime']),
+    format: PropTypes.string
   })).isRequired,
   components: PropTypes.shape({
     Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
