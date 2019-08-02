@@ -27,7 +27,7 @@ export class MTableToolbar extends React.Component {
   }
 
   defaultExportCsv = () => {
-    this.props.columns.sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1)
+    this.props.columns.sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
     const columns = this.props.columns
       .filter(columnDef => {
         return !columnDef.hidden && columnDef.field && columnDef.export !== false;
