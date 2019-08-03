@@ -389,6 +389,7 @@ export default class MaterialTable extends React.Component {
   onFilterChangeDebounce = debounce(() => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
+      query.page = 0;
       query.filters = this.state.columns
         .filter(a => a.tableData.filterValue)
         .map(a => ({
