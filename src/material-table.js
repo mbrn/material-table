@@ -163,11 +163,10 @@ export default class MaterialTable extends React.Component {
   }
 
   onChangeColumnHidden = (columnId, hidden) => {
-    if (this.props.onChangeColumnHidden) {
-      this.props.onChangeColumnHidden(columnId, hidden);
-    }
     this.dataManager.changeColumnHidden(columnId, hidden);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onChangeColumnHidden && this.props.onChangeColumnHidden(columnId, hidden);
+    });
   }
 
   onChangeGroupOrder = (groupedColumn) => {
