@@ -18,6 +18,7 @@ export default class DataManager {
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
   defaultExpanded = false;
+  shouldExpand = false;
 
   data = [];
   columns = [];
@@ -72,6 +73,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setShouldExpand(shouldExpand) {
+    this.shouldExpand = shouldExpand;
   }
 
   changeApplySearch(applySearch) {
