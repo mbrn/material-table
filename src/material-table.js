@@ -229,6 +229,9 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
+    if (this.props.onColumnDragged) {
+      this.props.onColumnDragged(result.source.index, result.destination.index);
+    }
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState());
   }
