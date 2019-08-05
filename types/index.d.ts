@@ -182,6 +182,7 @@ export interface Options {
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
+  draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
   exportButton?: boolean;
