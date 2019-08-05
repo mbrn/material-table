@@ -108,6 +108,7 @@ class App extends Component {
                     filtering: 'true'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
+                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
                 />
               </Grid>
             </Grid>
