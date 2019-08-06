@@ -34,7 +34,7 @@ export default class MaterialTable extends React.Component {
           })),
         orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
-        page: 0,
+        page: calculatedProps.options.initialPage || 0,
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
 
@@ -92,7 +92,7 @@ export default class MaterialTable extends React.Component {
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
 
-    if (count <= pageSize * currentPage && currentPage !== 0) {
+    if (count <= pageSize * currentPage && (!this.isRemoteData() || !this.state.isLoading)) {
       this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }
@@ -440,7 +440,7 @@ export default class MaterialTable extends React.Component {
                 SelectProps={{
                   renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
                 }}
-                page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
+                page={this.isRemoteData() ? (Math.min(this.state.query.page, this.state.query.totalCount)) : this.state.currentPage}
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
@@ -477,7 +477,7 @@ export default class MaterialTable extends React.Component {
               exportCsv={props.options.exportCsv}
               getFieldValue={this.dataManager.getFieldValue}
               data={this.state.data}
-              renderData={this.state.renderData}
+              renderData={this.isRemoteData() ? this.state.data : this.state.renderData}
               search={props.options.search}
               showTitle={props.options.showTitle}
               showTextRowsSelected={props.options.showTextRowsSelected}
@@ -536,7 +536,7 @@ export default class MaterialTable extends React.Component {
                         actions={props.actions}
                         components={props.components}
                         icons={props.icons}
-                        renderData={this.state.renderData}
+                        renderData={this.isRemoteData() ? this.state.data : this.state.renderData}
                         currentPage={this.state.currentPage}
                         initialFormData={props.initialFormData}
                         pageSize={this.state.pageSize}
