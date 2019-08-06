@@ -63,8 +63,18 @@ export class MTableHeader extends React.Component {
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
               onClick={() => {
-                const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
-                this.props.onOrderChange(columnDef.tableData.id, orderDirection);
+                // Update set sort direction logic to cycle on asc -> desc -> <blank> instead of just switch direction from asc to desc or desc to asc
+                switch(this.props.orderDirection){
+                  case 'asc':
+                      this.props.onOrderChange(columnDef.tableData.id, 'desc');
+                      break;
+                  case 'desc':
+                      this.props.onOrderChange(-1, '');
+                      break;
+                  default:
+                      this.props.onOrderChange(columnDef.tableData.id, 'asc');
+                      break;
+                }                
               }}
             >
               {content}
