@@ -89,6 +89,16 @@ class App extends Component {
                           resolve();
                         }, 1000);
                       }),
+                      onRowDelete: id =>
+                      new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                          {
+                            /* 
+                            this.setState({ data }, () => resolve()); */
+                          }
+                          resolve();
+                        }, 1000);
+                      }),
                   }}
                 />
               </Grid>
