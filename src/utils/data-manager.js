@@ -119,8 +119,8 @@ export default class DataManager {
           if (childRow.tableData.checked !== checked) {
             childRow.tableData.checked = checked;
             this.selectedCount = this.selectedCount + (checked ? 1 : -1);
-            checkChildRows(childRow);
           }
+          checkChildRows(childRow);
         });
       }
     };
