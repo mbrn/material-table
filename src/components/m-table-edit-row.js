@@ -19,8 +19,8 @@ export default class MTableEditRow extends React.Component {
   }
 
   createRowData(){
-    return this.props.columns.filter(column=>column.emptyValue && column.field).reduce((prev,column)=>{
-      prev[column.field]=column.emptyValue;
+    return this.props.columns.filter(column=>column.initialEditValue && column.field).reduce((prev,column)=>{
+      prev[column.field]=column.initialEditValue;
       return prev;
     },{});
   }
