@@ -173,20 +173,20 @@ export default class MaterialTable extends React.Component {
   }
 
   onChangeOrder = (orderBy, orderDirection) => {
-    this.dataManager.changeOrder(orderBy, orderDirection);
+    const newOrderBy = orderDirection === '' ? -1 : orderBy;
+    this.dataManager.changeOrder(newOrderBy, orderDirection);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
-      query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
+      query.orderBy = this.state.columns.find(a => a.tableData.id === newOrderBy);
       query.orderDirection = orderDirection;
       this.onQueryChange(query, () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection);
       });
-    }
-    else {
+    } else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection);
       });
     }
   }
