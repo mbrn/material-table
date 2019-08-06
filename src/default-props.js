@@ -1,8 +1,11 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
-import TablePagination from '@material-ui/core/TablePagination';
+import {
+	Icon,
+	Paper,
+	TablePagination,
+	CircularProgress,
+	Typography,
+} from "@material-ui/core";
 import * as MComponents from './components';
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -19,6 +22,7 @@ OverlayLoading.propTypes = {
 };
 
 const Container = (props) => <Paper elevation={2} {...props} />;
+const ActionFeedback = props => <Typography variant="h6" {...props} />;
 
 export const defaultProps = {
   actions: [],
@@ -27,6 +31,7 @@ export const defaultProps = {
   components: {
     Action: MComponents.MTableAction,
     Actions: MComponents.MTableActions,
+    ActionFeedback: ActionFeedback,
     Body: MComponents.MTableBody,
     Cell: MComponents.MTableCell,
     Container: Container,
