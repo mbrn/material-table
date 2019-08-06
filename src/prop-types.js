@@ -51,6 +51,7 @@ export const propTypes = {
   components: PropTypes.shape({
     Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Actions: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    ActionFeedback: PropTypes.oneOfType([ PropTypes.element, PropTypes.func, StyledComponent, ]),
     Body: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Cell: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Container: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),

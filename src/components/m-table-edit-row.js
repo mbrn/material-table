@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { byString, setByString } from '../utils';
 /* eslint-enable no-unused-vars */
 
 
-export default class MTableEditRow extends React.Component {
 
+export default class MTableEditRow extends React.Component {
   constructor(props) {
     super(props);
 
@@ -95,7 +94,7 @@ export default class MTableEditRow extends React.Component {
   }
 
   renderActions() {
-    const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
+    const {localization} = this.props;
     const actions = [
       {
         icon: this.props.icons.Check,
@@ -146,9 +145,9 @@ export default class MTableEditRow extends React.Component {
           padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
           key="key-selection-cell"
           colSpan={colSpan}>
-          <Typography variant="h6">
+          <this.props.components.ActionFeedback>
             {localization.deleteText}
-          </Typography>
+          </this.props.components.ActionFeedback>
         </TableCell>
       ];
     }
@@ -219,11 +218,6 @@ MTableEditRow.defaultProps = {
   index: 0,
   options: {},
   path: [],
-  localization: {
-    saveTooltip: 'Save',
-    cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure delete this row?',
-  }
 };
 
 MTableEditRow.propTypes = {
