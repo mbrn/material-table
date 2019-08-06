@@ -419,7 +419,7 @@ export default class MaterialTable extends React.Component {
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
-      const localization = { ...MaterialTable.defaultProps.localization.pagination, ...this.props.localization.pagination };
+      const localization = this.props.localization.pagination;
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
