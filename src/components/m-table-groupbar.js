@@ -76,7 +76,7 @@ class MTableGroupbar extends React.Component {
                                 <this.props.icons.SortArrow
                                   style={{
                                     transition: '300ms ease all',
-                                    transform: columnDef.tableData.groupSort === "desc" ? 'rotate(-180deg)' : 'none',
+                                    transform: columnDef.tableData.groupSort === "asc" ? 'rotate(-180deg)' : 'none',
                                     fontSize: 18
                                   }}
                                 />

@@ -99,6 +99,9 @@ export default class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
+    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
+    calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
+    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     const localization = calculatedProps.localization.body;
 
@@ -147,10 +150,6 @@ export default class MaterialTable extends React.Component {
         }));
       }
     }
-
-    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
-    calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
-    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     return calculatedProps;
   }
@@ -515,6 +514,7 @@ export default class MaterialTable extends React.Component {
                           columns={this.state.columns}
                           hasSelection={props.options.selection}
                           headerStyle={props.options.headerStyle}
+                          icons={props.icons}
                           selectedCount={this.state.selectedCount}
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}

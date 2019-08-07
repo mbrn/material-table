@@ -28,7 +28,6 @@ export class MTableHeader extends React.Component {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
-                  // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                 >
                   {columnDef.title}
                 </div>
@@ -37,29 +36,10 @@ export class MTableHeader extends React.Component {
           );
         }
 
-        // if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
-        //   content = (
-        //     <Draggable
-        //       key={columnDef.tableData.id}
-        //       draggableId={columnDef.tableData.id.toString()}
-        //       index={index}>
-        //       {(provided, snapshot) => (
-        //         <div
-        //           ref={provided.innerRef}
-        //           {...provided.draggableProps}
-        //           {...provided.dragHandleProps}
-        //         // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-        //         >
-        //           {columnDef.title}
-        //         </div>
-        //       )}
-        //     </Draggable>
-        //   );
-        // }
-
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
             <TableSortLabel
+              IconComponent={this.props.icons.SortArrow}
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
               onClick={() => {
