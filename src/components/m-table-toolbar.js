@@ -27,14 +27,12 @@ export class MTableToolbar extends React.Component {
   }
 
   defaultExportCsv = () => {
-    this.props.columns.sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
     const columns = this.props.columns
       .filter(columnDef => {
         return !columnDef.hidden && columnDef.field && columnDef.export !== false;
-      });
-
+      })
+      .sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
     const dataToExport = this.props.exportAllData ? this.props.data : this.props.renderData;
-
     const data = dataToExport.map(rowData =>
       columns.map(columnDef => {
         return this.props.getFieldValue(rowData, columnDef);
@@ -193,9 +191,9 @@ export class MTableToolbar extends React.Component {
   render() {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
-    const title =this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length  > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
+    const title = this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
     return (
-      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.showTextRowsSelected &&this.props.selectedRows && this.props.selectedRows.length > 0 })}>
+      <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 })}>
         {title && <div className={classes.title}>
           <Typography variant="h6">{title}</Typography>
         </div>}
@@ -226,7 +224,7 @@ MTableToolbar.defaultProps = {
   },
   search: true,
   showTitle: true,
-  showTextRowsSelected:true,
+  showTextRowsSelected: true,
   toolbarButtonAlignment: 'right',
   searchFieldAlignment: 'right',
   searchText: '',
@@ -249,7 +247,7 @@ MTableToolbar.propTypes = {
   selectedRows: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
-  showTextRowsSelected:PropTypes.bool.isRequired,
+  showTextRowsSelected: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,
   renderData: PropTypes.array,
