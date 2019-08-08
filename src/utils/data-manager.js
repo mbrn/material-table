@@ -230,8 +230,7 @@ export default class DataManager {
     this.sorted = false;
   }
 
-  changeColumnHidden(columnId, hidden) {
-    const column = this.columns.find(c => c.tableData.id === columnId);
+  changeColumnHidden(column, hidden) {    
     column.hidden = hidden;
   }
 
