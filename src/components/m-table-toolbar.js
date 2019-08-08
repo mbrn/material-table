@@ -30,10 +30,9 @@ export class MTableToolbar extends React.Component {
     const columns = this.props.columns
       .filter(columnDef => {
         return !columnDef.hidden && columnDef.field && columnDef.export !== false;
-      });
-
+      })
+      .sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
     const dataToExport = this.props.exportAllData ? this.props.data : this.props.renderData;
-
     const data = dataToExport.map(rowData =>
       columns.map(columnDef => {
         return this.props.getFieldValue(rowData, columnDef);
