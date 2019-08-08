@@ -39,11 +39,7 @@ class App extends Component {
     text: 'text',
     selecteds: 0,
     data: [
-      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35),
-      tableData: { 
-        isTreeExpanded: true
-      }
-     },
+      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 4, name: 'A4', surname: 'Dede', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
@@ -81,9 +77,13 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
-                  options={{                     
+                  options={{
+                    selection: true,
+                    columnsButton: true,
+                    filtering: 'true'
                   }}
+                  onSearchChange={(e) => console.log("search changed: " + e)}
+                  onChangeColumnHidden={(column, hidden) => console.log("column " + column.title + " is now hidden:" + hidden)}
                 />
               </Grid>
             </Grid>
