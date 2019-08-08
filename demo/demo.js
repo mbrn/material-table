@@ -39,7 +39,11 @@ class App extends Component {
     text: 'text',
     selecteds: 0,
     data: [
-      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35),
+      tableData: { 
+        isTreeExpanded: true
+      }
+     },
       { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 4, name: 'A4', surname: 'Dede', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
@@ -48,7 +52,7 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter' },
-      { title: 'Soyadı', field: 'surname', initialEditValue: 'test'},
+      { title: 'Soyadı', field: 'surname', initialEditValue: 'test' },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -77,18 +81,8 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  editable={{
-                    onRowAdd: newData =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
+                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  options={{                     
                   }}
                 />
               </Grid>
