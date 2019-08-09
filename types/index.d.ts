@@ -68,7 +68,7 @@ export interface Action<RowData extends object> {
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
-  onClick: (event: any, data: RowData) => void;
+  onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
   hidden?: boolean;
 }
