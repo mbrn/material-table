@@ -17,6 +17,7 @@ export default class DataManager {
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
+  groupedDataLength = 0;
   defaultExpanded = false;
 
   data = [];
@@ -476,7 +477,8 @@ export default class DataManager {
       searchText: this.searchText,
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
-      treeDataMaxLevel: this.treeDataMaxLevel
+      treeDataMaxLevel: this.treeDataMaxLevel,
+      groupedDataLength: this.groupedDataLength
     };
   }
 
@@ -593,6 +595,7 @@ export default class DataManager {
 
   groupData() {
     this.sorted = this.paged = false;
+    this.groupedDataLength = 0;
 
     const tmpData = [...this.searchedData];
 
@@ -622,6 +625,7 @@ export default class DataManager {
       }, object);
 
       object.data.push(currentRow);
+      this.groupedDataLength++;
 
       return result;
     }, { groups: [], groupsIndex: {} });
