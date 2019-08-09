@@ -160,6 +160,7 @@ MTableGroupRow.propTypes = {
   icons: PropTypes.object,
   isTreeData: PropTypes.bool.isRequired,
   level: PropTypes.number,
+  localization: PropTypes.object,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
   onRowClick: PropTypes.func,  
