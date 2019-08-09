@@ -159,6 +159,7 @@ export const propTypes = {
   }),
   initialFormData: PropTypes.object,
   onSearchChange: PropTypes.func,
+  onColumnDragged: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,

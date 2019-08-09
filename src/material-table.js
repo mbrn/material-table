@@ -231,7 +231,12 @@ export default class MaterialTable extends React.Component {
 
   onDragEnd = result => {
     this.dataManager.changeByDrag(result);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState(), () => {
+      if (this.props.onColumnDragged && result.destination.droppableId === "headers" &&
+        result.source.droppableId === "headers") {
+        this.props.onColumnDragged(result.source.index, result.destination.index);
+      }
+    });
   }
 
   onGroupExpandChanged = (path) => {

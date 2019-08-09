@@ -83,7 +83,7 @@ class App extends Component {
                     filtering: 'true'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
-                  onChangeColumnHidden={(column, hidden) => console.log("column " + column.title + " is now hidden:" + hidden)}
+                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
                 />
               </Grid>
             </Grid>
