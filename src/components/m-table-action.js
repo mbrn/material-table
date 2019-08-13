@@ -32,17 +32,13 @@ class MTableAction extends React.Component {
           size={this.props.size}
           color="inherit"
           disabled={action.disabled}
-          onClick={(event) => handleOnClick(event)}
+          onClick={event => handleOnClick(event)}
         >
-          {typeof action.icon === "string" ? (
+          {typeof action.icon === 'string' ? (
             <Icon {...action.iconProps}>{action.icon}</Icon>
           ) : (
-              <action.icon
-                {...action.iconProps}
-                disabled={action.disabled}
-              />
-            )
-          }
+            <action.icon {...action.iconProps} disabled={action.disabled} />
+          )}
         </IconButton>
     );
 
@@ -56,13 +52,13 @@ class MTableAction extends React.Component {
 
 MTableAction.defaultProps = {
   action: {},
-  data: {}
+  data: {},
 };
 
 MTableAction.propTypes = {
   action: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-  size: PropTypes.string
+  size: PropTypes.string,
 };
 
 export default MTableAction;
