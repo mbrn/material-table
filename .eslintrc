@@ -1,13 +1,20 @@
 {
-  "extends": [
-    "standard",
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  "plugins": ["react-hooks"],
+  "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "one-var": "off",
-    "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
-    "space-before-function-paren": ["error", "never"]
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/display-name": "off",
+    "no-mixed-spaces-and-tabs": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "16.9"
+    }
+  },
+  "env": {
+    "jest": true
   },
   "parser": "babel-eslint"
 }
