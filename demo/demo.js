@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
 import { data, columns, remoteColumns } from './dummy';
-import theme from './theme';
+import theme from './muiTheme';
 
 const bigData = [];
 for (let i = 0; i < 1; i++) {
