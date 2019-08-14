@@ -255,7 +255,9 @@ export default class MaterialTable extends React.Component {
       type: "DEFAULT"
     };
     this.dataManager.changeByDrag(result);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onGroupRemoved && this.props.onGroupRemoved(groupedColumn, index);
+    });
   }
 
   onEditingApproved = (mode, newData, oldData) => {
