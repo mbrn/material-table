@@ -155,7 +155,9 @@ export class MTableToolbar extends React.Component {
           </span>
 
         }
-        <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => a.isFreeAction)} components={this.props.components} />
+        <span>
+          <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => a.isFreeAction)} components={this.props.components} />
+        </span>
       </div>
     );
   }

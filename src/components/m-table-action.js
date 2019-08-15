@@ -28,7 +28,6 @@ class MTableAction extends React.Component {
     };
 
     const button = (
-      <span>
         <IconButton
           size={this.props.size}
           color="inherit"
@@ -45,7 +44,6 @@ class MTableAction extends React.Component {
             )
           }
         </IconButton>
-      </span>
     );
 
     if (action.tooltip) {
