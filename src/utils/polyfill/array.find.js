@@ -1,5 +1,5 @@
 Object.defineProperty(Array.prototype, 'find', {
-    value: function (predicate) {
+    value: function(predicate) {
         if (this == null) {
             throw new TypeError('"this" is null or not defined');
         }
