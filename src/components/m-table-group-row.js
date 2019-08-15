@@ -50,28 +50,51 @@ export default class MTableGroupRow extends React.Component {
         ));
       }
       else {
-        detail = this.props.groupData.data.map((rowData, index) => (
-          <this.props.components.Row
-            actions={this.props.actions}
-            key={index}
-            columns={this.props.columns}
-            components={this.props.components}
-            data={rowData}
-            detailPanel={this.props.detailPanel}
-            getFieldValue={this.props.getFieldValue}
-            icons={this.props.icons}
-            path={[...this.props.path, index]}
-            onRowSelected={this.props.onRowSelected}
-            onRowClick={this.props.onRowClick}
-            onToggleDetailPanel={this.props.onToggleDetailPanel}
-            options={this.props.options}
-            isTreeData={this.props.isTreeData}
-            onTreeExpandChanged={this.props.onTreeExpandChanged}
-            onEditingCanceled={this.props.onEditingCanceled}
-            onEditingApproved={this.props.onEditingApproved}
-            hasAnyEditingRow={this.props.hasAnyEditingRow}
-          />
-        ));
+        detail = this.props.groupData.data.map((rowData, index) => {
+          if (rowData.tableData.editing) {
+            return (
+              <this.props.components.EditRow
+                columns={this.props.columns}
+                components={this.props.components}
+                data={rowData}
+                icons={this.props.icons}
+                path={[...this.props.path, index]}
+                localization={this.props.localization}
+                key={index}
+                mode={rowData.tableData.editing}
+                options={this.props.options}
+                isTreeData={this.props.isTreeData}
+                detailPanel={this.props.detailPanel}
+                onEditingCanceled={this.props.onEditingCanceled}
+                onEditingApproved={this.props.onEditingApproved}
+                getFieldValue={this.props.getFieldValue}
+              />
+            );
+          } else {
+            return (
+              <this.props.components.Row
+                actions={this.props.actions}
+                key={index}
+                columns={this.props.columns}
+                components={this.props.components}
+                data={rowData}
+                detailPanel={this.props.detailPanel}
+                getFieldValue={this.props.getFieldValue}
+                icons={this.props.icons}
+                path={[...this.props.path, index]}
+                onRowSelected={this.props.onRowSelected}
+                onRowClick={this.props.onRowClick}
+                onToggleDetailPanel={this.props.onToggleDetailPanel}
+                options={this.props.options}
+                isTreeData={this.props.isTreeData}
+                onTreeExpandChanged={this.props.onTreeExpandChanged}
+                onEditingCanceled={this.props.onEditingCanceled}
+                onEditingApproved={this.props.onEditingApproved}
+                hasAnyEditingRow={this.props.hasAnyEditingRow}
+              />
+            );
+          }
+        });
       }
     }
 
@@ -137,6 +160,7 @@ MTableGroupRow.propTypes = {
   icons: PropTypes.object,
   isTreeData: PropTypes.bool.isRequired,
   level: PropTypes.number,
+  localization: PropTypes.object,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
   onRowClick: PropTypes.func,  
