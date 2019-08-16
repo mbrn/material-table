@@ -23,8 +23,10 @@ export interface MaterialTableProps<RowData extends object> {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
+  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
+  onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
