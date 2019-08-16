@@ -141,7 +141,10 @@ class MTableBody extends React.Component {
         options={this.props.options}
         isTreeData={this.props.isTreeData}
         hasAnyEditingRow={this.props.hasAnyEditingRow}
-        localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+        localization={{
+          ...MTableBody.defaultProps.localization.editRow,
+          ...this.props.localization.editRow,
+        }}
       />
     ));
   }
