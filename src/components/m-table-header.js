@@ -48,8 +48,10 @@ export class MTableHeader extends React.Component {
                     ? 'asc'
                     : this.props.orderDirection === 'asc'
                     ? 'desc'
-                    : this.props.orderDirection === 'desc'
+                    : this.props.orderDirection === 'desc' && this.props.sortBackToNormal
                     ? ''
+                    : this.props.orderDirection === 'desc' && !this.props.sortBackToNormal
+                    ? 'asc'
                     : this.props.orderDirection === ''
                     ? 'asc'
                     : 'desc';
@@ -183,6 +185,7 @@ MTableHeader.defaultProps = {
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: "left",
   draggable: true,
+  sortBackToNormal: true,
 };
 
 MTableHeader.propTypes = {
@@ -203,6 +206,7 @@ MTableHeader.propTypes = {
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
+  sortBackToNormal: PropTypes.bool,
 };
 
 
