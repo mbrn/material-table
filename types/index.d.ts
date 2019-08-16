@@ -182,7 +182,7 @@ export interface Options {
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
-  defaultExpanded?: boolean;
+  defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
