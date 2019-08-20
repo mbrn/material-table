@@ -98,7 +98,9 @@ export const defaultProps = {
     sorting: true,
     toolbar: true,
     defaultExpanded: false,
-    detailPanelColumnAlignment: 'left'
+    detailPanelColumnAlignment: 'left',
+    emptyRowMediumHeight: 42,
+    emptyRowMedium: 26
   },
   localization: {
     grouping: {

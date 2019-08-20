@@ -33,7 +33,7 @@ export default class MTableBodyRow extends React.Component {
 
   renderActions() {
     const size = this.getElementSize();
-    const baseIconSize = size === 'medium' ? 42 : 26;
+    const baseIconSize = size === 'medium' ? this.props.options.emptyRowHeightMedium || 42 : this.props.options.emptyRowHeight || 26;
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
     return (
       <TableCell size={size} padding="none" key="key-actions-column" style={{ width: baseIconSize * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
