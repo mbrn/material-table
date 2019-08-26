@@ -87,8 +87,14 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   }
 
+  getTotalCount() {
+    return this.isRemoteData() ?
+      this.state.query.totalCount :
+      (this.props.totalCount || this.state.data.length);
+  }
+
   componentDidUpdate() {
-    const count = this.isRemoteData() ? this.state.query.totalCount : this.state.data.length;
+    const count = this.getTotalCount();
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
 
@@ -442,7 +448,7 @@ export default class MaterialTable extends React.Component {
                 }}
                 style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
                 colSpan={3}
-                count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
+                count={this.getTotalCount()}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
