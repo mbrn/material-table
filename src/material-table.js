@@ -540,7 +540,7 @@ export default class MaterialTable extends React.Component {
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}
                           draggable={props.options.draggable}
-                          sortBackToNormal={props.options.sortBackToNormal}
+                          thirdSortClick={props.options.thirdSortClick}
                         />
                       }
                       <props.components.Body

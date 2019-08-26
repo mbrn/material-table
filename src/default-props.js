@@ -99,7 +99,7 @@ export const defaultProps = {
     toolbar: true,
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
-    sortBackToNormal: true,
+    thirdSortClick: true,
   },
   localization: {
     grouping: {
