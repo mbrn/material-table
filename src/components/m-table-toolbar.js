@@ -119,12 +119,11 @@ export class MTableToolbar extends React.Component {
               {
                 this.props.columns.map((col) => {
                   return (
-                    <MenuItem key={col.tableData.id} disabled={col.removable === false}
-                      onClick={() => this.props.onColumnsChanged(col, !col.hidden)}
-                    >
+                    <MenuItem key={col.tableData.id} disabled={col.removable === false}>
                       <FormControlLabel
                         label={col.title}
                         control={<Checkbox checked={!col.hidden} />}
+                        onChange={() => this.props.onColumnsChanged(col, !col.hidden)}
                       />
                     </MenuItem>
                   );
