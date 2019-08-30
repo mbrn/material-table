@@ -17,12 +17,20 @@ export default class MTableBodyRow extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
+        const indentStyle = (this.props.options.indentFirstDataCell && index == 0)?(
+          size === 'medium' ? {
+            paddingLeft: this.props.level * 9
+          } : {
+            paddingLeft: 5 + this.props.level * 9
+          }
+        ):{};
         return (
           <this.props.components.Cell
             size={size}
             icons={this.props.icons}
             columnDef={columnDef}
             value={value}
+            style={indentStyle}
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
           />
@@ -35,9 +43,16 @@ export default class MTableBodyRow extends React.Component {
     const size = this.getElementSize();
     const baseIconSize = size === 'medium' ? 42 : 26;
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
+
+    const indentStyle = this.props.options.indentActionsCell ?( size === 'medium' ? {
+      marginLeft: this.props.level * 9
+    } : {
+        marginLeft: 5 + this.props.level * 9
+      }):{};
+
     return (
       <TableCell size={size} padding="none" key="key-actions-column" style={{ width: baseIconSize * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
-        <div style={{ display: 'flex' }}>
+        <div style={{ ...indentStyle, display: 'flex' }}>
           <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} />
         </div>
       </TableCell>
