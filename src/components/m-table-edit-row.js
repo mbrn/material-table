@@ -200,6 +200,8 @@ export default class MTableEditRow extends React.Component {
       onEditingApproved,
       onEditingCanceled,
       getFieldValue,
+      hasAnyEditingRow,
+      treeDataMaxLevel,
       ...rowProps
     } = this.props;
 
