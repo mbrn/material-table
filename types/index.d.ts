@@ -195,6 +195,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
   initialPage?: number;
