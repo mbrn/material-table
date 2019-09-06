@@ -7,6 +7,7 @@ export interface MaterialTableProps<RowData extends object> {
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
+  footerData?: {[key in keyof RowData]: string | number | React.ReactElement | null};
   detailPanel?: ((rowData: RowData) => React.ReactNode) | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
@@ -133,6 +134,7 @@ export interface Components {
   EditField?: React.ComponentType<any>;
   EditRow?: React.ComponentType<any>;
   FilterRow?: React.ComponentType<any>;
+  Footer?: React.ComponentType<any>;
   Groupbar?: React.ComponentType<any>;
   GroupRow?: React.ComponentType<any>;
   Header?: React.ComponentType<any>;

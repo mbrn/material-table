@@ -33,6 +33,7 @@ export const defaultProps = {
     EditField: MComponents.MTableEditField,
     EditRow: MComponents.MTableEditRow,
     FilterRow: MComponents.MTableFilterRow,
+    Footer: MComponents.MTableFooter,
     Groupbar: MComponents.MTableGroupbar,
     GroupRow: MComponents.MTableGroupRow,
     Header: MComponents.MTableHeader,
@@ -42,6 +43,7 @@ export const defaultProps = {
     Toolbar: MComponents.MTableToolbar
   },
   data: [],
+  footerData: null,
   icons: {
     /* eslint-disable react/display-name */
     Add: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>add_box</Icon>),

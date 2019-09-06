@@ -542,6 +542,18 @@ export default class MaterialTable extends React.Component {
                           draggable={props.options.draggable}
                         />
                       }
+                    {props.footerData && 
+                       <props.components.Footer
+                          options={props.options}
+                          columns={this.state.columns}
+                          components={props.components}
+                          onRowClick={this.props.onRowClick}
+                          getFieldValue={this.dataManager.getFieldValue}
+                          isTreeData={this.props.parentChildData !== undefined}
+                          treeDataMaxLevel={this.state.treeDataMaxLevel}
+                          data={props.footerData}
+                         />
+                     }
                       <props.components.Body
                         actions={props.actions}
                         components={props.components}
