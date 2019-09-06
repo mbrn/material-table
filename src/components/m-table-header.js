@@ -18,7 +18,7 @@ export class MTableHeader extends React.Component {
         let content = columnDef.title;
 
         if(this.props.draggable) {
-          content = (
+          content = (columnDef.fixed ? <>{columnDef.title}</> : 
             <Draggable
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
