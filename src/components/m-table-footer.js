@@ -119,7 +119,7 @@ export default class MTableFooter extends React.Component {
     if(this.props.isTreeData){
       renderColumns.splice(0, 0, 
         <TableCell style={this.getStyle()} padding="none" key={"footer-tree-data-placeholder"} />
-      )
+      );
     }
     if(this.props.detailPanel){
       if (this.props.options.detailPanelColumnAlignment === 'right') {
@@ -168,7 +168,7 @@ export default class MTableFooter extends React.Component {
               hover={onRowClick ? true : false}
               style={this.getStyle()}
               onClick={(event) => {
-                onRowClick && onRowClick(event, this.props.data)
+                onRowClick && onRowClick(event, this.props.data);
               }}
             >
               {renderColumns}
