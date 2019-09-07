@@ -47,7 +47,11 @@ class MTableAction extends React.Component {
     );
 
     if (action.tooltip) {
-      return <Tooltip title={action.tooltip}>{button}</Tooltip>;
+      // fix for issue #1049
+      // https://github.com/mbrn/material-table/issues/1049
+      return action.disabled
+        ? <Tooltip title={action.tooltip}><span>{button}</span></Tooltip>
+        : <Tooltip title={action.tooltip}>{button}</Tooltip>;
     } else {
       return button;
     }

@@ -70,6 +70,66 @@ class App extends Component {
       <>
         <MuiThemeProvider theme={theme}>
           <div style={{ maxWidth: '100%', direction }}>
+            <MaterialTable
+              title="Free Action Demo"
+              columns={[
+                { title: 'Name', field: 'name' },
+                { title: 'Surname', field: 'surname' },
+                { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+                {
+                  title: 'Birth Place',
+                  field: 'birthCity',
+                  lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+                },
+              ]}
+              editable={{
+                isEditable: rowData => true,
+                onRowUpdate: (newData, oldData) => Promise.resolve()
+              }}
+              data={[
+                { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+                { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+              ]}
+              actions={[
+                {
+                  icon: 'add',
+                  tooltip: 'Add User',
+                  isFreeAction: true,
+                  onClick: (event) => alert("You want to add a new row")
+                }
+              ]}
+            />
+            <MaterialTable
+              title="Editable With Disabled Row Demo"
+              data={[
+                {
+                  name: "Rock",
+                  id: 1
+                },
+                {
+                  name: "Paper",
+                  id: 2
+                },
+                {
+                  name: "Scissors",
+                  id: 3
+                }
+              ]}
+              columns={[
+                {
+                  title: "Item",
+                  field: "name"
+                },
+                {
+                  title: "Item ID",
+                  field: "id"
+                }
+              ]}
+              editable={{
+                isEditable: rowData => false,
+                onRowUpdate: (newData, oldData) => Promise.resolve()
+              }}
+            />
             <Grid container>
               <Grid item xs={12}>
                 <MaterialTable
