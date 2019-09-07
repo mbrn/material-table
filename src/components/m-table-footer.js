@@ -26,7 +26,6 @@ export default class MTableFooter extends React.Component {
             style={this.getStyle()}
             key={"footer-cell-" + columnDef.tableData.id}
             rowData={this.props.data}
-            isFooterCell={true}
           />
         );
       });
