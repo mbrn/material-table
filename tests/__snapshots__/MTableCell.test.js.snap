@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MTableCell can render "boolean" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value={true}
+>
+  <span
+    aria-hidden={true}
+    className="material-icons MuiIcon-root"
+    style={
+      Object {
+        "textAlign": "left",
+        "verticalAlign": "middle",
+        "width": 48,
+      }
+    }
+  >
+    check
+  </span>
+</td>
+`;
+
+exports[`MTableCell can render "currency" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value={100}
+>
+  $100.00
+</td>
+`;
+
+exports[`MTableCell can render "date" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value={1991-09-23T10:00:00.000Z}
+>
+  9/23/1991
+</td>
+`;
+
+exports[`MTableCell can render "datetime" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value={1991-09-23T10:00:00.000Z}
+>
+  9/23/1991, 12:00:00 PM
+</td>
+`;
+
+exports[`MTableCell can render "empty" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+>
+  
+</td>
+`;
+
+exports[`MTableCell can render "generic" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value="abc"
+>
+  abc
+</td>
+`;
+
+exports[`MTableCell can render "time" cell 1`] = `
+<td
+  aria-sort={null}
+  className="MuiTableCell-root MuiTableCell-alignLeft"
+  onClick={[Function]}
+  style={Object {}}
+  value={1991-09-23T10:00:00.000Z}
+>
+  12:00:00 PM
+</td>
+`;

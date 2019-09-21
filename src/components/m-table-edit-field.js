@@ -4,12 +4,17 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from '@material-ui/pickers';
+import {
+  MuiPickersUtilsProvider,
+  TimePicker,
+  DatePicker,
+  DateTimePicker,
+} from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, onRowDataChange,  ...props } = this.props;
+    const { columnDef, rowData, onRowDataChange, ...props } = this.props;
     return props;
   }
 
@@ -24,11 +29,12 @@ class MTableEditField extends React.Component {
         }}
       >
         {Object.keys(this.props.columnDef.lookup).map(key => (
-          <MenuItem key={key} value={key}>{this.props.columnDef.lookup[key]}</MenuItem>)
-        )}
+          <MenuItem key={key} value={key}>
+            {this.props.columnDef.lookup[key]}
+          </MenuItem>
+        ))}
       </Select>
     );
-
   }
 
   renderBooleanField() {
@@ -41,7 +47,7 @@ class MTableEditField extends React.Component {
         style={{
           paddingLeft: 0,
           paddingTop: 0,
-          paddingBottom: 0
+          paddingBottom: 0,
         }}
       />
     );
@@ -59,7 +65,7 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 13,
-            }
+            },
           }}
         />
       </MuiPickersUtilsProvider>
@@ -78,7 +84,7 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 13,
-            }
+            },
           }}
         />
       </MuiPickersUtilsProvider>
@@ -97,7 +103,7 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 13,
-            }
+            },
           }}
         />
       </MuiPickersUtilsProvider>
@@ -116,50 +122,43 @@ class MTableEditField extends React.Component {
         InputProps={{
           style: {
             fontSize: 13,
-          }
+          },
         }}
       />
     );
   }
 
   renderCurrencyField() {
-    return "ok";
+    return 'ok';
   }
 
   render() {
-    let component = "ok";
+    let component = 'ok';
 
     if (this.props.columnDef.lookup) {
       component = this.renderLookupField();
-    }
-    else if (this.props.columnDef.type === "boolean") {
+    } else if (this.props.columnDef.type === 'boolean') {
       component = this.renderBooleanField();
-    }
-    else if (this.props.columnDef.type === "date") {
+    } else if (this.props.columnDef.type === 'date') {
       component = this.renderDateField();
-    }
-    else if (this.props.columnDef.type === "time") {
+    } else if (this.props.columnDef.type === 'time') {
       component = this.renderTimeField();
-    }
-    else if (this.props.columnDef.type === "datetime") {
+    } else if (this.props.columnDef.type === 'datetime') {
       component = this.renderDateTimeField();
-    }
-    else if (this.props.columnDef.type === "currency") {
+    } else if (this.props.columnDef.type === 'currency') {
       component = this.renderCurrencyField();
-    }
-    else {
+    } else {
       component = this.renderTextField();
     }
 
     return component;
-
   }
 }
 
 MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  columnDef: PropTypes.object.isRequired
+  columnDef: PropTypes.object.isRequired,
 };
 
 export default MTableEditField;
