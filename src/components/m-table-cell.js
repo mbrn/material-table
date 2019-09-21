@@ -6,18 +6,17 @@ import PropTypes from 'prop-types';
 
 export default class MTableCell extends React.Component {
   getRenderValue() {
-    if (
-      this.props.columnDef.emptyValue !== undefined &&
-      (this.props.value === undefined || this.props.value === null)
-    ) {
+    if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
     if (this.props.columnDef.render) {
       if (this.props.rowData) {
         return this.props.columnDef.render(this.props.rowData, 'row');
-      } else {
+      }
+      else {
         return this.props.columnDef.render(this.props.value, 'group');
       }
+
     } else if (this.props.columnDef.type === 'boolean') {
       const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
       if (this.props.value) {
@@ -60,26 +59,15 @@ export default class MTableCell extends React.Component {
 
   getCurrencyValue(currencySetting, value) {
     if (currencySetting !== undefined) {
-      return new Intl.NumberFormat(
-        currencySetting.locale !== undefined ? currencySetting.locale : 'en-US',
+      return new Intl.NumberFormat((currencySetting.locale !== undefined) ? currencySetting.locale : 'en-US',
         {
           style: 'currency',
-          currency:
-            currencySetting.currencyCode !== undefined ? currencySetting.currencyCode : 'USD',
-          minimumFractionDigits:
-            currencySetting.minimumFractionDigits !== undefined
-              ? currencySetting.minimumFractionDigits
-              : 2,
-          maximumFractionDigits:
-            currencySetting.maximumFractionDigits !== undefined
-              ? currencySetting.maximumFractionDigits
-              : 2,
-        }
-      ).format(value !== undefined ? value : 0);
+          currency: (currencySetting.currencyCode !== undefined) ? currencySetting.currencyCode : 'USD',
+          minimumFractionDigits: (currencySetting.minimumFractionDigits !== undefined) ? currencySetting.minimumFractionDigits : 2,
+          maximumFractionDigits: (currencySetting.maximumFractionDigits !== undefined) ? currencySetting.maximumFractionDigits : 2
+        }).format((value !== undefined) ? value : 0);
     } else {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-        value !== undefined ? value : 0
-      );
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((value !== undefined) ? value : 0);
     }
   }
 
@@ -87,16 +75,13 @@ export default class MTableCell extends React.Component {
     if (this.props.columnDef.disableClick) {
       e.stopPropagation();
     }
-  };
+  }
 
   getStyle = () => {
     let cellStyle = {};
 
     if (typeof this.props.columnDef.cellStyle === 'function') {
-      cellStyle = {
-        ...cellStyle,
-        ...this.props.columnDef.cellStyle(this.props.value, this.props.rowData),
-      };
+      cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle(this.props.value, this.props.rowData) };
     } else {
       cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
     }
@@ -106,9 +91,10 @@ export default class MTableCell extends React.Component {
     }
 
     return { ...this.props.style, ...cellStyle };
-  };
+  }
 
   render() {
+
     const { icons, columnDef, rowData, ...cellProps } = this.props;
 
     return (
@@ -116,7 +102,7 @@ export default class MTableCell extends React.Component {
         size={this.props.size}
         {...cellProps}
         style={this.getStyle()}
-        align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? 'right' : 'left'}
+        align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}
       >
         {this.props.children}
@@ -128,11 +114,11 @@ export default class MTableCell extends React.Component {
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: undefined,
+  value: undefined
 };
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
-  rowData: PropTypes.object,
+  rowData: PropTypes.object
 };
