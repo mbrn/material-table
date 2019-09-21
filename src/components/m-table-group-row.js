@@ -6,32 +6,33 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
+
 export default class MTableGroupRow extends React.Component {
+
   rotateIconStyle = isOpen => ({
-    transform: isOpen ? 'rotate(90deg)' : 'none',
+    transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
   render() {
     let colSpan = this.props.columns.filter(columnDef => !columnDef.hidden).length;
-    this.props.options.selection && colSpan++;
+    this.props.options.selection && colSpan++;    
     this.props.detailPanel && colSpan++;
     this.props.actions && this.props.actions.length > 0 && colSpan++;
     const column = this.props.groups[this.props.level];
 
     let detail;
     if (this.props.groupData.isExpanded) {
-      if (this.props.groups.length > this.props.level + 1) {
-        // Is there another group
+      if (this.props.groups.length > (this.props.level + 1)) { // Is there another group
         detail = this.props.groupData.groups.map((groupData, index) => (
           <this.props.components.GroupRow
             actions={this.props.actions}
-            key={groupData.value || '' + index}
+            key={groupData.value || ("" + index)}
             columns={this.props.columns}
             components={this.props.components}
             detailPanel={this.props.detailPanel}
             getFieldValue={this.props.getFieldValue}
             groupData={groupData}
-            groups={this.props.groups}
+            groups={this.props.groups}            
             icons={this.props.icons}
             level={this.props.level + 1}
             path={[...this.props.path, index]}
@@ -47,7 +48,8 @@ export default class MTableGroupRow extends React.Component {
             isTreeData={this.props.isTreeData}
           />
         ));
-      } else {
+      }
+      else {
         detail = this.props.groupData.data.map((rowData, index) => {
           if (rowData.tableData.editing) {
             return (
@@ -98,7 +100,7 @@ export default class MTableGroupRow extends React.Component {
 
     const freeCells = [];
     for (let i = 0; i < this.props.level; i++) {
-      freeCells.push(<TableCell padding="checkbox" key={i} />);
+      freeCells.push(<TableCell padding="checkbox" key={ i } />);
     }
 
     let value = this.props.groupData.value;
@@ -107,7 +109,7 @@ export default class MTableGroupRow extends React.Component {
     }
 
     let title = column.title;
-    if (typeof title !== 'string') {
+    if (typeof title !== "string") {
       title = React.cloneElement(title);
     }
 
@@ -115,28 +117,22 @@ export default class MTableGroupRow extends React.Component {
       <>
         <TableRow>
           {freeCells}
-          <this.props.components.Cell
-            colSpan={colSpan}
-            padding="none"
-            columnDef={column}
+          <this.props.components.Cell 
+            colSpan={colSpan} 
+            padding="none" 
+            columnDef={column} 
             value={value}
             icons={this.props.icons}
           >
             <IconButton
-              style={{
-                transition: 'all ease 200ms',
-                ...this.rotateIconStyle(this.props.groupData.isExpanded),
-              }}
-              onClick={event => {
+              style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
+              onClick={(event) => {
                 this.props.onGroupExpandChanged(this.props.path);
               }}
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>
-              {title}
-              {': '}
-            </b>
+            <b>{title}{": "}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}
@@ -149,7 +145,7 @@ MTableGroupRow.defaultProps = {
   columns: [],
   groups: [],
   options: {},
-  level: 0,
+  level: 0
 };
 
 MTableGroupRow.propTypes = {
@@ -167,7 +163,7 @@ MTableGroupRow.propTypes = {
   localization: PropTypes.object,
   onGroupExpandChanged: PropTypes.func,
   onRowSelected: PropTypes.func,
-  onRowClick: PropTypes.func,
+  onRowClick: PropTypes.func,  
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
   onEditingCanceled: PropTypes.func,

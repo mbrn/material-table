@@ -36,16 +36,13 @@ class MTablePaginationInner extends React.Component {
     const buttons = [];
 
     for (let p = start; p <= end; p++) {
-      const buttonVariant = p === this.props.page ? 'contained' : 'default';
+      const buttonVariant = p === this.props.page ? "contained" : "default";
       buttons.push(
         <Button
           size="small"
           style={{
             boxShadow: 'none',
-            maxWidth: '30px',
-            maxHeight: '30px',
-            minWidth: '30px',
-            minHeight: '30px',
+            maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'
           }}
           disabled={p === this.props.page}
           variant={buttonVariant}
@@ -63,10 +60,7 @@ class MTablePaginationInner extends React.Component {
   render() {
     const { classes, count, page, rowsPerPage } = this.props;
 
-    const localization = {
-      ...MTablePaginationInner.defaultProps.localization,
-      ...this.props.localization,
-    };
+    const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
     const maxPages = Math.ceil(count / rowsPerPage) - 1;
 
     const pageStart = Math.max(page - 1, 0);
@@ -85,7 +79,9 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden smDown={true}>{this.renderPagesButton(pageStart, pageEnd)}</Hidden>
+        <Hidden smDown={true}>
+          {this.renderPagesButton(pageStart, pageEnd)}
+        </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
@@ -106,8 +102,8 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
+    marginLeft: theme.spacing(2.5)
+  }
 });
 
 MTablePaginationInner.propTypes = {
@@ -116,7 +112,7 @@ MTablePaginationInner.propTypes = {
   count: PropTypes.number,
   rowsPerPage: PropTypes.number,
   classes: PropTypes.object,
-  localization: PropTypes.object,
+  localization: PropTypes.object
 };
 
 MTablePaginationInner.defaultProps = {
@@ -124,8 +120,8 @@ MTablePaginationInner.defaultProps = {
     previousTooltip: 'Previous Page',
     nextTooltip: 'Next Page',
     labelDisplayedRows: '{from}-{to} of {count}',
-    labelRowsPerPage: 'Rows per page:',
-  },
+    labelRowsPerPage: 'Rows per page:'
+  }
 };
 
 const MTablePagination = withStyles(actionsStyles, { withTheme: true })(MTablePaginationInner);
