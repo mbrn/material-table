@@ -274,7 +274,11 @@ export default class MTableBodyRow extends React.Component {
               (panelIndex) => {
                 let panel = detailPanel;
                 if (Array.isArray(panel)) {
-                  panel = panel[panelIndex || 0].render;
+                  panel = panel[panelIndex || 0]
+                  if (typeof panel === "function") {
+                    panel = panel(this.props.data)
+                  }
+                  panel = panel.render;
                 }
 
                 onToggleDetailPanel(this.props.path, panel);
