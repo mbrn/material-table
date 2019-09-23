@@ -247,11 +247,15 @@ export interface Localization {
   };
   pagination?: {
     firstTooltip?: string;
+    firstAriaLabel?: string;
     previousTooltip?: string;
+    previousAriaLabel?: string,
     nextTooltip?: string;
+    nextAriaLabel?: string,
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
     lastTooltip?: string;
+    lastAriaLabel?: string,
     labelRowsSelect?: string;
   };
   toolbar?: {
