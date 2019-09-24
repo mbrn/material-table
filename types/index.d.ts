@@ -32,7 +32,7 @@ export interface MaterialTableProps<RowData extends object> {
   onSearchChange?: (searchText: string) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
-  onQueryChange?: () => void;
+  onQueryChange?: (query: Query<RowData>) => void;
   style?: React.CSSProperties;
   tableRef?: any;
 }
