@@ -79,6 +79,7 @@ export default class MaterialTable extends React.Component {
     isInit && this.dataManager.changePaging(props.options.paging);
     isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
+    this.dataManager.setSearchInitialText(props.searchInitialText);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
