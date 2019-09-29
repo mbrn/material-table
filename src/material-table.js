@@ -50,6 +50,7 @@ export default class MaterialTable extends React.Component {
         this.onQueryChange(this.state.query);
       }
     });
+    if (this.state.searchInitialText) {this.onSearchChange(this.state.searchInitialText)}
   }
 
   setDataManagerFields(props, isInit) {
