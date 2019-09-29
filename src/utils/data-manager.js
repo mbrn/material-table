@@ -158,6 +158,10 @@ export default class DataManager {
     this.currentPage = 0;
   }
 
+  setSearchInitialText(searchInitialText) {
+    this.searchInitialText = searchInitialText;
+  }
+
   changeRowEditing(rowData, mode) {
     if (rowData) {
       rowData.tableData.editing = mode;
@@ -474,6 +478,7 @@ export default class DataManager {
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,
+      searchInitialText: this.searchInitialText,
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel
