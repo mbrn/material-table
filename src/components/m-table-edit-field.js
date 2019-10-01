@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, onRowDataChange,  ...props } = this.props;
+    const { columnDef, rowData, onRowDataChange, ...props } = this.props;
     return props;
   }
 
@@ -49,7 +49,8 @@ class MTableEditField extends React.Component {
 
   renderDateField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}
+        locale={this.props.locale}>
         <DatePicker
           {...this.getProps()}
           format="dd.MM.yyyy"
@@ -65,10 +66,11 @@ class MTableEditField extends React.Component {
       </MuiPickersUtilsProvider>
     );
   }
-
   renderTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider
+        utils={DateFnsUtils}
+        locale={this.props.locale}>
         <TimePicker
           {...this.getProps()}
           format="HH:mm:ss"
@@ -87,7 +89,8 @@ class MTableEditField extends React.Component {
 
   renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}
+        locale={this.props.locale}>
         <DateTimePicker
           {...this.getProps()}
           format="dd.MM.yyyy HH:mm:ss"
@@ -159,7 +162,8 @@ class MTableEditField extends React.Component {
 MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  columnDef: PropTypes.object.isRequired
+  columnDef: PropTypes.object.isRequired,
+  locale: PropTypes.object
 };
 
 export default MTableEditField;

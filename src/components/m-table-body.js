@@ -47,7 +47,7 @@ class MTableBody extends React.Component {
             components={this.props.components}
             data={data}
             icons={this.props.icons}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, locale: this.props.localization.locale }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -140,7 +140,7 @@ class MTableBody extends React.Component {
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
-            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, locale: this.props.localization.locale }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
