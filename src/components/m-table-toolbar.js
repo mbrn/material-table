@@ -96,6 +96,8 @@ export class MTableToolbar extends React.Component {
 
   renderDefaultActions() {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
+    const {classes} = this.props;
+
     return (
       <div>
         {this.props.columnsButton &&
@@ -119,14 +121,21 @@ export class MTableToolbar extends React.Component {
               {
                 this.props.columns.map((col) => {
                   return (
-                    <MenuItem key={col.tableData.id} disabled={col.removable === false}
-                      onClick={() => this.props.onColumnsChanged(col, !col.hidden)}
-                    >
-                      <FormControlLabel
-                        label={col.title}
-                        control={<Checkbox checked={!col.hidden} />}
-                      />
-                    </MenuItem>
+                    <li key={col.tableData.id}>
+                      <MenuItem
+                        className={classes.formControlLabel}
+                        component="label"
+                        htmlFor={`column-toggle-${col.tableData.id}`}
+                        disabled={col.removable === false}
+                      >
+                        <Checkbox
+                          checked={!col.hidden}
+                          id={`column-toggle-${col.tableData.id}`}
+                          onChange={() => this.props.onColumnsChanged(col, !col.hidden)}
+                        />
+                        <span>{col.title}</span>
+                      </MenuItem>
+                    </li>
                   );
                 })
               }
@@ -282,6 +291,10 @@ export const styles = theme => ({
   },
   searchField: {
     paddingLeft: theme.spacing(2)
+  },
+  formControlLabel: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   }
 });
 
