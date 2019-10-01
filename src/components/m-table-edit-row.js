@@ -16,13 +16,14 @@ export default class MTableEditRow extends React.Component {
     this.state = {
       data: props.data ? JSON.parse(JSON.stringify(props.data)) : this.createRowData()
     };
+    this.approveEdit = this.approveEdit.bind(this);
   }
 
-  createRowData(){
-    return this.props.columns.filter(column=>column.initialEditValue && column.field).reduce((prev,column)=>{
-      prev[column.field]=column.initialEditValue;
+  createRowData() {
+    return this.props.columns.filter(column => column.initialEditValue && column.field).reduce((prev, column) => {
+      prev[column.field] = column.initialEditValue;
       return prev;
-    },{});
+    }, {});
   }
 
   renderColumns() {
@@ -49,8 +50,8 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
           allowEditing = true;
         }
-        if (typeof columnDef.editable == 'function'){
-            allowEditing = columnDef.editable(columnDef, this.props.data);
+        if (typeof columnDef.editable == 'function') {
+          allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
           const readonlyValue = this.props.getFieldValue(this.state.data, columnDef);
@@ -76,6 +77,7 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
+                approve={this.props.components.EditField ? this.approveEdit : undefined}
                 rowData={this.state.data}
                 onChange={value => {
                   const data = { ...this.state.data };
@@ -100,11 +102,7 @@ export default class MTableEditRow extends React.Component {
       {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
-        onClick: () => {
-          const newData = this.state.data;
-          delete newData.tableData;
-          this.props.onEditingApproved(this.props.mode, this.state.data, this.props.data);
-        }
+        onClick: this.approveEdit
       },
       {
         icon: this.props.icons.Clear,
@@ -121,6 +119,12 @@ export default class MTableEditRow extends React.Component {
         </div>
       </TableCell>
     );
+  }
+
+  approveEdit() {
+    const newData = this.state.data;
+    delete newData.tableData;
+    this.props.onEditingApproved(this.props.mode, this.state.data, this.props.data);
   }
 
   getStyle() {

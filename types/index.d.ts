@@ -23,10 +23,10 @@ export interface MaterialTableProps<RowData extends object> {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
-  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
-  onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
@@ -77,9 +77,10 @@ export interface Action<RowData extends object> {
 
 export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
-  value: any,
-  onChange: (newValue: any) => void,
-  columnDef: EditCellColumnDef,
+  value: any;
+  onChange: (newValue: any) => void;
+  columnDef: EditCellColumnDef;
+  approve: () => void;
 }
 
 export interface EditCellColumnDef {
@@ -271,4 +272,4 @@ export interface Localization {
   };
 }
 
-export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}
+export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> { }
