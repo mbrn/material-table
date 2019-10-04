@@ -12,7 +12,12 @@ class MTableBody extends React.Component {
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
-      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+      if (this.props.options.selection) {
+        addColumn++;
+      }
+      if (this.props.actions && this.props.options.selection
+        ? this.props.actions.filter(a => a.position === "row").length > 0
+        : this.props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row").length > 0) {
         addColumn++;
       }
       if (this.props.hasDetailPanel) {
@@ -129,14 +134,18 @@ class MTableBody extends React.Component {
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
+
+    let hasActions = this.props.actions && this.props.options.selection
+      ? this.props.actions.filter(a => a.position === "row").length > 0
+      : this.props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row").length > 0;
+
     return (
       <TableBody>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             icons={this.props.icons}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
-            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            hasActions={hasActions}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}

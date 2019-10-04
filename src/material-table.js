@@ -111,7 +111,7 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
-          isFreeAction: true,
+          position: "toolbar",
           onClick: () => {
             this.dataManager.changeRowEditing();
             this.setState({
@@ -529,7 +529,11 @@ export default class MaterialTable extends React.Component {
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                          showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                          showActionsColumn={
+                            props.actions && this.props.options.selection
+                              ? props.actions.filter(a => a.position === "row").length > 0
+                              : props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row").length > 0
+                          }
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
                           orderDirection={this.state.orderDirection}
