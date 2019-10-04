@@ -16,7 +16,7 @@ export const propTypes = {
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
   }),
-    PropTypes.shape({action: PropTypes.func, position: PropTypes.oneOf(['auto', 'toolbar', 'toolbarOnSelect', 'row'])})
+    PropTypes.shape({action: PropTypes.func.isRequired, position: PropTypes.oneOf(['auto', 'toolbar', 'toolbarOnSelect', 'row'])})
   ])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
