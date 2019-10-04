@@ -16,7 +16,9 @@ export const propTypes = {
     iconProps: PropTypes.object,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
-  })])),
+  }),
+    PropTypes.shape({action: PropTypes.func, position: PropTypes.oneOf(['auto', 'toolbar', 'toolbarOnSelect', 'row'])})
+  ])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     currencySetting: PropTypes.shape({
