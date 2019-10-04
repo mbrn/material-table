@@ -156,7 +156,7 @@ export class MTableToolbar extends React.Component {
 
         }
         <span>
-          <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => a.isFreeAction || a.position === "toolbar")} components={this.props.components} />
+          <this.props.components.Actions actions={this.props.actions && this.props.actions.filter(a => a.position === "toolbar")} components={this.props.components} />
         </span>
       </div>
     );
@@ -165,7 +165,7 @@ export class MTableToolbar extends React.Component {
   renderSelectedActions() {
     return (
       <React.Fragment>
-        <this.props.components.Actions actions={this.props.actions.filter(a => !a.isFreeAction || a.position === "toolbarOnSelect" || a.position === "auto")} data={this.props.selectedRows} components={this.props.components} />
+        <this.props.components.Actions actions={this.props.actions.filter(a => a.position === "toolbarOnSelect")} data={this.props.selectedRows} components={this.props.components} />
       </React.Fragment>
     );
   }

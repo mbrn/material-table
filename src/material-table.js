@@ -106,6 +106,32 @@ export default class MaterialTable extends React.Component {
     const localization = calculatedProps.localization.body;
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
+
+    if (props.selection)
+      calculatedProps.actions.map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          return { ...action, position: "toolbarOnSelect" };
+        else if (action.isFreeAction)
+          return { ...action, position: "toolbar" };
+        else return action;
+      });
+    else
+      calculatedProps.actions.map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          return { ...action, position: "row" };
+        else if (action.isFreeAction)
+          return { ...action, position: "toolbar" };
+        else return action;
+      });
+    
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
@@ -529,11 +555,7 @@ export default class MaterialTable extends React.Component {
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                          showActionsColumn={
-                            props.actions && this.props.options.selection
-                              ? props.actions.filter(a => a.position === "row").length > 0
-                              : props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row").length > 0
-                          }
+                          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row").length > 0}
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
                           orderDirection={this.state.orderDirection}

@@ -34,9 +34,7 @@ export default class MTableBodyRow extends React.Component {
   renderActions() {
     const size = this.getElementSize();
     const baseIconSize = size === 'medium' ? 42 : 26;
-    const actions = this.props.options.selection
-      ? this.props.actions.filter(a => a.position === "row")
-      : this.props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row");
+    const actions = this.props.actions.filter(a => a.position === "row");
     return (
       <TableCell size={size} padding="none" key="key-actions-column" style={{ width: baseIconSize * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
         <div style={{ display: 'flex' }}>
@@ -192,9 +190,7 @@ export default class MTableBodyRow extends React.Component {
     if (this.props.options.selection) {
       renderColumns.splice(0, 0, this.renderSelectionColumn());
     }
-    if (this.props.actions && this.props.options.selection
-        ? this.props.actions.filter(a => a.position === "row").length > 0
-        : this.props.actions.filter(a => !a.isFreeAction || a.position === "auto" || a.position === "row").length > 0) {
+    if (this.props.actions && this.props.actions.filter(a => a.position === "row").length > 0) {
       if (this.props.options.actionsColumnIndex === -1) {
         renderColumns.push(this.renderActions());
       } else if (this.props.options.actionsColumnIndex >= 0) {
