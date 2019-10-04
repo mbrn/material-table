@@ -107,7 +107,7 @@ export default class MaterialTable extends React.Component {
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
 
-    if (props.selection)
+    if (calculatedProps.options.selection)
       calculatedProps.actions.map(action => {
         if (
           (action.position === "auto") ||
