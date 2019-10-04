@@ -3,7 +3,7 @@ import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps<RowData extends object> {
-  actions?: (Action<RowData> | FunctionalAction | ((rowData: RowData) => Action<RowData>))[];
+  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
@@ -74,11 +74,6 @@ export interface Action<RowData extends object> {
   onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
   hidden?: boolean;
-}
-
-export interface FunctionalAction<RowData extends object> {
-  action: ((rowData: RowData) => Action<RowData>)
-  position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
 }
 
 export interface EditComponentProps<RowData extends object> {
