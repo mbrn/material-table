@@ -53,7 +53,7 @@ export default class MTableEditRow extends React.Component {
             allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
-          const readonlyValue = this.props.getFieldValue(this.state.data, columnDef);
+          const readonlyValue = this.props.getFieldValue && this.props.getFieldValue(this.state.data, columnDef);
           return (
             <this.props.components.Cell
               icons={this.props.icons}
