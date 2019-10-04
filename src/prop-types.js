@@ -10,6 +10,7 @@ export const propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
     icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]).isRequired,
     isFreeAction: PropTypes.bool,
+    position: PropTypes.oneOf(['auto', 'header', 'headerOnSelect', 'row']),
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
     iconProps: PropTypes.object,
