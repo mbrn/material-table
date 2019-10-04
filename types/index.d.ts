@@ -3,7 +3,7 @@ import { IconProps } from '@material-ui/core/Icon';
 import { string } from 'prop-types';
 
 export interface MaterialTableProps<RowData extends object> {
-  actions?: (Action<RowData> | FunctionalAction | ((rowData: RowData) => Action<RowData>))[];
+  actions?: (Action<RowData> | FunctionalAction<RowData> | ((rowData: RowData) => Action<RowData>))[];
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
