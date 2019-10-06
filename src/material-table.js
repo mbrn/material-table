@@ -114,9 +114,11 @@ export default class MaterialTable extends React.Component {
           (action.isFreeAction === false) ||
           (action.position === undefined && action.isFreeAction === undefined)
         )
-          return { ...action, position: "toolbarOnSelect" };
+          if (typeof action === "function") return { action: action, position: "toolbarOnSelect" };
+          else return { ...action, position: "toolbarOnSelect" };
         else if (action.isFreeAction)
-          return { ...action, position: "toolbar" };
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
         else return action;
       });
     else
@@ -126,9 +128,11 @@ export default class MaterialTable extends React.Component {
           (action.isFreeAction === false) ||
           (action.position === undefined && action.isFreeAction === undefined)
         )
-          return { ...action, position: "row" };
+          if (typeof action === "function") return { action: action, position: "row" };
+          else return { ...action, position: "row" };
         else if (action.isFreeAction)
-          return { ...action, position: "toolbar" };
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
         else return action;
       });
     
