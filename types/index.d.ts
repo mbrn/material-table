@@ -19,16 +19,20 @@ export interface MaterialTableProps<RowData extends object> {
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
   options?: Options;
-  parentChildData?: (row: RowData, rows: RowData[]) => RowData[];
+  parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
+  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
+  onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
+  onQueryChange?: (query: Query<RowData>) => void;
   style?: React.CSSProperties;
   tableRef?: any;
   page?: number;
@@ -69,7 +73,7 @@ export interface Action<RowData extends object> {
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
   tooltip?: string;
-  onClick: (event: any, data: RowData[]) => void;
+  onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
   hidden?: boolean;
 }
@@ -112,6 +116,7 @@ export interface Column<RowData extends object> {
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  initialEditValue?: any,
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
@@ -184,6 +189,7 @@ export interface Options {
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
+  draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
   exportButton?: boolean;
@@ -203,7 +209,7 @@ export interface Options {
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: ('normal' | 'stepped');
-  rowStyle?: React.CSSProperties | ((data: any, index: number) => React.CSSProperties);
+  rowStyle?: React.CSSProperties | ((data: any, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
@@ -244,11 +250,15 @@ export interface Localization {
   };
   pagination?: {
     firstTooltip?: string;
+    firstAriaLabel?: string;
     previousTooltip?: string;
+    previousAriaLabel?: string,
     nextTooltip?: string;
+    nextAriaLabel?: string,
     labelDisplayedRows?: string;
     labelRowsPerPage?: string;
     lastTooltip?: string;
+    lastAriaLabel?: string,
     labelRowsSelect?: string;
   };
   toolbar?: {

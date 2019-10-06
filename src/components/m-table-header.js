@@ -28,7 +28,6 @@ export class MTableHeader extends React.Component {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
-                  // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                 >
                   {columnDef.title}
                 </div>
@@ -37,33 +36,25 @@ export class MTableHeader extends React.Component {
           );
         }
 
-        // if (this.props.grouping && columnDef.grouping !== false && columnDef.field) {
-        //   content = (
-        //     <Draggable
-        //       key={columnDef.tableData.id}
-        //       draggableId={columnDef.tableData.id.toString()}
-        //       index={index}>
-        //       {(provided, snapshot) => (
-        //         <div
-        //           ref={provided.innerRef}
-        //           {...provided.draggableProps}
-        //           {...provided.dragHandleProps}
-        //         // style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-        //         >
-        //           {columnDef.title}
-        //         </div>
-        //       )}
-        //     </Draggable>
-        //   );
-        // }
-
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
             <TableSortLabel
+              IconComponent={this.props.icons.SortArrow}
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
               onClick={() => {
-                const orderDirection = columnDef.tableData.id !== this.props.orderBy ? 'asc' : this.props.orderDirection === 'asc' ? 'desc' : 'asc';
+                const orderDirection =
+                  columnDef.tableData.id !== this.props.orderBy
+                    ? 'asc'
+                    : this.props.orderDirection === 'asc'
+                    ? 'desc'
+                    : this.props.orderDirection === 'desc' && this.props.thirdSortClick
+                    ? ''
+                    : this.props.orderDirection === 'desc' && !this.props.thirdSortClick
+                    ? 'asc'
+                    : this.props.orderDirection === ''
+                    ? 'asc'
+                    : 'desc';
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
@@ -194,6 +185,7 @@ MTableHeader.defaultProps = {
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: "left",
   draggable: true,
+  thirdSortClick: true,
 };
 
 MTableHeader.propTypes = {
@@ -214,6 +206,7 @@ MTableHeader.propTypes = {
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
+  thirdSortClick: PropTypes.bool,
 };
 
 

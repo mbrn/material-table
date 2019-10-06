@@ -14,15 +14,22 @@ export default class MTableEditRow extends React.Component {
     super(props);
 
     this.state = {
-      data: props.data ? JSON.parse(JSON.stringify(props.data)) : {}
+      data: props.data ? JSON.parse(JSON.stringify(props.data)) : this.createRowData()
     };
+  }
+
+  createRowData(){
+    return this.props.columns.filter(column=>column.initialEditValue && column.field).reduce((prev,column)=>{
+      prev[column.field]=column.initialEditValue;
+      return prev;
+    },{});
   }
 
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));        
+        const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));
         const style = {};
         if (index === 0) {
           style.paddingLeft = 24 + this.props.level * 20;
@@ -172,7 +179,9 @@ export default class MTableEditRow extends React.Component {
 
     // Lastly we add detail panel icon
     if (this.props.detailPanel) {
-      columns.splice(0, 0, <TableCell padding="none" key="key-detail-panel-cell" />);
+      const aligment = this.props.options.detailPanelColumnAlignment;
+      const index = aligment === "left" ? 0 : columns.length;
+      columns.splice(index, 0, <TableCell padding="none" key="key-detail-panel-cell" />);
     }
 
     this.props.columns
@@ -215,7 +224,7 @@ MTableEditRow.defaultProps = {
   localization: {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure delete this row?',
+    deleteText: 'Are you sure you want to delete this row?',
   }
 };
 

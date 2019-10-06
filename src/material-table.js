@@ -99,6 +99,9 @@ export default class MaterialTable extends React.Component {
 
   getProps(props) {
     const calculatedProps = { ...(props || this.props) };
+    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
+    calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
+    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     const localization = calculatedProps.localization.body;
 
@@ -148,10 +151,6 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
-    calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
-    calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
-
     return calculatedProps;
   }
 
@@ -164,9 +163,11 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
   }
 
-  onChangeColumnHidden = (columnId, hidden) => {
-    this.dataManager.changeColumnHidden(columnId, hidden);
-    this.setState(this.dataManager.getRenderState());
+  onChangeColumnHidden = (column, hidden) => {
+    this.dataManager.changeColumnHidden(column, hidden);
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onChangeColumnHidden && this.props.onChangeColumnHidden(column, hidden);
+    });
   }
 
   onChangeGroupOrder = (groupedColumn) => {
@@ -175,20 +176,20 @@ export default class MaterialTable extends React.Component {
   }
 
   onChangeOrder = (orderBy, orderDirection) => {
-    this.dataManager.changeOrder(orderBy, orderDirection);
+    const newOrderBy = orderDirection === '' ? -1 : orderBy;
+    this.dataManager.changeOrder(newOrderBy, orderDirection);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
-      query.orderBy = this.state.columns.find(a => a.tableData.id === orderBy);
+      query.orderBy = this.state.columns.find(a => a.tableData.id === newOrderBy);
       query.orderDirection = orderDirection;
       this.onQueryChange(query, () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection);
       });
-    }
-    else {
+    } else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onOrderChange && this.props.onOrderChange(orderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection);
       });
     }
   }
@@ -234,7 +235,12 @@ export default class MaterialTable extends React.Component {
 
   onDragEnd = result => {
     this.dataManager.changeByDrag(result);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState(), () => {
+      if (this.props.onColumnDragged && result.destination.droppableId === "headers" &&
+        result.source.droppableId === "headers") {
+        this.props.onColumnDragged(result.source.index, result.destination.index);
+      }
+    });
   }
 
   onGroupExpandChanged = (path) => {
@@ -253,7 +259,9 @@ export default class MaterialTable extends React.Component {
       type: "DEFAULT"
     };
     this.dataManager.changeByDrag(result);
-    this.setState(this.dataManager.getRenderState());
+    this.setState(this.dataManager.getRenderState(), () => {
+      this.props.onGroupRemoved && this.props.onGroupRemoved(groupedColumn, index);
+    });
   }
 
   onEditingApproved = (mode, newData, oldData) => {
@@ -393,6 +401,7 @@ export default class MaterialTable extends React.Component {
   onFilterChangeDebounce = debounce(() => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
+      query.page = 0;
       query.filters = this.state.columns
         .filter(a => a.tableData.filterValue)
         .map(a => ({
@@ -528,6 +537,7 @@ export default class MaterialTable extends React.Component {
                           columns={this.state.columns}
                           hasSelection={props.options.selection}
                           headerStyle={props.options.headerStyle}
+                          icons={props.icons}
                           selectedCount={this.state.selectedCount}
                           dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
                           hasDetailPanel={!!props.detailPanel}
@@ -543,6 +553,7 @@ export default class MaterialTable extends React.Component {
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}
                           draggable={props.options.draggable}
+                          thirdSortClick={props.options.thirdSortClick}
                         />
                       }
                       <props.components.Body

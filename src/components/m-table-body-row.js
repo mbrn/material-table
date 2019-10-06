@@ -101,7 +101,7 @@ export default class MTableBodyRow extends React.Component {
     else {
       return (
         <TableCell size={this.getElementSize()} padding="none" key="key-detail-panel-column">
-          <div style={{ width: 42 * this.props.detailPanel.length, textAlign: 'center', display: 'inline-block' }}>
+          <div style={{ width: 42 * this.props.detailPanel.length, textAlign: 'center', display: 'flex' }}>
             {this.props.detailPanel.map((panel, index) => {
 
               if (typeof panel === "function") {
@@ -152,7 +152,7 @@ export default class MTableBodyRow extends React.Component {
     }
   }
 
-  getStyle(index) {
+  getStyle(index, level) {
     let style = {
       transition: 'all ease 300ms',
     };
@@ -160,7 +160,7 @@ export default class MTableBodyRow extends React.Component {
     if (typeof this.props.options.rowStyle === "function") {
       style = {
         ...style,
-        ...this.props.options.rowStyle(this.props.data, index)
+        ...this.props.options.rowStyle(this.props.data, index, level)
       };
     }
     else if (this.props.options.rowStyle) {
@@ -268,13 +268,17 @@ export default class MTableBodyRow extends React.Component {
           selected={hasAnyEditingRow}
           {...rowProps}
           hover={onRowClick ? true : false}
-          style={this.getStyle(this.props.index)}
+          style={this.getStyle(this.props.index, this.props.level)}
           onClick={(event) => {
             onRowClick && onRowClick(event, this.props.data,
               (panelIndex) => {
                 let panel = detailPanel;
                 if (Array.isArray(panel)) {
-                  panel = panel[panelIndex || 0].render;
+                  panel = panel[panelIndex || 0];
+                  if (typeof panel === "function") {
+                    panel = panel(this.props.data);
+                  }
+                  panel = panel.render;
                 }
 
                 onToggleDetailPanel(this.props.path, panel);

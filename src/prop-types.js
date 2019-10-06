@@ -8,7 +8,7 @@ const StyledComponent = PropTypes.shape({
 
 export const propTypes = {
   actions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
-    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]).isRequired,
+    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]).isRequired,
     isFreeAction: PropTypes.bool,
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
@@ -38,6 +38,7 @@ export const propTypes = {
     grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
+    initialEditValue: PropTypes.any,
     lookup: PropTypes.object,
     editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never', PropTypes.func]),
     removable: PropTypes.bool,
@@ -96,6 +97,7 @@ export const propTypes = {
     LastPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     NextPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     PreviousPage: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    Refresh: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     ResetSearch: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
@@ -145,6 +147,7 @@ export const propTypes = {
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
+    thirdSortClick: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
@@ -158,12 +161,16 @@ export const propTypes = {
   }),
   initialFormData: PropTypes.object,
   onSearchChange: PropTypes.func,
+  onColumnDragged: PropTypes.func,
+  onGroupRemoved: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
+  onChangeColumnHidden: PropTypes.func,
   onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,
+  onQueryChange: PropTypes.func,
   tableRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,

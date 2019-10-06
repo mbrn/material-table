@@ -116,8 +116,10 @@ export default class DataManager {
     const checkChildRows = rowData => {
       if (rowData.tableData.childRows) {
         rowData.tableData.childRows.forEach(childRow => {
-          childRow.tableData.checked = checked;
-          this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+          if (childRow.tableData.checked !== checked) {
+            childRow.tableData.checked = checked;
+            this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+          }
           checkChildRows(childRow);
         });
       }
@@ -228,8 +230,7 @@ export default class DataManager {
     this.sorted = false;
   }
 
-  changeColumnHidden(columnId, hidden) {
-    const column = this.columns.find(c => c.tableData.id === columnId);
+  changeColumnHidden(column, hidden) {    
     column.hidden = hidden;
   }
 
@@ -642,9 +643,10 @@ export default class DataManager {
       this.data.forEach(row => {
         row.tableData.isTreeExpanded = false;
       });
+
+      // expand the tree for all nodes present after filtering and searching
+      this.expandTreeForNodes(this.searchedData);
     }
-    // expand the tree for all nodes present after filtering and searching
-    this.expandTreeForNodes(this.searchedData);
 
     const addRow = (rowData) => {
       rowData.tableData.markedForTreeRemove = false;
@@ -697,7 +699,7 @@ export default class DataManager {
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
     this.data.forEach(rowData => {
       if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
-        rowData.tableData.isTreeExpanded = this.defaultExpanded;
+        rowData.tableData.isTreeExpanded = rowData.tableData.isTreeExpanded === undefined ? this.defaultExpanded : rowData.tableData.isTreeExpanded;
       }
       const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
 

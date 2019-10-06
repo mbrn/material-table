@@ -47,33 +47,8 @@ class App extends Component {
       { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      {
-        title: 'Adı', field: 'name', editComponent: props => {
-          return (
-            <input
-              value={props.value}
-              onChange={e => {
-                var data = { ...props.rowData };
-                data.name = e.target.value;
-                data.surname = e.target.value.toLocaleUpperCase();
-                props.onRowDataChange(data);
-              }}
-            />
-          )
-        },
-        filterPlaceholder: 'Adı filter'
-      },
-      {
-        title: 'Soyadı', field: 'surname', editComponent: props => {
-          this.inputBProps = props;
-          return (
-            <input
-              value={props.value}
-              onChange={e => props.onChange(e.target.value)}
-            />
-          )
-        }
-      },
+      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter' },
+      { title: 'Soyadı', field: 'surname', initialEditValue: 'test' },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -102,12 +77,13 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                   options={{
                     selection: true,
-                    filtering: 'true'
+                    columnsButton: true,
+                    filtering: true
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
+                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
                 />
               </Grid>
             </Grid>
