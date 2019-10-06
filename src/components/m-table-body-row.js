@@ -296,7 +296,8 @@ export default class MTableBodyRow extends React.Component {
                   components={this.props.components}
                   data={data}
                   icons={this.props.icons}
-                  localization={this.props.localization}
+                  localization={this.props.localization}          
+                  getFieldValue={this.props.getFieldValue}
                   key={index}
                   mode={data.tableData.editing}
                   options={this.props.options}
