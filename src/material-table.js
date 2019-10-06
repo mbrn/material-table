@@ -108,7 +108,7 @@ export default class MaterialTable extends React.Component {
     calculatedProps.actions = [...(calculatedProps.actions || [])];
 
     if (calculatedProps.options.selection)
-      calculatedProps.actions = calculatedProps.actions.map(action => {
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
         if (
           (action.position === "auto") ||
           (action.isFreeAction === false) ||
@@ -120,7 +120,7 @@ export default class MaterialTable extends React.Component {
         else return action;
       });
     else
-      calculatedProps.actions = calculatedProps.actions.map(action => {
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
         if (
           (action.position === "auto") ||
           (action.isFreeAction === false) ||
