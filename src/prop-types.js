@@ -172,5 +172,7 @@ export const propTypes = {
   onTreeExpandChange: PropTypes.func,
   onQueryChange: PropTypes.func,
   tableRef: PropTypes.any,
-  style: PropTypes.object
+  style: PropTypes.object,
+  page: PropTypes.number,
+  totalCount: PropTypes.number
 };

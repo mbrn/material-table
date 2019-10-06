@@ -156,6 +156,8 @@ export default class MaterialTable extends React.Component {
 
   isRemoteData = (props) => !Array.isArray((props || this.props).data)
 
+  isOutsidePageNumbers = (props) => (props.page !== undefined && props.totalCount !== undefined);
+
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(checked);
     this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
@@ -201,7 +203,9 @@ export default class MaterialTable extends React.Component {
       });
     }
     else {
-      this.dataManager.changeCurrentPage(page);
+      if (!this.isOutsidePageNumbers(this.props)) {
+        this.dataManager.changeCurrentPage(page);
+      }
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onChangePage && this.props.onChangePage(page);
       });
@@ -429,6 +433,15 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
     if (props.options.paging) {
       const localization = { ...MaterialTable.defaultProps.localization.pagination, ...this.props.localization.pagination };
+
+      const isOutsidePageNumbers = this.isOutsidePageNumbers(props);
+      const currentPage = isOutsidePageNumbers
+        ? Math.min(props.page, Math.floor(props.totalCount / this.state.pageSize))
+        : this.state.currentPage;
+      const totalCount = isOutsidePageNumbers
+        ? props.totalCount
+        : this.state.data.length;
+
       return (
         <Table>
           <TableFooter style={{ display: 'grid' }}>
@@ -442,14 +455,14 @@ export default class MaterialTable extends React.Component {
                 }}
                 style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
                 colSpan={3}
-                count={this.isRemoteData() ? this.state.query.totalCount : this.state.data.length}
+                count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
                 icons={props.icons}
                 rowsPerPage={this.state.pageSize}
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
                   renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
                 }}
-                page={this.isRemoteData() ? this.state.query.page : this.state.currentPage}
+                page={this.isRemoteData() ? this.state.query.page : currentPage}
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?

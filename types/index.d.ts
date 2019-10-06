@@ -35,6 +35,8 @@ export interface MaterialTableProps<RowData extends object> {
   onQueryChange?: (query: Query<RowData>) => void;
   style?: React.CSSProperties;
   tableRef?: any;
+  page?: number;
+  totalCount?: number;
 }
 
 export interface Filter<RowData extends object> {
