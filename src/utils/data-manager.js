@@ -612,7 +612,7 @@ export default class DataManager {
 
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (this.defaultExpanded ? true : false) };
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : false };
 
           group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -699,7 +699,10 @@ export default class DataManager {
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
     this.data.forEach(rowData => {
       if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
-        rowData.tableData.isTreeExpanded = rowData.tableData.isTreeExpanded === undefined ? this.defaultExpanded : rowData.tableData.isTreeExpanded;
+        if (rowData.tableData.isTreeExpanded === undefined) {
+          var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
+          rowData.tableData.isTreeExpanded = isExpanded;
+        } 
       }
       const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
 

@@ -80,10 +80,12 @@ class App extends Component {
                   options={{
                     selection: true,
                     columnsButton: true,
-                    filtering: true
+                    filtering: true,
+                    defaultExpanded: row => row.surname === 'C'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
+                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
             </Grid>

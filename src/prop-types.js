@@ -111,7 +111,7 @@ export const propTypes = {
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
-    defaultExpanded: PropTypes.bool,
+    defaultExpanded: PropTypes.bool | PropTypes.func,
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
