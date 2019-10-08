@@ -189,7 +189,7 @@ export default class MaterialTable extends React.Component {
       });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection);
+        this.props.onOrderChange && this.props.onOrderChange(newOrderBy, orderDirection, this.state.renderData);
       });
     }
   }
