@@ -25,7 +25,7 @@ export interface MaterialTableProps<RowData extends object> {
   onChangePage?: (page: number) => void;
   onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
-  onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
+  onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc"), displayedData: RowData[]) => void;
   onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
