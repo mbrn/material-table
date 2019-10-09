@@ -193,7 +193,7 @@ export class MTableToolbar extends React.Component {
       <div className={classes.title}>
         {toolBarTitle}
       </div>
-    )
+    );
   }
 
   render() {
