@@ -185,15 +185,24 @@ export class MTableToolbar extends React.Component {
     );
   }
 
+  renderToolbarTitle(title) {
+    const { classes } = this.props;
+    const toolBarTitle = (typeof title === 'string') ? <Typography variant='h6'>{title}</Typography> : title;
+
+    return (
+      <div className={classes.title}>
+        {toolBarTitle}
+      </div>
+    )
+  }
+
   render() {
     const { classes } = this.props;
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     const title = this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 })}>
-        {title && <div className={classes.title}>
-          <Typography variant="h6">{title}</Typography>
-        </div>}
+        { title && this.renderToolbarTitle(title)}
         {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
         {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
         <div className={classes.spacer} />

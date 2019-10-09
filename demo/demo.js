@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
+import Typography from "@material-ui/core/Typography";
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -94,7 +95,9 @@ class App extends Component {
               Select
             </button>
             <MaterialTable
-              title="Remote Data Preview"
+                title={
+                    <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+                }
               columns={[
                 {
                   title: 'Avatar',
