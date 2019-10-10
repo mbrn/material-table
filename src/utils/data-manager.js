@@ -49,7 +49,7 @@ export default class DataManager {
       const localRow = {
         ...row,
         tableData: { ...row.tableData, id: index }
-      }
+      };
       if (localRow.tableData.checked) {
         this.selectedCount++;
       }
