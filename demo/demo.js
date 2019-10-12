@@ -131,6 +131,49 @@ class App extends Component {
               })}
             />
 
+              <MaterialTable
+                  title="Edit table state notify"
+                  columns={[
+                      {
+                          title: 'Avatar',
+                          field: 'avatar',
+                          render: rowData => (
+                              <img
+                                  style={{ height: 36, borderRadius: '50%' }}
+                                  src={rowData.avatar}
+                              />
+                          ),
+                      },
+                      { title: 'Id', field: 'id', filterPlaceholder: 'placeholder' },
+                      { title: 'First Name', field: 'first_name' },
+                      { title: 'Last Name', field: 'last_name' },
+                  ]}
+                  editable={{
+                      onRowUpdate: async (d) => d,
+                      onRowAdd: async (d) => d,
+                      onRowDelete: async (d) => d,
+                  }}
+                  onEditingStatusChange={(isEditing) => console.log(`Edit mode? ${isEditing}`)}
+                  options={{
+                      grouping: true,
+                      filtering: true,
+                  }}
+                  data={query => new Promise((resolve, reject) => {
+                      let url = 'https://reqres.in/api/users?'
+                      url += 'per_page=' + query.pageSize
+                      url += '&page=' + (query.page + 1)
+                      console.log(query);
+                      fetch(url)
+                          .then(response => response.json())
+                          .then(result => {
+                              resolve({
+                                  data: result.data,
+                                  page: result.page - 1,
+                                  totalCount: result.total,
+                              })
+                          })
+                  })}
+              />
           </div>
         </MuiThemeProvider>
       </>

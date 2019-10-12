@@ -15,6 +15,7 @@ export interface MaterialTableProps<RowData extends object> {
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<void>;
     onRowDelete?: (oldData: RowData) => Promise<void>;
   }
+  onEditingStatusChange?: (isEditing: boolean) => void;
   icons?: Icons;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;

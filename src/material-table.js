@@ -480,6 +480,8 @@ export default class MaterialTable extends React.Component {
 
   render() {
     const props = this.getProps();
+    const hasAnyEditingRow= !!(this.state.lastEditingRow || this.state.showAddRow);
+    !!props.onEditingStatusChange && props.onEditingStatusChange(hasAnyEditingRow);
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -579,7 +581,7 @@ export default class MaterialTable extends React.Component {
                         localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
                         onRowClick={this.props.onRowClick}
                         showAddRow={this.state.showAddRow}
-                        hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
+                        hasAnyEditingRow={hasAnyEditingRow}
                         hasDetailPanel={!!props.detailPanel}
                         treeDataMaxLevel={this.state.treeDataMaxLevel}
                       />
