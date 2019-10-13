@@ -103,7 +103,7 @@ export default class MaterialTable extends React.Component {
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
-    const localization = calculatedProps.localization.body;
+    const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body};
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
     if (calculatedProps.editable) {
