@@ -82,7 +82,7 @@ class MTableFilterRow extends React.Component {
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
-        InputProps={{
+        InputProps={columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
@@ -151,6 +151,8 @@ class MTableFilterRow extends React.Component {
   }
 
   render() {
+    if (this.props.hideFilterRow) return null;
+
     const columns = this.props.columns
       .filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
@@ -210,7 +212,8 @@ MTableFilterRow.defaultProps = {
   hasActions: false,
   localization: {
     filterTooltip: 'Filter'
-  }
+  },
+  hideFilterRow: false,
 };
 
 MTableFilterRow.propTypes = {
@@ -223,7 +226,8 @@ MTableFilterRow.propTypes = {
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
-  localization: PropTypes.object
+  localization: PropTypes.object,
+  hideFilterRow: PropTypes.bool,
 };
 
 export default MTableFilterRow;
