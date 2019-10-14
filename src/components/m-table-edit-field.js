@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, onRowDataChange,  ...props } = this.props;
+    const { columnDef, rowData, onRowDataChange, approve, ...props } = this.props;
     return props;
   }
 
