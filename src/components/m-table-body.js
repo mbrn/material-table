@@ -12,7 +12,7 @@ class MTableBody extends React.Component {
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
-      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction && !this.props.options.selection) || a.isRowAction).length > 0)) {
         addColumn++;
       }
       if (this.props.hasDetailPanel) {
@@ -135,8 +135,8 @@ class MTableBody extends React.Component {
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             icons={this.props.icons}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
-            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => (!a.isFreeAction && !this.props.options.selection) || a.isRowAction).length > 0)}
+            hasActions={(this.props.actions && this.props.actions.filter(a => (!a.isFreeAction && !this.props.options.selection) || a.isRowAction).length > 0)}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}

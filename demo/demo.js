@@ -81,8 +81,23 @@ class App extends Component {
                     selection: true,
                     columnsButton: true,
                     filtering: true,
+                    actionsColumnIndex: -1,
                     defaultExpanded: row => row.surname === 'C'
                   }}
+                  actions={[
+                    {
+                      icon: 'edit',
+                      tooltip: 'Edit',
+                      onClick: (event, rowData) => console.log(rowData),
+                      isRowAction: true,
+                    },
+                    {
+                      icon: 'add',
+                      tooltip: 'Add',
+                      onClick: (event, rowData) => console.log(rowData),
+                      isFreeAction: true,
+                    },
+                  ]}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
                   parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
@@ -95,6 +110,7 @@ class App extends Component {
             </button>
             <MaterialTable
               title="Remote Data Preview"
+
               columns={[
                 {
                   title: 'Avatar',
