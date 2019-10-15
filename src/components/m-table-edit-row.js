@@ -200,6 +200,12 @@ export default class MTableEditRow extends React.Component {
       onEditingApproved,
       onEditingCanceled,
       getFieldValue,
+      components,
+      icons,
+      columns: columnsProp, // renamed to not conflict with definition above
+      localization: localizationProp, // renamed to not conflict with definition above
+      options,
+      actions,
       ...rowProps
     } = this.props;
 

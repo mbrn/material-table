@@ -260,6 +260,8 @@ export default class MTableBodyRow extends React.Component {
       options,
       hasAnyEditingRow,
       treeDataMaxLevel,
+      localization,
+      actions,
       ...rowProps } = this.props;
 
     return (
