@@ -62,8 +62,8 @@ export interface QueryResult<RowData extends object> {
 
 export interface DetailPanel<RowData extends object> {
   disabled?: boolean;
-  icon?: string | React.ReactElement<any>;
-  openIcon?: string | React.ReactElement<any>;
+  icon?: string | React.ComponentType<any>;
+  openIcon?: string | React.ComponentType<any>;
   tooltip?: string;
   render: (rowData: RowData) => string | React.ReactNode;
 }
@@ -80,19 +80,19 @@ export interface Action<RowData extends object> {
 
 export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
-  value: any,
-  onChange: (newValue: any) => void,
-  columnDef: EditCellColumnDef,
+  value: any;
+  onChange: (newValue: any) => void;
+  columnDef: EditCellColumnDef;
 }
 
 export interface EditCellColumnDef {
-  field: string,
-  title: string,
+  field: string;
+  title: string;
   tableData: {
-    filterValue: any,
-    groupOrder: any,
-    groupSort: string,
-    id: number,
+    filterValue: any;
+    groupOrder: any;
+    groupSort: string;
+    id: number;
   }
 }
 
