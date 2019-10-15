@@ -69,7 +69,6 @@ export const defaultProps = {
     actionsColumnIndex: 0,
     addRowPosition: 'last',
     columnsButton: false,
-    customToolbarButtons: [],
     detailPanelType: 'multiple',
     debounceInterval: 200,
     doubleHorizontalScroll: false,
