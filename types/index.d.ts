@@ -186,7 +186,6 @@ export interface Options {
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
-  customToolbarButtons?: React.ReactChild[];
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
@@ -202,7 +201,6 @@ export interface Options {
   filterCellStyle?: React.CSSProperties;
   header?: boolean;
   headerStyle?: React.CSSProperties;
-  hideFilterRow?: boolean;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;

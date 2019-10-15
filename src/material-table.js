@@ -491,7 +491,6 @@ export default class MaterialTable extends React.Component {
               selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked }) : []}
               columns={this.state.columns}
               columnsButton={props.options.columnsButton}
-              customToolbarButtons={props.options.customToolbarButtons}
               icons={props.icons}
               exportAllData={props.options.exportAllData}
               exportButton={props.options.exportButton}
