@@ -109,7 +109,7 @@ export interface Column<RowData extends object> {
   editComponent?: ((props: EditComponentProps<RowData>) => React.ReactElement<any>);
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
-  field?: keyof RowData;
+  field?: keyof RowData | string;
   filtering?: boolean;
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
