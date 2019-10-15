@@ -123,7 +123,20 @@ class MTableEditField extends React.Component {
   }
 
   renderCurrencyField() {
-    return "ok";
+    return (
+      <TextField
+        {...this.getProps()}
+        placeholder={this.props.columnDef.title}
+        value={this.props.value === undefined ? '' : this.props.value}
+        onChange={event => this.props.onChange(event.target.value)}
+        inputProps={{
+          style: {
+            fontSize: 13,
+            textAlign: "right"
+          }
+        }}
+      />
+    );
   }
 
   render() {
