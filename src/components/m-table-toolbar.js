@@ -98,6 +98,7 @@ export class MTableToolbar extends React.Component {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     return (
       <div>
+        {this.props.customToolbarButtons}
         {this.props.columnsButton &&
           <span>
             <Tooltip title={localization.showColumnsTitle}>
@@ -208,6 +209,7 @@ MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
   columnsButton: false,
+  customToolbarButtons: [],
   localization: {
     addRemoveColumns: 'Add or remove columns',
     nRowsSelected: '{0} row(s) selected',
@@ -234,6 +236,7 @@ MTableToolbar.propTypes = {
   columns: PropTypes.array,
   columnsButton: PropTypes.bool,
   components: PropTypes.object.isRequired,
+  customToolbarButtons: PropTypes.array,
   getFieldValue: PropTypes.func.isRequired,
   localization: PropTypes.object.isRequired,
   onColumnsChanged: PropTypes.func.isRequired,

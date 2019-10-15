@@ -112,6 +112,7 @@ export const propTypes = {
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
+    customToolbarButtons: PropTypes.array,
     defaultExpanded: PropTypes.bool | PropTypes.func,
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),

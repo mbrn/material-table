@@ -186,6 +186,7 @@ export interface Options {
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
+  customToolbarButtons?: React.ReactChild[];
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
