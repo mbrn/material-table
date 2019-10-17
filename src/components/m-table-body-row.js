@@ -19,9 +19,9 @@ export default class MTableBodyRow extends React.Component {
         const value = this.props.getFieldValue(this.props.data, columnDef);
         const indentStyle = (this.props.options.indentFirstDataCell && index == 0)?(
           size === 'medium' ? {
-            paddingLeft: this.props.level * 9
+            paddingLeft: this.props.level * this.props.options.indentFirstDataCell
           } : {
-            paddingLeft: 5 + this.props.level * 9
+            paddingLeft: 5 + this.props.level * this.props.options.indentFirstDataCell
           }
         ):{};
         return (
@@ -45,9 +45,9 @@ export default class MTableBodyRow extends React.Component {
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
 
     const indentStyle = this.props.options.indentActionsCell ?( size === 'medium' ? {
-      marginLeft: this.props.level * 9
+      marginLeft: this.props.level * this.props.options.indentActionsCell
     } : {
-        marginLeft: 5 + this.props.level * 9
+        marginLeft: 5 + this.props.level * this.props.options.indentActionsCell
       }):{};
 
     return (

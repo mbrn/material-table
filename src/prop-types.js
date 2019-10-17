@@ -124,6 +124,8 @@ export const propTypes = {
     filterCellStyle: PropTypes.object,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
+    indentActionsCell: PropTypes.number,
+    indentFirstDataCell: PropTypes.number,
     initialPage: PropTypes.number,
     maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
