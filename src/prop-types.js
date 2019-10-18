@@ -139,6 +139,10 @@ export const propTypes = {
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
+    selectionOpts:  PropTypes.shape({
+        recursive : PropTypes.bool,
+        multiple : PropTypes.bool
+    }),
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
     showFirstLastPageButtons: PropTypes.bool,

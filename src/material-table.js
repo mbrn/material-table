@@ -58,7 +58,13 @@ export default class MaterialTable extends React.Component {
     if (props) {
       defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
       defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
+
+      if (props.options && props.options.selectionOpts) {
+        this.dataManager.setSelectionOptions(props.options.selectionOpts);
+      }
+
     }
+
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);

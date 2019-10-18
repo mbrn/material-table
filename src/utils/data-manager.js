@@ -39,6 +39,11 @@ export default class DataManager {
 
   rootGroupsIndex = {};
 
+  selectionOptions = {
+    recursive : true,
+    multiple : true,
+  };
+
   constructor() {
   }
 
@@ -57,6 +62,12 @@ export default class DataManager {
     });
 
     this.filtered = false;
+  }
+
+  setSelectionOptions(opts){
+    this.selectionOptions = {
+      ...this.selectionOptions,
+      ...opts}
   }
 
   setColumns(columns) {
@@ -113,6 +124,14 @@ export default class DataManager {
 
   changeRowSelected(checked, path) {
     const rowData = this.findDataByPath(this.sortedData, path);
+    
+    if (!this.selectionOptions.multiple) {
+      if (this._lastSelection) { 
+          this._lastSelection.tableData.checked = false;
+      }
+      this._lastSelection = rowData;
+    }
+
     rowData.tableData.checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
 
@@ -128,7 +147,9 @@ export default class DataManager {
       }
     };
 
-    checkChildRows(rowData);
+    if (this.selectionOptions.recursive){
+      checkChildRows(rowData);
+    }
 
     this.filtered = false;
   }
