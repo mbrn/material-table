@@ -67,7 +67,7 @@ export default class DataManager {
   setSelectionOptions(opts){
     this.selectionOptions = {
       ...this.selectionOptions,
-      ...opts}
+      ...opts};
   }
 
   setColumns(columns) {
