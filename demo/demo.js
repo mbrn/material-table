@@ -81,6 +81,7 @@ class App extends Component {
                   options={{
                     selection: true,
                     columnsButton: true,
+                    searchText: 'a6',
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C'
                   }}
