@@ -18,6 +18,7 @@ export default class MaterialTable extends React.Component {
     super(props);
 
     const calculatedProps = this.getProps(props);
+
     this.setDataManagerFields(calculatedProps, true);
     const renderState = this.dataManager.getRenderState();
 
@@ -62,6 +63,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.setDataFieldId(props.dataFieldId);
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -150,6 +152,7 @@ export default class MaterialTable extends React.Component {
         }));
       }
     }
+
 
     return calculatedProps;
   }

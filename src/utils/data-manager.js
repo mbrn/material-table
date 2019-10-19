@@ -20,6 +20,7 @@ export default class DataManager {
   defaultExpanded = false;
 
   data = [];
+  dataFieldId = null;
   columns = [];
 
   filteredData = [];
@@ -29,6 +30,7 @@ export default class DataManager {
   sortedData = [];
   pagedData = [];
   renderData = [];
+  tableData = {};
 
   filtered = false;
   searched = false;
@@ -45,18 +47,50 @@ export default class DataManager {
   setData(data) {
     this.selectedCount = 0;
 
+    const me = this;
+    const keys = Object.keys(this.tableData);
+    const exists = {}
+    keys.forEach(k => {
+      exists[k] = false;
+    });
+
     this.data = data.map((row, index) => {
+      if (!me.dataFieldId) {
+           // Keep mutable for legacy.
+            row.tableData = { ...row.tableData, id: index };
+            if (row.tableData.checked) {
+                this.selectedCount++;
+            }
+            return row;
+      }
+
+      me.tableData[row[me.dataFieldId]] = {...me.tableData[row[me.dataFieldId]] || {}, id : index};
+
+      exists[row[me.dataFieldId]] = true;
+
       const localRow = {
         ...row,
-        tableData: { ...row.tableData, id: index }
+        tableData:  me.tableData[row[me.dataFieldId]]
       };
       if (localRow.tableData.checked) {
         this.selectedCount++;
       }
       return localRow;
+     
+
+    });
+
+    keys.forEach(k => {
+      if (!exists[k]){
+        delete me.tableData[k];
+      }
     });
 
     this.filtered = false;
+  }
+
+  setDataFieldId(dataFieldId){
+    this.dataFieldId = dataFieldId;
   }
 
   setColumns(columns) {

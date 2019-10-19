@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
 import Typography from "@material-ui/core/Typography";
 
+
 let direction = 'ltr';
 // direction = 'rtl';
 const theme = createMuiTheme({
@@ -36,11 +37,13 @@ class App extends Component {
 
   colRenderCount = 0;
 
+
   state = {
     text: 'text',
     selecteds: 0,
+    selection : null,
     data: [
-      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
+      { id: 1, name: 'A11', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
       { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
       { id: 4, name: 'A4', surname: 'Dede', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
@@ -67,6 +70,9 @@ class App extends Component {
   }
 
   render() {
+var me = this;
+   // const [selected, setSelected] = React.useState(null);
+
     return (
       <>
         <MuiThemeProvider theme={theme}>
@@ -77,9 +83,18 @@ class App extends Component {
                   tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
+                  dataFieldId={"id"}
                   title="Demo Title"
+                  onSelectionChange={ (data )=> {
+                     me.setState((oldData, props) => { return { ...oldData, select : data}});
+                     console.log('After set',me.state.select);
+                  }}
                   options={{
-                    selection: true,
+                    selection : true,
+                    selectionOpts: {
+                      recursive : false,
+                      multiple : false
+                    },
                     columnsButton: true,
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C'
