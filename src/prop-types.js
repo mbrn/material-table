@@ -66,6 +66,7 @@ export const propTypes = {
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent])
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
+  dataFieldId : PropTypes.string,
   editable: PropTypes.shape({
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
