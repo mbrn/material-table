@@ -49,7 +49,7 @@ export default class DataManager {
 
     const me = this;
     const keys = Object.keys(this.tableData);
-    const exists = {}
+    const exists = {};
     keys.forEach(k => {
       exists[k] = false;
     });
@@ -64,7 +64,7 @@ export default class DataManager {
             return row;
       }
 
-      me.tableData[row[me.dataFieldId]] = {...me.tableData[row[me.dataFieldId]] || {}, id : index};
+      me.tableData[row[me.dataFieldId]] = {...me.tableData[row[me.dataFieldId]]||{}, id : index};
 
       exists[row[me.dataFieldId]] = true;
 
