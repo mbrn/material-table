@@ -204,6 +204,7 @@ export interface Options {
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;
+  minBodyHeight?: number | string;
   padding?: ('default' | 'dense');
   paging?: boolean;
   grouping?: boolean;

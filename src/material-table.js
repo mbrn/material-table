@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
 import TableFooter from '@material-ui/core/TableFooter';
 import TableRow from '@material-ui/core/TableRow';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import DoubleScrollbar from "react-double-scrollbar";
-import * as React from 'react';
-import { MTablePagination, MTableSteppedPagination } from './components';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+import * as React from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import DoubleScrollbar from "react-double-scrollbar";
+import { MTablePagination, MTableSteppedPagination } from './components';
+import DataManager from './utils/data-manager';
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -529,7 +529,7 @@ export default class MaterialTable extends React.Component {
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
-                  <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
+                  <div style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: 'auto' }}>
                     <Table>
                       {props.options.header &&
                         <props.components.Header
