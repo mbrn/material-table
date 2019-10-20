@@ -80,8 +80,8 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                     columnsButton: true,
-                    selection: true,
-                    grouping: true,
+                    searchText: 'a6',
+                    filtering: true,
                     defaultExpanded: row => row.surname === 'C'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
