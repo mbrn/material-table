@@ -539,7 +539,11 @@ export default class MaterialTable extends React.Component {
                           headerStyle={props.options.headerStyle}
                           icons={props.icons}
                           selectedCount={this.state.selectedCount}
-                          dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
+                          dataCount={
+                            props.parentChildData ? this.state.treefiedDataLength : (
+                              (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
+                            )
+                          }
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
                           showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
