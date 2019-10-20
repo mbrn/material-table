@@ -40,7 +40,7 @@ export const propTypes = {
     hidden: PropTypes.bool,
     initialEditValue: PropTypes.any,
     lookup: PropTypes.object,
-    editable: PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never', PropTypes.func]),
+    editable: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never'])]),
     removable: PropTypes.bool,
     render: PropTypes.func,
     searchable: PropTypes.bool,

@@ -76,7 +76,7 @@ class MTableFilterRow extends React.Component {
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
-        type={columnDef.type === 'numeric' ? 'number' : 'text'}
+        type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
         placeholder={columnDef.filterPlaceholder || ''}
         onChange={(event) => {

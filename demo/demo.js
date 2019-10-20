@@ -79,7 +79,6 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    selection: true,
                     columnsButton: true,
                     searchText: 'a6',
                     filtering: true,
@@ -87,7 +86,7 @@ class App extends Component {
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
-                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
             </Grid>

@@ -113,7 +113,9 @@ export default class MTableGroupRow extends React.Component {
       title = React.cloneElement(title);
     }
 
-    return (
+    let separator = this.props.options.groupRowSeparator || ": ";
+
+      return (
       <>
         <TableRow>
           {freeCells}
@@ -132,7 +134,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{title}{": "}</b>
+            <b>{title}{separator}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}
