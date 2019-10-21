@@ -201,6 +201,7 @@ export interface Options {
   filterCellStyle?: React.CSSProperties;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;
