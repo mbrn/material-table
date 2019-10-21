@@ -76,7 +76,7 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
-                locale={this.props.localization.locale}
+                locale={this.props.localization.dateTimePickerLocalization}
                 rowData={this.state.data}
                 onChange={value => {
                   const data = { ...this.state.data };

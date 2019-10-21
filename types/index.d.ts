@@ -225,7 +225,7 @@ export interface Options {
 
 export interface Localization {
   body?: {
-    locale?: object; // The date-fns locale object applied to the datepickers
+    dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: string;
     filterRow?: {
       filterTooltip?: string;

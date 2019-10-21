@@ -126,7 +126,7 @@ class MTableFilterRow extends React.Component {
     return (
       <MuiPickersUtilsProvider
         utils={DateFnsUtils}
-        locale={this.props.localization.locale}>
+        locale={this.props.localization.dateTimePickerLocalization}>
         {dateInputElement}
       </MuiPickersUtilsProvider>
     );
