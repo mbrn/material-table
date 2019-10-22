@@ -133,7 +133,7 @@ class MTableBody extends React.Component {
       <TableBody>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
-              columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+              columns={this.props.columns.filter(columnDef => !columnDef.hidden)}
               icons={this.props.icons}
               emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
               hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
