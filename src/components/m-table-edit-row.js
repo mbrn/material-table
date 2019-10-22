@@ -19,7 +19,7 @@ export default class MTableEditRow extends React.Component {
   }
 
   createRowData(){
-    return this.props.columns.filter(column=>column.initialEditValue && column.field).reduce((prev,column)=>{
+    return this.props.columns.filter(column => (column.initialEditValue || column.initialEditValue === 0) && column.field).reduce((prev,column)=>{
       prev[column.field]=column.initialEditValue;
       return prev;
     },{});
@@ -200,6 +200,12 @@ export default class MTableEditRow extends React.Component {
       onEditingApproved,
       onEditingCanceled,
       getFieldValue,
+      components,
+      icons,
+      columns: columnsProp, // renamed to not conflict with definition above
+      localization: localizationProp, // renamed to not conflict with definition above
+      options,
+      actions,
       ...rowProps
     } = this.props;
 

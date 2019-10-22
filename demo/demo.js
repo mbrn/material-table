@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
+import Typography from "@material-ui/core/Typography";
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -78,14 +79,14 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    selection: true,
                     columnsButton: true,
+                    searchText: 'a6',
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C'
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
-                  parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
             </Grid>
@@ -94,7 +95,9 @@ class App extends Component {
               Select
             </button>
             <MaterialTable
-              title="Remote Data Preview"
+                title={
+                    <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+                }
               columns={[
                 {
                   title: 'Avatar',

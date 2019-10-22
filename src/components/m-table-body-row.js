@@ -80,7 +80,7 @@ export default class MTableBodyRow extends React.Component {
 
   renderDetailPanelColumn() {
 
-    const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, { style });
+    const CustomIcon = ({ icon, iconProps, }) => typeof icon === "string" ? <Icon {...iconProps}>{icon}</Icon> : React.createElement(icon, { ...iconProps });
 
     if (typeof this.props.detailPanel == 'function') {
       return (
@@ -114,15 +114,19 @@ export default class MTableBodyRow extends React.Component {
               let animation = true;
               if (isOpen) {
                 if (panel.openIcon) {
-                  iconButton = <CustomIcon icon={panel.openIcon} />;
+                  iconButton = <CustomIcon icon={panel.openIcon} iconProps={panel.iconProps} />;
                   animation = false;
                 }
                 else if (panel.icon) {
-                  iconButton = <CustomIcon icon={panel.icon} />;
+                  iconButton = (
+                    <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                  );
                 }
               }
               else if (panel.icon) {
-                iconButton = <CustomIcon icon={panel.icon} />;
+                iconButton = (
+                  <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
+                );
                 animation = false;
               }
 
@@ -260,6 +264,8 @@ export default class MTableBodyRow extends React.Component {
       options,
       hasAnyEditingRow,
       treeDataMaxLevel,
+      localization,
+      actions,
       ...rowProps } = this.props;
 
     return (

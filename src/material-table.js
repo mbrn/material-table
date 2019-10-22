@@ -61,6 +61,7 @@ export default class MaterialTable extends React.Component {
     }
 
     this.dataManager.setColumns(props.columns);
+    this.dataManager.changeSearchText(props.options.searchText);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
     if (this.isRemoteData(props)) {
@@ -102,8 +103,8 @@ export default class MaterialTable extends React.Component {
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
-
-    const localization = calculatedProps.localization.body;
+		
+    const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
     if (calculatedProps.editable) {
@@ -529,7 +530,7 @@ export default class MaterialTable extends React.Component {
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
-                  <div style={{ maxHeight: props.options.maxBodyHeight, overflowY: 'auto' }}>
+                  <div style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: 'auto' }}>
                     <Table>
                       {props.options.header &&
                         <props.components.Header
@@ -539,7 +540,11 @@ export default class MaterialTable extends React.Component {
                           headerStyle={props.options.headerStyle}
                           icons={props.icons}
                           selectedCount={this.state.selectedCount}
-                          dataCount={props.parentChildData ? this.state.treefiedDataLength : this.state.data.length}
+                          dataCount={
+                            props.parentChildData ? this.state.treefiedDataLength : (
+                              (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
+                            )
+                          }
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
                           showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}

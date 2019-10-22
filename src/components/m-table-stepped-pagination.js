@@ -36,7 +36,7 @@ class MTablePaginationInner extends React.Component {
     const buttons = [];
 
     for (let p = start; p <= end; p++) {
-      const buttonVariant = p === this.props.page ? "contained" : "default";
+      const buttonVariant = p === this.props.page ? "contained" : "text";
       buttons.push(
         <Button
           size="small"

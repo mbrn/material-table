@@ -75,14 +75,14 @@ class MTableFilterRow extends React.Component {
     const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
     return (
       <TextField
-          style={columnDef.type === 'numeric' ? {float: 'right'} : {}}
-          type={columnDef.type === 'numeric' ? 'number' : 'text'}
-          value={columnDef.tableData.filterValue || ''}
-          placeholder={columnDef.filterPlaceholder || ''}
-          onChange={(event) => {
+        style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
+        type={columnDef.type === 'numeric' ? 'number' : 'search'}
+        value={columnDef.tableData.filterValue || ''}
+        placeholder={columnDef.filterPlaceholder || ''}
+        onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
-          InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
+        InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
