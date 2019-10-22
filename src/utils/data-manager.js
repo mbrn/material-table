@@ -230,7 +230,7 @@ export default class DataManager {
     this.sorted = false;
   }
 
-  changeColumnHidden(column, hidden) {    
+    changeColumnHidden(column, hidden) {
     column.hidden = hidden;
   }
 
@@ -244,6 +244,8 @@ export default class DataManager {
   }
 
   changeByDrag(result) {
+      if (!result || !result.source || !result.destination) return;
+
     let start = 0;
 
     let groups = this.columns
@@ -291,16 +293,20 @@ export default class DataManager {
           .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
           .filter(column => column.tableData.groupOrder === undefined);
       let effectiveStart = 0;
-      for (let numVisibleCols = 0; numVisibleCols < start; effectiveStart++) {
-        if (!sorted[effectiveStart].hidden) {
-          numVisibleCols++;
+        let numVisibleCols = 0;
+        do {
+            while (sorted[effectiveStart].hidden) {
+                effectiveStart++;
         }
       }
+        while (numVisibleCols < start);
+
       let effectiveEnd = effectiveStart;
       for (let numVisibleCols = 0; numVisibleCols < (end - start); effectiveEnd++) {
-        if (!sorted[effectiveEnd].hidden) {
+          while (sorted[effectiveEnd].hidden) {
+              effectiveEnd++;
+          }
           numVisibleCols++;
-        }
       }
       const colsToMov = sorted.slice(effectiveStart, effectiveEnd + 1);
 
@@ -715,7 +721,7 @@ export default class DataManager {
         if (rowData.tableData.isTreeExpanded === undefined) {
           var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
-        } 
+        }
       }
       const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
 
