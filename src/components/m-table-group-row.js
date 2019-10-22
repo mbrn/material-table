@@ -115,7 +115,7 @@ export default class MTableGroupRow extends React.Component {
 
     let separator = this.props.options.groupRowSeparator || ": ";
 
-      return (
+    return (
       <>
         <TableRow>
           {freeCells}
@@ -134,7 +134,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{title}{separator}</b>
+            <b>{title} ({this.props.groupData.data.length}) {separator}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}
