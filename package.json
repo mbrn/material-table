@@ -77,7 +77,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
     "debounce": "^1.2.0",
-    "filefy": "0.1.9",
+    "filefy": "0.1.10",
     "prop-types": "^15.6.2",
     "react-beautiful-dnd": "11.0.3",
     "react-double-scrollbar": "0.0.15"
