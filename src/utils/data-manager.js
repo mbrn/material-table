@@ -244,8 +244,6 @@ export default class DataManager {
   }
 
   changeByDrag(result) {
-      if (!result || !result.source || !result.destination) return;
-
     let start = 0;
 
     let groups = this.columns
@@ -292,21 +290,22 @@ export default class DataManager {
       const sorted = this.columns
           .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
           .filter(column => column.tableData.groupOrder === undefined);
-      let effectiveStart = 0;
-        let numVisibleCols = 0;
-        do {
-            while (sorted[effectiveStart].hidden) {
-                effectiveStart++;
+      let numHiddenBeforeStart = 0;
+      let numVisibleBeforeStart = 0;
+      for (let i = 0; i < sorted.length && numVisibleBeforeStart <= start; i++) {
+        if (sorted[i].hidden) {
+          numHiddenBeforeStart++;
+        } else {
+          numVisibleBeforeStart++;
         }
       }
-        while (numVisibleCols < start);
+      const effectiveStart = start + numHiddenBeforeStart;
 
       let effectiveEnd = effectiveStart;
-      for (let numVisibleCols = 0; numVisibleCols < (end - start); effectiveEnd++) {
-          while (sorted[effectiveEnd].hidden) {
-              effectiveEnd++;
-          }
-          numVisibleCols++;
+      for (let numVisibleInRange = 0; numVisibleInRange < (end - start) && effectiveEnd < sorted.length; effectiveEnd++) {
+        if (!sorted[effectiveEnd].hidden) {
+          numVisibleInRange++;
+        }
       }
       const colsToMov = sorted.slice(effectiveStart, effectiveEnd + 1);
 
