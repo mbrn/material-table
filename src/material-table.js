@@ -82,8 +82,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
-  componentDidUpdate() {
-	  
+  componentDidUpdate(prevProps) {
     const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
     if (propsChanged) {
