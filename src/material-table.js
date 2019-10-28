@@ -90,7 +90,7 @@ export default class MaterialTable extends React.Component {
       this.setDataManagerFields(props);
       this.setState(this.dataManager.getRenderState());
     }
-	  
+
     const count = this.isRemoteData() ? this.state.query.totalCount : this.state.data.length;
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
