@@ -21,7 +21,7 @@ export default class MTableBodyRow extends React.Component {
           <this.props.components.Cell
             size={size}
             icons={this.props.icons}
-            columnDef={columnDef}
+            columnDef={{ ...columnDef, cellStyle: this.props.options.cellStyle }}
             value={value}
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
@@ -302,7 +302,7 @@ export default class MTableBodyRow extends React.Component {
                   components={this.props.components}
                   data={data}
                   icons={this.props.icons}
-                  localization={this.props.localization}          
+                  localization={this.props.localization}
                   getFieldValue={this.props.getFieldValue}
                   key={index}
                   mode={data.tableData.editing}
