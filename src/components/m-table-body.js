@@ -46,7 +46,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             components={this.props.components}
             data={data}
-            icons={this.props.icons}            
+            icons={this.props.icons}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             key={index}
             mode={data.tableData.editing}
