@@ -163,6 +163,7 @@ export const propTypes = {
   }),
   initialFormData: PropTypes.object,
   onSearchChange: PropTypes.func,
+  onFilterChange: PropTypes.func,
   onColumnDragged: PropTypes.func,
   onGroupRemoved: PropTypes.func,
   onSelectionChange: PropTypes.func,
