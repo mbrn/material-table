@@ -413,8 +413,18 @@ export default class MaterialTable extends React.Component {
 
       this.onQueryChange(query);
     }
-    else {
-      this.setState(this.dataManager.getRenderState());
+    else {		
+      const appliedFilters = this.state.columns
+		.filter(a => a.tableData.filterValue)
+		.map(a => ({
+			column: a,
+			operator: "=",
+			value: a.tableData.filterValue
+		}));
+
+      this.setState(this.dataManager.getRenderState(), () => {
+        this.props.onFilterChange && this.props.onFilterChange(appliedFilters);
+      });
     }
   }, this.props.options.debounceInterval)
 
