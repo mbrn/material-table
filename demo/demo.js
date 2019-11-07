@@ -80,9 +80,11 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                     columnsButton: true,
-                    searchText: 'a6',
+                    searchText: '',
                     filtering: true,
-                    defaultExpanded: row => row.surname === 'C'
+                    defaultExpanded: row => row.surname === 'C',
+                    grouping: true,
+                    groupTitle: groupData => `THIS IS A TEST (${groupData.length})`,
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
@@ -114,7 +116,6 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                grouping: true,
                 filtering: true,
               }}
               data={query => new Promise((resolve, reject) => {
