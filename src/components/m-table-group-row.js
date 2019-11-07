@@ -107,8 +107,11 @@ export default class MTableGroupRow extends React.Component {
     if (column.lookup) {
       value = column.lookup[value];
     }
-
+    
     let title = column.title;
+    if (typeof this.props.options.groupTitle === "function") {
+      title = this.props.options.groupTitle(this.props.groupData.data);
+    }
     if (typeof title !== "string") {
       title = React.cloneElement(title);
     }
@@ -134,7 +137,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>{title} ({this.props.groupData.data.length}) {separator}</b>
+            <b>{title}{separator}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}

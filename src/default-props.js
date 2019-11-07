@@ -77,6 +77,7 @@ export const defaultProps = {
     exportButton: false,
     exportDelimiter: ',',
     filtering: false,
+    groupTitle: false,
     header: true,
     loadingType: 'overlay',
     padding: 'default',
