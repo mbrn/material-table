@@ -110,7 +110,7 @@ export default class MTableGroupRow extends React.Component {
     
     let title = column.title;
     if (typeof this.props.options.groupTitle === "function") {
-      title = this.props.options.groupTitle(this.props.groupData.data);
+      title = this.props.options.groupTitle(this.props.groupData);
     }
     if (typeof title !== "string") {
       title = React.cloneElement(title);
