@@ -98,7 +98,6 @@ class MTableFilterRow extends React.Component {
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
-
     if (columnDef.type === 'date') {
       dateInputElement = (
         <DatePicker
@@ -124,9 +123,10 @@ class MTableFilterRow extends React.Component {
         />
       );
     }
-
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider
+        utils={DateFnsUtils}
+        locale={this.props.localization.dateTimePickerLocalization}>
         {dateInputElement}
       </MuiPickersUtilsProvider>
     );
@@ -161,9 +161,9 @@ class MTableFilterRow extends React.Component {
       ));
 
     if (this.props.selection) {
-      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column"/>);
+      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
-    
+
     if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
