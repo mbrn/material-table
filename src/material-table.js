@@ -406,11 +406,12 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = searchText => this.setState({ searchText }, this.onSearchChangeDebounce)
+  onSearchChange = searchText => {
+    this.dataManager.changeSearchText(searchText);
+    this.setState(({ searchText }), this.onSearchChangeDebounce());
+  }
 
   onSearchChangeDebounce = debounce(() => {
-    this.dataManager.changeSearchText(this.state.searchText);
-
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
