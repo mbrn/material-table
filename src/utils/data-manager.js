@@ -234,7 +234,7 @@ export default class DataManager {
     this.sorted = false;
   }
 
-  changeColumnHidden(column, hidden) {    
+    changeColumnHidden(column, hidden) {
     column.hidden = hidden;
   }
 
@@ -290,10 +290,28 @@ export default class DataManager {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
-      const colsToMov = this.columns
-        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter(column => column.tableData.groupOrder === undefined)
-        .slice(start, end + 1);
+      // get the effective start and end considering hidden columns
+      const sorted = this.columns
+          .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+          .filter(column => column.tableData.groupOrder === undefined);
+      let numHiddenBeforeStart = 0;
+      let numVisibleBeforeStart = 0;
+      for (let i = 0; i < sorted.length && numVisibleBeforeStart <= start; i++) {
+        if (sorted[i].hidden) {
+          numHiddenBeforeStart++;
+        } else {
+          numVisibleBeforeStart++;
+        }
+      }
+      const effectiveStart = start + numHiddenBeforeStart;
+
+      let effectiveEnd = effectiveStart;
+      for (let numVisibleInRange = 0; numVisibleInRange < (end - start) && effectiveEnd < sorted.length; effectiveEnd++) {
+        if (!sorted[effectiveEnd].hidden) {
+          numVisibleInRange++;
+        }
+      }
+      const colsToMov = sorted.slice(effectiveStart, effectiveEnd + 1);
 
       if (result.destination.index < result.source.index) {
         // Take last and add as first
@@ -307,7 +325,7 @@ export default class DataManager {
       }
 
       for (let i = 0; i < colsToMov.length; i++) {
-        colsToMov[i].tableData.columnOrder = start + i;
+        colsToMov[i].tableData.columnOrder = effectiveStart + i;
       }
 
       return;
@@ -709,7 +727,7 @@ export default class DataManager {
         if (rowData.tableData.isTreeExpanded === undefined) {
           var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
-        } 
+        }
       }
       const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
 
