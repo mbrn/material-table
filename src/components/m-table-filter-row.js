@@ -82,7 +82,7 @@ class MTableFilterRow extends React.Component {
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
-        InputProps={{
+        InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
@@ -209,7 +209,8 @@ MTableFilterRow.defaultProps = {
   hasActions: false,
   localization: {
     filterTooltip: 'Filter'
-  }
+  },
+  hideFilterIcons: false,
 };
 
 MTableFilterRow.propTypes = {
@@ -221,7 +222,8 @@ MTableFilterRow.propTypes = {
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
-  localization: PropTypes.object
+  localization: PropTypes.object,
+  hideFilterIcons: PropTypes.bool,
 };
 
 export default MTableFilterRow;

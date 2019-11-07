@@ -78,6 +78,7 @@ export const defaultProps = {
     exportDelimiter: ',',
     filtering: false,
     header: true,
+    hideFilterIcons: false,
     loadingType: 'overlay',
     padding: 'default',
     paging: true,

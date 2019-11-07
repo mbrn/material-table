@@ -117,6 +117,7 @@ export interface Column<RowData extends object> {
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
@@ -202,6 +203,7 @@ export interface Options {
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;
