@@ -107,12 +107,42 @@ export default class MaterialTable extends React.Component {
     const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
+
+    if (calculatedProps.options.selection)
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          if (typeof action === "function") return { action: action, position: "toolbarOnSelect" };
+          else return { ...action, position: "toolbarOnSelect" };
+        else if (action.isFreeAction)
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
+        else return action;
+      });
+    else
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          if (typeof action === "function") return { action: action, position: "row" };
+          else return { ...action, position: "row" };
+        else if (action.isFreeAction)
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
+        else return action;
+      });
+    
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
-          isFreeAction: true,
+          position: "toolbar",
           onClick: () => {
             this.dataManager.changeRowEditing();
             this.setState({
@@ -547,7 +577,7 @@ export default class MaterialTable extends React.Component {
                           }
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                          showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row").length > 0}
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
                           orderDirection={this.state.orderDirection}
