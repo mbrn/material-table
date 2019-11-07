@@ -15,7 +15,7 @@ class MTableBody extends React.Component {
       if (this.props.options.selection) {
         addColumn++;
       }
-      if (this.props.actions && this.props.actions.filter(a => a.position === "row").length > 0) {
+      if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
         addColumn++;
       }
       if (this.props.hasDetailPanel) {
@@ -139,7 +139,7 @@ class MTableBody extends React.Component {
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => !columnDef.hidden)}
             icons={this.props.icons}
-            hasActions={this.props.actions.filter(a => a.position === "row").length > 0}
+            hasActions={this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
