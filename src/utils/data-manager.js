@@ -19,7 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-
+  
   data = [];
   columns = [];
 
@@ -72,6 +72,10 @@ export default class DataManager {
       };
       return columnDef;
     });
+  }
+
+  setGroupTitle(text) {
+    this.groupTitle = text;
   }
 
   setDefaultExpanded(expanded) {
