@@ -74,10 +74,6 @@ export default class DataManager {
     });
   }
 
-  setGroupTitle(text) {
-    this.groupTitle = text;
-  }
-
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
   }
