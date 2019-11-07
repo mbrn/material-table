@@ -38,7 +38,7 @@ export const propTypes = {
     grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
-    hideFilterIcon: PropTypes.bool,
+    hideFilterIcons: PropTypes.bool,
     initialEditValue: PropTypes.any,
     lookup: PropTypes.object,
     editable: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never'])]),
