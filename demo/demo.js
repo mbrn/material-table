@@ -84,7 +84,7 @@ class App extends Component {
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C',
                     grouping: true,
-                    groupTitle: groupData => `THIS IS A TEST (${groupData.length})`,
+                    groupTitle: group => `Group: ${group.value} (${group.data.length})`,
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
