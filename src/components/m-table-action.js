@@ -16,6 +16,13 @@ class MTableAction extends React.Component {
         return null;
       }
     }
+
+    if (action.action) {
+      action = action.action(this.props.data);
+      if (!action) {
+        return null;
+      }
+    }
     
     if (action.hidden) {
       return null;
