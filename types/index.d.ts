@@ -30,6 +30,10 @@ export interface MaterialTableProps<RowData extends object> {
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
+ /** An event fired when the table has finished filtering data
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
+  */ 
+  onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query: Query<RowData>) => void;
