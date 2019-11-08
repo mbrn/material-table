@@ -47,14 +47,11 @@ export default class DataManager {
     this.selectedCount = 0;
 
     this.data = data.map((row, index) => {
-      const localRow = {
-        ...row,
-        tableData: { ...row.tableData, id: index }
-      };
-      if (localRow.tableData.checked) {
+      row.tableData = { ...row.tableData, id: index };
+      if (row.tableData.checked) {
         this.selectedCount++;
       }
-      return localRow;
+      return row;
     });
 
     this.filtered = false;
