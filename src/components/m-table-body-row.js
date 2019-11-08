@@ -20,8 +20,8 @@ export default class MTableBodyRow extends React.Component {
         return (
           <this.props.components.Cell
             size={size}
-            icons={this.props.icons}
-            columnDef={{ ...columnDef, cellStyle: this.props.options.cellStyle }}
+            icons={this.props.icons}            
+            columnDef={{ cellStyle: this.props.options.cellStyle, ...columnDef }}
             value={value}
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
             rowData={this.props.data}
