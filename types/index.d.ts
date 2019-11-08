@@ -226,6 +226,7 @@ export interface Options {
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
+  thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
