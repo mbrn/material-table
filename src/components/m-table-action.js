@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 class MTableAction extends React.Component {
   render() {
     let action = this.props.action;
+    const disabled = action.disabled || this.props.disabled;
     if (typeof action === 'function') {
       action = action(this.props.data);
       if (!action) {
@@ -30,7 +31,7 @@ class MTableAction extends React.Component {
     const icon = typeof action.icon === "string" ? (
         <Icon {...action.iconProps}>{action.icon}</Icon>
     ) : typeof action.icon === "function" ? (
-        action.icon({ ...action.iconProps, disabled: action.disabled })
+        action.icon({ ...action.iconProps, disabled: disabled })
     ) : (
         <action.icon />
     );
@@ -39,7 +40,7 @@ class MTableAction extends React.Component {
         <IconButton
           size={this.props.size}
           color="inherit"
-          disabled={action.disabled}
+          disabled={disabled}
           onClick={(event) => handleOnClick(event)}
         >
           {icon}
@@ -49,7 +50,7 @@ class MTableAction extends React.Component {
     if (action.tooltip) {
       // fix for issue #1049
       // https://github.com/mbrn/material-table/issues/1049
-      return action.disabled
+      return disabled
         ? <Tooltip title={action.tooltip}><span>{button}</span></Tooltip>
         : <Tooltip title={action.tooltip}>{button}</Tooltip>;
     } else {
@@ -66,6 +67,7 @@ MTableAction.defaultProps = {
 MTableAction.propTypes = {
   action: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+  disabled: PropTypes.bool,
   size: PropTypes.string
 };
 
