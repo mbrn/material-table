@@ -84,7 +84,9 @@ class App extends Component {
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C',
                     grouping: true,
-                    groupTitle: group => `Group: ${group.value} (${group.data.length})`,
+                    groupTitle: group => {
+                      return `${group.value} (${group.data.length + group.groups.reduce((sum, subgroup) => sum + subgroup.data.length, 0)})`
+                    },
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
@@ -117,6 +119,8 @@ class App extends Component {
               ]}
               options={{
                 filtering: true,
+                grouping: true,
+                groupTitle: group => group.data.length,
               }}
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
