@@ -27,6 +27,14 @@ class MTableAction extends React.Component {
       }
     };
 
+    const icon = typeof action.icon === "string" ? (
+        <Icon {...action.iconProps}>{action.icon}</Icon>
+    ) : typeof action.icon === "function" ? (
+        action.icon({ ...action.iconProps, disabled: action.disabled })
+    ) : (
+        <action.icon />
+    );
+
     const button = (
         <IconButton
           size={this.props.size}
@@ -34,15 +42,7 @@ class MTableAction extends React.Component {
           disabled={action.disabled}
           onClick={(event) => handleOnClick(event)}
         >
-          {typeof action.icon === "string" ? (
-            <Icon {...action.iconProps}>{action.icon}</Icon>
-          ) : (
-              <action.icon
-                {...action.iconProps}
-                disabled={action.disabled}
-              />
-            )
-          }
+          {icon}
         </IconButton>
     );
 
