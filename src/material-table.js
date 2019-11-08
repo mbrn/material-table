@@ -9,6 +9,7 @@ import { MTablePagination, MTableSteppedPagination } from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+import equal from 'fast-deep-equal';
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -83,7 +84,11 @@ export default class MaterialTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
+    // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
+
+    let propsChanged = !equal(prevProps.columns, this.props.columns);
+    propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
+    propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
 
     if (propsChanged) {
       const props = this.getProps(this.props);
