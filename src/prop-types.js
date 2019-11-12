@@ -123,6 +123,7 @@ export const propTypes = {
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.string,
     exportCsv: PropTypes.func,
+    getFieldValueCsv: PropTypes.func,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
     header: PropTypes.bool,
