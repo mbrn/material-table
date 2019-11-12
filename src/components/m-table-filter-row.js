@@ -82,7 +82,7 @@ class MTableFilterRow extends React.Component {
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
-        InputProps={{
+        InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
@@ -98,7 +98,6 @@ class MTableFilterRow extends React.Component {
   renderDateTypeFilter = (columnDef) => {
     let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
-
     if (columnDef.type === 'date') {
       dateInputElement = (
         <DatePicker
@@ -124,9 +123,10 @@ class MTableFilterRow extends React.Component {
         />
       );
     }
-
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider
+        utils={DateFnsUtils}
+        locale={this.props.localization.dateTimePickerLocalization}>
         {dateInputElement}
       </MuiPickersUtilsProvider>
     );
@@ -161,10 +161,10 @@ class MTableFilterRow extends React.Component {
       ));
 
     if (this.props.selection) {
-      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column"/>);
+      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
     
-    if (this.props.emptyCell && this.props.hasActions) {
+    if (this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
       } else {
@@ -204,17 +204,16 @@ class MTableFilterRow extends React.Component {
 }
 
 MTableFilterRow.defaultProps = {
-  emptyCell: false,
   columns: [],
   selection: false,
   hasActions: false,
   localization: {
     filterTooltip: 'Filter'
-  }
+  },
+  hideFilterIcons: false,
 };
 
 MTableFilterRow.propTypes = {
-  emptyCell: PropTypes.bool,
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
   isTreeData: PropTypes.bool.isRequired,
@@ -223,7 +222,8 @@ MTableFilterRow.propTypes = {
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
-  localization: PropTypes.object
+  localization: PropTypes.object,
+  hideFilterIcons: PropTypes.bool,
 };
 
 export default MTableFilterRow;

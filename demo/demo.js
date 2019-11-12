@@ -73,24 +73,49 @@ class App extends Component {
           <div style={{ maxWidth: '100%', direction }}>
             <Grid container>
               <Grid item xs={12}>
+                {this.state.selectedRows && this.state.selectedRows.length}
                 <MaterialTable
                   tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  options={{
-                    columnsButton: true,
-                    searchText: '',
-                    filtering: true,
-                    defaultExpanded: row => row.surname === 'C',
-                    grouping: true,
-                    groupTitle: group => {
-                      return `${group.value} (${group.data.length + group.groups.reduce((sum, subgroup) => sum + subgroup.data.length, 0)})`
-                    },
-                  }}
-                  onSearchChange={(e) => console.log("search changed: " + e)}
-                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
-                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  editable={{
+                    onRowAdd: newData =>
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                {
+                                    /* const data = this.state.data;
+                                    data.push(newData);
+                                    this.setState({ data }, () => resolve()); */
+                                }
+                                resolve();
+                            }, 1000);
+                        }),
+                    onRowUpdate: (newData, oldData) =>
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                {
+                                    /* const data = this.state.data;
+                                    const index = data.indexOf(oldData);
+                                    data[index] = newData;                
+                                    this.setState({ data }, () => resolve()); */
+                                }
+                                resolve();
+                            }, 1000);
+                        }),
+                    onRowDelete: oldData =>
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                {
+                                    /* let data = this.state.data;
+                                    const index = data.indexOf(oldData);
+                                    data.splice(index, 1);
+                                    this.setState({ data }, () => resolve()); */
+                                }
+                                resolve();
+                            }, 1000);
+                        })
+                }}
                 />
               </Grid>
             </Grid>
@@ -99,9 +124,9 @@ class App extends Component {
               Select
             </button>
             <MaterialTable
-                title={
-                    <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
-                }
+              title={
+                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+              }
               columns={[
                 {
                   title: 'Avatar',

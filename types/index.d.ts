@@ -30,6 +30,10 @@ export interface MaterialTableProps<RowData extends object> {
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
+ /** An event fired when the table has finished filtering data
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
+  */ 
+  onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query: Query<RowData>) => void;
@@ -62,8 +66,8 @@ export interface QueryResult<RowData extends object> {
 
 export interface DetailPanel<RowData extends object> {
   disabled?: boolean;
-  icon?: string | React.ReactElement<any>;
-  openIcon?: string | React.ReactElement<any>;
+  icon?: string | React.ComponentType<any>;
+  openIcon?: string | React.ComponentType<any>;
   tooltip?: string;
   render: (rowData: RowData) => string | React.ReactNode;
 }
@@ -72,6 +76,7 @@ export interface Action<RowData extends object> {
   disabled?: boolean;
   icon: string | (() => React.ReactElement<any>);
   isFreeAction?: boolean;
+  position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
   onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
@@ -80,19 +85,19 @@ export interface Action<RowData extends object> {
 
 export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
-  value: any,
-  onChange: (newValue: any) => void,
-  columnDef: EditCellColumnDef,
+  value: any;
+  onChange: (newValue: any) => void;
+  columnDef: EditCellColumnDef;
 }
 
 export interface EditCellColumnDef {
-  field: string,
-  title: string,
+  field: string;
+  title: string;
   tableData: {
-    filterValue: any,
-    groupOrder: any,
-    groupSort: string,
-    id: number,
+    filterValue: any;
+    groupOrder: any;
+    groupSort: string;
+    id: number;
   }
 }
 
@@ -116,6 +121,7 @@ export interface Column<RowData extends object> {
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
@@ -201,6 +207,7 @@ export interface Options {
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');
   maxBodyHeight?: number | string;
@@ -223,6 +230,7 @@ export interface Options {
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
+  thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
@@ -230,6 +238,7 @@ export interface Options {
 
 export interface Localization {
   body?: {
+    dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: string;
     filterRow?: {
       filterTooltip?: string;

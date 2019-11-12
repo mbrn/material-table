@@ -79,6 +79,7 @@ export const defaultProps = {
     filtering: false,
     groupTitle: false,
     header: true,
+    hideFilterIcons: false,
     loadingType: 'overlay',
     padding: 'default',
     paging: true,

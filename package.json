@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.52.0",
+  "version": "1.54.1",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -77,7 +77,8 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
     "debounce": "^1.2.0",
-    "filefy": "0.1.9",
+    "fast-deep-equal": "2.0.1",
+    "filefy": "0.1.10",
     "prop-types": "^15.6.2",
     "react-beautiful-dnd": "11.0.3",
     "react-double-scrollbar": "0.0.15"

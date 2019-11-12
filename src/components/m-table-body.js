@@ -12,7 +12,10 @@ class MTableBody extends React.Component {
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
     if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
       let addColumn = 0;
-      if (this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)) {
+      if (this.props.options.selection) {
+        addColumn++;
+      }
+      if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
         addColumn++;
       }
       if (this.props.hasDetailPanel) {
@@ -47,7 +50,7 @@ class MTableBody extends React.Component {
             components={this.props.components}
             data={data}
             icons={this.props.icons}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -129,21 +132,22 @@ class MTableBody extends React.Component {
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
+
     return (
       <TableBody>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
-            columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
+            columns={this.props.columns.filter(columnDef => !columnDef.hidden)}
             icons={this.props.icons}
-            emptyCell={this.props.options.selection || (this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
-            hasActions={(this.props.actions && this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0)}
+            hasActions={this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
-            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow }}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
+            hideFilterIcons={this.props.options.hideFilterIcons}
           />
         }
 

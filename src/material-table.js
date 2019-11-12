@@ -9,6 +9,7 @@ import { MTablePagination, MTableSteppedPagination } from './components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
+import equal from 'fast-deep-equal';
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -55,13 +56,12 @@ export default class MaterialTable extends React.Component {
   setDataManagerFields(props, isInit) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = '';
-    if (props) {
-      defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort);
+    if (props && props.options.sorting !== false) {
+      defaultSortColumnIndex = props.columns.findIndex(a => a.defaultSort && a.sorting !== false);
       defaultSortDirection = defaultSortColumnIndex > -1 ? props.columns[defaultSortColumnIndex].defaultSort : '';
     }
 
     this.dataManager.setColumns(props.columns);
-    this.dataManager.changeSearchText(props.options.searchText);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
 
     if (this.isRemoteData(props)) {
@@ -75,6 +75,7 @@ export default class MaterialTable extends React.Component {
     }
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     this.dataManager.changePageSize(props.options.pageSize);
     isInit && this.dataManager.changePaging(props.options.paging);
@@ -82,13 +83,19 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const props = this.getProps(nextProps);
-    this.setDataManagerFields(props);
-    this.setState(this.dataManager.getRenderState());
-  }
+  componentDidUpdate(prevProps) {
+    // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
-  componentDidUpdate() {
+    let propsChanged = !equal(prevProps.columns, this.props.columns);
+    propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
+    propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+
+    if (propsChanged) {
+      const props = this.getProps(this.props);
+      this.setDataManagerFields(props);
+      this.setState(this.dataManager.getRenderState());
+    }
+
     const count = this.isRemoteData() ? this.state.query.totalCount : this.state.data.length;
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
@@ -107,12 +114,42 @@ export default class MaterialTable extends React.Component {
     const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
+
+    if (calculatedProps.options.selection)
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          if (typeof action === "function") return { action: action, position: "toolbarOnSelect" };
+          else return { ...action, position: "toolbarOnSelect" };
+        else if (action.isFreeAction)
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
+        else return action;
+      });
+    else
+      calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
+        if (
+          (action.position === "auto") ||
+          (action.isFreeAction === false) ||
+          (action.position === undefined && action.isFreeAction === undefined)
+        )
+          if (typeof action === "function") return { action: action, position: "row" };
+          else return { ...action, position: "row" };
+        else if (action.isFreeAction)
+          if (typeof action === "function") return { action: action, position: "toolbar" };
+          else return { ...action, position: "toolbar" };
+        else return action;
+      });
+    
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
-          isFreeAction: true,
+          position: "toolbar",
           onClick: () => {
             this.dataManager.changeRowEditing();
             this.setState({
@@ -235,6 +272,7 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
+    if (!result || !result.source || !result.destination) return;
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
       if (this.props.onColumnDragged && result.destination.droppableId === "headers" &&
@@ -375,11 +413,12 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = searchText => this.setState({ searchText }, this.onSearchChangeDebounce)
+  onSearchChange = searchText => {
+    this.dataManager.changeSearchText(searchText);
+    this.setState(({ searchText }), this.onSearchChangeDebounce());
+  }
 
   onSearchChangeDebounce = debounce(() => {
-    this.dataManager.changeSearchText(this.state.searchText);
-
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
@@ -413,8 +452,19 @@ export default class MaterialTable extends React.Component {
 
       this.onQueryChange(query);
     }
-    else {
-      this.setState(this.dataManager.getRenderState());
+    else {		
+      this.setState(this.dataManager.getRenderState(), () => {
+        if(this.props.onFilterChange) { 
+		const appliedFilters = this.state.columns
+			.filter(a => a.tableData.filterValue)
+			.map(a => ({
+				column: a,
+				operator: "=",
+				value: a.tableData.filterValue
+			}));
+		this.props.onFilterChange(appliedFilters);
+	}
+      });
     }
   }, this.props.options.debounceInterval)
 
@@ -547,7 +597,7 @@ export default class MaterialTable extends React.Component {
                           }
                           hasDetailPanel={!!props.detailPanel}
                           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                          showActionsColumn={props.actions && props.actions.filter(a => !a.isFreeAction && !this.props.options.selection).length > 0}
+                          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
                           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
                           orderBy={this.state.orderBy}
                           orderDirection={this.state.orderDirection}
