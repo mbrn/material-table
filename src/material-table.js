@@ -580,7 +580,7 @@ export default class MaterialTable extends React.Component {
             <Droppable droppableId="headers" direction="horizontal">
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
-                  <div style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: 'auto' }}>
+                  <div style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: props.options.overflowY }}>
                     <Table>
                       {props.options.header &&
                         <props.components.Header
