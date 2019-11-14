@@ -10,7 +10,6 @@ import MTableEditField from './m-table-edit-field';
 import MTableFilterRow from './m-table-filter-row';
 import MTableHeader from './m-table-header';
 import MTablePagination from './m-table-pagination';
-import MTableSteppedPagination from './m-table-stepped-pagination';
 import MTableToolbar from './m-table-toolbar';
 
 export {
@@ -26,6 +25,5 @@ export {
   MTableFilterRow,
   MTableHeader,
   MTablePagination,
-  MTableSteppedPagination,
   MTableToolbar,
 };

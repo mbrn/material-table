@@ -103,8 +103,8 @@ export default class MaterialTable extends React.Component {
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
-		
-    const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
+
+    const localization = { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
     if (calculatedProps.editable) {
@@ -466,9 +466,7 @@ export default class MaterialTable extends React.Component {
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
-                ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
-                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                ActionsComponent={(subProps) => <MTablePagination {...subProps} icons={props.icons} paginationType={props.options.paginationType} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />

@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
@@ -24,8 +25,42 @@ class MTablePaginationInner extends React.Component {
     this.props.onChangePage(event, Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1));
   };
 
+  handleNumberButtonClick = number => event => {
+    this.props.onChangePage(event, number);
+  };
+
+  renderSteppedPagination = () => {
+    const { count, page, rowsPerPage } = this.props;
+    const buttons = [];
+    const maxPages = Math.ceil(count / rowsPerPage) - 1;
+
+    const start = Math.max(page - 1, 0);
+    const end = Math.min(maxPages, page + 1);
+
+    for (let p = start; p <= end; p++) {
+      const buttonVariant = p === this.props.page ? "contained" : "text";
+      buttons.push(
+        <Button
+          size="small"
+          style={{
+            boxShadow: 'none',
+            maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'
+          }}
+          disabled={p === this.props.page}
+          variant={buttonVariant}
+          onClick={this.handleNumberButtonClick(p)}
+          key={p}
+        >
+          {p + 1}
+        </Button>
+      );
+    }
+
+    return <span>{buttons}</span>;
+  }
+
   render() {
-    const { classes, count, page, rowsPerPage, theme, showFirstLastPageButtons } = this.props;
+    const { classes, count, page, rowsPerPage, theme, paginationType, showFirstLastPageButtons } = this.props;
     const localization = { ...MTablePaginationInner.defaultProps.localization, ...this.props.localization };
 
     return (
@@ -55,7 +90,11 @@ class MTablePaginationInner extends React.Component {
           </span>
         </Tooltip>
         <Typography variant="caption" style={{ flex: 1, textAlign: 'center', alignSelf: 'center', flexBasis: 'inherit' }} >
-          {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
+          {
+            paginationType === "stepped"
+              ? this.renderSteppedPagination()
+              : localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)
+          }
         </Typography>
         <Tooltip title={localization.nextTooltip}>
           <span>
@@ -68,7 +107,7 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        {showFirstLastPageButtons && 
+        {showFirstLastPageButtons &&
           <Tooltip title={localization.lastTooltip}>
             <span>
               <IconButton
@@ -90,7 +129,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    display: 'flex', 
+    display: 'flex',
     // lineHeight: '48px'
   }
 });
@@ -103,7 +142,8 @@ MTablePaginationInner.propTypes = {
   classes: PropTypes.object,
   localization: PropTypes.object,
   theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool
+  showFirstLastPageButtons: PropTypes.bool,
+  paginationType: PropTypes.oneOf(['normal', 'stepped'])
 };
 
 MTablePaginationInner.defaultProps = {
