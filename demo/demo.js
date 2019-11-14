@@ -84,9 +84,18 @@ class App extends Component {
                     filtering: true,
                     defaultExpanded: row => row.surname === 'C'
                   }}
+                  localization={{
+                    body: {
+                      emptyDataSourceMessage: 'No records to display',
+                      filterRow: {
+                        filterTooltip: 'Filter',
+                        filterPlaceHolder: "Filtaaer"
+                      }
+                    }
+                  }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
-                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
             </Grid>
@@ -95,9 +104,9 @@ class App extends Component {
               Select
             </button>
             <MaterialTable
-                title={
-                    <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
-                }
+              title={
+                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+              }
               columns={[
                 {
                   title: 'Avatar',

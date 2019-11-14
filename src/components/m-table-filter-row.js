@@ -29,9 +29,12 @@ const MenuProps = {
 };
 
 class MTableFilterRow extends React.Component {
+  getLocalizationData = () => ({ ...MTableFilterRow.defaultProps.localization, ...this.props.localization });
+  getLocalizedFilterPlaceHolder = columnDef => columnDef.filterPlaceholder || this.getLocalizationData().filterPlaceHolder || "";
+
   renderLookupFilter = (columnDef) => (
     <FormControl style={{ width: '100%' }}>
-      <InputLabel htmlFor="select-multiple-checkbox">{columnDef.filterPlaceholder}</InputLabel>
+      <InputLabel htmlFor="select-multiple-checkbox">{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
       <Select
         multiple
         value={columnDef.tableData.filterValue || []}
@@ -72,13 +75,13 @@ class MTableFilterRow extends React.Component {
   )
 
   renderDefaultFilter = (columnDef) => {
-    const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
+    const localization = this.getLocalizationData();
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
-        placeholder={columnDef.filterPlaceholder || localization.filterPlaceHolder || ''}
+        placeholder={this.getLocalizedFilterPlaceHolder(columnDef)}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
@@ -96,32 +99,26 @@ class MTableFilterRow extends React.Component {
   }
 
   renderDateTypeFilter = (columnDef) => {
-    let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
+    const pickerProps = {
+      value: columnDef.tableData.filterValue || null,
+      onChange: onDateInputChange,
+      placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
+      clearable: true
+    };
 
+    let dateInputElement = null;
     if (columnDef.type === 'date') {
       dateInputElement = (
-        <DatePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DatePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'datetime') {
       dateInputElement = (
-        <DateTimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DateTimePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'time') {
       dateInputElement = (
-        <TimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <TimePicker {...pickerProps} />
       );
     }
 
