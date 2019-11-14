@@ -78,7 +78,7 @@ class MTableFilterRow extends React.Component {
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
-        placeholder={columnDef.filterPlaceholder || ''}
+        placeholder={columnDef.filterPlaceholder || localization.filterPlaceHolder || ''}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
@@ -161,9 +161,9 @@ class MTableFilterRow extends React.Component {
       ));
 
     if (this.props.selection) {
-      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column"/>);
+      columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
-    
+
     if (this.props.emptyCell && this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
