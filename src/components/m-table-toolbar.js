@@ -29,7 +29,7 @@ export class MTableToolbar extends React.Component {
 
   onSearchChange = searchText => {
     this.props.dataManager.changeSearchText(searchText);
-    this.setState(({ searchText }), this.props.onSearchChanged());
+    this.setState(({ searchText }), this.props.onSearchChanged(searchText));
   }
 
   defaultExportCsv = () => {
