@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
 import Typography from "@material-ui/core/Typography";
+import FilterComponent from './components/filter-component';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -49,7 +50,7 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter' },
-      { title: 'Soyadı', field: 'surname', initialEditValue: 'test' },
+      { title: 'Soyadı', field: 'surname', initialEditValue: 'test', filterComponent: FilterComponent },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -79,6 +80,9 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
+                  options={{
+                    filtering: true
+                  }}
                   editable={{
                     onRowAdd: newData =>
                         new Promise((resolve, reject) => {
