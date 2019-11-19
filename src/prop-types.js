@@ -73,6 +73,11 @@ export const propTypes = {
     onRowUpdate: PropTypes.func,
     onRowDelete: PropTypes.func
   }),
+  editActionProps: PropTypes.shape({
+    add: PropTypes.object,
+    update: PropTypes.object,
+    delete: PropTypes.object,
+  }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.arrayOf(PropTypes.oneOfType([

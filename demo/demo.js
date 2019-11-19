@@ -116,6 +116,17 @@ class App extends Component {
                             }, 1000);
                         })
                 }}
+                editActionProps={{
+                  add: {
+                    'data-test-id': 'add-row'
+                  },
+                  update: {
+                    'data-test-id': 'edit-row'
+                  },
+                  delete: {
+                    'data-test-id': 'delete-row'
+                  }
+                }}
                 />
               </Grid>
             </Grid>
