@@ -115,18 +115,24 @@ class App extends Component {
                                 resolve();
                             }, 1000);
                         })
-                }}
-                editActionProps={{
-                  add: {
-                    'data-test-id': 'add-row'
-                  },
-                  update: {
-                    'data-test-id': 'edit-row'
-                  },
-                  delete: {
-                    'data-test-id': 'delete-row'
-                  }
-                }}
+                  }}
+                  editActionProps={{
+                    add: {
+                      'data-test-id': 'add-row'
+                    },
+                    update: {
+                      'data-test-id': 'edit-row'
+                    },
+                    delete: {
+                      'data-test-id': 'delete-row'
+                    }
+                  }}
+                  onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
+                  options={{
+                    rowStyle: rowData => ({
+                      backgroundColor: (this.state.selectedRow && this.state.selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
+                    })
+                  }}
                 />
               </Grid>
             </Grid>
