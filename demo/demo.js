@@ -79,43 +79,12 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
-                  editable={{
-                    onRowAdd: newData =>
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                {
-                                    /* const data = this.state.data;
-                                    data.push(newData);
-                                    this.setState({ data }, () => resolve()); */
-                                }
-                                resolve();
-                            }, 1000);
-                        }),
-                    onRowUpdate: (newData, oldData) =>
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                {
-                                    /* const data = this.state.data;
-                                    const index = data.indexOf(oldData);
-                                    data[index] = newData;                
-                                    this.setState({ data }, () => resolve()); */
-                                }
-                                resolve();
-                            }, 1000);
-                        }),
-                    onRowDelete: oldData =>
-                        new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                {
-                                    /* let data = this.state.data;
-                                    const index = data.indexOf(oldData);
-                                    data.splice(index, 1);
-                                    this.setState({ data }, () => resolve()); */
-                                }
-                                resolve();
-                            }, 1000);
-                        })
-                }}
+                  onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
+                  options={{
+                    rowStyle: rowData => ({
+                      backgroundColor: (this.state.selectedRow && this.state.selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
+                    })
+                  }}
                 />
               </Grid>
             </Grid>
