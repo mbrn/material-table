@@ -662,9 +662,14 @@ export default class DataManager {
 
     // if filter or search is enabled, collapse the tree
     if (this.searchText || this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+      
+      /*Removing bc: Breaking expanded rows on touch:
+      
       this.data.forEach(row => {
         row.tableData.isTreeExpanded = false;
       });
+      
+      */
 
       // expand the tree for all nodes present after filtering and searching
       this.expandTreeForNodes(this.searchedData);
