@@ -127,6 +127,7 @@ export interface Column<RowData extends object> {
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: ('row' | 'group')) => any;
+  getFieldValue:(rowData: RowData, columnDef: Column<RowData>) => boolean
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
