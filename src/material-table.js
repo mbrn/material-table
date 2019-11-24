@@ -35,7 +35,7 @@ export default class MaterialTable extends React.Component {
           })),
         orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
-        page: 0,
+        page: calculatedProps.options.initialPage || 0,
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
 
@@ -48,6 +48,7 @@ export default class MaterialTable extends React.Component {
   componentDidMount() {
     this.setState(this.dataManager.getRenderState(), () => {
       if (this.isRemoteData()) {
+        this.dataManager.setRemoteDataMode();
         this.onQueryChange(this.state.query);
       }
     });
@@ -100,7 +101,7 @@ export default class MaterialTable extends React.Component {
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
 
-    if (count <= pageSize * currentPage && currentPage !== 0) {
+    if (count <= pageSize * currentPage && currentPage !== 0 && !this.isRemoteData()) {
       this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }
@@ -493,39 +494,42 @@ export default class MaterialTable extends React.Component {
         ? props.totalCount
         : this.state.data.length;
 
-      return (
-        <Table>
-          <TableFooter style={{ display: 'grid' }}>
-            <TableRow>
-              <props.components.Pagination
-                classes={{
-                  root: props.classes.paginationRoot,
-                  toolbar: props.classes.paginationToolbar,
-                  caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot,
-                }}
-                style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
-                colSpan={3}
-                count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
-                icons={props.icons}
-                rowsPerPage={this.state.pageSize}
-                rowsPerPageOptions={props.options.pageSizeOptions}
-                SelectProps={{
-                  renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
-                }}
-                page={this.isRemoteData() ? this.state.query.page : currentPage}
-                onChangePage={this.onChangePage}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
-                ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
-                  <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
-                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
-                labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
-                labelRowsPerPage={localization.labelRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      );
+      const isEmpty = () => (this.isRemoteData() ? this.state.query.totalCount : totalCount) === 0;
+      if (!isEmpty()) {
+        return (
+          <Table>
+            <TableFooter style={{ display: 'grid' }}>
+              <TableRow>
+                <props.components.Pagination
+                  classes={{
+                    root: props.classes.paginationRoot,
+                    toolbar: props.classes.paginationToolbar,
+                    caption: props.classes.paginationCaption,
+                    selectRoot: props.classes.paginationSelectRoot,
+                  }}
+                  style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
+                  colSpan={3}
+                  count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
+                  icons={props.icons}
+                  rowsPerPage={this.state.pageSize}
+                  rowsPerPageOptions={props.options.pageSizeOptions}
+                  SelectProps={{
+                    renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
+                  }}
+                  page={this.isRemoteData() ? this.state.query.page : currentPage}
+                  onChangePage={this.onChangePage}
+                  onChangeRowsPerPage={this.onChangeRowsPerPage}
+                  ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
+                    <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
+                    <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                  labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
+                  labelRowsPerPage={localization.labelRowsPerPage}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        );
+      }
     }
   }
 

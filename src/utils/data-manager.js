@@ -19,6 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  remoteDataMode = false;
 
   data = [];
   columns = [];
@@ -55,6 +56,10 @@ export default class DataManager {
     });
 
     this.filtered = false;
+  }
+
+  setRemoteDataMode() {
+    this.remoteDataMode = true;
   }
 
   setColumns(columns) {
@@ -831,7 +836,7 @@ export default class DataManager {
   pageData() {
     this.pagedData = [...this.sortedData];
 
-    if (this.paging) {
+    if (this.paging && !this.remoteDataMode) {
       const startIndex = this.currentPage * this.pageSize;
       const endIndex = startIndex + this.pageSize;
 
