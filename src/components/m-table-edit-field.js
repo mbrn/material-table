@@ -13,12 +13,36 @@ class MTableEditField extends React.Component {
     return props;
   }
 
+  coerceLookupType(type, value) {
+    if (type === 'numeric') {
+        if (value.toString().indexOf('.') > -1) {
+            return parseFloat(value);
+        } else {
+            return parseInt(value);
+        }
+    } else if (type === 'boolean') {
+        return value === 'true';
+    } else if (type === 'datetime') {
+        return new Date(value);
+    } else if (type === 'time') {
+        return value;
+    } else {
+        return value;
+    }
+  }
+
   renderLookupField() {
     return (
       <Select
         {...this.getProps()}
         value={this.props.value === undefined ? '' : this.props.value}
-        onChange={event => this.props.onChange(event.target.value)}
+        onChange={event => {
+            let value = event.target.value;
+            if (this.props.columnDef.type !== undefined) {
+              value = this.coerceLookupType(this.props.columnDef.type, event.target.value);
+            }
+            return this.props.onChange(value);
+        }}
         style={{
           fontSize: 13,
         }}
