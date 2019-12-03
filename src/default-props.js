@@ -81,6 +81,7 @@ export const defaultProps = {
     hideFilterIcons: false,
     loadingType: 'overlay',
     padding: 'default',
+    searchAutoFocus: false,
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
