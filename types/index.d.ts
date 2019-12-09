@@ -225,6 +225,7 @@ export interface Options {
   showTitle?: boolean;
   showTextRowsSelected?: boolean;
   search?: boolean;
+  searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
