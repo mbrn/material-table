@@ -224,7 +224,8 @@ export interface Options {
   showSelectAllCheckbox?: boolean;
   showTitle?: boolean;
   showTextRowsSelected?: boolean;
-  search?: boolean;
+  search?: boolean;  
+  searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
