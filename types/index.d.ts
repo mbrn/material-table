@@ -234,6 +234,7 @@ export interface Options {
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
+  cspNonce?: string;
 }
 
 export interface Localization {
