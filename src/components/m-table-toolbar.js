@@ -84,7 +84,7 @@ export class MTableToolbar extends React.Component {
               <InputAdornment position="end">
                 <IconButton
                   disabled={!this.state.searchText}
-                  onClick={() => this.props.onSearchChanged("")}
+                  onClick={() => this.onSearchChange("")}
                 >
                   <this.props.icons.ResetSearch color="inherit" fontSize="small" />
                 </IconButton>
