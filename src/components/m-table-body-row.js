@@ -137,6 +137,7 @@ export default class MTableBodyRow extends React.Component {
                   style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
                   disabled={panel.disabled}
                   onClick={(event) => {
+                    panel.onClick && panel.onClick(this.props.data);
                     this.props.onToggleDetailPanel(this.props.path, panel.render);
                     event.stopPropagation();
                   }}
