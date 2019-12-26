@@ -94,6 +94,7 @@ export const defaultProps = {
     toolbarButtonAlignment: 'right',
     searchFieldAlignment: 'right',
     searchFieldStyle: {},
+    searchFieldVariant: 'standard',
     selection: false,
     selectionProps: {},
     sorting: true,

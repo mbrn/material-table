@@ -114,6 +114,12 @@ class App extends Component {
               options={{
                 grouping: true,
                 filtering: true,
+                searchFieldVariant: 'outlined',
+              }}
+              localization={{
+                toolbar: {
+                  searchPlaceholder: "Outlined Search Field",
+                }
               }}
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'

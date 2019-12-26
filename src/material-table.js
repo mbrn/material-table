@@ -558,6 +558,7 @@ export default class MaterialTable extends React.Component {
               searchFieldAlignment={props.options.searchFieldAlignment}
               searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
+              searchFieldVariant={props.options.searchFieldVariant}
               title={props.title}
               onSearchChanged={this.onSearchChange}
               onColumnsChanged={this.onChangeColumnHidden}
