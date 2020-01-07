@@ -83,7 +83,10 @@ export class MTableToolbar extends React.Component {
                 </IconButton>
               </InputAdornment>
             ),
-            style: this.props.searchFieldStyle
+            style: this.props.searchFieldStyle,
+            inputProps: {
+              'aria-label': "Search"
+            }
           }}
         />
       );
