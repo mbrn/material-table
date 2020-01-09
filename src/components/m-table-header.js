@@ -41,7 +41,12 @@ export class MTableHeader extends React.Component {
             <TableSortLabel
               IconComponent={this.props.icons.SortArrow}
               active={this.props.orderBy === columnDef.tableData.id}
-              direction={this.props.orderDirection || 'asc'}
+              direction={
+                this.props.iconMatchOrientation
+                  ? this.props.orderDirection || 'asc'
+                  : this.props.orderBy === columnDef.tableData.id
+                  ? this.props.orderDirection || 'asc' : 'asc'
+              }
               onClick={() => {
                 const orderDirection =
                   columnDef.tableData.id !== this.props.orderBy
@@ -186,6 +191,7 @@ MTableHeader.defaultProps = {
   detailPanelColumnAlignment: "left",
   draggable: true,
   thirdSortClick: true,
+  iconMatchOrientation: true,
 };
 
 MTableHeader.propTypes = {
@@ -207,6 +213,7 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
+  iconMatchOrientation: PropTypes.bool,
 };
 
 

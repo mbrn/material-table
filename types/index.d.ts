@@ -231,6 +231,7 @@ export interface Options {
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
   thirdSortClick?: boolean;
+  iconMatchOrientation?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';

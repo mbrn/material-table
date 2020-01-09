@@ -609,6 +609,7 @@ export default class MaterialTable extends React.Component {
                           isTreeData={this.props.parentChildData !== undefined}
                           draggable={props.options.draggable}
                           thirdSortClick={props.options.thirdSortClick}
+                          iconMatchOrientation={props.options.iconMatchOrientation}
                         />
                       }
                       <props.components.Body
