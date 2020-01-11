@@ -116,6 +116,7 @@ export interface Column<RowData extends object> {
   export?: boolean;
   field?: keyof RowData | string;
   filtering?: boolean;
+  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
