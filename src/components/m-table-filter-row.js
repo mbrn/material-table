@@ -29,6 +29,10 @@ const MenuProps = {
 };
 
 class MTableFilterRow extends React.Component {
+  renderFilterComponent = (columnDef) => (
+    React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
+  )
+
   renderLookupFilter = (columnDef) => (
     <FormControl style={{ width: '100%' }}>
       <InputLabel htmlFor="select-multiple-checkbox">{columnDef.filterPlaceholder}</InputLabel>
@@ -139,7 +143,9 @@ class MTableFilterRow extends React.Component {
     }
 
     if (columnDef.field || columnDef.customFilterAndSearch) {
-      if (columnDef.lookup) {
+      if (columnDef.filterComponent) {
+        return this.renderFilterComponent(columnDef);
+      } else if (columnDef.lookup) {
         return this.renderLookupFilter(columnDef);
       } else if (columnDef.type === 'boolean') {
         return this.renderBooleanFilter(columnDef);
