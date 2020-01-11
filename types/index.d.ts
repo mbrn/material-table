@@ -130,7 +130,7 @@ export interface Column<RowData extends object> {
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
-  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
 export interface Components {
