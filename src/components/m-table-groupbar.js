@@ -70,7 +70,7 @@ class MTableGroupbar extends React.Component {
                           {...provided.dragHandleProps}
                           onClick={() => this.props.onSortChanged(columnDef)}
                           label={
-                            <div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                               <div style={{ float: 'left' }}>{columnDef.title}</div>
                               {columnDef.tableData.groupSort &&
                                 <this.props.icons.SortArrow
