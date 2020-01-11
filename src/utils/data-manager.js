@@ -19,7 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-
+  
   data = [];
   columns = [];
 
