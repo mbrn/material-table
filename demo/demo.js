@@ -112,8 +112,9 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                grouping: true,
                 filtering: true,
+                grouping: true,
+                groupTitle: group => group.data.length,
                 searchFieldVariant: 'outlined',
               }}
               localization={{
