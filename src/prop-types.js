@@ -153,6 +153,7 @@ export const propTypes = {
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
+    overflowY: PropTypes.string
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
