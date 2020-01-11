@@ -41,6 +41,7 @@ class MTableFilterRow extends React.Component {
         input={<Input id="select-multiple-checkbox" />}
         renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
         MenuProps={MenuProps}
+        style={{marginTop: 0}}
       >
         {
           Object.keys(columnDef.lookup).map(key => (
