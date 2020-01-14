@@ -77,8 +77,8 @@ export default class MaterialTable extends React.Component {
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
-    this.dataManager.changePageSize(props.options.pageSize);
-    isInit && this.dataManager.changePaging(props.options.paging);
+    (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
+    this.dataManager.changePaging(props.options.paging);
     isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
@@ -518,7 +518,7 @@ export default class MaterialTable extends React.Component {
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
                   <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
-                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} />}
+                  <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} />}
                 labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
                 labelRowsPerPage={localization.labelRowsPerPage}
               />

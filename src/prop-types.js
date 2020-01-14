@@ -36,6 +36,7 @@ export const propTypes = {
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
     filterPlaceholder: PropTypes.string,
+    filterComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
@@ -132,6 +133,7 @@ export const propTypes = {
     maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     minBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
+    overflowY: PropTypes.oneOf(['visible', 'hidden', 'scroll', 'auto', 'initial', 'inherit']),
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
@@ -152,8 +154,7 @@ export const propTypes = {
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool,
-    overflowY: PropTypes.string
+    thirdSortClick: PropTypes.bool
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
