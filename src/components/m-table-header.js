@@ -8,6 +8,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
@@ -15,7 +16,7 @@ export class MTableHeader extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        let content = columnDef.title;
+        let content = columnDef.title;        
 
         if(this.props.draggable) {
           content = (
@@ -35,6 +36,9 @@ export class MTableHeader extends React.Component {
             </Draggable>
           );
         }
+
+        
+       
 
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
@@ -61,6 +65,10 @@ export class MTableHeader extends React.Component {
               {content}
             </TableSortLabel>
           );
+        }
+
+        if(columnDef.tooltip) {
+          content = <Tooltip title={columnDef.tooltip}><span>{content}</span></Tooltip>;
         }
 
         return (
@@ -207,6 +215,7 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
+  tooltip: PropTypes.string
 };
 
 
