@@ -10,6 +10,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal';
+import { withStyles } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -666,7 +667,24 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-const ScrollBar = ({ double, children }) => {
+var style = () => ({
+  horizontalScrollContainer: {
+    '& ::-webkit-scrollbar': {
+      '-webkit-appearance': 'none'
+    },
+    '& ::-webkit-scrollbar:horizontal': {
+      height: 8
+    },
+    '& ::-webkit-scrollbar-thumb': {
+      borderRadius: 4,
+      border: '2px solid white',
+      backgroundColor: 'rgba(0, 0, 0, .3)'
+    }
+  }
+});
+
+
+const ScrollBar = withStyles(style)(({ double, children, classes }) => {
   if (double) {
     return (
       <DoubleScrollbar>
@@ -676,9 +694,9 @@ const ScrollBar = ({ double, children }) => {
   }
   else {
     return (
-      <div style={{ overflowX: 'auto' }}>
+      <div className={classes.horizontalScrollContainer} style={{ overflowX: 'auto' }}>
         {children}
       </div>
     );
   }
-};
+});
