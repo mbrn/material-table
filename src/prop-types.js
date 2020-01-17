@@ -13,6 +13,7 @@ export const propTypes = {
     position: PropTypes.oneOf(['auto', 'toolbar', 'toolbarOnSelect', 'row']),
     tooltip: PropTypes.string,
     onClick: PropTypes.func.isRequired,
+    iconButtonProps: PropTypes.object,
     iconProps: PropTypes.object,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
