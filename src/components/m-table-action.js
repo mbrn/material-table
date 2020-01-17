@@ -49,6 +49,7 @@ class MTableAction extends React.Component {
           color="inherit"
           disabled={disabled}
           onClick={(event) => handleOnClick(event)}
+          {...action.iconButtonProps}
         >
           {icon}
         </IconButton>
