@@ -12,7 +12,10 @@ import { Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
+
   renderHeader() {
+    const size = this.props.options.padding === 'default' ? 'medium' : 'small';
+
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
@@ -77,6 +80,7 @@ export class MTableHeader extends React.Component {
             align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             className={this.props.classes.header}
             style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+            size={size}
           >
             {content}
           </TableCell>
