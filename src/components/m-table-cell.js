@@ -23,7 +23,7 @@ export default class MTableCell extends React.Component {
       }
 
     } else if (this.props.columnDef.type === 'boolean') {
-      const style = { textAlign: 'left', verticalAlign: 'middle', width: 48 };
+      const style = { textAlign: 'left', verticalAlign: 'middle' };
       if (this.props.value) {
         return <this.props.icons.Check style={style} />;
       } else {
@@ -31,25 +31,25 @@ export default class MTableCell extends React.Component {
       }
     } else if (this.props.columnDef.type === 'date') {
       if (this.props.value instanceof Date) {
-        return this.props.value.toLocaleDateString();
+        return this.props.value.toLocaleDateString(this.props.columnDef.locale, this.props.columnDef.localeDateStringFormat);
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString();
+        return new Date(this.props.value).toLocaleDateString(this.props.columnDef.locale, this.props.columnDef.localeDateStringFormat);
       } else {
         return this.props.value;
       }
     } else if (this.props.columnDef.type === 'time') {
       if (this.props.value instanceof Date) {
-        return this.props.value.toLocaleTimeString();
+        return this.props.value.toLocaleTimeString(this.props.columnDef.locale, this.props.columnDef.localeTimeStringFormat);
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString();
+        return new Date(this.props.value).toLocaleTimeString(this.props.columnDef.locale, this.props.columnDef.localeTimeStringFormat);
       } else {
         return this.props.value;
       }
     } else if (this.props.columnDef.type === 'datetime') {
       if (this.props.value instanceof Date) {
-        return this.props.value.toLocaleString();
+        return this.props.value.toLocaleString(this.props.columnDef.locale, this.props.columnDef.localeStringFormat);
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleString();
+        return new Date(this.props.value).toLocaleString(this.props.columnDef.locale, this.props.columnDef.localeStringFormat);
       } else {
         return this.props.value;
       }

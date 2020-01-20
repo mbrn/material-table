@@ -37,9 +37,7 @@ export default class MTableBodyRow extends React.Component {
     const actions = this.props.actions.filter(a => a.position === "row" || typeof a === "function");
     return (
       <TableCell size={size} padding="none" key="key-actions-column" style={{ width: baseIconSize * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
-        <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} disabled={this.props.hasAnyEditingRow} />
-        </div>
+        <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} disabled={this.props.hasAnyEditingRow} />
       </TableCell>
     );
   }
@@ -271,7 +269,6 @@ export default class MTableBodyRow extends React.Component {
     return (
       <>
         <TableRow
-          selected={hasAnyEditingRow}
           {...rowProps}
           hover={onRowClick ? true : false}
           style={this.getStyle(this.props.index, this.props.level)}

@@ -604,6 +604,7 @@ export default class MaterialTable extends React.Component {
                           onAllSelected={this.onAllSelected}
                           onOrderChange={this.onChangeOrder}
                           actionsHeaderIndex={props.options.actionsColumnIndex}
+                          actionsHeaderStyle={props.options.actionsHeaderStyle}
                           sorting={props.options.sorting}
                           grouping={props.options.grouping}
                           isTreeData={this.props.parentChildData !== undefined}

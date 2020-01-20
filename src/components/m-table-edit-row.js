@@ -43,7 +43,7 @@ export default class MTableEditRow extends React.Component {
             cellStyle.cursor = 'default';
           }
 
-          return { ...cellStyle };
+          return { ...cellStyle, ...columnDef.editCellStyle };
         };
 
         const style = {};
@@ -88,6 +88,7 @@ export default class MTableEditRow extends React.Component {
           return (
             <TableCell
               key={columnDef.tableData.id}
+              padding={columnDef.type === "boolean" ? 'checkbox' : undefined}
               align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
               style={getCellStyle(columnDef, value)}
             >
@@ -135,10 +136,8 @@ export default class MTableEditRow extends React.Component {
       }
     ];
     return (
-      <TableCell padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px' }}>
-        <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} />
-        </div>
+      <TableCell padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px', ...this.props.options.actionsCellStyle }}>
+        <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} />
       </TableCell>
     );
   }

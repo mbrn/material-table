@@ -19,9 +19,6 @@ class MTableEditField extends React.Component {
         {...this.getProps()}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
-        style={{
-          fontSize: 13,
-        }}
       >
         {Object.keys(this.props.columnDef.lookup).map(key => (
           <MenuItem key={key} value={key}>{this.props.columnDef.lookup[key]}</MenuItem>)
@@ -38,11 +35,6 @@ class MTableEditField extends React.Component {
         value={String(this.props.value)}
         checked={Boolean(this.props.value)}
         onChange={event => this.props.onChange(event.target.checked)}
-        style={{
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingBottom: 0
-        }}
       />
     );
   }
@@ -53,15 +45,11 @@ class MTableEditField extends React.Component {
         locale={this.props.dateTimePickerLocalization}>
         <DatePicker
           {...this.getProps()}
-          format="dd.MM.yyyy"
+          format={this.props.columnDef.dateFormat || "dd.MM.yyyy"}
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            }
-          }}
+          InputProps={this.props.columnDef.editInputProps}
         />
       </MuiPickersUtilsProvider>
     );
@@ -77,11 +65,7 @@ class MTableEditField extends React.Component {
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            }
-          }}
+          InputProps={this.props.columnDef.editInputProps}
         />
       </MuiPickersUtilsProvider>
     );
@@ -97,11 +81,7 @@ class MTableEditField extends React.Component {
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            }
-          }}
+          InputProps={this.props.columnDef.editInputProps}
         />
       </MuiPickersUtilsProvider>
     );
@@ -116,11 +96,7 @@ class MTableEditField extends React.Component {
         placeholder={this.props.columnDef.title}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
-        InputProps={{
-          style: {
-            fontSize: 13,
-          }
-        }}
+        InputProps={this.props.columnDef.editInputProps}
       />
     );
   }
@@ -132,12 +108,9 @@ class MTableEditField extends React.Component {
         placeholder={this.props.columnDef.title}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
-        inputProps={{
-          style: {
-            fontSize: 13,
-            textAlign: "right"
-          }
-        }}
+        InputProps={this.props.columnDef.editInputProps || { style: {
+          textAlign: "right"
+        }}}
       />
     );
   }

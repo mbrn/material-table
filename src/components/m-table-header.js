@@ -82,11 +82,10 @@ export class MTableHeader extends React.Component {
     return (
       <TableCell
         key="key-actions-column"
-        padding="checkbox"
         className={this.props.classes.header}
-        style={{ ...this.props.headerStyle, textAlign: 'center' }}
+        style={{...this.props.headerStyle, textAlign: 'center', ...this.props.actionsHeaderStyle}}
       >
-        <TableSortLabel disabled>{localization.actions}</TableSortLabel>
+        <TableSortLabel disabled hideSortIcon={true}>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }
@@ -203,6 +202,7 @@ MTableHeader.propTypes = {
   orderBy: PropTypes.number,
   orderDirection: PropTypes.string,
   actionsHeaderIndex: PropTypes.number,
+  actionsHeaderStyle: PropTypes.object,
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
