@@ -8,14 +8,18 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Tooltip } from '@material-ui/core';
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
+
   renderHeader() {
+    const size = this.props.options.padding === 'default' ? 'medium' : 'small';
+
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        let content = columnDef.title;
+        let content = columnDef.title;        
 
         if(this.props.draggable) {
           content = (
@@ -35,6 +39,9 @@ export class MTableHeader extends React.Component {
             </Draggable>
           );
         }
+
+        
+       
 
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
@@ -63,12 +70,17 @@ export class MTableHeader extends React.Component {
           );
         }
 
+        if(columnDef.tooltip) {
+          content = <Tooltip title={columnDef.tooltip}><span>{content}</span></Tooltip>;
+        }
+
         return (
           <TableCell
             key={columnDef.tableData.id}
             align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             className={this.props.classes.header}
             style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+            size={size}
           >
             {content}
           </TableCell>
@@ -207,6 +219,7 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
+  tooltip: PropTypes.string
 };
 
 

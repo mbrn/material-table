@@ -48,8 +48,8 @@ class App extends Component {
       { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
     ],
     columns: [
-      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter' },
-      { title: 'Soyadı', field: 'surname', initialEditValue: 'test' },
+      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text' },
+      { title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text' },
       { title: 'Evli', field: 'isMarried', type: 'boolean' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -59,7 +59,7 @@ class App extends Component {
       { title: 'Zaman', field: 'time', type: 'time' }
     ],
     remoteColumns: [
-      { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} /> },
+      { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} />, tooltip: 'delakjdslkjdaskljklsdaj' },
       { title: 'Id', field: 'id' },
       { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
       { title: 'Last Name', field: 'last_name' },
