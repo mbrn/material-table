@@ -44,6 +44,12 @@ You can access all code examples and documentation on our site [**material-table
 
 To support material-table visit [SUPPORT](https://www.patreon.com/mbrn) page.
 
+## Issue Prioritizing
+
+Issues would be prioritized according reactions count. `is:issue is:open sort:reactions-+1-desc` filter would be use. 
+
+[List issues according to reaction score](https://github.com/mbrn/material-table/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
+
 ## Prerequisites
 
 The minimum `React` version material-table supports is `^16.8.5` since material-table `v1.36.1`. This is due to utilising [`react-beautiful-dnd`](https://github.com/atlassian/react-beautiful-dnd) for drag & drop functionality which uses hooks.
