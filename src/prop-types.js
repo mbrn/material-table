@@ -128,6 +128,7 @@ export const propTypes = {
     filterCellStyle: PropTypes.object,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
+    headerClassOverrides: PropTypes.object,
     hideFilterIcons: PropTypes.bool,
     initialPage: PropTypes.number,
     maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

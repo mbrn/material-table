@@ -188,6 +188,12 @@ export interface Icons {
   ViewColumn?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
+export type MTableClassKeys = 'paginationRoot' | 'paginationToolbar' | 'paginationCaption' | 'paginationSelectRoot';
+export type MTableHeaderClassKeys = 'header';
+export type MTableScrollBarClassKeys = 'horizontalScrollContainer';
+export type MTablePaginationClassKeys = 'root';
+export type MTableSteppedPaginationClassKeys = 'root';
+
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
@@ -209,6 +215,11 @@ export interface Options {
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
+  tableClassOverrides?: Partial<Record<MTableClassKeys, string>>;
+  headerClassOverrides?: Partial<Record<MTableHeaderClassKeys, string>>;
+  scrollbarClassOverrides?: Partial<Record<MTableScrollBarClassKeys, string>>;
+  paginationClassOverrides?: Partial<Record<MTablePaginationClassKeys, string>>;
+  steppedPaginationClassOverrides?: Partial<Record<MTableSteppedPaginationClassKeys, string>>;
   hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: ('overlay' | 'linear');

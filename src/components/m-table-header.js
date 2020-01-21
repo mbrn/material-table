@@ -207,6 +207,7 @@ MTableHeader.propTypes = {
   detailPanelColumnAlignment: PropTypes.string,
   hasSelection: PropTypes.bool,
   headerStyle: PropTypes.object,
+  headerClassOverrides: PropTypes.object,
   localization: PropTypes.object,
   selectedCount: PropTypes.number,
   sorting: PropTypes.bool,
