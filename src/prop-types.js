@@ -80,8 +80,8 @@ export const propTypes = {
       PropTypes.func,
       PropTypes.shape({
         disabled: PropTypes.bool,
-        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]),
+        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]),
         tooltip: PropTypes.string,
         render: PropTypes.func.isRequired
       })
