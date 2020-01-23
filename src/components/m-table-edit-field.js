@@ -52,23 +52,25 @@ class MTableEditField extends React.Component {
 
   renderDateField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}
-        locale={this.props.dateTimePickerLocalization}>
-
-          <DatePicker
-            {...this.getProps()}
-            format="dd.MM.yyyy"
-            value={this.props.value || null}
-            onChange={this.props.onChange}
-            clearable
-            InputProps={{
-              style: {
-                fontSize: 13,
-              },
-              'aria-label': `${this.props.columnDef.title}: press space to edit`
-            }}
-          />
-
+      <MuiPickersUtilsProvider
+        utils={DateFnsUtils}
+        locale={this.props.dateTimePickerLocalization}
+      >
+        <DatePicker
+          {...this.getProps()}
+          format='dd.MM.yyyy'
+          value={this.props.value || null}
+          onChange={this.props.onChange}
+          clearable
+          InputProps={{
+            style: {
+              fontSize: 13
+            }
+          }}
+          inputProps={{
+            'aria-label': `${this.props.columnDef.title}: press space to edit`
+          }}
+        />
       </MuiPickersUtilsProvider>
     );
   }
@@ -76,41 +78,49 @@ class MTableEditField extends React.Component {
     return (
       <MuiPickersUtilsProvider
         utils={DateFnsUtils}
-        locale={this.props.dateTimePickerLocalization}>
-          <TimePicker
-            {...this.getProps()}
-            format="HH:mm:ss"
-            value={this.props.value || null}
-            onChange={this.props.onChange}
-            clearable
-            InputProps={{
-              style: {
-                fontSize: 13,
-              },
+        locale={this.props.dateTimePickerLocalization}
+      >
+        <TimePicker
+          {...this.getProps()}
+          format='HH:mm:ss'
+          value={this.props.value || null}
+          onChange={this.props.onChange}
+          clearable
+          InputProps={{
+            style: {
+              fontSize: 13
+            },
+            inputProps: {
               'aria-label': `${this.props.columnDef.title}: press space to edit`
-            }}
-          />
+            }
+          }}
+        />
       </MuiPickersUtilsProvider>
     );
   }
 
   renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}
-        locale={this.props.dateTimePickerLocalization}>
-          <DateTimePicker
-            {...this.getProps()}
-            format="dd.MM.yyyy HH:mm:ss"
-            value={this.props.value || null}
-            onChange={this.props.onChange}
-            clearable
-            InputProps={{
-              style: {
-                fontSize: 13,
-              },
-              'aria-label': `${this.props.columnDef.title}: press space to edit`
-            }}
-          />
+      <MuiPickersUtilsProvider
+        utils={DateFnsUtils}
+        locale={this.props.dateTimePickerLocalization}
+      >
+        <DateTimePicker
+          {...this.getProps()}
+          format='dd.MM.yyyy HH:mm:ss'
+          value={this.props.value || null}
+          onChange={this.props.onChange}
+          clearable
+          InputProps={{
+            style: {
+              fontSize: 13
+            },
+            inputProps:{
+            'aria-label': `${this.props.columnDef.title}: press space to edit`
+          }
+          }}
+          
+        />
       </MuiPickersUtilsProvider>
     );
   }
