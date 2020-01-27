@@ -11,9 +11,9 @@ export interface MaterialTableProps<RowData extends object> {
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
-    onRowAdd?: (newData: RowData) => Promise<void>;
-    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<void>;
-    onRowDelete?: (oldData: RowData) => Promise<void>;
+    onRowAdd?: (newData: RowData) => Promise<any>;
+    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
+    onRowDelete?: (oldData: RowData) => Promise<any>;
   }
   icons?: Icons;
   isLoading?: boolean;
