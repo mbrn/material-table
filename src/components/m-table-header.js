@@ -37,19 +37,19 @@ export class MTableHeader extends React.Component {
         }
 
         if (columnDef.sorting !== false && this.props.sorting) {
+          const isActive = this.props.orderBy === columnDef.tableData.id;
           content = (
             <TableSortLabel
               IconComponent={this.props.icons.SortArrow}
-              active={this.props.orderBy === columnDef.tableData.id}
+              active={isActive}
               direction={
-                this.props.iconMatchOrientation
-                  ? this.props.orderDirection || 'asc'
-                  : this.props.orderBy === columnDef.tableData.id
-                  ? this.props.orderDirection || 'asc' : 'asc'
+                !isActive && !this.props.iconMatchOrientation
+                  ? 'asc'
+                  : this.props.orderDirection || 'asc'
               }
               onClick={() => {
                 const orderDirection =
-                  columnDef.tableData.id !== this.props.orderBy
+                  !isActive
                     ? 'asc'
                     : this.props.orderDirection === 'asc'
                     ? 'desc'
