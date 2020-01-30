@@ -66,6 +66,7 @@ export const defaultProps = {
   isLoading: false,
   title: 'Table Title',
   options: {
+    actionsCellInsideStyle :{ display: 'flex' },
     actionsColumnIndex: 0,
     addRowPosition: 'last',
     columnsButton: false,
