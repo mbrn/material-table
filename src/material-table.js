@@ -369,6 +369,7 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
+    this.props.editable.onRowModifyingCancelled && this.props.editable.onRowModifyingCancelled(rowData, mode);
   }
 
   onQueryChange = (query, callback) => {
@@ -453,9 +454,9 @@ export default class MaterialTable extends React.Component {
 
       this.onQueryChange(query);
     }
-    else {		
+    else {
       this.setState(this.dataManager.getRenderState(), () => {
-        if(this.props.onFilterChange) { 
+        if(this.props.onFilterChange) {
 		const appliedFilters = this.state.columns
 			.filter(a => a.tableData.filterValue)
 			.map(a => ({
