@@ -93,13 +93,8 @@ export default class MaterialTable extends React.Component {
 	  
     const stateChanged = !equal(prevState, this.props.state);
 
-    if (propsChanged) {
+    if (propsChanged || stateChanged) {
       const props = this.getProps(this.props);
-      this.setDataManagerFields(props);
-      this.setState(this.dataManager.getRenderState());
-    }
-	  
-    if (stateChanged) {
       this.setDataManagerFields(props);
       this.setState(this.dataManager.getRenderState());
     }
