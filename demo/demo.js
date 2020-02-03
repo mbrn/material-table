@@ -140,6 +140,7 @@ class App extends Component {
               }}
               selectedRows={this.state.selectedRows}
               primaryField='id'
+              externalSelection
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
                 url += 'per_page=' + query.pageSize
