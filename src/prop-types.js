@@ -184,5 +184,6 @@ export const propTypes = {
   page: PropTypes.number,
   totalCount: PropTypes.number,
   selectedRows: PropTypes.arrayOf(PropTypes.object),
-  primaryField: PropTypes.string
+  primaryField: PropTypes.string,
+  externalSelection: PropTypes.bool
 };

@@ -43,6 +43,7 @@ export interface MaterialTableProps<RowData extends object> {
   totalCount?: number;
   selectedRows?: RowData[];
   primaryField?: string;
+  externalSelection?: boolean;
 }
 
 export interface Filter<RowData extends object> {

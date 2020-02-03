@@ -131,5 +131,6 @@ export const defaultProps = {
   style: {
   },
   selectedRows: undefined,
-  primaryField: undefined
+  primaryField: undefined,
+  externalSelection: false
 };
