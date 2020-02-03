@@ -28,19 +28,21 @@ export interface MaterialTableProps<RowData extends object> {
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
   onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
-  onRowSelected?: (rowData: RowData) => void;
+  onRowSelected?: (rowData: RowData, checked: boolean) => void;
   onSearchChange?: (searchText: string) => void;
  /** An event fired when the table has finished filtering data
   * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
   */ 
   onFilterChange?: (filters: Filter<RowData>[]) => void;
-  onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
+  onSelectionChange?: (data: RowData[], rowData?: RowData, rowChecked?: boolean) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
   onQueryChange?: (query: Query<RowData>) => void;
   style?: React.CSSProperties;
   tableRef?: any;
   page?: number;
   totalCount?: number;
+  selectedRows?: RowData[];
+  primaryField?: string;
 }
 
 export interface Filter<RowData extends object> {

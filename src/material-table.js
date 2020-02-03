@@ -25,6 +25,7 @@ export default class MaterialTable extends React.Component {
 
     this.state = {
       data: [],
+      restrictSelectionEvents: false,
       ...renderState,
       query: {
         filters: renderState.columns
@@ -64,7 +65,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
-
+    
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
@@ -73,6 +74,11 @@ export default class MaterialTable extends React.Component {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
       this.dataManager.setData(props.data);
+    }
+
+    if (props.selectedRows !== undefined && props.primaryField !== undefined){
+      this.dataManager.setPrimaryField(props.primaryField);
+      this.dataManager.setSelected(props.selectedRows);
     }
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
@@ -90,6 +96,8 @@ export default class MaterialTable extends React.Component {
     let propsChanged = !equal(prevProps.columns, this.props.columns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
     propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+    propsChanged = propsChanged || (!equal(prevProps.selectedRows, this.props.selectedRows) && !this.state.restrictSelectionEvents);
+    propsChanged = propsChanged || !equal(prevProps.primaryField, this.props.primaryField);
 
     if (propsChanged) {
       const props = this.getProps(this.props);
@@ -391,12 +399,15 @@ export default class MaterialTable extends React.Component {
   }
 
   onRowSelected = (event, path, dataClicked) => {
-    this.dataManager.changeRowSelected(event.target.checked, path);
+    let data = this.dataManager.changeRowSelected(event.target.checked, path);
+    if (this.props.onRowSelected){
+      this.props.onRowSelected(data, event.target.checked);
+    }
     this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange(dataClicked));
   }
 
-  onSelectionChange = (dataClicked) => {
-    if (this.props.onSelectionChange) {
+  onSelectionChange = (dataClicked, rowChecked) => {
+    if (this.props.onSelectionChange && !this.dataManager.suppressSelectionChange) {
       const selectedRows = [];
 
       const findSelecteds = list => {
@@ -410,7 +421,7 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows, dataClicked);
+      this.props.onSelectionChange(selectedRows, dataClicked, rowChecked);
     }
   }
 

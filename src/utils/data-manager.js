@@ -19,6 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  suppressSelectionChange = false;
   
   data = [];
   columns = [];
@@ -38,6 +39,8 @@ export default class DataManager {
   sorted = false;
   paged = false;
 
+  primaryField = undefined;
+
   rootGroupsIndex = {};
 
   constructor() {
@@ -55,6 +58,26 @@ export default class DataManager {
     });
 
     this.filtered = false;
+  }
+
+  setPrimaryField(field){
+    this.primaryField = field;
+  }
+
+  setSelected(selectedRows){
+    if (selectedRows === undefined) return;
+    this.suppressSelectionChange = true;
+    this.selectedCount = 0;
+    this.data.forEach((row, index) => {
+      if (selectedRows.some((sRow, sIndex) => this.getPrimaryFieldValue(sRow) === this.getPrimaryFieldValue(row))){
+        row.tableData.checked = true;
+        this.selectedCount++;
+      }
+      else{
+        row.tableData.checked = false;
+      }
+    });
+    this.suppressSelectionChange = false;
   }
 
   setColumns(columns) {
@@ -129,6 +152,7 @@ export default class DataManager {
     checkChildRows(rowData);
 
     this.filtered = false;
+    return rowData;
   }
 
   changeDetailPanelVisibility(path, render) {
@@ -398,6 +422,14 @@ export default class DataManager {
       // return group;
     }, data);
     return node;
+  }
+
+  getPrimaryFieldValue = (rowData) => {
+    if (this.primaryField !== undefined){
+      let value = (typeof rowData[this.primaryField] !== 'undefined' ? rowData[this.primaryField] : byString(rowData, this.primaryField));
+      return value;
+    }
+    return undefined;
   }
 
   getFieldValue = (rowData, columnDef, lookup = true) => {

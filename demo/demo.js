@@ -37,6 +37,7 @@ class App extends Component {
   colRenderCount = 0;
 
   state = {
+    selectedRows: [],
     text: 'text',
     selecteds: 0,
     data: [
@@ -83,14 +84,34 @@ class App extends Component {
                   options={{
                     rowStyle: rowData => ({
                       backgroundColor: (this.state.selectedRow && this.state.selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
-                    })
+                    }),
+                    selection: true
                   }}
+                  onSelectionChange={(data, rowData) => {
+                    this.setState({selectedRows: data});
+                  }}
+                  // onRowSelected = {(data, selected) => {
+                  //   if (selected){
+                  //     let selectedRows = this.state.selectedRows.slice();
+                  //     selectedRows.push(data);
+                  //     this.setState({selectedRows: selectedRows});
+                  //   }
+                  //   else{
+                  //     let selectedRows = this.state.selectedRows.slice().filter((sdata) => sdata['id'] !== data['id']);
+                  //     this.setState({selectedRows: selectedRows});
+                  //   }
+                  // }}
+                  primaryField='id'
+                  selectedRows={this.state.selectedRows}
                 />
               </Grid>
             </Grid>
             {this.state.text}
             <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
               Select
+            </button>
+            <button onClick = {() => this.setState({selectedRows: []})}>
+              Deselect
             </button>
             <MaterialTable
               title={
@@ -115,7 +136,10 @@ class App extends Component {
                 filtering: true,
                 grouping: true,
                 groupTitle: group => group.data.length,
+                selection: true
               }}
+              selectedRows={this.state.selectedRows}
+              primaryField='id'
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
                 url += 'per_page=' + query.pageSize
