@@ -84,15 +84,22 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
     let propsChanged = !equal(prevProps.columns, this.props.columns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
     propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+	  
+    const stateChanged = !equal(prevState, this.props.state);
 
     if (propsChanged) {
       const props = this.getProps(this.props);
+      this.setDataManagerFields(props);
+      this.setState(this.dataManager.getRenderState());
+    }
+	  
+    if (stateChanged) {
       this.setDataManagerFields(props);
       this.setState(this.dataManager.getRenderState());
     }
