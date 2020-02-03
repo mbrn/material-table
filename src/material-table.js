@@ -90,7 +90,7 @@ export default class MaterialTable extends React.Component {
     let propsChanged = !equal(prevProps.columns, this.props.columns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
     propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
-	  
+
     const stateChanged = !equal(prevState, this.props.state);
 
     if (propsChanged || stateChanged) {
