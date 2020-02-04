@@ -11,6 +11,8 @@ import DataManager from './utils/data-manager';
 import { debounce } from 'debounce';
 import equal from 'fast-deep-equal';
 import { withStyles } from '@material-ui/core';
+import * as CommonValues from './utils/common-values';
+
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -42,12 +44,15 @@ export default class MaterialTable extends React.Component {
 
         totalCount: 0
       },
-      showAddRow: false
+      showAddRow: false,
+      width: 0
     };
+
+    this.tableContainerDiv = React.createRef();
   }
 
   componentDidMount() {
-    this.setState(this.dataManager.getRenderState(), () => {
+    this.setState({ ...this.dataManager.getRenderState(), width: this.tableContainerDiv.current.scrollWidth }, () => {
       if (this.isRemoteData()) {
         this.onQueryChange(this.state.query);
       }
@@ -111,8 +116,8 @@ export default class MaterialTable extends React.Component {
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
-		
-    const localization =  { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
+
+    const localization = { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
 
@@ -144,7 +149,7 @@ export default class MaterialTable extends React.Component {
           else return { ...action, position: "toolbar" };
         else return action;
       });
-    
+
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
         calculatedProps.actions.push({
@@ -453,18 +458,18 @@ export default class MaterialTable extends React.Component {
 
       this.onQueryChange(query);
     }
-    else {		
+    else {
       this.setState(this.dataManager.getRenderState(), () => {
-        if(this.props.onFilterChange) { 
-		const appliedFilters = this.state.columns
-			.filter(a => a.tableData.filterValue)
-			.map(a => ({
-				column: a,
-				operator: "=",
-				value: a.tableData.filterValue
-			}));
-		this.props.onFilterChange(appliedFilters);
-	}
+        if (this.props.onFilterChange) {
+          const appliedFilters = this.state.columns
+            .filter(a => a.tableData.filterValue)
+            .map(a => ({
+              column: a,
+              operator: "=",
+              value: a.tableData.filterValue
+            }));
+          this.props.onFilterChange(appliedFilters);
+        }
       });
     }
   }, this.props.options.debounceInterval)
@@ -530,6 +535,101 @@ export default class MaterialTable extends React.Component {
     }
   }
 
+  renderTable = (props) => (
+    <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+      {props.options.header &&
+        <props.components.Header
+          actions={props.actions}
+          localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+          columns={this.state.columns}
+          hasSelection={props.options.selection}
+          headerStyle={props.options.headerStyle}
+          icons={props.icons}
+          selectedCount={this.state.selectedCount}
+          dataCount={
+            props.parentChildData ? this.state.treefiedDataLength : (
+              (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
+            )
+          }
+          hasDetailPanel={!!props.detailPanel}
+          detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
+          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
+          showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+          orderBy={this.state.orderBy}
+          orderDirection={this.state.orderDirection}
+          onAllSelected={this.onAllSelected}
+          onOrderChange={this.onChangeOrder}
+          actionsHeaderIndex={props.options.actionsColumnIndex}
+          sorting={props.options.sorting}
+          grouping={props.options.grouping}
+          isTreeData={this.props.parentChildData !== undefined}
+          draggable={props.options.draggable}
+          thirdSortClick={props.options.thirdSortClick}
+          treeDataMaxLevel={this.state.treeDataMaxLevel}
+          options={props.options}
+        />
+      }
+      <props.components.Body
+        actions={props.actions}
+        components={props.components}
+        icons={props.icons}
+        renderData={this.state.renderData}
+        currentPage={this.state.currentPage}
+        initialFormData={props.initialFormData}
+        pageSize={this.state.pageSize}
+        columns={this.state.columns}
+        detailPanel={props.detailPanel}
+        options={props.options}
+        getFieldValue={this.dataManager.getFieldValue}
+        isTreeData={this.props.parentChildData !== undefined}
+        onFilterChanged={this.onFilterChange}
+        onRowSelected={this.onRowSelected}
+        onToggleDetailPanel={this.onToggleDetailPanel}
+        onGroupExpandChanged={this.onGroupExpandChanged}
+        onTreeExpandChanged={this.onTreeExpandChanged}
+        onEditingCanceled={this.onEditingCanceled}
+        onEditingApproved={this.onEditingApproved}
+        localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+        onRowClick={this.props.onRowClick}
+        showAddRow={this.state.showAddRow}
+        hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
+        hasDetailPanel={!!props.detailPanel}
+        treeDataMaxLevel={this.state.treeDataMaxLevel}
+      />
+    </Table>
+  )
+
+  getColumnsWidth = (props, count) => {
+    let result = [];
+
+    const actionsWidth = CommonValues.actionsColumnWidth(props);
+    if (actionsWidth > 0) {
+      if (count > 0 && props.options.actionsColumnIndex >= 0 && props.options.actionsColumnIndex < count) {
+        result.push(actionsWidth + "px");
+      }
+      else if (count < 0 && props.options.actionsColumnIndex < 0 && props.options.actionsColumnIndex >= count) {
+        result.push(actionsWidth + "px");
+      }
+    }
+
+    if (props.options.selection) {
+      const selectionWidth = CommonValues.selectionMaxWidth(props, this.state.treeDataMaxLevel);
+      result.push(selectionWidth + "px");
+    }
+
+    for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
+      const colDef = props.columns[i > 0 ? i : props.columns.length - 1 - i];
+      if (typeof colDef.tableData.width === "number") {
+        result.push(colDef.tableData.width + "px");
+      }
+      else {
+        result.push(colDef.tableData.width);
+      }
+    }
+
+    return "calc(" + result.join(' + ') + ")";
+  }
+
   render() {
     const props = this.getProps();
 
@@ -579,72 +679,37 @@ export default class MaterialTable extends React.Component {
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>
             <Droppable droppableId="headers" direction="horizontal">
-              {(provided, snapshot) => (
-                <div ref={provided.innerRef}>
-                  <div style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: props.options.overflowY }}>
-                    <Table>
-                      {props.options.header &&
-                        <props.components.Header
-                          localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
-                          columns={this.state.columns}
-                          hasSelection={props.options.selection}
-                          headerStyle={props.options.headerStyle}
-                          icons={props.icons}
-                          selectedCount={this.state.selectedCount}
-                          dataCount={
-                            props.parentChildData ? this.state.treefiedDataLength : (
-                              (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
-                            )
-                          }
-                          hasDetailPanel={!!props.detailPanel}
-                          detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-                          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
-                          showSelectAllCheckbox={props.options.showSelectAllCheckbox}
-                          orderBy={this.state.orderBy}
-                          orderDirection={this.state.orderDirection}
-                          onAllSelected={this.onAllSelected}
-                          onOrderChange={this.onChangeOrder}
-                          actionsHeaderIndex={props.options.actionsColumnIndex}
-                          sorting={props.options.sorting}
-                          grouping={props.options.grouping}
-                          isTreeData={this.props.parentChildData !== undefined}
-                          draggable={props.options.draggable}
-                          thirdSortClick={props.options.thirdSortClick}
-                          options={props.options}
-                        />
+              {(provided, snapshot) => {
+                const table = this.renderTable(props);
+                return (
+                  <div ref={provided.innerRef}>
+                    <div ref={this.tableContainerDiv} style={{ maxHeight: props.options.maxBodyHeight, minHeight: props.options.minBodyHeight, overflowY: props.options.overflowY }}>
+
+                      {this.state.width && props.options.fixedColumns && props.options.fixedColumns.right ?
+                        <div style={{ width: this.getColumnsWidth(props, -1 * props.options.fixedColumns.right), position: 'absolute', top: 0, right: 0, boxShadow: '-2px 0px 15px rgba(125,147,178,.25)', overflowX: 'hidden', zIndex: 11 }}>
+                          <div style={{ width: this.state.width, background: 'white', transform: `translateX(calc(${this.getColumnsWidth(props, -1 * props.options.fixedColumns.right)} - 100%))` }}>
+                            {table}
+                          </div>
+                        </div> : null
                       }
-                      <props.components.Body
-                        actions={props.actions}
-                        components={props.components}
-                        icons={props.icons}
-                        renderData={this.state.renderData}
-                        currentPage={this.state.currentPage}
-                        initialFormData={props.initialFormData}
-                        pageSize={this.state.pageSize}
-                        columns={this.state.columns}
-                        detailPanel={props.detailPanel}
-                        options={props.options}
-                        getFieldValue={this.dataManager.getFieldValue}
-                        isTreeData={this.props.parentChildData !== undefined}
-                        onFilterChanged={this.onFilterChange}
-                        onRowSelected={this.onRowSelected}
-                        onToggleDetailPanel={this.onToggleDetailPanel}
-                        onGroupExpandChanged={this.onGroupExpandChanged}
-                        onTreeExpandChanged={this.onTreeExpandChanged}
-                        onEditingCanceled={this.onEditingCanceled}
-                        onEditingApproved={this.onEditingApproved}
-                        localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
-                        onRowClick={this.props.onRowClick}
-                        showAddRow={this.state.showAddRow}
-                        hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
-                        hasDetailPanel={!!props.detailPanel}
-                        treeDataMaxLevel={this.state.treeDataMaxLevel}
-                      />
-                    </Table>
+
+                      <div  >
+                        {table}
+                      </div>
+
+                      {this.state.width && props.options.fixedColumns && props.options.fixedColumns.left ?
+                        <div style={{ width: this.getColumnsWidth(props, props.options.fixedColumns.left), position: 'absolute', top: 0, left: 0, boxShadow: '2px 0px 15px rgba(125,147,178,.25)', overflowX: 'hidden', zIndex: 11 }}>
+                          <div style={{ width: this.state.width, background: 'white' }}>
+                            {table}
+                          </div>
+                        </div> : null
+                      }
+
+                    </div>
+                    {provided.placeholder}
                   </div>
-                  {provided.placeholder}
-                </div>
-              )}
+                );
+              }}
             </Droppable>
 
           </ScrollBar>
@@ -695,7 +760,7 @@ const ScrollBar = withStyles(style)(({ double, children, classes }) => {
   }
   else {
     return (
-      <div className={classes.horizontalScrollContainer} style={{ overflowX: 'auto' }}>
+      <div className={classes.horizontalScrollContainer} style={{ overflowX: 'auto', position: 'relative' }}>
         {children}
       </div>
     );

@@ -64,8 +64,9 @@ export default class DataManager {
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || 'asc',
+        width: 150,
         ...columnDef.tableData,
-        id: index
+        id: index,
       };
       return columnDef;
     });

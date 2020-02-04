@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Tooltip } from '@material-ui/core';
+import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
@@ -19,9 +20,9 @@ export class MTableHeader extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        let content = columnDef.title;        
+        let content = columnDef.title;
 
-        if(this.props.draggable) {
+        if (this.props.draggable) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
@@ -40,9 +41,6 @@ export class MTableHeader extends React.Component {
           );
         }
 
-        
-       
-
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
             <TableSortLabel
@@ -54,14 +52,14 @@ export class MTableHeader extends React.Component {
                   columnDef.tableData.id !== this.props.orderBy
                     ? 'asc'
                     : this.props.orderDirection === 'asc'
-                    ? 'desc'
-                    : this.props.orderDirection === 'desc' && this.props.thirdSortClick
-                    ? ''
-                    : this.props.orderDirection === 'desc' && !this.props.thirdSortClick
-                    ? 'asc'
-                    : this.props.orderDirection === ''
-                    ? 'asc'
-                    : 'desc';
+                      ? 'desc'
+                      : this.props.orderDirection === 'desc' && this.props.thirdSortClick
+                        ? ''
+                        : this.props.orderDirection === 'desc' && !this.props.thirdSortClick
+                          ? 'asc'
+                          : this.props.orderDirection === ''
+                            ? 'asc'
+                            : 'desc';
                 this.props.onOrderChange(columnDef.tableData.id, orderDirection);
               }}
             >
@@ -70,7 +68,7 @@ export class MTableHeader extends React.Component {
           );
         }
 
-        if(columnDef.tooltip) {
+        if (columnDef.tooltip) {
           content = <Tooltip title={columnDef.tooltip}><span>{content}</span></Tooltip>;
         }
 
@@ -79,7 +77,7 @@ export class MTableHeader extends React.Component {
             key={columnDef.tableData.id}
             align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             className={this.props.classes.header}
-            style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+            style={{ ...this.props.headerStyle, ...columnDef.headerStyle, boxSizing: 'border-box', width: columnDef.tableData.width }}
             size={size}
           >
             {content}
@@ -89,26 +87,31 @@ export class MTableHeader extends React.Component {
     return mapArr;
   }
 
+
+
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
+    const width = CommonValues.actionsColumnWidth(this.props);
     return (
       <TableCell
         key="key-actions-column"
         padding="checkbox"
         className={this.props.classes.header}
-        style={{ ...this.props.headerStyle, textAlign: 'center' }}
+        style={{ ...this.props.headerStyle, width: width, textAlign: 'center', boxSizing: 'border-box' }}
       >
         <TableSortLabel disabled>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }
   renderSelectionHeader() {
+    const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
+
     return (
       <TableCell
         padding="none"
         key="key-selection-column"
         className={this.props.classes.header}
-        style={{ ...this.props.headerStyle }}
+        style={{ ...this.props.headerStyle, width: selectionWidth }}
       >
         {this.props.showSelectAllCheckbox &&
           <Checkbox
@@ -123,11 +126,11 @@ export class MTableHeader extends React.Component {
 
   renderDetailPanelColumnCell() {
     return <TableCell
-            padding="none"
-            key="key-detail-panel-column"
-            className={this.props.classes.header}
-            style={{ ...this.props.headerStyle }}
-          />;
+      padding="none"
+      key="key-detail-panel-column"
+      className={this.props.classes.header}
+      style={{ ...this.props.headerStyle }}
+    />;
   }
 
   render() {

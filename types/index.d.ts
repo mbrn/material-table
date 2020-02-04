@@ -206,6 +206,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
@@ -233,6 +234,7 @@ export interface Options {
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
+  tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';

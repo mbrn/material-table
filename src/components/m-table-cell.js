@@ -90,7 +90,9 @@ export default class MTableCell extends React.Component {
 
   getStyle = () => {
     let cellStyle = {
-      color: 'inherit'
+      color: 'inherit',
+      width: this.props.columnDef.tableData.width,
+      boxSizing: 'border-box'
     };
 
     if (typeof this.props.columnDef.cellStyle === 'function') {
