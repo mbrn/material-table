@@ -84,7 +84,7 @@ export default class DataManager {
       return columnDef;
     });
 
-    usedWidth = "(" + usedWidth.join(' + ') + ")";
+    usedWidth = "(0px + " + usedWidth.join(' + ') + ")";
     undefinedWidthColumns.forEach(columnDef => {
       columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
