@@ -59,7 +59,7 @@ export default class DataManager {
 
   setColumns(columns) {    
     const undefinedWidthColumns = columns.filter(c => c.width === undefined);
-    let usedWidth = [];
+    let usedWidth = ["0px"];
 
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
@@ -84,7 +84,7 @@ export default class DataManager {
       return columnDef;
     });
 
-    usedWidth = "(0px + " + usedWidth.join(' + ') + ")";
+    usedWidth = "(" + usedWidth.join(' + ') + ")";
     undefinedWidthColumns.forEach(columnDef => {
       columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
