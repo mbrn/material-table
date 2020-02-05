@@ -153,20 +153,20 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
-export const MTableAction: () => React.ReactElement<any>;
-export const MTableActions: () => React.ReactElement<any>;
-export const MTableBody: () => React.ReactElement<any>;
-export const MTableBodyRow: () => React.ReactElement<any>;
-export const MTableCell: () => React.ReactElement<any>;
-export const MTableEditField: () => React.ReactElement<any>;
-export const MTableEditRow: () => React.ReactElement<any>;
-export const MTableFilterRow: () => React.ReactElement<any>;
-export const MTableGroupbar: () => React.ReactElement<any>;
-export const MTableGroupRow: () => React.ReactElement<any>;
-export const MTableHeader: () => React.ReactElement<any>;
-export const MTablePagination: () => React.ReactElement<any>;
-export const MTableToolbar: () => React.ReactElement<any>;
-export const MTable: () => React.ReactElement<any>;
+export const MTableAction: (props: any) => React.ReactElement<any>;
+export const MTableActions: (props: any) => React.ReactElement<any>;
+export const MTableBody: (props: any) => React.ReactElement<any>;
+export const MTableBodyRow: (props: any) => React.ReactElement<any>;
+export const MTableCell: (props: any) => React.ReactElement<any>;
+export const MTableEditField: (props: any) => React.ReactElement<any>;
+export const MTableEditRow: (props: any) => React.ReactElement<any>;
+export const MTableFilterRow: (props: any) => React.ReactElement<any>;
+export const MTableGroupbar: (props: any) => React.ReactElement<any>;
+export const MTableGroupRow: (props: any) => React.ReactElement<any>;
+export const MTableHeader: (props: any) => React.ReactElement<any>;
+export const MTablePagination: (props: any) => React.ReactElement<any>;
+export const MTableToolbar: (props: any) => React.ReactElement<any>;
+export const MTable: (props: any) => React.ReactElement<any>;
 
 export interface Icons {
   Add?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
