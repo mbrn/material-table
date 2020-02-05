@@ -49,7 +49,7 @@ class App extends Component {
     ],
     columns: [
       { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text' },
-      { title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text' },
+      { width: 200, title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text' },
       { title: 'Evli', field: 'isMarried' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
       { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
@@ -83,11 +83,11 @@ class App extends Component {
                   onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
                   options={{
                     fixedColumns: {
-                      left: 1,
+                      left: 2,
                       right: 0
-                    }                    
+                    },
+                    tableLayout: 'fixed'
                   }}
-                  detailPanel={() => <div>ok</div>}
                 />
               </Grid>
             </Grid>
