@@ -402,9 +402,9 @@ export default class MaterialTable extends React.Component {
     if (this.props.selectedRows !== undefined && this.props.externalSelection === true) return;
     let data = this.dataManager.changeRowSelected(event.target.checked, path);
     if (this.props.onRowSelected){
-      this.props.onRowSelected(data, event.target.checked);
+      this.props.onRowSelected(dataClicked, event.target.checked);
     }
-    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange(dataClicked));
+    this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange(dataClicked, event.target.checked));
   }
 
   onSelectionChange = (dataClicked, rowChecked) => {
