@@ -69,6 +69,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -260,7 +261,7 @@ export default class MaterialTable extends React.Component {
     const pageSize = event.target.value;
 
     this.dataManager.changePageSize(pageSize);
-	  
+
     this.props.onChangePage && this.props.onChangePage(0);
 
     if (this.isRemoteData()) {
