@@ -540,7 +540,7 @@ export default class DataManager {
               const value = this.getFieldValue(row, columnDef, false);
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;
+                tableData.filterValue.indexOf(value !== undefined && value !== null && value.toString()) > -1;
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
