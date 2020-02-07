@@ -56,6 +56,10 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'currency') {
       return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
+    else if(typeof this.props.value === "boolean") {
+      // To avoid forwardref boolean children. 
+      return this.props.value.toString();
+    }
 
     return this.props.value;
   }
