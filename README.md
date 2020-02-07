@@ -9,7 +9,7 @@
 A simple and powerful Datatable for React based on [Material-UI Table](https://material-ui.com/api/table/) with some additional features.
 
 [![Build Status](https://travis-ci.org/mbrn/material-table.svg?branch=master)](https://travis-ci.org/mbrn/material-table)
-[![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
+[![Financial Contributors on Open Collective](https://opencollective.com/material-table/all/badge.svg?label=financial+contributors)](https://opencollective.com/material-table) [![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
 [![NPM Downloads](https://img.shields.io/npm/dm/material-table.svg?style=flat)](https://npmcharts.com/compare/material-table?minimal=true)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mbrn/material-table.svg)](http://isitmaintained.com/project/mbrn/material-table "Average time to resolve an issue")
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
@@ -201,6 +201,36 @@ ReactDOM.render(<App />, document.getElementById("react-div"));
 We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 If you have any sort of doubt, idea or just want to talk about the project, feel free to join [our chat on Gitter](https://gitter.im/material-table/Lobby) :)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/mbrn/material-table/graphs/contributors"><img src="https://opencollective.com/material-table/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/material-table/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/material-table"><img src="https://opencollective.com/material-table/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/material-table/contribute)]
+
+<a href="https://opencollective.com/material-table/organization/0/website"><img src="https://opencollective.com/material-table/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/1/website"><img src="https://opencollective.com/material-table/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/2/website"><img src="https://opencollective.com/material-table/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/3/website"><img src="https://opencollective.com/material-table/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/4/website"><img src="https://opencollective.com/material-table/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/5/website"><img src="https://opencollective.com/material-table/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/6/website"><img src="https://opencollective.com/material-table/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/7/website"><img src="https://opencollective.com/material-table/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/8/website"><img src="https://opencollective.com/material-table/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/material-table/organization/9/website"><img src="https://opencollective.com/material-table/organization/9/avatar.svg"></a>
 
 ## License
 
