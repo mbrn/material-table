@@ -719,11 +719,15 @@ export default class DataManager {
     });
     const markForTreeRemove = (rowData) => {
       let pointer = this.treefiedData;
+      let pathSet = new Set();
       rowData.tableData.path.forEach(pathPart => {
-        if (pointer.tableData && pointer.tableData.childRows) {
-          pointer = pointer.tableData.childRows;
+        if(!pathSet.has(pathPart)){
+          if (pointer.tableData && pointer.tableData.childRows) {
+            pointer = pointer.tableData.childRows;
+          }
+          pointer = pointer[pathPart];
+          pathSet.add(pathPart);
         }
-        pointer = pointer[pathPart];
       });
       pointer.tableData.markedForTreeRemove = true;
     };
