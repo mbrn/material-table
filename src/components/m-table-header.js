@@ -44,6 +44,7 @@ export class MTableHeader extends React.Component {
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
             <TableSortLabel
+              aria-label={columnDef.ariaLabel}
               IconComponent={this.props.icons.SortArrow}
               active={this.props.orderBy === columnDef.tableData.id}
               direction={this.props.orderDirection || 'asc'}
