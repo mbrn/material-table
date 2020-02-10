@@ -1,5 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Icon, IconButton, withStyles, Tooltip, Typography } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */

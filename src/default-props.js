@@ -1,5 +1,8 @@
 import React from 'react';
-import { CircularProgress, Icon, Paper, TablePagination } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Icon from '@material-ui/core/Icon';
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
 import * as MComponents from './components';
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -55,7 +58,7 @@ export const defaultProps = {
     PreviousPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_left</Icon>),
     ResetSearch: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
     Search: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>search</Icon>),
-    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_upward</Icon>),
+    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_downward</Icon>),
     ThirdStateCheck: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>remove</Icon>),
     ViewColumn: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>view_column</Icon>)
     /* eslint-enable react/display-name */
@@ -74,7 +77,9 @@ export const defaultProps = {
     exportButton: false,
     exportDelimiter: ',',
     filtering: false,
+    groupTitle: false,
     header: true,
+    hideFilterIcons: false,
     loadingType: 'overlay',
     padding: 'default',
     paging: true,
@@ -87,6 +92,7 @@ export const defaultProps = {
     search: true,
     showTitle: true,
     showTextRowsSelected: true,
+    tableLayout: 'auto',
     toolbarButtonAlignment: 'right',
     searchFieldAlignment: 'right',
     searchFieldStyle: {},
@@ -95,7 +101,9 @@ export const defaultProps = {
     sorting: true,
     toolbar: true,
     defaultExpanded: false,
-    detailPanelColumnAlignment: 'left'
+    detailPanelColumnAlignment: 'left',
+    thirdSortClick: true,
+    overflowY: 'auto',
   },
   localization: {
     grouping: {
@@ -114,7 +122,7 @@ export const defaultProps = {
       editRow: {
         saveTooltip: 'Save',
         cancelTooltip: 'Cancel',
-        deleteText: 'Are you sure delete this row?',
+        deleteText: 'Are you sure you want to delete this row?',
       },
       addTooltip: 'Add',
       deleteTooltip: 'Delete',

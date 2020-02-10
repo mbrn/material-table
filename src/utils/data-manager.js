@@ -17,8 +17,9 @@ export default class DataManager {
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
+  groupedDataLength = 0;
   defaultExpanded = false;
-
+  
   data = [];
   columns = [];
 
@@ -56,17 +57,36 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {
+  setColumns(columns) {    
+    const undefinedWidthColumns = columns.filter(c => c.width === undefined);
+    let usedWidth = ["0px"];
+
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',
+        groupSort: columnDef.defaultGroupSort || 'asc',     
+        width: columnDef.width,   
         ...columnDef.tableData,
-        id: index
+        id: index,
       };
+
+      if(columnDef.width !== undefined) {
+        if(typeof columnDef.width === "number") {
+          usedWidth.push(columnDef.width + "px");
+        }
+        else {
+          usedWidth.push(columnDef.width);
+        }
+      }
+
       return columnDef;
+    });
+
+    usedWidth = "(" + usedWidth.join(' + ') + ")";
+    undefinedWidthColumns.forEach(columnDef => {
+      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -116,8 +136,10 @@ export default class DataManager {
     const checkChildRows = rowData => {
       if (rowData.tableData.childRows) {
         rowData.tableData.childRows.forEach(childRow => {
-          childRow.tableData.checked = checked;
-          this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+          if (childRow.tableData.checked !== checked) {
+            childRow.tableData.checked = checked;
+            this.selectedCount = this.selectedCount + (checked ? 1 : -1);
+          }
           checkChildRows(childRow);
         });
       }
@@ -228,8 +250,7 @@ export default class DataManager {
     this.sorted = false;
   }
 
-  changeColumnHidden(columnId, hidden) {
-    const column = this.columns.find(c => c.tableData.id === columnId);
+    changeColumnHidden(column, hidden) {
     column.hidden = hidden;
   }
 
@@ -285,10 +306,28 @@ export default class DataManager {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
-      const colsToMov = this.columns
-        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter(column => column.tableData.groupOrder === undefined)
-        .slice(start, end + 1);
+      // get the effective start and end considering hidden columns
+      const sorted = this.columns
+          .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+          .filter(column => column.tableData.groupOrder === undefined);
+      let numHiddenBeforeStart = 0;
+      let numVisibleBeforeStart = 0;
+      for (let i = 0; i < sorted.length && numVisibleBeforeStart <= start; i++) {
+        if (sorted[i].hidden) {
+          numHiddenBeforeStart++;
+        } else {
+          numVisibleBeforeStart++;
+        }
+      }
+      const effectiveStart = start + numHiddenBeforeStart;
+
+      let effectiveEnd = effectiveStart;
+      for (let numVisibleInRange = 0; numVisibleInRange < (end - start) && effectiveEnd < sorted.length; effectiveEnd++) {
+        if (!sorted[effectiveEnd].hidden) {
+          numVisibleInRange++;
+        }
+      }
+      const colsToMov = sorted.slice(effectiveStart, effectiveEnd + 1);
 
       if (result.destination.index < result.source.index) {
         // Take last and add as first
@@ -302,7 +341,7 @@ export default class DataManager {
       }
 
       for (let i = 0; i < colsToMov.length; i++) {
-        colsToMov[i].tableData.columnOrder = start + i;
+        colsToMov[i].tableData.columnOrder = effectiveStart + i;
       }
 
       return;
@@ -316,6 +355,19 @@ export default class DataManager {
     }
 
     this.sorted = this.grouped = false;
+  }
+
+  expandTreeForNodes = (data) => {
+    data.forEach(row => {
+      let currentRow = row;
+      while (this.parentFunc(currentRow, this.data)) {
+        let parent = this.parentFunc(currentRow, this.data);
+        if (parent) {
+          parent.tableData.isTreeExpanded = true;
+        }
+        currentRow = parent;
+      }
+    });
   }
 
   findDataByPath = (renderData, path) => {
@@ -462,7 +514,8 @@ export default class DataManager {
       searchText: this.searchText,
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
-      treeDataMaxLevel: this.treeDataMaxLevel
+      treeDataMaxLevel: this.treeDataMaxLevel,
+      groupedDataLength: this.groupedDataLength
     };
   }
 
@@ -487,7 +540,7 @@ export default class DataManager {
               const value = this.getFieldValue(row, columnDef, false);
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;
+                tableData.filterValue.indexOf(value !== undefined && value !== null && value.toString()) > -1;
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
@@ -546,6 +599,7 @@ export default class DataManager {
           }
         }
       });
+
     }
 
     this.filtered = true;
@@ -573,12 +627,12 @@ export default class DataManager {
           });
       });
     }
-
     this.searched = true;
   }
 
   groupData() {
     this.sorted = this.paged = false;
+    this.groupedDataLength = 0;
 
     const tmpData = [...this.searchedData];
 
@@ -598,7 +652,7 @@ export default class DataManager {
 
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (this.defaultExpanded ? true : false) };
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : false };
 
           group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -608,6 +662,7 @@ export default class DataManager {
       }, object);
 
       object.data.push(currentRow);
+      this.groupedDataLength++;
 
       return result;
     }, { groups: [], groupsIndex: {} });
@@ -624,15 +679,21 @@ export default class DataManager {
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
 
-    const addRow = (rowData) => {
-      let parent = this.parentFunc(rowData, this.data);
+    // if filter or search is enabled, collapse the tree
+    if (this.searchText || this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+      this.data.forEach(row => {
+        row.tableData.isTreeExpanded = false;
+      });
 
+      // expand the tree for all nodes present after filtering and searching
+      this.expandTreeForNodes(this.searchedData);
+    }
+
+    const addRow = (rowData) => {
+      rowData.tableData.markedForTreeRemove = false;
+      let parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
-        let oldParent = parent.tableData.path && this.findDataByPath(this.treefiedData, parent.tableData.path);
-        let isDefined = oldParent && oldParent.tableData.isTreeExpanded !== undefined;
-
-        parent.tableData.isTreeExpanded = isDefined ? oldParent.tableData.isTreeExpanded : (this.defaultExpanded ? true : false);
         if (!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
           this.treefiedDataLength++;
@@ -652,10 +713,64 @@ export default class DataManager {
       }
     };
 
-    this.searchedData.forEach(rowData => {
+    // Add all rows initially
+    this.data.forEach(rowData => {
       addRow(rowData);
     });
+    const markForTreeRemove = (rowData) => {
+      let pointer = this.treefiedData;
+      rowData.tableData.path.forEach(pathPart => {
+        if (pointer.tableData && pointer.tableData.childRows) {
+          pointer = pointer.tableData.childRows;
+        }
+        pointer = pointer[pathPart];
+      });
+      pointer.tableData.markedForTreeRemove = true;
+    };
 
+    const traverseChildrenAndUnmark = (rowData) => {
+      if (rowData.tableData.childRows) {
+        rowData.tableData.childRows.forEach(row => {
+          traverseChildrenAndUnmark(row);
+        });
+      }
+      rowData.tableData.markedForTreeRemove = false;
+    };
+
+    // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
+    this.data.forEach(rowData => {
+      if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+        if (rowData.tableData.isTreeExpanded === undefined) {
+          var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
+          rowData.tableData.isTreeExpanded = isExpanded;
+        }
+      }
+      const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
+
+      if (!hasSearchMatchedChildren && this.searchedData.indexOf(rowData) < 0) {
+        markForTreeRemove(rowData);
+      }
+    });
+
+    // preserve all children of nodes that are matched by search or filters
+    this.data.forEach(rowData => {
+      if (this.searchedData.indexOf(rowData) > -1) {
+        traverseChildrenAndUnmark(rowData);
+      }
+    });
+
+    const traverseTreeAndDeleteMarked = (rowDataArray) => {
+      for (var i = rowDataArray.length - 1; i >= 0; i--) {
+        const item = rowDataArray[i];
+        if (item.tableData.childRows) {
+          traverseTreeAndDeleteMarked(item.tableData.childRows);
+        }
+        if (item.tableData.markedForTreeRemove)
+          rowDataArray.splice(i, 1);
+      }
+    };
+
+    traverseTreeAndDeleteMarked(this.treefiedData);
     this.treefied = true;
   }
 

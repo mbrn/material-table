@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { Icon, Toolbar, Chip, Typography } from '@material-ui/core';
+import Toolbar from '@material-ui/core/Toolbar';
+import Chip from '@material-ui/core/Chip';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -68,13 +70,13 @@ class MTableGroupbar extends React.Component {
                           {...provided.dragHandleProps}
                           onClick={() => this.props.onSortChanged(columnDef)}
                           label={
-                            <div>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                               <div style={{ float: 'left' }}>{columnDef.title}</div>
                               {columnDef.tableData.groupSort &&
                                 <this.props.icons.SortArrow
                                   style={{
                                     transition: '300ms ease all',
-                                    transform: columnDef.tableData.groupSort === "desc" ? 'rotate(-180deg)' : 'none',
+                                    transform: columnDef.tableData.groupSort === "asc" ? 'rotate(-180deg)' : 'none',
                                     fontSize: 18
                                   }}
                                 />

@@ -1,4 +1,5 @@
 language: node_js
+version: 1.0
 sudo: false
 node_js:
  - 10
@@ -8,6 +9,7 @@ script:
   - npm run lint
   - npm run build
 deploy:
+  edge: true
   provider: npm
   email: "mehmetbaran@mehmetbaran.net"
   api_key: "$NPM_TOKEN"
