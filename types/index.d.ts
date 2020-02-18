@@ -111,21 +111,21 @@ export interface Column<RowData extends object> {
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
   disableClick?: boolean;
-  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   editComponent?: ((props: EditComponentProps<RowData>) => React.ReactElement<any>);
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
   field?: keyof RowData | string;
-  filterCellStyle?: React.CSSProperties;
-  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
   filtering?: boolean;
+  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
   filterPlaceholder?: string;
+  filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: ('row' | 'group')) => any;
   searchable?: boolean;
