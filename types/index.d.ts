@@ -31,8 +31,8 @@ export interface MaterialTableProps<RowData extends object> {
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
  /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
-  */ 
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+  */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -111,21 +111,21 @@ export interface Column<RowData extends object> {
   defaultGroupSort?: ('asc' | 'desc');
   defaultSort?: ('asc' | 'desc');
   disableClick?: boolean;
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   editComponent?: ((props: EditComponentProps<RowData>) => React.ReactElement<any>);
   emptyValue?: string | React.ReactElement<any> | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
   field?: keyof RowData | string;
-  filtering?: boolean;
-  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
-  filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
+  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
+  filtering?: boolean;
+  filterPlaceholder?: string;
   grouping?: boolean;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
-  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: ('row' | 'group')) => any;
   searchable?: boolean;
@@ -133,6 +133,7 @@ export interface Column<RowData extends object> {
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  width?: string | number;
 }
 
 export interface Components {
