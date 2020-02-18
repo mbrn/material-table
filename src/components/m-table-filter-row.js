@@ -109,6 +109,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...this.props.muiPickerProps}
         />
       );
     } else if (columnDef.type === 'datetime') {
