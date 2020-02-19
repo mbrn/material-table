@@ -159,7 +159,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -182,7 +182,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
