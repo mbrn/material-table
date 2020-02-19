@@ -19,7 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-  
+
   data = [];
   columns = [];
 
@@ -57,7 +57,7 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {    
+  setColumns(columns) {
     const undefinedWidthColumns = columns.filter(c => c.width === undefined);
     let usedWidth = ["0px"];
 
@@ -66,8 +66,8 @@ export default class DataManager {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',     
-        width: columnDef.width,   
+        groupSort: columnDef.defaultGroupSort || 'asc',
+        width: columnDef.width,
         ...columnDef.tableData,
         id: index,
       };
@@ -86,7 +86,7 @@ export default class DataManager {
 
     usedWidth = "(" + usedWidth.join(' + ') + ")";
     undefinedWidthColumns.forEach(columnDef => {
-      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.filter(c => !c.hidden).length})`;
     });
   }
 
