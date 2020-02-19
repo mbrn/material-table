@@ -109,7 +109,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
-          {...this.props.muiPickerProps}
+          {...this.props.localization.muiDatePickerProps}
         />
       );
     } else if (columnDef.type === 'datetime') {
@@ -118,6 +118,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...this.props.localization.muiDatePickerProps}
         />
       );
     } else if (columnDef.type === 'time') {
@@ -126,6 +127,7 @@ class MTableFilterRow extends React.Component {
           value={columnDef.tableData.filterValue || null}
           onChange={onDateInputChange}
           clearable
+          {...this.props.localization.muiDatePickerProps}
         />
       );
     }

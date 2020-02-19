@@ -86,56 +86,30 @@ class App extends Component {
                       left: 2,
                       right: 0
                     },
-                    tableLayout: 'fixed'
+                    tableLayout: 'fixed',
+                    filtering: true,
+                  }}
+                  localization={{
+                    body: {
+                      muiDatePickerProps: {
+                        okLabel: 'oke',
+                        cancelLabel: 'no',
+                        clearLabel: 'delet this',
+                      },
+                    }
+                  }}
+                  editable={{
+                    onRowAdd: newData =>
+                      new Promise((resolve, reject) => resolve()),
+                    onRowUpdate: (newData, oldData) =>
+                      new Promise((resolve, reject) => resolve()),
+                    onRowDelete: oldData =>
+                      new Promise((resolve, reject) => resolve()),
                   }}
                 />
               </Grid>
             </Grid>
             {this.state.text}
-            <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
-              Select
-            </button>
-            <MaterialTable
-              title={
-                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
-              }
-              columns={[
-                {
-                  title: 'Avatar',
-                  field: 'avatar',
-                  render: rowData => (
-                    <img
-                      style={{ height: 36, borderRadius: '50%' }}
-                      src={rowData.avatar}
-                    />
-                  ),
-                },
-                { title: 'Id', field: 'id', filterPlaceholder: 'placeholder' },
-                { title: 'First Name', field: 'first_name' },
-                { title: 'Last Name', field: 'last_name' },
-              ]}
-              options={{
-                filtering: true,
-                grouping: true,
-                groupTitle: group => group.data.length,
-              }}
-              data={query => new Promise((resolve, reject) => {
-                let url = 'https://reqres.in/api/users?'
-                url += 'per_page=' + query.pageSize
-                url += '&page=' + (query.page + 1)
-                console.log(query);
-                fetch(url)
-                  .then(response => response.json())
-                  .then(result => {
-                    resolve({
-                      data: result.data,
-                      page: result.page - 1,
-                      totalCount: result.total,
-                    })
-                  })
-              })}
-            />
-
           </div>
         </MuiThemeProvider>
       </>

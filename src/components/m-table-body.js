@@ -50,7 +50,7 @@ class MTableBody extends React.Component {
             components={this.props.components}
             data={data}
             icons={this.props.icons}
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization.locale }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization, muiDatePickerProps: this.props.localization.muiDatePickerProps }}
             key={index}
             mode={data.tableData.editing}
             options={this.props.options}
@@ -117,7 +117,7 @@ class MTableBody extends React.Component {
         options={this.props.options}
         isTreeData={this.props.isTreeData}
         hasAnyEditingRow={this.props.hasAnyEditingRow}
-        localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+        localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, muiDatePickerProps: this.props.localization.muiDatePickerProps }}
       />
     ));
   }
@@ -143,12 +143,11 @@ class MTableBody extends React.Component {
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
-            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization.locale }}
+            localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization, muiDatePickerProps: this.props.localization.muiDatePickerProps }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
             hideFilterIcons={this.props.options.hideFilterIcons}
-            muiPickerProps={this.props.localization.dateTimePickerLocalization.muiPickerProps}
           />
         }
 
@@ -160,7 +159,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, muiDatePickerProps: this.props.localization.muiDatePickerProps }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -183,7 +182,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
-            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
+            localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, muiDatePickerProps: this.props.localization.muiDatePickerProps }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}

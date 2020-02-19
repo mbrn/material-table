@@ -62,6 +62,7 @@ class MTableEditField extends React.Component {
               fontSize: 13,
             }
           }}
+          {...this.props.muiDatePickerProps}
         />
       </MuiPickersUtilsProvider>
     );
@@ -82,6 +83,7 @@ class MTableEditField extends React.Component {
               fontSize: 13,
             }
           }}
+          {...this.props.muiDatePickerProps}
         />
       </MuiPickersUtilsProvider>
     );
@@ -102,6 +104,7 @@ class MTableEditField extends React.Component {
               fontSize: 13,
             }
           }}
+          {...this.props.muiDatePickerProps}
         />
       </MuiPickersUtilsProvider>
     );
