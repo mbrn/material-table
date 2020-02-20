@@ -69,7 +69,7 @@ export class MTableToolbar extends React.Component {
             startAdornment: (
               <InputAdornment position="start">
                 <Tooltip title={localization.searchTooltip}>
-                  <this.props.icons.Search color="inherit" fontSize="small" />
+                  <this.props.icons.Search fontSize="small" />
                 </Tooltip>
               </InputAdornment>
             ),
@@ -79,7 +79,7 @@ export class MTableToolbar extends React.Component {
                   disabled={!this.props.searchText}
                   onClick={() => this.props.onSearchChanged("")}
                 >
-                  <this.props.icons.ResetSearch color="inherit" fontSize="small" />
+                  <this.props.icons.ResetSearch fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
