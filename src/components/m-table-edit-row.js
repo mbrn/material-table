@@ -94,7 +94,7 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
-                locale={this.props.localization.dateTimePickerLocalization}
+                dateTimePickerLocalization={this.props.localization.dateTimePickerLocalization}
                 muiDatePickerProps={{...MTableEditRow.defaultProps.localization.muiDatePickerProps, ...this.props.localization.muiDatePickerProps}}
                 rowData={this.state.data}
                 onChange={value => {
