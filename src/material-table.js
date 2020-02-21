@@ -538,7 +538,7 @@ export default class MaterialTable extends React.Component {
   }
 
   renderTable = (props) => (
-    <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+    <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) || (props.options.selection && props.options.columnsButton) ? 'fixed' : props.options.tableLayout }}>
       {props.options.header &&
         <props.components.Header
           actions={props.actions}
