@@ -133,6 +133,7 @@ export interface Column<RowData extends object> {
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  width?: number | string;
 }
 
 export interface Components {
