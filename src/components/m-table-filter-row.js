@@ -64,7 +64,7 @@ class MTableFilterRow extends React.Component {
           ))
         }
       </Select>
-    </FormControl>
+    </FormControl>;
   }
 
 
