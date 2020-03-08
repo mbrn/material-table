@@ -72,7 +72,9 @@ export const propTypes = {
   editable: PropTypes.shape({
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
-    onRowDelete: PropTypes.func
+    onRowDelete: PropTypes.func,
+    onRowAddCancelled: PropTypes.func,
+    onRowUpdateCancelled: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
