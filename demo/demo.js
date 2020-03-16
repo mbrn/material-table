@@ -86,7 +86,15 @@ class App extends Component {
                       left: 2,
                       right: 0
                     },
-                    tableLayout: 'fixed'
+                    tableLayout: 'fixed',
+                    selection: true,
+                    selectionProps: rowData => {
+                      rowData.tableData.disabled = rowData.name === 'A1';
+                      
+                      return {
+                        disabled: rowData.name === 'A1'
+                      }
+                    }
                   }}
                 />
               </Grid>
