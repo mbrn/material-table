@@ -118,6 +118,7 @@ class App extends Component {
                 filtering: true,
                 grouping: true,
                 groupTitle: group => group.data.length,
+                selection: true,
               }}
               data={query => new Promise((resolve, reject) => {
                 let url = 'https://reqres.in/api/users?'
