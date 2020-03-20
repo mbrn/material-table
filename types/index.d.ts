@@ -259,6 +259,7 @@ export interface Localization {
   };
   header?: {
     actions?: string;
+    selectAllRows?: string;
   };
   grouping?: {
     groupedBy?: string;

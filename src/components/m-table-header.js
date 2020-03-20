@@ -8,8 +8,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import {Tooltip} from '@material-ui/core';
-import FormLabel from "@material-ui/core/FormLabel";
+import { Tooltip } from '@material-ui/core';
 import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
 
@@ -117,7 +116,7 @@ export class MTableHeader extends React.Component {
         {this.props.showSelectAllCheckbox &&
           <Checkbox
             inputProps={{
-              'aria-label': 'Select all rows'
+              'aria-label': MTableHeader.defaultProps.localization.selectAllRowsAriaLabel
             }}
 
             indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
@@ -198,7 +197,8 @@ MTableHeader.defaultProps = {
   selectedCount: 0,
   sorting: true,
   localization: {
-    actions: 'Actions'
+    actions: 'Actions',
+    selectAllRowsAriaLabel: 'Select all rows'
   },
   orderBy: undefined,
   orderDirection: 'asc',

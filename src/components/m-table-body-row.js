@@ -64,7 +64,7 @@ export default class MTableBodyRow extends React.Component {
       <TableCell size={size} padding="none" key="key-selection-column" style={{ width: selectionWidth }}>
         <Checkbox
           inputProps={{
-            'aria-label': 'Select all rows'
+            'aria-label': MTableBodyRow.defaultProps.localization.selectThisRow
           }}
           size={size}
           checked={this.props.data.tableData.checked === true}
@@ -351,7 +351,11 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: []
+  path: [],
+  localization: {
+    selectThisRow: 'Select this row'
+  }
+
 };
 
 MTableBodyRow.propTypes = {
