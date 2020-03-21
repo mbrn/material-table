@@ -252,6 +252,7 @@ export interface Localization {
       saveTooltip?: string;
       cancelTooltip?: string;
       deleteText?: string;
+      selectThisRowAriaLabel?: string;
     },
     addTooltip?: string;
     deleteTooltip?: string;
@@ -259,7 +260,7 @@ export interface Localization {
   };
   header?: {
     actions?: string;
-    selectAllRows?: string;
+    selectAllRowsAriaLabel?: string;
   };
   grouping?: {
     groupedBy?: string;

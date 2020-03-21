@@ -105,6 +105,7 @@ export class MTableHeader extends React.Component {
   }
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
+    const localization = {...MTableHeader.defaultProps.localization, ...this.props.localization};
 
     return (
       <TableCell
@@ -116,7 +117,7 @@ export class MTableHeader extends React.Component {
         {this.props.showSelectAllCheckbox &&
           <Checkbox
             inputProps={{
-              'aria-label': MTableHeader.defaultProps.localization.selectAllRowsAriaLabel
+              'aria-label': localization.selectAllRowsAriaLabel
             }}
 
             indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}

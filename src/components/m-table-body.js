@@ -206,7 +206,7 @@ MTableBody.defaultProps = {
   localization: {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
-    editRow: {},
+    editRow: {}
   }
 };
 

@@ -49,7 +49,7 @@ export default class MTableBodyRow extends React.Component {
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);
     }
-
+    const localization = { ...this.props.localization };
     const size = CommonValues.elementSize(this.props);
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
 
@@ -64,7 +64,7 @@ export default class MTableBodyRow extends React.Component {
       <TableCell size={size} padding="none" key="key-selection-column" style={{ width: selectionWidth }}>
         <Checkbox
           inputProps={{
-            'aria-label': MTableBodyRow.defaultProps.localization.selectThisRow
+            'aria-label': localization.selectThisRowAriaLabel
           }}
           size={size}
           checked={this.props.data.tableData.checked === true}
@@ -351,11 +351,7 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: [],
-  localization: {
-    selectThisRow: 'Select this row'
-  }
-
+  path: []
 };
 
 MTableBodyRow.propTypes = {
