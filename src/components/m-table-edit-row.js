@@ -250,7 +250,7 @@ MTableEditRow.defaultProps = {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel',
     deleteText: 'Are you sure you want to delete this row?',
-    selectThisRowAriaLabel: 'select this row'
+    selectThisRowAriaLabel: 'Select this row'
   }
 };
 

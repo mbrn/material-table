@@ -85,7 +85,7 @@ export class MTableToolbar extends React.Component {
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              'aria-label': "Search"
+              'aria-label': localization.searchAriaLabel
             }
           }}
         />
@@ -241,7 +241,8 @@ MTableToolbar.defaultProps = {
     exportAriaLabel: 'Export',
     exportName: 'Export as CSV',
     searchTooltip: 'Search',
-    searchPlaceholder: 'Search'
+    searchPlaceholder: 'Search',
+    searchAriaLabel: 'Search'
   },
   search: true,
   showTitle: true,

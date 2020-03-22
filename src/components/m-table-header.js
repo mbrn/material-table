@@ -113,6 +113,7 @@ export class MTableHeader extends React.Component {
         key="key-selection-column"
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle, width: selectionWidth }}
+        component={'td'} // accessibility: <th> without text violates accessibility, fixed by using <td> with no text
       >
         {this.props.showSelectAllCheckbox &&
           <Checkbox

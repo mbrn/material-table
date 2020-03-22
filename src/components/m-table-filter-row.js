@@ -84,7 +84,7 @@ class MTableFilterRow extends React.Component {
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
         placeholder={columnDef.filterPlaceholder || ''}
-        inputProps={{'aria-label': `filter data by ${columnDef.title}`}}
+        inputProps={{'aria-label': `${localization.filterAriaLabel} ${columnDef.title}`}}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
@@ -216,7 +216,8 @@ MTableFilterRow.defaultProps = {
   selection: false,
   hasActions: false,
   localization: {
-    filterTooltip: 'Filter'
+    filterTooltip: 'Filter',
+    filterAriaLabel: 'Filter data by'
   },
   hideFilterIcons: false,
 };

@@ -247,6 +247,7 @@ export interface Localization {
     emptyDataSourceMessage?: string;
     filterRow?: {
       filterTooltip?: string;
+      filterAriaLabel?: string;
     };
     editRow?: {
       saveTooltip?: string;
@@ -289,6 +290,7 @@ export interface Localization {
     exportName?: string;
     searchTooltip?: string;
     searchPlaceholder?: string;
+    searchAriaLabel?: string;
   };
 }
 

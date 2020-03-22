@@ -8,6 +8,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import * as CommonValues from '../utils/common-values';
+import MEditTableRow from './m-table-edit-row';
+
 /* eslint-enable no-unused-vars */
 
 
@@ -49,7 +51,7 @@ export default class MTableBodyRow extends React.Component {
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);
     }
-    const localization = { ...this.props.localization };
+    const localization = { ...MEditTableRow.defaultProps.localization, ...this.props.localization };
     const size = CommonValues.elementSize(this.props);
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
 

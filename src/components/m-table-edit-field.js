@@ -68,7 +68,7 @@ class MTableEditField extends React.Component {
             }
           }}
           inputProps={{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`
+            'aria-label': `${this.props.columnDef.title}`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -91,7 +91,7 @@ class MTableEditField extends React.Component {
               fontSize: 13
             },
             inputProps: {
-              'aria-label': `${this.props.columnDef.title}: press space to edit`
+              'aria-label': `${this.props.columnDef.title}`
             }
           }}
         />
@@ -116,7 +116,7 @@ class MTableEditField extends React.Component {
               fontSize: 13
             },
             inputProps:{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`
+            'aria-label': `${this.props.columnDef.title}`
           }
           }}
           
