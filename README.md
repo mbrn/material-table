@@ -62,13 +62,11 @@ If you use an older version of react we suggest to upgrade your dependencies or 
 
 To install material-table with `npm`:
 
-    npm install material-table --save
-    npm install @material-ui/core --save
+    npm install material-table @material-ui/core --save
 
 To install material-table with `yarn`:
 
-    yarn add material-table
-    yarn add @material-ui/core
+    yarn add material-table @material-ui/core
 
 #### 2.Add material icons
 
