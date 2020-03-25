@@ -51,13 +51,13 @@ export default class MTableBodyRow extends React.Component {
     }
 
     const size = CommonValues.elementSize(this.props);
-    const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
+    const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel) || 0;
 
     const styles = size === 'medium' ? {
-      marginLeft: this.props.level * 9
+      marginLeft: this.props.level * 9 || 0
     } : {
         padding: "4px",
-        marginLeft: 5 + this.props.level * 9
+        marginLeft: 5 + this.props.level * 9 || 0
       };
 
     return (
