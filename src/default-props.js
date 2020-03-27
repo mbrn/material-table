@@ -1,11 +1,14 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
-import TablePagination from '@material-ui/core/TablePagination';
-import * as MComponents from './components';
 import PropTypes from 'prop-types';
+import { CircularProgress, Paper, TablePagination } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import {
+  AddBox, ArrowDownward, Check, ChevronLeft, ChevronRight, Clear,
+  DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove,
+  SaveAlt, Search, ViewColumn
+} from '@material-ui/icons';
+
+import * as MComponents from './components';
 
 const OverlayLoading = props => (
   <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
@@ -44,23 +47,23 @@ export const defaultProps = {
   data: [],
   icons: {
     /* eslint-disable react/display-name */
-    Add: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>add_box</Icon>),
-    Check: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>check</Icon>),
-    Clear: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Delete: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>delete_outline</Icon>),
-    DetailPanel: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    Edit: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>edit</Icon>),
-    Export: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>save_alt</Icon>),
-    Filter: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>filter_list</Icon>),
-    FirstPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>first_page</Icon>),
-    LastPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>last_page</Icon>),
-    NextPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    PreviousPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_left</Icon>),
-    ResetSearch: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Search: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>search</Icon>),
-    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_downward</Icon>),
-    ThirdStateCheck: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>remove</Icon>),
-    ViewColumn: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>view_column</Icon>)
+    Add: React.forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Check: React.forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: React.forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: React.forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: React.forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    Edit: React.forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: React.forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: React.forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: React.forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: React.forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: React.forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: React.forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+    ResetSearch: React.forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: React.forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: React.forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+    ThirdStateCheck: React.forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+    ViewColumn: React.forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
     /* eslint-enable react/display-name */
   },
   isLoading: false,

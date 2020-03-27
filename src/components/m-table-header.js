@@ -87,8 +87,6 @@ export class MTableHeader extends React.Component {
     return mapArr;
   }
 
-
-
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     const width = CommonValues.actionsColumnWidth(this.props);
@@ -103,8 +101,13 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
+
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
+    
+    const isSelected = (row) => row.tableData?.checked || false;
+    const allChecked =  this.props.renderData.every(isSelected);
+    const isIndeterminate = this.props.selectedCount > 0 && !allChecked;
 
     return (
       <TableCell
@@ -115,9 +118,9 @@ export class MTableHeader extends React.Component {
       >
         {this.props.showSelectAllCheckbox &&
           <Checkbox
-            indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
-            checked={this.props.dataCount > 0 && this.props.selectedCount === this.props.dataCount}
-            onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
+            indeterminate={isIndeterminate}
+            checked={allChecked}
+            onChange={ (event, checked) => this.props.onAllSelected && this.props.onAllSelected(!allChecked) }
           />
         }
       </TableCell>
@@ -201,6 +204,7 @@ MTableHeader.defaultProps = {
   detailPanelColumnAlignment: "left",
   draggable: true,
   thirdSortClick: true,
+  renderData: [],
 };
 
 MTableHeader.propTypes = {
@@ -222,7 +226,8 @@ MTableHeader.propTypes = {
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
-  tooltip: PropTypes.string
+  tooltip: PropTypes.string,
+  renderData: PropTypes.array,
 };
 
 

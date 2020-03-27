@@ -219,14 +219,14 @@ export default class DataManager {
       setCheck(this.groupedData);
     }
     else {
-      this.searchedData.map(row => {
+      this.pagedData.map(row => {
         row.tableData.checked = checked;
         return row;
       });
-      selectedCount = this.searchedData.length;
+      selectedCount = this.data.filter(row => row.tableData?.checked || false).length;
     }
 
-    this.selectedCount = checked ? selectedCount : 0;
+    this.selectedCount = selectedCount;
   }
 
   changeOrder(orderBy, orderDirection) {

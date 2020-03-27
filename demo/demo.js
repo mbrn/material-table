@@ -1,146 +1,105 @@
-import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from '../src';
-import Typography from "@material-ui/core/Typography";
 
-let direction = 'ltr';
-// direction = 'rtl';
+import { MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { Schedule as ScheduleIcon } from '@material-ui/icons';
+import MaterialTable from '../src';
+
 const theme = createMuiTheme({
-  direction: direction,
+  overrides: {
+    MuiTableCell: {
+      root: {
+        fontWeight: 300,
+        fontSize: 13,
+        lineHeight: 1.5,
+        borderBottom: 'none',
+      },
+    },
+  },
   palette: {
-    type: 'light'
-  }
+    common: { black: "#000", white: "#fff" },
+    background: {
+      paper: "#fff",
+      default: "#fafafa"
+    },
+    secondary: {
+      light: "rgba(191, 230, 242, 1)",
+      main: "rgba(64, 179, 217, 1)",
+      dark: "rgba(0, 152, 195, 1)",
+      contrastText: "#fff"
+    },
+    primary: {
+      light: "rgba(199, 201, 200, 1)",
+      main: "rgba(87, 92, 91, 1)",
+      dark: "rgba(53, 55, 53, 1)",
+      contrastText: "#fff"
+    },
+    error: {
+      light: "#e57373",
+      main: "#f44336",
+      dark: "#d32f2f",
+      contrastText: "#fff"
+    },
+    text: {
+      primary: "rgba(0, 0, 0, 0.87)",
+      secondary: "rgba(0, 0, 0, 0.54)",
+      disabled: "rgba(0, 0, 0, 0.38)",
+      hint: "rgba(0, 0, 0, 0.38)"
+    },
+  },
 });
 
-const bigData = [];
-for (let i = 0; i < 1; i++) {
-  const d = {
-    id: i + 1,
-    name: 'Name' + i,
-    surname: 'Surname' + Math.round(i / 10),
-    isMarried: i % 2 ? true : false,
-    birthDate: new Date(1987, 1, 1),
-    birthCity: 0,
-    sex: i % 2 ? 'Male' : 'Female',
-    type: 'adult',
-    insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-    time: new Date(1900, 1, 1, 14, 23, 35)
-  };
-  bigData.push(d);
-}
+function App() {
+  const tableRef = React.createRef();
 
-class App extends Component {
-  tableRef = React.createRef();
+  const columns = [
+    { title: 'ID', field: 'id', type: 'numeric', filtering: false },
+    { title: 'Name', field: 'name', searchable: false },
+    { title: 'Owner', field: 'owner' },
+    { title: 'Group', field: 'group' },
+    { title: 'Status', field: 'status', lookup: { 0: 'POWEROFF', 1: 'RUNNING', 2: 'FAILED_BOOT' } },
+    { title: 'Host', field: 'host' },
+    {
+      title: 'IPs', field: 'ips', emptyValue: '--',
+      render: rowData => rowData?.ips?.map((ip, index) => <p key={`nic-${index}`}>{ip}</p>)
+    },
+    {
+      title: 'Charter', field: 'charter', emptyValue: '',
+      render: rowData => rowData?.charter && <ScheduleIcon />
+    },
+  ];
 
-  colRenderCount = 0;
-
-  state = {
-    text: 'text',
-    selecteds: 0,
-    data: [
-      { id: 1, name: 'A1', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 0, sex: 'Male', type: 'adult', insertDateTime: '1994-11-23T08:15:30-05:00', time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 2, name: 'A2', surname: 'B', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'adult', insertDateTime: '1994-11-05T13:15:30Z', time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 3, name: 'A3', surname: 'B', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 1 },
-      { id: 4, name: 'A4', surname: 'Dede Dede Dede Dede Dede Dede Dede Dede', isMarried: true, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 3 },
-      { id: 5, name: 'A5', surname: 'C', isMarried: false, birthDate: new Date(1987, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35) },
-      { id: 6, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 },
-    ],
-    columns: [
-      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text' },
-      { width: 200, title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text' },
-      { title: 'Evli', field: 'isMarried' },
-      { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
-      { title: 'Tipi', field: 'type', removable: false, editable: 'never' },
-      { title: 'Doğum Yılı', field: 'birthDate', type: 'date' },
-      { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 0: 'Şanlıurfa' } },
-      { title: 'Kayıt Tarihi', field: 'insertDateTime', type: 'datetime' },
-      { title: 'Zaman', field: 'time', type: 'time' },
-      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text' },
-    ],
-    remoteColumns: [
-      { title: 'Avatar', field: 'avatar', render: rowData => <img style={{ height: 36, borderRadius: '50%' }} src={rowData.avatar} />, tooltip: 'delakjdslkjdaskljklsdaj' },
-      { title: 'Id', field: 'id' },
-      { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
-      { title: 'Last Name', field: 'last_name' },
-    ]
-  }
-
-  render() {
-    return (
-      <>
-        <MuiThemeProvider theme={theme}>
-          <div style={{ maxWidth: '100%', direction }}>
-            <Grid container>
-              <Grid item xs={12}>
-                {this.state.selectedRows && this.state.selectedRows.length}
-                <MaterialTable
-                  tableRef={this.tableRef}
-                  columns={this.state.columns}
-                  data={this.state.data}
-                  title="Demo Title"
-                  onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
-                  options={{
-                    fixedColumns: {
-                      left: 2,
-                      right: 0
-                    },
-                    tableLayout: 'fixed'
-                  }}
-                />
-              </Grid>
-            </Grid>
-            {this.state.text}
-            <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
-              Select
-            </button>
-            <MaterialTable
-              title={
-                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
-              }
-              columns={[
-                {
-                  title: 'Avatar',
-                  field: 'avatar',
-                  render: rowData => (
-                    <img
-                      style={{ height: 36, borderRadius: '50%' }}
-                      src={rowData.avatar}
-                    />
-                  ),
-                },
-                { title: 'Id', field: 'id', filterPlaceholder: 'placeholder' },
-                { title: 'First Name', field: 'first_name' },
-                { title: 'Last Name', field: 'last_name' },
-              ]}
-              options={{
-                filtering: true,
-                grouping: true,
-                groupTitle: group => group.data.length,
-              }}
-              data={query => new Promise((resolve, reject) => {
-                let url = 'https://reqres.in/api/users?'
-                url += 'per_page=' + query.pageSize
-                url += '&page=' + (query.page + 1)
-                console.log(query);
-                fetch(url)
-                  .then(response => response.json())
-                  .then(result => {
-                    resolve({
-                      data: result.data,
-                      page: result.page - 1,
-                      totalCount: result.total,
-                    })
-                  })
-              })}
-            />
-
-          </div>
-        </MuiThemeProvider>
-      </>
-    );
-  }
+  const data = [
+    { id: 0, name: 'vm_1', owner: 'oneadmin', group: 'oneadmin', status: 0, host: 'localhost', ips: ['192.168.122.10', '192.168.122.13'], charter: true },
+    { id: 1, name: 'vm_2', owner: 'oneadmin', group: 'oneadmin', status: 1, host: 'localhost', ips: ['192.168.122.14'] },
+    { id: 2, name: 'vm_3', owner: 'oneadmin', group: 'oneadmin', status: 1, host: 'localhost', ips: ['192.168.122.15', '192.168.122.16', '192.168.122.17', '192.168.122.18'] },
+    { id: 3, name: 'vm_4', owner: 'oneadmin', group: 'oneadmin', status: 2, host: 'localhost', ips: ['192.168.122.19', '192.168.122.20'] },
+    { id: 4, name: 'vm_5', owner: 'oneadmin', group: 'oneadmin', status: 1, host: 'localhost', ips: ['192.168.122.21', '192.168.122.22'], charter: true },
+    { id: 5, name: 'vm_6', owner: 'oneadmin', group: 'oneadmin', status: 2, host: 'localhost', ips: ['192.168.122.23', '192.168.122.24'], charter: true },
+    { id: 6, name: 'vm_7', owner: 'oneadmin', group: 'oneadmin', status: 0, host: 'localhost', ips: ['192.168.122.25'], charter: true },
+    { id: 7, name: 'vm_8', owner: 'oneadmin', group: 'oneadmin', status: 0, host: 'localhost', ips: ['192.168.122.26', '192.168.122.27'] },
+  ];
+  
+  return (
+    <MuiThemeProvider theme={theme}>
+      <MaterialTable
+        tableRef={tableRef}
+        columns={columns}
+        data={data}
+        title="Demo Title"
+        onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
+        options={{
+          selection: true,
+          padding: 'dense',
+          emptyRowsWhenPaging: false,
+          showSelectAllCheckbox: true,
+          paginationType: 'stepped',
+        }}
+        onSelectionChange={rows => console.log(rows)}
+      />
+    </MuiThemeProvider>
+  );
 }
 
 ReactDOM.render(
