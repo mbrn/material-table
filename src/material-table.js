@@ -412,7 +412,6 @@ export default class MaterialTable extends React.Component {
             selectedRows.push(row);
           }
 
-          row.tableData.childRows && findSelecteds(row.tableData.childRows);
         });
       };
 
