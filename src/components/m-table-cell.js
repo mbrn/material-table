@@ -36,7 +36,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleDateString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString();
+        return new Date(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -44,7 +44,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString();
+        return new Date(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
       }
