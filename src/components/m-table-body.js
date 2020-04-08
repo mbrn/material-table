@@ -26,7 +26,7 @@ class MTableBody extends React.Component {
       }
       return (
         <TableRow style={{ height: rowHeight * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
-          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
+          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.reduce((currentVal, columnDef) => columnDef.hidden ? currentVal : currentVal + 1, 0) + addColumn} key="empty-">
             {localization.emptyDataSourceMessage}
           </TableCell>
         </TableRow>
