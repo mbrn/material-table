@@ -37,8 +37,8 @@ export default class MTableBodyRow extends React.Component {
     const actions = CommonValues.rowActions(this.props);
     const width = actions.length * CommonValues.baseIconSize(this.props);
     return (
-      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: width, padding: '0px 5px', boxSizing: 'border-box', ...this.props.options.actionsCellStyle }}>
-        <div style={{ display: 'flex' }}>
+      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: width, padding: '0px 5px', boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', ...this.props.options.actionsCellStyle }}>
           <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} disabled={this.props.hasAnyEditingRow} />
         </div>
       </TableCell>
