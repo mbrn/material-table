@@ -15,7 +15,7 @@ import * as CommonValues from './utils/common-values';
 
 /* eslint-enable no-unused-vars */
 
-export default class MaterialTable extends React.Component {
+class MaterialTable extends React.Component {
   dataManager = new DataManager();
 
   constructor(props) {
@@ -502,7 +502,7 @@ export default class MaterialTable extends React.Component {
         : this.state.data.length;
 
       return (
-        <Table>
+        <Table ref={props.innerRef}>
           <TableFooter style={{ display: 'grid' }}>
             <TableRow>
               <props.components.Pagination
@@ -736,6 +736,8 @@ export default class MaterialTable extends React.Component {
     );
   }
 }
+
+export default React.forwardRef((props, ref) => <MaterialTable innerRef={ref} {...props} />);
 
 var style = () => ({
   horizontalScrollContainer: {
