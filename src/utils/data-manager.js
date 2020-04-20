@@ -19,6 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  remoteSorting = false;
   
   data = [];
   columns = [];
@@ -92,6 +93,10 @@ export default class DataManager {
 
   setDefaultExpanded(expanded) {
     this.defaultExpanded = expanded;
+  }
+
+  setRemoteSortingStatus(remoteSortStatus) {
+    this.remoteSorting = remoteSortStatus;
   }
 
   changeApplySearch(applySearch) {
@@ -839,7 +844,7 @@ export default class DataManager {
     }
     else if (this.isDataType("normal")) {
       this.sortedData = [...this.searchedData];
-      if (this.orderBy != -1) {
+      if (this.orderBy != -1 && this.remoteSorting === false) {
         this.sortedData = this.sortList(this.sortedData);
       }
     }

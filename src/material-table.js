@@ -378,9 +378,14 @@ export default class MaterialTable extends React.Component {
     }
   }
 
+  checkFunctionType = (data) => {
+    return typeof data === 'function' ? true : false;
+  }
+
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query };
-
+    const isFunction = this.checkFunctionType(this.props.data);
+    this.dataManager.setRemoteSortingStatus(isFunction);
     this.setState({ isLoading: true }, () => {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
