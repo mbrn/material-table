@@ -279,7 +279,7 @@ export interface Localization {
   };
   toolbar?: {
     addRemoveColumns?: string;
-    nRowsSelected?: string;
+    nRowsSelected?: string | ((rowCount: number) => string);
     showColumnsTitle?: string;
     showColumnsAriaLabel?: string;
     exportTitle?: string;
