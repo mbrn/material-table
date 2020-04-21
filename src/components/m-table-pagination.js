@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import IconButton from '@material-ui/core/IconButton';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
@@ -68,7 +68,7 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        {showFirstLastPageButtons && 
+        {showFirstLastPageButtons &&
           <Tooltip title={localization.lastTooltip}>
             <span>
               <IconButton
@@ -90,7 +90,7 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    display: 'flex', 
+    display: 'flex',
     // lineHeight: '48px'
   }
 });

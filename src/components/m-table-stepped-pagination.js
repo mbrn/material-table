@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import IconButton from '@material-ui/core/IconButton';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
