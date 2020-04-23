@@ -11,9 +11,9 @@ export interface MaterialTableProps<RowData extends object> {
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
-    onRowAdd?: (newData: RowData) => Promise<void>;
-    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<void>;
-    onRowDelete?: (oldData: RowData) => Promise<void>;
+    onRowAdd?: (newData: RowData) => Promise<any>;
+    onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
+    onRowDelete?: (oldData: RowData) => Promise<any>;
   }
   icons?: Icons;
   isLoading?: boolean;
@@ -116,6 +116,7 @@ export interface Column<RowData extends object> {
   export?: boolean;
   field?: keyof RowData | string;
   filtering?: boolean;
+  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
@@ -130,7 +131,8 @@ export interface Column<RowData extends object> {
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
-  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  tooltip?: string;
+  type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
 }
 
 export interface Components {
@@ -151,20 +153,20 @@ export interface Components {
   Toolbar?: React.ComponentType<any>;
 }
 
-export const MTableAction: () => React.ReactElement<any>;
-export const MTableActions: () => React.ReactElement<any>;
-export const MTableBody: () => React.ReactElement<any>;
-export const MTableBodyRow: () => React.ReactElement<any>;
-export const MTableCell: () => React.ReactElement<any>;
-export const MTableEditField: () => React.ReactElement<any>;
-export const MTableEditRow: () => React.ReactElement<any>;
-export const MTableFilterRow: () => React.ReactElement<any>;
-export const MTableGroupbar: () => React.ReactElement<any>;
-export const MTableGroupRow: () => React.ReactElement<any>;
-export const MTableHeader: () => React.ReactElement<any>;
-export const MTablePagination: () => React.ReactElement<any>;
-export const MTableToolbar: () => React.ReactElement<any>;
-export const MTable: () => React.ReactElement<any>;
+export const MTableAction: (props: any) => React.ReactElement<any>;
+export const MTableActions: (props: any) => React.ReactElement<any>;
+export const MTableBody: (props: any) => React.ReactElement<any>;
+export const MTableBodyRow: (props: any) => React.ReactElement<any>;
+export const MTableCell: (props: any) => React.ReactElement<any>;
+export const MTableEditField: (props: any) => React.ReactElement<any>;
+export const MTableEditRow: (props: any) => React.ReactElement<any>;
+export const MTableFilterRow: (props: any) => React.ReactElement<any>;
+export const MTableGroupbar: (props: any) => React.ReactElement<any>;
+export const MTableGroupRow: (props: any) => React.ReactElement<any>;
+export const MTableHeader: (props: any) => React.ReactElement<any>;
+export const MTablePagination: (props: any) => React.ReactElement<any>;
+export const MTableToolbar: (props: any) => React.ReactElement<any>;
+export const MTable: (props: any) => React.ReactElement<any>;
 
 export interface Icons {
   Add?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
@@ -204,6 +206,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
@@ -225,11 +228,13 @@ export interface Options {
   showTitle?: boolean;
   showTextRowsSelected?: boolean;
   search?: boolean;
+  searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
+  tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';

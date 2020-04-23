@@ -36,6 +36,7 @@ export const propTypes = {
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
     filterPlaceholder: PropTypes.string,
+    filterComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     grouping: PropTypes.bool,
     headerStyle: PropTypes.object,
     hidden: PropTypes.bool,
@@ -153,6 +154,7 @@ export const propTypes = {
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
+    overflowY: PropTypes.string
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({

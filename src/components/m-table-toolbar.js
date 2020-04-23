@@ -195,7 +195,11 @@ export class MTableToolbar extends React.Component {
 
   renderToolbarTitle(title) {
     const { classes } = this.props;
-    const toolBarTitle = (typeof title === 'string') ? <Typography variant='h6'>{title}</Typography> : title;
+    const toolBarTitle = (typeof title === 'string') ? <Typography variant='h6' style={{
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }}>{title}</Typography> : title;
 
     return (
       <div className={classes.title}>
@@ -295,9 +299,10 @@ export const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   title: {
-    flex: '0 0 auto'
+    overflow: 'hidden'
   },
   searchField: {
+    minWidth: 150,
     paddingLeft: theme.spacing(2)
   },
   formControlLabel: {

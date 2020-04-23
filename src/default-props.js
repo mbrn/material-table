@@ -77,6 +77,7 @@ export const defaultProps = {
     exportButton: false,
     exportDelimiter: ',',
     filtering: false,
+    groupTitle: false,
     header: true,
     hideFilterIcons: false,
     loadingType: 'overlay',
@@ -91,6 +92,7 @@ export const defaultProps = {
     search: true,
     showTitle: true,
     showTextRowsSelected: true,
+    tableLayout: 'auto',
     toolbarButtonAlignment: 'right',
     searchFieldAlignment: 'right',
     searchFieldStyle: {},
@@ -101,6 +103,7 @@ export const defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
+    overflowY: 'auto',
   },
   localization: {
     grouping: {

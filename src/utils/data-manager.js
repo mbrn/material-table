@@ -19,7 +19,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-
+  
   data = [];
   columns = [];
 
@@ -57,17 +57,36 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {
+  setColumns(columns) {    
+    const undefinedWidthColumns = columns.filter(c => c.width === undefined);
+    let usedWidth = ["0px"];
+
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',
+        groupSort: columnDef.defaultGroupSort || 'asc',     
+        width: columnDef.width,   
         ...columnDef.tableData,
-        id: index
+        id: index,
       };
+
+      if(columnDef.width !== undefined) {
+        if(typeof columnDef.width === "number") {
+          usedWidth.push(columnDef.width + "px");
+        }
+        else {
+          usedWidth.push(columnDef.width);
+        }
+      }
+
       return columnDef;
+    });
+
+    usedWidth = "(" + usedWidth.join(' + ') + ")";
+    undefinedWidthColumns.forEach(columnDef => {
+      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -521,7 +540,7 @@ export default class DataManager {
               const value = this.getFieldValue(row, columnDef, false);
               return !tableData.filterValue ||
                 tableData.filterValue.length === 0 ||
-                tableData.filterValue.indexOf(value !== undefined && value.toString()) > -1;
+                tableData.filterValue.indexOf(value !== undefined && value !== null && value.toString()) > -1;
             });
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
