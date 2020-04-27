@@ -75,7 +75,7 @@ export class MTableHeader extends React.Component {
         return (
           <TableCell
             key={columnDef.tableData.id}
-            align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+            align={['numeric', 'currency'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
             className={this.props.classes.header}
             style={{ ...this.props.headerStyle, ...columnDef.headerStyle, boxSizing: 'border-box', width: columnDef.tableData.width }}
             size={size}
