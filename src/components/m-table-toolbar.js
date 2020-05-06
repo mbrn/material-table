@@ -312,6 +312,7 @@ MTableToolbar.propTypes = {
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,
+  defaultExportCsv: PropTypes.func,
   exportCsv: PropTypes.func,
   classes: PropTypes.object,
 };
