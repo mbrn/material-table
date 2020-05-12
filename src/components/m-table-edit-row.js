@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { byString, setByString } from '../utils';
+import * as CommonValues from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 
@@ -24,8 +25,9 @@ export default class MTableEditRow extends React.Component {
       return prev;
     },{});
   }
-  
+
   renderColumns() {
+    const size = CommonValues.elementSize(this.props);
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
@@ -72,6 +74,7 @@ export default class MTableEditRow extends React.Component {
           const readonlyValue = this.props.getFieldValue(this.state.data, columnDef);
           return (
             <this.props.components.Cell
+              size={size}
               icons={this.props.icons}
               columnDef={columnDef}
               value={readonlyValue}
@@ -87,6 +90,7 @@ export default class MTableEditRow extends React.Component {
           
           return (
             <TableCell
+              size={size}
               key={columnDef.tableData.id}
               align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
               style={getCellStyle(columnDef, value)}
@@ -115,6 +119,7 @@ export default class MTableEditRow extends React.Component {
   }
 
   renderActions() {
+    const size = CommonValues.elementSize(this.props);
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
@@ -135,9 +140,9 @@ export default class MTableEditRow extends React.Component {
       }
     ];
     return (
-      <TableCell padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px' }}>
+      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px' }}>
         <div style={{ display: 'flex' }}>
-          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} />
+          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} />
         </div>
       </TableCell>
     );
@@ -153,6 +158,7 @@ export default class MTableEditRow extends React.Component {
   }
 
   render() {
+    const size = CommonValues.elementSize(this.props);
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     let columns;
     if (this.props.mode === "add" || this.props.mode === "update") {
@@ -162,6 +168,7 @@ export default class MTableEditRow extends React.Component {
       const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)).length;
       columns = [
         <TableCell
+          size={size}
           padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
           key="key-selection-cell"
           colSpan={colSpan}>
