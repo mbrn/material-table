@@ -22,7 +22,7 @@ export class MTableHeader extends React.Component {
       .map((columnDef, index) => {
         let content = columnDef.title;
 
-        if (this.props.draggable) {
+        if (false && this.props.draggable) {
           content = (
             <Draggable
               key={columnDef.tableData.id}

@@ -12,6 +12,7 @@ import { debounce } from 'debounce';
 import equal from 'fast-deep-equal';
 import { withStyles } from '@material-ui/core';
 import * as CommonValues from './utils/common-values';
+import { Draggable } from "react-beautiful-dnd";
 
 /* eslint-enable no-unused-vars */
 
@@ -280,6 +281,9 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
+    // debugger;
+    this.toggleDraggableClass(result);
+    
     if (!result || !result.source || !result.destination) return;
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -537,8 +541,31 @@ export default class MaterialTable extends React.Component {
     }
   }
 
+  toggleDraggableClass = (result) => {
+    let p = this.props;
+    let container = this.tableContainerDiv.current;
+    container.style.height = container.getBoundingClientRect().height + 'px';
+    let row = container.querySelector('tr[data-rbd-draggable-id="'+ result.draggableId +'"]');
+    if (row.classList.contains(p.classes.draggableRow)) {
+      row.classList.remove(p.classes.draggableRow);
+    } else {
+      row.classList.add(p.classes.draggableRow);
+    }
+  }
+  
+  onDragStart = result => {
+    // let p = this.props;
+    // let container = this.tableContainerDiv.current;
+    // container.querySelector('tr[data-rbd-draggable-id="'+ result.draggableId +'"]').classList.add(p.classes.draggableRow);
+    // // debugger;
+    this.toggleDraggableClass(result);
+  }
+
   renderTable = (props) => (
-    <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+      <DragDropContext onDragStart={e => { /*debugger*/ }} onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+        <Droppable droppableId="mainTable">
+          {(provided, snapshot) => (
+    <Table ref={provided.innerRef} style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
       {props.options.header &&
         <props.components.Header
           actions={props.actions}
@@ -571,34 +598,37 @@ export default class MaterialTable extends React.Component {
           options={props.options}
         />
       }
-      <props.components.Body
-        actions={props.actions}
-        components={props.components}
-        icons={props.icons}
-        renderData={this.state.renderData}
-        currentPage={this.state.currentPage}
-        initialFormData={props.initialFormData}
-        pageSize={this.state.pageSize}
-        columns={this.state.columns}
-        detailPanel={props.detailPanel}
-        options={props.options}
-        getFieldValue={this.dataManager.getFieldValue}
-        isTreeData={this.props.parentChildData !== undefined}
-        onFilterChanged={this.onFilterChange}
-        onRowSelected={this.onRowSelected}
-        onToggleDetailPanel={this.onToggleDetailPanel}
-        onGroupExpandChanged={this.onGroupExpandChanged}
-        onTreeExpandChanged={this.onTreeExpandChanged}
-        onEditingCanceled={this.onEditingCanceled}
-        onEditingApproved={this.onEditingApproved}
-        localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
-        onRowClick={this.props.onRowClick}
-        showAddRow={this.state.showAddRow}
-        hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
-        hasDetailPanel={!!props.detailPanel}
-        treeDataMaxLevel={this.state.treeDataMaxLevel}
-      />
+            <props.components.Body
+              
+              actions={props.actions}
+              components={props.components}
+              icons={props.icons}
+              renderData={this.state.renderData}
+              currentPage={this.state.currentPage}
+              initialFormData={props.initialFormData}
+              pageSize={this.state.pageSize}
+              columns={this.state.columns}
+              detailPanel={props.detailPanel}
+              options={props.options}
+              getFieldValue={this.dataManager.getFieldValue}
+              isTreeData={this.props.parentChildData !== undefined}
+              onFilterChanged={this.onFilterChange}
+              onRowSelected={this.onRowSelected}
+              onToggleDetailPanel={this.onToggleDetailPanel}
+              onGroupExpandChanged={this.onGroupExpandChanged}
+              onTreeExpandChanged={this.onTreeExpandChanged}
+              onEditingCanceled={this.onEditingCanceled}
+              onEditingApproved={this.onEditingApproved}
+              localization={{ ...MaterialTable.defaultProps.localization.body, ...this.props.localization.body }}
+              onRowClick={this.props.onRowClick}
+              showAddRow={this.state.showAddRow}
+              hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
+              hasDetailPanel={!!props.detailPanel}
+              treeDataMaxLevel={this.state.treeDataMaxLevel}
+            />
     </Table>
+            )}
+            </Droppable></DragDropContext>
   )
 
   getColumnsWidth = (props, count) => {

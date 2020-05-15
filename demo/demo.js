@@ -115,7 +115,7 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                filtering: true,
+                filtering: false,
                 grouping: true,
                 groupTitle: group => group.data.length,
               }}

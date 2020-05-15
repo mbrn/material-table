@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import * as CommonValues from '../utils/common-values';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 /* eslint-enable no-unused-vars */
 
 
@@ -265,9 +266,15 @@ export default class MTableBodyRow extends React.Component {
       localization,
       actions,
       ...rowProps } = this.props;
+    
+    const handleDragStart = (e) => {
+      debugger;
+    }
 
     return (
       <>
+        <Draggable onDragStart={handleDragStart} key={"row-" + this.props.index.toString()} draggableId={"row-" + this.props.index.toString()} index={this.props.index}>
+          {(provided, snapshot) => (
         <TableRow
           selected={hasAnyEditingRow}
           {...rowProps}
@@ -288,9 +295,14 @@ export default class MTableBodyRow extends React.Component {
                 onToggleDetailPanel(this.props.path, panel);
               });
           }}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
           {renderColumns}
         </TableRow>
+          )}
+          </Draggable>
         {this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded &&
           this.props.data.tableData.childRows.map((data, index) => {
             if (data.tableData.editing) {
