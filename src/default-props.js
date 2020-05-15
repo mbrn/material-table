@@ -1,6 +1,6 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Icon from '@material-ui/core/Icon';
+import * as Icons from "@material-ui/icons";
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import * as MComponents from './components';
@@ -44,23 +44,23 @@ export const defaultProps = {
   data: [],
   icons: {
     /* eslint-disable react/display-name */
-    Add: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>add_box</Icon>),
-    Check: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>check</Icon>),
-    Clear: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Delete: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>delete_outline</Icon>),
-    DetailPanel: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    Edit: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>edit</Icon>),
-    Export: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>save_alt</Icon>),
-    Filter: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>filter_list</Icon>),
-    FirstPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>first_page</Icon>),
-    LastPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>last_page</Icon>),
-    NextPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    PreviousPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_left</Icon>),
-    ResetSearch: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Search: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>search</Icon>),
-    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_downward</Icon>),
-    ThirdStateCheck: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>remove</Icon>),
-    ViewColumn: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>view_column</Icon>)
+    Add: Icons.Add,
+    Check: Icons.Check,
+    Clear: Icons.Clear,
+    Delete: Icons.DeleteOutline,
+    DetailPanel: Icons.ChevronRight,
+    Edit: Icons.Edit,
+    Export: Icons.SaveAlt,
+    Filter: Icons.FilterList,
+    FirstPage: Icons.FirstPage,
+    LastPage: Icons.LastPage,
+    NextPage: Icons.ChevronRight,
+    PreviousPage: Icons.ChevronLeft,
+    ResetSearch: Icons.Clear,
+    Search: Icons.Search,
+    SortArrow: Icons.ArrowDownward,
+    ThirdStateCheck: Icons.Remove,
+    ViewColumn: Icons.ViewColumn
     /* eslint-enable react/display-name */
   },
   isLoading: false,
