@@ -316,7 +316,8 @@ export default class MaterialTable extends React.Component {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowAdd(newData)
           .then(result => {
-            this.setState({ isLoading: false, showAddRow: false }, () => {
+            this.dataManager.setData(this.props.data);
+            this.setState({ isLoading: false, showAddRow: false,...this.dataManager.getRenderState() }, () => {
               if (this.isRemoteData()) {
                 this.onQueryChange(this.state.query);
               }
@@ -332,6 +333,7 @@ export default class MaterialTable extends React.Component {
         this.props.editable.onRowUpdate(newData, oldData)
           .then(result => {
             this.dataManager.changeRowEditing(oldData);
+            this.dataManager.setData(this.props.data);
             this.setState({
               isLoading: false,
               ...this.dataManager.getRenderState()
@@ -352,6 +354,7 @@ export default class MaterialTable extends React.Component {
         this.props.editable.onRowDelete(oldData)
           .then(result => {
             this.dataManager.changeRowEditing(oldData);
+            this.dataManager.setData(this.props.data);
             this.setState({
               isLoading: false,
               ...this.dataManager.getRenderState()
