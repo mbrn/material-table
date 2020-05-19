@@ -170,7 +170,7 @@ class MTableFilterRow extends React.Component {
     if (this.props.selection) {
       columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
-    
+
     if (this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
@@ -203,7 +203,7 @@ class MTableFilterRow extends React.Component {
       });
 
     return (
-      <TableRow style={{ height: 10 }}>
+      <TableRow style={{ height: 10, ...this.props.filterRowStyle }}>
         {columns}
       </TableRow>
     );
@@ -226,6 +226,7 @@ MTableFilterRow.propTypes = {
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,
+  filterRowStyle: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
