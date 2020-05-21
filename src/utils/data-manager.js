@@ -701,7 +701,7 @@ export default class DataManager {
 
         addRow(parent);
 
-        rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
+        if(!rowData.tableData.path) rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
         this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowData.tableData.path.length);
       }
       else {
