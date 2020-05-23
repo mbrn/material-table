@@ -67,6 +67,7 @@ export class MTableToolbar extends React.Component {
     if (this.props.search) {
       return (
         <TextField
+          autoFocus={this.props.searchAutoFocus}
           className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
           value={this.state.searchText}
           onChange={event => this.onSearchChange(event.target.value)}
@@ -251,6 +252,7 @@ MTableToolbar.defaultProps = {
   showTitle: true,
   showTextRowsSelected: true,
   toolbarButtonAlignment: 'right',
+  searchAutoFocus: false,
   searchFieldAlignment: 'right',
   selectedRows: [],
   title: 'No Title!'
@@ -281,7 +283,8 @@ MTableToolbar.propTypes = {
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,
   exportCsv: PropTypes.func,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  searchAutoFocus: PropTypes.bool
 };
 
 export const styles = theme => ({
