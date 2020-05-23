@@ -633,7 +633,7 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={this.onDragEnd} nonce={props.options.cspNonce}>
         <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
