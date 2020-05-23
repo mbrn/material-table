@@ -145,6 +145,7 @@ export const propTypes = {
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldStyle: PropTypes.object,
     searchAutoFocus: PropTypes.bool,
+    searchFieldVariant: PropTypes.oneOf( ['standard', 'filled', 'outlined']),
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,

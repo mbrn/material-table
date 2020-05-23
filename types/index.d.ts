@@ -231,6 +231,7 @@ export interface Options {
   searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
+  searchFieldVariant?: 'standard' | 'filled' | 'outlined';
   searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
