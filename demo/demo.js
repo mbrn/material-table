@@ -145,6 +145,18 @@ class App extends Component {
                         }, 1000);
                       })
                   }}
+                  localization={{
+                    body: {
+                      emptyDataSourceMessage: 'No records to display',
+                      filterRow: {
+                        filterTooltip: 'Filter',
+                        filterPlaceHolder: "Filtaaer"
+                      }
+                    }
+                  }}
+                  onSearchChange={(e) => console.log("search changed: " + e)}
+                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
+                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
             </Grid>
