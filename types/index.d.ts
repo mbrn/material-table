@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
+import SvgIcon from "@material-ui/core/SvgIcon"
 import { string } from 'prop-types';
+
+type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
@@ -74,7 +77,7 @@ export interface DetailPanel<RowData extends object> {
 
 export interface Action<RowData extends object> {
   disabled?: boolean;
-  icon: string | (() => React.ReactElement<any>);
+  icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
   isFreeAction?: boolean;
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
