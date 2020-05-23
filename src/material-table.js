@@ -421,22 +421,17 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = searchText => {
-    this.dataManager.changeSearchText(searchText);
-    this.setState(({ searchText }), this.onSearchChangeDebounce());
-  }
-
-  onSearchChangeDebounce = debounce(() => {
+  onSearchChangeDebounce = debounce((searchText) => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
-      query.search = this.state.searchText;
+      query.search = searchText;
 
       this.onQueryChange(query);
     }
     else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onSearchChange && this.props.onSearchChange(this.state.searchText);
+        this.props.onSearchChange && this.props.onSearchChange(searchText);
       });
     }
   }, this.props.options.debounceInterval)
@@ -661,10 +656,10 @@ export default class MaterialTable extends React.Component {
               showTextRowsSelected={props.options.showTextRowsSelected}
               toolbarButtonAlignment={props.options.toolbarButtonAlignment}
               searchFieldAlignment={props.options.searchFieldAlignment}
-              searchText={this.state.searchText}
               searchFieldStyle={props.options.searchFieldStyle}
               title={props.title}
-              onSearchChanged={this.onSearchChange}
+              onSearchChanged={this.onSearchChangeDebounce}
+              dataManager={this.dataManager}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
