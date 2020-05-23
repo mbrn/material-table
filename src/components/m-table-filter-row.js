@@ -90,6 +90,7 @@ class MTableFilterRow extends React.Component {
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
+        inputProps={{'aria-label': `filter data by ${columnDef.title}`}}
         InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
