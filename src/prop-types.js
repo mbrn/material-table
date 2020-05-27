@@ -112,6 +112,7 @@ export const propTypes = {
   options: PropTypes.shape({
     actionsCellStyle: PropTypes.object,
     editCellStyle: PropTypes.object,
+    detailPanelColumnStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
