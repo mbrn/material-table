@@ -34,7 +34,7 @@ class MTableFilterRow extends React.Component {
 
   renderLookupFilter = (columnDef) => (
     <FormControl style={{ width: '100%' }}>
-      <InputLabel htmlFor="select-multiple-checkbox">{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
+      <InputLabel htmlFor="select-multiple-checkbox" style={{marginTop: -16}}>{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
       <Select
         multiple
         value={columnDef.tableData.filterValue || []}
@@ -170,7 +170,7 @@ class MTableFilterRow extends React.Component {
     if (this.props.selection) {
       columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
-    
+
     if (this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
