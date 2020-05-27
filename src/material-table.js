@@ -89,12 +89,25 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
+  cleanColumns(columns) {
+    return columns.map(col => {
+      const colClone = {...col};
+      delete colClone.tableData;
+      return colClone;
+    });
+  }
+
   componentDidUpdate(prevProps) {
     // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
-    let propsChanged = !equal(prevProps.columns, this.props.columns);
+    const fixedPrevColumns = this.cleanColumns(prevProps.columns);
+    const fixedPropsColumns = this.cleanColumns(this.props.columns);
+
+    let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
-    propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+    if(!this.isRemoteData()) {
+      propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+    }
 
     if (propsChanged) {
       const props = this.getProps(this.props);
