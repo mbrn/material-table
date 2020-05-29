@@ -4,6 +4,7 @@ import { byString } from './';
 export default class DataManager {
   applyFilters = false;
   applySearch = false;
+  applySort = false;
   currentPage = 0;
   detailPanelType = 'multiple'
   lastDetailPanelRow = undefined;
@@ -19,7 +20,6 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-  remoteSorting = false;
   
   data = [];
   columns = [];
@@ -95,10 +95,6 @@ export default class DataManager {
     this.defaultExpanded = expanded;
   }
 
-  setRemoteSortingStatus(remoteSortStatus) {
-    this.remoteSorting = remoteSortStatus;
-  }
-
   changeApplySearch(applySearch) {
     this.applySearch = applySearch;
     this.searched = false;
@@ -107,6 +103,11 @@ export default class DataManager {
   changeApplyFilters(applyFilters) {
     this.applyFilters = applyFilters;
     this.filtered = false;
+  }
+
+  changeApplySort(applySort) {
+    this.applySort = applySort;
+    this.sorted = false;
   }
 
   changePaging(paging) {
@@ -844,7 +845,7 @@ export default class DataManager {
     }
     else if (this.isDataType("normal")) {
       this.sortedData = [...this.searchedData];
-      if (this.orderBy != -1 && this.remoteSorting === false) {
+      if (this.orderBy != -1 && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
       }
     }
