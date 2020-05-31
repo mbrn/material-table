@@ -74,7 +74,7 @@ export class MTableToolbar extends React.Component {
     doc.setFontSize(15);
     doc.text(this.props.title, 40, 40);
     doc.autoTable(content);
-    doc.save((this.props.exportFileName || this.props.title || 'data') + '.pdf')
+    doc.save((this.props.exportFileName || this.props.title || 'data') + '.pdf');
   }
 
   exportCsv = () => {
@@ -325,6 +325,7 @@ MTableToolbar.propTypes = {
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,
   exportCsv: PropTypes.func,
+  exportPdf: PropTypes.func,
   classes: PropTypes.object,
   searchAutoFocus: PropTypes.bool
 };
