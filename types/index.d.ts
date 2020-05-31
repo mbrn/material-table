@@ -34,8 +34,8 @@ export interface MaterialTableProps<RowData extends object> {
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
  /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
-  */ 
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+  */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -136,6 +136,7 @@ export interface Column<RowData extends object> {
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  width?: string | number;
 }
 
 export interface Components {
