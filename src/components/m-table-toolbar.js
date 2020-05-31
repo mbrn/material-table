@@ -14,6 +14,8 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 import { CsvBuilder } from 'filefy';
 import PropTypes, { oneOf } from 'prop-types';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
@@ -32,18 +34,20 @@ export class MTableToolbar extends React.Component {
     this.setState(({ searchText }), this.props.onSearchChanged(searchText));
   }
 
-  defaultExportCsv = () => {
+  getTableData = () => {
     const columns = this.props.columns
-      .filter(columnDef => {
-        return !columnDef.hidden && columnDef.field && columnDef.export !== false;
-      })
+      .filter(columnDef => !columnDef.hidden && columnDef.field && columnDef.export !== false)
       .sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
-    const dataToExport = this.props.exportAllData ? this.props.data : this.props.renderData;
-    const data = dataToExport.map(rowData =>
-      columns.map(columnDef => {
-        return this.props.getFieldValue(rowData, columnDef);
-      })
+    const data = (this.props.exportAllData ? this.props.data : this.props.renderData)
+      .map(rowData =>
+        columns.map(columnDef => this.props.getFieldValue(rowData, columnDef))
     );
+
+    return [columns, data];
+  }
+
+  defaultExportCsv = () => {
+    const [columns, data] = this.getTableData();
 
     const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv');
     builder
@@ -53,11 +57,40 @@ export class MTableToolbar extends React.Component {
       .exportFile();
   }
 
+  defaultExportPdf = () => {
+    const [columns, data] = this.getTableData();
+
+    let content = {
+      startY: 50,
+      head: [columns.map(columnDef => columnDef.title)],
+      body: data
+    };
+
+    const unit = "pt";
+    const size = "A4"; 
+    const orientation = "landscape";
+
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(this.props.title, 40, 40);
+    doc.autoTable(content);
+    doc.save((this.props.exportFileName || this.props.title || 'data') + '.pdf')
+  }
+
   exportCsv = () => {
     if (this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
     } else {
       this.defaultExportCsv();
+    }
+    this.setState({ exportButtonAnchorEl: null });
+  }
+
+  exportPdf = () => {
+    if (this.props.exportPdf) {
+      this.props.exportPdf(this.props.columns, this.props.data);
+    } else {
+      this.defaultExportPdf();
     }
     this.setState({ exportButtonAnchorEl: null });
   }
@@ -168,7 +201,10 @@ export class MTableToolbar extends React.Component {
               onClose={() => this.setState({ exportButtonAnchorEl: null })}
             >
               <MenuItem key="export-csv" onClick={this.exportCsv}>
-                {localization.exportName}
+                {localization.exportCSVName}
+              </MenuItem>
+              <MenuItem key="export-pdf" onClick={this.exportPdf}>
+                {localization.exportPDFName}
               </MenuItem>
             </Menu>
           </span>
@@ -247,7 +283,8 @@ MTableToolbar.defaultProps = {
     showColumnsAriaLabel: 'Show Columns',
     exportTitle: 'Export',
     exportAriaLabel: 'Export',
-    exportName: 'Export as CSV',
+    exportCSVName: 'Export as CSV',
+    exportPDFName: 'Export as PDF',
     searchTooltip: 'Search',
     searchPlaceholder: 'Search'
   },
