@@ -29,9 +29,8 @@ const MenuProps = {
 };
 
 class MTableFilterRow extends React.Component {
-  renderFilterComponent = (columnDef) => (
-    React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
-  )
+  getLocalizationData = () => ({ ...MTableFilterRow.defaultProps.localization, ...this.props.localization });
+  getLocalizedFilterPlaceHolder = columnDef => columnDef.filterPlaceholder || this.getLocalizationData().filterPlaceHolder || "";
 
   LookupFilter = ({ columnDef }) => {
     const [selectedFilter, setSelectedFilter] = React.useState(columnDef.tableData.filterValue || []);
@@ -41,7 +40,7 @@ class MTableFilterRow extends React.Component {
     }, [columnDef.tableData.filterValue]);
 
     return <FormControl style={{ width: '100%' }}>
-      <InputLabel htmlFor="select-multiple-checkbox">{columnDef.filterPlaceholder}</InputLabel>
+      <InputLabel htmlFor="select-multiple-checkbox" style={{marginTop: -16}}>{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
       <Select
         multiple
         value={selectedFilter}
@@ -68,6 +67,10 @@ class MTableFilterRow extends React.Component {
   }
 
 
+  renderFilterComponent = (columnDef) => (
+    React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
+  )
+
   renderBooleanFilter = (columnDef) => (
     <Checkbox
       indeterminate={columnDef.tableData.filterValue === undefined}
@@ -86,21 +89,23 @@ class MTableFilterRow extends React.Component {
   )
 
   renderDefaultFilter = (columnDef) => {
-    const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
+    const localization = this.getLocalizationData();
+    const FilterIcon = this.props.icons.Filter;
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
-        placeholder={columnDef.filterPlaceholder || ''}
+        placeholder={this.getLocalizedFilterPlaceHolder(columnDef)}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
+        inputProps={{'aria-label': `filter data by ${columnDef.title}`}}
         InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
-                <this.props.icons.Filter />
+                <FilterIcon/>
               </Tooltip>
             </InputAdornment>
           )
@@ -110,31 +115,26 @@ class MTableFilterRow extends React.Component {
   }
 
   renderDateTypeFilter = (columnDef) => {
-    let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
+    const pickerProps = {
+      value: columnDef.tableData.filterValue || null,
+      onChange: onDateInputChange,
+      placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
+      clearable: true
+    };
+
+    let dateInputElement = null;
     if (columnDef.type === 'date') {
       dateInputElement = (
-        <DatePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DatePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'datetime') {
       dateInputElement = (
-        <DateTimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DateTimePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'time') {
       dateInputElement = (
-        <TimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <TimePicker {...pickerProps} />
       );
     }
     return (
