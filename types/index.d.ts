@@ -34,8 +34,8 @@ export interface MaterialTableProps<RowData extends object> {
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
  /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
-  */ 
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+  */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -136,6 +136,7 @@ export interface Column<RowData extends object> {
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  width?: string | number;
 }
 
 export interface Components {
@@ -251,49 +252,49 @@ export interface Options {
 export interface Localization {
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
-    emptyDataSourceMessage?: string;
+    emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
-      filterTooltip?: string;
+      filterTooltip?: React.ReactNode;
     };
     editRow?: {
-      saveTooltip?: string;
-      cancelTooltip?: string;
-      deleteText?: string;
+      saveTooltip?: React.ReactNode;
+      cancelTooltip?: React.ReactNode;
+      deleteText?: React.ReactNode;
     },
-    addTooltip?: string;
-    deleteTooltip?: string;
-    editTooltip?: string;
+    addTooltip?: React.ReactNode;
+    deleteTooltip?: React.ReactNode;
+    editTooltip?: React.ReactNode;
   };
   header?: {
-    actions?: string;
+    actions?: React.ReactNode;
   };
   grouping?: {
-    groupedBy?: string;
-    placeholder?: string;
+    groupedBy?: React.ReactNode;
+    placeholder?: React.ReactNode;
   };
   pagination?: {
-    firstTooltip?: string;
+    firstTooltip?: React.ReactNode;
     firstAriaLabel?: string;
-    previousTooltip?: string;
+    previousTooltip?: React.ReactNode;
     previousAriaLabel?: string,
-    nextTooltip?: string;
+    nextTooltip?: React.ReactNode;
     nextAriaLabel?: string,
-    labelDisplayedRows?: string;
-    labelRowsPerPage?: string;
-    lastTooltip?: string;
+    labelDisplayedRows?: React.ReactNode;
+    labelRowsPerPage?: React.ReactNode;
+    lastTooltip?: React.ReactNode;
     lastAriaLabel?: string,
-    labelRowsSelect?: string;
+    labelRowsSelect?: React.ReactNode;
   };
   toolbar?: {
-    addRemoveColumns?: string;
-    nRowsSelected?: string;
-    showColumnsTitle?: string;
+    addRemoveColumns?: React.ReactNode;
+    nRowsSelected?: React.ReactNode;
+    showColumnsTitle?: React.ReactNode;
     showColumnsAriaLabel?: string;
-    exportTitle?: string;
+    exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
-    exportName?: string;
-    searchTooltip?: string;
-    searchPlaceholder?: string;
+    exportName?: React.ReactNode;
+    searchTooltip?: React.ReactNode;
+    searchPlaceholder?: React.ReactNode;
   };
 }
 
