@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
+import SvgIcon from "@material-ui/core/SvgIcon"
 import { string } from 'prop-types';
+
+type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
@@ -74,7 +77,7 @@ export interface DetailPanel<RowData extends object> {
 
 export interface Action<RowData extends object> {
   disabled?: boolean;
-  icon: string | (() => React.ReactElement<any>);
+  icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
   isFreeAction?: boolean;
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
@@ -218,6 +221,7 @@ export interface Options {
   padding?: ('default' | 'dense');
   paging?: boolean;
   grouping?: boolean;
+  overflowY?: ('visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit');
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: ('normal' | 'stepped');
@@ -231,6 +235,8 @@ export interface Options {
   searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
+  searchFieldVariant?: 'standard' | 'filled' | 'outlined';
+  searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
@@ -239,6 +245,7 @@ export interface Options {
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
+  cspNonce?: string;
 }
 
 export interface Localization {
