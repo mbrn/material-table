@@ -40,15 +40,15 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'time') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
-      } else if (isoDateRegex.exec(this.props.value)) {
+      } else if(isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleTimeString();
       } else {
         return this.props.value;
       }
-    } else if (this.props.columnDef.type === 'datetime') {
+    } else if(this.props.columnDef.type === 'datetime') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
-      } else if (isoDateRegex.exec(this.props.value)) {
+      } else if(isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleString();
       } else {
         return this.props.value;
@@ -56,7 +56,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'currency') {
       return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
-    else if (typeof this.props.value === "boolean") {
+    else if(typeof this.props.value === "boolean") {
       // To avoid forwardref boolean children. 
       return this.props.value.toString();
     }
