@@ -32,7 +32,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'date') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleDateString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleDateString();
       } else {
         return this.props.value;
@@ -40,7 +40,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'time') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleTimeString();
       } else {
         return this.props.value;
@@ -48,7 +48,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'datetime') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleString();
       } else {
         return this.props.value;
@@ -56,7 +56,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'currency') {
       return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
-    else if(typeof this.props.value === "boolean") {
+    else if (typeof this.props.value === "boolean") {
       // To avoid forwardref boolean children. 
       return this.props.value.toString();
     }
@@ -115,13 +115,13 @@ export default class MTableCell extends React.Component {
   render() {
 
     const { icons, columnDef, rowData, ...cellProps } = this.props;
-
+    const cellAlignment = columnDef.align !== undefined ? columnDef.align : ['numeric', 'currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left";
     return (
       <TableCell
         size={this.props.size}
         {...cellProps}
         style={this.getStyle()}
-        align={['numeric','currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
+        align={cellAlignment}
         onClick={this.handleClickCell}
       >
         {this.props.children}
