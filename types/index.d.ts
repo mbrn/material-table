@@ -105,6 +105,7 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
   cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
