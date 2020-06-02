@@ -266,10 +266,6 @@ export default class MTableBodyRow extends React.Component {
       localization,
       actions,
       ...rowProps } = this.props;
-    
-    const handleDragStart = (e) => {
-      debugger;
-    }
 
     return (
       <>
