@@ -20,12 +20,12 @@ export default class MTableBodyRow extends React.Component {
         const value = this.props.getFieldValue(this.props.data, columnDef);
         return (
           <this.props.components.Cell
-            size={size}
-            icons={this.props.icons}
-            columnDef={{ cellStyle: this.props.options.cellStyle, ...columnDef }}
-            value={value}
-            key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
-            rowData={this.props.data}
+              size={size}
+              icons={this.props.icons}
+              columnDef={{ cellStyle: this.props.options.cellStyle, ...columnDef }}
+              value={value}
+              key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
+              rowData={this.props.data}
           />
         );
       });
@@ -63,13 +63,13 @@ export default class MTableBodyRow extends React.Component {
     return (
       <TableCell size={size} padding="none" key="key-selection-column" style={{ width: selectionWidth }}>
         <Checkbox
-          size={size}
-          checked={this.props.data.tableData.checked === true}
-          onClick={(e) => e.stopPropagation()}
-          value={this.props.data.tableData.id.toString()}
-          onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
-          style={styles}
-          {...checkboxProps}
+            size={size}
+            checked={this.props.data.tableData.checked === true}
+            onClick={(e) => e.stopPropagation()}
+            value={this.props.data.tableData.id.toString()}
+            onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
+            style={styles}
+            {...checkboxProps}
         />
       </TableCell>
     );
@@ -81,15 +81,15 @@ export default class MTableBodyRow extends React.Component {
 
   renderDetailPanelColumn() {
     const size = CommonValues.elementSize(this.props);
-    const CustomIcon = ({ icon, iconProps, }) => typeof icon === "string" ? <Icon {...iconProps}>{icon}</Icon> : React.createElement(icon, { ...iconProps });
+    const CustomIcon = ({ icon, iconProps }) => typeof icon === "string" ? <Icon {...iconProps}>{icon}</Icon> : React.createElement(icon, { ...iconProps });
 
-    if (typeof this.props.detailPanel == 'function') {
+    if (typeof this.props.detailPanel === 'function') {
       return (
         <TableCell size={size} padding="none" key="key-detail-panel-column" style={{ width: 42, textAlign: 'center' }}>
           <IconButton
-            size={size}
-            style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
-            onClick={(event) => {
+              size={size}
+              style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
+              onClick={(event) => {
               this.props.onToggleDetailPanel(this.props.path, this.props.detailPanel);
               event.stopPropagation();
             }}
@@ -119,20 +119,20 @@ export default class MTableBodyRow extends React.Component {
                   animation = false;
                 }
                 else if (panel.icon) {
-                  iconButton = (
+                  iconButton = 
                     <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
-                  );
+                  ;
                 }
               }
               else if (panel.icon) {
-                iconButton = (
+                iconButton = 
                   <CustomIcon icon={panel.icon} iconProps={panel.iconProps} />
-                );
+                ;
                 animation = false;
               }
 
-              iconButton = (
-                <IconButton
+              iconButton = 
+                (<IconButton
                   size={size}
                   key={"key-detail-panel-" + index}
                   style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(animation && isOpen) }}
@@ -163,13 +163,13 @@ export default class MTableBodyRow extends React.Component {
       return (
         <TableCell size={size} padding="none" key={"key-tree-data-column"} style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}>
           <IconButton
-            size={size}
-            style={{
+              size={size}
+              style={{
               transition: 'all ease 200ms',
               marginLeft: this.props.level * 9,
               ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
             }}
-            onClick={(event) => {
+              onClick={(event) => {
               this.props.onTreeExpandChanged(this.props.path, this.props.data);
               event.stopPropagation();
             }}
@@ -180,13 +180,13 @@ export default class MTableBodyRow extends React.Component {
       );
     }
     else {
-      return(<TableCell padding="none" key={"key-tree-data-column"} />);
+      return<TableCell padding="none" key={"key-tree-data-column"} />;
     }
   }
 
   getStyle(index, level) {
     let style = {
-      transition: 'all ease 300ms',
+      transition: 'all ease 300ms'
     };
 
     if (typeof this.props.options.rowStyle === "function") {
@@ -275,11 +275,11 @@ export default class MTableBodyRow extends React.Component {
     return (
       <>
         <TableRow
-          selected={hasAnyEditingRow}
-          {...rowProps}
-          hover={onRowClick ? true : false}
-          style={this.getStyle(this.props.index, this.props.level)}
-          onClick={(event) => {
+            selected={hasAnyEditingRow}
+            {...rowProps}
+            hover={onRowClick ? true : false}
+            style={this.getStyle(this.props.index, this.props.level)}
+            onClick={(event) => {
             onRowClick && onRowClick(event, this.props.data,
               (panelIndex) => {
                 let panel = detailPanel;
@@ -298,9 +298,7 @@ export default class MTableBodyRow extends React.Component {
           {renderColumns}
         </TableRow>
         {this.props.data.tableData && this.props.data.tableData.showDetailPanel &&
-          <TableRow
-          // selected={this.props.index % 2 === 0}
-          >
+          <TableRow >
             <TableCell size={size} colSpan={renderColumns.length} padding="none">
               {this.props.data.tableData.showDetailPanel(this.props.data)}
             </TableCell>
@@ -311,34 +309,34 @@ export default class MTableBodyRow extends React.Component {
             if (data.tableData.editing) {
               return (
                 <this.props.components.EditRow
-                  columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
-                  components={this.props.components}
-                  data={data}
-                  icons={this.props.icons}
-                  localization={this.props.localization}
-                  getFieldValue={this.props.getFieldValue}
-                  key={index}
-                  mode={data.tableData.editing}
-                  options={this.props.options}
-                  isTreeData={this.props.isTreeData}
-                  detailPanel={this.props.detailPanel}
-                  onEditingCanceled={onEditingCanceled}
-                  onEditingApproved={onEditingApproved}
+                    columns={this.props.columns.filter(columnDef => { return !columnDef.hidden; })}
+                    components={this.props.components}
+                    data={data}
+                    icons={this.props.icons}
+                    localization={this.props.localization}
+                    getFieldValue={this.props.getFieldValue}
+                    key={index}
+                    mode={data.tableData.editing}
+                    options={this.props.options}
+                    isTreeData={this.props.isTreeData}
+                    detailPanel={this.props.detailPanel}
+                    onEditingCanceled={onEditingCanceled}
+                    onEditingApproved={onEditingApproved}
                 />
               );
             } else {
               return (
                 <this.props.components.Row
-                  {...this.props}
-                  data={data}
-                  index={index}
-                  key={index}
-                  level={this.props.level + 1}
-                  path={[...this.props.path, index]}
-                  onEditingCanceled={onEditingCanceled}
-                  onEditingApproved={onEditingApproved}
-                  hasAnyEditingRow={this.props.hasAnyEditingRow}
-                  treeDataMaxLevel={treeDataMaxLevel}
+                    {...this.props}
+                    data={data}
+                    index={index}
+                    key={index}
+                    level={this.props.level + 1}
+                    path={[...this.props.path, index]}
+                    onEditingCanceled={onEditingCanceled}
+                    onEditingApproved={onEditingApproved}
+                    hasAnyEditingRow={this.props.hasAnyEditingRow}
+                    treeDataMaxLevel={treeDataMaxLevel}
                 />
               );
             }
@@ -359,19 +357,19 @@ MTableBodyRow.defaultProps = {
 
 MTableBodyRow.propTypes = {
   actions: PropTypes.array,
-  icons: PropTypes.any.isRequired,
-  index: PropTypes.number.isRequired,
+  columns: PropTypes.array,
   data: PropTypes.object.isRequired,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
-  hasAnyEditingRow: PropTypes.bool,
-  options: PropTypes.object.isRequired,
-  onRowSelected: PropTypes.func,
-  path: PropTypes.arrayOf(PropTypes.number),
-  treeDataMaxLevel: PropTypes.number,
   getFieldValue: PropTypes.func.isRequired,
-  columns: PropTypes.array,
-  onToggleDetailPanel: PropTypes.func.isRequired,
-  onRowClick: PropTypes.func,
+  hasAnyEditingRow: PropTypes.bool,
+  icons: PropTypes.any.isRequired,
+  index: PropTypes.number.isRequired,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
+  onRowClick: PropTypes.func,
+  onRowSelected: PropTypes.func,
+  onToggleDetailPanel: PropTypes.func.isRequired,
+  options: PropTypes.object.isRequired,
+  path: PropTypes.arrayOf(PropTypes.number),
+  treeDataMaxLevel: PropTypes.number
 };

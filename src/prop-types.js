@@ -15,7 +15,7 @@ export const propTypes = {
     onClick: PropTypes.func.isRequired,
     iconProps: PropTypes.object,
     disabled: PropTypes.bool,
-    hidden: PropTypes.bool,
+    hidden: PropTypes.bool
   })])),
   columns: PropTypes.arrayOf(PropTypes.shape({
     cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -105,7 +105,7 @@ export const propTypes = {
     Search: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     SortArrow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     ThirdStateCheck: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
-    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
+    ViewColumn: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent])
   }),
   isLoading: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),

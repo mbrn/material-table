@@ -37,24 +37,24 @@ class MTableAction extends React.Component {
       }
     };
 
-    const icon = typeof action.icon === "string" ? (
+    const icon = typeof action.icon === "string" ? 
         <Icon {...action.iconProps}>{action.icon}</Icon>
-    ) : typeof action.icon === "function" ? (
+     : typeof action.icon === "function" ? 
         action.icon({ ...action.iconProps, disabled: disabled })
-    ) : (
+     : 
         <action.icon />
-    );
+    ;
 
-    const button = (
-        <IconButton
+    const button = 
+        (<IconButton
           size={this.props.size}
           color="inherit"
           disabled={disabled}
           onClick={handleOnClick}
         >
           {icon}
-        </IconButton>
-    );
+        </IconButton>)
+    ;
 
     if (action.tooltip) {
       // fix for issue #1049

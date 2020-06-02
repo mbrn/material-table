@@ -39,15 +39,15 @@ class MTablePaginationInner extends React.Component {
       const buttonVariant = p === this.props.page ? "contained" : "text";
       buttons.push(
         <Button
-          size="small"
-          style={{
+            size="small"
+            style={{
             boxShadow: 'none',
             maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'
           }}
-          disabled={p === this.props.page}
-          variant={buttonVariant}
-          onClick={this.handleNumberButtonClick(p)}
-          key={p}
+            disabled={p === this.props.page}
+            variant={buttonVariant}
+            onClick={this.handleNumberButtonClick(p)}
+            key={p}
         >
           {p + 1}
         </Button>
@@ -84,23 +84,23 @@ class MTablePaginationInner extends React.Component {
         <Tooltip title={localization.previousTooltip}>
           <span>
             <IconButton
-              onClick={this.handleBackButtonClick}
-              disabled={page === 0}
-              aria-label={localization.previousAriaLabel}
+                onClick={this.handleBackButtonClick}
+                disabled={page === 0}
+                aria-label={localization.previousAriaLabel}
             >
               <this.props.icons.PreviousPage />
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden smDown={true}>
+        <Hidden smDown>
           {this.renderPagesButton(pageStart, pageEnd)}
         </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
-              onClick={this.handleNextButtonClick}
-              disabled={page >= maxPages}
-              aria-label={localization.nextAriaLabel}
+                onClick={this.handleNextButtonClick}
+                disabled={page >= maxPages}
+                aria-label={localization.nextAriaLabel}
             >
               <this.props.icons.NextPage />
             </IconButton>
@@ -133,14 +133,14 @@ const actionsStyles = theme => ({
 });
 
 MTablePaginationInner.propTypes = {
+  classes: PropTypes.object,
+  count: PropTypes.number,
+  localization: PropTypes.object,
   onChangePage: PropTypes.func,
   page: PropTypes.number,
-  count: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  classes: PropTypes.object,
-  localization: PropTypes.object,
-  theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool
+  showFirstLastPageButtons: PropTypes.bool,
+  theme: PropTypes.any
 };
 
 MTablePaginationInner.defaultProps = {

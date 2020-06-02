@@ -15,6 +15,7 @@ export default class DataManager {
   paging = true;
   parentFunc = null;
   searchText = '';
+  searchBy = '';
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
@@ -70,7 +71,7 @@ export default class DataManager {
         groupSort: columnDef.defaultGroupSort || 'asc',     
         width: columnDef.width,   
         ...columnDef.tableData,
-        id: index,
+        id: index
       };
 
       if(columnDef.width !== undefined) {
@@ -182,6 +183,11 @@ export default class DataManager {
     this.searchText = searchText;
     this.searched = false;
     this.currentPage = 0;
+  }
+
+  changeSearchBy(searchBy, searchText) {
+    this.searchBy = searchBy;
+    this.changeSearchText(searchText);
   }
 
   changeRowEditing(rowData, mode) {
@@ -328,7 +334,7 @@ export default class DataManager {
       const effectiveStart = start + numHiddenBeforeStart;
 
       let effectiveEnd = effectiveStart;
-      for (let numVisibleInRange = 0; numVisibleInRange < (end - start) && effectiveEnd < sorted.length; effectiveEnd++) {
+      for (let numVisibleInRange = 0; numVisibleInRange < end - start && effectiveEnd < sorted.length; effectiveEnd++) {
         if (!sorted[effectiveEnd].hidden) {
           numVisibleInRange++;
         }
@@ -426,7 +432,7 @@ export default class DataManager {
   }
 
   getFieldValue = (rowData, columnDef, lookup = true) => {
-    let value = (typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field));
+    let value = typeof rowData[columnDef.field] !== 'undefined' ? rowData[columnDef.field] : byString(rowData, columnDef.field);
     if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
@@ -518,6 +524,7 @@ export default class DataManager {
       pageSize: this.pageSize,
       renderData: this.pagedData,
       searchText: this.searchText,
+      searchBy: this.searchBy,
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
@@ -551,13 +558,13 @@ export default class DataManager {
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
               const value = this.getFieldValue(row, columnDef);
-              return (value + "") === tableData.filterValue;
+              return value + "" === tableData.filterValue;
             });
           } else if (type === 'boolean' && tableData.filterValue) {
             this.filteredData = this.filteredData.filter(row => {
               const value = this.getFieldValue(row, columnDef);
-              return (value && tableData.filterValue === 'checked') ||
-                (!value && tableData.filterValue === 'unchecked');
+              return value && tableData.filterValue === 'checked' ||
+                !value && tableData.filterValue === 'unchecked';
             });
           } else if (['date', 'datetime'].includes(type)) {
             this.filteredData = this.filteredData.filter(row => {
@@ -619,7 +626,7 @@ export default class DataManager {
     if (this.searchText && this.applySearch) {
       this.searchedData = this.searchedData.filter(row => {
         return this.columns
-          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable })
+          .filter(columnDef => { return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable; })
           .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(this.searchText, row, columnDef);
@@ -657,8 +664,8 @@ export default class DataManager {
         }
 
         if (!group) {
-          const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : false };
+          const path = [...o.path || [], value];
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: typeof this.defaultExpanded ==='boolean' ? this.defaultExpanded : false };
 
           group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -747,7 +754,7 @@ export default class DataManager {
     this.data.forEach(rowData => {
       if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
         if (rowData.tableData.isTreeExpanded === undefined) {
-          var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
+          var isExpanded = typeof this.defaultExpanded ==='boolean' ? this.defaultExpanded : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
         }
       }

@@ -7,13 +7,13 @@ import * as MComponents from './components';
 import PropTypes from 'prop-types';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-const OverlayLoading = props => (
-  <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
+const OverlayLoading = props => 
+  (<div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
     <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
       <CircularProgress />
     </div>
-  </div>
-);
+  </div>)
+;
 OverlayLoading.propTypes = {
   theme: PropTypes.any
 };
@@ -105,12 +105,12 @@ export const defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
-    overflowY: 'auto',
+    overflowY: 'auto'
   },
   localization: {
     grouping: {
       groupedBy: 'Grouped By:',
-      placeholder: 'Drag headers here to group by',
+      placeholder: 'Drag headers here to group by'
     },
     pagination: {
       labelDisplayedRows: '{from}-{to} of {count}',
@@ -124,7 +124,7 @@ export const defaultProps = {
       editRow: {
         saveTooltip: 'Save',
         cancelTooltip: 'Cancel',
-        deleteText: 'Are you sure you want to delete this row?',
+        deleteText: 'Are you sure you want to delete this row?'
       },
       addTooltip: 'Add',
       deleteTooltip: 'Delete',

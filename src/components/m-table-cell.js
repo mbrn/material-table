@@ -74,15 +74,15 @@ export default class MTableCell extends React.Component {
 
   getCurrencyValue(currencySetting, value) {
     if (currencySetting !== undefined) {
-      return new Intl.NumberFormat((currencySetting.locale !== undefined) ? currencySetting.locale : 'en-US',
+      return new Intl.NumberFormat(currencySetting.locale !== undefined ? currencySetting.locale : 'en-US',
         {
           style: 'currency',
-          currency: (currencySetting.currencyCode !== undefined) ? currencySetting.currencyCode : 'USD',
-          minimumFractionDigits: (currencySetting.minimumFractionDigits !== undefined) ? currencySetting.minimumFractionDigits : 2,
-          maximumFractionDigits: (currencySetting.maximumFractionDigits !== undefined) ? currencySetting.maximumFractionDigits : 2
-        }).format((value !== undefined) ? value : 0);
+          currency: currencySetting.currencyCode !== undefined ? currencySetting.currencyCode : 'USD',
+          minimumFractionDigits: currencySetting.minimumFractionDigits !== undefined ? currencySetting.minimumFractionDigits : 2,
+          maximumFractionDigits: currencySetting.maximumFractionDigits !== undefined ? currencySetting.maximumFractionDigits : 2
+        }).format(value !== undefined ? value : 0);
     } else {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((value !== undefined) ? value : 0);
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value !== undefined ? value : 0);
     }
   }
 
@@ -118,11 +118,11 @@ export default class MTableCell extends React.Component {
 
     return (
       <TableCell
-        size={this.props.size}
-        {...cellProps}
-        style={this.getStyle()}
-        align={['numeric','currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
-        onClick={this.handleClickCell}
+          size={this.props.size}
+          {...cellProps}
+          style={this.getStyle()}
+          align={['numeric','currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
+          onClick={this.handleClickCell}
       >
         {this.props.children}
         {this.getRenderValue()}
@@ -138,6 +138,6 @@ MTableCell.defaultProps = {
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
-  value: PropTypes.any,
-  rowData: PropTypes.object
+  rowData: PropTypes.object,
+  value: PropTypes.any
 };

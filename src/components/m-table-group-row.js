@@ -22,9 +22,9 @@ export default class MTableGroupRow extends React.Component {
 
     let detail;
     if (this.props.groupData.isExpanded) {
-      if (this.props.groups.length > (this.props.level + 1)) { // Is there another group
-        detail = this.props.groupData.groups.map((groupData, index) => (
-          <this.props.components.GroupRow
+      if (this.props.groups.length > this.props.level + 1) { // Is there another group
+        detail = this.props.groupData.groups.map((groupData, index) => 
+          (<this.props.components.GroupRow
             actions={this.props.actions}
             key={groupData.value || ("" + index)}
             columns={this.props.columns}
@@ -46,51 +46,51 @@ export default class MTableGroupRow extends React.Component {
             options={this.props.options}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             isTreeData={this.props.isTreeData}
-          />
-        ));
+          />)
+        );
       }
       else {
         detail = this.props.groupData.data.map((rowData, index) => {
           if (rowData.tableData.editing) {
             return (
               <this.props.components.EditRow
-                columns={this.props.columns}
-                components={this.props.components}
-                data={rowData}
-                icons={this.props.icons}
-                path={[...this.props.path, index]}
-                localization={this.props.localization}
-                key={index}
-                mode={rowData.tableData.editing}
-                options={this.props.options}
-                isTreeData={this.props.isTreeData}
-                detailPanel={this.props.detailPanel}
-                onEditingCanceled={this.props.onEditingCanceled}
-                onEditingApproved={this.props.onEditingApproved}
-                getFieldValue={this.props.getFieldValue}
+                  columns={this.props.columns}
+                  components={this.props.components}
+                  data={rowData}
+                  icons={this.props.icons}
+                  path={[...this.props.path, index]}
+                  localization={this.props.localization}
+                  key={index}
+                  mode={rowData.tableData.editing}
+                  options={this.props.options}
+                  isTreeData={this.props.isTreeData}
+                  detailPanel={this.props.detailPanel}
+                  onEditingCanceled={this.props.onEditingCanceled}
+                  onEditingApproved={this.props.onEditingApproved}
+                  getFieldValue={this.props.getFieldValue}
               />
             );
           } else {
             return (
               <this.props.components.Row
-                actions={this.props.actions}
-                key={index}
-                columns={this.props.columns}
-                components={this.props.components}
-                data={rowData}
-                detailPanel={this.props.detailPanel}
-                getFieldValue={this.props.getFieldValue}
-                icons={this.props.icons}
-                path={[...this.props.path, index]}
-                onRowSelected={this.props.onRowSelected}
-                onRowClick={this.props.onRowClick}
-                onToggleDetailPanel={this.props.onToggleDetailPanel}
-                options={this.props.options}
-                isTreeData={this.props.isTreeData}
-                onTreeExpandChanged={this.props.onTreeExpandChanged}
-                onEditingCanceled={this.props.onEditingCanceled}
-                onEditingApproved={this.props.onEditingApproved}
-                hasAnyEditingRow={this.props.hasAnyEditingRow}
+                  actions={this.props.actions}
+                  key={index}
+                  columns={this.props.columns}
+                  components={this.props.components}
+                  data={rowData}
+                  detailPanel={this.props.detailPanel}
+                  getFieldValue={this.props.getFieldValue}
+                  icons={this.props.icons}
+                  path={[...this.props.path, index]}
+                  onRowSelected={this.props.onRowSelected}
+                  onRowClick={this.props.onRowClick}
+                  onToggleDetailPanel={this.props.onToggleDetailPanel}
+                  options={this.props.options}
+                  isTreeData={this.props.isTreeData}
+                  onTreeExpandChanged={this.props.onTreeExpandChanged}
+                  onEditingCanceled={this.props.onEditingCanceled}
+                  onEditingApproved={this.props.onEditingApproved}
+                  hasAnyEditingRow={this.props.hasAnyEditingRow}
               />
             );
           }
@@ -100,7 +100,7 @@ export default class MTableGroupRow extends React.Component {
 
     const freeCells = [];
     for (let i = 0; i < this.props.level; i++) {
-      freeCells.push(<TableCell padding="checkbox" key={ i } />);
+      freeCells.push(<TableCell padding="checkbox" key={i} />);
     }
 
     let value = this.props.groupData.value;
@@ -122,15 +122,15 @@ export default class MTableGroupRow extends React.Component {
         <TableRow>
           {freeCells}
           <this.props.components.Cell 
-            colSpan={colSpan} 
-            padding="none" 
-            columnDef={column} 
-            value={value}
-            icons={this.props.icons}
+              colSpan={colSpan} 
+              padding="none" 
+              columnDef={column} 
+              value={value}
+              icons={this.props.icons}
           >
             <IconButton
-              style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
-              onClick={(event) => {
+                style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.groupData.isExpanded) }}
+                onClick={(event) => {
                 this.props.onGroupExpandChanged(this.props.path);
               }}
             >
@@ -165,13 +165,13 @@ MTableGroupRow.propTypes = {
   isTreeData: PropTypes.bool.isRequired,
   level: PropTypes.number,
   localization: PropTypes.object,
-  onGroupExpandChanged: PropTypes.func,
+  onEditingApproved: PropTypes.func,
+  onEditingCanceled: PropTypes.func,
+  onGroupExpandChanged: PropTypes.func,  
+  onRowClick: PropTypes.func,
   onRowSelected: PropTypes.func,
-  onRowClick: PropTypes.func,  
   onToggleDetailPanel: PropTypes.func.isRequired,
   onTreeExpandChanged: PropTypes.func.isRequired,
-  onEditingCanceled: PropTypes.func,
-  onEditingApproved: PropTypes.func,
   options: PropTypes.object,
-  path: PropTypes.arrayOf(PropTypes.number),
+  path: PropTypes.arrayOf(PropTypes.number)
 };

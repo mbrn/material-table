@@ -29,7 +29,7 @@ export default class MTableEditRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        const value = (typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field));
+        const value = typeof this.state.data[columnDef.field] !== 'undefined' ? this.state.data[columnDef.field] : byString(this.state.data, columnDef.field);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
             color: 'inherit'
@@ -65,19 +65,19 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
           allowEditing = true;
         }
-        if (typeof columnDef.editable == 'function'){
+        if (typeof columnDef.editable === 'function'){
             allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
           const readonlyValue = this.props.getFieldValue(this.state.data, columnDef);
           return (
             <this.props.components.Cell
-              icons={this.props.icons}
-              columnDef={columnDef}
-              value={readonlyValue}
-              key={columnDef.tableData.id}
-              rowData={this.props.data}
-              style={getCellStyle(columnDef, value)}
+                icons={this.props.icons}
+                columnDef={columnDef}
+                value={readonlyValue}
+                key={columnDef.tableData.id}
+                rowData={this.props.data}
+                style={getCellStyle(columnDef, value)}
             />
           );
         }
@@ -87,23 +87,23 @@ export default class MTableEditRow extends React.Component {
           
           return (
             <TableCell
-              key={columnDef.tableData.id}
-              align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
-              style={getCellStyle(columnDef, value)}
+                key={columnDef.tableData.id}
+                align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+                style={getCellStyle(columnDef, value)}
             >
               <EditComponent
-                key={columnDef.tableData.id}
-                columnDef={cellProps}
-                value={value}
-                locale={this.props.localization.dateTimePickerLocalization}
-                rowData={this.state.data}
-                onChange={value => {
+                  key={columnDef.tableData.id}
+                  columnDef={cellProps}
+                  value={value}
+                  locale={this.props.localization.dateTimePickerLocalization}
+                  rowData={this.state.data}
+                  onChange={value => {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
                   this.setState({ data });
                 }}
-                onRowDataChange={data => {
+                  onRowDataChange={data => {
                   this.setState({ data });
                 }}
               />
@@ -162,9 +162,10 @@ export default class MTableEditRow extends React.Component {
       const colSpan = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)).length;
       columns = [
         <TableCell
-          padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
-          key="key-edit-cell"
-          colSpan={colSpan}>
+            padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
+            key="key-edit-cell"
+            colSpan={colSpan}
+        >
           <Typography variant="h6">
             {localization.deleteText}
           </Typography>
@@ -231,8 +232,8 @@ export default class MTableEditRow extends React.Component {
     return (
       <>
         <TableRow
-          {...rowProps}
-          style={this.getStyle()}
+            {...rowProps}
+            style={this.getStyle()}
         >
           {columns}
         </TableRow>
@@ -249,23 +250,23 @@ MTableEditRow.defaultProps = {
   localization: {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure you want to delete this row?',
+    deleteText: 'Are you sure you want to delete this row?'
   }
 };
 
 MTableEditRow.propTypes = {
   actions: PropTypes.array,
-  icons: PropTypes.any.isRequired,
-  index: PropTypes.number.isRequired,
+  columns: PropTypes.array,
   data: PropTypes.object,
   detailPanel: PropTypes.oneOfType([PropTypes.func, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))]),
-  options: PropTypes.object.isRequired,
-  onRowSelected: PropTypes.func,
-  path: PropTypes.arrayOf(PropTypes.number),
-  columns: PropTypes.array,
-  onRowClick: PropTypes.func,
+  getFieldValue: PropTypes.func,
+  icons: PropTypes.any.isRequired,
+  index: PropTypes.number.isRequired,
+  localization: PropTypes.object,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
-  localization: PropTypes.object,
-  getFieldValue: PropTypes.func
+  onRowClick: PropTypes.func,
+  onRowSelected: PropTypes.func,
+  options: PropTypes.object.isRequired,
+  path: PropTypes.arrayOf(PropTypes.number)
 };

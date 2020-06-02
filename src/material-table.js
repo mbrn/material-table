@@ -85,6 +85,7 @@ export default class MaterialTable extends React.Component {
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
+    isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
     this.dataManager.changePaging(props.options.paging);
@@ -128,21 +129,21 @@ export default class MaterialTable extends React.Component {
   }
 
   getProps(props) {
-    const calculatedProps = { ...(props || this.props) };
+    const calculatedProps = { ...props || this.props };
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
 
     const localization = { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
-    calculatedProps.actions = [...(calculatedProps.actions || [])];
+    calculatedProps.actions = [...calculatedProps.actions || []];
 
     if (calculatedProps.options.selection)
       calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
         if (
-          (action.position === "auto") ||
-          (action.isFreeAction === false) ||
-          (action.position === undefined && action.isFreeAction === undefined)
+          action.position === "auto" ||
+          action.isFreeAction === false ||
+          action.position === undefined && action.isFreeAction === undefined
         )
           if (typeof action === "function") return { action: action, position: "toolbarOnSelect" };
           else return { ...action, position: "toolbarOnSelect" };
@@ -154,9 +155,9 @@ export default class MaterialTable extends React.Component {
     else
       calculatedProps.actions = calculatedProps.actions.filter(a => a).map(action => {
         if (
-          (action.position === "auto") ||
-          (action.isFreeAction === false) ||
-          (action.position === undefined && action.isFreeAction === undefined)
+          action.position === "auto" ||
+          action.isFreeAction === false ||
+          action.position === undefined && action.isFreeAction === undefined
         )
           if (typeof action === "function") return { action: action, position: "row" };
           else return { ...action, position: "row" };
@@ -172,7 +173,7 @@ export default class MaterialTable extends React.Component {
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
           position: "toolbar",
-          disabled: !!(this.dataManager.lastEditingRow),
+          disabled: !!this.dataManager.lastEditingRow,
           onClick: () => {
             this.dataManager.changeRowEditing();
             this.setState({
@@ -217,7 +218,7 @@ export default class MaterialTable extends React.Component {
 
   isRemoteData = (props) => !Array.isArray((props || this.props).data)
 
-  isOutsidePageNumbers = (props) => (props.page !== undefined && props.totalCount !== undefined);
+  isOutsidePageNumbers = (props) => props.page !== undefined && props.totalCount !== undefined;
 
   onAllSelected = (checked) => {
     this.dataManager.changeAllSelected(checked);
@@ -517,29 +518,29 @@ export default class MaterialTable extends React.Component {
           <TableFooter style={{ display: 'grid' }}>
             <TableRow>
               <props.components.Pagination
-                classes={{
+                  classes={{
                   root: props.classes.paginationRoot,
                   toolbar: props.classes.paginationToolbar,
                   caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot,
+                  selectRoot: props.classes.paginationSelectRoot
                 }}
-                style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
-                colSpan={3}
-                count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
-                icons={props.icons}
-                rowsPerPage={this.state.pageSize}
-                rowsPerPageOptions={props.options.pageSizeOptions}
-                SelectProps={{
+                  style={{ float: props.theme.direction === "rtl" ? "" : "right", overflowX: 'auto' }}
+                  colSpan={3}
+                  count={this.isRemoteData() ? this.state.query.totalCount : totalCount}
+                  icons={props.icons}
+                  rowsPerPage={this.state.pageSize}
+                  rowsPerPageOptions={props.options.pageSizeOptions}
+                  SelectProps={{
                   renderValue: value => <div style={{ padding: '0px 5px' }}>{value + ' ' + localization.labelRowsSelect + ' '}</div>
                 }}
-                page={this.isRemoteData() ? this.state.query.page : currentPage}
-                onChangePage={this.onChangePage}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
-                ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
+                  page={this.isRemoteData() ? this.state.query.page : currentPage}
+                  onChangePage={this.onChangePage}
+                  onChangeRowsPerPage={this.onChangeRowsPerPage}
+                  ActionsComponent={(subProps) => props.options.paginationType === 'normal' ?
                   <MTablePagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} /> :
                   <MTableSteppedPagination {...subProps} icons={props.icons} localization={localization} showFirstLastPageButtons={props.options.showFirstLastPageButtons} />}
-                labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
-                labelRowsPerPage={localization.labelRowsPerPage}
+                  labelDisplayedRows={(row) => localization.labelDisplayedRows.replace('{from}', row.from).replace('{to}', row.to).replace('{count}', row.count)}
+                  labelRowsPerPage={localization.labelRowsPerPage}
               />
             </TableRow>
           </TableFooter>
@@ -548,8 +549,8 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  renderTable = (props) => (
-    <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+  renderTable = (props) => 
+    (<Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
       {props.options.header &&
         <props.components.Header
           actions={props.actions}
@@ -609,8 +610,8 @@ export default class MaterialTable extends React.Component {
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
       />
-    </Table>
-  )
+    </Table>)
+  
 
   getColumnsWidth = (props, count) => {
     let result = [];
@@ -653,45 +654,45 @@ export default class MaterialTable extends React.Component {
         <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
-              actions={props.actions}
-              components={props.components}
-              selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked }) : []}
-              columns={this.state.columns}
-              columnsButton={props.options.columnsButton}
-              icons={props.icons}
-              exportAllData={props.options.exportAllData}
-              exportButton={props.options.exportButton}
-              exportDelimiter={props.options.exportDelimiter}
-              exportFileName={props.options.exportFileName}
-              exportCsv={props.options.exportCsv}
-              getFieldValue={this.dataManager.getFieldValue}
-              data={this.state.data}
-              renderData={this.state.renderData}
-              search={props.options.search}
-              showTitle={props.options.showTitle}
-              showTextRowsSelected={props.options.showTextRowsSelected}
-              toolbarButtonAlignment={props.options.toolbarButtonAlignment}
-              searchFieldAlignment={props.options.searchFieldAlignment}
-              searchAutoFocus={props.options.searchAutoFocus}
-              searchFieldStyle={props.options.searchFieldStyle}
-              searchFieldVariant={props.options.searchFieldVariant}
-              title={props.title}
-              onSearchChanged={this.onSearchChangeDebounce}
-              dataManager={this.dataManager}
-              onColumnsChanged={this.onChangeColumnHidden}
-              localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
+                actions={props.actions}
+                components={props.components}
+                selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => { return a.tableData.checked; }) : []}
+                columns={this.state.columns}
+                columnsButton={props.options.columnsButton}
+                icons={props.icons}
+                exportAllData={props.options.exportAllData}
+                exportButton={props.options.exportButton}
+                exportDelimiter={props.options.exportDelimiter}
+                exportFileName={props.options.exportFileName}
+                exportCsv={props.options.exportCsv}
+                getFieldValue={this.dataManager.getFieldValue}
+                data={this.state.data}
+                renderData={this.state.renderData}
+                search={props.options.search}
+                showTitle={props.options.showTitle}
+                showTextRowsSelected={props.options.showTextRowsSelected}
+                toolbarButtonAlignment={props.options.toolbarButtonAlignment}
+                searchFieldAlignment={props.options.searchFieldAlignment}
+                searchAutoFocus={props.options.searchAutoFocus}
+                searchFieldStyle={props.options.searchFieldStyle}
+                searchFieldVariant={props.options.searchFieldVariant}
+                title={props.title}
+                onSearchChanged={this.onSearchChangeDebounce}
+                dataManager={this.dataManager}
+                onColumnsChanged={this.onChangeColumnHidden}
+                localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
           }
           {props.options.grouping &&
             <props.components.Groupbar
-              icons={props.icons}
-              localization={{ ...MaterialTable.defaultProps.localization.grouping, ...props.localization.grouping }}
-              groupColumns={this.state.columns
+                icons={props.icons}
+                localization={{ ...MaterialTable.defaultProps.localization.grouping, ...props.localization.grouping }}
+                groupColumns={this.state.columns
                 .filter(col => col.tableData.groupOrder > -1)
                 .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder)
               }
-              onSortChanged={this.onChangeGroupOrder}
-              onGroupRemoved={this.onGroupRemoved}
+                onSortChanged={this.onChangeGroupOrder}
+                onGroupRemoved={this.onGroupRemoved}
             />
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>
