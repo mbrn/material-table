@@ -18,6 +18,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
+  draggableRowsIdentifier = "draggable-rows";
 
   constructor(props) {
     super(props);
@@ -281,8 +282,10 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
-    // debugger;
     this.toggleDraggableClass(result);
+    if (result.source.droppableId === this.draggableRowsIdentifier && this.props.onRowDrop) {
+      this.props.onRowDrop(result);
+    }
     
     if (!result || !result.source || !result.destination) return;
     this.dataManager.changeByDrag(result);
@@ -542,28 +545,23 @@ export default class MaterialTable extends React.Component {
   }
 
   toggleDraggableClass = (result) => {
-    let p = this.props;
     let container = this.tableContainerDiv.current;
     container.style.height = container.getBoundingClientRect().height + 'px';
     let row = container.querySelector('tr[data-rbd-draggable-id="'+ result.draggableId +'"]');
-    if (row.classList.contains(p.classes.draggableRow)) {
-      row.classList.remove(p.classes.draggableRow);
+    if (row.classList.contains(this.props.classes.draggableRow)) {
+      row.classList.remove(this.props.classes.draggableRow);
     } else {
-      row.classList.add(p.classes.draggableRow);
+      row.classList.add(this.props.classes.draggableRow);
     }
   }
   
   onDragStart = result => {
-    // let p = this.props;
-    // let container = this.tableContainerDiv.current;
-    // container.querySelector('tr[data-rbd-draggable-id="'+ result.draggableId +'"]').classList.add(p.classes.draggableRow);
-    // // debugger;
     this.toggleDraggableClass(result);
   }
 
   renderTable = (props) => (
-      <DragDropContext onDragStart={e => { /*debugger*/ }} onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="mainTable">
+      <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+        <Droppable droppableId={this.draggableRowsIdentifier}>
           {(provided, snapshot) => (
     <Table ref={provided.innerRef} style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
       {props.options.header &&
