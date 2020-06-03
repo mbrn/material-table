@@ -33,6 +33,7 @@ for (let i = 0; i < 1; i++) {
 
 class App extends Component {
   tableRef = React.createRef();
+  remoteDataTableRef = React.createRef();
 
   colRenderCount = 0;
 
@@ -64,7 +65,17 @@ class App extends Component {
       { title: 'Id', field: 'id' },
       { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
       { title: 'Last Name', field: 'last_name' },
-    ]
+    ],
+    remoteDataOrder: []
+  }
+  
+  reorderData = (data) => {
+    return data.sort((a, b) => {
+      const aPos = this.state.remoteDataOrder.indexOf(a.id);
+      const bPos = this.state.remoteDataOrder.indexOf(b.id);
+
+      return aPos === -1 ? 1 : bPos === -1 ? 1 : aPos - bPos;
+    })
   }
 
   render() {
@@ -96,6 +107,7 @@ class App extends Component {
               Select
             </button>
             <MaterialTable
+              tableRef={this.remoteDataTableRef}
               title={
                 <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
               }
@@ -123,17 +135,27 @@ class App extends Component {
                 let url = 'https://reqres.in/api/users?'
                 url += 'per_page=' + query.pageSize
                 url += '&page=' + (query.page + 1)
-                console.log(query);
                 fetch(url)
                   .then(response => response.json())
                   .then(result => {
+                    if (this.state.remoteDataOrder.length === 0) {
+                      result.data.forEach((el) => this.state.remoteDataOrder.push(el.id));
+                    }
                     resolve({
-                      data: result.data,
+                      data: this.reorderData(result.data),
                       page: result.page - 1,
                       totalCount: result.total,
                     })
                   })
               })}
+              onRowDrop={(result) => {
+                this.state.remoteDataOrder.splice(result.destination.index, 0, this.state.remoteDataOrder.splice(result.source.index, 1)[0]);
+                const dataManager = this.remoteDataTableRef.current.dataManager 
+                dataManager.setData(this.reorderData(dataManager.data));
+              }}
+              onChangePage={() => {
+                this.state.remoteDataOrder = [];
+              }}
             />
 
           </div>

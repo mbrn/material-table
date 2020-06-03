@@ -269,7 +269,7 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <>
-        <Draggable onDragStart={handleDragStart} key={"row-" + this.props.index.toString()} draggableId={"row-" + this.props.index.toString()} index={this.props.index}>
+        <Draggable key={"row-" + this.props.index.toString()} draggableId={"row-" + this.props.index.toString()} index={this.props.index}>
           {(provided, snapshot) => (
         <TableRow
           selected={hasAnyEditingRow}
