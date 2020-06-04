@@ -134,7 +134,7 @@ class MTableBody extends React.Component {
     }
 
     return (
-      <TableBody ref={this.props.ref}>
+      <TableBody>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => !columnDef.hidden)}

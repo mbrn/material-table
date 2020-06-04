@@ -12,7 +12,6 @@ import { debounce } from 'debounce';
 import equal from 'fast-deep-equal';
 import { withStyles } from '@material-ui/core';
 import * as CommonValues from './utils/common-values';
-import { Draggable } from "react-beautiful-dnd";
 
 /* eslint-enable no-unused-vars */
 
