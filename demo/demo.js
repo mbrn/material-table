@@ -69,6 +69,11 @@ class App extends Component {
     remoteDataOrder: []
   }
   
+  resetDataOrder = (data) => {
+    this.state.remoteDataOrder = [];
+    data.forEach((el) => this.state.remoteDataOrder.push(el.id));
+  }
+  
   reorderData = (data) => {
     return data.sort((a, b) => {
       const aPos = this.state.remoteDataOrder.indexOf(a.id);
@@ -138,9 +143,7 @@ class App extends Component {
                 fetch(url)
                   .then(response => response.json())
                   .then(result => {
-                    if (this.state.remoteDataOrder.length === 0) {
-                      result.data.forEach((el) => this.state.remoteDataOrder.push(el.id));
-                    }
+                    this.resetDataOrder(result.data);
                     resolve({
                       data: this.reorderData(result.data),
                       page: result.page - 1,
@@ -150,11 +153,8 @@ class App extends Component {
               })}
               onRowDrop={(result) => {
                 this.state.remoteDataOrder.splice(result.destination.index, 0, this.state.remoteDataOrder.splice(result.source.index, 1)[0]);
-                const dataManager = this.remoteDataTableRef.current.dataManager 
+                const dataManager = this.remoteDataTableRef.current.dataManager;
                 dataManager.setData(this.reorderData(dataManager.data));
-              }}
-              onChangePage={() => {
-                this.state.remoteDataOrder = [];
               }}
             />
 
