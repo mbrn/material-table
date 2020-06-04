@@ -21,13 +21,14 @@ export class MTableHeader extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         let content = columnDef.title;
-
         if (this.props.draggable) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
               draggableId={columnDef.tableData.id.toString()}
-              index={index}>
+              index={index}
+              isDragDisabled={!(this.props.draggable && !this.props.draggableRows)}
+            >
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
@@ -200,6 +201,7 @@ MTableHeader.defaultProps = {
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: "left",
   draggable: true,
+  draggableRows: false,
   thirdSortClick: true,
 };
 
@@ -221,6 +223,7 @@ MTableHeader.propTypes = {
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
+  draggableRows: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
   tooltip: PropTypes.string
 };

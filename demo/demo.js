@@ -102,7 +102,9 @@ class App extends Component {
                       left: 2,
                       right: 0
                     },
-                    tableLayout: 'fixed'
+                    tableLayout: 'fixed',
+                    draggable: false,
+                    draggableRows: false
                   }}
                 />
               </Grid>
@@ -133,7 +135,9 @@ class App extends Component {
               ]}
               options={{
                 filtering: false,
-                grouping: true,
+                grouping: false,
+                draggable: false,
+                draggableRows: true,
                 groupTitle: group => group.data.length,
               }}
               data={query => new Promise((resolve, reject) => {

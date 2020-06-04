@@ -590,6 +590,7 @@ export default class MaterialTable extends React.Component {
           grouping={props.options.grouping}
           isTreeData={this.props.parentChildData !== undefined}
           draggable={props.options.draggable}
+          draggableRows={props.options.draggableRows}
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
