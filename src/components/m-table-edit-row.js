@@ -163,7 +163,7 @@ export default class MTableEditRow extends React.Component {
       columns = [
         <TableCell
           padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
-          key="key-selection-cell"
+          key="key-edit-cell"
           colSpan={colSpan}>
           <Typography variant="h6">
             {localization.deleteText}

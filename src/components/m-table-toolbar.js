@@ -22,8 +22,14 @@ export class MTableToolbar extends React.Component {
     super(props);
     this.state = {
       columnsButtonAnchorEl: null,
-      exportButtonAnchorEl: null
+      exportButtonAnchorEl: null,
+      searchText: ''
     };
+  }
+
+  onSearchChange = searchText => {
+    this.props.dataManager.changeSearchText(searchText);
+    this.setState(({ searchText }), this.props.onSearchChanged(searchText));
   }
 
   defaultExportCsv = () => {
@@ -61,10 +67,12 @@ export class MTableToolbar extends React.Component {
     if (this.props.search) {
       return (
         <TextField
+          autoFocus={this.props.searchAutoFocus}
           className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
-          value={this.props.searchText}
-          onChange={event => this.props.onSearchChanged(event.target.value)}
-          placeholder={localization.searchPlaceholder}          
+          value={this.state.searchText}
+          onChange={event => this.onSearchChange(event.target.value)}
+          placeholder={localization.searchPlaceholder}
+          variant={this.props.searchFieldVariant}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -76,14 +84,17 @@ export class MTableToolbar extends React.Component {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  disabled={!this.props.searchText}
-                  onClick={() => this.props.onSearchChanged("")}
+                  disabled={!this.state.searchText}
+                  onClick={() => this.onSearchChange("")}
                 >
                   <this.props.icons.ResetSearch color="inherit" fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
-            style: this.props.searchFieldStyle
+            style: this.props.searchFieldStyle,
+            inputProps: {
+              'aria-label': "Search"
+            }
           }}
         />
       );
@@ -95,7 +106,7 @@ export class MTableToolbar extends React.Component {
 
   renderDefaultActions() {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
       <div>
@@ -214,7 +225,7 @@ export class MTableToolbar extends React.Component {
     const title = this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 ? localization.nRowsSelected.replace('{0}', this.props.selectedRows.length) : this.props.showTitle ? this.props.title : null;
     return (
       <Toolbar className={classNames(classes.root, { [classes.highlight]: this.props.showTextRowsSelected && this.props.selectedRows && this.props.selectedRows.length > 0 })}>
-        { title && this.renderToolbarTitle(title)}
+        {title && this.renderToolbarTitle(title)}
         {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
         {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
         <div className={classes.spacer} />
@@ -244,8 +255,9 @@ MTableToolbar.defaultProps = {
   showTitle: true,
   showTextRowsSelected: true,
   toolbarButtonAlignment: 'right',
+  searchAutoFocus: false,
   searchFieldAlignment: 'right',
-  searchText: '',
+  searchFieldVariant: 'standard',
   selectedRows: [],
   title: 'No Title!'
 };
@@ -258,10 +270,11 @@ MTableToolbar.propTypes = {
   getFieldValue: PropTypes.func.isRequired,
   localization: PropTypes.object.isRequired,
   onColumnsChanged: PropTypes.func.isRequired,
+  dataManager: PropTypes.object.isRequired,
   onSearchChanged: PropTypes.func.isRequired,
   search: PropTypes.bool.isRequired,
   searchFieldStyle: PropTypes.object,
-  searchText: PropTypes.string.isRequired,
+  searchFieldVariant: PropTypes.string,
   selectedRows: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,
@@ -275,7 +288,8 @@ MTableToolbar.propTypes = {
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.string,
   exportCsv: PropTypes.func,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  searchAutoFocus: PropTypes.bool
 };
 
 export const styles = theme => ({
