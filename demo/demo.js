@@ -151,7 +151,6 @@ class App extends Component {
               options={{
                 filtering: false,
                 grouping: true,
-                sorting: false,
                 draggable: this.state.dragOption === "columns",
                 draggableRows: this.state.dragOption === "cell" || this.state.dragOption === "row",
                 draggableRowsOptions: {
