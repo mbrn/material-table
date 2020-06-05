@@ -1,4 +1,4 @@
-import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
+import { Grid, MuiThemeProvider, FormControl, FormHelperText, MenuItem, Select } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -66,6 +66,7 @@ class App extends Component {
       { title: 'First Name', field: 'first_name', defaultFilter: 'De' },
       { title: 'Last Name', field: 'last_name' },
     ],
+    dragOption: "disabled",
     remoteDataOrder: []
   }
   
@@ -116,7 +117,21 @@ class App extends Component {
             <MaterialTable
               tableRef={this.remoteDataTableRef}
               title={
-                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+                <>
+                  <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+                  <FormControl>
+                    <Select
+                        defaultValue="disable"
+                        onChange={(event) => {this.setState({dragOption: event.target.value})}}
+                    >
+                      <MenuItem value="disable">No Drag</MenuItem>
+                      <MenuItem value="columns">Draggable columns</MenuItem>
+                      <MenuItem value="row">Draggable Row</MenuItem>
+                      <MenuItem value="cell">Draggable Cell</MenuItem>
+                    </Select>
+                    <FormHelperText>Drag Options</FormHelperText>
+                  </FormControl>
+                </>
               }
               columns={[
                 {
@@ -135,9 +150,15 @@ class App extends Component {
               ]}
               options={{
                 filtering: false,
-                grouping: false,
-                draggable: false,
-                draggableRows: true,
+                grouping: true,
+                sorting: true,
+                draggable: this.state.dragOption === "columns",
+                draggableRows: this.state.dragOption === "cell" || this.state.dragOption === "row",
+                draggableRowsOptions: {
+                  draggableCell: this.state.dragOption === "cell",
+                  dragCellContent: "=",
+                  dragCellWidth: "40px"
+                },
                 groupTitle: group => group.data.length,
               }}
               data={query => new Promise((resolve, reject) => {
@@ -161,7 +182,6 @@ class App extends Component {
                 dataManager.setData(this.reorderData(dataManager.data));
               }}
             />
-
           </div>
         </MuiThemeProvider>
       </>

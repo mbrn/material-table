@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip } from '@material-ui/core';
 import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
@@ -88,8 +88,6 @@ export class MTableHeader extends React.Component {
     return mapArr;
   }
 
-
-
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     const width = CommonValues.actionsColumnWidth(this.props);
@@ -104,6 +102,7 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
+  
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
 
@@ -125,6 +124,20 @@ export class MTableHeader extends React.Component {
     );
   }
 
+  renderDraggableHeaderCell() {
+    const draggableOptions = this.props.options.draggableRowsOptions;
+    return (
+        <TableCell
+            padding="none"
+            key="key-drag-column" 
+            className={this.props.classes.header}
+           style={{ ...this.props.headerStyle, width: draggableOptions.dragCellWidth }}
+        >
+          {draggableOptions.dragHeaderContent}
+        </TableCell>
+    );
+  }
+
   renderDetailPanelColumnCell() {
     return <TableCell
       padding="none"
@@ -140,6 +153,10 @@ export class MTableHeader extends React.Component {
       headers.splice(0, 0, this.renderSelectionHeader());
     }
 
+    if (this.props.options.draggableRows && this.props.options.draggableRowsOptions.draggableCell) {
+      headers.splice(0, 0, this.renderDraggableHeaderCell());
+    }
+    
     if (this.props.showActionsColumn) {
       if (this.props.actionsHeaderIndex >= 0) {
         let endPos = 0;
@@ -201,7 +218,6 @@ MTableHeader.defaultProps = {
   actionsHeaderIndex: 0,
   detailPanelColumnAlignment: "left",
   draggable: true,
-  draggableRows: false,
   thirdSortClick: true,
 };
 
@@ -223,7 +239,6 @@ MTableHeader.propTypes = {
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
   draggable: PropTypes.bool,
-  draggableRows: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
   tooltip: PropTypes.string
 };

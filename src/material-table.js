@@ -281,9 +281,11 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
-    this.toggleDraggableClass(result);
-    if (result.source.droppableId === this.draggableRowsIdentifier && this.props.onRowDrop) {
-      this.props.onRowDrop(result);
+    if (this.props.options.draggableRows) {
+      this.toggleDraggableClass(result);
+      if (result.source.droppableId === this.draggableRowsIdentifier && this.props.onRowDrop) {
+        this.props.onRowDrop(result);
+      }
     }
     
     if (!result || !result.source || !result.destination) return;
@@ -555,49 +557,49 @@ export default class MaterialTable extends React.Component {
   }
   
   onDragStart = result => {
-    this.toggleDraggableClass(result);
+    if (this.props.options.draggableRows) {
+      this.toggleDraggableClass(result);
+    }
   }
 
   renderTable = (props) => (
-      <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-        <Droppable droppableId={this.draggableRowsIdentifier}>
-          {(provided, snapshot) => (
-    <Table ref={provided.innerRef} style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
-      {props.options.header &&
-        <props.components.Header
-          actions={props.actions}
-          localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
-          columns={this.state.columns}
-          hasSelection={props.options.selection}
-          headerStyle={props.options.headerStyle}
-          icons={props.icons}
-          selectedCount={this.state.selectedCount}
-          dataCount={
-            props.parentChildData ? this.state.treefiedDataLength : (
-              (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
-            )
-          }
-          hasDetailPanel={!!props.detailPanel}
-          detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
-          showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
-          showSelectAllCheckbox={props.options.showSelectAllCheckbox}
-          orderBy={this.state.orderBy}
-          orderDirection={this.state.orderDirection}
-          onAllSelected={this.onAllSelected}
-          onOrderChange={this.onChangeOrder}
-          actionsHeaderIndex={props.options.actionsColumnIndex}
-          sorting={props.options.sorting}
-          grouping={props.options.grouping}
-          isTreeData={this.props.parentChildData !== undefined}
-          draggable={props.options.draggable}
-          draggableRows={props.options.draggableRows}
-          thirdSortClick={props.options.thirdSortClick}
-          treeDataMaxLevel={this.state.treeDataMaxLevel}
-          options={props.options}
-        />
-      }
-            <props.components.Body
-              
+    <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+      <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.draggableRowsIdentifier}>
+        {(provided, snapshot) => (
+          <Table ref={provided.innerRef} style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
+            {props.options.header &&
+              <props.components.Header
+                actions={props.actions}
+                localization={{ ...MaterialTable.defaultProps.localization.header, ...this.props.localization.header }}
+                columns={this.state.columns}
+                hasSelection={props.options.selection}
+                headerStyle={props.options.headerStyle}
+                icons={props.icons}
+                selectedCount={this.state.selectedCount}
+                dataCount={
+                  props.parentChildData ? this.state.treefiedDataLength : (
+                    (this.state.columns.filter(col => col.tableData.groupOrder > -1).length > 0) ? this.state.groupedDataLength : this.state.data.length
+                  )
+                }
+                hasDetailPanel={!!props.detailPanel}
+                detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
+                showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
+                showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+                orderBy={this.state.orderBy}
+                orderDirection={this.state.orderDirection}
+                onAllSelected={this.onAllSelected}
+                onOrderChange={this.onChangeOrder}
+                actionsHeaderIndex={props.options.actionsColumnIndex}
+                sorting={props.options.sorting}
+                grouping={props.options.grouping}
+                isTreeData={this.props.parentChildData !== undefined}
+                draggable={props.options.draggable}
+                thirdSortClick={props.options.thirdSortClick}
+                treeDataMaxLevel={this.state.treeDataMaxLevel}
+                options={props.options}
+              />
+            }
+            <props.components.Body                        
               actions={props.actions}
               components={props.components}
               icons={props.icons}
@@ -624,9 +626,10 @@ export default class MaterialTable extends React.Component {
               hasDetailPanel={!!props.detailPanel}
               treeDataMaxLevel={this.state.treeDataMaxLevel}
             />
-    </Table>
-            )}
-            </Droppable></DragDropContext>
+          </Table>
+        )}
+      </Droppable>
+    </DragDropContext>
   )
 
   getColumnsWidth = (props, count) => {

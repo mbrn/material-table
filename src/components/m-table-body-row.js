@@ -45,6 +45,7 @@ export default class MTableBodyRow extends React.Component {
       </TableCell>
     );
   }
+  
   renderSelectionColumn() {
     let checkboxProps = this.props.options.selectionProps || {};
     if (typeof checkboxProps === 'function') {
@@ -73,6 +74,13 @@ export default class MTableBodyRow extends React.Component {
           {...checkboxProps}
         />
       </TableCell>
+    );
+  }
+
+  renderDraggableColumn() {
+    const draggableOptions = this.props.options.draggableRowsOptions;
+    return (
+        <TableCell padding="none" key="key-drag-column" style={{ width: draggableOptions.dragCellWidth }} />
     );
   }
 
@@ -292,8 +300,15 @@ export default class MTableBodyRow extends React.Component {
           }}
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
+          {...(options.draggableRowsOptions.draggableCell ? {} : provided.dragHandleProps)}
         >
+          {options.draggableRows && options.draggableRowsOptions.draggableCell &&
+          <this.props.components.Cell
+              value={options.draggableRowsOptions.dragCellContent}
+              columnDef={{tableData: {width: options.draggableRowsOptions.dragCellWidth}}}
+              {...provided.dragHandleProps}
+          />
+          }
           {renderColumns}
         </TableRow>
           )}
