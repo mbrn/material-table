@@ -98,6 +98,7 @@ export const defaultProps = {
     searchFieldStyle: {},
     selection: false,
     selectionProps: {},
+    selectionDisabledIcon: {},
     sorting: true,
     toolbar: true,
     defaultExpanded: false,

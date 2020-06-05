@@ -146,6 +146,7 @@ export const propTypes = {
     searchFieldStyle: PropTypes.object,
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    selectionDisabledIcon: PropTypes.element,
     showEmptyDataSourceMessage: PropTypes.bool,
     showFirstLastPageButtons: PropTypes.bool,
     showSelectAllCheckbox: PropTypes.bool,

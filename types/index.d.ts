@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
-import { string } from 'prop-types';
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
@@ -233,6 +232,7 @@ export interface Options {
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
+  selectionDisabledIcon?: JSX.Element,
   sorting?: boolean;
   tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;

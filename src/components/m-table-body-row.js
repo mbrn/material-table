@@ -46,8 +46,12 @@ export default class MTableBodyRow extends React.Component {
   }
   renderSelectionColumn() {
     let checkboxProps = this.props.options.selectionProps || {};
+    let selectionDisabledIcon;
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);
+      if (checkboxProps.disabled && this.props.options.selectionDisabledIcon) {
+        selectionDisabledIcon = this.props.options.selectionDisabledIcon;
+      }
     }
 
     const size = CommonValues.elementSize(this.props);
@@ -62,7 +66,7 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <TableCell size={size} padding="none" key="key-selection-column" style={{ width: selectionWidth }}>
-        <Checkbox
+        {selectionDisabledIcon || <Checkbox
           size={size}
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
@@ -70,7 +74,7 @@ export default class MTableBodyRow extends React.Component {
           onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
           style={styles}
           {...checkboxProps}
-        />
+        />}
       </TableCell>
     );
   }
