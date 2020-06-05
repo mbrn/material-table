@@ -219,7 +219,7 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                filtering: false,
+                filtering: true,
                 grouping: true,
                 draggable: this.state.dragOption === "columns",
                 draggableRows: this.state.dragOption === "cell" || this.state.dragOption === "row",
