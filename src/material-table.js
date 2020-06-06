@@ -27,6 +27,7 @@ export default class MaterialTable extends React.Component {
 
     this.state = {
       data: [],
+      hasError: undefined,
       ...renderState,
       query: {
         filters: renderState.columns
@@ -394,20 +395,30 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
     }
   }
-
+  retry = () => {
+    this.onQueryChange(this.state.query);
+  }
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query };
-    this.setState({ isLoading: true }, () => {
+    this.setState({ isLoading: true, hasError: undefined }, () => {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
         query.page = result.page;
         this.dataManager.setData(result.data);
         this.setState({
           isLoading: false,
+          hasError: false,
           ...this.dataManager.getRenderState(),
           query
         }, () => {
           callback && callback();
+        });
+      }).catch((error) => {
+        const localization = { ...MaterialTable.defaultProps.localization, ...this.props.localization };
+        this.setState({
+          isLoading: false,
+          hasError: typeof error === 'object' ? error.message : error !== undefined ? error : localization.error,
+          ...this.dataManager.getRenderState(),
         });
       });
     });
@@ -742,6 +753,11 @@ export default class MaterialTable extends React.Component {
           {(this.state.isLoading || props.isLoading) && props.options.loadingType === 'overlay' &&
             <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
               <props.components.OverlayLoading theme={props.theme} />
+            </div>
+          }
+          {this.state.hasError &&
+            <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
+              <props.components.OverlayError error={this.state.hasError} retry={this.retry} theme={props.theme} icon={props.icons.Retry} />
             </div>
           }
         </props.components.Container>

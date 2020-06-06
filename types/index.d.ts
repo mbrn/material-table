@@ -153,6 +153,7 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   OverlayLoading?: React.ComponentType<any>;
+  OverlayError?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
@@ -190,6 +191,7 @@ export interface Icons {
   Search?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   ThirdStateCheck?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   ViewColumn?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
+  Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
 export interface Options {
@@ -250,6 +252,7 @@ export interface Options {
 }
 
 export interface Localization {
+  error?: React.ReactNode;
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;

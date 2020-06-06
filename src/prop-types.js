@@ -64,6 +64,7 @@ export const propTypes = {
     GroupRow: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Header: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     OverlayLoading: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
+    OverlayError: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Pagination: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Row: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent]),
     Toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.func, StyledComponent])
