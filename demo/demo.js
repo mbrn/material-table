@@ -123,9 +123,7 @@ class App extends Component {
                   title="Demo Title"
                   options={{
                     pageSize: 50,
-                    pageSizeOptions: [5, 50, 100],
-                    draggable: false,
-                    draggableRows: false
+                    pageSizeOptions: [5, 50, 100]
                   }}
                   editable={{
                     onRowAdd: newData =>
