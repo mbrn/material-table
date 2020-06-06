@@ -112,7 +112,7 @@ export const defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
-    overflowY: 'auto',
+    overflowY: 'initial',
   },
   localization: {
     grouping: {
