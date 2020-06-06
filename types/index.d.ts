@@ -302,6 +302,7 @@ export interface Localization {
 
 export interface DraggableRowsOptions {
   draggableCell?: boolean;
+  dragHeaderContent: string | React.ReactElement<any>;
   dragCellContent: string | React.ReactElement<any>;
   dragCellWidth?: string;
 }
