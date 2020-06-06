@@ -14,6 +14,31 @@ class MTableEditField extends React.Component {
     return props;
   }
 
+  renderAutocompleteField() {
+    return (
+      <Autocomplete
+        {...this.getProps()}
+        clearOnEscape
+        options={this.props.columnDef.autocomplete}
+        freeSolo={this.props.columnDef.freeSolo}
+        inputValue={this.props.value || ''}
+        onChange={(event, newValue) => this.props.onChange(newValue)}
+        onInputChange={(event, newValue) => this.props.onChange(event.target.value)}
+        renderInput={(params) =>
+          <TextField
+            {...params}
+            placeholder={this.props.columnDef.title}
+            value={this.props.value || ''}
+            onChange={(event) => this.props.onChange(event.target.value)}
+            style={{
+              maxWidth: "200px"
+            }}
+          />
+        }
+      />
+    );
+  }
+
   renderLookupField() {
     return (
       <Select
@@ -21,7 +46,7 @@ class MTableEditField extends React.Component {
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
         style={{
-          fontSize: 13,
+          fontSize: 16,
         }}
       >
         {Object.keys(this.props.columnDef.lookup).map(key => (
@@ -29,7 +54,6 @@ class MTableEditField extends React.Component {
         )}
       </Select>
     );
-
   }
 
   renderBooleanField() {
@@ -60,13 +84,14 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
+              fontSize: 16,
             }
           }}
         />
       </MuiPickersUtilsProvider>
     );
   }
+
   renderTimeField() {
     return (
       <MuiPickersUtilsProvider
@@ -80,7 +105,7 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
+              fontSize: 16,
             }
           }}
         />
@@ -100,7 +125,7 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
+              fontSize: 16,
             }
           }}
         />
@@ -119,7 +144,7 @@ class MTableEditField extends React.Component {
         onChange={event => this.props.onChange(event.target.value)}
         InputProps={{
           style: {
-            fontSize: 13,
+            fontSize: 16,
           }
         }}
       />
@@ -135,7 +160,7 @@ class MTableEditField extends React.Component {
         onChange={event => this.props.onChange(event.target.value)}
         inputProps={{
           style: {
-            fontSize: 13,
+            fontSize: 16,
             textAlign: "right"
           }
         }}
@@ -143,33 +168,14 @@ class MTableEditField extends React.Component {
     );
   }
 
-  renderAutocompleteField() {
-    return (
-      <Autocomplete
-        {...this.getProps()}
-        options={this.props.columnDef.autocomplete}
-        value={this.props.value === undefined ? '' : this.props.value}
-        onChange={event => this.props.onChange(event.target.textContent)}
-        renderInput={(params) =>
-          <TextField
-            {...params}
-            placeholder={this.props.columnDef.title}
-            value={this.props.value === undefined ? '' : this.props.value}
-            onChange={event => this.props.onChange(event.target.value)}
-          />
-        }
-      />
-    );
-  }
-
   render() {
     let component = "ok";
 
-    if (this.props.columnDef.lookup) {
-      component = this.renderLookupField();
-    }
-    else if (this.props.columnDef.autocomplete) {
+    if (this.props.columnDef.autocomplete) {
       component = this.renderAutocompleteField();
+    }
+    else if (this.props.columnDef.lookup) {
+      component = this.renderLookupField();
     }
     else if (this.props.columnDef.type === "boolean") {
       component = this.renderBooleanField();
