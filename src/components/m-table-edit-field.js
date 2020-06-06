@@ -45,9 +45,6 @@ class MTableEditField extends React.Component {
         {...this.getProps()}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
-        style={{
-          fontSize: 16,
-        }}
       >
         {Object.keys(this.props.columnDef.lookup).map(key => (
           <MenuItem key={key} value={key}>{this.props.columnDef.lookup[key]}</MenuItem>)
@@ -82,11 +79,6 @@ class MTableEditField extends React.Component {
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 16,
-            }
-          }}
         />
       </MuiPickersUtilsProvider>
     );
@@ -103,11 +95,6 @@ class MTableEditField extends React.Component {
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 16,
-            }
-          }}
         />
       </MuiPickersUtilsProvider>
     );
@@ -123,11 +110,6 @@ class MTableEditField extends React.Component {
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
-          InputProps={{
-            style: {
-              fontSize: 16,
-            }
-          }}
         />
       </MuiPickersUtilsProvider>
     );
@@ -142,11 +124,6 @@ class MTableEditField extends React.Component {
         placeholder={this.props.columnDef.title}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
-        InputProps={{
-          style: {
-            fontSize: 16,
-          }
-        }}
       />
     );
   }
@@ -160,7 +137,6 @@ class MTableEditField extends React.Component {
         onChange={event => this.props.onChange(event.target.value)}
         inputProps={{
           style: {
-            fontSize: 16,
             textAlign: "right"
           }
         }}
