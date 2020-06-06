@@ -611,7 +611,7 @@ export default class MaterialTable extends React.Component {
         <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.draggableRowsIdentifier}>
           {(provided, snapshot) => (
             <props.components.Body
-              innerRef={provided.innerRef}
+              provided={provided}
               actions={props.actions}
               components={props.components}
               icons={props.icons}
@@ -743,7 +743,7 @@ export default class MaterialTable extends React.Component {
                         </div> : null
                       }
 
-                      <div  >
+                      <div>
                         {table}
                       </div>
 

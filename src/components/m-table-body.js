@@ -132,9 +132,9 @@ class MTableBody extends React.Component {
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
-    
+
     return (
-      <TableBody ref={this.props.innerRef}>
+      <TableBody ref={this.props.provided?.innerRef}>
         {this.props.options.filtering &&
           <this.props.components.FilterRow
             columns={this.props.columns.filter(columnDef => !columnDef.hidden)}
@@ -193,6 +193,7 @@ class MTableBody extends React.Component {
           />
         }
         {this.renderEmpty(emptyRowCount, renderData)}
+        {this.props.provided.placeholder}
       </TableBody>
     );
   }
@@ -238,7 +239,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  innerRef: PropTypes.any,
+  provided: PropTypes.object,
 };
 
 export default MTableBody;
