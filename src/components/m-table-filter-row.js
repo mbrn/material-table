@@ -221,7 +221,7 @@ MTableFilterRow.defaultProps = {
   localization: {
     filterTooltip: 'Filter'
   },
-  hideFilterIcons: true,
+  hideFilterIcons: false,
 };
 
 MTableFilterRow.propTypes = {
