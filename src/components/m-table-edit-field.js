@@ -58,7 +58,7 @@ class MTableEditField extends React.Component {
         value={this.props.value === undefined ? "" : this.props.value}
         onChange={(event) => this.props.onChange(event.target.value)}
         style={{
-          fontSize: 16,
+          fontSize: 13,
         }}
         SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
       >
@@ -102,7 +102,10 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 16,
-            }
+            },
+          }}
+          inputProps={{
+            "aria-label": `${this.props.columnDef.title}: press space to edit`,
           }}
         />
       </MuiPickersUtilsProvider>
@@ -121,13 +124,15 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 16,
-            }
+            },
+            inputProps: {
+              "aria-label": `${this.props.columnDef.title}: press space to edit`,
+            },
           }}
         />
       </MuiPickersUtilsProvider>
     );
   }
-
   renderDateTimeField() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
@@ -139,11 +144,11 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
+              fontSize: 13,
+            },
             inputProps: {
               "aria-label": `${this.props.columnDef.title}: press space to edit`,
             },
-              fontSize: 16,
-            }
           }}
         />
       </MuiPickersUtilsProvider>
@@ -165,11 +170,11 @@ class MTableEditField extends React.Component {
         onChange={(event) => this.props.onChange(event.target.value)}
         InputProps={{
           style: {
-            inputProps: {
-              "aria-label": this.props.columnDef.title,
-            },
             fontSize: 16,
-          }
+          },
+          inputProps: {
+            "aria-label": this.props.columnDef.title,
+          },
         }}
       />
     );
@@ -189,7 +194,7 @@ class MTableEditField extends React.Component {
             fontSize: 16,
             textAlign: "right",
             "aria-label": this.props.columnDef.title,
-          }
+          },
         }}
       />
     );
