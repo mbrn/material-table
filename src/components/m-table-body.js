@@ -143,6 +143,7 @@ class MTableBody extends React.Component {
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
+            draggableCells={this.props.options.draggableRows && this.props.options.draggableRowsOptions.draggableCell}
             localization={{ ...MTableBody.defaultProps.localization.filterRow, ...this.props.localization.filterRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}

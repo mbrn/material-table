@@ -166,7 +166,10 @@ class MTableFilterRow extends React.Component {
           {this.getComponentForColumn(columnDef)}
         </TableCell>
       ));
-
+    
+    if (this.props.draggableCells) {
+      columns.splice(0, 0, <TableCell padding="none" key="key-draggable-column" />);
+    }
     if (this.props.selection) {
       columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
@@ -213,6 +216,7 @@ class MTableFilterRow extends React.Component {
 MTableFilterRow.defaultProps = {
   columns: [],
   selection: false,
+  draggableCells: false,
   hasActions: false,
   localization: {
     filterTooltip: 'Filter'
