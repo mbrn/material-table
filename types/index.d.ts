@@ -14,8 +14,8 @@ export interface MaterialTableProps<RowData extends object> {
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
-    onRowAddCancelled?: () => void;
-    onRowUpdateCancelled?: () => void;
+    onRowAddCancelled?: (rowData: RowData) => void;
+    onRowUpdateCancelled?: (rowData: RowData) => void;
   }
   icons?: Icons;
   isLoading?: boolean;
