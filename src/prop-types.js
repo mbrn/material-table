@@ -70,9 +70,13 @@ export const propTypes = {
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
+    isEditable: PropTypes.func,
+    isDeletable: PropTypes.func,
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
-    onRowDelete: PropTypes.func
+    onRowDelete: PropTypes.func,
+    isEditHidden: PropTypes.func,
+    isDeleteHidden: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
