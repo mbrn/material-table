@@ -389,12 +389,19 @@ export default class MaterialTable extends React.Component {
 
   onEditingCanceled = (mode, rowData) => {
     if (mode === "add") {
+      this.props.editable.onRowAddCancelled && this.props.editable.onRowAddCancelled();
       this.setState({ showAddRow: false });
     }
-    else if (mode === "update" || mode === "delete") {
+    else if(mode === "update") {
+      this.props.editable.onRowUpdateCancelled && this.props.editable.onRowUpdateCancelled();
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
+    else if(mode === "delete") {
+      this.dataManager.changeRowEditing(rowData);
+      this.setState(this.dataManager.getRenderState());
+    }
+
   }
 
   onQueryChange = (query, callback) => {

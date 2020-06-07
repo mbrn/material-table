@@ -75,6 +75,8 @@ export const propTypes = {
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
     onRowDelete: PropTypes.func,
+    onRowAddCancelled: PropTypes.func,
+    onRowUpdateCancelled: PropTypes.func
     isEditHidden: PropTypes.func,
     isDeleteHidden: PropTypes.func
   }),
