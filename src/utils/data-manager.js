@@ -59,7 +59,7 @@ export default class DataManager {
   }
 
   setColumns(columns) {    
-    const undefinedWidthColumns = columns.filter(c => c.width === undefined);
+    const undefinedWidthColumns = columns.filter(c => c.width === undefined && !c.hidden);
     let usedWidth = ["0px"];
 
     this.columns = columns.map((columnDef, index) => {
