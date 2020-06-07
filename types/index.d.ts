@@ -25,7 +25,7 @@ export interface MaterialTableProps<RowData extends object> {
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number) => void;
+  onChangePage?: (page: number, pageSize: number) => void;
   onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
