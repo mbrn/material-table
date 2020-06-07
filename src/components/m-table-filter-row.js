@@ -29,18 +29,26 @@ const MenuProps = {
 };
 
 class MTableFilterRow extends React.Component {
-  renderFilterComponent = (columnDef) => (
-    React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
-  )
+  getLocalizationData = () => ({ ...MTableFilterRow.defaultProps.localization, ...this.props.localization });
+  getLocalizedFilterPlaceHolder = columnDef => columnDef.filterPlaceholder || this.getLocalizationData().filterPlaceHolder || "";
 
-  renderLookupFilter = (columnDef) => (
-    <FormControl style={{ width: '100%' }}>
-      <InputLabel htmlFor="select-multiple-checkbox">{columnDef.filterPlaceholder}</InputLabel>
+  LookupFilter = ({ columnDef }) => {
+    const [selectedFilter, setSelectedFilter] = React.useState(columnDef.tableData.filterValue || []);
+
+    React.useEffect(() => {
+      setSelectedFilter(columnDef.tableData.filterValue || []);
+    }, [columnDef.tableData.filterValue]);
+
+    return <FormControl style={{ width: '100%' }}>
+      <InputLabel htmlFor="select-multiple-checkbox" style={{marginTop: -16}}>{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
       <Select
         multiple
-        value={columnDef.tableData.filterValue || []}
-        onChange={event => {
+        value={selectedFilter}
+        onClose={event => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+        }}
+        onChange={event => {
+          setSelectedFilter(event.target.value);
         }}
         input={<Input id="select-multiple-checkbox" />}
         renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
@@ -50,13 +58,18 @@ class MTableFilterRow extends React.Component {
         {
           Object.keys(columnDef.lookup).map(key => (
             <MenuItem key={key} value={key}>
-              <Checkbox checked={columnDef.tableData.filterValue ? columnDef.tableData.filterValue.indexOf(key.toString()) > -1 : false} />
+              <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
               <ListItemText primary={columnDef.lookup[key]} />
             </MenuItem>
           ))
         }
       </Select>
-    </FormControl>
+    </FormControl>;
+  }
+
+
+  renderFilterComponent = (columnDef) => (
+    React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
   )
 
   renderBooleanFilter = (columnDef) => (
@@ -77,21 +90,23 @@ class MTableFilterRow extends React.Component {
   )
 
   renderDefaultFilter = (columnDef) => {
-    const localization = { ...MTableFilterRow.defaultProps.localization, ...this.props.localization };
+    const localization = this.getLocalizationData();
+    const FilterIcon = this.props.icons.Filter;
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
-        placeholder={columnDef.filterPlaceholder || ''}
+        placeholder={this.getLocalizedFilterPlaceHolder(columnDef)}
         onChange={(event) => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
+        inputProps={{'aria-label': `filter data by ${columnDef.title}`}}
         InputProps={this.props.hideFilterIcons || columnDef.hideFilterIcon ? undefined : {
           startAdornment: (
             <InputAdornment position="start">
               <Tooltip title={localization.filterTooltip}>
-                <this.props.icons.Filter />
+                <FilterIcon/>
               </Tooltip>
             </InputAdornment>
           )
@@ -101,31 +116,26 @@ class MTableFilterRow extends React.Component {
   }
 
   renderDateTypeFilter = (columnDef) => {
-    let dateInputElement = null;
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
+    const pickerProps = {
+      value: columnDef.tableData.filterValue || null,
+      onChange: onDateInputChange,
+      placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
+      clearable: true
+    };
+
+    let dateInputElement = null;
     if (columnDef.type === 'date') {
       dateInputElement = (
-        <DatePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DatePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'datetime') {
       dateInputElement = (
-        <DateTimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <DateTimePicker {...pickerProps} />
       );
     } else if (columnDef.type === 'time') {
       dateInputElement = (
-        <TimePicker
-          value={columnDef.tableData.filterValue || null}
-          onChange={onDateInputChange}
-          clearable
-        />
+        <TimePicker {...pickerProps} />
       );
     }
     return (
@@ -146,7 +156,7 @@ class MTableFilterRow extends React.Component {
       if (columnDef.filterComponent) {
         return this.renderFilterComponent(columnDef);
       } else if (columnDef.lookup) {
-        return this.renderLookupFilter(columnDef);
+        return <this.LookupFilter columnDef={columnDef} />;
       } else if (columnDef.type === 'boolean') {
         return this.renderBooleanFilter(columnDef);
       } else if (['date', 'datetime', 'time'].includes(columnDef.type)) {
@@ -170,7 +180,7 @@ class MTableFilterRow extends React.Component {
     if (this.props.selection) {
       columns.splice(0, 0, <TableCell padding="none" key="key-selection-column" />);
     }
-    
+
     if (this.props.hasActions) {
       if (this.props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
