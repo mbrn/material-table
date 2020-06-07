@@ -18,6 +18,10 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 </div>
 
+## Roadmap
+
+ - [More on our roadmap can be found here](https://github.com/mbrn/material-table/blob/master/.github/ROADMAP.md)
+
 ## Key features
 
 - [Actions](https://material-table.com/#/docs/features/actions)
