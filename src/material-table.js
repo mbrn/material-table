@@ -278,7 +278,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.changePageSize(pageSize);
 
-    this.props.onChangePage && this.props.onChangePage(0);
+    this.props.onChangePage && this.props.onChangePage(0, pageSize);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
