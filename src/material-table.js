@@ -331,7 +331,7 @@ export default class MaterialTable extends React.Component {
   }
 
   onEditingApproved = (mode, newData, oldData) => {
-    if (mode === "add") {
+    if (mode === "add"  && this.props.editable && this.props.editable.onRowAdd) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowAdd(newData)
           .then(result => {
@@ -346,7 +346,7 @@ export default class MaterialTable extends React.Component {
           });
       });
     }
-    else if (mode === "update") {
+    else if(mode === "update" && this.props.editable && this.props.editable.onRowUpdate) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowUpdate(newData, oldData)
           .then(result => {
@@ -366,7 +366,7 @@ export default class MaterialTable extends React.Component {
       });
 
     }
-    else if (mode === "delete") {
+    else if(mode === "delete" && this.props.editable && this.props.editable.onRowDelete) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowDelete(oldData)
           .then(result => {
