@@ -70,11 +70,15 @@ export const propTypes = {
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
+    isEditable: PropTypes.func,
+    isDeletable: PropTypes.func,
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
     onRowDelete: PropTypes.func,
     onRowAddCancelled: PropTypes.func,
     onRowUpdateCancelled: PropTypes.func
+    isEditHidden: PropTypes.func,
+    isDeleteHidden: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
@@ -82,8 +86,8 @@ export const propTypes = {
       PropTypes.func,
       PropTypes.shape({
         disabled: PropTypes.bool,
-        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
-        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string]),
+        icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]),
+        openIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.func, PropTypes.string, RefComponent]),
         tooltip: PropTypes.string,
         render: PropTypes.func.isRequired
       })
@@ -135,6 +139,7 @@ export const propTypes = {
     maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     minBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     loadingType: PropTypes.oneOf(['overlay', 'linear']),
+    overflowY: PropTypes.oneOf(['visible', 'hidden', 'scroll', 'auto', 'initial', 'inherit']),
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
@@ -146,6 +151,8 @@ export const propTypes = {
     toolbarButtonAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldAlignment: PropTypes.oneOf(['left', 'right']),
     searchFieldStyle: PropTypes.object,
+    searchAutoFocus: PropTypes.bool,
+    searchFieldVariant: PropTypes.oneOf( ['standard', 'filled', 'outlined']),
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,
@@ -155,8 +162,7 @@ export const propTypes = {
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool,
-    overflowY: PropTypes.string
+    thirdSortClick: PropTypes.bool
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({

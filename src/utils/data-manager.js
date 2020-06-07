@@ -4,6 +4,7 @@ import { byString } from './';
 export default class DataManager {
   applyFilters = false;
   applySearch = false;
+  applySort = false;
   currentPage = 0;
   detailPanelType = 'multiple'
   lastDetailPanelRow = undefined;
@@ -58,7 +59,7 @@ export default class DataManager {
   }
 
   setColumns(columns) {    
-    const undefinedWidthColumns = columns.filter(c => c.width === undefined);
+    const undefinedWidthColumns = columns.filter(c => c.width === undefined && !c.hidden);
     let usedWidth = ["0px"];
 
     this.columns = columns.map((columnDef, index) => {
@@ -102,6 +103,11 @@ export default class DataManager {
   changeApplyFilters(applyFilters) {
     this.applyFilters = applyFilters;
     this.filtered = false;
+  }
+
+  changeApplySort(applySort) {
+    this.applySort = applySort;
+    this.sorted = false;
   }
 
   changePaging(paging) {
@@ -839,7 +845,7 @@ export default class DataManager {
     }
     else if (this.isDataType("normal")) {
       this.sortedData = [...this.searchedData];
-      if (this.orderBy != -1) {
+      if (this.orderBy != -1 && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
       }
     }
