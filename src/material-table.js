@@ -12,16 +12,16 @@ import { debounce } from 'debounce';
 import equal from 'fast-deep-equal';
 import { withStyles } from '@material-ui/core';
 import * as CommonValues from './utils/common-values';
+import { MTableConditionalRender } from './components/m-table-conditional-render';
 
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
-  draggableRowsIdentifier = "draggable-rows";
+  droppableRowsIdentifier = this.props.options.draggableRowsOptions.droppableRowsIdentifier;
 
   constructor(props) {
     super(props);
-
     const calculatedProps = this.getProps(props);
     this.setDataManagerFields(calculatedProps, true);
     const renderState = this.dataManager.getRenderState();
@@ -301,7 +301,7 @@ export default class MaterialTable extends React.Component {
     if (!result || !result.source || !result.destination) return;
     if (this.props.options.draggableRows) {
       this.toggleDraggableClass(result);
-      if (result.source.droppableId === this.draggableRowsIdentifier && this.props.onRowDrop) {
+      if (result.source.droppableId === this.droppableRowsIdentifier && this.props.onRowDrop) {
         this.props.onRowDrop({ ...result, selectedRows: this.dataManager.selectedRows });
       }
     }
@@ -613,8 +613,17 @@ export default class MaterialTable extends React.Component {
           options={props.options}
         />
       }
-      <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-        <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.draggableRowsIdentifier}
+      <MTableConditionalRender
+        condition={!props.options.disableDragDropContext}
+        wrapperSuccess={(children) => {
+          return(
+            <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+              {children}
+            </DragDropContext>
+          );
+        }}>
+
+        <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.droppableRowsIdentifier}
                    direction="vertical">
           {(provided, snapshot) => (
             <props.components.Body
@@ -648,7 +657,7 @@ export default class MaterialTable extends React.Component {
             />
           )}
         </Droppable>
-      </DragDropContext>
+      </MTableConditionalRender>
     </Table>
   )
 
@@ -689,7 +698,9 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd} nonce={props.options.cspNonce}>
+      <MTableConditionalRender
+          condition={!props.options.disableDragDropContext}
+          wrapperSuccess={(children) => <DragDropContext onDragEnd={this.onDragEnd} nonce={props.options.cspNonce}> {children} </DragDropContext>}>
         <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
@@ -736,7 +747,7 @@ export default class MaterialTable extends React.Component {
             />
           }
           <ScrollBar double={props.options.doubleHorizontalScroll}>
-            <Droppable droppableId="headers" direction="horizontal">
+            <Droppable isDropDisabled={this.props.options.draggableRows || !this.props.options.draggable} droppableId="headers" direction="horizontal">
               {(provided, snapshot) => {
                 const table = this.renderTable(props);
                 return (
@@ -786,8 +797,7 @@ export default class MaterialTable extends React.Component {
             </div>
           }
         </props.components.Container>
-      </DragDropContext>
-    );
+      </MTableConditionalRender>    );
   }
 }
 

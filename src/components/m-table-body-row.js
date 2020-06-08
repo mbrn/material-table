@@ -285,8 +285,8 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <>
-        <Draggable isDragDisabled={!options.draggableRows} key={"row-" + this.props.index.toString()}
-                   draggableId={"row-" + this.props.index.toString()} index={this.props.index}>
+        <Draggable isDragDisabled={!options.draggableRows} key={options.draggableRowsOptions.droppableRowsIdentifier + "row-" + this.props.index.toString()}
+                   draggableId={options.draggableRowsOptions.droppableRowsIdentifier + "row-" + this.props.index.toString()} index={this.props.index}>
           {(provided, snapshot) => {
             const shouldShowSelection = snapshot.isDragging && selectedCount > 1;
             return (

@@ -118,12 +118,14 @@ export const propTypes = {
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(['single', 'multiple']),
     doubleHorizontalScroll: PropTypes.bool,
+    draggable: PropTypes.bool,
     draggableRows: PropTypes.bool,
     draggableRowsOptions: PropTypes.shape({
       draggableCell: PropTypes.bool,
       dragHeaderContent: PropTypes.string | PropTypes.element,
       dragCellContent: PropTypes.string | PropTypes.element,
       dragCellWidth: PropTypes.string,
+      droppableRowsIdentifier: PropTypes.string,
     }),
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,
@@ -163,7 +165,8 @@ export const propTypes = {
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool
+    thirdSortClick: PropTypes.bool,
+    disableDragDropContext: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({

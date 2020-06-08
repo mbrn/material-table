@@ -72,12 +72,14 @@ export const defaultProps = {
     detailPanelType: 'multiple',
     debounceInterval: 200,
     doubleHorizontalScroll: false,
+    draggable: true,
     draggableRows: false,
     draggableRowsOptions: {
       draggableCell: false,
       dragHeaderContent: "",
       dragCellContent: "=",
-      dragCellWidth: "40px"
+      dragCellWidth: "40px",
+      droppableRowsIdentifier: "droppable-rows",
     },
     emptyRowsWhenPaging: true,
     exportAllData: false,
@@ -113,6 +115,7 @@ export const defaultProps = {
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
     overflowY: 'initial',
+    disableDragDropContext: false,
   },
   localization: {
     grouping: {

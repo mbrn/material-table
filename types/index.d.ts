@@ -249,6 +249,7 @@ export interface Options {
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
   cspNonce?: string;
+  disableDragDropContext?: boolean;
 }
 
 export interface Localization {
@@ -302,9 +303,10 @@ export interface Localization {
 
 export interface DraggableRowsOptions {
   draggableCell?: boolean;
-  dragHeaderContent: string | React.ReactElement<any>;
-  dragCellContent: string | React.ReactElement<any>;
+  dragHeaderContent?: string | React.ReactElement<any>;
+  dragCellContent?: string | React.ReactElement<any>;
   dragCellWidth?: string;
+  droppableRowsIdentifier?: string;
 }
 
 export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}
