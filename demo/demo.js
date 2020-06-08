@@ -93,12 +93,12 @@ class App extends Component {
     dragOption: "disabled",
     remoteDataOrder: []
   }
-  
+
   resetDataOrder = (data) => {
     this.state.remoteDataOrder = [];
     data.forEach((el) => this.state.remoteDataOrder.push(el.id));
   }
-  
+
   reorderData = (data) => {
     return data.sort((a, b) => {
       const aPos = this.state.remoteDataOrder.indexOf(a.id);
@@ -143,7 +143,7 @@ class App extends Component {
                           {
                             /* const data = this.state.data;
                             const index = data.indexOf(oldData);
-                            data[index] = newData;                
+                            data[index] = newData;
                             this.setState({ data }, () => resolve()); */
                           }
                           resolve();
@@ -217,7 +217,8 @@ class App extends Component {
                 { title: 'Last Name', field: 'last_name' },
               ]}
               options={{
-                filtering: true,
+                selection: true,
+                filtering: false,
                 grouping: true,
                 draggable: this.state.dragOption === "columns",
                 draggableRows: this.state.dragOption === "cell" || this.state.dragOption === "row",
@@ -250,9 +251,26 @@ class App extends Component {
                   })
               })}
               onRowDrop={(result) => {
-                this.state.remoteDataOrder.splice(result.destination.index, 0, this.state.remoteDataOrder.splice(result.source.index, 1)[0]);
+                if (result.selectedRows.length > 1) {
+                  let indexes = [];
+                  let firstLower= false;
+                  result.selectedRows=result.selectedRows.sort((a,b)=> a.tableData.id - b.tableData.id)
+                  for (const selectedRow of result.selectedRows) {
+                    indexes.push(this.state.remoteDataOrder.splice(this.state.remoteDataOrder.indexOf(selectedRow.id), 1)[0]);
+                    if (selectedRow.tableData.id < result.destination.index){
+                      if (firstLower) {
+                        result.destination.index--
+                      }
+                      firstLower = true;
+                    }
+                  }
+                  this.state.remoteDataOrder.splice(result.destination.index, 0, ...indexes);
+                } else {
+                  this.state.remoteDataOrder.splice(result.destination.index, 0, this.state.remoteDataOrder.splice(result.source.index, 1)[0]);
+                }
                 const dataManager = this.remoteDataTableRef.current.dataManager;
                 dataManager.setData(this.reorderData(dataManager.data));
+                dataManager.changeAllSelected(false);
               }}
             />
           </div>

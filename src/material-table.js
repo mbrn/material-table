@@ -298,14 +298,14 @@ export default class MaterialTable extends React.Component {
   }
 
   onDragEnd = result => {
+    if (!result || !result.source || !result.destination) return;
     if (this.props.options.draggableRows) {
       this.toggleDraggableClass(result);
       if (result.source.droppableId === this.draggableRowsIdentifier && this.props.onRowDrop) {
-        this.props.onRowDrop(result);
+        this.props.onRowDrop({ ...result, selectedRows: this.dataManager.selectedRows });
       }
     }
-    
-    if (!result || !result.source || !result.destination) return;
+
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
       if (this.props.onColumnDragged && result.destination.droppableId === "headers" &&
@@ -566,12 +566,18 @@ export default class MaterialTable extends React.Component {
       row.classList.add(this.props.classes.draggableRow);
     }
   }
-  
+
   onDragStart = result => {
     if (this.props.options.draggableRows) {
       this.toggleDraggableClass(result);
+      const draggedRow = this.dataManager.selectedRows.find((row) => row.tableData.id === result.source.index);
+
+      if (!draggedRow || draggedRow.length === 0) {
+        this.onAllSelected(false);
+        this.dataManager.selectedRows = [this.state.originalData.find((row) => row.tableData.id === result.source.index)];
+      }
     }
-  }
+  };
 
   renderTable = (props) => (
     <Table style={{ tableLayout: (props.options.fixedColumns && (props.options.fixedColumns.left || props.options.fixedColumns.right)) ? 'fixed' : props.options.tableLayout }}>
@@ -608,7 +614,8 @@ export default class MaterialTable extends React.Component {
         />
       }
       <DragDropContext onBeforeDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-        <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.draggableRowsIdentifier}>
+        <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.draggableRowsIdentifier}
+                   direction="vertical">
           {(provided, snapshot) => (
             <props.components.Body
               provided={provided}
@@ -626,6 +633,7 @@ export default class MaterialTable extends React.Component {
               isTreeData={this.props.parentChildData !== undefined}
               onFilterChanged={this.onFilterChange}
               onRowSelected={this.onRowSelected}
+              selectedCount={this.state.selectedCount}
               onToggleDetailPanel={this.onToggleDetailPanel}
               onGroupExpandChanged={this.onGroupExpandChanged}
               onTreeExpandChanged={this.onTreeExpandChanged}

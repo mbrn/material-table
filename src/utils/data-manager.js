@@ -16,6 +16,7 @@ export default class DataManager {
   parentFunc = null;
   searchText = '';
   selectedCount = 0;
+  selectedRows= [];
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
@@ -46,11 +47,13 @@ export default class DataManager {
 
   setData(data) {
     this.selectedCount = 0;
+    this.selectedRows = [];
 
     this.data = data.map((row, index) => {
       row.tableData = { ...row.tableData, id: index };
       if (row.tableData.checked) {
         this.selectedCount++;
+        this.selectedRows.push(row);
       }
       return row;
     });
@@ -139,6 +142,7 @@ export default class DataManager {
     rowData.tableData.checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
 
+    checked ? this.selectedRows.push(rowData) : this.selectedRows.splice(this.selectedRows.indexOf(rowData), 1);
     const checkChildRows = rowData => {
       if (rowData.tableData.childRows) {
         rowData.tableData.childRows.forEach(childRow => {
@@ -231,7 +235,7 @@ export default class DataManager {
       });
       selectedCount = this.searchedData.length;
     }
-
+    this.selectedRows = checked ?  [...this.data] : [];
     this.selectedCount = checked ? selectedCount : 0;
   }
 

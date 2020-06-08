@@ -74,6 +74,7 @@ class MTableBody extends React.Component {
             options={this.props.options}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow }}
             onRowSelected={this.props.onRowSelected}
+            selectedCount={this.props.selectedCount}
             actions={this.props.actions}
             columns={this.props.columns}
             getFieldValue={this.props.getFieldValue}
@@ -109,6 +110,7 @@ class MTableBody extends React.Component {
         path={[index + this.props.pageSize * this.props.currentPage]}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
+        selectedCount={this.props.selectedCount}
         onRowClick={this.props.onRowClick}
         onEditingCanceled={this.props.onEditingCanceled}
         onEditingApproved={this.props.onEditingApproved}
@@ -224,6 +226,7 @@ MTableBody.propTypes = {
   icons: PropTypes.object.isRequired,
   isTreeData: PropTypes.bool.isRequired,
   onRowSelected: PropTypes.func,
+  selectedCount: PropTypes.number,
   options: PropTypes.object.isRequired,
   pageSize: PropTypes.number,
   renderData: PropTypes.array,
