@@ -18,7 +18,7 @@ import { MTableConditionalRender } from './components/m-table-conditional-render
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
-  droppableRowsIdentifier = this.props.options.draggableRowsOptions.droppableRowsIdentifier;
+  droppableRowsIdentifier = MaterialTable.defaultProps.options.draggableRowsOptions.droppableRowsIdentifier;
 
   constructor(props) {
     super(props);
@@ -49,6 +49,7 @@ export default class MaterialTable extends React.Component {
       width: 0
     };
 
+    if (props?.options?.draggableRowsOptions?.droppableRowsIdentifier) this.droppableRowsIdentifier = props.options.draggableRowsOptions.droppableRowsIdentifier;
     this.tableContainerDiv = React.createRef();
   }
 
@@ -633,7 +634,7 @@ export default class MaterialTable extends React.Component {
         }}>
 
         <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.droppableRowsIdentifier}
-                   direction="vertical" isCombineEnabled={this.props.options.draggableRowsOptions.isCombineEnabled}>
+                   direction="vertical" isCombineEnabled={ this.props.options?.draggableRowsOptions?.isCombineEnabled}>
           {(provided, snapshot) => (
             <props.components.Body
               provided={provided}

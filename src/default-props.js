@@ -79,7 +79,7 @@ export const defaultProps = {
       dragHeaderContent: "",
       dragCellContent: "=",
       dragCellWidth: "40px",
-      droppableRowsIdentifier: "droppable-rows",
+      droppableRowsIdentifier: "droppable-rows-",
       isCombineEnabled: false,
     },
     emptyRowsWhenPaging: true,
