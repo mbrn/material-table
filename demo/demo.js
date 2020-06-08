@@ -480,7 +480,7 @@ class App extends Component {
   };
 
   onDragStart = (result) => {
-    if (result.source.droppableId){
+    if (result.source.droppableId === "droppable1"){
       this.tableRef.current.onDragStart(result)
     } else {
       this.remoteDataTableRef.current.onDragStart(result)
