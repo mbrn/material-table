@@ -23,7 +23,7 @@ export class MTableToolbar extends React.Component {
     this.state = {
       columnsButtonAnchorEl: null,
       exportButtonAnchorEl: null,
-      searchText: ''
+      searchText: props.searchText
     };
   }
 
@@ -77,7 +77,7 @@ export class MTableToolbar extends React.Component {
             startAdornment: (
               <InputAdornment position="start">
                 <Tooltip title={localization.searchTooltip}>
-                  <this.props.icons.Search color="inherit" fontSize="small" />
+                  <this.props.icons.Search fontSize="small" />
                 </Tooltip>
               </InputAdornment>
             ),
@@ -87,7 +87,7 @@ export class MTableToolbar extends React.Component {
                   disabled={!this.state.searchText}
                   onClick={() => this.onSearchChange("")}
                 >
-                  <this.props.icons.ResetSearch color="inherit" fontSize="small" />
+                  <this.props.icons.ResetSearch fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
@@ -253,6 +253,7 @@ MTableToolbar.defaultProps = {
   },
   search: true,
   showTitle: true,
+  searchText: '',
   showTextRowsSelected: true,
   toolbarButtonAlignment: 'right',
   searchAutoFocus: false,
@@ -271,6 +272,7 @@ MTableToolbar.propTypes = {
   localization: PropTypes.object.isRequired,
   onColumnsChanged: PropTypes.func.isRequired,
   dataManager: PropTypes.object.isRequired,
+  searchText: PropTypes.string,
   onSearchChanged: PropTypes.func.isRequired,
   search: PropTypes.bool.isRequired,
   searchFieldStyle: PropTypes.object,
