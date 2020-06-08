@@ -38,22 +38,24 @@ export default class MaterialTable extends React.Component {
           })),
         orderBy: renderState.columns.find(a => a.tableData.id === renderState.orderBy),
         orderDirection: renderState.orderDirection,
-        page: 0,
+        page: calculatedProps.options.initialPage || 0,
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
 
         totalCount: 0
       },
       showAddRow: false,
-      width: 0
+      width: 0,
+      isLoading: true,
     };
 
     this.tableContainerDiv = React.createRef();
   }
 
   componentDidMount() {
-    this.setState({ ...this.dataManager.getRenderState(), width: this.tableContainerDiv.current.scrollWidth }, () => {
-      if (this.isRemoteData()) {
+    const isRemoteData = this.isRemoteData();
+    this.setState({ ...this.dataManager.getRenderState(), width: this.tableContainerDiv.current.scrollWidth, isLoading: isRemoteData }, () => {
+      if (isRemoteData) {
         this.onQueryChange(this.state.query);
       }
     });
@@ -72,22 +74,25 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
+      // search, filter, sort and paging are delegated to the external data source
+      // so are disabled
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
       this.dataManager.changeApplySort(false);
+      this.dataManager.changePaging(false);
     }
     else {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
       this.dataManager.changeApplySort(true);
       this.dataManager.setData(props.data);
+      this.dataManager.changePaging(props.options.paging);
     }
 
     isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
-    this.dataManager.changePaging(props.options.paging);
     isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
@@ -122,7 +127,7 @@ export default class MaterialTable extends React.Component {
     const currentPage = this.isRemoteData() ? this.state.query.page : this.state.currentPage;
     const pageSize = this.isRemoteData() ? this.state.query.pageSize : this.state.pageSize;
 
-    if (count <= pageSize * currentPage && currentPage !== 0) {
+    if (count <= pageSize * currentPage && currentPage !== 0 && !this.state.isLoading) {
       this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
   }

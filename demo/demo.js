@@ -1,9 +1,13 @@
 import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from '@material-ui/core/Typography';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import MaterialTable from '../src';
-import Typography from "@material-ui/core/Typography";
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -96,121 +100,149 @@ class App extends Component {
       <>
         <MuiThemeProvider theme={theme}>
           <div style={{ maxWidth: '100%', direction }}>
-            <Grid container>
-              <Grid item xs={12}>
-                {this.state.selectedRows && this.state.selectedRows.length}
+          { 
+            // expansion panels with unmountonExit make it easy to test componentDidMount logic
+          }
+          <ExpansionPanel TransitionProps={{ unmountOnExit: true }}>
+            <ExpansionPanelSummary
+              aria-controls="local-data-demo"
+              id="local-data-demo"
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <Typography>Local Data Demo</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Grid container>
+                <Grid item xs={12}>
+                  {this.state.selectedRows && this.state.selectedRows.length}
+                  <MaterialTable
+                    tableRef={this.tableRef}
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    title="Demo Title"
+                    options={{
+                      pageSize: 50,
+                      pageSizeOptions: [5, 50, 100]
+                    }}
+                    editable={{
+                      onRowAdd: newData =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            {
+                              /* const data = this.state.data;
+                              data.push(newData);
+                              this.setState({ data }, () => resolve()); */
+                            }
+                            resolve();
+                          }, 1000);
+                        }),
+                      onRowUpdate: (newData, oldData) =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            {
+                              /* const data = this.state.data;
+                              const index = data.indexOf(oldData);
+                              data[index] = newData;                
+                              this.setState({ data }, () => resolve()); */
+                            }
+                            resolve();
+                          }, 1000);
+                        }),
+                      onRowDelete: oldData =>
+                        new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            {
+                              /* let data = this.state.data;
+                              const index = data.indexOf(oldData);
+                              data.splice(index, 1);
+                              this.setState({ data }, () => resolve()); */
+                            }
+                            resolve();
+                          }, 1000);
+                        })
+                    }}
+                    localization={{
+                      body: {
+                        emptyDataSourceMessage: 'No records to display',
+                        filterRow: {
+                          filterTooltip: 'Filter',
+                          filterPlaceHolder: "Filtaaer"
+                        }
+                      }
+                    }}
+                    onSearchChange={(e) => console.log("search changed: " + e)}
+                    onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
+                  // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  />
+                </Grid>
+              </Grid>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel TransitionProps={{ unmountOnExit: true }}>
+            <ExpansionPanelSummary
+              aria-controls="remote-data-demo"
+              id="remote-data-demo"
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <Typography>Remote Data Demo</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div>
+                {this.state.text}
+                <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
+                  Select
+                </button>
                 <MaterialTable
-                  tableRef={this.tableRef}
-                  columns={this.state.columns}
-                  data={this.state.data}
-                  title="Demo Title"
+                  title={
+                    <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
+                  }
+                  columns={[
+                    {
+                      title: 'Avatar',
+                      field: 'avatar',
+                      render: rowData => (
+                        <img
+                          style={{ height: 36, borderRadius: '50%' }}
+                          src={rowData.avatar}
+                        />
+                      ),
+                    },
+                    { title: 'Id', field: 'id', filterPlaceholder: 'placeholder',
+                      lookup: {1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: '11', 12: '12'}},
+                    { title: 'First Name', field: 'first_name' },
+                    { title: 'Last Name', field: 'last_name' },
+                  ]}
                   options={{
-                    pageSize: 50,
-                    pageSizeOptions: [5, 50, 100]
-                  }}
-                  editable={{
-                    onRowAdd: newData =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowUpdate: (newData, oldData) =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data[index] = newData;                
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowDelete: oldData =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* let data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data.splice(index, 1);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      })
+                    initialPage: 2,
+                    filtering: true,
+                    grouping: true,
+                    groupTitle: group => group.data.length,
+                    searchFieldVariant: 'outlined',
                   }}
                   localization={{
-                    body: {
-                      emptyDataSourceMessage: 'No records to display',
-                      filterRow: {
-                        filterTooltip: 'Filter',
-                        filterPlaceHolder: "Filtaaer"
-                      }
+                    toolbar: {
+                      searchPlaceholder: "Outlined Search Field",
                     }
                   }}
-                  onSearchChange={(e) => console.log("search changed: " + e)}
-                  onColumnDragged={(oldPos, newPos) => console.log("Dropped column from " + oldPos + " to position " + newPos)}
-                // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
+                  data={query => new Promise((resolve, reject) => {
+                    let url = 'https://reqres.in/api/users?'
+                    url += 'per_page=' + query.pageSize
+                    url += '&page=' + (query.page + 1)
+                    console.log(query);
+                    fetch(url)
+                      .then(response => response.json())
+                      .then(result => {
+                        resolve({
+                          data: result.data,
+                          page: result.page - 1,
+                          totalCount: result.total,
+                        })
+                      })
+                  })}
                 />
-              </Grid>
-            </Grid>
-            {this.state.text}
-            <button onClick={() => this.tableRef.current.onAllSelected(true)} style={{ margin: 10 }}>
-              Select
-            </button>
-            <MaterialTable
-              title={
-                <Typography variant='h6' color='primary'>Remote Data Preview</Typography>
-              }
-              columns={[
-                {
-                  title: 'Avatar',
-                  field: 'avatar',
-                  render: rowData => (
-                    <img
-                      style={{ height: 36, borderRadius: '50%' }}
-                      src={rowData.avatar}
-                    />
-                  ),
-                },
-                { title: 'Id', field: 'id', filterPlaceholder: 'placeholder',
-                  lookup: {1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: '10', 11: '11', 12: '12'}},
-                { title: 'First Name', field: 'first_name' },
-                { title: 'Last Name', field: 'last_name' },
-              ]}
-              options={{
-                filtering: true,
-                grouping: true,
-                groupTitle: group => group.data.length,
-                searchFieldVariant: 'outlined',
-              }}
-              localization={{
-                toolbar: {
-                  searchPlaceholder: "Outlined Search Field",
-                }
-              }}
-              data={query => new Promise((resolve, reject) => {
-                let url = 'https://reqres.in/api/users?'
-                url += 'per_page=' + query.pageSize
-                url += '&page=' + (query.page + 1)
-                console.log(query);
-                fetch(url)
-                  .then(response => response.json())
-                  .then(result => {
-                    resolve({
-                      data: result.data,
-                      page: result.page - 1,
-                      totalCount: result.total,
-                    })
-                  })
-              })}
-            />
+              </div>  
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
 
           </div>
         </MuiThemeProvider>
