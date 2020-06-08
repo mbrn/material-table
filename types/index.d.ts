@@ -307,6 +307,7 @@ export interface DraggableRowsOptions {
   dragCellContent?: string | React.ReactElement<any>;
   dragCellWidth?: string;
   droppableRowsIdentifier?: string;
+  isCombineEnabled?: boolean;
 }
 
 export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}

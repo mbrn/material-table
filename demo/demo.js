@@ -502,6 +502,17 @@ class App extends Component {
     } else{
       this.remoteDataTableRef.current.toggleDraggableClass(result)
     }
+
+    // Implement combine logic.
+    if (result.combine) {
+      console.log("combine")
+      // super simple: just removing the dragging item
+      const data = [...this.state.data];
+      data.splice(result.source.index, 1);
+      this.setState({ data });
+      return;
+    }
+
     // dropped outside the list
     if (!destination) {
       return;
@@ -564,7 +575,8 @@ class App extends Component {
                   draggable: false,
                   draggableRows: true,
                   draggableRowsOptions: {
-                    droppableRowsIdentifier: 'droppable2'
+                    droppableRowsIdentifier: 'droppable2',
+                    isCombineEnabled: true
                   },
                   disableDragDropContext: true
                 }}

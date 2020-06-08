@@ -126,6 +126,7 @@ export const propTypes = {
       dragCellContent: PropTypes.string | PropTypes.element,
       dragCellWidth: PropTypes.string,
       droppableRowsIdentifier: PropTypes.string,
+      isCombineEnabled: PropTypes.bool,
     }),
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,

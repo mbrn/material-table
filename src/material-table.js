@@ -624,7 +624,7 @@ export default class MaterialTable extends React.Component {
         }}>
 
         <Droppable isDropDisabled={!this.props.options.draggableRows} droppableId={this.droppableRowsIdentifier}
-                   direction="vertical">
+                   direction="vertical" isCombineEnabled={this.props.options.draggableRowsOptions.isCombineEnabled}>
           {(provided, snapshot) => (
             <props.components.Body
               provided={provided}

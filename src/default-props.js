@@ -80,6 +80,7 @@ export const defaultProps = {
       dragCellContent: "=",
       dragCellWidth: "40px",
       droppableRowsIdentifier: "droppable-rows",
+      isCombineEnabled: false,
     },
     emptyRowsWhenPaging: true,
     exportAllData: false,
