@@ -19,6 +19,8 @@ export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
 
   constructor(props) {
+    /* eslint-disable-next-line no-console */
+    console.log('======= material-table: LegalDesk\'s forked version currently in use =======');
     super(props);
 
     const calculatedProps = this.getProps(props);
