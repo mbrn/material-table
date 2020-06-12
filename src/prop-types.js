@@ -189,6 +189,8 @@ export const propTypes = {
   onChangeRowsPerPage: PropTypes.func,
   onChangePage: PropTypes.func,
   onChangeColumnHidden: PropTypes.func,
+  onDetailPanelExpanded: PropTypes.func,
+  onDetailPanelClosed: PropTypes.func,
   onOrderChange: PropTypes.func,
   onRowClick: PropTypes.func,
   onTreeExpandChange: PropTypes.func,
