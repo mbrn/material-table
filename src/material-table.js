@@ -42,10 +42,12 @@ export default class MaterialTable extends React.Component {
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
 
-        totalCount: 0
+        totalCount: 0,
+        error: undefined,
       },
       showAddRow: false,
-      width: 0
+      width: 0,
+      isDataSourceError: false,
     };
 
     this.tableContainerDiv = React.createRef();
@@ -410,13 +412,27 @@ export default class MaterialTable extends React.Component {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
         query.page = result.page;
+        query.error = undefined;
         this.dataManager.setData(result.data);
         this.setState({
+          isDataSourceError: false,
           isLoading: false,
           ...this.dataManager.getRenderState(),
           query
         }, () => {
           callback && callback();
+        });
+      }).catch((error) => {
+        // Not resetting the query totalCount and page
+        // as ideally an error on the query is intermitent (network issue)
+        // so can be resolved by re-executing the query.
+        query.error = error;
+        this.dataManager.setData([]);
+        this.setState({
+          isLoading: false,
+          isDataSourceError: true,
+          ...this.dataManager.getRenderState(),
+          query,
         });
       });
     });
@@ -617,6 +633,8 @@ export default class MaterialTable extends React.Component {
         hasAnyEditingRow={!!(this.state.lastEditingRow || this.state.showAddRow)}
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
+        isDataSourceError={this.state.isDataSourceError}
+        error={this.isRemoteData() ? this.state.query.error : undefined} // pass the query error on so that any components overriding the Body can display it if they wish
       />
     </Table>
   )

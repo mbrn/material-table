@@ -195,21 +195,21 @@ class App extends Component {
                   searchPlaceholder: "Outlined Search Field",
                 }
               }}
-              data={query => new Promise((resolve, reject) => {
+              data={query => {
                 let url = 'https://reqres.in/api/users?'
                 url += 'per_page=' + query.pageSize
                 url += '&page=' + (query.page + 1)
                 console.log(query);
-                fetch(url)
+                return fetch(url)
                   .then(response => response.json())
                   .then(result => {
-                    resolve({
+                    return {
                       data: result.data,
                       page: result.page - 1,
                       totalCount: result.total,
-                    })
-                  })
-              })}
+                    }
+                  });
+              }}
             />
 
           </div>

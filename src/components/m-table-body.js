@@ -10,27 +10,33 @@ class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
     const rowHeight = this.props.options.padding === 'default' ? 49 : 36;
     const localization = { ...MTableBody.defaultProps.localization, ...this.props.localization };
-    if (this.props.options.showEmptyDataSourceMessage && renderData.length === 0) {
-      let addColumn = 0;
-      if (this.props.options.selection) {
-        addColumn++;
+    if ( renderData.length === 0) {
+        if (this.props.options.showEmptyDataSourceMessage || (this.props.isDataSourceError && this.props.options.showDataSourceErrorMessage)) {
+          let addColumn = 0;
+          if (this.props.options.selection) {
+            addColumn++;
+          }
+          if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
+            addColumn++;
+          }
+          if (this.props.hasDetailPanel) {
+            addColumn++;
+          }
+          if (this.props.isTreeData) {
+            addColumn++;
+          }
+          return (
+            <TableRow style={{ height: rowHeight * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
+              <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
+                {
+                  this.props.isDataSourceError ? 
+                  localization.dataSourceErrorMessage :
+                  localization.emptyDataSourceMessage
+                }
+              </TableCell>
+            </TableRow>
+          );
       }
-      if (this.props.actions && this.props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0) {
-        addColumn++;
-      }
-      if (this.props.hasDetailPanel) {
-        addColumn++;
-      }
-      if (this.props.isTreeData) {
-        addColumn++;
-      }
-      return (
-        <TableRow style={{ height: rowHeight * (this.props.options.paging && this.props.options.emptyRowsWhenPaging ? this.props.pageSize : 1) }} key={'empty-' + 0} >
-          <TableCell style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }} colSpan={this.props.columns.length + addColumn} key="empty-">
-            {localization.emptyDataSourceMessage}
-          </TableCell>
-        </TableRow>
-      );
     } else if (this.props.options.emptyRowsWhenPaging) {
       return (
         <React.Fragment>
@@ -205,9 +211,11 @@ MTableBody.defaultProps = {
   selection: false,
   localization: {
     emptyDataSourceMessage: 'No records to display',
+    dataSourceErrorMessage: 'An error occurred while retrieving the data',
     filterRow: {},
     editRow: {}
-  }
+  },
+  isDataSourceError: false,
 };
 
 MTableBody.propTypes = {
@@ -237,6 +245,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  isDataSourceError: PropTypes.bool,
 };
 
 export default MTableBody;
