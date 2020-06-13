@@ -22,10 +22,10 @@ class MTableEditField extends React.Component {
     return props;
   }
 
-  handleChangeForSecondaryInput(value) {
-    this.props.onChange(value);
+  handleChangeForSecondaryInput(e) {
+    this.props.onChange(e.target.value);
     this.setState({
-      secondaryValue: value
+      secondaryValue: e.target.textContent
     });
   }
 
@@ -37,7 +37,7 @@ class MTableEditField extends React.Component {
         options={this.props.columnDef.autocomplete}
         freeSolo={this.props.columnDef.freeSolo}
         value={this.state.secondaryValue || ''}
-        onChange={(event) => this.handleChangeForSecondaryInput(event.target.textContent)}
+        onChange={(event) => this.handleChangeForSecondaryInput(event)}
         renderInput={(params) =>
           <TextField
             {...params}
