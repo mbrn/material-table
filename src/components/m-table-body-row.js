@@ -21,6 +21,7 @@ export default class MTableBodyRow extends React.Component {
         return (
           <this.props.components.Cell
             size={size}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             columnDef={{ cellStyle: this.props.options.cellStyle, ...columnDef }}
             value={value}
@@ -180,7 +181,7 @@ export default class MTableBodyRow extends React.Component {
       );
     }
     else {
-      return(<TableCell padding="none" key={"key-tree-data-column"} />);
+      return (<TableCell padding="none" key={"key-tree-data-column"} />);
     }
   }
 
@@ -324,6 +325,7 @@ export default class MTableBodyRow extends React.Component {
                   detailPanel={this.props.detailPanel}
                   onEditingCanceled={onEditingCanceled}
                   onEditingApproved={onEditingApproved}
+                  errorState={this.props.errorState}
                 />
               );
             } else {
@@ -339,6 +341,7 @@ export default class MTableBodyRow extends React.Component {
                   onEditingApproved={onEditingApproved}
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
+                  errorState={this.props.errorState}
                 />
               );
             }
@@ -374,4 +377,5 @@ MTableBodyRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
+  errorState: PropTypes.object
 };

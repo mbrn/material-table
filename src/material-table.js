@@ -27,7 +27,7 @@ export default class MaterialTable extends React.Component {
 
     this.state = {
       data: [],
-      hasError: undefined,
+      errorState: undefined,
       ...renderState,
       query: {
         filters: renderState.columns
@@ -95,7 +95,7 @@ export default class MaterialTable extends React.Component {
 
   cleanColumns(columns) {
     return columns.map(col => {
-      const colClone = {...col};
+      const colClone = { ...col };
       delete colClone.tableData;
       return colClone;
     });
@@ -109,7 +109,7 @@ export default class MaterialTable extends React.Component {
 
     let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
-    if(!this.isRemoteData()) {
+    if (!this.isRemoteData()) {
       propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
     }
 
@@ -341,7 +341,11 @@ export default class MaterialTable extends React.Component {
             });
           })
           .catch(reason => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "add"
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     }
@@ -360,7 +364,11 @@ export default class MaterialTable extends React.Component {
             });
           })
           .catch(reason => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "update"
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
 
@@ -380,7 +388,11 @@ export default class MaterialTable extends React.Component {
             });
           })
           .catch(reason => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "delete"
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     }
@@ -399,15 +411,15 @@ export default class MaterialTable extends React.Component {
     this.onQueryChange(this.state.query);
   }
   onQueryChange = (query, callback) => {
-    query = { ...this.state.query, ...query };
-    this.setState({ isLoading: true, hasError: undefined }, () => {
+    query = { ...this.state.query, ...query, error: this.state.errorState };
+    this.setState({ isLoading: true, errorState: undefined }, () => {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
         query.page = result.page;
         this.dataManager.setData(result.data);
         this.setState({
           isLoading: false,
-          hasError: false,
+          errorState: false,
           ...this.dataManager.getRenderState(),
           query
         }, () => {
@@ -415,9 +427,13 @@ export default class MaterialTable extends React.Component {
         });
       }).catch((error) => {
         const localization = { ...MaterialTable.defaultProps.localization, ...this.props.localization };
+        const errorState = {
+          message: typeof error === 'object' ? error.message : error !== undefined ? error : localization.error,
+          errorCause: 'query'
+        };
         this.setState({
           isLoading: false,
-          hasError: typeof error === 'object' ? error.message : error !== undefined ? error : localization.error,
+          errorState,
           ...this.dataManager.getRenderState(),
         });
       });
@@ -602,6 +618,7 @@ export default class MaterialTable extends React.Component {
         initialFormData={props.initialFormData}
         pageSize={this.state.pageSize}
         columns={this.state.columns}
+        errorState={this.state.errorState}
         detailPanel={props.detailPanel}
         options={props.options}
         getFieldValue={this.dataManager.getFieldValue}
@@ -643,7 +660,7 @@ export default class MaterialTable extends React.Component {
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
       const colDef = props.columns[i > 0 ? i : props.columns.length - 1 - i];
-      if(colDef.tableData) {
+      if (colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
         }
@@ -755,9 +772,9 @@ export default class MaterialTable extends React.Component {
               <props.components.OverlayLoading theme={props.theme} />
             </div>
           }
-          {this.state.hasError &&
+          {this.state.errorState &&
             <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '100%', zIndex: 11 }}>
-              <props.components.OverlayError error={this.state.hasError} retry={this.retry} theme={props.theme} icon={props.icons.Retry} />
+              <props.components.OverlayError error={this.state.errorState} retry={this.retry} theme={props.theme} icon={props.icons.Retry} />
             </div>
           }
         </props.components.Container>

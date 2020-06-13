@@ -26,16 +26,16 @@ export interface MaterialTableProps<RowData extends object> {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
-  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
-  onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
- /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
-  */
+  /** An event fired when the table has finished filtering data
+   * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+   */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -51,6 +51,10 @@ export interface Filter<RowData extends object> {
   operator: "=";
   value: any;
 }
+export interface ErrorState {
+  message: string;
+  errorCause: "query" | 'add' | 'update' | 'delete';
+}
 
 export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
@@ -59,6 +63,7 @@ export interface Query<RowData extends object> {
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
+  error?: ErrorState;
 }
 
 export interface QueryResult<RowData extends object> {
@@ -91,6 +96,7 @@ export interface EditComponentProps<RowData extends object> {
   value: any;
   onChange: (newValue: any) => void;
   columnDef: EditCellColumnDef;
+  errorState?: ErrorStateL
 }
 
 export interface EditCellColumnDef {
@@ -119,7 +125,7 @@ export interface Column<RowData extends object> {
   export?: boolean;
   field?: keyof RowData | string;
   filtering?: boolean;
-  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
+  filterComponent?: ((props: { columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void }) => React.ReactElement<any>);
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
@@ -130,6 +136,7 @@ export interface Column<RowData extends object> {
   lookup?: object;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
+  validate?: (rowData: RowData) => { isValid: boolean, helperText?: string } | string | boolean,
   render?: (data: RowData, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -301,4 +308,4 @@ export interface Localization {
   };
 }
 
-export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}
+export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> { }

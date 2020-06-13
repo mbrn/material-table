@@ -49,6 +49,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             components={this.props.components}
             data={data}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             localization={{ ...MTableBody.defaultProps.localization.editRow, ...this.props.localization.editRow, dateTimePickerLocalization: this.props.localization.dateTimePickerLocalization }}
             key={index}
@@ -69,6 +70,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             data={data}
             index={index}
+            errorState={this.props.errorState}
             key={"row-" + data.tableData.id}
             level={0}
             options={this.props.options}
@@ -156,6 +158,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             data={this.props.initialFormData}
             components={this.props.components}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
@@ -179,6 +182,7 @@ class MTableBody extends React.Component {
             columns={this.props.columns.filter(columnDef => { return !columnDef.hidden })}
             data={this.props.initialFormData}
             components={this.props.components}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
@@ -237,6 +241,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  errorState: PropTypes.object
 };
 
 export default MTableBody;

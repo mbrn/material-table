@@ -19,12 +19,12 @@ export default class MTableEditRow extends React.Component {
   }
 
   createRowData() {
-    return this.props.columns.filter(column => (column.initialEditValue || column.initialEditValue === 0) && column.field).reduce((prev,column)=>{
-      prev[column.field]=column.initialEditValue;
+    return this.props.columns.filter(column => (column.initialEditValue || column.initialEditValue === 0) && column.field).reduce((prev, column) => {
+      prev[column.field] = column.initialEditValue;
       return prev;
-    },{});
+    }, {});
   }
-  
+
   renderColumns() {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
@@ -65,8 +65,8 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === 'onUpdate' && this.props.mode === 'update') {
           allowEditing = true;
         }
-        if (typeof columnDef.editable == 'function'){
-            allowEditing = columnDef.editable(columnDef, this.props.data);
+        if (typeof columnDef.editable == 'function') {
+          allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
           const readonlyValue = this.props.getFieldValue(this.state.data, columnDef);
@@ -84,7 +84,21 @@ export default class MTableEditRow extends React.Component {
         else {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent = editComponent || this.props.components.EditField;
-          
+          let error = { isValid: true, helperText: '' };
+          if (columnDef.validate) {
+            const validateResponse = columnDef.validate(this.state.data);
+            switch (typeof validateResponse) {
+              case 'object':
+                error = { ...validateResponse };
+                break;
+              case 'boolean':
+                error = { isValid: validateResponse, helperText: '' };
+                break;
+              case 'string':
+                error = { isValid: false, helperText: validateResponse };
+                break;
+            }
+          }
           return (
             <TableCell
               key={columnDef.tableData.id}
@@ -95,6 +109,8 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
+                error={!error.isValid}
+                helperText={error.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}
                 rowData={this.state.data}
                 onChange={value => {
@@ -120,6 +136,7 @@ export default class MTableEditRow extends React.Component {
       {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
+        disabled: true,
         onClick: () => {
           const newData = this.state.data;
           delete newData.tableData;
@@ -267,5 +284,6 @@ MTableEditRow.propTypes = {
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   localization: PropTypes.object,
-  getFieldValue: PropTypes.func
+  getFieldValue: PropTypes.func,
+  errorState: PropTypes.object
 };

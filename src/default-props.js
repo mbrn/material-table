@@ -21,7 +21,7 @@ OverlayLoading.propTypes = {
 const OverlayError = props => (
   <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
     <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
-      <span>{props.error === 'object' ? props.error.message : props.error}</span> <props.icon onClick={props.retry} style={{ cursor: 'pointer', position: 'relative', top: 5 }} />
+      <span>{props.error.message}</span> <props.icon onClick={props.retry} style={{ cursor: 'pointer', position: 'relative', top: 5 }} />
     </div>
   </div>
 );
