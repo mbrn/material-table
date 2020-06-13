@@ -160,6 +160,11 @@ class MTableEditField extends React.Component {
         placeholder={this.props.columnDef.title}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
+        InputProps={{
+          inputProps: {
+            'aria-label': this.props.columnDef.title
+          }
+        }}
       />
     );
   }
