@@ -132,11 +132,12 @@ export default class MTableEditRow extends React.Component {
 
   renderActions() {
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
+    const isValid = this.props.columns.every(column => column.validate ? column.validate(this.state.data) : true);
     const actions = [
       {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
-        disabled: true,
+        disabled: !isValid,
         onClick: () => {
           const newData = this.state.data;
           delete newData.tableData;
