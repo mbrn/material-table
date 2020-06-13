@@ -23,12 +23,12 @@ class MTableEditField extends React.Component {
   }
 
   handleChangeForSecondaryInput(value) {
-    this.props.onChange(value)
+    this.props.onChange(value);
     this.setState({
       secondaryValue: value
-    })
+    });
   }
-  
+
   renderAutocompleteField() {
     return (
       <Autocomplete
