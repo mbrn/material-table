@@ -137,7 +137,7 @@ export default class MTableEditRow extends React.Component {
         const response = column.validate(this.state.data);
         switch (typeof response) {
           case 'object':
-            return response.isValid
+            return response.isValid;
           case 'string':
             return response;
           case 'boolean':
