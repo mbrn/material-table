@@ -173,6 +173,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+<<<<<<< HEAD
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
         }
@@ -189,6 +190,17 @@ class MTableEditField extends React.Component {
           inputProps: {
             "aria-label": this.props.columnDef.title,
           },
+=======
+        style={this.props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
+        type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
+        placeholder={this.props.columnDef.title}
+        value={this.props.value === undefined ? '' : this.props.value}
+        onChange={event => this.props.onChange(event.target.value)}
+        InputProps={{
+          inputProps: {
+            'aria-label': this.props.columnDef.title
+          }
+>>>>>>> Re-added aria label to text field
         }}
       />
     );
