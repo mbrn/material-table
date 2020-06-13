@@ -9,11 +9,26 @@ import { MuiPickersUtilsProvider, TimePicker, DatePicker, DateTimePicker } from 
 import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      secondaryValue: this.props.value
+    };
+  }
+
   getProps() {
     const { columnDef, rowData, onRowDataChange, ...props } = this.props;
     return props;
   }
 
+  handleChangeForSecondaryInput(value) {
+    this.props.onChange(value)
+    this.setState({
+      secondaryValue: value
+    })
+  }
+  
   renderAutocompleteField() {
     return (
       <Autocomplete
@@ -21,9 +36,8 @@ class MTableEditField extends React.Component {
         clearOnEscape
         options={this.props.columnDef.autocomplete}
         freeSolo={this.props.columnDef.freeSolo}
-        inputValue={this.props.value || ''}
-        onChange={(event, newValue) => this.props.onChange(newValue)}
-        onInputChange={(event, newValue) => this.props.onChange(event.target.value)}
+        value={this.state.secondaryValue || ''}
+        onChange={(event) => this.handleChangeForSecondaryInput(event.target.textContent)}
         renderInput={(params) =>
           <TextField
             {...params}
