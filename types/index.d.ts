@@ -96,6 +96,7 @@ export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
+  onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
 }
 
