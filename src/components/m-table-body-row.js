@@ -21,7 +21,7 @@ export default class MTableBodyRow extends React.Component {
         return (
           <this.props.components.Cell
             size={size}
-            icons={this.props.icons}            
+            icons={this.props.icons}
             columnDef={{ cellStyle: this.props.options.cellStyle, ...columnDef }}
             value={value}
             key={"cell-" + this.props.data.tableData.id + "-" + columnDef.tableData.id}
@@ -157,6 +157,33 @@ export default class MTableBodyRow extends React.Component {
     }
   }
 
+  renderTreeDataColumn() {
+    const size = CommonValues.elementSize(this.props);
+    if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
+      return (
+        <TableCell size={size} padding="none" key={"key-tree-data-column"} style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}>
+          <IconButton
+            size={size}
+            style={{
+              transition: 'all ease 200ms',
+              marginLeft: this.props.level * 9,
+              ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
+            }}
+            onClick={(event) => {
+              this.props.onTreeExpandChanged(this.props.path, this.props.data);
+              event.stopPropagation();
+            }}
+          >
+            <this.props.icons.DetailPanel />
+          </IconButton>
+        </TableCell>
+      );
+    }
+    else {
+      return(<TableCell padding="none" key={"key-tree-data-column"} />);
+    }
+  }
+
   getStyle(index, level) {
     let style = {
       transition: 'all ease 300ms',
@@ -204,39 +231,18 @@ export default class MTableBodyRow extends React.Component {
       }
     }
 
-    if (this.props.isTreeData) {
-      if (this.props.data.tableData.childRows && this.props.data.tableData.childRows.length > 0) {
-        renderColumns.splice(0, 0, (
-          <TableCell size={size} padding="none" key={"key-tree-data-column"} style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}>
-            <IconButton
-              size={size}
-              style={{
-                transition: 'all ease 200ms',
-                marginLeft: this.props.level * 9,
-                ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
-              }}
-              onClick={(event) => {
-                this.props.onTreeExpandChanged(this.props.path, this.props.data);
-                event.stopPropagation();
-              }}
-            >
-              <this.props.icons.DetailPanel />
-            </IconButton>
-          </TableCell>
-        ));
-      }
-      else {
-        renderColumns.splice(0, 0, <TableCell padding="none" key={"key-tree-data-column"} />);
-      }
-    }
-
-    // Lastly we add detail panel icon
+    // Then we add detail panel icon
     if (this.props.detailPanel) {
       if (this.props.options.detailPanelColumnAlignment === 'right') {
         renderColumns.push(this.renderDetailPanelColumn());
       } else {
         renderColumns.splice(0, 0, this.renderDetailPanelColumn());
       }
+    }
+
+    // Lastly we add tree data icon
+    if (this.props.isTreeData) {
+      renderColumns.splice(0, 0, this.renderTreeDataColumn());
     }
 
     this.props.columns
@@ -291,6 +297,15 @@ export default class MTableBodyRow extends React.Component {
         >
           {renderColumns}
         </TableRow>
+        {this.props.data.tableData && this.props.data.tableData.showDetailPanel &&
+          <TableRow
+          // selected={this.props.index % 2 === 0}
+          >
+            <TableCell size={size} colSpan={renderColumns.length} padding="none">
+              {this.props.data.tableData.showDetailPanel(this.props.data)}
+            </TableCell>
+          </TableRow>
+        }
         {this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded &&
           this.props.data.tableData.childRows.map((data, index) => {
             if (data.tableData.editing) {
@@ -328,15 +343,6 @@ export default class MTableBodyRow extends React.Component {
               );
             }
           })
-        }
-        {this.props.data.tableData && this.props.data.tableData.showDetailPanel &&
-          <TableRow
-          // selected={this.props.index % 2 === 0}
-          >
-            <TableCell size={size} colSpan={renderColumns.length} padding="none">
-              {this.props.data.tableData.showDetailPanel(this.props.data)}
-            </TableCell>
-          </TableRow>
         }
       </>
     );

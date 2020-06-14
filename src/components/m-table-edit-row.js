@@ -152,6 +152,12 @@ export default class MTableEditRow extends React.Component {
     return style;
   }
 
+  cancelEdit = (e) => {
+    if(e.keyCode === 27) {
+      this.props.onEditingCanceled(this.props.mode, this.props.data);
+    }
+  }
+
   render() {
     const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     let columns;
@@ -163,7 +169,7 @@ export default class MTableEditRow extends React.Component {
       columns = [
         <TableCell
           padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
-          key="key-selection-cell"
+          key="key-edit-cell"
           colSpan={colSpan}>
           <Typography variant="h6">
             {localization.deleteText}
@@ -231,6 +237,7 @@ export default class MTableEditRow extends React.Component {
     return (
       <>
         <TableRow
+         onKeyDown={this.cancelEdit}
           {...rowProps}
           style={this.getStyle()}
         >
