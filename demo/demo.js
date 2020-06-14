@@ -105,11 +105,6 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    fixedColumns: {
-                      left: 2,
-                      right: 0
-                    },
-                    tableLayout: 'fixed',
                     selection: true,
                     selectionProps: rowData => {
                       rowData.tableData.disabled = rowData.name === 'A1';
@@ -118,8 +113,6 @@ class App extends Component {
                         disabled: rowData.name === 'A1'
                       }
                     }
-
-
                   }}
                   editable={{
                     onRowAdd: newData =>
