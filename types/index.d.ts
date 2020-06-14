@@ -17,6 +17,8 @@ export interface MaterialTableProps<RowData extends object> {
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
+    editTooltip?: (rowData: RowData) => string;
+    deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
     onRowUpdateCancelled?: (rowData: RowData) => void;
     isEditHidden?: (rowData: RowData) => boolean;
@@ -94,6 +96,7 @@ export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
+  onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
 }
 
@@ -111,6 +114,7 @@ export interface EditCellColumnDef {
 export interface Column<RowData extends object> {
   cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
+  dateSetting?: { locale?: string };
   customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
   customSort?: (data1: RowData, data2: RowData, type: (('row' | 'group'))) => number;
   defaultFilter?: any;
@@ -139,7 +143,7 @@ export interface Column<RowData extends object> {
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
   tooltip?: string;
-  type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
   width?: string | number;
 }
 
@@ -291,7 +295,7 @@ export interface Localization {
   };
   toolbar?: {
     addRemoveColumns?: React.ReactNode;
-    nRowsSelected?: React.ReactNode;
+    nRowsSelected?: React.ReactNode | ((rowCount: number) => React.ReactNode);
     showColumnsTitle?: React.ReactNode;
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;

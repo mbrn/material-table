@@ -105,8 +105,14 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    pageSize: 50,
-                    pageSizeOptions: [5, 50, 100]
+                    selection: true,
+                    selectionProps: rowData => {
+                      rowData.tableData.disabled = rowData.name === 'A1';
+                      
+                      return {
+                        disabled: rowData.name === 'A1'
+                      }
+                    }
                   }}
                   editable={{
                     onRowAdd: newData =>
