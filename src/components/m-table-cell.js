@@ -11,6 +11,9 @@ const isoDateRegex = /^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])([T\s](([01]\d
 export default class MTableCell extends React.Component {
 
   getRenderValue() {
+    const dateLocale = this.props.columnDef.dateSetting && this.props.columnDef.dateSetting.locale
+        ? this.props.columnDef.dateSetting.locale
+        : undefined;
     if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
@@ -33,7 +36,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleDateString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString();
+        return new Date(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -41,7 +44,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString();
+        return new Date(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -49,7 +52,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleString();
+        return new Date(this.props.value).toLocaleString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -57,7 +60,7 @@ export default class MTableCell extends React.Component {
       return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
     else if(typeof this.props.value === "boolean") {
-      // To avoid forwardref boolean children. 
+      // To avoid forwardref boolean children.
       return this.props.value.toString();
     }
 
