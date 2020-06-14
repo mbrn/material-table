@@ -215,7 +215,7 @@ export default class DataManager {
           }
           else {
             element.data.forEach(d => {
-              d.tableData.checked = checked;
+              d.tableData.checked = d.tableData.disabled ? false : checked;
               selectedCount++;
             });
           }
@@ -226,7 +226,7 @@ export default class DataManager {
     }
     else {
       this.searchedData.map(row => {
-        row.tableData.checked = checked;
+        row.tableData.checked = row.tableData.disabled ? false : checked;
         return row;
       });
       selectedCount = this.searchedData.length;
