@@ -117,7 +117,7 @@ export default class MTableCell extends React.Component {
 
   render() {
 
-    const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const { icons, columnDef, rowData, cellProps } = this.props;
 
     return (
       <TableCell
