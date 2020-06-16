@@ -71,9 +71,15 @@ export const propTypes = {
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
+    isEditable: PropTypes.func,
+    isDeletable: PropTypes.func,
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
-    onRowDelete: PropTypes.func
+    onRowDelete: PropTypes.func,
+    onRowAddCancelled: PropTypes.func,
+    onRowUpdateCancelled: PropTypes.func,
+    isEditHidden: PropTypes.func,
+    isDeleteHidden: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
@@ -138,7 +144,13 @@ export const propTypes = {
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    pageSizeOptions: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        value: PropTypes.number,
+        label: PropTypes.string
+      })
+    ])),
     paginationType: PropTypes.oneOf(['normal', 'stepped']),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     search: PropTypes.bool,

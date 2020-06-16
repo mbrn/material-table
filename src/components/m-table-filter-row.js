@@ -32,14 +32,23 @@ class MTableFilterRow extends React.Component {
   getLocalizationData = () => ({ ...MTableFilterRow.defaultProps.localization, ...this.props.localization });
   getLocalizedFilterPlaceHolder = columnDef => columnDef.filterPlaceholder || this.getLocalizationData().filterPlaceHolder || "";
 
-  renderLookupFilter = (columnDef) => (
-    <FormControl style={{ width: '100%' }}>
+  LookupFilter = ({ columnDef }) => {
+    const [selectedFilter, setSelectedFilter] = React.useState(columnDef.tableData.filterValue || []);
+
+    React.useEffect(() => {
+      setSelectedFilter(columnDef.tableData.filterValue || []);
+    }, [columnDef.tableData.filterValue]);
+
+    return <FormControl style={{ width: '100%' }}>
       <InputLabel htmlFor="select-multiple-checkbox" style={{marginTop: -16}}>{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
       <Select
         multiple
-        value={columnDef.tableData.filterValue || []}
-        onChange={event => {
+        value={selectedFilter}
+        onClose={event => {
           this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+        }}
+        onChange={event => {
+          setSelectedFilter(event.target.value);
         }}
         input={<Input id="select-multiple-checkbox" />}
         renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
@@ -49,14 +58,15 @@ class MTableFilterRow extends React.Component {
         {
           Object.keys(columnDef.lookup).map(key => (
             <MenuItem key={key} value={key}>
-              <Checkbox checked={columnDef.tableData.filterValue ? columnDef.tableData.filterValue.indexOf(key.toString()) > -1 : false} />
+              <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
               <ListItemText primary={columnDef.lookup[key]} />
             </MenuItem>
           ))
         }
       </Select>
-    </FormControl>
-  )
+    </FormControl>;
+  }
+
 
   renderFilterComponent = (columnDef) => (
     React.createElement(columnDef.filterComponent, { columnDef: columnDef, onFilterChanged: this.props.onFilterChanged })
@@ -146,7 +156,7 @@ class MTableFilterRow extends React.Component {
       if (columnDef.filterComponent) {
         return this.renderFilterComponent(columnDef);
       } else if (columnDef.lookup) {
-        return this.renderLookupFilter(columnDef);
+        return <this.LookupFilter columnDef={columnDef} />;
       } else if (columnDef.type === 'boolean') {
         return this.renderBooleanFilter(columnDef);
       } else if (['date', 'datetime', 'time'].includes(columnDef.type)) {
