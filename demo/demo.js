@@ -105,7 +105,7 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   onFilterChange={(appliedFilter)=>{
-                    console.log(appliedFilter)
+                    console.log("selected Filters : " ,appliedFilter);
                   }}
                   options={{
                     selection: true,
