@@ -80,7 +80,7 @@
     "fast-deep-equal": "2.0.1",
     "filefy": "0.1.10",
     "prop-types": "^15.6.2",
-    "react-beautiful-dnd": "11.0.3",
+    "react-beautiful-dnd": "^13.0.0",
     "react-double-scrollbar": "0.0.15"
   },
   "peerDependencies": {
