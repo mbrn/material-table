@@ -45,6 +45,7 @@ class MTableFilterRow extends React.Component {
         multiple
         value={selectedFilter}
         onClose={event => {
+          setSelectedFilter(event.target.value);
           if(columnDef.filterOnItemSelect !== true)
             this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
