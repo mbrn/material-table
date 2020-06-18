@@ -45,10 +45,13 @@ class MTableFilterRow extends React.Component {
         multiple
         value={selectedFilter}
         onClose={event => {
-          this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+          if(columnDef.filterOnItemSelect !== true)
+            this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
         onChange={event => {
           setSelectedFilter(event.target.value);
+          if(columnDef.filterOnItemSelect === true)
+            this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
         input={<Input id="select-multiple-checkbox" />}
         renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
