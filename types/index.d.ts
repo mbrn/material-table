@@ -221,6 +221,7 @@ export interface Options {
   fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
+  headerSelectionProps?: object;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;

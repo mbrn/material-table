@@ -105,12 +105,16 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
+                    headerSelectionProps: {
+                      color: 'primary'
+                    },
                     selection: true,
                     selectionProps: rowData => {
                       rowData.tableData.disabled = rowData.name === 'A1';
-                      
+
                       return {
-                        disabled: rowData.name === 'A1'
+                        disabled: rowData.name === 'A1',
+                        color: 'primary'
                       }
                     }
                   }}
@@ -132,7 +136,7 @@ class App extends Component {
                           {
                             /* const data = this.state.data;
                             const index = data.indexOf(oldData);
-                            data[index] = newData;                
+                            data[index] = newData;
                             this.setState({ data }, () => resolve()); */
                           }
                           resolve();
