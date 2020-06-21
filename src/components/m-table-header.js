@@ -99,7 +99,7 @@ export class MTableHeader extends React.Component {
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle, width: width, textAlign: 'center', boxSizing: 'border-box' }}
       >
-        <TableSortLabel disabled>{localization.actions}</TableSortLabel>
+        <TableSortLabel hideSortIcon={true} disabled>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }
