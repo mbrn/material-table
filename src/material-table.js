@@ -83,7 +83,9 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    // If the columns changed and the defaultSorting differs from the current sorting, it will trigger a new sorting
+    const shouldReorder = (isInit || (defaultSortColumnIndex !== this.dataManager.orderBy && defaultSortDirection !== this.dataManager.orderDirection));
+    shouldReorder && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
