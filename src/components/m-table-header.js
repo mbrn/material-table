@@ -84,13 +84,16 @@ export class MTableHeader extends React.Component {
             </Tooltip>
           );
         }
-
+        const cellAlignment =
+          columnDef.align !== undefined
+            ? columnDef.align
+            : ["numeric", "currency"].indexOf(columnDef.type) !== -1
+            ? "right"
+            : "left";
         return (
           <TableCell
             key={columnDef.tableData.id}
-            align={
-              ["numeric"].indexOf(columnDef.type) !== -1 ? "right" : "left"
-            }
+            align={cellAlignment}
             className={this.props.classes.header}
             style={{
               ...this.props.headerStyle,
@@ -125,7 +128,9 @@ export class MTableHeader extends React.Component {
           boxSizing: "border-box",
         }}
       >
-        <TableSortLabel disabled>{localization.actions}</TableSortLabel>
+        <TableSortLabel hideSortIcon={true} disabled>
+          {localization.actions}
+        </TableSortLabel>
       </TableCell>
     );
   }

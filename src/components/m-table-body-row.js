@@ -134,7 +134,11 @@ export default class MTableBodyRow extends React.Component {
           size={size}
           padding="none"
           key="key-detail-panel-column"
-          style={{ width: 42, textAlign: "center" }}
+          style={{
+            width: 42,
+            textAlign: "center",
+            ...this.props.options.detailPanelColumnStyle,
+          }}
         >
           <IconButton
             size={size}
@@ -164,6 +168,7 @@ export default class MTableBodyRow extends React.Component {
               width: 42 * this.props.detailPanel.length,
               textAlign: "center",
               display: "flex",
+              ...this.props.options.detailPanelColumnStyle,
             }}
           >
             {this.props.detailPanel.map((panel, index) => {

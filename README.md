@@ -1,4 +1,4 @@
-<p align="center" style="box-shadow: 2px 2px; ">
+<p align="center" style="box-shadow: 2px 2px;">
   <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://raw.githubusercontent.com/mbrn/material-table.com/master/docs/assets/logo-back.png" alt="material-table"></a></p>
 </p>
 
@@ -12,7 +12,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 [![Financial Contributors on Open Collective](https://opencollective.com/material-table/all/badge.svg?label=financial+contributors)](https://opencollective.com/material-table) [![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
 [![NPM Downloads](https://img.shields.io/npm/dm/material-table.svg?style=flat)](https://npmcharts.com/compare/material-table?minimal=true)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mbrn/material-table.svg)](http://isitmaintained.com/project/mbrn/material-table "Average time to resolve an issue")
-[![xscode](https://img.shields.io/badge/Available%20on-xs%3Acode-blue?style=?style=plastic&logo=appveyor&logo=data:image/png; base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////////VXz1bAAAAAJ0Uk5T/wDltzBKAAAAlUlEQVR42uzXSwqAMAwE0Mn9L+3Ggtgkk35QwcnSJo9S+yGwM9DCooCbgn4YrJ4CIPUcQF7/XSBbx2TEz4sAZ2q1RAECBAiYBlCtvwN+KiYAlG7UDGj59MViT9hOwEqAhYCtAsUZvL6I6W8c2wcbd+LIWSCHSTeSAAECngN4xxIDSK9f4B9t377Wd7H5Nt7/Xz8eAgwAvesLRjYYPuUAAAAASUVORK5CYII=)](https://xscode.com/mbrn/material-table)
+[![xscode](https://img.shields.io/badge/Available%20on-xs%3Acode-blue?style=?style=plastic&logo=appveyor&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////////VXz1bAAAAAJ0Uk5T/wDltzBKAAAAlUlEQVR42uzXSwqAMAwE0Mn9L+3Ggtgkk35QwcnSJo9S+yGwM9DCooCbgn4YrJ4CIPUcQF7/XSBbx2TEz4sAZ2q1RAECBAiYBlCtvwN+KiYAlG7UDGj59MViT9hOwEqAhYCtAsUZvL6I6W8c2wcbd+LIWSCHSTeSAAECngN4xxIDSK9f4B9t377Wd7H5Nt7/Xz8eAgwAvesLRjYYPuUAAAAASUVORK5CYII=)](https://xscode.com/mbrn/material-table)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/material-table/Lobby)
 
@@ -57,23 +57,23 @@ Issues would be prioritized according reactions count. `is:issue is:open sort:re
 
 ## Prerequisites
 
-The minimum `React` version material-table supports is `^16.8.5` since material-table `v1.36.1` . This is due to utilising [ `react-beautiful-dnd` ](https://github.com/atlassian/react-beautiful-dnd) for drag & drop functionality which uses hooks.
+The minimum `React` version material-table supports is `^16.8.5` since material-table `v1.36.1`. This is due to utilising [`react-beautiful-dnd`](https://github.com/atlassian/react-beautiful-dnd) for drag & drop functionality which uses hooks.
 
-If you use an older version of react we suggest to upgrade your dependencies or use material-table `1.36.0` .
+If you use an older version of react we suggest to upgrade your dependencies or use material-table `1.36.0`.
 
 ## Installation
 
-#### 1. Install package
+#### 1.Install package
 
-To install material-table with `npm` :
+To install material-table with `npm`:
 
     npm install material-table @material-ui/core --save
 
-To install material-table with `yarn` :
+To install material-table with `yarn`:
 
     yarn add material-table @material-ui/core
 
-#### 2. Add material icons
+#### 2.Add material icons
 
 There are two ways to use icons in material-table either import the material icons font via html OR import material icons and use the material-table `icons` prop.
 
@@ -92,11 +92,11 @@ OR
 
 Icons can be imported to be used in material-table offering more flexibility for customising the look and feel of material table over using a font library.
 
-To install @material-ui/icons with `npm` :
+To install @material-ui/icons with `npm`:
 
     npm install @material-ui/icons --save
 
-To install @material-ui/icons with `yarn` :
+To install @material-ui/icons with `yarn`:
 
     yarn add @material-ui/icons
 
@@ -206,7 +206,7 @@ ReactDOM.render(<App />, document.getElementById("react-div"));
 
 ## Contributing
 
-We'd love to have your helping hand on `material-table` ! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
 
 If you have any sort of doubt, idea or just want to talk about the project, feel free to join [our chat on Gitter](https://gitter.im/material-table/Lobby) :)
 

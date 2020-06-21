@@ -49,7 +49,11 @@ class MTableBody extends React.Component {
         >
           <TableCell
             style={{ paddingTop: 0, paddingBottom: 0, textAlign: "center" }}
-            colSpan={this.props.columns.length + addColumn}
+            colSpan={this.props.columns.reduce(
+              (currentVal, columnDef) =>
+                columnDef.hidden ? currentVal : currentVal + 1,
+              addColumn
+            )}
             key="empty-"
           >
             {localization.emptyDataSourceMessage}
@@ -201,6 +205,7 @@ class MTableBody extends React.Component {
             hasDetailPanel={!!this.props.detailPanel}
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
+            filterRowStyle={this.props.options.filterRowStyle}
             hideFilterIcons={this.props.options.hideFilterIcons}
           />
         )}

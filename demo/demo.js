@@ -427,6 +427,7 @@ class App extends Component {
         field: "name",
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
+        editPlaceholder: "This is placeholder",
       },
       {
         width: 200,
@@ -490,8 +491,14 @@ class App extends Component {
                   data={this.state.data}
                   title="Demo Title"
                   options={{
-                    pageSize: 50,
-                    pageSizeOptions: [5, 50, 100],
+                    selection: true,
+                    selectionProps: (rowData) => {
+                      rowData.tableData.disabled = rowData.name === "A1";
+
+                      return {
+                        disabled: rowData.name === "A1",
+                      };
+                    },
                   }}
                   editable={{
                     onRowAdd: (newData) =>
@@ -511,7 +518,7 @@ class App extends Component {
                           {
                             /* const data = this.state.data;
                             const index = data.indexOf(oldData);
-                            data[index] = newData;                
+                            data[index] = newData;
                             this.setState({ data }, () => resolve()); */
                           }
                           resolve();

@@ -273,10 +273,12 @@ export class MTableToolbar extends React.Component {
       this.props.showTextRowsSelected &&
       this.props.selectedRows &&
       this.props.selectedRows.length > 0
-        ? localization.nRowsSelected.replace(
-            "{0}",
-            this.props.selectedRows.length
-          )
+        ? typeof localization.nRowsSelected === "function"
+          ? localization.nRowsSelected(this.props.selectedRows.length)
+          : localization.nRowsSelected.replace(
+              "{0}",
+              this.props.selectedRows.length
+            )
         : this.props.showTitle
         ? this.props.title
         : null;
