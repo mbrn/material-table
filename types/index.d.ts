@@ -218,6 +218,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  filterRowStyle?: React.CSSProperties;
   fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;

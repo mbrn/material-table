@@ -132,6 +132,7 @@ export const propTypes = {
     exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
+    filterRowStyle: PropTypes.object,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
     hideFilterIcons: PropTypes.bool,
