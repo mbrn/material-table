@@ -203,6 +203,7 @@ export interface Icons {
 
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
+  detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
