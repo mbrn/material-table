@@ -215,9 +215,10 @@ export default class DataManager {
         data.forEach((element) => {
           if (element.groups.length > 0) {
             setCheck(element.groups);
-          } else {
-            element.data.forEach((d) => {
-              d.tableData.checked = checked;
+          }
+          else {
+            element.data.forEach(d => {
+              d.tableData.checked = d.tableData.disabled ? false : checked;
               selectedCount++;
             });
           }
@@ -225,9 +226,10 @@ export default class DataManager {
       };
 
       setCheck(this.groupedData);
-    } else {
-      this.searchedData.map((row) => {
-        row.tableData.checked = checked;
+    }
+    else {
+      this.searchedData.map(row => {
+        row.tableData.checked = row.tableData.disabled ? false : checked;
         return row;
       });
       selectedCount = this.searchedData.length;

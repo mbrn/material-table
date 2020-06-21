@@ -130,12 +130,7 @@ export default class MTableBodyRow extends React.Component {
 
     if (typeof this.props.detailPanel == "function") {
       return (
-        <TableCell
-          size={size}
-          padding="none"
-          key="key-detail-panel-column"
-          style={{ width: 42, textAlign: "center" }}
-        >
+        <TableCell size={size} padding="none" key="key-detail-panel-column" style={{ width: 42, textAlign: 'center', ...this.props.options.detailPanelColumnStyle }}>
           <IconButton
             size={size}
             style={{
@@ -159,13 +154,7 @@ export default class MTableBodyRow extends React.Component {
     } else {
       return (
         <TableCell size={size} padding="none" key="key-detail-panel-column">
-          <div
-            style={{
-              width: 42 * this.props.detailPanel.length,
-              textAlign: "center",
-              display: "flex",
-            }}
-          >
+          <div style={{ width: 42 * this.props.detailPanel.length, textAlign: 'center', display: 'flex', ...this.props.options.detailPanelColumnStyle }}>
             {this.props.detailPanel.map((panel, index) => {
               if (typeof panel === "function") {
                 panel = panel(this.props.data);

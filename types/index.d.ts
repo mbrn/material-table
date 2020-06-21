@@ -19,6 +19,8 @@ export interface MaterialTableProps<RowData extends object> {
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
+    editTooltip?: (rowData: RowData) => string;
+    deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
     onRowUpdateCancelled?: (rowData: RowData) => void;
     isEditHidden?: (rowData: RowData) => boolean;
@@ -66,6 +68,7 @@ export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
+  totalCount: number;
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
@@ -100,6 +103,7 @@ export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
+  onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
 }
 
@@ -115,25 +119,12 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
-  cellStyle?:
-    | React.CSSProperties
-    | ((data: RowData[], rowData: RowData) => React.CSSProperties);
-  currencySetting?: {
-    locale?: string;
-    currencyCode?: string;
-    minimumFractionDigits?: number;
-    maximumFractionDigits?: number;
-  };
-  customFilterAndSearch?: (
-    filter: any,
-    rowData: RowData,
-    columnDef: Column<RowData>
-  ) => boolean;
-  customSort?: (
-    data1: RowData,
-    data2: RowData,
-    type: "row" | "group"
-  ) => number;
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
+  cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
+  currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
+  dateSetting?: { locale?: string };
+  customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
+  customSort?: (data1: RowData, data2: RowData, type: (('row' | 'group'))) => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: "asc" | "desc";
@@ -161,19 +152,15 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any;
   lookup?: object;
-  editable?:
-    | "always"
-    | "onUpdate"
-    | "onAdd"
-    | "never"
-    | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
+  editPlaceholder?: string;
+  editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
   tooltip?: string;
-  type?: "boolean" | "numeric" | "date" | "datetime" | "time" | "currency";
+  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
   width?: string | number;
 }
 
@@ -250,6 +237,8 @@ export interface Icons {
 
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
+  detailPanelColumnStyle?: React.CSSProperties;
+  editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: "first" | "last";
   columnsButton?: boolean;
@@ -266,7 +255,8 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
-  fixedColumns?: { left?: number; right?: number };
+  filterRowStyle?: React.CSSProperties;
+  fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
   headerStyle?: React.CSSProperties;
@@ -345,7 +335,7 @@ export interface Localization {
   };
   toolbar?: {
     addRemoveColumns?: React.ReactNode;
-    nRowsSelected?: React.ReactNode;
+    nRowsSelected?: React.ReactNode | ((rowCount: number) => React.ReactNode);
     showColumnsTitle?: React.ReactNode;
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;

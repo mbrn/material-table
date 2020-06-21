@@ -95,18 +95,12 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    isInit &&
-      this.dataManager.changeOrder(
-        defaultSortColumnIndex,
-        defaultSortDirection
-      );
-    isInit && this.dataManager.changeSearchText(props.options.searchText || "");
-    isInit &&
-      this.dataManager.changeCurrentPage(
-        props.options.initialPage ? props.options.initialPage : 0
-      );
-    (isInit || this.isRemoteData()) &&
-      this.dataManager.changePageSize(props.options.pageSize);
+    // If the columns changed and the defaultSorting differs from the current sorting, it will trigger a new sorting
+    const shouldReorder = (isInit || (defaultSortColumnIndex !== this.dataManager.orderBy && defaultSortDirection !== this.dataManager.orderDirection));
+    shouldReorder && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    isInit && this.dataManager.changeSearchText(props.options.searchText || '');
+    isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
+    (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
     this.dataManager.changePaging(props.options.paging);
     isInit && this.dataManager.changeParentFunc(props.parentChildData);
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
@@ -232,13 +226,9 @@ export default class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowUpdate) {
         calculatedProps.actions.push((rowData) => ({
           icon: calculatedProps.icons.Edit,
-          tooltip: localization.editTooltip,
-          disabled:
-            calculatedProps.editable.isEditable &&
-            !calculatedProps.editable.isEditable(rowData),
-          hidden:
-            calculatedProps.editable.isEditHidden &&
-            calculatedProps.editable.isEditHidden(rowData),
+          tooltip: calculatedProps.editable.editTooltip ?  calculatedProps.editable.editTooltip(rowData) : localization.editTooltip,
+          disabled: calculatedProps.editable.isEditable && !calculatedProps.editable.isEditable(rowData),
+          hidden: calculatedProps.editable.isEditHidden && calculatedProps.editable.isEditHidden(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "update");
             this.setState({
@@ -251,13 +241,9 @@ export default class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowDelete) {
         calculatedProps.actions.push((rowData) => ({
           icon: calculatedProps.icons.Delete,
-          tooltip: localization.deleteTooltip,
-          disabled:
-            calculatedProps.editable.isDeletable &&
-            !calculatedProps.editable.isDeletable(rowData),
-          hidden:
-            calculatedProps.editable.isDeleteHidden &&
-            calculatedProps.editable.isDeleteHidden(rowData),
+          tooltip: calculatedProps.editable.deleteTooltip ?  calculatedProps.editable.deleteTooltip(rowData) :localization.deleteTooltip,
+          disabled: calculatedProps.editable.isDeletable && !calculatedProps.editable.isDeletable(rowData),
+          hidden: calculatedProps.editable.isDeleteHidden && calculatedProps.editable.isDeleteHidden(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "delete");
             this.setState({
@@ -401,7 +387,7 @@ export default class MaterialTable extends React.Component {
   };
 
   onEditingApproved = (mode, newData, oldData) => {
-    if (mode === "add") {
+    if (mode === "add"  && this.props.editable && this.props.editable.onRowAdd) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
           .onRowAdd(newData)
@@ -416,7 +402,8 @@ export default class MaterialTable extends React.Component {
             this.setState({ isLoading: false });
           });
       });
-    } else if (mode === "update") {
+    }
+    else if(mode === "update" && this.props.editable && this.props.editable.onRowUpdate) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
           .onRowUpdate(newData, oldData)
@@ -438,7 +425,9 @@ export default class MaterialTable extends React.Component {
             this.setState({ isLoading: false });
           });
       });
-    } else if (mode === "delete") {
+
+    }
+    else if(mode === "delete" && this.props.editable && this.props.editable.onRowDelete) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
           .onRowDelete(oldData)
@@ -792,8 +781,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef = props.columns[i > 0 ? i : props.columns.length - 1 - i];
-      if (colDef.tableData) {
+      const colDef = props.columns[i >= 0 ? i : props.columns.length - 1 - i];
+      if(colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
         } else {

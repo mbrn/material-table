@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
-import PropTypes from "prop-types";
-import * as React from "react";
-import { byString, setByString } from "../utils";
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import { byString, setByString } from '../utils';
+import * as CommonValues from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 export default class MTableEditRow extends React.Component {
@@ -32,11 +33,8 @@ export default class MTableEditRow extends React.Component {
   }
 
   renderColumns() {
-    const mapArr = this.props.columns
-      .filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      )
+    const size = CommonValues.elementSize(this.props);
+    const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value =
@@ -91,6 +89,7 @@ export default class MTableEditRow extends React.Component {
           );
           return (
             <this.props.components.Cell
+              size={size}
               icons={this.props.icons}
               columnDef={columnDef}
               value={readonlyValue}
@@ -106,6 +105,7 @@ export default class MTableEditRow extends React.Component {
 
           return (
             <TableCell
+              size={size}
               key={columnDef.tableData.id}
               align={
                 ["numeric"].indexOf(columnDef.type) !== -1 ? "right" : "left"
@@ -136,10 +136,8 @@ export default class MTableEditRow extends React.Component {
   }
 
   renderActions() {
-    const localization = {
-      ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
-    };
+    const size = CommonValues.elementSize(this.props);
+    const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     const actions = [
       {
         icon: this.props.icons.Check,
@@ -163,17 +161,9 @@ export default class MTableEditRow extends React.Component {
       },
     ];
     return (
-      <TableCell
-        padding="none"
-        key="key-actions-column"
-        style={{ width: 42 * actions.length, padding: "0px 5px" }}
-      >
-        <div style={{ display: "flex" }}>
-          <this.props.components.Actions
-            data={this.props.data}
-            actions={actions}
-            components={this.props.components}
-          />
+      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px', ...this.props.options.editCellStyle }}>
+        <div style={{ display: 'flex' }}>
+          <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} />
         </div>
       </TableCell>
     );
@@ -195,10 +185,8 @@ export default class MTableEditRow extends React.Component {
   };
 
   render() {
-    const localization = {
-      ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
-    };
+    const size = CommonValues.elementSize(this.props);
+    const localization = { ...MTableEditRow.defaultProps.localization, ...this.props.localization };
     let columns;
     if (this.props.mode === "add" || this.props.mode === "update") {
       columns = this.renderColumns();
@@ -209,9 +197,8 @@ export default class MTableEditRow extends React.Component {
       ).length;
       columns = [
         <TableCell
-          padding={
-            this.props.options.actionsColumnIndex === 0 ? "none" : undefined
-          }
+          size={size}
+          padding={this.props.options.actionsColumnIndex === 0 ? "none" : undefined}
           key="key-edit-cell"
           colSpan={colSpan}
         >

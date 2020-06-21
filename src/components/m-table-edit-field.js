@@ -126,6 +126,7 @@ class MTableEditField extends React.Component {
               "aria-label": `${this.props.columnDef.title}: press space to edit`,
             },
           }}
+
         />
       </MuiPickersUtilsProvider>
     );
@@ -135,13 +136,11 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
-        style={
-          this.props.columnDef.type === "numeric" ? { float: "right" } : {}
-        }
-        type={this.props.columnDef.type === "numeric" ? "number" : "text"}
-        placeholder={this.props.columnDef.title}
-        value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        style={this.props.columnDef.type === 'numeric' ? { float: 'right' } : {}}
+        type={this.props.columnDef.type === 'numeric' ? 'number' : 'text'}
+        placeholder={this.props.columnDef.editPlaceholder || this.props.columnDef.title}
+        value={this.props.value === undefined ? '' : this.props.value}
+        onChange={event => this.props.onChange(event.target.value)}
         InputProps={{
           style: {
             fontSize: 13,
@@ -158,9 +157,9 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
-        placeholder={this.props.columnDef.title}
-        value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        placeholder={this.props.columnDef.editPlaceholder || this.props.columnDef.title}
+        value={this.props.value === undefined ? '' : this.props.value}
+        onChange={event => this.props.onChange(event.target.value)}
         inputProps={{
           style: {
             fontSize: 13,

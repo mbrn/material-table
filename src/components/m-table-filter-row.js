@@ -52,34 +52,24 @@ class MTableFilterRow extends React.Component {
       setSelectedFilter(columnDef.tableData.filterValue || []);
     }, [columnDef.tableData.filterValue]);
 
-    return (
-      <FormControl style={{ width: "100%" }}>
-        <InputLabel
-          htmlFor="select-multiple-checkbox"
-          style={{ marginTop: -16 }}
-        >
-          {this.getLocalizedFilterPlaceHolder(columnDef)}
-        </InputLabel>
-        <Select
-          multiple
-          value={selectedFilter}
-          onClose={(event) => {
-            this.props.onFilterChanged(
-              columnDef.tableData.id,
-              event.target.value
-            );
-          }}
-          onChange={(event) => {
-            setSelectedFilter(event.target.value);
-          }}
-          input={<Input id="select-multiple-checkbox" />}
-          renderValue={(selecteds) =>
-            selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
-          }
-          MenuProps={MenuProps}
-          style={{ marginTop: 0 }}
-        >
-          {Object.keys(columnDef.lookup).map((key) => (
+    return <FormControl style={{ width: '100%' }}>
+      <InputLabel htmlFor="select-multiple-checkbox" style={{marginTop: -16}}>{this.getLocalizedFilterPlaceHolder(columnDef)}</InputLabel>
+      <Select
+        multiple
+        value={selectedFilter}
+        onClose={() => {
+          this.props.onFilterChanged(columnDef.tableData.id, selectedFilter);
+        }}
+        onChange={event => {
+          setSelectedFilter(event.target.value);
+        }}
+        input={<Input id="select-multiple-checkbox" />}
+        renderValue={selecteds => selecteds.map(selected => columnDef.lookup[selected]).join(', ')}
+        MenuProps={MenuProps}
+        style={{marginTop: 0}}
+      >
+        {
+          Object.keys(columnDef.lookup).map(key => (
             <MenuItem key={key} value={key}>
               <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
               <ListItemText primary={columnDef.lookup[key]} />
@@ -266,7 +256,11 @@ class MTableFilterRow extends React.Component {
         );
       });
 
-    return <TableRow style={{ height: 10 }}>{columns}</TableRow>;
+    return (
+      <TableRow style={{ height: 10, ...this.props.filterRowStyle }}>
+        {columns}
+      </TableRow>
+    );
   }
 }
 
@@ -286,6 +280,7 @@ MTableFilterRow.propTypes = {
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,
+  filterRowStyle: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
