@@ -140,7 +140,7 @@ export default class MTableEditRow extends React.Component {
       }
     ];
     return (
-      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px' }}>
+      <TableCell size={size} padding="none" key="key-actions-column" style={{ width: 42 * actions.length, padding: '0px 5px', ...this.props.options.editCellStyle }}>
         <div style={{ display: 'flex' }}>
           <this.props.components.Actions data={this.props.data} actions={actions} components={this.props.components} size={size} />
         </div>
