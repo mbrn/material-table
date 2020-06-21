@@ -23,7 +23,7 @@ export class MTableToolbar extends React.Component {
     this.state = {
       columnsButtonAnchorEl: null,
       exportButtonAnchorEl: null,
-      searchText: props.searchText
+      searchText: props.searchText,
     };
   }
 
@@ -317,7 +317,7 @@ MTableToolbar.defaultProps = {
   },
   search: true,
   showTitle: true,
-  searchText: '',
+  searchText: "",
   showTextRowsSelected: true,
   toolbarButtonAlignment: "right",
   searchAutoFocus: false,
