@@ -128,7 +128,7 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
-  placeholder?: string;
+  editPlaceholder?: string;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: ('row' | 'group')) => any;
