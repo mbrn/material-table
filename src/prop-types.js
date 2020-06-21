@@ -70,9 +70,15 @@ export const propTypes = {
   }),
   data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.func]).isRequired,
   editable: PropTypes.shape({
+    isEditable: PropTypes.func,
+    isDeletable: PropTypes.func,
     onRowAdd: PropTypes.func,
     onRowUpdate: PropTypes.func,
-    onRowDelete: PropTypes.func
+    onRowDelete: PropTypes.func,
+    onRowAddCancelled: PropTypes.func,
+    onRowUpdateCancelled: PropTypes.func,
+    isEditHidden: PropTypes.func,
+    isDeleteHidden: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
@@ -111,6 +117,8 @@ export const propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsCellStyle: PropTypes.object,
+    editCellStyle: PropTypes.object,
+    detailPanelColumnStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
@@ -126,6 +134,7 @@ export const propTypes = {
     exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
+    filterRowStyle: PropTypes.object,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
     hideFilterIcons: PropTypes.bool,
@@ -137,7 +146,13 @@ export const propTypes = {
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    pageSizeOptions: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        value: PropTypes.number,
+        label: PropTypes.string
+      })
+    ])),
     paginationType: PropTypes.oneOf(['normal', 'stepped']),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     search: PropTypes.bool,
