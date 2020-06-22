@@ -117,12 +117,16 @@ class MTableFilterRow extends React.Component {
 
   renderDateTypeFilter = (columnDef) => {
     const onDateInputChange = date => this.props.onFilterChanged(columnDef.tableData.id, date);
-    const pickerProps = {
+    let pickerProps = {
       value: columnDef.tableData.filterValue || null,
       onChange: onDateInputChange,
       placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
-      clearable: true
+      clearable: true,
     };
+
+    if (columnDef.datePickerProps !== null && typeof columnDef.datePickerProps === 'object') {
+      pickerProps = { ...pickerProps, ...columnDef.datePickerProps };
+    }
 
     let dateInputElement = null;
     if (columnDef.type === 'date') {
