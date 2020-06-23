@@ -55,7 +55,7 @@ class MTablePaginationInner extends React.Component {
           </span>
         </Tooltip>
         <Typography variant="caption" style={{ flex: 1, textAlign: 'center', alignSelf: 'center', flexBasis: 'inherit' }} >
-          {localization.labelDisplayedRows.replace('{from}', this.props.page * this.props.rowsPerPage + 1).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
+          {localization.labelDisplayedRows.replace('{from}', this.props.count === 0 ? 0 : ((this.props.page * this.props.rowsPerPage) + 1)).replace('{to}', Math.min((this.props.page + 1) * this.props.rowsPerPage, this.props.count)).replace('{count}', this.props.count)}
         </Typography>
         <Tooltip title={localization.nextTooltip}>
           <span>

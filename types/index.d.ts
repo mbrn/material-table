@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { IconProps } from '@material-ui/core/Icon';
+import SvgIcon from "@material-ui/core/SvgIcon"
 import { string } from 'prop-types';
+
+type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
@@ -14,6 +17,12 @@ export interface MaterialTableProps<RowData extends object> {
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
+    editTooltip?: (rowData: RowData) => string;
+    deleteTooltip?: (rowData: RowData) => string;
+    onRowAddCancelled?: (rowData: RowData) => void;
+    onRowUpdateCancelled?: (rowData: RowData) => void;
+    isEditHidden?: (rowData: RowData) => boolean;
+    isDeleteHidden?: (rowData: RowData) => boolean;
   }
   icons?: Icons;
   isLoading?: boolean;
@@ -31,8 +40,8 @@ export interface MaterialTableProps<RowData extends object> {
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
  /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table 
-  */ 
+  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+  */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -53,6 +62,7 @@ export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
+  totalCount: number;
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
@@ -74,7 +84,7 @@ export interface DetailPanel<RowData extends object> {
 
 export interface Action<RowData extends object> {
   disabled?: boolean;
-  icon: string | (() => React.ReactElement<any>);
+  icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
   isFreeAction?: boolean;
   position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
@@ -87,6 +97,7 @@ export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
+  onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
 }
 
@@ -102,8 +113,10 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
   cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
+  dateSetting?: { locale?: string };
   customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
   customSort?: (data1: RowData, data2: RowData, type: (('row' | 'group'))) => number;
   defaultFilter?: any;
@@ -125,6 +138,7 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
+  editPlaceholder?: string;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   render?: (data: RowData, type: ('row' | 'group')) => any;
@@ -132,7 +146,8 @@ export interface Column<RowData extends object> {
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
   tooltip?: string;
-  type?: ('boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  width?: string | number;
 }
 
 export interface Components {
@@ -190,6 +205,8 @@ export interface Icons {
 
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
+  detailPanelColumnStyle?: React.CSSProperties;
+  editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
@@ -206,6 +223,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  filterRowStyle?: React.CSSProperties;
   fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
@@ -218,6 +236,7 @@ export interface Options {
   padding?: ('default' | 'dense');
   paging?: boolean;
   grouping?: boolean;
+  overflowY?: ('visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit');
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: ('normal' | 'stepped');
@@ -231,6 +250,8 @@ export interface Options {
   searchText?: string;
   searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
+  searchFieldVariant?: 'standard' | 'filled' | 'outlined';
+  searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
@@ -239,54 +260,55 @@ export interface Options {
   toolbar?: boolean;
   toolbarButtonAlignment?: 'left' | 'right';
   detailPanelColumnAlignment?: 'left' | 'right';
+  cspNonce?: string;
 }
 
 export interface Localization {
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
-    emptyDataSourceMessage?: string;
+    emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
-      filterTooltip?: string;
+      filterTooltip?: React.ReactNode;
     };
     editRow?: {
-      saveTooltip?: string;
-      cancelTooltip?: string;
-      deleteText?: string;
+      saveTooltip?: React.ReactNode;
+      cancelTooltip?: React.ReactNode;
+      deleteText?: React.ReactNode;
     },
-    addTooltip?: string;
-    deleteTooltip?: string;
-    editTooltip?: string;
+    addTooltip?: React.ReactNode;
+    deleteTooltip?: React.ReactNode;
+    editTooltip?: React.ReactNode;
   };
   header?: {
-    actions?: string;
+    actions?: React.ReactNode;
   };
   grouping?: {
-    groupedBy?: string;
-    placeholder?: string;
+    groupedBy?: React.ReactNode;
+    placeholder?: React.ReactNode;
   };
   pagination?: {
-    firstTooltip?: string;
+    firstTooltip?: React.ReactNode;
     firstAriaLabel?: string;
-    previousTooltip?: string;
+    previousTooltip?: React.ReactNode;
     previousAriaLabel?: string,
-    nextTooltip?: string;
+    nextTooltip?: React.ReactNode;
     nextAriaLabel?: string,
-    labelDisplayedRows?: string;
-    labelRowsPerPage?: string;
-    lastTooltip?: string;
+    labelDisplayedRows?: React.ReactNode;
+    labelRowsPerPage?: React.ReactNode;
+    lastTooltip?: React.ReactNode;
     lastAriaLabel?: string,
-    labelRowsSelect?: string;
+    labelRowsSelect?: React.ReactNode;
   };
   toolbar?: {
-    addRemoveColumns?: string;
-    nRowsSelected?: string;
-    showColumnsTitle?: string;
+    addRemoveColumns?: React.ReactNode;
+    nRowsSelected?: React.ReactNode | ((rowCount: number) => React.ReactNode);
+    showColumnsTitle?: React.ReactNode;
     showColumnsAriaLabel?: string;
-    exportTitle?: string;
+    exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
-    exportName?: string;
-    searchTooltip?: string;
-    searchPlaceholder?: string;
+    exportName?: React.ReactNode;
+    searchTooltip?: React.ReactNode;
+    searchPlaceholder?: React.ReactNode;
   };
 }
 

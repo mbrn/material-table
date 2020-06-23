@@ -69,18 +69,23 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
       this.dataManager.changeApplyFilters(false);
+      this.dataManager.changeApplySort(false);
     }
     else {
       this.dataManager.changeApplySearch(true);
       this.dataManager.changeApplyFilters(true);
+      this.dataManager.changeApplySort(true);
       this.dataManager.setData(props.data);
     }
 
-    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    // If the columns changed and the defaultSorting differs from the current sorting, it will trigger a new sorting
+    const shouldReorder = (isInit || (defaultSortColumnIndex !== this.dataManager.orderBy && defaultSortDirection !== this.dataManager.orderDirection));
+    shouldReorder && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
@@ -89,12 +94,25 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
+  cleanColumns(columns) {
+    return columns.map(col => {
+      const colClone = {...col};
+      delete colClone.tableData;
+      return colClone;
+    });
+  }
+
   componentDidUpdate(prevProps) {
     // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
-    let propsChanged = !equal(prevProps.columns, this.props.columns);
+    const fixedPrevColumns = this.cleanColumns(prevProps.columns);
+    const fixedPropsColumns = this.cleanColumns(this.props.columns);
+
+    let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     propsChanged = propsChanged || !equal(prevProps.options, this.props.options);
-    propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+    if(!this.isRemoteData()) {
+      propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+    }
 
     if (propsChanged) {
       const props = this.getProps(this.props);
@@ -156,6 +174,7 @@ export default class MaterialTable extends React.Component {
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
           position: "toolbar",
+          disabled: !!(this.dataManager.lastEditingRow),
           onClick: () => {
             this.dataManager.changeRowEditing();
             this.setState({
@@ -168,8 +187,9 @@ export default class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowUpdate) {
         calculatedProps.actions.push(rowData => ({
           icon: calculatedProps.icons.Edit,
-          tooltip: localization.editTooltip,
+          tooltip: calculatedProps.editable.editTooltip ?  calculatedProps.editable.editTooltip(rowData) : localization.editTooltip,
           disabled: calculatedProps.editable.isEditable && !calculatedProps.editable.isEditable(rowData),
+          hidden: calculatedProps.editable.isEditHidden && calculatedProps.editable.isEditHidden(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "update");
             this.setState({
@@ -182,8 +202,9 @@ export default class MaterialTable extends React.Component {
       if (calculatedProps.editable.onRowDelete) {
         calculatedProps.actions.push(rowData => ({
           icon: calculatedProps.icons.Delete,
-          tooltip: localization.deleteTooltip,
+          tooltip: calculatedProps.editable.deleteTooltip ?  calculatedProps.editable.deleteTooltip(rowData) :localization.deleteTooltip,
           disabled: calculatedProps.editable.isDeletable && !calculatedProps.editable.isDeletable(rowData),
+          hidden: calculatedProps.editable.isDeleteHidden && calculatedProps.editable.isDeleteHidden(rowData),
           onClick: (e, rowData) => {
             this.dataManager.changeRowEditing(rowData, "delete");
             this.setState({
@@ -312,7 +333,7 @@ export default class MaterialTable extends React.Component {
   }
 
   onEditingApproved = (mode, newData, oldData) => {
-    if (mode === "add") {
+    if (mode === "add"  && this.props.editable && this.props.editable.onRowAdd) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowAdd(newData)
           .then(result => {
@@ -327,7 +348,7 @@ export default class MaterialTable extends React.Component {
           });
       });
     }
-    else if (mode === "update") {
+    else if(mode === "update" && this.props.editable && this.props.editable.onRowUpdate) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowUpdate(newData, oldData)
           .then(result => {
@@ -347,7 +368,7 @@ export default class MaterialTable extends React.Component {
       });
 
     }
-    else if (mode === "delete") {
+    else if(mode === "delete" && this.props.editable && this.props.editable.onRowDelete) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowDelete(oldData)
           .then(result => {
@@ -370,17 +391,23 @@ export default class MaterialTable extends React.Component {
 
   onEditingCanceled = (mode, rowData) => {
     if (mode === "add") {
+      this.props.editable.onRowAddCancelled && this.props.editable.onRowAddCancelled();
       this.setState({ showAddRow: false });
     }
-    else if (mode === "update" || mode === "delete") {
+    else if(mode === "update") {
+      this.props.editable.onRowUpdateCancelled && this.props.editable.onRowUpdateCancelled();
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
+    else if(mode === "delete") {
+      this.dataManager.changeRowEditing(rowData);
+      this.setState(this.dataManager.getRenderState());
+    }
+
   }
 
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query };
-
     this.setState({ isLoading: true }, () => {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
@@ -421,22 +448,17 @@ export default class MaterialTable extends React.Component {
     }
   }
 
-  onSearchChange = searchText => {
-    this.dataManager.changeSearchText(searchText);
-    this.setState(({ searchText }), this.onSearchChangeDebounce());
-  }
-
-  onSearchChangeDebounce = debounce(() => {
+  onSearchChangeDebounce = debounce((searchText) => {
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
       query.page = 0;
-      query.search = this.state.searchText;
+      query.search = searchText;
 
       this.onQueryChange(query);
     }
     else {
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onSearchChange && this.props.onSearchChange(this.state.searchText);
+        this.props.onSearchChange && this.props.onSearchChange(searchText);
       });
     }
   }, this.props.options.debounceInterval)
@@ -620,7 +642,7 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef = props.columns[i > 0 ? i : props.columns.length - 1 - i];
+      const colDef = props.columns[i >= 0 ? i : props.columns.length - 1 - i];
       if(colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
@@ -638,7 +660,7 @@ export default class MaterialTable extends React.Component {
     const props = this.getProps();
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={this.onDragEnd} nonce={props.options.cspNonce}>
         <props.components.Container style={{ position: 'relative', ...props.style }}>
           {props.options.toolbar &&
             <props.components.Toolbar
@@ -661,10 +683,13 @@ export default class MaterialTable extends React.Component {
               showTextRowsSelected={props.options.showTextRowsSelected}
               toolbarButtonAlignment={props.options.toolbarButtonAlignment}
               searchFieldAlignment={props.options.searchFieldAlignment}
-              searchText={this.state.searchText}
+              searchAutoFocus={props.options.searchAutoFocus}
               searchFieldStyle={props.options.searchFieldStyle}
+              searchFieldVariant={props.options.searchFieldVariant}
               title={props.title}
-              onSearchChanged={this.onSearchChange}
+              searchText={this.dataManager.searchText}
+              onSearchChanged={this.onSearchChangeDebounce}
+              dataManager={this.dataManager}
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{ ...MaterialTable.defaultProps.localization.toolbar, ...this.props.localization.toolbar }}
             />
