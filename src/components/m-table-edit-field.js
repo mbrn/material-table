@@ -9,25 +9,25 @@ import PropTypes from 'prop-types';
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, onRowDataChange, ...props } = this.props;
+    const { columnDef, rowData, onRowDataChange, errorState, ...props } = this.props;
     return props;
   }
 
   renderLookupField() {
     return (
-        <Select
-          {...this.getProps()}
-          value={this.props.value === undefined ? '' : this.props.value}
-          onChange={event => this.props.onChange(event.target.value)}
-          style={{
-            fontSize: 13,
-          }}
-          SelectDisplayProps={{ 'aria-label': this.props.columnDef.title }}
-        >
-          {Object.keys(this.props.columnDef.lookup).map(key => (
-            <MenuItem key={key} value={key}>{this.props.columnDef.lookup[key]}</MenuItem>)
-          )}
-        </Select>
+      <Select
+        {...this.getProps()}
+        value={this.props.value === undefined ? '' : this.props.value}
+        onChange={event => this.props.onChange(event.target.value)}
+        style={{
+          fontSize: 13,
+        }}
+        SelectDisplayProps={{ 'aria-label': this.props.columnDef.title }}
+      >
+        {Object.keys(this.props.columnDef.lookup).map(key => (
+          <MenuItem key={key} value={key}>{this.props.columnDef.lookup[key]}</MenuItem>)
+        )}
+      </Select>
     );
   }
 
@@ -115,11 +115,11 @@ class MTableEditField extends React.Component {
             style: {
               fontSize: 13
             },
-            inputProps:{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`
-          }
+            inputProps: {
+              'aria-label': `${this.props.columnDef.title}: press space to edit`
+            }
           }}
-          
+
         />
       </MuiPickersUtilsProvider>
     );

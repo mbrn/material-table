@@ -183,7 +183,7 @@ export default class MTableEditRow extends React.Component {
   }
 
   cancelEdit = (e) => {
-    if(e.keyCode === 27) {
+    if (e.keyCode === 27) {
       this.props.onEditingCanceled(this.props.mode, this.props.data);
     }
   }
@@ -267,7 +267,7 @@ export default class MTableEditRow extends React.Component {
     return (
       <>
         <TableRow
-         onKeyDown={this.cancelEdit}
+          onKeyDown={this.cancelEdit}
           {...rowProps}
           style={this.getStyle()}
         >
@@ -305,5 +305,5 @@ MTableEditRow.propTypes = {
   onEditingCanceled: PropTypes.func,
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
-  errorState: PropTypes.object
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };

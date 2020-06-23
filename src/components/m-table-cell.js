@@ -12,8 +12,8 @@ export default class MTableCell extends React.Component {
 
   getRenderValue() {
     const dateLocale = this.props.columnDef.dateSetting && this.props.columnDef.dateSetting.locale
-        ? this.props.columnDef.dateSetting.locale
-        : undefined;
+      ? this.props.columnDef.dateSetting.locale
+      : undefined;
     if (this.props.columnDef.emptyValue !== undefined && (this.props.value === undefined || this.props.value === null)) {
       return this.getEmptyValue(this.props.columnDef.emptyValue);
     }
@@ -35,7 +35,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'date') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleDateString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
@@ -43,7 +43,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'time') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
@@ -51,7 +51,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'datetime') {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
-      } else if(isoDateRegex.exec(this.props.value)) {
+      } else if (isoDateRegex.exec(this.props.value)) {
         return new Date(this.props.value).toLocaleString(dateLocale);
       } else {
         return this.props.value;
@@ -59,7 +59,7 @@ export default class MTableCell extends React.Component {
     } else if (this.props.columnDef.type === 'currency') {
       return this.getCurrencyValue(this.props.columnDef.currencySetting, this.props.value);
     }
-    else if(typeof this.props.value === "boolean") {
+    else if (typeof this.props.value === "boolean") {
       // To avoid forwardref boolean children.
       return this.props.value.toString();
     }
@@ -117,7 +117,7 @@ export default class MTableCell extends React.Component {
 
   render() {
 
-    const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const { icons, columnDef, rowData, errorState, ...cellProps } = this.props;
 
     return (
       <TableCell
@@ -143,5 +143,5 @@ MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
-  errorState: PropTypes.object
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };

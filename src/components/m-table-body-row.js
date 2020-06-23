@@ -271,6 +271,7 @@ export default class MTableBodyRow extends React.Component {
       treeDataMaxLevel,
       localization,
       actions,
+      errorState,
       ...rowProps } = this.props;
 
     return (
@@ -377,5 +378,5 @@ MTableBodyRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
-  errorState: PropTypes.object
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };

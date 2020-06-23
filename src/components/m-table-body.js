@@ -241,7 +241,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
-  errorState: PropTypes.object
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };
 
 export default MTableBody;
