@@ -14,9 +14,10 @@ class MTableEditField extends React.Component {
   }
 
   renderLookupField() {
+    const { helperText, ...props } = this.getProps();
     return (
       <Select
-        {...this.getProps()}
+        {...props}
         value={this.props.value === undefined ? '' : this.props.value}
         onChange={event => this.props.onChange(event.target.value)}
         style={{

@@ -261,6 +261,7 @@ export default class MTableEditRow extends React.Component {
       localization: localizationProp, // renamed to not conflict with definition above
       options,
       actions,
+      errorState,
       ...rowProps
     } = this.props;
 
