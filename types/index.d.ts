@@ -66,6 +66,7 @@ export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
+  totalCount: number;
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
@@ -118,6 +119,7 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
   cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   dateSetting?: { locale?: string };
@@ -142,6 +144,7 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
+  editPlaceholder?: string;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
   validate?: (rowData: RowData) => { isValid: boolean, helperText?: string } | string | boolean,
@@ -211,6 +214,8 @@ export interface Icons {
 
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
+  detailPanelColumnStyle?: React.CSSProperties;
+  editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
@@ -227,6 +232,7 @@ export interface Options {
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
+  filterRowStyle?: React.CSSProperties;
   fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;

@@ -84,7 +84,9 @@ export default class MaterialTable extends React.Component {
       this.dataManager.setData(props.data);
     }
 
-    isInit && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
+    // If the columns changed and the defaultSorting differs from the current sorting, it will trigger a new sorting
+    const shouldReorder = (isInit || (defaultSortColumnIndex !== this.dataManager.orderBy && defaultSortDirection !== this.dataManager.orderDirection));
+    shouldReorder && this.dataManager.changeOrder(defaultSortColumnIndex, defaultSortDirection);
     isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit && this.dataManager.changeCurrentPage(props.options.initialPage ? props.options.initialPage : 0);
     (isInit || this.isRemoteData()) && this.dataManager.changePageSize(props.options.pageSize);
@@ -332,7 +334,7 @@ export default class MaterialTable extends React.Component {
   }
 
   onEditingApproved = (mode, newData, oldData) => {
-    if (mode === "add") {
+    if (mode === "add"  && this.props.editable && this.props.editable.onRowAdd) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowAdd(newData)
           .then(result => {
@@ -351,7 +353,7 @@ export default class MaterialTable extends React.Component {
           });
       });
     }
-    else if (mode === "update") {
+    else if(mode === "update" && this.props.editable && this.props.editable.onRowUpdate) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowUpdate(newData, oldData)
           .then(result => {
@@ -375,7 +377,7 @@ export default class MaterialTable extends React.Component {
       });
 
     }
-    else if (mode === "delete") {
+    else if(mode === "delete" && this.props.editable && this.props.editable.onRowDelete) {
       this.setState({ isLoading: true }, () => {
         this.props.editable.onRowDelete(oldData)
           .then(result => {

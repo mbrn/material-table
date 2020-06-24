@@ -71,11 +71,11 @@ export class MTableHeader extends React.Component {
         if (columnDef.tooltip) {
           content = <Tooltip title={columnDef.tooltip}><span>{content}</span></Tooltip>;
         }
-
+        const cellAlignment = columnDef.align !== undefined ? columnDef.align : ['numeric', 'currency'].indexOf(columnDef.type) !== -1 ? "right" : "left";
         return (
           <TableCell
             key={columnDef.tableData.id}
-            align={['numeric', 'currency'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
+            align={cellAlignment}
             className={this.props.classes.header}
             style={{ ...this.props.headerStyle, ...columnDef.headerStyle, boxSizing: 'border-box', width: columnDef.tableData.width }}
             size={size}
@@ -99,7 +99,7 @@ export class MTableHeader extends React.Component {
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle, width: width, textAlign: 'center', boxSizing: 'border-box' }}
       >
-        <TableSortLabel disabled>{localization.actions}</TableSortLabel>
+        <TableSortLabel hideSortIcon={true} disabled>{localization.actions}</TableSortLabel>
       </TableCell>
     );
   }

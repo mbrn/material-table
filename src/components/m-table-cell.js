@@ -99,7 +99,10 @@ export default class MTableCell extends React.Component {
     let cellStyle = {
       color: 'inherit',
       width: this.props.columnDef.tableData.width,
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      fontSize: "inherit",
+      fontFamily: "inherit",
+      fontWeight: "inherit",
     };
 
     if (typeof this.props.columnDef.cellStyle === 'function') {
@@ -116,15 +119,15 @@ export default class MTableCell extends React.Component {
   }
 
   render() {
-
     const { icons, columnDef, rowData, errorState, ...cellProps } = this.props;
-
+    
+    const cellAlignment = columnDef.align !== undefined ? columnDef.align : ['numeric', 'currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left";
     return (
       <TableCell
         size={this.props.size}
         {...cellProps}
         style={this.getStyle()}
-        align={['numeric', 'currency'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
+        align={cellAlignment}
         onClick={this.handleClickCell}
       >
         {this.props.children}
