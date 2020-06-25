@@ -2,6 +2,7 @@
 import * as React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import PropTypes from 'prop-types';
+import parseISO from 'date-fns/parseISO';
 /* eslint-enable no-unused-vars */
 
 /* eslint-disable no-useless-escape */
@@ -36,7 +37,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleDateString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString(dateLocale);
+        return parseISO(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -44,7 +45,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString(dateLocale);
+        return parseISO(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -52,7 +53,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
       } else if(isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleString(dateLocale);
+        return parseISO(this.props.value).toLocaleString(dateLocale);
       } else {
         return this.props.value;
       }
