@@ -45,8 +45,9 @@ class MTableFilterRow extends React.Component {
         multiple
         value={selectedFilter}
         onClose={event => {
+          
           if(columnDef.filterOnItemSelect !== true)
-            this.props.onFilterChanged(columnDef.tableData.id, event.target.value);
+            this.props.onFilterChanged(columnDef.tableData.id, selectedFilter);
         }}
         onChange={event => {
           setSelectedFilter(event.target.value);
@@ -216,7 +217,7 @@ class MTableFilterRow extends React.Component {
       });
 
     return (
-      <TableRow style={{ height: 10 }}>
+      <TableRow style={{ height: 10, ...this.props.filterRowStyle }}>
         {columns}
       </TableRow>
     );
@@ -239,6 +240,7 @@ MTableFilterRow.propTypes = {
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,
+  filterRowStyle: PropTypes.object,
   selection: PropTypes.bool.isRequired,
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,

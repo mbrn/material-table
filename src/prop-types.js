@@ -117,6 +117,8 @@ export const propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsCellStyle: PropTypes.object,
+    editCellStyle: PropTypes.object,
+    detailPanelColumnStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
     addRowPosition: PropTypes.oneOf(['first', 'last']),
     columnsButton: PropTypes.bool,
@@ -132,6 +134,7 @@ export const propTypes = {
     exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
+    filterRowStyle: PropTypes.object,
     header: PropTypes.bool,
     headerStyle: PropTypes.object,
     hideFilterIcons: PropTypes.bool,

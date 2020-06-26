@@ -72,7 +72,7 @@ class App extends Component {
       { id: 64, name: 'A6', surname: 'C', isMarried: true, birthDate: new Date(1989, 1, 1), birthCity: 34, sex: 'Female', type: 'child', insertDateTime: new Date(2018, 1, 1, 12, 23, 44), time: new Date(1900, 1, 1, 14, 23, 35), parentId: 5 }
     ],
     columns: [
-      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text' },
+      { title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text', editPlaceholder: 'This is placeholder' },
       { width: 200, title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text' },
       { title: 'Evli', field: 'isMarried' },
       { title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd' },
@@ -135,7 +135,7 @@ class App extends Component {
                           {
                             /* const data = this.state.data;
                             const index = data.indexOf(oldData);
-                            data[index] = newData;                
+                            data[index] = newData;
                             this.setState({ data }, () => resolve()); */
                           }
                           resolve();
