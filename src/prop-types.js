@@ -130,7 +130,7 @@ export const propTypes = {
     exportAllData: PropTypes.bool,
     exportButton: PropTypes.bool,
     exportDelimiter: PropTypes.string,
-    exportFileName: PropTypes.string,
+    exportFileName: PropTypes.string | PropTypes.func,
     exportCsv: PropTypes.func,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
