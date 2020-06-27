@@ -119,6 +119,7 @@ export interface Column<RowData extends object> {
   dateSetting?: { locale?: string };
   customFilterAndSearch?: (filter: any, rowData: RowData, columnDef: Column<RowData>) => boolean;
   customSort?: (data1: RowData, data2: RowData, type: (('row' | 'group'))) => number;
+  customExport?: (rowData: RowData) => void;
   defaultFilter?: any;
   defaultGroupOrder?: number;
   defaultGroupSort?: ('asc' | 'desc');
