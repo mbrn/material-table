@@ -45,7 +45,11 @@ export class MTableToolbar extends React.Component {
       })
     );
 
-    const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv');
+    let fileName = this.props.title || 'data';
+    if (this.props.exportFileName) {
+      fileName = typeof this.props.exportFileName === 'function' ? this.props.exportFileName() : this.props.exportFileName;
+    }
+    const builder = new CsvBuilder(fileName + '.csv');
     builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map(columnDef => columnDef.title))
@@ -288,7 +292,7 @@ MTableToolbar.propTypes = {
   exportAllData: PropTypes.bool,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
-  exportFileName: PropTypes.string,
+  exportFileName: PropTypes.string | PropTypes.func,
   exportCsv: PropTypes.func,
   classes: PropTypes.object,
   searchAutoFocus: PropTypes.bool
