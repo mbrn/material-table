@@ -27,21 +27,21 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
-  options?: Options;
+  options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number) => void;
-  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: ("asc" | "desc")) => void;
-  onGroupRemoved?: (column:Column<RowData>, index:boolean) => void;
+  onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (event?: React.MouseEvent, rowData?: RowData, toggleDetailPanel?: (panelIndex?: number) => void) => void;
   onRowSelected?: (rowData: RowData) => void;
   onSearchChange?: (searchText: string) => void;
- /** An event fired when the table has finished filtering data
-  * @param {Filter<RowData>[]} filters All the filters that are applied to the table
-  */
+  /** An event fired when the table has finished filtering data
+   * @param {Filter<RowData>[]} filters All the filters that are applied to the table
+   */
   onFilterChange?: (filters: Filter<RowData>[]) => void;
   onSelectionChange?: (data: RowData[], rowData?: RowData) => void;
   onTreeExpandChange?: (data: any, isExpanded: boolean) => void;
@@ -57,15 +57,19 @@ export interface Filter<RowData extends object> {
   operator: "=";
   value: any;
 }
+export interface ErrorState {
+  message: string;
+  errorCause: "query" | 'add' | 'update' | 'delete';
+}
 
 export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
-  totalCount: number;
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
+  error?: ErrorState;
 }
 
 export interface QueryResult<RowData extends object> {
@@ -99,6 +103,7 @@ export interface EditComponentProps<RowData extends object> {
   onChange: (newValue: any) => void;
   onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
+  errorState?: ErrorStateL
 }
 
 export interface EditCellColumnDef {
@@ -113,7 +118,6 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
-  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
   cellStyle?: React.CSSProperties | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: { locale?: string, currencyCode?: string, minimumFractionDigits?: number, maximumFractionDigits?: number };
   dateSetting?: { locale?: string };
@@ -129,7 +133,7 @@ export interface Column<RowData extends object> {
   export?: boolean;
   field?: keyof RowData | string;
   filtering?: boolean;
-  filterComponent?: ((props: {columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void}) => React.ReactElement<any>);
+  filterComponent?: ((props: { columnDef: Column<RowData>, onFilterChanged: (rowId: string, value: any) => void }) => React.ReactElement<any>);
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
@@ -138,9 +142,9 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any,
   lookup?: object;
-  editPlaceholder?: string;
   editable?: ('always' | 'onUpdate' | 'onAdd' | 'never' | ((columnDef: Column<RowData>, rowData: RowData) => boolean));
   removable?: boolean;
+  validate?: (rowData: RowData) => { isValid: boolean, helperText?: string } | string | boolean,
   render?: (data: RowData, type: ('row' | 'group')) => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -164,6 +168,7 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   OverlayLoading?: React.ComponentType<any>;
+  OverlayError?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
@@ -201,12 +206,11 @@ export interface Icons {
   Search?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   ThirdStateCheck?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   ViewColumn?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
+  Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
-export interface Options {
+export interface Options<RowData extends object> {
   actionsCellStyle?: React.CSSProperties;
-  detailPanelColumnStyle?: React.CSSProperties;
-  editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
   columnsButton?: boolean;
@@ -219,11 +223,10 @@ export interface Options {
   exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
-  exportFileName?: string;
+  exportFileName?: string | (columns: Column<RowData>, data: string[][]) => string;
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
-  filterRowStyle?: React.CSSProperties;
   fixedColumns?: { left?: number; right?: number; };
   groupRowSeparator?: string;
   header?: boolean;
@@ -264,6 +267,7 @@ export interface Options {
 }
 
 export interface Localization {
+  error?: React.ReactNode;
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
@@ -312,4 +316,4 @@ export interface Localization {
   };
 }
 
-export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> {}
+export default class MaterialTable<RowData extends object> extends React.Component<MaterialTableProps<RowData>> { }
