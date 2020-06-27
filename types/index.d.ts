@@ -223,7 +223,7 @@ export interface Options<RowData extends object> {
   exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
-  exportFileName?: string | (columns: Column<RowData>, data: string[][]) => string;
+  exportFileName?: string | ((columns: Column<RowData>, data: string[][]) => string);
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
