@@ -35,13 +35,13 @@ class MTableEditField extends React.Component {
         {...this.getProps()}
         clearOnEscape
         options={this.props.columnDef.autocomplete}
-        freeSolo={this.props.columnDef.freeSolo}
+        freeSolo={this.props.columnDef.autocompleteFreeSolo}
         value={this.state.secondaryValue || ''}
         onChange={(event) => this.handleChangeForSecondaryInput(event)}
         renderInput={(params) =>
           <TextField
             {...params}
-            placeholder={this.props.columnDef.title}
+            placeholder={this.props.columnDef.editPlaceholder || this.props.columnDef.title}
             value={this.props.value || ''}
             onChange={(event) => this.props.onChange(event.target.value)}
             style={{
