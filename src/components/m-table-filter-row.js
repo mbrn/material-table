@@ -55,7 +55,7 @@ class MTableFilterRow extends React.Component {
     return (
       <FormControl style={{ width: "100%" }}>
         <InputLabel
-          htmlFor="select-multiple-checkbox"
+          htmlFor={"select-multiple-checkbox" + columnDef.tableData.id}
           style={{ marginTop: -16 }}
         >
           {this.getLocalizedFilterPlaceHolder(columnDef)}
@@ -69,7 +69,7 @@ class MTableFilterRow extends React.Component {
           onChange={(event) => {
             setSelectedFilter(event.target.value);
           }}
-          input={<Input id="select-multiple-checkbox" />}
+          input={<Input id={"select-multiple-checkbox" + columnDef.tableData.id} />}
           renderValue={(selecteds) =>
             selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
           }
