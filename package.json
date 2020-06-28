@@ -17,11 +17,12 @@
     "lint": "npm run eslint && npm run tsc",
     "eslint": "eslint src/** -c ./configs/.eslintrc",
     "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
-    "lint:fix": "eslint src/** --fix"
+    "lint:fix": "eslint src/** --fix",
+    "prettify": "prettier --write **/*.js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && pretty-quick --staged"
     }
   },
   "repository": {
@@ -63,6 +64,10 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
     "husky": "^1.2.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "jspdf": "1.5.3",
+    "jspdf-autotable": "3.5.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.3.12",
