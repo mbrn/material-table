@@ -334,14 +334,16 @@ export default class MaterialTable extends React.Component {
       const query = { ...this.state.query };
       query.page = page;
       this.onQueryChange(query, () => {
-        this.props.onChangePage && this.props.onChangePage(page, query.pageSize);
+        this.props.onChangePage &&
+          this.props.onChangePage(page, query.pageSize);
       });
     } else {
       if (!this.isOutsidePageNumbers(this.props)) {
         this.dataManager.changeCurrentPage(page);
       }
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onChangePage && this.props.onChangePage(page, this.state.query.pageSize);
+        this.props.onChangePage &&
+          this.props.onChangePage(page, this.state.query.pageSize);
       });
     }
   };
