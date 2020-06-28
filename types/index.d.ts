@@ -34,7 +34,7 @@ export interface MaterialTableProps<RowData extends object> {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number, pageSize: number) => void;
-  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
@@ -278,7 +278,9 @@ export interface Options {
   exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
-  exportFileName?: string | ((columns: Column<RowData>, data: string[][]) => string);
+  exportFileName?:
+    | string
+    | ((columns: Column<RowData>, data: string[][]) => string);
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
