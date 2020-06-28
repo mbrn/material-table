@@ -66,6 +66,8 @@
     "husky": "^1.2.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
+    "jspdf": "1.5.3",
+    "jspdf-autotable": "3.5.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.3.12",
