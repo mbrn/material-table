@@ -11,8 +11,8 @@ export interface MaterialTableProps<RowData extends object> {
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?:
-  | ((rowData: RowData) => React.ReactNode)
-  | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
+    | ((rowData: RowData) => React.ReactNode)
+    | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
@@ -34,7 +34,7 @@ export interface MaterialTableProps<RowData extends object> {
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number, pageSize: number) => void;
-  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
+  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
@@ -121,8 +121,8 @@ export interface EditCellColumnDef {
 export interface Column<RowData extends object> {
   align?: "center" | "inherit" | "justify" | "left" | "right";
   cellStyle?:
-  | React.CSSProperties
-  | ((data: RowData[], rowData: RowData) => React.CSSProperties);
+    | React.CSSProperties
+    | ((data: RowData[], rowData: RowData) => React.CSSProperties);
   currencySetting?: {
     locale?: string;
     currencyCode?: string;
@@ -149,9 +149,9 @@ export interface Column<RowData extends object> {
     props: EditComponentProps<RowData>
   ) => React.ReactElement<any>;
   emptyValue?:
-  | string
-  | React.ReactElement<any>
-  | ((data: any) => React.ReactElement<any> | string);
+    | string
+    | React.ReactElement<any>
+    | ((data: any) => React.ReactElement<any> | string);
   export?: boolean;
   field?: keyof RowData | string;
   filtering?: boolean;
@@ -169,11 +169,11 @@ export interface Column<RowData extends object> {
   lookup?: object;
   editPlaceholder?: string;
   editable?:
-  | "always"
-  | "onUpdate"
-  | "onAdd"
-  | "never"
-  | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
+    | "always"
+    | "onUpdate"
+    | "onAdd"
+    | "never"
+    | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
@@ -181,13 +181,13 @@ export interface Column<RowData extends object> {
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?:
-  | "string"
-  | "boolean"
-  | "numeric"
-  | "date"
-  | "datetime"
-  | "time"
-  | "currency";
+    | "string"
+    | "boolean"
+    | "numeric"
+    | "date"
+    | "datetime"
+    | "time"
+    | "currency";
   width?: string | number;
 }
 
@@ -300,8 +300,8 @@ export interface Options {
   pageSizeOptions?: number[];
   paginationType?: "normal" | "stepped";
   rowStyle?:
-  | React.CSSProperties
-  | ((data: any, index: number, level: number) => React.CSSProperties);
+    | React.CSSProperties
+    | ((data: any, index: number, level: number) => React.CSSProperties);
   showEmptyDataSourceMessage?: boolean;
   showFirstLastPageButtons?: boolean;
   showSelectAllCheckbox?: boolean;
@@ -375,4 +375,4 @@ export interface Localization {
 
 export default class MaterialTable<
   RowData extends object
-  > extends React.Component<MaterialTableProps<RowData>> { }
+> extends React.Component<MaterialTableProps<RowData>> {}

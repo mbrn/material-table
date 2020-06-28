@@ -72,7 +72,7 @@ export class MTableToolbar extends React.Component {
     };
 
     const unit = "pt";
-    const size = "A4";
+    const size = "A4"; 
     const orientation = "landscape";
 
     const doc = new jsPDF(orientation, unit, size);
@@ -111,7 +111,7 @@ export class MTableToolbar extends React.Component {
           autoFocus={this.props.searchAutoFocus}
           className={
             this.props.searchFieldAlignment === "left" &&
-              this.props.showTitle === false
+            this.props.showTitle === false
               ? null
               : this.props.classes.searchField
           }
@@ -290,8 +290,8 @@ export class MTableToolbar extends React.Component {
           {title}
         </Typography>
       ) : (
-          title
-        );
+        title
+      );
 
     return <div className={classes.title}>{toolBarTitle}</div>;
   }
@@ -304,17 +304,17 @@ export class MTableToolbar extends React.Component {
     };
     const title =
       this.props.showTextRowsSelected &&
-        this.props.selectedRows &&
-        this.props.selectedRows.length > 0
+      this.props.selectedRows &&
+      this.props.selectedRows.length > 0
         ? typeof localization.nRowsSelected === "function"
           ? localization.nRowsSelected(this.props.selectedRows.length)
           : localization.nRowsSelected.replace(
-            "{0}",
-            this.props.selectedRows.length
-          )
+              "{0}",
+              this.props.selectedRows.length
+            )
         : this.props.showTitle
-          ? this.props.title
-          : null;
+        ? this.props.title
+        : null;
     return (
       <Toolbar
         className={classNames(classes.root, {
@@ -401,13 +401,13 @@ export const styles = (theme) => ({
   highlight:
     theme.palette.type === "light"
       ? {
-        color: theme.palette.secondary.main,
-        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-      }
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        }
       : {
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.secondary.dark,
-      },
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark,
+        },
   spacer: {
     flex: "1 1 10%",
   },
