@@ -8,6 +8,9 @@
     "dist",
     "types"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "babel": {
     "extends": "./configs/.babelrc"
   },
@@ -82,8 +85,6 @@
     "debounce": "^1.2.0",
     "fast-deep-equal": "2.0.1",
     "filefy": "0.1.10",
-    "jspdf": "1.5.3",
-    "jspdf-autotable": "3.5.3",
     "prop-types": "^15.6.2",
     "react-beautiful-dnd": "^13.0.0",
     "react-double-scrollbar": "0.0.15"
