@@ -1,22 +1,22 @@
 /* eslint-disable no-unused-vars */
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
-import classNames from 'classnames';
-import { CsvBuilder } from 'filefy';
-import PropTypes, { oneOf } from 'prop-types';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import * as React from 'react';
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+import Toolbar from "@material-ui/core/Toolbar";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
+import classNames from "classnames";
+import { CsvBuilder } from "filefy";
+import PropTypes, { oneOf } from "prop-types";
+import "jspdf-autotable";
+import * as React from "react";
+const jsPDF = typeof window !== "undefined" ? require("jspdf") : null;
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
@@ -36,20 +36,29 @@ export class MTableToolbar extends React.Component {
 
   getTableData = () => {
     const columns = this.props.columns
-      .filter(columnDef => !columnDef.hidden && columnDef.field && columnDef.export !== false)
-      .sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
-    const data = (this.props.exportAllData ? this.props.data : this.props.renderData)
-      .map(rowData =>
-        columns.map(columnDef => this.props.getFieldValue(rowData, columnDef))
+      .filter(
+        (columnDef) =>
+          !columnDef.hidden && columnDef.field && columnDef.export !== false
+      )
+      .sort((a, b) =>
+        a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
+      );
+    const data = (this.props.exportAllData
+      ? this.props.data
+      : this.props.renderData
+    ).map((rowData) =>
+      columns.map((columnDef) => this.props.getFieldValue(rowData, columnDef))
     );
 
     return [columns, data];
-  }
+  };
 
   defaultExportCsv = () => {
     const [columns, data] = this.getTableData();
 
-    const builder = new CsvBuilder((this.props.exportFileName || this.props.title || 'data') + '.csv');
+    const builder = new CsvBuilder(
+      (this.props.exportFileName || this.props.title || "data") + ".csv"
+    );
     builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map((columnDef) => columnDef.title))
@@ -58,24 +67,28 @@ export class MTableToolbar extends React.Component {
   };
 
   defaultExportPdf = () => {
-    const [columns, data] = this.getTableData();
+    if (jsPDF !== null) {
+      const [columns, data] = this.getTableData();
 
-    let content = {
-      startY: 50,
-      head: [columns.map(columnDef => columnDef.title)],
-      body: data
-    };
+      let content = {
+        startY: 50,
+        head: [columns.map((columnDef) => columnDef.title)],
+        body: data,
+      };
 
-    const unit = "pt";
-    const size = "A4"; 
-    const orientation = "landscape";
+      const unit = "pt";
+      const size = "A4";
+      const orientation = "landscape";
 
-    const doc = new jsPDF(orientation, unit, size);
-    doc.setFontSize(15);
-    doc.text(this.props.title, 40, 40);
-    doc.autoTable(content);
-    doc.save((this.props.exportFileName || this.props.title || 'data') + '.pdf');
-  }
+      const doc = new jsPDF(orientation, unit, size);
+      doc.setFontSize(15);
+      doc.text(this.props.title, 40, 40);
+      doc.autoTable(content);
+      doc.save(
+        (this.props.exportFileName || this.props.title || "data") + ".pdf"
+      );
+    }
+  };
 
   exportCsv = () => {
     if (this.props.exportCsv) {
@@ -93,7 +106,7 @@ export class MTableToolbar extends React.Component {
       this.defaultExportPdf();
     }
     this.setState({ exportButtonAnchorEl: null });
-  }
+  };
 
   renderSearch() {
     const localization = {
