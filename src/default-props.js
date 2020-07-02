@@ -1,21 +1,36 @@
-import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
-import TablePagination from '@material-ui/core/TablePagination';
-import * as MComponents from './components';
-import PropTypes from 'prop-types';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import React from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Icon from "@material-ui/core/Icon";
+import Paper from "@material-ui/core/Paper";
+import TablePagination from "@material-ui/core/TablePagination";
+import * as MComponents from "./components";
+import PropTypes from "prop-types";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
-const OverlayLoading = props => (
-  <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
-    <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
+const OverlayLoading = (props) => (
+  <div
+    style={{
+      display: "table",
+      width: "100%",
+      height: "100%",
+      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+    }}
+  >
+    <div
+      style={{
+        display: "table-cell",
+        width: "100%",
+        height: "100%",
+        verticalAlign: "middle",
+        textAlign: "center",
+      }}
+    >
       <CircularProgress />
     </div>
   </div>
 );
 OverlayLoading.propTypes = {
-  theme: PropTypes.any
+  theme: PropTypes.any,
 };
 
 const OverlayError = props => (
@@ -55,100 +70,171 @@ export const defaultProps = {
     OverlayError: OverlayError,
     Pagination: TablePagination,
     Row: MComponents.MTableBodyRow,
-    Toolbar: MComponents.MTableToolbar
+    Toolbar: MComponents.MTableToolbar,
   },
   data: [],
   icons: {
     /* eslint-disable react/display-name */
-    Add: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>add_box</Icon>),
-    Check: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>check</Icon>),
-    Clear: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Delete: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>delete_outline</Icon>),
-    DetailPanel: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    Edit: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>edit</Icon>),
-    Export: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>save_alt</Icon>),
-    Filter: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>filter_list</Icon>),
-    FirstPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>first_page</Icon>),
-    LastPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>last_page</Icon>),
-    NextPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
-    PreviousPage: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_left</Icon>),
-    ResetSearch: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
-    Search: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>search</Icon>),
-    SortArrow: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>arrow_downward</Icon>),
-    ThirdStateCheck: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>remove</Icon>),
-    ViewColumn: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>view_column</Icon>),
-    Retry: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>replay</Icon>)
+    Add: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        add_box
+      </Icon>
+    )),
+    Check: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        check
+      </Icon>
+    )),
+    Clear: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        clear
+      </Icon>
+    )),
+    Delete: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        delete_outline
+      </Icon>
+    )),
+    DetailPanel: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        chevron_right
+      </Icon>
+    )),
+    Edit: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        edit
+      </Icon>
+    )),
+    Export: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        save_alt
+      </Icon>
+    )),
+    Filter: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        filter_list
+      </Icon>
+    )),
+    FirstPage: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        first_page
+      </Icon>
+    )),
+    LastPage: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        last_page
+      </Icon>
+    )),
+    NextPage: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        chevron_right
+      </Icon>
+    )),
+    PreviousPage: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        chevron_left
+      </Icon>
+    )),
+    ResetSearch: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        clear
+      </Icon>
+    )),
+    Search: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        search
+      </Icon>
+    )),
+    SortArrow: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        arrow_downward
+      </Icon>
+    )),
+    ThirdStateCheck: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        remove
+      </Icon>
+    )),
+    ViewColumn: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        view_column
+      </Icon>
+    )),
+    Retry: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        replay
+      </Icon>
+    )),
     /* eslint-enable react/display-name */
   },
   isLoading: false,
-  title: 'Table Title',
+  title: "Table Title",
   options: {
     actionsColumnIndex: 0,
-    addRowPosition: 'last',
+    addRowPosition: "last",
     columnsButton: false,
-    detailPanelType: 'multiple',
+    detailPanelType: "multiple",
     debounceInterval: 200,
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportAllData: false,
     exportButton: false,
-    exportDelimiter: ',',
+    exportDelimiter: ",",
     filtering: false,
     groupTitle: false,
     header: true,
     hideFilterIcons: false,
-    loadingType: 'overlay',
-    padding: 'default',
+    loadingType: "overlay",
+    padding: "default",
     searchAutoFocus: false,
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
-    paginationType: 'normal',
+    paginationType: "normal",
     showEmptyDataSourceMessage: true,
     showFirstLastPageButtons: true,
     showSelectAllCheckbox: true,
     search: true,
     showTitle: true,
     showTextRowsSelected: true,
-    tableLayout: 'auto',
-    toolbarButtonAlignment: 'right',
-    searchFieldAlignment: 'right',
+    tableLayout: "auto",
+    toolbarButtonAlignment: "right",
+    searchFieldAlignment: "right",
     searchFieldStyle: {},
-    searchFieldVariant: 'standard',
+    searchFieldVariant: "standard",
     selection: false,
     selectionProps: {},
     sorting: true,
     toolbar: true,
     defaultExpanded: false,
-    detailPanelColumnAlignment: 'left',
+    detailPanelColumnAlignment: "left",
     thirdSortClick: true,
-    overflowY: 'auto',
+    overflowY: "auto",
   },
   localization: {
     error: 'Data could not be retrieved',
     grouping: {
-      groupedBy: 'Grouped By:',
-      placeholder: 'Drag headers here to group by',
+      groupedBy: "Grouped By:",
+      placeholder: "Drag headers here to group by",
     },
     pagination: {
-      labelDisplayedRows: '{from}-{to} of {count}',
-      labelRowsPerPage: 'Rows per page:',
-      labelRowsSelect: 'rows'
+      labelDisplayedRows: "{from}-{to} of {count}",
+      labelRowsPerPage: "Rows per page:",
+      labelRowsSelect: "rows",
     },
     toolbar: {},
     header: {},
     body: {
       filterRow: {},
       editRow: {
-        saveTooltip: 'Save',
-        cancelTooltip: 'Cancel',
-        deleteText: 'Are you sure you want to delete this row?',
+        saveTooltip: "Save",
+        cancelTooltip: "Cancel",
+        deleteText: "Are you sure you want to delete this row?",
       },
-      addTooltip: 'Add',
-      deleteTooltip: 'Delete',
-      editTooltip: 'Edit'
-    }
+      addTooltip: "Add",
+      deleteTooltip: "Delete",
+      editTooltip: "Edit",
+    },
   },
-  style: {
-  }
+  style: {},
 };
