@@ -86,14 +86,15 @@ export class MTableToolbar extends React.Component {
                 <IconButton
                   disabled={!this.state.searchText}
                   onClick={() => this.onSearchChange("")}
+                  aria-label={localization.clearSearchAriaLabel}
                 >
-                  <this.props.icons.ResetSearch fontSize="small" />
+                  <this.props.icons.ResetSearch fontSize="small" aria-label="clear"/>
                 </IconButton>
               </InputAdornment>
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              'aria-label': "Search"
+              'aria-label': localization.searchAriaLabel
             }
           }}
         />
@@ -249,7 +250,9 @@ MTableToolbar.defaultProps = {
     exportAriaLabel: 'Export',
     exportName: 'Export as CSV',
     searchTooltip: 'Search',
-    searchPlaceholder: 'Search'
+    searchPlaceholder: 'Search',
+    searchAriaLabel: 'Search',
+    clearSearchAriaLabel: 'Clear Search'
   },
   search: true,
   showTitle: true,
