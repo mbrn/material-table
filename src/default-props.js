@@ -33,10 +33,29 @@ OverlayLoading.propTypes = {
   theme: PropTypes.any,
 };
 
-const OverlayError = props => (
-  <div style={{ display: 'table', width: '100%', height: '100%', backgroundColor: fade(props.theme.palette.background.paper, 0.7) }}>
-    <div style={{ display: 'table-cell', width: '100%', height: '100%', verticalAlign: 'middle', textAlign: 'center' }}>
-      <span>{props.error.message}</span> <props.icon onClick={props.retry} style={{ cursor: 'pointer', position: 'relative', top: 5 }} />
+const OverlayError = (props) => (
+  <div
+    style={{
+      display: "table",
+      width: "100%",
+      height: "100%",
+      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+    }}
+  >
+    <div
+      style={{
+        display: "table-cell",
+        width: "100%",
+        height: "100%",
+        verticalAlign: "middle",
+        textAlign: "center",
+      }}
+    >
+      <span>{props.error.message}</span>{" "}
+      <props.icon
+        onClick={props.retry}
+        style={{ cursor: "pointer", position: "relative", top: 5 }}
+      />
     </div>
   </div>
 );
@@ -46,7 +65,6 @@ OverlayError.propTypes = {
   theme: PropTypes.any,
   icon: PropTypes.any,
 };
-
 
 const Container = (props) => <Paper elevation={2} {...props} />;
 
@@ -212,7 +230,7 @@ export const defaultProps = {
     overflowY: "auto",
   },
   localization: {
-    error: 'Data could not be retrieved',
+    error: "Data could not be retrieved",
     grouping: {
       groupedBy: "Grouped By:",
       placeholder: "Drag headers here to group by",

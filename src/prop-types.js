@@ -143,7 +143,7 @@ export const propTypes = {
       PropTypes.element,
       PropTypes.func,
       StyledComponent,
-    ]),    
+    ]),
     OverlayError: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,

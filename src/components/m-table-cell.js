@@ -171,5 +171,5 @@ MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };

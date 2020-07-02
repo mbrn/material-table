@@ -83,7 +83,7 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === "onUpdate" && this.props.mode === "update") {
           allowEditing = true;
         }
-        if (typeof columnDef.editable === 'function') {
+        if (typeof columnDef.editable === "function") {
           allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
@@ -104,18 +104,19 @@ export default class MTableEditRow extends React.Component {
           );
         } else {
           const { editComponent, ...cellProps } = columnDef;
-          const EditComponent = editComponent || this.props.components.EditField;
-          let error = { isValid: true, helperText: '' };
+          const EditComponent =
+            editComponent || this.props.components.EditField;
+          let error = { isValid: true, helperText: "" };
           if (columnDef.validate) {
             const validateResponse = columnDef.validate(this.state.data);
             switch (typeof validateResponse) {
-              case 'object':
+              case "object":
                 error = { ...validateResponse };
                 break;
-              case 'boolean':
-                error = { isValid: validateResponse, helperText: '' };
+              case "boolean":
+                error = { isValid: validateResponse, helperText: "" };
                 break;
-              case 'string':
+              case "string":
                 error = { isValid: false, helperText: validateResponse };
                 break;
             }
@@ -160,18 +161,20 @@ export default class MTableEditRow extends React.Component {
       ...MTableEditRow.defaultProps.localization,
       ...this.props.localization,
     };
-    const isValid = this.props.columns.every(column => {
+    const isValid = this.props.columns.every((column) => {
       if (column.validate) {
         const response = column.validate(this.state.data);
         switch (typeof response) {
-          case 'object':
+          case "object":
             return response.isValid;
-          case 'string':
+          case "string":
             return response;
-          case 'boolean':
+          case "boolean":
             return response;
         }
-      } else { return true }
+      } else {
+        return true;
+      }
     });
     const actions = [
       {
@@ -385,5 +388,5 @@ MTableEditRow.propTypes = {
   onEditingCanceled: PropTypes.func,
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
