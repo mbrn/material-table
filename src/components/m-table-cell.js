@@ -66,6 +66,11 @@ export default class MTableCell extends React.Component {
     } else if (typeof this.props.value === "boolean") {
       // To avoid forwardref boolean children.
       return this.props.value.toString();
+    } else if (Array.isArray(this.props.value)) {
+      // fix bug related to => https://github.com/mbrn/material-table/issues/2077
+      // return this.props.value.toString();
+      // or
+      return this.props.value.join(", ");
     }
 
     return this.props.value;
