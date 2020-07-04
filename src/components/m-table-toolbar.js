@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
@@ -66,38 +67,40 @@ export class MTableToolbar extends React.Component {
     const localization = { ...MTableToolbar.defaultProps.localization, ...this.props.localization };
     if (this.props.search) {
       return (
-        <TextField
-          autoFocus={this.props.searchAutoFocus}
-          className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
-          value={this.state.searchText}
-          onChange={event => this.onSearchChange(event.target.value)}
-          placeholder={localization.searchPlaceholder}
-          variant={this.props.searchFieldVariant}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Tooltip title={localization.searchTooltip}>
-                  <this.props.icons.Search fontSize="small" />
-                </Tooltip>
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  disabled={!this.state.searchText}
-                  onClick={() => this.onSearchChange("")}
-                  aria-label={localization.clearSearchAriaLabel}
-                >
-                  <this.props.icons.ResetSearch fontSize="small" aria-label="clear"/>
-                </IconButton>
-              </InputAdornment>
-            ),
-            style: this.props.searchFieldStyle,
-            inputProps: {
-              'aria-label': localization.searchAriaLabel
-            }
-          }}
-        />
+        <Grid container spacing={1} justify="flex-end" alignItems="flex-end">
+          <Grid item>
+            <Tooltip title={localization.searchTooltip}>
+              <this.props.icons.Search fontSize="small" />
+            </Tooltip>
+          </Grid>
+          <Grid item>
+            <TextField
+              autoFocus={this.props.searchAutoFocus}
+              className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
+              value={this.state.searchText}
+              onChange={event => this.onSearchChange(event.target.value)}
+              variant={this.props.searchFieldVariant}
+              label={localization.searchPlaceholder}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      disabled={!this.state.searchText}
+                      onClick={() => this.onSearchChange("")}
+                      aria-label={localization.clearSearchAriaLabel}
+                    >
+                      <this.props.icons.ResetSearch fontSize="small" aria-label="clear"/>
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                style: this.props.searchFieldStyle,
+                inputProps: {
+                  'aria-label': localization.searchAriaLabel
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
       );
     }
     else {
@@ -322,7 +325,6 @@ export const styles = theme => ({
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2)
   },
   formControlLabel: {
     paddingLeft: theme.spacing(1),
