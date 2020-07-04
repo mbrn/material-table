@@ -79,8 +79,9 @@ export class MTableToolbar extends React.Component {
               className={this.props.searchFieldAlignment === 'left' && this.props.showTitle === false ? null : this.props.classes.searchField}
               value={this.state.searchText}
               onChange={event => this.onSearchChange(event.target.value)}
+              placeholder={localization.searchPlaceholder}
               variant={this.props.searchFieldVariant}
-              label={localization.searchPlaceholder}
+              label={localization.searchLabel}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -253,7 +254,8 @@ MTableToolbar.defaultProps = {
     exportAriaLabel: 'Export',
     exportName: 'Export as CSV',
     searchTooltip: 'Search',
-    searchPlaceholder: 'Search',
+    searchLabel: 'Search',
+    searchPlaceholder: '',
     searchAriaLabel: 'Search',
     clearSearchAriaLabel: 'Clear Search'
   },
