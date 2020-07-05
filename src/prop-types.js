@@ -144,6 +144,11 @@ export const propTypes = {
       PropTypes.func,
       StyledComponent,
     ]),
+    OverlayError: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.func,
+      StyledComponent,
+    ]),
     Pagination: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,

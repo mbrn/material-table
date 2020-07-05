@@ -490,6 +490,9 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
+                  onFilterChange={(appliedFilter) => {
+                    console.log("selected Filters : ", appliedFilter);
+                  }}
                   options={{
                     selection: true,
                     selectionProps: (rowData) => {
@@ -583,6 +586,7 @@ class App extends Component {
                 {
                   title: "Id",
                   field: "id",
+                  filterOnItemSelect: true,
                   filterPlaceholder: "placeholder",
                   lookup: {
                     1: "1",

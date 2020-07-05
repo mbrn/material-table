@@ -63,6 +63,10 @@ export interface Filter<RowData extends object> {
   operator: "=";
   value: any;
 }
+export interface ErrorState {
+  message: string;
+  errorCause: "query" | 'add' | 'update' | 'delete';
+}
 
 export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
@@ -72,6 +76,7 @@ export interface Query<RowData extends object> {
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
+  error?: ErrorState;
 }
 
 export interface QueryResult<RowData extends object> {
@@ -105,6 +110,7 @@ export interface EditComponentProps<RowData extends object> {
   onChange: (newValue: any) => void;
   onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
+  errorState?: ErrorState
 }
 
 export interface EditCellColumnDef {
@@ -174,7 +180,8 @@ export interface Column<RowData extends object> {
     | "onAdd"
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
-  removable?: boolean;
+  removable?: boolean;  
+  validate?: (rowData: RowData) => { isValid: boolean, helperText?: string } | string | boolean,
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -205,6 +212,7 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   OverlayLoading?: React.ComponentType<any>;
+  OverlayError?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
@@ -258,6 +266,9 @@ export interface Icons {
     React.RefAttributes<SVGSVGElement>
   >;
   ViewColumn?: React.ForwardRefExoticComponent<
+    React.RefAttributes<SVGSVGElement>
+  >;
+  Retry?: React.ForwardRefExoticComponent<
     React.RefAttributes<SVGSVGElement>
   >;
 }
@@ -327,6 +338,7 @@ export interface Options {
 }
 
 export interface Localization {
+  error?: React.ReactNode;
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
