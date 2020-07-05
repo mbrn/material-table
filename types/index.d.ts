@@ -65,7 +65,7 @@ export interface Filter<RowData extends object> {
 }
 export interface ErrorState {
   message: string;
-  errorCause: "query" | 'add' | 'update' | 'delete';
+  errorCause: "query" | "add" | "update" | "delete";
 }
 
 export interface Query<RowData extends object> {
@@ -110,7 +110,7 @@ export interface EditComponentProps<RowData extends object> {
   onChange: (newValue: any) => void;
   onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
-  errorState?: ErrorState
+  errorState?: ErrorState;
 }
 
 export interface EditCellColumnDef {
@@ -180,8 +180,10 @@ export interface Column<RowData extends object> {
     | "onAdd"
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
-  removable?: boolean;  
-  validate?: (rowData: RowData) => { isValid: boolean, helperText?: string } | string | boolean,
+  removable?: boolean;
+  validate?: (
+    rowData: RowData
+  ) => { isValid: boolean; helperText?: string } | string | boolean;
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -268,9 +270,7 @@ export interface Icons {
   ViewColumn?: React.ForwardRefExoticComponent<
     React.RefAttributes<SVGSVGElement>
   >;
-  Retry?: React.ForwardRefExoticComponent<
-    React.RefAttributes<SVGSVGElement>
-  >;
+  Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
 export interface Options {
@@ -289,7 +289,9 @@ export interface Options {
   exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
-  exportFileName?: string;
+  exportFileName?:
+    | string
+    | ((columns: Column<RowData>, data: string[][]) => string);
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
