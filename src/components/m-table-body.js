@@ -84,6 +84,7 @@ class MTableBody extends React.Component {
             })}
             components={this.props.components}
             data={data}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
@@ -108,6 +109,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             data={data}
             index={index}
+            errorState={this.props.errorState}
             key={"row-" + data.tableData.id}
             level={0}
             options={this.props.options}
@@ -209,7 +211,6 @@ class MTableBody extends React.Component {
             hideFilterIcons={this.props.options.hideFilterIcons}
           />
         )}
-
         {this.props.showAddRow &&
           this.props.options.addRowPosition === "first" && (
             <this.props.components.EditRow
@@ -218,6 +219,7 @@ class MTableBody extends React.Component {
               })}
               data={this.props.initialFormData}
               components={this.props.components}
+              errorState={this.props.errorState}
               icons={this.props.icons}
               key="key-add-row"
               mode="add"
@@ -245,6 +247,7 @@ class MTableBody extends React.Component {
             })}
             data={this.props.initialFormData}
             components={this.props.components}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
@@ -309,6 +312,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 export default MTableBody;

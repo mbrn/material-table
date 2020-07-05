@@ -27,6 +27,7 @@ export default class MaterialTable extends React.Component {
 
     this.state = {
       data: [],
+      errorState: undefined,
       ...renderState,
       query: {
         filters: renderState.columns
@@ -334,14 +335,16 @@ export default class MaterialTable extends React.Component {
       const query = { ...this.state.query };
       query.page = page;
       this.onQueryChange(query, () => {
-        this.props.onChangePage && this.props.onChangePage(page);
+        this.props.onChangePage &&
+          this.props.onChangePage(page, query.pageSize);
       });
     } else {
       if (!this.isOutsidePageNumbers(this.props)) {
         this.dataManager.changeCurrentPage(page);
       }
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onChangePage && this.props.onChangePage(page);
+        this.props.onChangePage &&
+          this.props.onChangePage(page, this.state.query.pageSize);
       });
     }
   };
@@ -351,7 +354,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.changePageSize(pageSize);
 
-    this.props.onChangePage && this.props.onChangePage(0);
+    this.props.onChangePage && this.props.onChangePage(0, pageSize);
 
     if (this.isRemoteData()) {
       const query = { ...this.state.query };
@@ -422,7 +425,11 @@ export default class MaterialTable extends React.Component {
             });
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "add",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
@@ -448,7 +455,11 @@ export default class MaterialTable extends React.Component {
             );
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "update",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
@@ -474,7 +485,11 @@ export default class MaterialTable extends React.Component {
             );
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "delete",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     }
@@ -495,25 +510,50 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
     }
   };
-
+  retry = () => {
+    this.onQueryChange(this.state.query);
+  };
   onQueryChange = (query, callback) => {
-    query = { ...this.state.query, ...query };
-    this.setState({ isLoading: true }, () => {
-      this.props.data(query).then((result) => {
-        query.totalCount = result.totalCount;
-        query.page = result.page;
-        this.dataManager.setData(result.data);
-        this.setState(
-          {
+    query = { ...this.state.query, ...query, error: this.state.errorState };
+    this.setState({ isLoading: true, errorState: undefined }, () => {
+      this.props
+        .data(query)
+        .then((result) => {
+          query.totalCount = result.totalCount;
+          query.page = result.page;
+          this.dataManager.setData(result.data);
+          this.setState(
+            {
+              isLoading: false,
+              errorState: false,
+              ...this.dataManager.getRenderState(),
+              query,
+            },
+            () => {
+              callback && callback();
+            }
+          );
+        })
+        .catch((error) => {
+          const localization = {
+            ...MaterialTable.defaultProps.localization,
+            ...this.props.localization,
+          };
+          const errorState = {
+            message:
+              typeof error === "object"
+                ? error.message
+                : error !== undefined
+                ? error
+                : localization.error,
+            errorCause: "query",
+          };
+          this.setState({
             isLoading: false,
+            errorState,
             ...this.dataManager.getRenderState(),
-            query,
-          },
-          () => {
-            callback && callback();
-          }
-        );
-      });
+          });
+        });
     });
   };
 
@@ -533,8 +573,6 @@ export default class MaterialTable extends React.Component {
           if (row.tableData.checked) {
             selectedRows.push(row);
           }
-
-          row.tableData.childRows && findSelecteds(row.tableData.childRows);
         });
       };
 
@@ -754,6 +792,7 @@ export default class MaterialTable extends React.Component {
         initialFormData={props.initialFormData}
         pageSize={this.state.pageSize}
         columns={this.state.columns}
+        errorState={this.state.errorState}
         detailPanel={props.detailPanel}
         options={props.options}
         getFieldValue={this.dataManager.getFieldValue}
@@ -1007,6 +1046,25 @@ export default class MaterialTable extends React.Component {
                 <props.components.OverlayLoading theme={props.theme} />
               </div>
             )}
+          {this.state.errorState && this.state.errorCause === "query" && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: "100%",
+                width: "100%",
+                zIndex: 11,
+              }}
+            >
+              <props.components.OverlayError
+                error={this.state.errorState}
+                retry={this.retry}
+                theme={props.theme}
+                icon={props.icons.Retry}
+              />
+            </div>
+          )}
         </props.components.Container>
       </DragDropContext>
     );
