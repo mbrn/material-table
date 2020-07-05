@@ -196,25 +196,28 @@ export class MTableToolbar extends React.Component {
                 {localization.addRemoveColumns}
               </MenuItem>
               {this.props.columns.map((col) => {
-                return (
-                  <li key={col.tableData.id}>
-                    <MenuItem
-                      className={classes.formControlLabel}
-                      component="label"
-                      htmlFor={`column-toggle-${col.tableData.id}`}
-                      disabled={col.removable === false}
-                    >
-                      <Checkbox
-                        checked={!col.hidden}
-                        id={`column-toggle-${col.tableData.id}`}
-                        onChange={() =>
-                          this.props.onColumnsChanged(col, !col.hidden)
-                        }
-                      />
-                      <span>{col.title}</span>
-                    </MenuItem>
-                  </li>
-                );
+                if (!col.hidden || col.hiddenByColumnsButton) {
+                  return (
+                    <li key={col.tableData.id}>
+                      <MenuItem
+                        className={classes.formControlLabel}
+                        component="label"
+                        htmlFor={`column-toggle-${col.tableData.id}`}
+                        disabled={col.removable === false}
+                      >
+                        <Checkbox
+                          checked={!col.hidden}
+                          id={`column-toggle-${col.tableData.id}`}
+                          onChange={() =>
+                            this.props.onColumnsChanged(col, !col.hidden)
+                          }
+                        />
+                        <span>{col.title}</span>
+                      </MenuItem>
+                    </li>
+                  );
+                }
+                return null;
               })}
             </Menu>
           </span>
