@@ -23,10 +23,9 @@ export default class MTableCell extends React.Component {
     }
     if (this.props.columnDef.render) {
       if (this.props.rowData) {
-        return this.props.columnDef.render(this.props.rowData, 'row');
-      }
-      else if (this.props.value) {
-        return this.props.columnDef.render(this.props.value, 'group');
+        return this.props.columnDef.render(this.props.rowData, "row");
+      } else if (this.props.value) {
+        return this.props.columnDef.render(this.props.value, "group");
       }
     } else if (this.props.columnDef.type === "boolean") {
       const style = { textAlign: "left", verticalAlign: "middle", width: 48 };
