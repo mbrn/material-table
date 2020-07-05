@@ -69,7 +69,9 @@ class MTableFilterRow extends React.Component {
           onChange={(event) => {
             setSelectedFilter(event.target.value);
           }}
-          input={<Input id={"select-multiple-checkbox" + columnDef.tableData.id} />}
+          input={
+            <Input id={"select-multiple-checkbox" + columnDef.tableData.id} />
+          }
           renderValue={(selecteds) =>
             selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
           }

@@ -14,14 +14,21 @@ import PropTypes from "prop-types";
 
 class MTableEditField extends React.Component {
   getProps() {
-    const { columnDef, rowData, onRowDataChange, ...props } = this.props;
+    const {
+      columnDef,
+      rowData,
+      onRowDataChange,
+      errorState,
+      ...props
+    } = this.props;
     return props;
   }
 
   renderLookupField() {
+    const { helperText, ...props } = this.getProps();
     return (
       <Select
-        {...this.getProps()}
+        {...props}
         value={this.props.value === undefined ? "" : this.props.value}
         onChange={(event) => this.props.onChange(event.target.value)}
         style={{
@@ -59,10 +66,7 @@ class MTableEditField extends React.Component {
 
   renderDateField() {
     return (
-      <MuiPickersUtilsProvider
-        utils={DateFnsUtils}
-        locale={this.props.locale}
-      >
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
         <DatePicker
           {...this.getProps()}
           format="dd.MM.yyyy"
@@ -83,10 +87,7 @@ class MTableEditField extends React.Component {
   }
   renderTimeField() {
     return (
-      <MuiPickersUtilsProvider
-        utils={DateFnsUtils}
-        locale={this.props.locale}
-      >
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
         <TimePicker
           {...this.getProps()}
           format="HH:mm:ss"
@@ -108,10 +109,7 @@ class MTableEditField extends React.Component {
 
   renderDateTimeField() {
     return (
-      <MuiPickersUtilsProvider
-        utils={DateFnsUtils}
-        locale={this.props.locale}
-      >
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
         <DateTimePicker
           {...this.getProps()}
           format="dd.MM.yyyy HH:mm:ss"
