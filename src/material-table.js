@@ -573,8 +573,6 @@ export default class MaterialTable extends React.Component {
           if (row.tableData.checked) {
             selectedRows.push(row);
           }
-
-          row.tableData.childRows && findSelecteds(row.tableData.childRows);
         });
       };
 
