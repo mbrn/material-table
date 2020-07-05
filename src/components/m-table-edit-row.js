@@ -83,7 +83,7 @@ export default class MTableEditRow extends React.Component {
         if (columnDef.editable === "onUpdate" && this.props.mode === "update") {
           allowEditing = true;
         }
-        if (typeof columnDef.editable == "function") {
+        if (typeof columnDef.editable === "function") {
           allowEditing = columnDef.editable(columnDef, this.props.data);
         }
         if (!columnDef.field || !allowEditing) {
@@ -106,7 +106,21 @@ export default class MTableEditRow extends React.Component {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent =
             editComponent || this.props.components.EditField;
-
+          let error = { isValid: true, helperText: "" };
+          if (columnDef.validate) {
+            const validateResponse = columnDef.validate(this.state.data);
+            switch (typeof validateResponse) {
+              case "object":
+                error = { ...validateResponse };
+                break;
+              case "boolean":
+                error = { isValid: validateResponse, helperText: "" };
+                break;
+              case "string":
+                error = { isValid: false, helperText: validateResponse };
+                break;
+            }
+          }
           return (
             <TableCell
               size={size}
@@ -120,6 +134,8 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
+                error={!error.isValid}
+                helperText={error.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}
                 rowData={this.state.data}
                 onChange={(value) => {
@@ -145,10 +161,26 @@ export default class MTableEditRow extends React.Component {
       ...MTableEditRow.defaultProps.localization,
       ...this.props.localization,
     };
+    const isValid = this.props.columns.every((column) => {
+      if (column.validate) {
+        const response = column.validate(this.state.data);
+        switch (typeof response) {
+          case "object":
+            return response.isValid;
+          case "string":
+            return response;
+          case "boolean":
+            return response;
+        }
+      } else {
+        return true;
+      }
+    });
     const actions = [
       {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
+        disabled: !isValid,
         onClick: () => {
           const newData = this.state.data;
           delete newData.tableData;
@@ -308,6 +340,7 @@ export default class MTableEditRow extends React.Component {
       localization: localizationProp, // renamed to not conflict with definition above
       options,
       actions,
+      errorState,
       ...rowProps
     } = this.props;
 
@@ -355,4 +388,5 @@ MTableEditRow.propTypes = {
   onEditingCanceled: PropTypes.func,
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
