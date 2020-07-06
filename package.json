@@ -76,6 +76,7 @@
   },
   "dependencies": {
     "@date-io/date-fns": "^1.1.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
