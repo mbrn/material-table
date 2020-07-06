@@ -34,6 +34,8 @@ export const propTypes = {
   ),
   columns: PropTypes.arrayOf(
     PropTypes.shape({
+      autocomplete: PropTypes.arrayOf(PropTypes.string),
+      autocompleteFreeSolo: PropTypes.bool,
       cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
       currencySetting: PropTypes.shape({
         locale: PropTypes.string,

@@ -19,8 +19,6 @@ export interface MaterialTableProps<RowData extends object> {
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
-    editTooltip?: (rowData: RowData) => string;
-    deleteTooltip?: (rowData: RowData) => string;
     onRowAddCancelled?: (rowData: RowData) => void;
     onRowUpdateCancelled?: (rowData: RowData) => void;
     isEditHidden?: (rowData: RowData) => boolean;
@@ -33,7 +31,7 @@ export interface MaterialTableProps<RowData extends object> {
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
-  onChangePage?: (page: number, pageSize: number) => void;
+  onChangePage?: (page: number) => void;
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
@@ -63,20 +61,14 @@ export interface Filter<RowData extends object> {
   operator: "=";
   value: any;
 }
-export interface ErrorState {
-  message: string;
-  errorCause: "query" | "add" | "update" | "delete";
-}
 
 export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
-  totalCount: number;
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
-  error?: ErrorState;
 }
 
 export interface QueryResult<RowData extends object> {
@@ -108,9 +100,7 @@ export interface EditComponentProps<RowData extends object> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
-  onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
-  errorState?: ErrorState;
 }
 
 export interface EditCellColumnDef {
@@ -125,7 +115,8 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
-  align?: "center" | "inherit" | "justify" | "left" | "right";
+  autocomplete?: string[];
+  autocompleteFreeSolo?: boolean;
   cellStyle?:
     | React.CSSProperties
     | ((data: RowData[], rowData: RowData) => React.CSSProperties);
@@ -135,7 +126,6 @@ export interface Column<RowData extends object> {
     minimumFractionDigits?: number;
     maximumFractionDigits?: number;
   };
-  dateSetting?: { locale?: string };
   customFilterAndSearch?: (
     filter: any,
     rowData: RowData,
@@ -173,7 +163,6 @@ export interface Column<RowData extends object> {
   hideFilterIcon?: boolean;
   initialEditValue?: any;
   lookup?: object;
-  editPlaceholder?: string;
   editable?:
     | "always"
     | "onUpdate"
@@ -181,22 +170,12 @@ export interface Column<RowData extends object> {
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
-  validate?: (
-    rowData: RowData
-  ) => { isValid: boolean; helperText?: string } | string | boolean;
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
   tooltip?: string;
-  type?:
-    | "string"
-    | "boolean"
-    | "numeric"
-    | "date"
-    | "datetime"
-    | "time"
-    | "currency";
+  type?: "boolean" | "numeric" | "date" | "datetime" | "time" | "currency";
   width?: string | number;
 }
 
@@ -214,7 +193,6 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   OverlayLoading?: React.ComponentType<any>;
-  OverlayError?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
@@ -270,13 +248,10 @@ export interface Icons {
   ViewColumn?: React.ForwardRefExoticComponent<
     React.RefAttributes<SVGSVGElement>
   >;
-  Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
 export interface Options {
   actionsCellStyle?: React.CSSProperties;
-  detailPanelColumnStyle?: React.CSSProperties;
-  editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: "first" | "last";
   columnsButton?: boolean;
@@ -289,13 +264,10 @@ export interface Options {
   exportAllData?: boolean;
   exportButton?: boolean;
   exportDelimiter?: string;
-  exportFileName?:
-    | string
-    | ((columns: Column<RowData>, data: string[][]) => string);
+  exportFileName?: string;
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
-  filterRowStyle?: React.CSSProperties;
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
@@ -338,7 +310,6 @@ export interface Options {
 }
 
 export interface Localization {
-  error?: React.ReactNode;
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
@@ -376,7 +347,7 @@ export interface Localization {
   };
   toolbar?: {
     addRemoveColumns?: React.ReactNode;
-    nRowsSelected?: React.ReactNode | ((rowCount: number) => React.ReactNode);
+    nRowsSelected?: React.ReactNode;
     showColumnsTitle?: React.ReactNode;
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;
