@@ -14,7 +14,10 @@ import { lighten } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
+import "jspdf-autotable";
 import * as React from "react";
+
+const jsPDF = typeof window !== `undefined` ? require("jsPDF") : null;
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
@@ -65,7 +68,27 @@ export class MTableToolbar extends React.Component {
   };
 
   defaultExportPdf = () => {
-    //console.log('this function is not implemented') ;
+    if (jsPDF !== null) {
+      const [columns, data] = this.getTableData();
+
+      let content = {
+        startY: 50,
+        head: [columns.map((columnDef) => columnDef.title)],
+        body: data,
+      };
+
+      const unit = "pt";
+      const size = "A4";
+      const orientation = "landscape";
+
+      const doc = new jsPDF(orientation, unit, size);
+      doc.setFontSize(15);
+      doc.text(this.props.title, 40, 40);
+      doc.autoTable(content);
+      doc.save(
+        (this.props.exportFileName || this.props.title || "data") + ".pdf"
+      );
+    }
   };
 
   exportCsv = () => {
