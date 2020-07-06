@@ -451,7 +451,13 @@ class App extends Component {
         lookup: { 34: "İstanbul", 0: "Şanlıurfa" },
       },
       { title: "Kayıt Tarihi", field: "insertDateTime", type: "datetime" },
-      { title: "Zaman", field: "time", type: "time" },
+      {
+        title: "Auto",
+        field: "demo",
+        autocomplete: ["Does", "the", "auto", "complete", "work", "?"],
+        autocompleteFreeSolo: true,
+        editPlaceholder: "complete",
+      },
       {
         title: "Adı",
         field: "name",
