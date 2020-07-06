@@ -18,6 +18,7 @@ import "jspdf-autotable";
 import * as React from "react";
 
 const jsPDF = typeof window !== `undefined` ? require("jsPDF") : null;
+
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
@@ -60,6 +61,7 @@ export class MTableToolbar extends React.Component {
     const builder = new CsvBuilder(
       (this.props.exportFileName || this.props.title || "data") + ".csv"
     );
+
     builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map((columnDef) => columnDef.title))
@@ -193,25 +195,28 @@ export class MTableToolbar extends React.Component {
                 {localization.addRemoveColumns}
               </MenuItem>
               {this.props.columns.map((col) => {
-                return (
-                  <li key={col.tableData.id}>
-                    <MenuItem
-                      className={classes.formControlLabel}
-                      component="label"
-                      htmlFor={`column-toggle-${col.tableData.id}`}
-                      disabled={col.removable === false}
-                    >
-                      <Checkbox
-                        checked={!col.hidden}
-                        id={`column-toggle-${col.tableData.id}`}
-                        onChange={() =>
-                          this.props.onColumnsChanged(col, !col.hidden)
-                        }
-                      />
-                      <span>{col.title}</span>
-                    </MenuItem>
-                  </li>
-                );
+                if (!col.hidden || col.hiddenByColumnsButton) {
+                  return (
+                    <li key={col.tableData.id}>
+                      <MenuItem
+                        className={classes.formControlLabel}
+                        component="label"
+                        htmlFor={`column-toggle-${col.tableData.id}`}
+                        disabled={col.removable === false}
+                      >
+                        <Checkbox
+                          checked={!col.hidden}
+                          id={`column-toggle-${col.tableData.id}`}
+                          onChange={() =>
+                            this.props.onColumnsChanged(col, !col.hidden)
+                          }
+                        />
+                        <span>{col.title}</span>
+                      </MenuItem>
+                    </li>
+                  );
+                }
+                return null;
               })}
             </Menu>
           </span>
@@ -355,7 +360,8 @@ MTableToolbar.defaultProps = {
     showColumnsAriaLabel: "Show Columns",
     exportTitle: "Export",
     exportAriaLabel: "Export",
-    exportName: "Export as CSV",
+    exportCSVName: "Export as CSV",
+    exportPDFName: "Export as PDF",
     searchTooltip: "Search",
     searchPlaceholder: "Search",
   },
@@ -396,7 +402,7 @@ MTableToolbar.propTypes = {
   exportAllData: PropTypes.bool,
   exportButton: PropTypes.bool,
   exportDelimiter: PropTypes.string,
-  exportFileName: PropTypes.string,
+  exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
   exportPdf: PropTypes.func,
   classes: PropTypes.object,
