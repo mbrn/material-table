@@ -18,6 +18,10 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 
 </div>
 
+## Roadmap
+
+- [More on our roadmap can be found here](https://github.com/mbrn/material-table/blob/master/.github/ROADMAP.md)
+
 ## Key features
 
 - [Actions](https://material-table.com/#/docs/features/actions)
@@ -47,7 +51,7 @@ To support material-table visit [SUPPORT](https://www.patreon.com/mbrn) page.
 
 ## Issue Prioritizing
 
-Issues would be prioritized according reactions count. `is:issue is:open sort:reactions-+1-desc` filter would be use. 
+Issues would be prioritized according reactions count. `is:issue is:open sort:reactions-+1-desc` filter would be use.
 
 [List issues according to reaction score](https://github.com/mbrn/material-table/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
 
@@ -179,11 +183,16 @@ class App extends Component {
             {
               title: "Doğum Yeri",
               field: "birthCity",
-              lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
-            }
+              lookup: { 34: "İstanbul", 63: "Şanlıurfa" },
+            },
           ]}
           data={[
-            { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 }
+            {
+              name: "Mehmet",
+              surname: "Baran",
+              birthYear: 1987,
+              birthCity: 63,
+            },
           ]}
           title="Demo Title"
         />

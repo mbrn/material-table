@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "1.61.0",
+  "version": "1.64.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -17,11 +17,12 @@
     "lint": "npm run eslint && npm run tsc",
     "eslint": "eslint src/** -c ./configs/.eslintrc",
     "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
-    "lint:fix": "eslint src/** --fix"
+    "lint:fix": "eslint src/** --fix",
+    "prettify": "prettier --write **/*.js"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && pretty-quick --staged"
     }
   },
   "repository": {
@@ -63,6 +64,8 @@
     "eslint-plugin-react": "7.11.1",
     "eslint-plugin-standard": "4.0.0",
     "husky": "^1.2.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.3.12",
@@ -79,8 +82,10 @@
     "debounce": "^1.2.0",
     "fast-deep-equal": "2.0.1",
     "filefy": "0.1.10",
+    "jspdf": "1.5.3",
+    "jspdf-autotable": "3.5.3",
     "prop-types": "^15.6.2",
-    "react-beautiful-dnd": "11.0.3",
+    "react-beautiful-dnd": "^13.0.0",
     "react-double-scrollbar": "0.0.15"
   },
   "peerDependencies": {
