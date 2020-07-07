@@ -1,13 +1,10 @@
 {
-  "extends": [
-    "standard",
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "one-var": "off",
-    "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
-    "space-before-function-paren": ["error", "never"]
+    "semi": ["error", "always", {
+      "omitLastInOneLineBlock": true
+    }]
   },
   "parser": "babel-eslint"
 }
