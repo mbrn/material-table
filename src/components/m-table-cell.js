@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import * as React from 'react';
-import TableCell from '@material-ui/core/TableCell';
-import PropTypes from 'prop-types';
-import parseISO from 'date-fns/parseISO';
+import * as React from "react";
+import TableCell from "@material-ui/core/TableCell";
+import PropTypes from "prop-types";
+import parseISO from "date-fns/parseISO";
 /* eslint-enable no-unused-vars */
 
 /* eslint-disable no-useless-escape */
