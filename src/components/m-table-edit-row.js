@@ -163,15 +163,6 @@ export default class MTableEditRow extends React.Component {
       this.state.data,
       this.props.data
     );
-    // () => {
-    //   const newData = this.state.data;
-    //   delete newData.tableData;
-    //   this.props.onEditingApproved(
-    //     this.props.mode,
-    //     this.state.data,
-    //     this.props.data
-    //   );
-    // },
   };
 
   renderActions() {
@@ -200,16 +191,7 @@ export default class MTableEditRow extends React.Component {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
         disabled: !isValid,
-        onClick: () => {
-          const newData = this.state.data;
-          delete newData.tableData;
-          this.props.onEditingApproved(
-            this.props.mode,
-            this.state.data,
-            this.props.data
-          );
-        },
-        // onClick: this.handleSave
+        onClick: this.handleSave,
       },
       {
         icon: this.props.icons.Clear,
@@ -369,7 +351,7 @@ export default class MTableEditRow extends React.Component {
     return (
       <>
         <TableRow
-          onKeyDown={this.cancelEdit}
+          onKeyDown={this.handleKeyDown}
           {...rowProps}
           style={this.getStyle()}
         >
