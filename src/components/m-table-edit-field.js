@@ -141,7 +141,13 @@ class MTableEditField extends React.Component {
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
         value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={(event) =>
+          this.props.onChange(
+            this.props.columnDef.type === "numeric"
+              ? event.target.valueAsNumber
+              : event.target.value
+          )
+        }
         InputProps={{
           style: {
             fontSize: 13,
