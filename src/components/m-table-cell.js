@@ -140,7 +140,7 @@ export default class MTableCell extends React.Component {
   };
 
   render() {
-    const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const { icons, columnDef, rowData, errorState, ...cellProps } = this.props;
     const cellAlignment =
       columnDef.align !== undefined
         ? columnDef.align
