@@ -168,6 +168,7 @@ export interface Column<RowData extends object> {
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
+  groupTitle?: string | ((groupData: any) => any) | React.Node; 
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hideFilterIcon?: boolean;
@@ -308,6 +309,7 @@ export interface Options {
   padding?: "default" | "dense";
   paging?: boolean;
   grouping?: boolean;
+  groupTitle?: (groupData: any) => any;
   overflowY?: "visible" | "hidden" | "scroll" | "auto" | "initial" | "inherit";
   pageSize?: number;
   pageSizeOptions?: number[];
