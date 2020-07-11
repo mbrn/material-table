@@ -155,6 +155,16 @@ export default class MTableEditRow extends React.Component {
     return mapArr;
   }
 
+  handleSave = () => {
+    const newData = this.state.data;
+    delete newData.tableData;
+    this.props.onEditingApproved(
+      this.props.mode,
+      this.state.data,
+      this.props.data
+    );
+  };
+
   renderActions() {
     const size = CommonValues.elementSize(this.props);
     const localization = {
@@ -181,15 +191,7 @@ export default class MTableEditRow extends React.Component {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
         disabled: !isValid,
-        onClick: () => {
-          const newData = this.state.data;
-          delete newData.tableData;
-          this.props.onEditingApproved(
-            this.props.mode,
-            this.state.data,
-            this.props.data
-          );
-        },
+        onClick: this.handleSave,
       },
       {
         icon: this.props.icons.Clear,
@@ -231,8 +233,10 @@ export default class MTableEditRow extends React.Component {
     return style;
   }
 
-  cancelEdit = (e) => {
-    if (e.keyCode === 27) {
+  handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      this.handleSave();
+    } else if (e.keyCode === 27) {
       this.props.onEditingCanceled(this.props.mode, this.props.data);
     }
   };
@@ -347,7 +351,7 @@ export default class MTableEditRow extends React.Component {
     return (
       <>
         <TableRow
-          onKeyDown={this.cancelEdit}
+          onKeyDown={this.handleKeyDown}
           {...rowProps}
           style={this.getStyle()}
         >
