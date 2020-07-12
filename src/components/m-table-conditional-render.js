@@ -1,9 +1,16 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export const MTableConditionalRender = ({ condition, wrapperSuccess, children, wrapperNotSuccess }) => {
-  return condition ? wrapperSuccess(children) :
-    wrapperNotSuccess ? wrapperNotSuccess(children)
-      : children;
+export const MTableConditionalRender = ({
+  condition,
+  wrapperSuccess,
+  children,
+  wrapperNotSuccess,
+}) => {
+  return condition
+    ? wrapperSuccess(children)
+    : wrapperNotSuccess
+    ? wrapperNotSuccess(children)
+    : children;
 };
 
 MTableConditionalRender.defaultProps = {
