@@ -2,7 +2,7 @@ language: node_js
 version: 1.0
 sudo: false
 node_js:
- - 10
+  - 10
 install:
   - npm install
 script:
