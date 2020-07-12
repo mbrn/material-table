@@ -16,7 +16,9 @@ import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
 import "jspdf-autotable";
 import * as React from "react";
-const jsPDF = typeof window !== "undefined" ? require("jspdf") : null;
+
+const jsPDF = typeof window !== `undefined` ? require("jsPDF") : null;
+
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
@@ -56,15 +58,10 @@ export class MTableToolbar extends React.Component {
   defaultExportCsv = () => {
     const [columns, data] = this.getTableData();
 
-    let fileName = this.props.title || "data";
-    if (this.props.exportFileName) {
-      fileName =
-        typeof this.props.exportFileName === "function"
-          ? this.props.exportFileName()
-          : this.props.exportFileName;
-    }
+    const builder = new CsvBuilder(
+      (this.props.exportFileName || this.props.title || "data") + ".csv"
+    );
 
-    const builder = new CsvBuilder(fileName + ".csv");
     builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map((columnDef) => columnDef.title))
@@ -146,16 +143,15 @@ export class MTableToolbar extends React.Component {
                 <IconButton
                   disabled={!this.state.searchText}
                   onClick={() => this.onSearchChange("")}
-                  aria-label={localization.clearSearchAriaLabel}
                 >
-                  <this.props.icons.ResetSearch fontSize="small" aria-label="clear"/>
+                  <this.props.icons.ResetSearch fontSize="small" />
                 </IconButton>
               </InputAdornment>
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              'aria-label': localization.searchAriaLabel
-            }
+              "aria-label": "Search",
+            },
           }}
         />
       );
@@ -358,18 +354,16 @@ MTableToolbar.defaultProps = {
   columns: [],
   columnsButton: false,
   localization: {
-    addRemoveColumns: 'Add or remove columns',
-    nRowsSelected: '{0} row(s) selected',
-    showColumnsTitle: 'Show Columns',
-    showColumnsAriaLabel: 'Show Columns',
-    exportTitle: 'Export',
-    exportAriaLabel: 'Export',
+    addRemoveColumns: "Add or remove columns",
+    nRowsSelected: "{0} row(s) selected",
+    showColumnsTitle: "Show Columns",
+    showColumnsAriaLabel: "Show Columns",
+    exportTitle: "Export",
+    exportAriaLabel: "Export",
     exportCSVName: "Export as CSV",
     exportPDFName: "Export as PDF",
-    searchTooltip: 'Search',
-    searchPlaceholder: 'Search',
-    searchAriaLabel: 'Search',
-    clearSearchAriaLabel: 'Clear Search'
+    searchTooltip: "Search",
+    searchPlaceholder: "Search",
   },
   search: true,
   showTitle: true,
