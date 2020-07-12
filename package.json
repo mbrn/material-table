@@ -8,9 +8,6 @@
     "dist",
     "types"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "babel": {
     "extends": "./configs/.babelrc"
   },
