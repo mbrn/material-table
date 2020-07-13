@@ -300,6 +300,7 @@ export interface Options<RowData extends object> {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
+  headerSelectionProps?: object;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;

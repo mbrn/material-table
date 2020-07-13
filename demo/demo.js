@@ -494,12 +494,16 @@ class App extends Component {
                     console.log("selected Filters : ", appliedFilter);
                   }}
                   options={{
+                    headerSelectionProps: {
+                      color: 'primary'
+                    },
                     selection: true,
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
 
                       return {
                         disabled: rowData.name === "A1",
+                        color: 'primary'
                       };
                     },
                   }}
