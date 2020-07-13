@@ -2,6 +2,7 @@
 import * as React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import PropTypes from "prop-types";
+import parseISO from "date-fns/parseISO";
 /* eslint-enable no-unused-vars */
 
 /* eslint-disable no-useless-escape */
@@ -36,25 +37,25 @@ export default class MTableCell extends React.Component {
       }
     } else if (this.props.columnDef.type === "date") {
       if (this.props.value instanceof Date) {
-        return this.props.value.toLocaleDateString();
-      } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString(dateLocale);
+        return this.props.value.toLocaleDateString(dateLocale);
+      } else if(isoDateRegex.exec(this.props.value)) {
+        return parseISO(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
       }
     } else if (this.props.columnDef.type === "time") {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
-      } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString(dateLocale);
+      } else if(isoDateRegex.exec(this.props.value)) {
+        return parseISO(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
       }
     } else if (this.props.columnDef.type === "datetime") {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
-      } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleString(dateLocale);
+      } else if(isoDateRegex.exec(this.props.value)) {
+        return parseISO(this.props.value).toLocaleString(dateLocale);
       } else {
         return this.props.value;
       }
