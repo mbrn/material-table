@@ -182,42 +182,23 @@ export default class MaterialTable extends React.Component {
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
 
-    if (calculatedProps.options.selection)
-      calculatedProps.actions = calculatedProps.actions
-        .filter((a) => a)
-        .map((action) => {
-          if (
-            action.position === "auto" ||
-            action.isFreeAction === false ||
-            (action.position === undefined && action.isFreeAction === undefined)
-          )
-            if (typeof action === "function")
-              return { action: action, position: "toolbarOnSelect" };
-            else return { ...action, position: "toolbarOnSelect" };
-          else if (action.isFreeAction)
-            if (typeof action === "function")
-              return { action: action, position: "toolbar" };
-            else return { ...action, position: "toolbar" };
-          else return action;
-        });
-    else
-      calculatedProps.actions = calculatedProps.actions
-        .filter((a) => a)
-        .map((action) => {
-          if (
-            action.position === "auto" ||
-            action.isFreeAction === false ||
-            (action.position === undefined && action.isFreeAction === undefined)
-          )
-            if (typeof action === "function")
-              return { action: action, position: "row" };
-            else return { ...action, position: "row" };
-          else if (action.isFreeAction)
-            if (typeof action === "function")
-              return { action: action, position: "toolbar" };
-            else return { ...action, position: "toolbar" };
-          else return action;
-        });
+    calculatedProps.actions = calculatedProps.actions.map((action) => {
+      if (
+        action.position === "auto" ||
+        action.isFreeAction === false ||
+        (action.position === undefined && action.isFreeAction === undefined)
+      )
+        return {
+          ...(typeof action === "function" ? { action: action } : action),
+          position: calculatedProps.options.selection
+            ? "toolbarOnSelect"
+            : "row",
+        };
+      else
+        return action.isFreeAction
+          ? { ...action, position: "toolbar" }
+          : action;
+    });
 
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
