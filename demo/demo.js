@@ -495,7 +495,7 @@ class App extends Component {
                   }}
                   options={{
                     headerSelectionProps: {
-                      color: 'primary'
+                      color: "primary",
                     },
                     selection: true,
                     selectionProps: (rowData) => {
@@ -503,7 +503,7 @@ class App extends Component {
 
                       return {
                         disabled: rowData.name === "A1",
-                        color: 'primary'
+                        color: "primary",
                       };
                     },
                   }}
