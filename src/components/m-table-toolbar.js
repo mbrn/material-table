@@ -36,7 +36,12 @@ export class MTableToolbar extends React.Component {
 
   getTableData = () => {
     const columns = this.props.columns
-      .filter((columnDef) => columnDef.field && columnDef.export !== false)
+      .filter(
+        (columnDef) =>
+          (!columnDef.hidden || columnDef.export === true) &&
+          columnDef.export !== false &&
+          columnDef.field
+      )
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
