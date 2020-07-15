@@ -160,6 +160,7 @@ export class MTableHeader extends React.Component {
             onChange={(event, checked) =>
               this.props.onAllSelected && this.props.onAllSelected(checked)
             }
+            {...this.props.options.headerSelectionProps}
           />
         )}
       </TableCell>

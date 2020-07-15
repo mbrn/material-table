@@ -29,7 +29,7 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
-  options?: Options;
+  options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
@@ -170,6 +170,7 @@ export interface Column<RowData extends object> {
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
+  groupTitle?: string | ((groupData: any) => any) | React.Node; 
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hideFilterIcon?: boolean;
@@ -275,7 +276,7 @@ export interface Icons {
   Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
-export interface Options {
+export interface Options<RowData extends object> {
   actionsCellStyle?: React.CSSProperties;
   detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
@@ -301,6 +302,7 @@ export interface Options {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
+  headerSelectionProps?: object;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
@@ -310,6 +312,7 @@ export interface Options {
   padding?: "default" | "dense";
   paging?: boolean;
   grouping?: boolean;
+  groupTitle?: (groupData: any) => any;
   overflowY?: "visible" | "hidden" | "scroll" | "auto" | "initial" | "inherit";
   pageSize?: number;
   pageSizeOptions?: number[];

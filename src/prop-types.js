@@ -318,6 +318,7 @@ export const propTypes = {
     filterCellStyle: PropTypes.object,
     filterRowStyle: PropTypes.object,
     header: PropTypes.bool,
+    headerSelectionProps: PropTypes.object,
     headerStyle: PropTypes.object,
     hideFilterIcons: PropTypes.bool,
     initialPage: PropTypes.number,
