@@ -405,48 +405,58 @@ export default class MTableBodyRow extends React.Component {
           draggableId={"row-" + this.props.index.toString()}
           index={this.props.index}
         >
-          {(provided, snapshot) => (
-            <TableRow
-              selected={hasAnyEditingRow}
-              {...rowProps}
-              hover={onRowClick ? true : false}
-              style={this.getStyle(this.props.index, this.props.level)}
-              onClick={(event) => {
-                onRowClick &&
-                  onRowClick(event, this.props.data, (panelIndex) => {
-                    let panel = detailPanel;
-                    if (Array.isArray(panel)) {
-                      panel = panel[panelIndex || 0];
-                      if (typeof panel === "function") {
-                        panel = panel(this.props.data);
+          {(provided, snapshot) => {
+            const {
+              style: providedStyle,
+              ...providedDraggableProps
+            } = provided.draggableProps;
+            const rowStyle = {
+              ...this.getStyle(this.props.index, this.props.level),
+              ...providedStyle,
+            };
+            return (
+              <TableRow
+                selected={hasAnyEditingRow}
+                {...rowProps}
+                hover={onRowClick ? true : false}
+                style={rowStyle}
+                onClick={(event) => {
+                  onRowClick &&
+                    onRowClick(event, this.props.data, (panelIndex) => {
+                      let panel = detailPanel;
+                      if (Array.isArray(panel)) {
+                        panel = panel[panelIndex || 0];
+                        if (typeof panel === "function") {
+                          panel = panel(this.props.data);
+                        }
+                        panel = panel.render;
                       }
-                      panel = panel.render;
-                    }
 
-                    onToggleDetailPanel(this.props.path, panel);
-                  });
-              }}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...(options.draggableRowsOptions.draggableCell
-                ? {}
-                : provided.dragHandleProps)}
-            >
-              {options.draggableRows &&
-                options.draggableRowsOptions.draggableCell && (
-                  <this.props.components.Cell
-                    value={options.draggableRowsOptions.dragCellContent}
-                    columnDef={{
-                      tableData: {
-                        width: options.draggableRowsOptions.dragCellWidth,
-                      },
-                    }}
-                    {...provided.dragHandleProps}
-                  />
-                )}
-              {renderColumns}
-            </TableRow>
-          )}
+                      onToggleDetailPanel(this.props.path, panel);
+                    });
+                }}
+                ref={provided.innerRef}
+                {...providedDraggableProps}
+                {...(options.draggableRowsOptions.draggableCell
+                  ? {}
+                  : provided.dragHandleProps)}
+              >
+                {options.draggableRows &&
+                  options.draggableRowsOptions.draggableCell && (
+                    <this.props.components.Cell
+                      value={options.draggableRowsOptions.dragCellContent}
+                      columnDef={{
+                        tableData: {
+                          width: options.draggableRowsOptions.dragCellWidth,
+                        },
+                      }}
+                      {...provided.dragHandleProps}
+                    />
+                  )}
+                {renderColumns}
+              </TableRow>
+            );
+          }}
         </Draggable>
         {this.props.data.tableData &&
           this.props.data.tableData.showDetailPanel && (
