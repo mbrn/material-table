@@ -168,7 +168,7 @@ export interface Column<RowData extends object> {
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
-  groupTitle?: string | ((groupData: any) => any) | React.Node; 
+  groupTitle?: string | ((groupData: any) => any) | React.ReactNode; 
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
   hideFilterIcon?: boolean;
