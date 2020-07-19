@@ -344,7 +344,7 @@ export default class MaterialTable extends React.Component {
       }
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onChangePage &&
-          this.props.onChangePage(page, this.state.query.pageSize);
+          this.props.onChangePage(page, this.state.pageSize);
       });
     }
   };
