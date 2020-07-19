@@ -38,7 +38,9 @@ export class MTableToolbar extends React.Component {
     const columns = this.props.columns
       .filter(
         (columnDef) =>
-          !columnDef.hidden && columnDef.field && columnDef.export !== false
+          (!columnDef.hidden || columnDef.export === true) &&
+          columnDef.export !== false &&
+          columnDef.field
       )
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
@@ -182,7 +184,9 @@ export class MTableToolbar extends React.Component {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  this.setState({ columnsButtonAnchorEl: event.currentTarget })
+                  this.setState({
+                    columnsButtonAnchorEl: event.currentTarget,
+                  })
                 }
                 aria-label={localization.showColumnsAriaLabel}
               >
@@ -197,7 +201,11 @@ export class MTableToolbar extends React.Component {
               <MenuItem
                 key={"text"}
                 disabled
-                style={{ opacity: 1, fontWeight: 600, fontSize: 12 }}
+                style={{
+                  opacity: 1,
+                  fontWeight: 600,
+                  fontSize: 12,
+                }}
               >
                 {localization.addRemoveColumns}
               </MenuItem>
@@ -234,7 +242,9 @@ export class MTableToolbar extends React.Component {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  this.setState({ exportButtonAnchorEl: event.currentTarget })
+                  this.setState({
+                    exportButtonAnchorEl: event.currentTarget,
+                  })
                 }
                 aria-label={localization.exportAriaLabel}
               >
