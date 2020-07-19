@@ -29,6 +29,12 @@ export const propTypes = {
         iconProps: PropTypes.object,
         disabled: PropTypes.bool,
         hidden: PropTypes.bool,
+        isCustom:PropTypes.bool,
+        component:PropTypes.oneOfType([
+          PropTypes.element,
+          PropTypes.func,
+          RefComponent,
+        ]),
       }),
     ])
   ),
