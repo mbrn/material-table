@@ -148,14 +148,17 @@ export class MTableToolbar extends React.Component {
                   onClick={() => this.onSearchChange("")}
                   aria-label={localization.clearSearchAriaLabel}
                 >
-                  <this.props.icons.ResetSearch fontSize="small" aria-label="clear"/>
+                  <this.props.icons.ResetSearch
+                    fontSize="small"
+                    aria-label="clear"
+                  />
                 </IconButton>
               </InputAdornment>
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              'aria-label': localization.searchAriaLabel
-            }
+              "aria-label": localization.searchAriaLabel,
+            },
           }}
         />
       );
@@ -358,18 +361,18 @@ MTableToolbar.defaultProps = {
   columns: [],
   columnsButton: false,
   localization: {
-    addRemoveColumns: 'Add or remove columns',
-    nRowsSelected: '{0} row(s) selected',
-    showColumnsTitle: 'Show Columns',
-    showColumnsAriaLabel: 'Show Columns',
-    exportTitle: 'Export',
-    exportAriaLabel: 'Export',
+    addRemoveColumns: "Add or remove columns",
+    nRowsSelected: "{0} row(s) selected",
+    showColumnsTitle: "Show Columns",
+    showColumnsAriaLabel: "Show Columns",
+    exportTitle: "Export",
+    exportAriaLabel: "Export",
     exportCSVName: "Export as CSV",
     exportPDFName: "Export as PDF",
-    searchTooltip: 'Search',
-    searchPlaceholder: 'Search',
-    searchAriaLabel: 'Search',
-    clearSearchAriaLabel: 'Clear Search'
+    searchTooltip: "Search",
+    searchPlaceholder: "Search",
+    searchAriaLabel: "Search",
+    clearSearchAriaLabel: "Clear Search",
   },
   search: true,
   showTitle: true,

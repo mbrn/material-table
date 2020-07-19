@@ -178,7 +178,7 @@ export default class MTableEditRow extends React.Component {
           case "object":
             return response.isValid;
           case "string":
-            return response;
+            return response.length === 0;
           case "boolean":
             return response;
         }
