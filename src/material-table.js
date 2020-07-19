@@ -848,7 +848,7 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef = props.columns[i >= 0 ? i : props.columns.length - 1 - i];
+      const colDef = props.columns[count >= 0 ? i : props.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
