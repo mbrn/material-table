@@ -102,6 +102,8 @@ export interface Action<RowData extends object> {
   onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
   hidden?: boolean;
+  isCustom?:boolean;
+  component?:React.ReactElement<any> | (() => React.ReactElement<any>)
 }
 
 export interface EditComponentProps<RowData extends object> {
