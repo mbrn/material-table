@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { MyComponent } from "./m-table-custom-action-component";
 /* eslint-enable no-unused-vars */
 
 class MTableAction extends React.Component {
@@ -47,21 +48,20 @@ class MTableAction extends React.Component {
       );
 
     const button =
-     (action.isCustom || this.props.isCustom && action.component || this.props.component) ?
-         action.component|this.props.component
-         :
-            (
-              <IconButton
-                  size={this.props.size}
-                  color="inherit"
-                  disabled={disabled}
-                  onClick={handleOnClick}
-              >
-                {icon}
-              </IconButton>
-          );
-
-
+      action.isCustom ||
+      (this.props.isCustom && action.component) ||
+      this.props.component ? (
+        <MyComponent>{action.component}</MyComponent>
+      ) : (
+        <IconButton
+          size={this.props.size}
+          color="inherit"
+          disabled={disabled}
+          onClick={handleOnClick}
+        >
+          {icon}
+        </IconButton>
+      );
 
     if (action.tooltip) {
       // fix for issue #1049
