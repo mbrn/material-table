@@ -58,9 +58,7 @@ class MTableEditField extends React.Component {
         checked={Boolean(this.props.value)}
         onChange={(event) => this.props.onChange(event.target.checked)}
         style={{
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
+          padding: 0,
         }}
         inputProps={{
           "aria-label": this.props.columnDef.title,
