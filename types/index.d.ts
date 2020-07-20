@@ -111,7 +111,7 @@ export interface EditComponentProps<RowData extends object> {
   onChange: (newValue: any) => void;
   onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
-  errorState?: ErrorState;
+  error: boolean;
 }
 
 export interface EditCellColumnDef {
