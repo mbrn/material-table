@@ -5,6 +5,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -51,19 +53,33 @@ class MTableEditField extends React.Component {
   }
 
   renderBooleanField() {
+    const { helperText, error, ...props } = this.getProps();
+
     return (
-      <Checkbox
-        {...this.getProps()}
-        value={String(this.props.value)}
-        checked={Boolean(this.props.value)}
-        onChange={(event) => this.props.onChange(event.target.checked)}
-        style={{
-          padding: 0,
-        }}
-        inputProps={{
-          "aria-label": this.props.columnDef.title,
-        }}
-      />
+      <FormControl error={error} component="fieldset">
+        <FormGroup>
+          <FormControlLabel
+            label=""
+            control={
+              <Checkbox
+                {...props}
+                value={String(this.props.value)}
+                checked={Boolean(this.props.value)}
+                onChange={(event) => this.props.onChange(event.target.checked)}
+                style={{
+                  padding: 0,
+                  width: 24,
+                  marginLeft: 9,
+                }}
+                inputProps={{
+                  "aria-label": this.props.columnDef.title,
+                }}
+              />
+            }
+          />
+        </FormGroup>
+        <FormHelperText>{helperText}</FormHelperText>
+      </FormControl>
     );
   }
 
