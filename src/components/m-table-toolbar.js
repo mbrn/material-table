@@ -14,9 +14,9 @@ import { lighten } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
-import jsPDF from "jspdf";
 import "jspdf-autotable";
 import * as React from "react";
+const jsPDF = typeof window !== "undefined" ? require("jspdf") : null;
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
@@ -38,7 +38,9 @@ export class MTableToolbar extends React.Component {
     const columns = this.props.columns
       .filter(
         (columnDef) =>
-          !columnDef.hidden && columnDef.field && columnDef.export !== false
+          (!columnDef.hidden || columnDef.export === true) &&
+          columnDef.export !== false &&
+          columnDef.field
       )
       .sort((a, b) =>
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
@@ -73,25 +75,27 @@ export class MTableToolbar extends React.Component {
   };
 
   defaultExportPdf = () => {
-    const [columns, data] = this.getTableData();
+    if (jsPDF !== null) {
+      const [columns, data] = this.getTableData();
 
-    let content = {
-      startY: 50,
-      head: [columns.map((columnDef) => columnDef.title)],
-      body: data,
-    };
+      let content = {
+        startY: 50,
+        head: [columns.map((columnDef) => columnDef.title)],
+        body: data,
+      };
 
-    const unit = "pt";
-    const size = "A4";
-    const orientation = "landscape";
+      const unit = "pt";
+      const size = "A4";
+      const orientation = "landscape";
 
-    const doc = new jsPDF(orientation, unit, size);
-    doc.setFontSize(15);
-    doc.text(this.props.title, 40, 40);
-    doc.autoTable(content);
-    doc.save(
-      (this.props.exportFileName || this.props.title || "data") + ".pdf"
-    );
+      const doc = new jsPDF(orientation, unit, size);
+      doc.setFontSize(15);
+      doc.text(this.props.title, 40, 40);
+      doc.autoTable(content);
+      doc.save(
+        (this.props.exportFileName || this.props.title || "data") + ".pdf"
+      );
+    }
   };
 
   exportCsv = () => {
@@ -144,14 +148,18 @@ export class MTableToolbar extends React.Component {
                 <IconButton
                   disabled={!this.state.searchText}
                   onClick={() => this.onSearchChange("")}
+                  aria-label={localization.clearSearchAriaLabel}
                 >
-                  <this.props.icons.ResetSearch fontSize="small" />
+                  <this.props.icons.ResetSearch
+                    fontSize="small"
+                    aria-label="clear"
+                  />
                 </IconButton>
               </InputAdornment>
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              "aria-label": "Search",
+              "aria-label": localization.searchAriaLabel,
             },
           }}
         />
@@ -176,7 +184,9 @@ export class MTableToolbar extends React.Component {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  this.setState({ columnsButtonAnchorEl: event.currentTarget })
+                  this.setState({
+                    columnsButtonAnchorEl: event.currentTarget,
+                  })
                 }
                 aria-label={localization.showColumnsAriaLabel}
               >
@@ -191,7 +201,11 @@ export class MTableToolbar extends React.Component {
               <MenuItem
                 key={"text"}
                 disabled
-                style={{ opacity: 1, fontWeight: 600, fontSize: 12 }}
+                style={{
+                  opacity: 1,
+                  fontWeight: 600,
+                  fontSize: 12,
+                }}
               >
                 {localization.addRemoveColumns}
               </MenuItem>
@@ -228,7 +242,9 @@ export class MTableToolbar extends React.Component {
               <IconButton
                 color="inherit"
                 onClick={(event) =>
-                  this.setState({ exportButtonAnchorEl: event.currentTarget })
+                  this.setState({
+                    exportButtonAnchorEl: event.currentTarget,
+                  })
                 }
                 aria-label={localization.exportAriaLabel}
               >
@@ -365,6 +381,8 @@ MTableToolbar.defaultProps = {
     exportPDFName: "Export as PDF",
     searchTooltip: "Search",
     searchPlaceholder: "Search",
+    searchAriaLabel: "Search",
+    clearSearchAriaLabel: "Clear Search",
   },
   search: true,
   showTitle: true,

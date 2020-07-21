@@ -3,6 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -25,23 +27,26 @@ class MTableEditField extends React.Component {
   }
 
   renderLookupField() {
-    const { helperText, ...props } = this.getProps();
+    const { helperText, error, ...props } = this.getProps();
     return (
-      <Select
-        {...props}
-        value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
-        style={{
-          fontSize: 13,
-        }}
-        SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
-      >
-        {Object.keys(this.props.columnDef.lookup).map((key) => (
-          <MenuItem key={key} value={key}>
-            {this.props.columnDef.lookup[key]}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl error={Boolean(error)}>
+        <Select
+          {...props}
+          value={this.props.value === undefined ? "" : this.props.value}
+          onChange={(event) => this.props.onChange(event.target.value)}
+          style={{
+            fontSize: 13,
+          }}
+          SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
+        >
+          {Object.keys(this.props.columnDef.lookup).map((key) => (
+            <MenuItem key={key} value={key}>
+              {this.props.columnDef.lookup[key]}
+            </MenuItem>
+          ))}
+        </Select>
+        {Boolean(helperText) && <FormHelperText>{helperText}</FormHelperText>}
+      </FormControl>
     );
   }
 
@@ -53,9 +58,7 @@ class MTableEditField extends React.Component {
         checked={Boolean(this.props.value)}
         onChange={(event) => this.props.onChange(event.target.checked)}
         style={{
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
+          padding: 0,
         }}
         inputProps={{
           "aria-label": this.props.columnDef.title,
@@ -141,7 +144,13 @@ class MTableEditField extends React.Component {
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
         value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={(event) =>
+          this.props.onChange(
+            this.props.columnDef.type === "numeric"
+              ? event.target.valueAsNumber
+              : event.target.value
+          )
+        }
         InputProps={{
           style: {
             fontSize: 13,
