@@ -523,10 +523,10 @@ class App extends Component {
                       new Promise((resolve, reject) => {
                         setTimeout(() => {
                           {
-                            const data = this.state.data;
+                            /* const data = this.state.data;
                             const index = data.indexOf(oldData);
                             data[index] = newData;
-                            this.setState({ data }, () => resolve());
+                            this.setState({ data }, () => resolve()); */
                           }
                           resolve();
                         }, 1000);
