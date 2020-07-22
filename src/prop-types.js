@@ -354,6 +354,7 @@ export const propTypes = {
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool,
+    persistTableData: PropTypes.bool,
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({

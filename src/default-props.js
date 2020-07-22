@@ -228,6 +228,7 @@ export const defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: "left",
     thirdSortClick: true,
+    persistTableData: false,
     overflowY: "auto",
   },
   localization: {

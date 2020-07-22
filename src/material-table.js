@@ -101,7 +101,8 @@ export default class MaterialTable extends React.Component {
       isInit ||
       (defaultSortColumnIndex !== this.dataManager.orderBy &&
         defaultSortDirection !== this.dataManager.orderDirection);
-    shouldReorder &&
+    !this.props.options.persistTableData &&
+      shouldReorder &&
       this.dataManager.changeOrder(
         defaultSortColumnIndex,
         defaultSortDirection
@@ -140,7 +141,24 @@ export default class MaterialTable extends React.Component {
     }
 
     if (propsChanged) {
-      const props = this.getProps(this.props);
+      let props = this.getProps(this.props);
+
+      if (this.props.options.persistTableData) {
+        props = {
+          ...props,
+          columns: props.columns.map((column) => {
+            const columnData = this.state.columns.find(
+              ({ field }) => field === column.field
+            );
+
+            return {
+              ...column,
+              tableData: columnData && columnData.tableData,
+            };
+          }),
+        };
+      }
+
       this.setDataManagerFields(props);
       this.setState(this.dataManager.getRenderState());
     }

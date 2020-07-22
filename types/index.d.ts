@@ -335,6 +335,7 @@ export interface Options<RowData extends object> {
   sorting?: boolean;
   tableLayout?: "auto" | "fixed";
   thirdSortClick?: boolean;
+  persistTableData?: boolean;
   toolbar?: boolean;
   toolbarButtonAlignment?: "left" | "right";
   detailPanelColumnAlignment?: "left" | "right";
