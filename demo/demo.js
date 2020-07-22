@@ -2,8 +2,10 @@ import { Grid, MuiThemeProvider, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import MaterialTable from "../src";
 import Typography from "@material-ui/core/Typography";
+
+import MaterialTable from "../src";
+import { defaultExportCsv, defaultExportPdf } from "../src/exports";
 
 let direction = "ltr";
 // direction = 'rtl';
@@ -494,6 +496,9 @@ class App extends Component {
                     console.log("selected Filters : ", appliedFilter);
                   }}
                   options={{
+                    exportButton: true,
+                    exportCsv: defaultExportCsv,
+                    exportPdf: defaultExportPdf,
                     headerSelectionProps: {
                       color: "primary",
                     },
