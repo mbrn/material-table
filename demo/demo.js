@@ -497,6 +497,7 @@ class App extends Component {
                     headerSelectionProps: {
                       color: "primary",
                     },
+                    paginationPosition: "both",
                     selection: true,
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
