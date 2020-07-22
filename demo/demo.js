@@ -494,6 +494,7 @@ class App extends Component {
                     console.log("selected Filters : ", appliedFilter);
                   }}
                   options={{
+                    cellEditable: true,
                     headerSelectionProps: {
                       color: "primary",
                     },

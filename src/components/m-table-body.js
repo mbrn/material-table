@@ -131,6 +131,7 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             treeDataMaxLevel={this.props.treeDataMaxLevel}
+            onCellEditClicked={this.props.onCellEditClicked}
           />
         );
       }
@@ -313,6 +314,7 @@ MTableBody.propTypes = {
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  onCellEditClicked: PropTypes.func,
 };
 
 export default MTableBody;

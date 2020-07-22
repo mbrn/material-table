@@ -642,6 +642,11 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onCellEditClicked = (rowData, columnDef) => {
+    this.dataManager.changeCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -815,6 +820,7 @@ export default class MaterialTable extends React.Component {
         }
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
+        onCellEditClicked={this.onCellEditClicked}
       />
     </Table>
   );

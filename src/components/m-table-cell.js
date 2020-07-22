@@ -148,6 +148,29 @@ export default class MTableCell extends React.Component {
         : ["numeric", "currency"].indexOf(this.props.columnDef.type) !== -1
         ? "right"
         : "left";
+
+    let renderValue = this.getRenderValue();
+    if (this.props.cellEditable) {
+      renderValue = (
+        <div
+          style={{
+            borderBottom: "1px dashed grey",
+            cursor: "pointer",
+            width: "max-content",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            this.props.onCellEditClicked(
+              this.props.rowData,
+              this.props.columnDef
+            );
+          }}
+        >
+          {renderValue}
+        </div>
+      );
+    }
+
     return (
       <TableCell
         size={this.props.size}
@@ -157,7 +180,7 @@ export default class MTableCell extends React.Component {
         onClick={this.handleClickCell}
       >
         {this.props.children}
-        {this.getRenderValue()}
+        {renderValue}
       </TableCell>
     );
   }

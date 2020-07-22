@@ -5,6 +5,7 @@ import MTableBodyRow from "./m-table-body-row";
 import MTableGroupbar from "./m-table-groupbar";
 import MTableGroupRow from "./m-table-group-row";
 import MTableCell from "./m-table-cell";
+import MTableCellEditField from "./m-table-cell-edit-field";
 import MTableEditRow from "./m-table-edit-row";
 import MTableEditField from "./m-table-edit-field";
 import MTableFilterRow from "./m-table-filter-row";
@@ -21,6 +22,7 @@ export {
   MTableGroupbar,
   MTableGroupRow,
   MTableCell,
+  MTableCellEditField,
   MTableEditRow,
   MTableEditField,
   MTableFilterRow,

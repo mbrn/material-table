@@ -383,6 +383,13 @@ export default class DataManager {
     this.sorted = this.grouped = false;
   }
 
+  changeCellEditable = (rowData, columnDef) => {
+    rowData.tableData.editCellList = [
+      ...(rowData.tableData.editCellList || []),
+      columnDef,
+    ];
+  };
+
   expandTreeForNodes = (data) => {
     data.forEach((row) => {
       let currentRow = row;
