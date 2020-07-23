@@ -3,6 +3,10 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -25,42 +29,57 @@ class MTableEditField extends React.Component {
   }
 
   renderLookupField() {
-    const { helperText, ...props } = this.getProps();
+    const { helperText, error, ...props } = this.getProps();
     return (
-      <Select
-        {...props}
-        value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
-        style={{
-          fontSize: 13,
-        }}
-        SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
-      >
-        {Object.keys(this.props.columnDef.lookup).map((key) => (
-          <MenuItem key={key} value={key}>
-            {this.props.columnDef.lookup[key]}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl error={Boolean(error)}>
+        <Select
+          {...props}
+          value={this.props.value === undefined ? "" : this.props.value}
+          onChange={(event) => this.props.onChange(event.target.value)}
+          style={{
+            fontSize: 13,
+          }}
+          SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
+        >
+          {Object.keys(this.props.columnDef.lookup).map((key) => (
+            <MenuItem key={key} value={key}>
+              {this.props.columnDef.lookup[key]}
+            </MenuItem>
+          ))}
+        </Select>
+        {Boolean(helperText) && <FormHelperText>{helperText}</FormHelperText>}
+      </FormControl>
     );
   }
 
   renderBooleanField() {
+    const { helperText, error, ...props } = this.getProps();
+
     return (
-      <Checkbox
-        {...this.getProps()}
-        value={String(this.props.value)}
-        checked={Boolean(this.props.value)}
-        onChange={(event) => this.props.onChange(event.target.checked)}
-        style={{
-          paddingLeft: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-        }}
-        inputProps={{
-          "aria-label": this.props.columnDef.title,
-        }}
-      />
+      <FormControl error={error} component="fieldset">
+        <FormGroup>
+          <FormControlLabel
+            label=""
+            control={
+              <Checkbox
+                {...props}
+                value={String(this.props.value)}
+                checked={Boolean(this.props.value)}
+                onChange={(event) => this.props.onChange(event.target.checked)}
+                style={{
+                  padding: 0,
+                  width: 24,
+                  marginLeft: 9,
+                }}
+                inputProps={{
+                  "aria-label": this.props.columnDef.title,
+                }}
+              />
+            }
+          />
+        </FormGroup>
+        <FormHelperText>{helperText}</FormHelperText>
+      </FormControl>
     );
   }
 
@@ -141,7 +160,13 @@ class MTableEditField extends React.Component {
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
         value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={(event) =>
+          this.props.onChange(
+            this.props.columnDef.type === "numeric"
+              ? event.target.valueAsNumber
+              : event.target.value
+          )
+        }
         InputProps={{
           style: {
             fontSize: 13,
@@ -161,8 +186,16 @@ class MTableEditField extends React.Component {
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
+        style={{ float: "right" }}
+        type="number"
         value={this.props.value === undefined ? "" : this.props.value}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={(event) => {
+          let value = event.target.valueAsNumber;
+          if (!value && value !== 0) {
+            value = undefined;
+          }
+          return this.props.onChange(value);
+        }}
         inputProps={{
           style: {
             fontSize: 13,
