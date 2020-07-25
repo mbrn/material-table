@@ -513,6 +513,11 @@ class App extends Component {
                     console.log("selected Filters : ", appliedFilter);
                   }}
                   options={{
+                    tableLayout:
+                      this.state.fixedColumns.left ||
+                      this.state.fixedColumns.right
+                        ? "fixed"
+                        : "auto",
                     headerSelectionProps: {
                       color: "primary",
                     },
@@ -593,7 +598,7 @@ class App extends Component {
               </button>
               <span style={{ margin: 10 }}>
                 <label>Fixed Columns: </label>
-                <label for="fixedColumnsLeft"> Left: </label>
+                <label htmlFor="fixedColumnsLeft"> Left: </label>
                 <input
                   type="number"
                   id="fixedColumnsLeft"
@@ -611,7 +616,7 @@ class App extends Component {
                     });
                   }}
                 />
-                <label for="fixedColumnsRight"> Right: </label>
+                <label htmlFor="fixedColumnsRight"> Right: </label>
                 <input
                   type="number"
                   id="fixedColumnsRight"
