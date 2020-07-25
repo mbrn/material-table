@@ -158,6 +158,14 @@ export default class MaterialTable extends React.Component {
     if (count <= pageSize * currentPage && currentPage !== 0) {
       this.onChangePage(null, Math.max(0, Math.ceil(count / pageSize) - 1));
     }
+    if (
+      this.tableContainerDiv.current &&
+      this.tableContainerDiv.current.scrollWidth !== this.state.width
+    ) {
+      this.setState({
+        width: this.tableContainerDiv.current.scrollWidth,
+      });
+    }
   }
 
   getProps(props) {
@@ -851,7 +859,7 @@ export default class MaterialTable extends React.Component {
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
       const colDef =
         props.columns[count >= 0 ? i : props.columns.length - 1 - i];
-      if (colDef.tableData) {
+      if (colDef.hidden !== true && colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
         } else {

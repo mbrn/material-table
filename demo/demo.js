@@ -531,6 +531,7 @@ class App extends Component {
                       };
                     },
                     fixedColumns: this.state.fixedColumns,
+                    columnsButton: true,
                   }}
                   editable={{
                     onRowAdd: (newData) =>
