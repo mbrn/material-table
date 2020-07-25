@@ -839,7 +839,8 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    if (props.options.selection) {
+    // add selection action width only for left container div
+    if (props.options.selection && count > 0) {
       const selectionWidth = CommonValues.selectionMaxWidth(
         props,
         this.state.treeDataMaxLevel

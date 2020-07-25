@@ -39,6 +39,10 @@ class App extends Component {
   state = {
     text: "text",
     selecteds: 0,
+    fixedColumns: {
+      left: 0,
+      right: 0,
+    },
     data: [
       {
         id: 1,
@@ -428,35 +432,50 @@ class App extends Component {
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
         editPlaceholder: "This is placeholder",
+        width: 100,
       },
       {
-        width: 200,
         title: "Soyadı",
         field: "surname",
         initialEditValue: "test",
         tooltip: "This is tooltip text",
+        width: 200,
       },
-      { title: "Evli", field: "isMarried" },
+      { title: "Evli", field: "isMarried", width: 100 },
       {
         title: "Cinsiyet",
         field: "sex",
         disableClick: true,
         editable: "onAdd",
+        width: 100,
       },
-      { title: "Tipi", field: "type", removable: false, editable: "never" },
-      { title: "Doğum Yılı", field: "birthDate", type: "date" },
+      {
+        title: "Tipi",
+        field: "type",
+        removable: false,
+        editable: "never",
+        width: 100,
+      },
+      { title: "Doğum Yılı", field: "birthDate", type: "date", width: 200 },
       {
         title: "Doğum Yeri",
         field: "birthCity",
         lookup: { 34: "İstanbul", 0: "Şanlıurfa" },
+        width: 100,
       },
-      { title: "Kayıt Tarihi", field: "insertDateTime", type: "datetime" },
-      { title: "Zaman", field: "time", type: "time" },
+      {
+        title: "Kayıt Tarihi",
+        field: "insertDateTime",
+        type: "datetime",
+        width: 200,
+      },
+      { title: "Zaman", field: "time", type: "time", width: 100 },
       {
         title: "Adı",
         field: "name",
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
+        width: 100,
       },
     ],
     remoteColumns: [
@@ -506,6 +525,7 @@ class App extends Component {
                         color: "primary",
                       };
                     },
+                    fixedColumns: this.state.fixedColumns,
                   }}
                   editable={{
                     onRowAdd: (newData) =>
@@ -563,13 +583,54 @@ class App extends Component {
                 />
               </Grid>
             </Grid>
-            {this.state.text}
-            <button
-              onClick={() => this.tableRef.current.onAllSelected(true)}
-              style={{ margin: 10 }}
-            >
-              Select
-            </button>
+            <div style={{ marginBottom: 30 }}>
+              {this.state.text}
+              <button
+                onClick={() => this.tableRef.current.onAllSelected(true)}
+                style={{ margin: 10 }}
+              >
+                Select All
+              </button>
+              <span style={{ margin: 10 }}>
+                <label>Fixed Columns: </label>
+                <label for="fixedColumnsLeft"> Left: </label>
+                <input
+                  type="number"
+                  id="fixedColumnsLeft"
+                  name="fixedColumnsLeft"
+                  min="0"
+                  max="5"
+                  style={{ minWidth: 30 }}
+                  value={this.state.fixedColumns.left}
+                  onChange={(event) => {
+                    this.setState({
+                      fixedColumns: {
+                        ...this.state.fixedColumns,
+                        left: +event.target.value,
+                      },
+                    });
+                  }}
+                />
+                <label for="fixedColumnsRight"> Right: </label>
+                <input
+                  type="number"
+                  id="fixedColumnsRight"
+                  name="fixedColumnsRight"
+                  min="0"
+                  max="5"
+                  style={{ minWidth: 30 }}
+                  value={this.state.fixedColumns.right}
+                  onChange={(event) => {
+                    this.setState({
+                      fixedColumns: {
+                        ...this.state.fixedColumns,
+                        right: +event.target.value,
+                      },
+                    });
+                  }}
+                />
+              </span>
+            </div>
             <MaterialTable
               title={
                 <Typography variant="h6" color="primary">
