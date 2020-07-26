@@ -1068,7 +1068,7 @@ export default class MaterialTable extends React.Component {
                 <props.components.OverlayLoading theme={props.theme} />
               </div>
             )}
-          {this.state.errorState && this.state.errorCause === "query" && (
+          {this.state.errorState && this.state.errorState.errorCause === "query" && (
             <div
               style={{
                 position: "absolute",
