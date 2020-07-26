@@ -78,6 +78,7 @@ export const defaultProps = {
     Body: MComponents.MTableBody,
     Cell: MComponents.MTableCell,
     Container: Container,
+    EditCell: MComponents.MTableEditCell,
     EditField: MComponents.MTableEditField,
     EditRow: MComponents.MTableEditRow,
     FilterRow: MComponents.MTableFilterRow,

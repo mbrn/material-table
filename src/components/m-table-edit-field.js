@@ -152,6 +152,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        fullWidth
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
         }
@@ -203,6 +204,8 @@ class MTableEditField extends React.Component {
             "aria-label": this.props.columnDef.title,
           },
         }}
+        onKeyDown={this.props.onKeyDown}
+        autoFocus={this.props.autoFocus}
       />
     );
   }

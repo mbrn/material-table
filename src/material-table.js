@@ -642,6 +642,16 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onCellEditStarted = (rowData, columnDef) => {
+    this.dataManager.startCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onCellEditFinished = (rowData, columnDef) => {
+    this.dataManager.finishCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -815,6 +825,9 @@ export default class MaterialTable extends React.Component {
         }
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
+        cellEditable={props.cellEditable}
+        onCellEditStarted={this.onCellEditStarted}
+        onCellEditFinished={this.onCellEditFinished}
       />
     </Table>
   );
