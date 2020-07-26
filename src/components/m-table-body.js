@@ -131,7 +131,9 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             treeDataMaxLevel={this.props.treeDataMaxLevel}
-            onCellEditClicked={this.props.onCellEditClicked}
+            cellEditable={this.props.cellEditable}
+            onCellEditStarted={this.props.onCellEditStarted}
+            onCellEditFinished={this.props.onCellEditFinished}
           />
         );
       }
@@ -166,6 +168,9 @@ class MTableBody extends React.Component {
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
         }}
+        cellEditable={this.props.cellEditable}
+        onCellEditStarted={this.props.onCellEditStarted}
+        onCellEditFinished={this.props.onCellEditFinished}
       />
     ));
   }
@@ -314,7 +319,9 @@ MTableBody.propTypes = {
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  onCellEditClicked: PropTypes.func,
+  cellEditable: PropTypes.object,
+  onCellEditStarted: PropTypes.func,
+  onCellEditFinished: PropTypes.func,
 };
 
 export default MTableBody;

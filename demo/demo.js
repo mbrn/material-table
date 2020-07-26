@@ -435,6 +435,7 @@ class App extends Component {
         field: "surname",
         initialEditValue: "test",
         tooltip: "This is tooltip text",
+        editable: "never",
       },
       { title: "Evli", field: "isMarried" },
       {
@@ -493,8 +494,21 @@ class App extends Component {
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
                   }}
+                  cellEditable={{
+                    cellStyle: {},
+                    onCellEditApproved: (
+                      newValue,
+                      oldValue,
+                      rowData,
+                      columnDef
+                    ) => {
+                      return new Promise((resolve, reject) => {
+                        console.log("newValue: " + newValue);
+                        setTimeout(resolve, 4000);
+                      });
+                    },
+                  }}
                   options={{
-                    cellEditable: true,
                     headerSelectionProps: {
                       color: "primary",
                     },

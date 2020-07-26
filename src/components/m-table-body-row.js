@@ -28,7 +28,18 @@ export default class MTableBodyRow extends React.Component {
             (c) => c.tableData.id === columnDef.tableData.id
           )
         ) {
-          return <this.props.components.CellEditField />;
+          return (
+            <this.props.components.EditCell
+              components={this.props.components}
+              icons={this.props.icons}
+              localization={this.props.localization}
+              columnDef={columnDef}
+              size={size}
+              rowData={this.props.data}
+              cellEditable={this.props.cellEditable}
+              onCellEditFinished={this.props.onCellEditFinished}
+            />
+          );
         } else {
           return (
             <this.props.components.Cell
@@ -47,8 +58,10 @@ export default class MTableBodyRow extends React.Component {
                 columnDef.tableData.id
               }
               rowData={this.props.data}
-              cellEditable={this.props.options.cellEditable}
-              onCellEditClicked={this.props.onCellEditClicked}
+              cellEditable={
+                columnDef.editable !== "never" && !!this.props.cellEditable
+              }
+              onCellEditStarted={this.props.onCellEditStarted}
             />
           );
         }
@@ -472,7 +485,9 @@ export default class MTableBodyRow extends React.Component {
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
                   errorState={this.props.errorState}
-                  onCellEditClicked={this.props.onCellEditClicked}
+                  cellEditable={this.props.cellEditable}
+                  onCellEditStarted={this.props.onCellEditStarted}
+                  onCellEditFinished={this.props.onCellEditFinished}
                 />
               );
             }

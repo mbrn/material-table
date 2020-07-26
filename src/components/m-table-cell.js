@@ -160,7 +160,7 @@ export default class MTableCell extends React.Component {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            this.props.onCellEditClicked(
+            this.props.onCellEditStarted(
               this.props.rowData,
               this.props.columnDef
             );

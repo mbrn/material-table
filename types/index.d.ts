@@ -7,6 +7,15 @@ type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
+  cellEditable?: {
+    cellStyle?: React.CSSProperties;
+    onCellEditApproved: (
+      newValue: any,
+      oldValue: any,
+      rowData: RowData,
+      columnDef: Column
+    ) => Promise<void>;
+  };
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
