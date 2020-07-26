@@ -90,7 +90,7 @@ export class MTableToolbar extends React.Component {
 
       const doc = new jsPDF(orientation, unit, size);
       doc.setFontSize(15);
-      doc.text(this.props.title, 40, 40);
+      doc.text(this.props.exportFileName || this.props.title, 40, 40);
       doc.autoTable(content);
       doc.save(
         (this.props.exportFileName || this.props.title || "data") + ".pdf"
