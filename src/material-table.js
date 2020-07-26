@@ -886,6 +886,7 @@ export default class MaterialTable extends React.Component {
         <props.components.Container
           style={{ position: "relative", ...props.style }}
         >
+          {(props.options.paginationPosition === "top" || props.options.paginationPosition === "both" ) ? this.renderFooter() : null}
           {props.options.toolbar && (
             <props.components.Toolbar
               actions={props.actions}
@@ -1043,7 +1044,7 @@ export default class MaterialTable extends React.Component {
                 </div>
               </div>
             )}
-          {this.renderFooter()}
+          { (props.options.paginationPosition === "bottom" || props.options.paginationPosition === "both" ) ? this.renderFooter() : null }
 
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
