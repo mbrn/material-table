@@ -852,7 +852,8 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    if (props.options.selection) {
+    // add selection action width only for left container div
+    if (props.options.selection && count > 0) {
       const selectionWidth = CommonValues.selectionMaxWidth(
         props,
         this.state.treeDataMaxLevel
@@ -886,7 +887,10 @@ export default class MaterialTable extends React.Component {
         <props.components.Container
           style={{ position: "relative", ...props.style }}
         >
-          {(props.options.paginationPosition === "top" || props.options.paginationPosition === "both" ) ? this.renderFooter() : null}
+          {props.options.paginationPosition === "top" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
           {props.options.toolbar && (
             <props.components.Toolbar
               actions={props.actions}
@@ -1044,7 +1048,10 @@ export default class MaterialTable extends React.Component {
                 </div>
               </div>
             )}
-          { (props.options.paginationPosition === "bottom" || props.options.paginationPosition === "both" ) ? this.renderFooter() : null }
+          {props.options.paginationPosition === "bottom" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
 
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
