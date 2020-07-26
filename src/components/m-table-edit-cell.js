@@ -150,7 +150,7 @@ MTableEditCell.defaultProps = {
 MTableEditCell.propTypes = {
   cellEditable: PropTypes.object.isRequired,
   columnDef: PropTypes.object.isRequired,
-  components: PropTypes.components.isRequired,
+  components: PropTypes.object.isRequired,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   icons: PropTypes.object.isRequired,
   localization: PropTypes.object.isRequired,
