@@ -89,7 +89,7 @@ class MTableEditCell extends React.Component {
     this.props.onCellEditFinished(this.props.rowData, this.props.columnDef);
   };
 
-  renderActions = () => {
+  renderActions() {
     if (this.state.isLoading) {
       return (
         <div style={{ display: "flex", justifyContent: "center", width: 60 }}>
@@ -120,7 +120,7 @@ class MTableEditCell extends React.Component {
         size="small"
       />
     );
-  };
+  }
 
   render() {
     return (
