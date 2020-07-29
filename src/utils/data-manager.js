@@ -383,6 +383,24 @@ export default class DataManager {
     this.sorted = this.grouped = false;
   }
 
+  startCellEditable = (rowData, columnDef) => {
+    rowData.tableData.editCellList = [
+      ...(rowData.tableData.editCellList || []),
+      columnDef,
+    ];
+  };
+
+  finishCellEditable = (rowData, columnDef) => {
+    if (rowData.tableData.editCellList) {
+      var index = rowData.tableData.editCellList.findIndex(
+        (c) => c.tableData.id === columnDef.tableData.id
+      );
+      if (index !== -1) {
+        rowData.tableData.editCellList.splice(index, 1);
+      }
+    }
+  };
+
   expandTreeForNodes = (data) => {
     data.forEach((row) => {
       let currentRow = row;
@@ -488,7 +506,7 @@ export default class DataManager {
 
     if (columnDef.customSort) {
       if (this.orderDirection === "desc") {
-        result = list.sort((a, b) => columnDef.customSort(b, a, "row"));
+        result = list.sort((a, b) => columnDef.customSort(b, a, "row", "desc"));
       } else {
         result = list.sort((a, b) => columnDef.customSort(a, b, "row"));
       }

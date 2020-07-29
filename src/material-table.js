@@ -650,6 +650,16 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onCellEditStarted = (rowData, columnDef) => {
+    this.dataManager.startCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onCellEditFinished = (rowData, columnDef) => {
+    this.dataManager.finishCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -823,6 +833,9 @@ export default class MaterialTable extends React.Component {
         }
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
+        cellEditable={props.cellEditable}
+        onCellEditStarted={this.onCellEditStarted}
+        onCellEditFinished={this.onCellEditFinished}
       />
     </Table>
   );
@@ -882,6 +895,10 @@ export default class MaterialTable extends React.Component {
         <props.components.Container
           style={{ position: "relative", ...props.style }}
         >
+          {props.options.paginationPosition === "top" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
           {props.options.toolbar && (
             <props.components.Toolbar
               actions={props.actions}
@@ -1039,7 +1056,10 @@ export default class MaterialTable extends React.Component {
                 </div>
               </div>
             )}
-          {this.renderFooter()}
+          {props.options.paginationPosition === "bottom" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
 
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
@@ -1056,25 +1076,26 @@ export default class MaterialTable extends React.Component {
                 <props.components.OverlayLoading theme={props.theme} />
               </div>
             )}
-          {this.state.errorState && this.state.errorCause === "query" && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100%",
-                width: "100%",
-                zIndex: 11,
-              }}
-            >
-              <props.components.OverlayError
-                error={this.state.errorState}
-                retry={this.retry}
-                theme={props.theme}
-                icon={props.icons.Retry}
-              />
-            </div>
-          )}
+          {this.state.errorState &&
+            this.state.errorState.errorCause === "query" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  width: "100%",
+                  zIndex: 11,
+                }}
+              >
+                <props.components.OverlayError
+                  error={this.state.errorState}
+                  retry={this.retry}
+                  theme={props.theme}
+                  icon={props.icons.Retry}
+                />
+              </div>
+            )}
         </props.components.Container>
       </DragDropContext>
     );

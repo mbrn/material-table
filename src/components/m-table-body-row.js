@@ -21,25 +21,50 @@ export default class MTableBodyRow extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        return (
-          <this.props.components.Cell
-            size={size}
-            errorState={this.props.errorState}
-            icons={this.props.icons}
-            columnDef={{
-              cellStyle: this.props.options.cellStyle,
-              ...columnDef,
-            }}
-            value={value}
-            key={
-              "cell-" +
-              this.props.data.tableData.id +
-              "-" +
-              columnDef.tableData.id
-            }
-            rowData={this.props.data}
-          />
-        );
+
+        if (
+          this.props.data.tableData.editCellList &&
+          this.props.data.tableData.editCellList.find(
+            (c) => c.tableData.id === columnDef.tableData.id
+          )
+        ) {
+          return (
+            <this.props.components.EditCell
+              components={this.props.components}
+              icons={this.props.icons}
+              localization={this.props.localization}
+              columnDef={columnDef}
+              size={size}
+              rowData={this.props.data}
+              cellEditable={this.props.cellEditable}
+              onCellEditFinished={this.props.onCellEditFinished}
+            />
+          );
+        } else {
+          return (
+            <this.props.components.Cell
+              size={size}
+              errorState={this.props.errorState}
+              icons={this.props.icons}
+              columnDef={{
+                cellStyle: this.props.options.cellStyle,
+                ...columnDef,
+              }}
+              value={value}
+              key={
+                "cell-" +
+                this.props.data.tableData.id +
+                "-" +
+                columnDef.tableData.id
+              }
+              rowData={this.props.data}
+              cellEditable={
+                columnDef.editable !== "never" && !!this.props.cellEditable
+              }
+              onCellEditStarted={this.props.onCellEditStarted}
+            />
+          );
+        }
       });
     return mapArr;
   }
@@ -381,6 +406,9 @@ export default class MTableBodyRow extends React.Component {
       localization,
       actions,
       errorState,
+      cellEditable,
+      onCellEditStarted,
+      onCellEditFinished,
       ...rowProps
     } = this.props;
 
@@ -402,7 +430,6 @@ export default class MTableBodyRow extends React.Component {
                   }
                   panel = panel.render;
                 }
-
                 onToggleDetailPanel(this.props.path, panel);
               });
           }}
@@ -461,6 +488,9 @@ export default class MTableBodyRow extends React.Component {
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
                   errorState={this.props.errorState}
+                  cellEditable={cellEditable}
+                  onCellEditStarted={onCellEditStarted}
+                  onCellEditFinished={onCellEditFinished}
                 />
               );
             }

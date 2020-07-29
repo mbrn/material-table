@@ -7,6 +7,15 @@ type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
+  cellEditable?: {
+    cellStyle?: React.CSSProperties;
+    onCellEditApproved: (
+      newValue: any,
+      oldValue: any,
+      rowData: RowData,
+      columnDef: Column<RowData>
+    ) => Promise<void>;
+  };
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
@@ -316,6 +325,7 @@ export interface Options<RowData extends object> {
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: "normal" | "stepped";
+  paginationPosition?: "bottom" | "top" | "both";
   rowStyle?:
     | React.CSSProperties
     | ((data: any, index: number, level: number) => React.CSSProperties);
