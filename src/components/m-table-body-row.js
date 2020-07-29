@@ -406,6 +406,9 @@ export default class MTableBodyRow extends React.Component {
       localization,
       actions,
       errorState,
+      cellEditable,
+      onCellEditStarted,
+      onCellEditFinished,
       ...rowProps
     } = this.props;
 
@@ -485,9 +488,9 @@ export default class MTableBodyRow extends React.Component {
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
                   errorState={this.props.errorState}
-                  cellEditable={this.props.cellEditable}
-                  onCellEditStarted={this.props.onCellEditStarted}
-                  onCellEditFinished={this.props.onCellEditFinished}
+                  cellEditable={cellEditable}
+                  onCellEditStarted={onCellEditStarted}
+                  onCellEditFinished={onCellEditFinished}
                 />
               );
             }

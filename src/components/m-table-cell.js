@@ -141,7 +141,15 @@ export default class MTableCell extends React.Component {
   };
 
   render() {
-    const { icons, columnDef, rowData, errorState, ...cellProps } = this.props;
+    const {
+      icons,
+      columnDef,
+      rowData,
+      errorState,
+      cellEditable,
+      onCellEditStarted,
+      ...cellProps
+    } = this.props;
     const cellAlignment =
       columnDef.align !== undefined
         ? columnDef.align
@@ -150,7 +158,7 @@ export default class MTableCell extends React.Component {
         : "left";
 
     let renderValue = this.getRenderValue();
-    if (this.props.cellEditable) {
+    if (cellEditable) {
       renderValue = (
         <div
           style={{
@@ -160,10 +168,7 @@ export default class MTableCell extends React.Component {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            this.props.onCellEditStarted(
-              this.props.rowData,
-              this.props.columnDef
-            );
+            onCellEditStarted(this.props.rowData, this.props.columnDef);
           }}
         >
           {renderValue}
