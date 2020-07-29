@@ -39,6 +39,10 @@ class App extends Component {
   state = {
     text: "text",
     selecteds: 0,
+    fixedColumns: {
+      left: 2,
+      right: 2,
+    },
     data: [
       {
         id: 1,
@@ -521,8 +525,6 @@ class App extends Component {
                         color: "primary",
                       };
                     },
-                    fixedColumns: this.state.fixedColumns,
-                    columnsButton: true,
                   }}
                   editable={{
                     onRowAdd: (newData) =>
