@@ -39,10 +39,6 @@ class App extends Component {
   state = {
     text: "text",
     selecteds: 0,
-    fixedColumns: {
-      left: 2,
-      right: 2,
-    },
     data: [
       {
         id: 1,
