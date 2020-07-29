@@ -13,7 +13,7 @@ export interface MaterialTableProps<RowData extends object> {
       newValue: any,
       oldValue: any,
       rowData: RowData,
-      columnDef: Column
+      columnDef: Column<RowData>
     ) => Promise<void>;
   };
   columns: Column<RowData>[];
