@@ -20,6 +20,8 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  bulkEditOpen = false;
+  bulkEditChangedRows = {};
 
   data = [];
   columns = [];
@@ -206,6 +208,10 @@ export default class DataManager {
       this.lastEditingRow.tableData.editing = undefined;
       this.lastEditingRow = undefined;
     }
+  }
+
+  changeBulkEditOpen(bulkEditOpen) {
+    this.bulkEditOpen = bulkEditOpen;
   }
 
   changeAllSelected(checked) {
@@ -399,6 +405,17 @@ export default class DataManager {
         rowData.tableData.editCellList.splice(index, 1);
       }
     }
+  };
+
+  clearBulkEditChangedRows = () => {
+    this.bulkEditChangedRows = {};
+  };
+
+  onBulkEditRowChanged = (oldData, newData) => {
+    this.bulkEditChangedRows[oldData.tableData.id] = {
+      oldData,
+      newData,
+    };
   };
 
   expandTreeForNodes = (data) => {

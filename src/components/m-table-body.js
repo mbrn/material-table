@@ -76,7 +76,7 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      if (data.tableData.editing) {
+      if (data.tableData.editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
             columns={this.props.columns.filter((columnDef) => {
@@ -93,13 +93,14 @@ class MTableBody extends React.Component {
                 .dateTimePickerLocalization,
             }}
             key={index}
-            mode={data.tableData.editing}
+            mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
+            onBulkEditRowChanged={this.props.onBulkEditRowChanged}
           />
         );
       } else {
@@ -322,6 +323,8 @@ MTableBody.propTypes = {
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
+  bulkEditOpen: PropTypes.bool,
+  onBulkEditRowChanged: PropTypes.func,
 };
 
 export default MTableBody;

@@ -494,20 +494,20 @@ class App extends Component {
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
                   }}
-                  cellEditable={{
-                    cellStyle: {},
-                    onCellEditApproved: (
-                      newValue,
-                      oldValue,
-                      rowData,
-                      columnDef
-                    ) => {
-                      return new Promise((resolve, reject) => {
-                        console.log("newValue: " + newValue);
-                        setTimeout(resolve, 4000);
-                      });
-                    },
-                  }}
+                  // cellEditable={{
+                  //   cellStyle: {},
+                  //   onCellEditApproved: (
+                  //     newValue,
+                  //     oldValue,
+                  //     rowData,
+                  //     columnDef
+                  //   ) => {
+                  //     return new Promise((resolve, reject) => {
+                  //       console.log("newValue: " + newValue);
+                  //       setTimeout(resolve, 4000);
+                  //     });
+                  //   },
+                  // }}
                   options={{
                     headerSelectionProps: {
                       color: "primary",
@@ -523,6 +523,18 @@ class App extends Component {
                     },
                   }}
                   editable={{
+                    onBulkUpdate: (changedRows) =>
+                      new Promise((resolve, reject) => {
+                        console.log(changedRows);
+                        setTimeout(() => {
+                          {
+                            /* const data = this.state.data;
+                            data.push(newData);
+                            this.setState({ data }, () => resolve()); */
+                          }
+                          resolve();
+                        }, 1000);
+                      }),
                     onRowAdd: (newData) =>
                       new Promise((resolve, reject) => {
                         setTimeout(() => {

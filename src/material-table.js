@@ -48,6 +48,7 @@ export default class MaterialTable extends React.Component {
         totalCount: 0,
       },
       showAddRow: false,
+      bulkEditOpen: false,
       width: 0,
     };
 
@@ -277,6 +278,36 @@ export default class MaterialTable extends React.Component {
           },
         }));
       }
+      if (calculatedProps.editable.onBulkUpdate) {
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Edit,
+          tooltip: localization.bulkEditTooltip,
+          position: "toolbar",
+          hidden: this.dataManager.bulkEditOpen,
+          onClick: () => {
+            this.dataManager.changeBulkEditOpen(true);
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Check,
+          tooltip: localization.bulkEditApprove,
+          position: "toolbar",
+          hidden: !this.dataManager.bulkEditOpen,
+          onClick: () => this.onEditingApproved("bulk"),
+        });
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Clear,
+          tooltip: localization.bulkEditCancel,
+          position: "toolbar",
+          hidden: !this.dataManager.bulkEditOpen,
+          onClick: () => {
+            this.dataManager.changeBulkEditOpen(false);
+            this.dataManager.clearBulkEditChangedRows();
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+      }
     }
 
     return calculatedProps;
@@ -492,6 +523,37 @@ export default class MaterialTable extends React.Component {
             this.setState({ isLoading: false, errorState });
           });
       });
+    } else if (
+      mode === "bulk" &&
+      this.props.editable &&
+      this.props.editable.onBulkUpdate
+    ) {
+      this.setState({ isLoading: true }, () => {
+        this.props.editable
+          .onBulkUpdate(this.dataManager.bulkEditChangedRows)
+          .then((result) => {
+            this.dataManager.changeBulkEditOpen(false);
+            this.dataManager.clearBulkEditChangedRows();
+            this.setState(
+              {
+                isLoading: false,
+                ...this.dataManager.getRenderState(),
+              },
+              () => {
+                if (this.isRemoteData()) {
+                  this.onQueryChange(this.state.query);
+                }
+              }
+            );
+          })
+          .catch((reason) => {
+            const errorState = {
+              message: reason,
+              errorCause: "bulk edit",
+            };
+            this.setState({ isLoading: false, errorState });
+          });
+      });
     }
   };
 
@@ -649,6 +711,11 @@ export default class MaterialTable extends React.Component {
 
   onCellEditFinished = (rowData, columnDef) => {
     this.dataManager.finishCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onEditRowDataChanged = (rowData, newData) => {
+    this.dataManager.setEditRowData(rowData, newData);
     this.setState(this.dataManager.getRenderState());
   };
 
@@ -828,6 +895,8 @@ export default class MaterialTable extends React.Component {
         cellEditable={props.cellEditable}
         onCellEditStarted={this.onCellEditStarted}
         onCellEditFinished={this.onCellEditFinished}
+        bulkEditOpen={this.dataManager.bulkEditOpen}
+        onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
       />
     </Table>
   );
@@ -1068,25 +1137,26 @@ export default class MaterialTable extends React.Component {
                 <props.components.OverlayLoading theme={props.theme} />
               </div>
             )}
-          {this.state.errorState && this.state.errorState.errorCause === "query" && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100%",
-                width: "100%",
-                zIndex: 11,
-              }}
-            >
-              <props.components.OverlayError
-                error={this.state.errorState}
-                retry={this.retry}
-                theme={props.theme}
-                icon={props.icons.Retry}
-              />
-            </div>
-          )}
+          {this.state.errorState &&
+            this.state.errorState.errorCause === "query" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  width: "100%",
+                  zIndex: 11,
+                }}
+              >
+                <props.components.OverlayError
+                  error={this.state.errorState}
+                  retry={this.retry}
+                  theme={props.theme}
+                  icon={props.icons.Retry}
+                />
+              </div>
+            )}
         </props.components.Container>
       </DragDropContext>
     );

@@ -142,10 +142,14 @@ export default class MTableEditRow extends React.Component {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  this.setState({ data });
+                  this.setState({ data }, () =>
+                    this.props.onBulkEditRowChanged(this.props.data, data)
+                  );
                 }}
                 onRowDataChange={(data) => {
-                  this.setState({ data });
+                  this.setState({ data }, () =>
+                    this.props.onBulkEditRowChanged(this.props.data, data)
+                  );
                 }}
               />
             </TableCell>
@@ -166,6 +170,10 @@ export default class MTableEditRow extends React.Component {
   };
 
   renderActions() {
+    if (this.props.mode === "bulk") {
+      return <TableCell padding="none" key="key-actions-column" />;
+    }
+
     const size = CommonValues.elementSize(this.props);
     const localization = {
       ...MTableEditRow.defaultProps.localization,
@@ -250,7 +258,11 @@ export default class MTableEditRow extends React.Component {
       ...this.props.localization,
     };
     let columns;
-    if (this.props.mode === "add" || this.props.mode === "update") {
+    if (
+      this.props.mode === "add" ||
+      this.props.mode === "update" ||
+      this.props.mode === "bulk"
+    ) {
       columns = this.renderColumns();
     } else {
       const colSpan = this.props.columns.filter(
