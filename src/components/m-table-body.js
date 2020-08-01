@@ -92,7 +92,7 @@ class MTableBody extends React.Component {
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization,
             }}
-            key={index}
+            key={"row-" + data.tableData.id}
             mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -172,6 +172,7 @@ class MTableBody extends React.Component {
         cellEditable={this.props.cellEditable}
         onCellEditStarted={this.props.onCellEditStarted}
         onCellEditFinished={this.props.onCellEditFinished}
+        onBulkEditRowChanged={this.props.onBulkEditRowChanged}
       />
     ));
   }

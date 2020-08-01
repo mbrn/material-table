@@ -70,6 +70,7 @@ export default class MTableGroupRow extends React.Component {
                 onEditingCanceled={this.props.onEditingCanceled}
                 onEditingApproved={this.props.onEditingApproved}
                 getFieldValue={this.props.getFieldValue}
+                onBulkEditRowChanged={this.props.onBulkEditRowChanged}
               />
             );
           } else {
@@ -191,4 +192,5 @@ MTableGroupRow.propTypes = {
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func,
 };
