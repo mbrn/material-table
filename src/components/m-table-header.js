@@ -13,6 +13,73 @@ import * as CommonValues from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lastX: 0,
+      resizingColumnDef: undefined,
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousemove", this.handleMouseMove);
+    document.addEventListener("mouseup", this.handleMouseUp);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousemove", this.handleMouseMove);
+    document.removeEventListener("mouseup", this.handleMouseUp);
+  }
+
+  handleMouseDown = (e, columnDef) => {
+    this.setState({
+      lastAdditionalWidth: columnDef.tableData.additionalWidth,
+      lastX: e.clientX,
+      resizingColumnDef: columnDef,
+    });
+  };
+
+  handleMouseMove = (e) => {
+    if (!this.state.resizingColumnDef) {
+      return;
+    }
+
+    const additionalWidth =
+      this.state.lastAdditionalWidth + e.clientX - this.state.lastX;
+
+    if (
+      this.state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
+    ) {
+      this.props.onColumnResized(
+        this.state.resizingColumnDef.tableData.id,
+        additionalWidth
+      );
+    }
+  };
+
+  handleMouseUp = (e) => {
+    this.setState({ resizingColumnDef: undefined });
+  };
+
+  getCellStyle = (columnDef) => {
+    const style = {
+      ...this.props.headerStyle,
+      ...columnDef.headerStyle,
+      boxSizing: "border-box",
+      width: columnDef.tableData.width,
+    };
+
+    if (
+      this.props.options.tableLayout === "resizable" ||
+      this.props.options.tableLayout === "fixed"
+    ) {
+      style.paddingRight = 2;
+    }
+
+    return style;
+  };
+
   renderHeader() {
     const size = this.props.options.padding === "default" ? "medium" : "small";
 
@@ -84,6 +151,38 @@ export class MTableHeader extends React.Component {
             </Tooltip>
           );
         }
+
+        if (
+          this.props.options.tableLayout === "resizable" ||
+          this.props.options.tableLayout === "fixed"
+        ) {
+          content = (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ flex: 1 }}>{content}</div>
+              <div></div>
+              <this.props.icons.Resize
+                style={{
+                  cursor: "e-resize",
+                  transition: "all ease 400ms",
+                  color:
+                    this.state.resizingColumnDef &&
+                    this.state.resizingColumnDef.tableData.id ===
+                      columnDef.tableData.id
+                      ? this.props.theme.palette.primary.main
+                      : "inherit",
+                  transform:
+                    this.state.resizingColumnDef &&
+                    this.state.resizingColumnDef.tableData.id ===
+                      columnDef.tableData.id
+                      ? "scale(1.25)"
+                      : "none",
+                }}
+                onMouseDown={(e) => this.handleMouseDown(e, columnDef)}
+              />
+            </div>
+          );
+        }
+
         const cellAlignment =
           columnDef.align !== undefined
             ? columnDef.align
@@ -95,12 +194,7 @@ export class MTableHeader extends React.Component {
             key={columnDef.tableData.id}
             align={cellAlignment}
             className={this.props.classes.header}
-            style={{
-              ...this.props.headerStyle,
-              ...columnDef.headerStyle,
-              boxSizing: "border-box",
-              width: columnDef.tableData.width,
-            }}
+            style={this.getCellStyle(columnDef)}
             size={size}
           >
             {content}
@@ -291,4 +385,4 @@ export const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(MTableHeader);
+export default withStyles(styles, { withTheme: true })(MTableHeader);
