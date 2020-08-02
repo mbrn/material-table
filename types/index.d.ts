@@ -184,6 +184,7 @@ export interface Column<RowData extends object> {
   groupTitle?: string | ((groupData: any) => any) | React.ReactNode;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  hiddenByColumnsButton?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any;
   lookup?: object;
