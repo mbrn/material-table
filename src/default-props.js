@@ -159,6 +159,11 @@ export const defaultProps = {
         clear
       </Icon>
     )),
+    Resize: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        more_vert
+      </Icon>
+    )),
     Search: React.forwardRef((props, ref) => (
       <Icon {...props} ref={ref}>
         search

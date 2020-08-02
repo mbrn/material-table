@@ -430,7 +430,6 @@ class App extends Component {
         editPlaceholder: "This is placeholder",
       },
       {
-        width: 200,
         title: "Soyadı",
         field: "surname",
         initialEditValue: "test",
@@ -489,7 +488,7 @@ class App extends Component {
                 <MaterialTable
                   tableRef={this.tableRef}
                   columns={this.state.columns}
-                  data={this.state.data}
+                  data={[] || this.state.data}
                   title="Demo Title"
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
@@ -509,6 +508,7 @@ class App extends Component {
                   //   },
                   // }}
                   options={{
+                    tableLayout: "fixed",
                     headerSelectionProps: {
                       color: "primary",
                     },

@@ -719,6 +719,11 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onColumnResized = (id, additionalWidth) => {
+    this.dataManager.onColumnResized(id, additionalWidth);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -858,6 +863,7 @@ export default class MaterialTable extends React.Component {
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
+          onColumnResized={this.onColumnResized}
         />
       )}
       <props.components.Body
