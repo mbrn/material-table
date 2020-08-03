@@ -35,6 +35,12 @@ export default class MTableBodyRow extends React.Component {
               localization={this.props.localization}
               columnDef={columnDef}
               size={size}
+              key={
+                "cell-" +
+                this.props.data.tableData.id +
+                "-" +
+                columnDef.tableData.id
+              }
               rowData={this.props.data}
               cellEditable={this.props.cellEditable}
               onCellEditFinished={this.props.onCellEditFinished}
