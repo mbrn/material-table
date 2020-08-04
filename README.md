@@ -37,7 +37,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 - [Export](https://material-table.com/#/docs/features/export)
 - [Filtering](https://material-table.com/#/docs/features/filtering)
 - [Grouping](https://material-table.com/#/docs/features/grouping)
-- [Localization](https://material-table.com/#/docs/features/localization)
+- [Localization](https://material-table.com/#/docs/features/localization) - Check some languages examples available [here](#localization-language-examples)
 - [Remote Data](https://material-table.com/#/docs/features/remote-data)
 - [Search](https://material-table.com/#/docs/features/search)
 - [Selection](https://material-table.com/#/docs/features/selection)
@@ -216,6 +216,10 @@ We'd love to have your helping hand on `material-table`! See [CONTRIBUTING.md](h
 If you have any sort of doubt, idea or just want to talk about the project, feel free to join [our chat on Gitter](https://gitter.im/material-table/Lobby) :)
 
 ## Contributors
+
+### Localization Language Examples
+
+🇧🇷 [Português (PT-BR)](https://gist.github.com/marciogurka/cefd7ad085394550e6f206358b336648) - made by: [marciogurka](https://github.com/marciogurka)
 
 ### Code Contributors
 
