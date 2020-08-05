@@ -148,7 +148,7 @@ export interface Column<RowData extends object> {
     minimumFractionDigits?: number;
     maximumFractionDigits?: number;
   };
-  dateSetting?: { locale?: string };
+  dateSetting?: { locale?: string; format?: string };
   customFilterAndSearch?: (
     filter: any,
     rowData: RowData,

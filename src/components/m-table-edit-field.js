@@ -84,11 +84,16 @@ class MTableEditField extends React.Component {
   }
 
   renderDateField() {
+    const dateFormat =
+      this.props.columnDef.dateSetting &&
+      this.props.columnDef.dateSetting.format
+        ? this.props.columnDef.dateSetting.format
+        : "dd.MM.yyyy";
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
         <DatePicker
           {...this.getProps()}
-          format="dd.MM.yyyy"
+          format={dateFormat}
           value={this.props.value || null}
           onChange={this.props.onChange}
           clearable
@@ -237,7 +242,7 @@ MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   columnDef: PropTypes.object.isRequired,
-  dateTimePickerLocalization: PropTypes.object,
+  locale: PropTypes.object,
 };
 
 export default MTableEditField;

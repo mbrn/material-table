@@ -117,6 +117,8 @@ class MTableBody extends React.Component {
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization,
             }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
@@ -168,6 +170,8 @@ class MTableBody extends React.Component {
         localization={{
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
+          dateTimePickerLocalization: this.props.localization
+            .dateTimePickerLocalization,
         }}
         cellEditable={this.props.cellEditable}
         onCellEditStarted={this.props.onCellEditStarted}
@@ -234,6 +238,8 @@ class MTableBody extends React.Component {
               localization={{
                 ...MTableBody.defaultProps.localization.editRow,
                 ...this.props.localization.editRow,
+                dateTimePickerLocalization: this.props.localization
+                  .dateTimePickerLocalization,
               }}
               options={this.props.options}
               isTreeData={this.props.isTreeData}
@@ -262,6 +268,8 @@ class MTableBody extends React.Component {
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization,
             }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
