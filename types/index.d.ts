@@ -38,6 +38,7 @@ export interface MaterialTableProps<RowData extends object> {
     isEditHidden?: (rowData: RowData) => boolean;
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
+  getFieldValue?: (rowData: RowData, columnDef: EditCellColumnDef, lookup?: boolean) => any;
   icons?: Icons;
   initialFormData?: object;
   isLoading?: boolean;
