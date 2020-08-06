@@ -45,10 +45,13 @@ export interface MaterialTableProps<RowData extends object> {
   options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
+  mode?: EditMode;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number, pageSize: number) => void;
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
+  onEditingApproved?: (mode: EditMode, newData: RowData[], oldData: RowData[]) => void;
+  onEditingCanceled?: (mode: EditMode, rows: RowData[]) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (
@@ -70,6 +73,8 @@ export interface MaterialTableProps<RowData extends object> {
   page?: number;
   totalCount?: number;
 }
+
+export type EditMode = "add" | "bulk" | "delete" | "update"
 
 export interface Filter<RowData extends object> {
   column: Column<RowData>;
