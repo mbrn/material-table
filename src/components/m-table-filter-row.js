@@ -246,8 +246,8 @@ class MTableFilterRow extends React.Component {
     }
 
     if (this.props.hasDetailPanel) {
-      const aligment = this.props.detailPanelColumnAlignment;
-      const index = aligment === "left" ? 0 : columns.length;
+      const alignment = this.props.detailPanelColumnAlignment;
+      const index = alignment === "left" ? 0 : columns.length;
       columns.splice(
         index,
         0,
