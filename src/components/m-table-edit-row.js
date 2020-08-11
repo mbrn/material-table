@@ -386,6 +386,7 @@ MTableEditRow.defaultProps = {
     cancelTooltip: "Cancel",
     deleteText: "Are you sure you want to delete this row?",
   },
+  onBulkEditRowChanged: () => {},
 };
 
 MTableEditRow.propTypes = {
@@ -407,4 +408,5 @@ MTableEditRow.propTypes = {
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  onBulkEditRowChanged: PropTypes.func,
 };
