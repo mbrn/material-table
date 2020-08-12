@@ -359,6 +359,7 @@ export default class MTableEditRow extends React.Component {
       options,
       actions,
       errorState,
+      onBulkEditRowChanged,
       ...rowProps
     } = this.props;
 
