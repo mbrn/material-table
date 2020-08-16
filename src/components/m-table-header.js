@@ -273,6 +273,11 @@ export class MTableHeader extends React.Component {
   }
 
   render() {
+    // const log = this.props.columns.map(c => c.field + ": " + c.tableData.width + ", " + c.tableData.initialWidth + ", " + c.tableData.additionalWidth).join('\r\n');
+    // console.log("===============================");
+    // console.log(log);
+    // console.log("===============================");
+
     const headers = this.renderHeader();
     if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
@@ -378,6 +383,7 @@ MTableHeader.propTypes = {
 
 export const styles = (theme) => ({
   header: {
+    // display: 'inline-block',
     position: "sticky",
     top: 0,
     zIndex: 10,

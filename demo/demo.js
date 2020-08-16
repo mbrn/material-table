@@ -428,8 +428,10 @@ class App extends Component {
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
         editPlaceholder: "This is placeholder",
+        width: "20%",
       },
       {
+        width: 100,
         title: "Soyadı",
         field: "surname",
         initialEditValue: "test",
@@ -512,7 +514,7 @@ class App extends Component {
                     headerSelectionProps: {
                       color: "primary",
                     },
-                    selection: true,
+                    selection: false,
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
 
@@ -522,55 +524,55 @@ class App extends Component {
                       };
                     },
                   }}
-                  editable={{
-                    onBulkUpdate: (changedRows) =>
-                      new Promise((resolve, reject) => {
-                        console.log(changedRows);
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowAdd: (newData) =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowUpdate: (newData, oldData) =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* const data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data[index] = newData;
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                    onRowDelete: (oldData) =>
-                      new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                          {
-                            /* let data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data.splice(index, 1);
-                            this.setState({ data }, () => resolve()); */
-                          }
-                          resolve();
-                        }, 1000);
-                      }),
-                  }}
+                  // editable={{
+                  //   onBulkUpdate: (changedRows) =>
+                  //     new Promise((resolve, reject) => {
+                  //       console.log(changedRows);
+                  //       setTimeout(() => {
+                  //         {
+                  //           /* const data = this.state.data;
+                  //           data.push(newData);
+                  //           this.setState({ data }, () => resolve()); */
+                  //         }
+                  //         resolve();
+                  //       }, 1000);
+                  //     }),
+                  //   onRowAdd: (newData) =>
+                  //     new Promise((resolve, reject) => {
+                  //       setTimeout(() => {
+                  //         {
+                  //           /* const data = this.state.data;
+                  //           data.push(newData);
+                  //           this.setState({ data }, () => resolve()); */
+                  //         }
+                  //         resolve();
+                  //       }, 1000);
+                  //     }),
+                  //   onRowUpdate: (newData, oldData) =>
+                  //     new Promise((resolve, reject) => {
+                  //       setTimeout(() => {
+                  //         {
+                  //           /* const data = this.state.data;
+                  //           const index = data.indexOf(oldData);
+                  //           data[index] = newData;
+                  //           this.setState({ data }, () => resolve()); */
+                  //         }
+                  //         resolve();
+                  //       }, 1000);
+                  //     }),
+                  //   onRowDelete: (oldData) =>
+                  //     new Promise((resolve, reject) => {
+                  //       setTimeout(() => {
+                  //         {
+                  //           /* let data = this.state.data;
+                  //           const index = data.indexOf(oldData);
+                  //           data.splice(index, 1);
+                  //           this.setState({ data }, () => resolve()); */
+                  //         }
+                  //         resolve();
+                  //       }, 1000);
+                  //     }),
+                  // }}
                   localization={{
                     body: {
                       emptyDataSourceMessage: "No records to display",
@@ -597,7 +599,7 @@ class App extends Component {
             >
               Select
             </button>
-            <MaterialTable
+            {/* <MaterialTable
               title={
                 <Typography variant="h6" color="primary">
                   Remote Data Preview
@@ -665,7 +667,7 @@ class App extends Component {
                     });
                 })
               }
-            />
+            /> */}
           </div>
         </MuiThemeProvider>
       </>

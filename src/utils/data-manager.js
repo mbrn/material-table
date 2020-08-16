@@ -84,8 +84,8 @@ export default class DataManager {
         id: index,
       };
 
-      if (columnDef.width !== undefined) {
-        usedWidth.push(columnDef.width);
+      if (columnDef.tableData.width !== undefined) {
+        usedWidth.push(columnDef.tableData.width);
       }
 
       return columnDef;
@@ -426,12 +426,18 @@ export default class DataManager {
     const column = this.columns.find((c) => c.tableData.id === id);
     if (!column) return;
 
+    const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
+    if (!nextColumn) return;
+
     // console.log("S i: " + column.tableData.initialWidth);
     // console.log("S a: " + column.tableData.additionalWidth);
     // console.log("S w: " + column.tableData.width);
 
     column.tableData.additionalWidth = additionalWidth;
     column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+
+    nextColumn.tableData.additionalWidth = -1 * additionalWidth;
+    nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
 
     // console.log("F i: " + column.tableData.initialWidth);
     // console.log("F a: " + column.tableData.additionalWidth);
