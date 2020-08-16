@@ -16,7 +16,7 @@ import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
 import "jspdf-autotable";
 import * as React from "react";
-const jsPDF = typeof window !== "undefined" ? require("jspdf") : null;
+const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
 /* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
