@@ -539,9 +539,10 @@ class App extends Component {
                       new Promise((resolve, reject) => {
                         setTimeout(() => {
                           {
-                            /* const data = this.state.data;
-                            data.push(newData);
-                            this.setState({ data }, () => resolve()); */
+                            /*
+                            const data = [...this.state.data, newData];
+                            this.setState({ data }, () => resolve());
+                            */
                           }
                           resolve();
                         }, 1000);
@@ -550,10 +551,10 @@ class App extends Component {
                       new Promise((resolve, reject) => {
                         setTimeout(() => {
                           {
-                            /* const data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data[index] = newData;
-                            this.setState({ data }, () => resolve()); */
+                            /*
+                            const data = this.state.data.filter(d => d !== oldData);
+                            this.setState({ data: [...data, newData] }, () => resolve());
+                            */
                           }
                           resolve();
                         }, 1000);
@@ -562,10 +563,10 @@ class App extends Component {
                       new Promise((resolve, reject) => {
                         setTimeout(() => {
                           {
-                            /* let data = this.state.data;
-                            const index = data.indexOf(oldData);
-                            data.splice(index, 1);
-                            this.setState({ data }, () => resolve()); */
+                            /*
+                            const data = this.state.data.filter(d => d !== oldData);
+                            this.setState({ data }, () => resolve());
+                            */
                           }
                           resolve();
                         }, 1000);
