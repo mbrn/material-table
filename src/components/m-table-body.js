@@ -217,6 +217,9 @@ class MTableBody extends React.Component {
                 .dateTimePickerLocalization,
             }}
             hasDetailPanel={!!this.props.detailPanel}
+            detailPanelColumnAlignment={
+              this.props.options.detailPanelColumnAlignment
+            }
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
             filterRowStyle={this.props.options.filterRowStyle}
