@@ -834,21 +834,25 @@ export default class DataManager {
       let parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
+	let addIndex = undefined;
         if (!parent.tableData.childRows.includes(rowData)) {
           parent.tableData.childRows.push(rowData);
+	  addIndex = parent.tableData.childRows.length - 1;
           this.treefiedDataLength++;
         }
 
         addRow(parent);
 
-        rowData.tableData.path = [
-          ...parent.tableData.path,
-          parent.tableData.childRows.length - 1,
-        ];
-        this.treeDataMaxLevel = Math.max(
-          this.treeDataMaxLevel,
-          rowData.tableData.path.length
-        );
+	if (addIndex !== undefined) {
+          rowData.tableData.path = [
+            ...parent.tableData.path,
+            addIndex,
+          ];
+	  this.treeDataMaxLevel = Math.max(
+            this.treeDataMaxLevel,
+            rowData.tableData.path.length
+          );
+	}
       } else {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
