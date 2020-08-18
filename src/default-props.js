@@ -198,6 +198,7 @@ export const defaultProps = {
     emptyRowsWhenPaging: true,
     exportAllData: false,
     exportButton: false,
+    isExportPdf: true,
     exportDelimiter: ",",
     filtering: false,
     groupTitle: false,

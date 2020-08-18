@@ -312,6 +312,7 @@ export const propTypes = {
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     exportCsv: PropTypes.func,
+    isExportPdf: PropTypes.bool,
     filtering: PropTypes.bool,
     filterCellStyle: PropTypes.object,
     filterRowStyle: PropTypes.object,
