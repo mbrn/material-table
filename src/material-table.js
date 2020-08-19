@@ -325,6 +325,13 @@ export default class MaterialTable extends React.Component {
     );
   };
 
+  onGroupSelected = (checked, path) => {
+    this.dataManager.changeGroupSelected(checked, path);
+    this.setState(this.dataManager.getRenderState(), () =>
+      this.onSelectionChange()
+    );
+  };
+
   onChangeColumnHidden = (column, hidden) => {
     this.dataManager.changeColumnHidden(column, hidden);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -846,6 +853,7 @@ export default class MaterialTable extends React.Component {
             ).length > 0
           }
           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+          showSelectGroupCheckbox={props.options.showSelectGroupCheckbox}
           orderBy={this.state.orderBy}
           orderDirection={this.state.orderDirection}
           onAllSelected={this.onAllSelected}
@@ -876,6 +884,7 @@ export default class MaterialTable extends React.Component {
         isTreeData={this.props.parentChildData !== undefined}
         onFilterChanged={this.onFilterChange}
         onRowSelected={this.onRowSelected}
+        onGroupSelected={this.onGroupSelected}
         onToggleDetailPanel={this.onToggleDetailPanel}
         onGroupExpandChanged={this.onGroupExpandChanged}
         onTreeExpandChanged={this.onTreeExpandChanged}
