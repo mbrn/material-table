@@ -35,6 +35,7 @@ export default class MTableGroupRow extends React.Component {
             groups={this.props.groups}
             icons={this.props.icons}
             level={this.props.level + 1}
+            treeDataMaxLevel={this.props.treeDataMaxLevel}
             path={[...this.props.path, index]}
             onGroupExpandChanged={this.props.onGroupExpandChanged}
             onRowSelected={this.props.onRowSelected}
@@ -78,6 +79,7 @@ export default class MTableGroupRow extends React.Component {
               <this.props.components.Row
                 actions={this.props.actions}
                 key={index}
+                level={this.props.level + 1}
                 columns={this.props.columns}
                 components={this.props.components}
                 data={rowData}
@@ -92,6 +94,7 @@ export default class MTableGroupRow extends React.Component {
                 isTreeData={this.props.isTreeData}
                 onTreeExpandChanged={this.props.onTreeExpandChanged}
                 onEditingCanceled={this.props.onEditingCanceled}
+                treeDataMaxLevel={this.props.treeDataMaxLevel}
                 onEditingApproved={this.props.onEditingApproved}
                 hasAnyEditingRow={this.props.hasAnyEditingRow}
                 cellEditable={this.props.cellEditable}
@@ -189,6 +192,7 @@ MTableGroupRow.propTypes = {
   onEditingApproved: PropTypes.func,
   options: PropTypes.object,
   path: PropTypes.arrayOf(PropTypes.number),
+  treeDataMaxLevel: PropTypes.number,
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,

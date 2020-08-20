@@ -156,6 +156,7 @@ class MTableBody extends React.Component {
         groups={groups}
         icons={this.props.icons}
         level={0}
+        treeDataMaxLevel={this.props.treeDataMaxLevel}
         path={[index + this.props.pageSize * this.props.currentPage]}
         onGroupExpandChanged={this.props.onGroupExpandChanged}
         onRowSelected={this.props.onRowSelected}
