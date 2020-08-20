@@ -302,7 +302,7 @@ export interface Options<RowData extends object> {
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
-  exportButton?: boolean;
+  exportButton?: boolean | { csv?: boolean; pdf?: boolean };
   exportDelimiter?: string;
   exportFileName?:
     | string
