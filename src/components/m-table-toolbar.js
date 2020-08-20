@@ -256,12 +256,16 @@ export class MTableToolbar extends React.Component {
               open={Boolean(this.state.exportButtonAnchorEl)}
               onClose={() => this.setState({ exportButtonAnchorEl: null })}
             >
-              <MenuItem key="export-csv" onClick={this.exportCsv}>
-                {localization.exportCSVName}
-              </MenuItem>
-              <MenuItem key="export-pdf" onClick={this.exportPdf}>
-                {localization.exportPDFName}
-              </MenuItem>
+              {(this.props.exportButton === true || this.props.exportButton.csv ) && (
+                <MenuItem key="export-csv" onClick={this.exportCsv}>
+                  {localization.exportCSVName}
+                </MenuItem>
+              )}
+              {(this.props.exportButton === true || this.props.exportButton.pdf ) && (
+                <MenuItem key="export-pdf" onClick={this.exportPdf}>
+                  {localization.exportPDFName}
+                </MenuItem>
+              )}
             </Menu>
           </span>
         )}
@@ -419,7 +423,7 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,
-  exportButton: PropTypes.bool,
+  exportButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })]),
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
