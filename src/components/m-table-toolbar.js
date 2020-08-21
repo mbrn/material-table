@@ -34,7 +34,7 @@ export class MTableToolbar extends React.Component {
     this.setState({ searchText }, this.props.onSearchChanged(searchText));
   };
 
-  getTableData = () => {
+  getTableData = async () => {
     const columns = this.props.columns
       .filter(
         (columnDef) =>
@@ -46,7 +46,7 @@ export class MTableToolbar extends React.Component {
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
     const data = (this.props.exportAllData
-      ? this.props.data
+      ? await this.getAllData()
       : this.props.renderData
     ).map((rowData) =>
       columns.map((columnDef) => this.props.getFieldValue(rowData, columnDef))
@@ -55,8 +55,26 @@ export class MTableToolbar extends React.Component {
     return [columns, data];
   };
 
-  defaultExportCsv = () => {
-    const [columns, data] = this.getTableData();
+  getAllData = async () => {
+    if (typeof this.props.remoteDataGetter !== "function")
+      return this.props.data;
+    let total = 0,
+      size = 0,
+      page = 0;
+    const allData = [];
+    do {
+      const { data, pageSize, totalCount } = await this.props.remoteDataGetter(
+        page++
+      );
+      total = totalCount;
+      size = pageSize;
+      allData.push(...data);
+    } while (total !== 0 && size !== 0 && page * size < total);
+    return allData;
+  };
+
+  defaultExportCsv = async () => {
+    const [columns, data] = await this.getTableData();
 
     let fileName = this.props.title || "data";
     if (this.props.exportFileName) {
@@ -74,9 +92,9 @@ export class MTableToolbar extends React.Component {
       .exportFile();
   };
 
-  defaultExportPdf = () => {
+  defaultExportPdf = async () => {
     if (jsPDF !== null) {
-      const [columns, data] = this.getTableData();
+      const [columns, data] = await this.getTableData();
 
       let content = {
         startY: 50,
@@ -98,20 +116,20 @@ export class MTableToolbar extends React.Component {
     }
   };
 
-  exportCsv = () => {
+  exportCsv = async () => {
     if (this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
     } else {
-      this.defaultExportCsv();
+      await this.defaultExportCsv();
     }
     this.setState({ exportButtonAnchorEl: null });
   };
 
-  exportPdf = () => {
+  exportPdf = async () => {
     if (this.props.exportPdf) {
       this.props.exportPdf(this.props.columns, this.props.data);
     } else {
-      this.defaultExportPdf();
+      await this.defaultExportPdf();
     }
     this.setState({ exportButtonAnchorEl: null });
   };
@@ -416,6 +434,7 @@ MTableToolbar.propTypes = {
   showTextRowsSelected: PropTypes.bool.isRequired,
   toolbarButtonAlignment: PropTypes.string.isRequired,
   searchFieldAlignment: PropTypes.string.isRequired,
+  remoteDataGetter: PropTypes.func,
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,

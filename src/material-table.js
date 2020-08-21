@@ -982,6 +982,24 @@ export default class MaterialTable extends React.Component {
               exportPdf={props.options.exportPdf}
               getFieldValue={this.dataManager.getFieldValue}
               data={this.state.data}
+              remoteDataGetter={
+                this.isRemoteData()
+                  ? async (page) => {
+                      const { query } = this.state,
+                        { pageSize } = query;
+                      const result = await Promise.resolve(
+                        props.data({
+                          ...query,
+                          page,
+                        })
+                      );
+                      return {
+                        ...result,
+                        pageSize,
+                      };
+                    }
+                  : null
+              }
               renderData={this.state.renderData}
               search={props.options.search}
               showTitle={props.options.showTitle}
