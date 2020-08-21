@@ -488,7 +488,11 @@ export default class DataManager {
     if (columnDef.lookup && lookup) {
       value = columnDef.lookup[value];
     }
-
+    if (this.bulkEditOpen && this.bulkEditChangedRows[rowData.tableData.id]) {
+      value = this.bulkEditChangedRows[rowData.tableData.id].newData[
+        columnDef.field
+      ];
+    }
     return value;
   };
 

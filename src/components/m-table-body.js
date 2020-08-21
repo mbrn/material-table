@@ -183,6 +183,13 @@ class MTableBody extends React.Component {
 
   render() {
     let renderData = this.props.renderData;
+    if (this.props.bulkEditOpen) {
+      renderData.forEach((data) => {
+        this.props.columns.forEach((column) => {
+          data[column.field] = this.props.getFieldValue(data, column);
+        });
+      });
+    }
     const groups = this.props.columns
       .filter((col) => col.tableData.groupOrder > -1)
       .sort(
