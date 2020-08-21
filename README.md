@@ -219,7 +219,7 @@ If you have any sort of doubt, idea or just want to talk about the project, feel
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute. [[Contribute](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md)].
 <a href="https://github.com/mbrn/material-table/graphs/contributors"><img src="https://opencollective.com/material-table/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
