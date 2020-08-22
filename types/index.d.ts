@@ -400,6 +400,8 @@ export interface Localization {
     exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
     exportName?: React.ReactNode;
+    exportCSVName?:React.ReactNode;
+    exportPDFName?:React.ReactNode;
     searchTooltip?: React.ReactNode;
     searchPlaceholder?: React.ReactNode;
   };
