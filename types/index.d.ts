@@ -365,6 +365,7 @@ export interface Localization {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
+      filterPlaceHolder?: React.ReactNode;
       filterTooltip?: React.ReactNode;
     };
     editRow?: {
@@ -403,9 +404,12 @@ export interface Localization {
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
-    exportName?: React.ReactNode;
+    exportCSVName?: React.ReactNode;
+    exportPDFName?: React.ReactNode;
     searchTooltip?: React.ReactNode;
     searchPlaceholder?: React.ReactNode;
+    searchAriaLabel?: string;
+    clearSearchAriaLabel?: string;
   };
 }
 
