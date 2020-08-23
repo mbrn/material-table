@@ -159,7 +159,7 @@ export class MTableHeader extends React.Component {
 
         if (columnDef.tooltip) {
           content = (
-            <Tooltip title={columnDef.tooltip}>
+            <Tooltip title={columnDef.tooltip} placement="bottom">
               <span>{content}</span>
             </Tooltip>
           );

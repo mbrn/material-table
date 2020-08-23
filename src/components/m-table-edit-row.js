@@ -21,11 +21,7 @@ export default class MTableEditRow extends React.Component {
 
   createRowData() {
     return this.props.columns
-      .filter(
-        (column) =>
-          (column.initialEditValue || column.initialEditValue === 0) &&
-          column.field
-      )
+      .filter((column) => "initialEditValue" in column && column.field)
       .reduce((prev, column) => {
         prev[column.field] = column.initialEditValue;
         return prev;
@@ -142,14 +138,18 @@ export default class MTableEditRow extends React.Component {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  this.setState({ data }, () =>
-                    this.props.onBulkEditRowChanged(this.props.data, data)
-                  );
+                  this.setState({ data }, () => {
+                    if (this.props.onBulkEditRowChanged) {
+                      this.props.onBulkEditRowChanged(this.props.data, data);
+                    }
+                  });
                 }}
                 onRowDataChange={(data) => {
-                  this.setState({ data }, () =>
-                    this.props.onBulkEditRowChanged(this.props.data, data)
-                  );
+                  this.setState({ data }, () => {
+                    if (this.props.onBulkEditRowChanged) {
+                      this.props.onBulkEditRowChanged(this.props.data, data);
+                    }
+                  });
                 }}
               />
             </TableCell>
@@ -359,6 +359,7 @@ export default class MTableEditRow extends React.Component {
       options,
       actions,
       errorState,
+      onBulkEditRowChanged,
       ...rowProps
     } = this.props;
 
@@ -386,6 +387,7 @@ MTableEditRow.defaultProps = {
     cancelTooltip: "Cancel",
     deleteText: "Are you sure you want to delete this row?",
   },
+  onBulkEditRowChanged: () => {},
 };
 
 MTableEditRow.propTypes = {
@@ -407,4 +409,5 @@ MTableEditRow.propTypes = {
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  onBulkEditRowChanged: PropTypes.func,
 };
