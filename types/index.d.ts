@@ -196,6 +196,7 @@ export interface Column<RowData extends object> {
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
+  resizable?: boolean;
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
@@ -295,6 +296,7 @@ export interface Options<RowData extends object> {
   actionsColumnIndex?: number;
   addRowPosition?: "first" | "last";
   columnsButton?: boolean;
+  columnResizable?: boolean;
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: "single" | "multiple";
