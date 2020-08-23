@@ -308,7 +308,10 @@ export const propTypes = {
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,
-    exportButton: PropTypes.bool,
+    exportButton: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
+    ]),
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     exportCsv: PropTypes.func,
