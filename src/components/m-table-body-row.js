@@ -319,7 +319,12 @@ export default class MTableBodyRow extends React.Component {
     if (typeof this.props.options.rowStyle === "function") {
       style = {
         ...style,
-        ...this.props.options.rowStyle(this.props.data, index, level, this.props.hasAnyEditingRow),
+        ...this.props.options.rowStyle(
+          this.props.data,
+          index,
+          level,
+          this.props.hasAnyEditingRow
+        ),
       };
     } else if (this.props.options.rowStyle) {
       style = {
@@ -333,7 +338,7 @@ export default class MTableBodyRow extends React.Component {
     }
 
     if (this.props.hasAnyEditingRow) {
-      style.opacity = (style.opacity) ? style.opacity : 0.2;
+      style.opacity = style.opacity ? style.opacity : 0.2;
     }
 
     return style;
