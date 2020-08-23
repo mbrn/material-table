@@ -864,6 +864,7 @@ export default class MaterialTable extends React.Component {
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
           onColumnResized={this.onColumnResized}
+          scrollWidth={this.state.width}
         />
       )}
       <props.components.Body
@@ -903,6 +904,7 @@ export default class MaterialTable extends React.Component {
         onCellEditFinished={this.onCellEditFinished}
         bulkEditOpen={this.dataManager.bulkEditOpen}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+        scrollWidth={this.state.width}
       />
     </Table>
   );

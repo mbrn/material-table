@@ -160,8 +160,12 @@ export const defaultProps = {
       </Icon>
     )),
     Resize: React.forwardRef((props, ref) => (
-      <Icon {...props} ref={ref}>
-        more_vert
+      <Icon
+        {...props}
+        ref={ref}
+        style={{ ...props.style, transform: "rotate(90deg)" }}
+      >
+        drag_handle
       </Icon>
     )),
     Search: React.forwardRef((props, ref) => (

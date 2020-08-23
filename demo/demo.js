@@ -428,15 +428,15 @@ class App extends Component {
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
         editPlaceholder: "This is placeholder",
-        width: "20%",
+        maxWidth: 50,
       },
       {
-        width: 100,
         title: "Soyadı",
         field: "surname",
         initialEditValue: "test",
         tooltip: "This is tooltip text",
         editable: "never",
+        resizable: false,
       },
       { title: "Evli", field: "isMarried" },
       {
@@ -454,12 +454,6 @@ class App extends Component {
       },
       { title: "Kayıt Tarihi", field: "insertDateTime", type: "datetime" },
       { title: "Zaman", field: "time", type: "time" },
-      {
-        title: "Adı",
-        field: "name",
-        filterPlaceholder: "Adı filter",
-        tooltip: "This is tooltip text",
-      },
     ],
     remoteColumns: [
       {
@@ -490,7 +484,7 @@ class App extends Component {
                 <MaterialTable
                   tableRef={this.tableRef}
                   columns={this.state.columns}
-                  data={[] || this.state.data}
+                  data={this.state.data}
                   title="Demo Title"
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
@@ -511,6 +505,7 @@ class App extends Component {
                   // }}
                   options={{
                     tableLayout: "fixed",
+                    columnResizable: true,
                     headerSelectionProps: {
                       color: "primary",
                     },

@@ -436,8 +436,8 @@ export default class DataManager {
     column.tableData.additionalWidth = additionalWidth;
     column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
 
-    nextColumn.tableData.additionalWidth = -1 * additionalWidth;
-    nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+    // nextColumn.tableData.additionalWidth = -1 * additionalWidth;
+    // nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
 
     // console.log("F i: " + column.tableData.initialWidth);
     // console.log("F a: " + column.tableData.additionalWidth);

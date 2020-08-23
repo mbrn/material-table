@@ -45,8 +45,13 @@ export class MTableHeader extends React.Component {
       return;
     }
 
-    const additionalWidth =
+    let additionalWidth =
       this.state.lastAdditionalWidth + e.clientX - this.state.lastX;
+
+    additionalWidth = Math.min(
+      this.state.resizingColumnDef.maxWidth || additionalWidth,
+      additionalWidth
+    );
 
     if (
       this.state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
@@ -63,16 +68,24 @@ export class MTableHeader extends React.Component {
   };
 
   getCellStyle = (columnDef) => {
+    const width = CommonValues.reducePercentsInCalc(
+      columnDef.tableData.width,
+      this.props.scrollWidth
+    );
+
     const style = {
       ...this.props.headerStyle,
       ...columnDef.headerStyle,
       boxSizing: "border-box",
-      width: columnDef.tableData.width,
+      width,
+      maxWidth: columnDef.maxWidth,
+      minWidth: columnDef.minWidth,
     };
 
     if (
-      this.props.options.tableLayout === "resizable" ||
-      this.props.options.tableLayout === "fixed"
+      this.props.options.tableLayout === "fixed" &&
+      this.props.options.columnResizable &&
+      columnDef.resizable !== false
     ) {
       style.paddingRight = 2;
     }
@@ -153,8 +166,9 @@ export class MTableHeader extends React.Component {
         }
 
         if (
-          this.props.options.tableLayout === "resizable" ||
-          this.props.options.tableLayout === "fixed"
+          this.props.options.tableLayout === "fixed" &&
+          this.props.options.columnResizable &&
+          columnDef.resizable !== false
         ) {
           content = (
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -163,19 +177,12 @@ export class MTableHeader extends React.Component {
               <this.props.icons.Resize
                 style={{
                   cursor: "e-resize",
-                  transition: "all ease 400ms",
                   color:
                     this.state.resizingColumnDef &&
                     this.state.resizingColumnDef.tableData.id ===
                       columnDef.tableData.id
                       ? this.props.theme.palette.primary.main
                       : "inherit",
-                  transform:
-                    this.state.resizingColumnDef &&
-                    this.state.resizingColumnDef.tableData.id ===
-                      columnDef.tableData.id
-                      ? "scale(1.25)"
-                      : "none",
                 }}
                 onMouseDown={(e) => this.handleMouseDown(e, columnDef)}
               />
