@@ -130,10 +130,12 @@ export interface EditCellColumnDef {
   field: string;
   title: string;
   tableData: {
+    columnOrder: number;
     filterValue: any;
     groupOrder: any;
     groupSort: string;
     id: number;
+    width: string;
   };
 }
 
