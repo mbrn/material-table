@@ -36,17 +36,26 @@ export class MTableToolbar extends React.Component {
 
   getTableData = () => {
     const columns = this.props.columns
-      .filter(columnDef => !columnDef.hidden && columnDef.field && columnDef.export === true)
-      .sort((a, b) => (a.tableData.columnOrder > b.tableData.columnOrder) ? 1 : -1);
-    const data = (this.props.exportAllData ? this.props.data : this.props.renderData)
-      .map(rowData => 
-        columns.map(columnDef => {
-          if(typeof columnDef.customExport === "function"){
-            return columnDef.customExport(rowData);
-          }
-          return this.props.getFieldValue(rowData, columnDef);                          
-      });
-
+      .filter(
+        (columnDef) =>
+          (!columnDef.hidden || columnDef.export === true) &&
+          columnDef.field &&
+          columnDef.export !== false
+      )
+      .sort((a, b) =>
+        a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
+      );
+    const data = (this.props.exportAllData
+      ? this.props.data
+      : this.props.renderData
+    ).map((rowData) =>
+      columns.map((columnDef) => {
+        if (typeof columnDef.customExport === "function") {
+          return columnDef.customExport(rowData);
+        }
+        return this.props.getFieldValue(rowData, columnDef);
+      })
+    );
     return [columns, data];
   };
 
@@ -251,12 +260,14 @@ export class MTableToolbar extends React.Component {
               open={Boolean(this.state.exportButtonAnchorEl)}
               onClose={() => this.setState({ exportButtonAnchorEl: null })}
             >
-              {(this.props.exportButton === true || this.props.exportButton.csv ) && (
+              {(this.props.exportButton === true ||
+                this.props.exportButton.csv) && (
                 <MenuItem key="export-csv" onClick={this.exportCsv}>
                   {localization.exportCSVName}
                 </MenuItem>
               )}
-              {(this.props.exportButton === true || this.props.exportButton.pdf ) && (
+              {(this.props.exportButton === true ||
+                this.props.exportButton.pdf) && (
                 <MenuItem key="export-pdf" onClick={this.exportPdf}>
                   {localization.exportPDFName}
                 </MenuItem>
@@ -418,7 +429,10 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,
-  exportButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })]),
+  exportButton: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
+  ]),
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
