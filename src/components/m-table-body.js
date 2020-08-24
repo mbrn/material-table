@@ -76,7 +76,7 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      if (data.tableData.editing) {
+      if (data.tableData.editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
             columns={this.props.columns.filter((columnDef) => {
@@ -84,6 +84,7 @@ class MTableBody extends React.Component {
             })}
             components={this.props.components}
             data={data}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
@@ -91,14 +92,16 @@ class MTableBody extends React.Component {
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization,
             }}
-            key={index}
-            mode={data.tableData.editing}
+            key={"row-" + data.tableData.id}
+            mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
+            onBulkEditRowChanged={this.props.onBulkEditRowChanged}
+            scrollWidth={this.props.scrollWidth}
           />
         );
       } else {
@@ -108,12 +111,15 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             data={data}
             index={index}
+            errorState={this.props.errorState}
             key={"row-" + data.tableData.id}
             level={0}
             options={this.props.options}
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization,
             }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
@@ -129,6 +135,10 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             hasAnyEditingRow={this.props.hasAnyEditingRow}
             treeDataMaxLevel={this.props.treeDataMaxLevel}
+            cellEditable={this.props.cellEditable}
+            onCellEditStarted={this.props.onCellEditStarted}
+            onCellEditFinished={this.props.onCellEditFinished}
+            scrollWidth={this.props.scrollWidth}
           />
         );
       }
@@ -162,7 +172,14 @@ class MTableBody extends React.Component {
         localization={{
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
+          dateTimePickerLocalization: this.props.localization
+            .dateTimePickerLocalization,
         }}
+        cellEditable={this.props.cellEditable}
+        onCellEditStarted={this.props.onCellEditStarted}
+        onCellEditFinished={this.props.onCellEditFinished}
+        onBulkEditRowChanged={this.props.onBulkEditRowChanged}
+        scrollWidth={this.props.scrollWidth}
       />
     ));
   }
@@ -203,13 +220,16 @@ class MTableBody extends React.Component {
                 .dateTimePickerLocalization,
             }}
             hasDetailPanel={!!this.props.detailPanel}
+            detailPanelColumnAlignment={
+              this.props.options.detailPanelColumnAlignment
+            }
             isTreeData={this.props.isTreeData}
             filterCellStyle={this.props.options.filterCellStyle}
             filterRowStyle={this.props.options.filterRowStyle}
             hideFilterIcons={this.props.options.hideFilterIcons}
+            scrollWidth={this.props.scrollWidth}
           />
         )}
-
         {this.props.showAddRow &&
           this.props.options.addRowPosition === "first" && (
             <this.props.components.EditRow
@@ -218,12 +238,15 @@ class MTableBody extends React.Component {
               })}
               data={this.props.initialFormData}
               components={this.props.components}
+              errorState={this.props.errorState}
               icons={this.props.icons}
               key="key-add-row"
               mode="add"
               localization={{
                 ...MTableBody.defaultProps.localization.editRow,
                 ...this.props.localization.editRow,
+                dateTimePickerLocalization: this.props.localization
+                  .dateTimePickerLocalization,
               }}
               options={this.props.options}
               isTreeData={this.props.isTreeData}
@@ -231,6 +254,7 @@ class MTableBody extends React.Component {
               onEditingCanceled={this.props.onEditingCanceled}
               onEditingApproved={this.props.onEditingApproved}
               getFieldValue={this.props.getFieldValue}
+              scrollWidth={this.props.scrollWidth}
             />
           )}
 
@@ -245,12 +269,15 @@ class MTableBody extends React.Component {
             })}
             data={this.props.initialFormData}
             components={this.props.components}
+            errorState={this.props.errorState}
             icons={this.props.icons}
             key="key-add-row"
             mode="add"
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
+              dateTimePickerLocalization: this.props.localization
+                .dateTimePickerLocalization,
             }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -258,6 +285,7 @@ class MTableBody extends React.Component {
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
+            scrollWidth={this.props.scrollWidth}
           />
         )}
         {this.renderEmpty(emptyRowCount, renderData)}
@@ -299,6 +327,7 @@ MTableBody.propTypes = {
   renderData: PropTypes.array,
   initialFormData: PropTypes.object,
   selection: PropTypes.bool.isRequired,
+  scrollWidth: PropTypes.number.isRequired,
   showAddRow: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   localization: PropTypes.object,
@@ -309,6 +338,12 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  cellEditable: PropTypes.object,
+  onCellEditStarted: PropTypes.func,
+  onCellEditFinished: PropTypes.func,
+  bulkEditOpen: PropTypes.bool,
+  onBulkEditRowChanged: PropTypes.func,
 };
 
 export default MTableBody;

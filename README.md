@@ -1,3 +1,8 @@
+> :warning: Please do not create pull requests that contains a lot of change. Because we are working on refactoring and testing. Just pull requests that fixes a bug with a few line changes.
+
+<br/>
+<br/>
+
 <p align="center" style="box-shadow: 2px 2px;">
   <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://raw.githubusercontent.com/mbrn/material-table.com/master/docs/assets/logo-back.png" alt="material-table"></a></p>
 </p>
@@ -214,7 +219,7 @@ If you have any sort of doubt, idea or just want to talk about the project, feel
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute. [[Contribute](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md)].
 <a href="https://github.com/mbrn/material-table/graphs/contributors"><img src="https://opencollective.com/material-table/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors

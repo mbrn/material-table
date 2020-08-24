@@ -33,6 +33,39 @@ OverlayLoading.propTypes = {
   theme: PropTypes.any,
 };
 
+const OverlayError = (props) => (
+  <div
+    style={{
+      display: "table",
+      width: "100%",
+      height: "100%",
+      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+    }}
+  >
+    <div
+      style={{
+        display: "table-cell",
+        width: "100%",
+        height: "100%",
+        verticalAlign: "middle",
+        textAlign: "center",
+      }}
+    >
+      <span>{props.error.message}</span>{" "}
+      <props.icon
+        onClick={props.retry}
+        style={{ cursor: "pointer", position: "relative", top: 5 }}
+      />
+    </div>
+  </div>
+);
+OverlayError.propTypes = {
+  error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  retry: PropTypes.func,
+  theme: PropTypes.any,
+  icon: PropTypes.any,
+};
+
 const Container = (props) => <Paper elevation={2} {...props} />;
 
 export const defaultProps = {
@@ -45,6 +78,7 @@ export const defaultProps = {
     Body: MComponents.MTableBody,
     Cell: MComponents.MTableCell,
     Container: Container,
+    EditCell: MComponents.MTableEditCell,
     EditField: MComponents.MTableEditField,
     EditRow: MComponents.MTableEditRow,
     FilterRow: MComponents.MTableFilterRow,
@@ -52,6 +86,7 @@ export const defaultProps = {
     GroupRow: MComponents.MTableGroupRow,
     Header: MComponents.MTableHeader,
     OverlayLoading: OverlayLoading,
+    OverlayError: OverlayError,
     Pagination: TablePagination,
     Row: MComponents.MTableBodyRow,
     Toolbar: MComponents.MTableToolbar,
@@ -124,6 +159,15 @@ export const defaultProps = {
         clear
       </Icon>
     )),
+    Resize: React.forwardRef((props, ref) => (
+      <Icon
+        {...props}
+        ref={ref}
+        style={{ ...props.style, transform: "rotate(90deg)" }}
+      >
+        drag_handle
+      </Icon>
+    )),
     Search: React.forwardRef((props, ref) => (
       <Icon {...props} ref={ref}>
         search
@@ -144,6 +188,11 @@ export const defaultProps = {
         view_column
       </Icon>
     )),
+    Retry: React.forwardRef((props, ref) => (
+      <Icon {...props} ref={ref}>
+        replay
+      </Icon>
+    )),
     /* eslint-enable react/display-name */
   },
   isLoading: false,
@@ -162,6 +211,7 @@ export const defaultProps = {
     filtering: false,
     groupTitle: false,
     header: true,
+    headerSelectionProps: {},
     hideFilterIcons: false,
     loadingType: "overlay",
     padding: "default",
@@ -170,6 +220,7 @@ export const defaultProps = {
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
     paginationType: "normal",
+    paginationPosition: "bottom",
     showEmptyDataSourceMessage: true,
     showFirstLastPageButtons: true,
     showSelectAllCheckbox: true,
@@ -191,6 +242,7 @@ export const defaultProps = {
     overflowY: "auto",
   },
   localization: {
+    error: "Data could not be retrieved",
     grouping: {
       groupedBy: "Grouped By:",
       placeholder: "Drag headers here to group by",
@@ -212,6 +264,9 @@ export const defaultProps = {
       addTooltip: "Add",
       deleteTooltip: "Delete",
       editTooltip: "Edit",
+      bulkEditTooltip: "Edit All",
+      bulkEditApprove: "Save all changes",
+      bulkEditCancel: "Discard all changes",
     },
   },
   style: {},

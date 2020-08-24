@@ -27,6 +27,7 @@ export default class MaterialTable extends React.Component {
 
     this.state = {
       data: [],
+      errorState: undefined,
       ...renderState,
       query: {
         filters: renderState.columns
@@ -47,6 +48,7 @@ export default class MaterialTable extends React.Component {
         totalCount: 0,
       },
       showAddRow: false,
+      bulkEditOpen: false,
       width: 0,
     };
 
@@ -276,6 +278,36 @@ export default class MaterialTable extends React.Component {
           },
         }));
       }
+      if (calculatedProps.editable.onBulkUpdate) {
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Edit,
+          tooltip: localization.bulkEditTooltip,
+          position: "toolbar",
+          hidden: this.dataManager.bulkEditOpen,
+          onClick: () => {
+            this.dataManager.changeBulkEditOpen(true);
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Check,
+          tooltip: localization.bulkEditApprove,
+          position: "toolbar",
+          hidden: !this.dataManager.bulkEditOpen,
+          onClick: () => this.onEditingApproved("bulk"),
+        });
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Clear,
+          tooltip: localization.bulkEditCancel,
+          position: "toolbar",
+          hidden: !this.dataManager.bulkEditOpen,
+          onClick: () => {
+            this.dataManager.changeBulkEditOpen(false);
+            this.dataManager.clearBulkEditChangedRows();
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+      }
     }
 
     return calculatedProps;
@@ -343,7 +375,7 @@ export default class MaterialTable extends React.Component {
       }
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onChangePage &&
-          this.props.onChangePage(page, this.state.query.pageSize);
+          this.props.onChangePage(page, this.state.pageSize);
       });
     }
   };
@@ -424,7 +456,11 @@ export default class MaterialTable extends React.Component {
             });
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "add",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
@@ -450,7 +486,11 @@ export default class MaterialTable extends React.Component {
             );
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "update",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
@@ -476,7 +516,42 @@ export default class MaterialTable extends React.Component {
             );
           })
           .catch((reason) => {
-            this.setState({ isLoading: false });
+            const errorState = {
+              message: reason,
+              errorCause: "delete",
+            };
+            this.setState({ isLoading: false, errorState });
+          });
+      });
+    } else if (
+      mode === "bulk" &&
+      this.props.editable &&
+      this.props.editable.onBulkUpdate
+    ) {
+      this.setState({ isLoading: true }, () => {
+        this.props.editable
+          .onBulkUpdate(this.dataManager.bulkEditChangedRows)
+          .then((result) => {
+            this.dataManager.changeBulkEditOpen(false);
+            this.dataManager.clearBulkEditChangedRows();
+            this.setState(
+              {
+                isLoading: false,
+                ...this.dataManager.getRenderState(),
+              },
+              () => {
+                if (this.isRemoteData()) {
+                  this.onQueryChange(this.state.query);
+                }
+              }
+            );
+          })
+          .catch((reason) => {
+            const errorState = {
+              message: reason,
+              errorCause: "bulk edit",
+            };
+            this.setState({ isLoading: false, errorState });
           });
       });
     }
@@ -497,25 +572,50 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
     }
   };
-
+  retry = () => {
+    this.onQueryChange(this.state.query);
+  };
   onQueryChange = (query, callback) => {
-    query = { ...this.state.query, ...query };
-    this.setState({ isLoading: true }, () => {
-      this.props.data(query).then((result) => {
-        query.totalCount = result.totalCount;
-        query.page = result.page;
-        this.dataManager.setData(result.data);
-        this.setState(
-          {
+    query = { ...this.state.query, ...query, error: this.state.errorState };
+    this.setState({ isLoading: true, errorState: undefined }, () => {
+      this.props
+        .data(query)
+        .then((result) => {
+          query.totalCount = result.totalCount;
+          query.page = result.page;
+          this.dataManager.setData(result.data);
+          this.setState(
+            {
+              isLoading: false,
+              errorState: false,
+              ...this.dataManager.getRenderState(),
+              query,
+            },
+            () => {
+              callback && callback();
+            }
+          );
+        })
+        .catch((error) => {
+          const localization = {
+            ...MaterialTable.defaultProps.localization,
+            ...this.props.localization,
+          };
+          const errorState = {
+            message:
+              typeof error === "object"
+                ? error.message
+                : error !== undefined
+                ? error
+                : localization.error,
+            errorCause: "query",
+          };
+          this.setState({
             isLoading: false,
+            errorState,
             ...this.dataManager.getRenderState(),
-            query,
-          },
-          () => {
-            callback && callback();
-          }
-        );
-      });
+          });
+        });
     });
   };
 
@@ -535,8 +635,6 @@ export default class MaterialTable extends React.Component {
           if (row.tableData.checked) {
             selectedRows.push(row);
           }
-
-          row.tableData.childRows && findSelecteds(row.tableData.childRows);
         });
       };
 
@@ -603,6 +701,26 @@ export default class MaterialTable extends React.Component {
 
   onToggleDetailPanel = (path, render) => {
     this.dataManager.changeDetailPanelVisibility(path, render);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onCellEditStarted = (rowData, columnDef) => {
+    this.dataManager.startCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onCellEditFinished = (rowData, columnDef) => {
+    this.dataManager.finishCellEditable(rowData, columnDef);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onEditRowDataChanged = (rowData, newData) => {
+    this.dataManager.setEditRowData(rowData, newData);
+    this.setState(this.dataManager.getRenderState());
+  };
+
+  onColumnResized = (id, additionalWidth) => {
+    this.dataManager.onColumnResized(id, additionalWidth);
     this.setState(this.dataManager.getRenderState());
   };
 
@@ -745,6 +863,8 @@ export default class MaterialTable extends React.Component {
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
+          onColumnResized={this.onColumnResized}
+          scrollWidth={this.state.width}
         />
       )}
       <props.components.Body
@@ -756,6 +876,7 @@ export default class MaterialTable extends React.Component {
         initialFormData={props.initialFormData}
         pageSize={this.state.pageSize}
         columns={this.state.columns}
+        errorState={this.state.errorState}
         detailPanel={props.detailPanel}
         options={props.options}
         getFieldValue={this.dataManager.getFieldValue}
@@ -778,6 +899,12 @@ export default class MaterialTable extends React.Component {
         }
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
+        cellEditable={props.cellEditable}
+        onCellEditStarted={this.onCellEditStarted}
+        onCellEditFinished={this.onCellEditFinished}
+        bulkEditOpen={this.dataManager.bulkEditOpen}
+        onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+        scrollWidth={this.state.width}
       />
     </Table>
   );
@@ -802,7 +929,8 @@ export default class MaterialTable extends React.Component {
       }
     }
 
-    if (props.options.selection) {
+    // add selection action width only for left container div
+    if (props.options.selection && count > 0) {
       const selectionWidth = CommonValues.selectionMaxWidth(
         props,
         this.state.treeDataMaxLevel
@@ -811,7 +939,8 @@ export default class MaterialTable extends React.Component {
     }
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
-      const colDef = props.columns[i >= 0 ? i : props.columns.length - 1 - i];
+      const colDef =
+        props.columns[count >= 0 ? i : props.columns.length - 1 - i];
       if (colDef.tableData) {
         if (typeof colDef.tableData.width === "number") {
           result.push(colDef.tableData.width + "px");
@@ -835,6 +964,10 @@ export default class MaterialTable extends React.Component {
         <props.components.Container
           style={{ position: "relative", ...props.style }}
         >
+          {props.options.paginationPosition === "top" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
           {props.options.toolbar && (
             <props.components.Toolbar
               actions={props.actions}
@@ -992,7 +1125,10 @@ export default class MaterialTable extends React.Component {
                 </div>
               </div>
             )}
-          {this.renderFooter()}
+          {props.options.paginationPosition === "bottom" ||
+          props.options.paginationPosition === "both"
+            ? this.renderFooter()
+            : null}
 
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
@@ -1007,6 +1143,26 @@ export default class MaterialTable extends React.Component {
                 }}
               >
                 <props.components.OverlayLoading theme={props.theme} />
+              </div>
+            )}
+          {this.state.errorState &&
+            this.state.errorState.errorCause === "query" && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  width: "100%",
+                  zIndex: 11,
+                }}
+              >
+                <props.components.OverlayError
+                  error={this.state.errorState}
+                  retry={this.retry}
+                  theme={props.theme}
+                  icon={props.icons.Retry}
+                />
               </div>
             )}
         </props.components.Container>

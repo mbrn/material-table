@@ -7,6 +7,15 @@ type SvgIconComponent = typeof SvgIcon;
 
 export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
+  cellEditable?: {
+    cellStyle?: React.CSSProperties;
+    onCellEditApproved: (
+      newValue: any,
+      oldValue: any,
+      rowData: RowData,
+      columnDef: Column<RowData>
+    ) => Promise<void>;
+  };
   columns: Column<RowData>[];
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
@@ -16,6 +25,9 @@ export interface MaterialTableProps<RowData extends object> {
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
+    onBulkUpdate?: (
+      changes: Record<number, { oldData: RowData; newData: RowData }>
+    ) => Promise<any>;
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
     onRowDelete?: (oldData: RowData) => Promise<any>;
@@ -27,14 +39,15 @@ export interface MaterialTableProps<RowData extends object> {
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
   icons?: Icons;
+  initialFormData?: object;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
-  options?: Options;
+  options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
   onChangePage?: (page: number, pageSize: number) => void;
-  onChangeColumnHidden?: (column:Column<RowData>, hidden:boolean) => void;
+  onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
   onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
@@ -63,6 +76,10 @@ export interface Filter<RowData extends object> {
   operator: "=";
   value: any;
 }
+export interface ErrorState {
+  message: string;
+  errorCause: "query" | "add" | "update" | "delete";
+}
 
 export interface Query<RowData extends object> {
   filters: Filter<RowData>[];
@@ -72,6 +89,7 @@ export interface Query<RowData extends object> {
   search: string;
   orderBy: Column<RowData>;
   orderDirection: "asc" | "desc";
+  error?: ErrorState;
 }
 
 export interface QueryResult<RowData extends object> {
@@ -105,16 +123,19 @@ export interface EditComponentProps<RowData extends object> {
   onChange: (newValue: any) => void;
   onRowDataChange: (newValue: RowData) => void;
   columnDef: EditCellColumnDef;
+  error: boolean;
 }
 
 export interface EditCellColumnDef {
   field: string;
   title: string;
   tableData: {
+    columnOrder: number;
     filterValue: any;
     groupOrder: any;
     groupSort: string;
     id: number;
+    width: string;
   };
 }
 
@@ -129,7 +150,7 @@ export interface Column<RowData extends object> {
     minimumFractionDigits?: number;
     maximumFractionDigits?: number;
   };
-  dateSetting?: { locale?: string };
+  dateSetting?: { locale?: string; format?: string };
   customFilterAndSearch?: (
     filter: any,
     rowData: RowData,
@@ -165,8 +186,10 @@ export interface Column<RowData extends object> {
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
+  groupTitle?: string | ((groupData: any) => any) | React.ReactNode;
   headerStyle?: React.CSSProperties;
   hidden?: boolean;
+  hiddenByColumnsButton?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any;
   lookup?: object;
@@ -178,6 +201,10 @@ export interface Column<RowData extends object> {
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
+  resizable?: boolean;
+  validate?: (
+    rowData: RowData
+  ) => { isValid: boolean; helperText?: string } | string | boolean;
   render?: (data: RowData, type: "row" | "group") => any;
   searchable?: boolean;
   sorting?: boolean;
@@ -208,6 +235,7 @@ export interface Components {
   Header?: React.ComponentType<any>;
   Pagination?: React.ComponentType<any>;
   OverlayLoading?: React.ComponentType<any>;
+  OverlayError?: React.ComponentType<any>;
   Row?: React.ComponentType<any>;
   Toolbar?: React.ComponentType<any>;
 }
@@ -263,15 +291,17 @@ export interface Icons {
   ViewColumn?: React.ForwardRefExoticComponent<
     React.RefAttributes<SVGSVGElement>
   >;
+  Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
-export interface Options {
+export interface Options<RowData extends object> {
   actionsCellStyle?: React.CSSProperties;
   detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: "first" | "last";
   columnsButton?: boolean;
+  columnResizable?: boolean;
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: "single" | "multiple";
@@ -279,9 +309,11 @@ export interface Options {
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
-  exportButton?: boolean;
+  exportButton?: boolean | { csv?: boolean; pdf?: boolean };
   exportDelimiter?: string;
-  exportFileName?: string;
+  exportFileName?:
+    | string
+    | ((columns: Column<RowData>, data: string[][]) => string);
   exportCsv?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
@@ -289,6 +321,7 @@ export interface Options {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
+  headerSelectionProps?: object;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
@@ -298,10 +331,12 @@ export interface Options {
   padding?: "default" | "dense";
   paging?: boolean;
   grouping?: boolean;
+  groupTitle?: (groupData: any) => any;
   overflowY?: "visible" | "hidden" | "scroll" | "auto" | "initial" | "inherit";
   pageSize?: number;
   pageSizeOptions?: number[];
   paginationType?: "normal" | "stepped";
+  paginationPosition?: "bottom" | "top" | "both";
   rowStyle?:
     | React.CSSProperties
     | ((data: any, index: number, level: number) => React.CSSProperties);
@@ -328,10 +363,12 @@ export interface Options {
 }
 
 export interface Localization {
+  error?: React.ReactNode;
   body?: {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
+      filterPlaceHolder?: React.ReactNode;
       filterTooltip?: React.ReactNode;
     };
     editRow?: {
@@ -370,9 +407,12 @@ export interface Localization {
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
-    exportName?: React.ReactNode;
+    exportCSVName?: React.ReactNode;
+    exportPDFName?: React.ReactNode;
     searchTooltip?: React.ReactNode;
     searchPlaceholder?: React.ReactNode;
+    searchAriaLabel?: string;
+    clearSearchAriaLabel?: string;
   };
 }
 

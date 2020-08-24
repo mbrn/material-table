@@ -20,6 +20,8 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
+  bulkEditOpen = false;
+  bulkEditChangedRows = {};
 
   data = [];
   columns = [];
@@ -69,17 +71,21 @@ export default class DataManager {
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || "asc",
-        width: columnDef.width,
+        width:
+          typeof columnDef.width === "number"
+            ? columnDef.width + "px"
+            : columnDef.width,
+        initialWidth:
+          typeof columnDef.width === "number"
+            ? columnDef.width + "px"
+            : columnDef.width,
+        additionalWidth: 0,
         ...columnDef.tableData,
         id: index,
       };
 
-      if (columnDef.width !== undefined) {
-        if (typeof columnDef.width === "number") {
-          usedWidth.push(columnDef.width + "px");
-        } else {
-          usedWidth.push(columnDef.width);
-        }
+      if (columnDef.tableData.width !== undefined) {
+        usedWidth.push(columnDef.tableData.width);
       }
 
       return columnDef;
@@ -87,7 +93,7 @@ export default class DataManager {
 
     usedWidth = "(" + usedWidth.join(" + ") + ")";
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -208,6 +214,10 @@ export default class DataManager {
     }
   }
 
+  changeBulkEditOpen(bulkEditOpen) {
+    this.bulkEditOpen = bulkEditOpen;
+  }
+
   changeAllSelected(checked) {
     let selectedCount = 0;
     if (this.isDataType("group")) {
@@ -258,6 +268,7 @@ export default class DataManager {
 
   changeColumnHidden(column, hidden) {
     column.hidden = hidden;
+    column.hiddenByColumnsButton = hidden;
   }
 
   changeTreeExpand(path) {
@@ -382,6 +393,57 @@ export default class DataManager {
     this.sorted = this.grouped = false;
   }
 
+  startCellEditable = (rowData, columnDef) => {
+    rowData.tableData.editCellList = [
+      ...(rowData.tableData.editCellList || []),
+      columnDef,
+    ];
+  };
+
+  finishCellEditable = (rowData, columnDef) => {
+    if (rowData.tableData.editCellList) {
+      var index = rowData.tableData.editCellList.findIndex(
+        (c) => c.tableData.id === columnDef.tableData.id
+      );
+      if (index !== -1) {
+        rowData.tableData.editCellList.splice(index, 1);
+      }
+    }
+  };
+
+  clearBulkEditChangedRows = () => {
+    this.bulkEditChangedRows = {};
+  };
+
+  onBulkEditRowChanged = (oldData, newData) => {
+    this.bulkEditChangedRows[oldData.tableData.id] = {
+      oldData,
+      newData,
+    };
+  };
+
+  onColumnResized(id, additionalWidth) {
+    const column = this.columns.find((c) => c.tableData.id === id);
+    if (!column) return;
+
+    const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
+    if (!nextColumn) return;
+
+    // console.log("S i: " + column.tableData.initialWidth);
+    // console.log("S a: " + column.tableData.additionalWidth);
+    // console.log("S w: " + column.tableData.width);
+
+    column.tableData.additionalWidth = additionalWidth;
+    column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+
+    // nextColumn.tableData.additionalWidth = -1 * additionalWidth;
+    // nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+
+    // console.log("F i: " + column.tableData.initialWidth);
+    // console.log("F a: " + column.tableData.additionalWidth);
+    // console.log("F w: " + column.tableData.width);
+  }
+
   expandTreeForNodes = (data) => {
     data.forEach((row) => {
       let currentRow = row;
@@ -487,7 +549,7 @@ export default class DataManager {
 
     if (columnDef.customSort) {
       if (this.orderDirection === "desc") {
-        result = list.sort((a, b) => columnDef.customSort(b, a, "row"));
+        result = list.sort((a, b) => columnDef.customSort(b, a, "row", "desc"));
       } else {
         result = list.sort((a, b) => columnDef.customSort(a, b, "row"));
       }

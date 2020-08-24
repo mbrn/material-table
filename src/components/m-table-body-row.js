@@ -21,24 +21,58 @@ export default class MTableBodyRow extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        return (
-          <this.props.components.Cell
-            size={size}
-            icons={this.props.icons}
-            columnDef={{
-              cellStyle: this.props.options.cellStyle,
-              ...columnDef,
-            }}
-            value={value}
-            key={
-              "cell-" +
-              this.props.data.tableData.id +
-              "-" +
-              columnDef.tableData.id
-            }
-            rowData={this.props.data}
-          />
-        );
+
+        if (
+          this.props.data.tableData.editCellList &&
+          this.props.data.tableData.editCellList.find(
+            (c) => c.tableData.id === columnDef.tableData.id
+          )
+        ) {
+          return (
+            <this.props.components.EditCell
+              components={this.props.components}
+              icons={this.props.icons}
+              localization={this.props.localization}
+              columnDef={columnDef}
+              size={size}
+              key={
+                "cell-" +
+                this.props.data.tableData.id +
+                "-" +
+                columnDef.tableData.id
+              }
+              rowData={this.props.data}
+              cellEditable={this.props.cellEditable}
+              onCellEditFinished={this.props.onCellEditFinished}
+              scrollWidth={this.props.scrollWidth}
+            />
+          );
+        } else {
+          return (
+            <this.props.components.Cell
+              size={size}
+              errorState={this.props.errorState}
+              icons={this.props.icons}
+              columnDef={{
+                cellStyle: this.props.options.cellStyle,
+                ...columnDef,
+              }}
+              value={value}
+              key={
+                "cell-" +
+                this.props.data.tableData.id +
+                "-" +
+                columnDef.tableData.id
+              }
+              rowData={this.props.data}
+              cellEditable={
+                columnDef.editable !== "never" && !!this.props.cellEditable
+              }
+              onCellEditStarted={this.props.onCellEditStarted}
+              scrollWidth={this.props.scrollWidth}
+            />
+          );
+        }
       });
     return mapArr;
   }
@@ -285,7 +319,12 @@ export default class MTableBodyRow extends React.Component {
     if (typeof this.props.options.rowStyle === "function") {
       style = {
         ...style,
-        ...this.props.options.rowStyle(this.props.data, index, level),
+        ...this.props.options.rowStyle(
+          this.props.data,
+          index,
+          level,
+          this.props.hasAnyEditingRow
+        ),
       };
     } else if (this.props.options.rowStyle) {
       style = {
@@ -299,7 +338,7 @@ export default class MTableBodyRow extends React.Component {
     }
 
     if (this.props.hasAnyEditingRow) {
-      style.opacity = 0.2;
+      style.opacity = style.opacity ? style.opacity : 0.2;
     }
 
     return style;
@@ -379,6 +418,10 @@ export default class MTableBodyRow extends React.Component {
       treeDataMaxLevel,
       localization,
       actions,
+      errorState,
+      cellEditable,
+      onCellEditStarted,
+      onCellEditFinished,
       ...rowProps
     } = this.props;
 
@@ -400,7 +443,6 @@ export default class MTableBodyRow extends React.Component {
                   }
                   panel = panel.render;
                 }
-
                 onToggleDetailPanel(this.props.path, panel);
               });
           }}
@@ -442,6 +484,7 @@ export default class MTableBodyRow extends React.Component {
                   detailPanel={this.props.detailPanel}
                   onEditingCanceled={onEditingCanceled}
                   onEditingApproved={onEditingApproved}
+                  errorState={this.props.errorState}
                 />
               );
             } else {
@@ -457,6 +500,10 @@ export default class MTableBodyRow extends React.Component {
                   onEditingApproved={onEditingApproved}
                   hasAnyEditingRow={this.props.hasAnyEditingRow}
                   treeDataMaxLevel={treeDataMaxLevel}
+                  errorState={this.props.errorState}
+                  cellEditable={cellEditable}
+                  onCellEditStarted={onCellEditStarted}
+                  onCellEditFinished={onCellEditFinished}
                 />
               );
             }
@@ -494,4 +541,5 @@ MTableBodyRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };

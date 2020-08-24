@@ -64,12 +64,23 @@ class MTableFilterRow extends React.Component {
           multiple
           value={selectedFilter}
           onClose={() => {
-            this.props.onFilterChanged(columnDef.tableData.id, selectedFilter);
+            if (columnDef.filterOnItemSelect !== true)
+              this.props.onFilterChanged(
+                columnDef.tableData.id,
+                selectedFilter
+              );
           }}
           onChange={(event) => {
             setSelectedFilter(event.target.value);
+            if (columnDef.filterOnItemSelect === true)
+              this.props.onFilterChanged(
+                columnDef.tableData.id,
+                event.target.value
+              );
           }}
-          input={<Input id={"select-multiple-checkbox" + columnDef.tableData.id} />}
+          input={
+            <Input id={"select-multiple-checkbox" + columnDef.tableData.id} />
+          }
           renderValue={(selecteds) =>
             selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
           }
@@ -235,8 +246,10 @@ class MTableFilterRow extends React.Component {
     }
 
     if (this.props.hasDetailPanel) {
+      const alignment = this.props.detailPanelColumnAlignment;
+      const index = alignment === "left" ? 0 : columns.length;
       columns.splice(
-        0,
+        index,
         0,
         <TableCell padding="none" key="key-detail-panel-column" />
       );
@@ -273,6 +286,7 @@ class MTableFilterRow extends React.Component {
 
 MTableFilterRow.defaultProps = {
   columns: [],
+  detailPanelColumnAlignment: "left",
   selection: false,
   hasActions: false,
   localization: {
@@ -284,6 +298,7 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
+  detailPanelColumnAlignment: PropTypes.string,
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,

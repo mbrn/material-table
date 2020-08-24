@@ -2,6 +2,9 @@
 import * as React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import PropTypes from "prop-types";
+import parseISO from "date-fns/parseISO";
+import * as CommonValues from "../utils/common-values";
+
 /* eslint-enable no-unused-vars */
 
 /* eslint-disable no-useless-escape */
@@ -24,7 +27,7 @@ export default class MTableCell extends React.Component {
     if (this.props.columnDef.render) {
       if (this.props.rowData) {
         return this.props.columnDef.render(this.props.rowData, "row");
-      } else {
+      } else if (this.props.value) {
         return this.props.columnDef.render(this.props.value, "group");
       }
     } else if (this.props.columnDef.type === "boolean") {
@@ -36,9 +39,9 @@ export default class MTableCell extends React.Component {
       }
     } else if (this.props.columnDef.type === "date") {
       if (this.props.value instanceof Date) {
-        return this.props.value.toLocaleDateString();
+        return this.props.value.toLocaleDateString(dateLocale);
       } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleDateString(dateLocale);
+        return parseISO(this.props.value).toLocaleDateString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -46,7 +49,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleTimeString();
       } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleTimeString(dateLocale);
+        return parseISO(this.props.value).toLocaleTimeString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -54,7 +57,7 @@ export default class MTableCell extends React.Component {
       if (this.props.value instanceof Date) {
         return this.props.value.toLocaleString();
       } else if (isoDateRegex.exec(this.props.value)) {
-        return new Date(this.props.value).toLocaleString(dateLocale);
+        return parseISO(this.props.value).toLocaleString(dateLocale);
       } else {
         return this.props.value;
       }
@@ -114,9 +117,16 @@ export default class MTableCell extends React.Component {
   };
 
   getStyle = () => {
+    const width = CommonValues.reducePercentsInCalc(
+      this.props.columnDef.tableData.width,
+      this.props.scrollWidth
+    );
+
     let cellStyle = {
       color: "inherit",
-      width: this.props.columnDef.tableData.width,
+      width,
+      maxWidth: this.props.columnDef.maxWidth,
+      minWidth: this.props.columnDef.minWidth,
       boxSizing: "border-box",
       fontSize: "inherit",
       fontFamily: "inherit",
@@ -140,13 +150,41 @@ export default class MTableCell extends React.Component {
   };
 
   render() {
-    const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const {
+      icons,
+      columnDef,
+      rowData,
+      errorState,
+      cellEditable,
+      onCellEditStarted,
+      ...cellProps
+    } = this.props;
     const cellAlignment =
       columnDef.align !== undefined
         ? columnDef.align
         : ["numeric", "currency"].indexOf(this.props.columnDef.type) !== -1
         ? "right"
         : "left";
+
+    let renderValue = this.getRenderValue();
+    if (cellEditable) {
+      renderValue = (
+        <div
+          style={{
+            borderBottom: "1px dashed grey",
+            cursor: "pointer",
+            width: "max-content",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onCellEditStarted(this.props.rowData, this.props.columnDef);
+          }}
+        >
+          {renderValue}
+        </div>
+      );
+    }
+
     return (
       <TableCell
         size={this.props.size}
@@ -156,7 +194,7 @@ export default class MTableCell extends React.Component {
         onClick={this.handleClickCell}
       >
         {this.props.children}
-        {this.getRenderValue()}
+        {renderValue}
       </TableCell>
     );
   }
@@ -171,4 +209,5 @@ MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
