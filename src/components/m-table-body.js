@@ -101,6 +101,7 @@ class MTableBody extends React.Component {
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
             onBulkEditRowChanged={this.props.onBulkEditRowChanged}
+            bulkEditChangedRows={this.props.bulkEditChangedRows}
           />
         );
       } else {
@@ -182,14 +183,8 @@ class MTableBody extends React.Component {
   }
 
   render() {
-    let renderData = this.props.renderData;
-    if (this.props.bulkEditOpen) {
-      renderData.forEach((data) => {
-        this.props.columns.forEach((column) => {
-          data[column.field] = this.props.getFieldValue(data, column);
-        });
-      });
-    }
+    const renderData = this.props.renderData;
+
     const groups = this.props.columns
       .filter((col) => col.tableData.groupOrder > -1)
       .sort(
@@ -344,6 +339,7 @@ MTableBody.propTypes = {
   onCellEditFinished: PropTypes.func,
   bulkEditOpen: PropTypes.bool,
   onBulkEditRowChanged: PropTypes.func,
+  bulkEditChangedRows: PropTypes.array,
 };
 
 export default MTableBody;

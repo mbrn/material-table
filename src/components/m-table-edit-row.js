@@ -11,11 +11,16 @@ import * as CommonValues from "../utils/common-values";
 export default class MTableEditRow extends React.Component {
   constructor(props) {
     super(props);
+    let data = props.data
+      ? JSON.parse(JSON.stringify(props.data))
+      : this.createRowData();
+
+    if (props.mode === "bulk" && props.bulkEditChangedRows[data.tableData.id]) {
+      data = props.bulkEditChangedRows[data.tableData.id].newData;
+    }
 
     this.state = {
-      data: props.data
-        ? JSON.parse(JSON.stringify(props.data))
-        : this.createRowData(),
+      data,
     };
   }
 
@@ -410,4 +415,6 @@ MTableEditRow.propTypes = {
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onBulkEditRowChanged: PropTypes.func,
+  mode: PropTypes.oneOf([PropTypes.bool, "bulk"]),
+  bulkEditChangedRows: PropTypes.array,
 };

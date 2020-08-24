@@ -897,6 +897,7 @@ export default class MaterialTable extends React.Component {
         onCellEditFinished={this.onCellEditFinished}
         bulkEditOpen={this.dataManager.bulkEditOpen}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+        bulkEditChangedRows={this.dataManager.bulkEditChangedRows}
       />
     </Table>
   );
