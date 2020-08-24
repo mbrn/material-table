@@ -984,19 +984,18 @@ export default class MaterialTable extends React.Component {
               data={this.state.data}
               remoteDataGetter={
                 this.isRemoteData()
-                  ? async (page) => {
+                  ? async () => {
                       const { query } = this.state,
-                        { pageSize } = query;
-                      const result = await Promise.resolve(
+                        { totalCount } = query;
+                      const { data } = await Promise.resolve(
                         props.data({
                           ...query,
-                          page,
+                          page: 0,
+                          pageSize: totalCount,
+                          totalCount,
                         })
                       );
-                      return {
-                        ...result,
-                        pageSize,
-                      };
+                      return data;
                     }
                   : null
               }

@@ -46,7 +46,7 @@ export class MTableToolbar extends React.Component {
         a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
       );
     const data = (this.props.exportAllData
-      ? await this.getAllData()
+      ? await Promise.resolve(this.getAllData())
       : this.props.renderData
     ).map((rowData) =>
       columns.map((columnDef) => this.props.getFieldValue(rowData, columnDef))
@@ -55,22 +55,10 @@ export class MTableToolbar extends React.Component {
     return [columns, data];
   };
 
-  getAllData = async () => {
-    if (typeof this.props.remoteDataGetter !== "function")
-      return this.props.data;
-    let total = 0,
-      size = 0,
-      page = 0;
-    const allData = [];
-    do {
-      const { data, pageSize, totalCount } = await this.props.remoteDataGetter(
-        page++
-      );
-      total = totalCount;
-      size = pageSize;
-      allData.push(...data);
-    } while (total !== 0 && size !== 0 && page * size < total);
-    return allData;
+  getAllData = () => {
+    if (typeof this.props.remoteDataGetter === "function")
+      return this.props.remoteDataGetter();
+    else return this.props.data;
   };
 
   defaultExportCsv = async () => {
