@@ -772,6 +772,11 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onColumnResized = (id, additionalWidth) => {
+    this.dataManager.onColumnResized(id, additionalWidth);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -912,6 +917,8 @@ export default class MaterialTable extends React.Component {
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
           isEditMultipleRowsFlow={this.dataManager.isEditMultipleRowsFlow}
+          onColumnResized={this.onColumnResized}
+          scrollWidth={this.state.width}
         />
       )}
       <props.components.Body
@@ -957,6 +964,7 @@ export default class MaterialTable extends React.Component {
         }}
         isEditMultipleRowsFlow={this.dataManager.isEditMultipleRowsFlow}
         multipleRowsEditChanges={this.dataManager.multipleRowsEditChanges}
+        scrollWidth={this.state.width}
       />
     </Table>
   );
