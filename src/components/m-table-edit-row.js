@@ -117,6 +117,7 @@ export default class MTableEditRow extends React.Component {
                 break;
             }
           }
+          const { isEditMultipleRowsFlow, multipleRowsEditChanges, onMultipleEditRowsChanged } = this.props;
           return (
             <TableCell
               size={size}
@@ -129,7 +130,8 @@ export default class MTableEditRow extends React.Component {
               <EditComponent
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
-                value={value}
+                value={isEditMultipleRowsFlow & multipleRowsEditChanges[columnDef.field] ?
+                  multipleRowsEditChanges[columnDef.field] : value}
                 error={!error.isValid}
                 helperText={error.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}
@@ -141,6 +143,9 @@ export default class MTableEditRow extends React.Component {
                   this.setState({ data }, () => {
                     if (this.props.onBulkEditRowChanged) {
                       this.props.onBulkEditRowChanged(this.props.data, data);
+                    }
+                    if (isEditMultipleRowsFlow && onMultipleEditRowsChanged) {
+                      onMultipleEditRowsChanged(columnDef.field, value);
                     }
                   });
                 }}
@@ -170,7 +175,7 @@ export default class MTableEditRow extends React.Component {
   };
 
   renderActions() {
-    if (this.props.mode === "bulk") {
+    if (this.props.mode === "bulk" || this.props.mode === 'multiple-edit') {
       return <TableCell padding="none" key="key-actions-column" />;
     }
 
@@ -261,7 +266,8 @@ export default class MTableEditRow extends React.Component {
     if (
       this.props.mode === "add" ||
       this.props.mode === "update" ||
-      this.props.mode === "bulk"
+      this.props.mode === "bulk" ||
+      this.props.mode === "multiple-edit"
     ) {
       columns = this.renderColumns();
     } else {
@@ -360,6 +366,9 @@ export default class MTableEditRow extends React.Component {
       actions,
       errorState,
       onBulkEditRowChanged,
+      onMultipleEditRowsChanged,
+      isEditMultipleRowsFlow,
+      multipleRowsEditChanges,
       ...rowProps
     } = this.props;
 
@@ -387,7 +396,8 @@ MTableEditRow.defaultProps = {
     cancelTooltip: "Cancel",
     deleteText: "Are you sure you want to delete this row?",
   },
-  onBulkEditRowChanged: () => {},
+  onBulkEditRowChanged: () => { },
+  onMultipleEditRowsChanged: () => { },
 };
 
 MTableEditRow.propTypes = {
@@ -410,4 +420,7 @@ MTableEditRow.propTypes = {
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onBulkEditRowChanged: PropTypes.func,
+  onMultipleEditRowsChanged: PropTypes.func,
+  isEditMultipleRowsFlow: PropTypes.bool,
+  multipleRowsEditChanges: PropTypes.object,
 };

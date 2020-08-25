@@ -571,6 +571,13 @@ class App extends Component {
                           resolve();
                         }, 1000);
                       }),
+
+                    onMultipleRowsUpdate: (newData) => new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        this.setState({ data:newData }, () => resolve());
+                        resolve();
+                      }, 1000);
+                    }),
                   }}
                   localization={{
                     body: {

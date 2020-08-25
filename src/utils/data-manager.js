@@ -22,6 +22,8 @@ export default class DataManager {
   defaultExpanded = false;
   bulkEditOpen = false;
   bulkEditChangedRows = {};
+  isEditMultipleRowsFlow = false;
+  multipleRowsEditChanges = {};
 
   data = [];
   columns = [];
@@ -43,7 +45,7 @@ export default class DataManager {
 
   rootGroupsIndex = {};
 
-  constructor() {}
+  constructor() { }
 
   setData(data) {
     this.selectedCount = 0;
@@ -207,6 +209,19 @@ export default class DataManager {
     } else if (this.lastEditingRow) {
       this.lastEditingRow.tableData.editing = undefined;
       this.lastEditingRow = undefined;
+    }
+  }
+
+  changeMultipleRowsEditing(mode = undefined) {
+    const hasSelectedRows = this.data.some(d => d.tableData.checked);
+    if (hasSelectedRows) {
+      this.isEditMultipleRowsFlow = mode ? true : false;
+      this.data.forEach((row) => {
+        if (row.tableData.checked) {
+          row.tableData.editing = mode;
+          row.tableData.checked = mode ? row.tableData.checked : false;
+        }
+      });
     }
   }
 
@@ -418,6 +433,14 @@ export default class DataManager {
     };
   };
 
+  onMultipleEditRowsChanged = (field, value) => {
+    this.multipleRowsEditChanges[field] = value;
+  }
+
+  resetMultipleRowsChanges = () => {
+    this.multipleRowsEditChanges = {};
+  }
+
   expandTreeForNodes = (data) => {
     data.forEach((row) => {
       let currentRow = row;
@@ -531,17 +554,17 @@ export default class DataManager {
       result = list.sort(
         this.orderDirection === "desc"
           ? (a, b) =>
-              this.sort(
-                this.getFieldValue(b, columnDef),
-                this.getFieldValue(a, columnDef),
-                columnDef.type
-              )
+            this.sort(
+              this.getFieldValue(b, columnDef),
+              this.getFieldValue(a, columnDef),
+              columnDef.type
+            )
           : (a, b) =>
-              this.sort(
-                this.getFieldValue(a, columnDef),
-                this.getFieldValue(b, columnDef),
-                columnDef.type
-              )
+            this.sort(
+              this.getFieldValue(a, columnDef),
+              this.getFieldValue(b, columnDef),
+              columnDef.type
+            )
       );
     }
 

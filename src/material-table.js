@@ -308,6 +308,59 @@ export default class MaterialTable extends React.Component {
           },
         });
       }
+      if (calculatedProps.editable.onMultipleRowsUpdate) {
+        const hasSelectedRows = this.dataManager.getRenderState().data.some(d => d.tableData.checked);
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Edit,
+          tooltip: localization.updateMultipleRowsTooltip,
+          position: "toolbarOnSelect",
+          hidden: !hasSelectedRows || this.dataManager.isEditMultipleRowsFlow,
+          onClick: () => {
+            this.dataManager.changeMultipleRowsEditing("update");
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Check,
+          tooltip: localization.saveMultipleRowsEditingTooltip,
+          position: "toolbarOnSelect",
+          hidden: !this.dataManager.isEditMultipleRowsFlow,
+          onClick: () => {
+            this.setState({ isLoading: true }, () => {
+              const newData = this.dataManager.getRenderState().data.map(_data => {
+                if (_data.tableData.checked) {
+                  Object.keys(this.dataManager.multipleRowsEditChanges).forEach(key => {
+                    _data[key] = this.dataManager.multipleRowsEditChanges[key];
+                  })
+                }
+                return _data;
+              });
+              calculatedProps.editable.onMultipleRowsUpdate(newData)
+                .then(result => {
+                  this.dataManager.changeMultipleRowsEditing();
+                  this.setState({
+                    ...this.dataManager.getRenderState(),
+                    isLoading: false,
+                  });
+                  this.dataManager.resetMultipleRowsChanges()
+                })
+            })
+          }
+        });
+
+        calculatedProps.actions.push({
+          icon: calculatedProps.icons.Clear,
+          tooltip: localization.cancelMultipleRowsEditingTooltip,
+          position: "toolbarOnSelect",
+          hidden: !this.dataManager.isEditMultipleRowsFlow,
+          onClick: () => {
+            this.dataManager.changeMultipleRowsEditing();
+            this.dataManager.resetMultipleRowsChanges()
+            this.setState(this.dataManager.getRenderState());
+          },
+        });
+      }
     }
 
     return calculatedProps;
@@ -858,6 +911,7 @@ export default class MaterialTable extends React.Component {
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
+          isEditMultipleRowsFlow={this.dataManager.isEditMultipleRowsFlow}
         />
       )}
       <props.components.Body
@@ -888,7 +942,7 @@ export default class MaterialTable extends React.Component {
         onRowClick={this.props.onRowClick}
         showAddRow={this.state.showAddRow}
         hasAnyEditingRow={
-          !!(this.state.lastEditingRow || this.state.showAddRow)
+          !!(this.state.lastEditingRow || this.state.showAddRow || this.dataManager.isEditMultipleRowsFlow)
         }
         hasDetailPanel={!!props.detailPanel}
         treeDataMaxLevel={this.state.treeDataMaxLevel}
@@ -897,6 +951,12 @@ export default class MaterialTable extends React.Component {
         onCellEditFinished={this.onCellEditFinished}
         bulkEditOpen={this.dataManager.bulkEditOpen}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+        onMultipleEditRowsChanged={(field, value) => {
+          this.dataManager.onMultipleEditRowsChanged(field, value);
+          this.setState(this.dataManager.getRenderState());
+        }}
+        isEditMultipleRowsFlow={this.dataManager.isEditMultipleRowsFlow}
+        multipleRowsEditChanges={this.dataManager.multipleRowsEditChanges}
       />
     </Table>
   );
