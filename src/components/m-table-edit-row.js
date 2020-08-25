@@ -130,8 +130,8 @@ export default class MTableEditRow extends React.Component {
               <EditComponent
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
-                value={isEditMultipleRowsFlow & multipleRowsEditChanges[columnDef.field] ?
-                  multipleRowsEditChanges[columnDef.field] : value}
+                value={isEditMultipleRowsFlow & typeof multipleRowsEditChanges[columnDef.field] !== 'undefined' ?
+                   multipleRowsEditChanges[columnDef.field] : value}
                 error={!error.isValid}
                 helperText={error.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}

@@ -109,6 +109,7 @@ class MTableBody extends React.Component {
             onMultipleEditRowsChanged={this.props.onMultipleEditRowsChanged}
             isEditMultipleRowsFlow={this.props.isEditMultipleRowsFlow}
             multipleRowsEditChanges={this.props.multipleRowsEditChanges}
+            scrollWidth={this.props.scrollWidth}
           />
         );
       } else {
@@ -145,6 +146,7 @@ class MTableBody extends React.Component {
             cellEditable={this.props.cellEditable}
             onCellEditStarted={this.props.onCellEditStarted}
             onCellEditFinished={this.props.onCellEditFinished}
+            scrollWidth={this.props.scrollWidth}
           />
         );
       }
@@ -185,6 +187,7 @@ class MTableBody extends React.Component {
         onCellEditStarted={this.props.onCellEditStarted}
         onCellEditFinished={this.props.onCellEditFinished}
         onBulkEditRowChanged={this.props.onBulkEditRowChanged}
+        scrollWidth={this.props.scrollWidth}
       />
     ));
   }
@@ -232,6 +235,7 @@ class MTableBody extends React.Component {
             filterCellStyle={this.props.options.filterCellStyle}
             filterRowStyle={this.props.options.filterRowStyle}
             hideFilterIcons={this.props.options.hideFilterIcons}
+            scrollWidth={this.props.scrollWidth}
           />
         )}
         {this.props.showAddRow &&
@@ -258,6 +262,7 @@ class MTableBody extends React.Component {
               onEditingCanceled={this.props.onEditingCanceled}
               onEditingApproved={this.props.onEditingApproved}
               getFieldValue={this.props.getFieldValue}
+              scrollWidth={this.props.scrollWidth}
             />
           )}
 
@@ -288,6 +293,7 @@ class MTableBody extends React.Component {
             onEditingCanceled={this.props.onEditingCanceled}
             onEditingApproved={this.props.onEditingApproved}
             getFieldValue={this.props.getFieldValue}
+            scrollWidth={this.props.scrollWidth}
           />
         )}
         {this.renderEmpty(emptyRowCount, renderData)}
@@ -329,6 +335,7 @@ MTableBody.propTypes = {
   renderData: PropTypes.array,
   initialFormData: PropTypes.object,
   selection: PropTypes.bool.isRequired,
+  scrollWidth: PropTypes.number.isRequired,
   showAddRow: PropTypes.bool,
   treeDataMaxLevel: PropTypes.number,
   localization: PropTypes.object,
