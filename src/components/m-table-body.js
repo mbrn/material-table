@@ -75,9 +75,13 @@ class MTableBody extends React.Component {
   }
 
   getMode = (data) => {
-    const { bulkEditOpen, isEditMultipleRowsFlow } = this.props
-    return bulkEditOpen ? "bulk" : isEditMultipleRowsFlow? "multiple-edit" : data.tableData.editing
-  }
+    const { bulkEditOpen, isEditMultipleRowsFlow } = this.props;
+    return bulkEditOpen
+      ? "bulk"
+      : isEditMultipleRowsFlow
+      ? "multiple-edit"
+      : data.tableData.editing;
+  };
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
