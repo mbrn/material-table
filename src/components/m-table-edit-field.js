@@ -60,7 +60,7 @@ class MTableEditField extends React.Component {
     const { helperText, error, ...props } = this.getProps();
 
     return (
-      <FormControl error={error} component="fieldset">
+      <FormControl error={Boolean(error)} component="fieldset">
         <FormGroup>
           <FormControlLabel
             label=""
