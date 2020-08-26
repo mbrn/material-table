@@ -75,6 +75,7 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
     "@date-io/date-fns": "^1.1.0",
     "@material-ui/pickers": "^3.2.2",
     "classnames": "^2.2.6",
