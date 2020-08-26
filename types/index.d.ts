@@ -159,7 +159,8 @@ export interface Column<RowData extends object> {
   customSort?: (
     data1: RowData,
     data2: RowData,
-    type: "row" | "group"
+    type: "row" | "group",
+    isDesc: "desc" | undefined
   ) => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
