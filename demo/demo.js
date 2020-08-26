@@ -473,6 +473,8 @@ class App extends Component {
     ],
   };
 
+  // getCopyOfSelectedRows = () => JSON.parse(JSON.stringify(this.state.data.filter(row => row.tableData.checked)));
+
   render() {
     return (
       <>
@@ -567,11 +569,21 @@ class App extends Component {
                   //         resolve();
                   //       }, 1000);
                   //     }),
-                  //   onMultipleRowsUpdate: (newData) => new Promise((resolve, reject) => {
+                  //   onMultipleRowsUpdate: (multipleRowsEditChanges) => new Promise((resolve, reject) => {
                   //     setTimeout(() => {
                   //       {
-                  //       /* this.setState({ data: newData }, () => resolve()); */
+                  //         // const selectedRows = this.getCopyOfSelectedRows();
+                  //         // const newData = this.state.data.map((_data) => {
+                  //         //   if (selectedRows.some(row => row.id === _data.id)) {
+                  //         //     Object.keys(multipleRowsEditChanges).forEach((key) => {
+                  //         //       _data[key] = multipleRowsEditChanges[key];
+                  //         //     });
+                  //         //   }
+                  //         //   return _data;
+                  //         // });
+                  //         // this.setState({ data: newData }, () => resolve());
                   //       }
+
                   //       resolve();
                   //     }, 1000);
                   //   }),
