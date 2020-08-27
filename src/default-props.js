@@ -269,7 +269,7 @@ export const defaultProps = {
       bulkEditCancel: "Discard all changes",
       updateMultipleRowsTooltip: "Edit selected rows",
       saveMultipleRowsEditingTooltip: "Save selected rows changes",
-      cancelMultipleRowsEditingTooltip: "Discard all changes"
+      cancelMultipleRowsEditingTooltip: "Discard all changes",
     },
   },
   style: {},
