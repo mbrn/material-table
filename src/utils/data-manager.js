@@ -753,7 +753,6 @@ export default class DataManager {
           .some((columnDef) => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(
-                this.searchText,
                 row,
                 columnDef
               );
