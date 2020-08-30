@@ -157,6 +157,7 @@ export default class MTableCell extends React.Component {
       errorState,
       cellEditable,
       onCellEditStarted,
+      scrollWidth,
       ...cellProps
     } = this.props;
     const cellAlignment =
