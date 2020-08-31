@@ -156,6 +156,22 @@ class MTableEditField extends React.Component {
   }
 
   renderTextField() {
+    let error = { isValid: true, helperText: "" };
+    if (this.props.columnDef.validate) {
+      const validateResponse = this.props.columnDef.validate(this.props.value);
+      switch (typeof validateResponse) {
+        case "object":
+          error = { ...validateResponse };
+          break;
+        case "boolean":
+          error = { isValid: validateResponse, helperText: "" };
+          break;
+        case "string":
+          error = { isValid: false, helperText: validateResponse };
+          break;
+      }
+    }
+
     return (
       <TextField
         {...this.getProps()}
@@ -163,6 +179,8 @@ class MTableEditField extends React.Component {
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
         }
+        error={!error.isValid}
+        helperText={error.helperText}
         type={this.props.columnDef.type === "numeric" ? "number" : "text"}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title

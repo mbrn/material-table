@@ -98,12 +98,28 @@ class MTableEditCell extends React.Component {
       );
     }
 
+    const isValid = () => {
+      if (this.props.columnDef.validate) {
+        const response = this.props.columnDef.validate(this.state.value);
+        switch (typeof response) {
+          case "object":
+            return response.isValid;
+          case "string":
+            return response.length === 0;
+          case "boolean":
+            return response;
+        }
+      } else {
+        return true;
+      }
+    };
+
     const actions = [
       {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: this.state.isLoading,
+        disabled: this.state.isLoading || !isValid(),
       },
       {
         icon: this.props.icons.Clear,
