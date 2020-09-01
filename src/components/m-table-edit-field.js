@@ -30,6 +30,25 @@ class MTableEditField extends React.Component {
     return props;
   }
 
+  validate() {
+    let error = { isValid: true, helperText: "" };
+    if (this.props.columnDef.validate) {
+      const validateResponse = this.props.columnDef.validate(this.props.value);
+      switch (typeof validateResponse) {
+        case "object":
+          error = { ...validateResponse };
+          break;
+        case "boolean":
+          error = { isValid: validateResponse, helperText: "" };
+          break;
+        case "string":
+          error = { isValid: false, helperText: validateResponse };
+          break;
+      }
+    }
+    return error;
+  }
+
   renderLookupField() {
     const { helperText, error, ...props } = this.getProps();
     return (
@@ -97,6 +116,8 @@ class MTableEditField extends React.Component {
           {...this.getProps()}
           format={dateFormat}
           value={this.props.value || null}
+          error={!this.validate().isValid}
+          helperText={this.validate().helperText}
           onChange={this.props.onChange}
           clearable
           InputProps={{
@@ -118,6 +139,8 @@ class MTableEditField extends React.Component {
           {...this.getProps()}
           format="HH:mm:ss"
           value={this.props.value || null}
+          error={!this.validate().isValid}
+          helperText={this.validate().helperText}
           onChange={this.props.onChange}
           clearable
           InputProps={{
@@ -140,6 +163,8 @@ class MTableEditField extends React.Component {
           {...this.getProps()}
           format="dd.MM.yyyy HH:mm:ss"
           value={this.props.value || null}
+          error={!this.validate().isValid}
+          helperText={this.validate().helperText}
           onChange={this.props.onChange}
           clearable
           InputProps={{
@@ -156,22 +181,6 @@ class MTableEditField extends React.Component {
   }
 
   renderTextField() {
-    let error = { isValid: true, helperText: "" };
-    if (this.props.columnDef.validate) {
-      const validateResponse = this.props.columnDef.validate(this.props.value);
-      switch (typeof validateResponse) {
-        case "object":
-          error = { ...validateResponse };
-          break;
-        case "boolean":
-          error = { isValid: validateResponse, helperText: "" };
-          break;
-        case "string":
-          error = { isValid: false, helperText: validateResponse };
-          break;
-      }
-    }
-
     return (
       <TextField
         {...this.getProps()}
@@ -179,8 +188,8 @@ class MTableEditField extends React.Component {
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
         }
-        error={!error.isValid}
-        helperText={error.helperText}
+        error={!this.validate().isValid}
+        helperText={this.validate().helperText}
         type={this.props.columnDef.type === "numeric" ? "number" : "text"}
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
@@ -213,6 +222,8 @@ class MTableEditField extends React.Component {
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
         style={{ float: "right" }}
+        error={!this.validate().isValid}
+        helperText={this.validate().helperText}
         type="number"
         value={this.props.value === undefined ? "" : this.props.value}
         onChange={(event) => {
