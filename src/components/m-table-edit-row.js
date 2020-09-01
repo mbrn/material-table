@@ -369,6 +369,7 @@ export default class MTableEditRow extends React.Component {
       onMultipleEditRowsChanged,
       isEditMultipleRowsFlow,
       multipleRowsEditChanges,
+      scrollWidth,
       ...rowProps
     } = this.props;
 

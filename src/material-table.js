@@ -101,6 +101,7 @@ export default class MaterialTable extends React.Component {
     const shouldReorder =
       isInit ||
       (defaultSortColumnIndex !== this.dataManager.orderBy &&
+        !this.isRemoteData() &&
         defaultSortDirection !== this.dataManager.orderDirection);
     shouldReorder &&
       this.dataManager.changeOrder(

@@ -766,6 +766,7 @@ export default class DataManager {
     this.searchedData = [...this.filteredData];
 
     if (this.searchText && this.applySearch) {
+      const trimmedSearchText = this.searchText.trim();
       this.searchedData = this.searchedData.filter((row) => {
         return this.columns
           .filter((columnDef) => {
@@ -776,7 +777,7 @@ export default class DataManager {
           .some((columnDef) => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(
-                this.searchText,
+                trimmedSearchText,
                 row,
                 columnDef
               );
@@ -786,7 +787,7 @@ export default class DataManager {
                 return value
                   .toString()
                   .toUpperCase()
-                  .includes(this.searchText.toUpperCase());
+                  .includes(trimmedSearchText.toUpperCase());
               }
             }
           });

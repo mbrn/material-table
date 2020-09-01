@@ -27,6 +27,7 @@ class MTableEditField extends React.Component {
       onMultipleEditRowsChanged,
       isEditMultipleRowsFlow,
       multipleRowsEditChanges,
+      scrollWidth,
       ...props
     } = this.props;
     return props;
