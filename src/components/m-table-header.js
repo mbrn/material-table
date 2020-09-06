@@ -10,6 +10,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Draggable } from "react-beautiful-dnd";
 import { Tooltip } from "@material-ui/core";
 import * as CommonValues from "../utils/common-values";
+import equal from "fast-deep-equal";
+
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
@@ -21,6 +23,10 @@ export class MTableHeader extends React.Component {
       resizingColumnDef: undefined,
     };
   }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //   return !equal(nextProps, this.props) || !equal(nextState, this.state);
+  // }
 
   componentDidMount() {
     document.addEventListener("mousemove", this.handleMouseMove);
@@ -176,7 +182,7 @@ export class MTableHeader extends React.Component {
               <div></div>
               <this.props.icons.Resize
                 style={{
-                  cursor: "e-resize",
+                  cursor: "col-resize",
                   color:
                     this.state.resizingColumnDef &&
                     this.state.resizingColumnDef.tableData.id ===
@@ -280,11 +286,6 @@ export class MTableHeader extends React.Component {
   }
 
   render() {
-    // const log = this.props.columns.map(c => c.field + ": " + c.tableData.width + ", " + c.tableData.initialWidth + ", " + c.tableData.additionalWidth).join('\r\n');
-    // console.log("===============================");
-    // console.log(log);
-    // console.log("===============================");
-
     const headers = this.renderHeader();
     if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
