@@ -1,5 +1,6 @@
 import formatDate from "date-fns/format";
 import { byString } from "./";
+import { tableData } from "./common-values";
 
 export default class DataManager {
   applyFilters = false;
@@ -49,8 +50,8 @@ export default class DataManager {
     this.selectedCount = 0;
 
     this.data = data.map((row, index) => {
-      row.tableData = { ...row.tableData, id: index };
-      if (row.tableData.checked) {
+      row[tableData] = { ...row[tableData], id: index };
+      if (row[tableData].checked) {
         this.selectedCount++;
       }
       return row;
@@ -64,9 +65,8 @@ export default class DataManager {
       (c) => c.width === undefined && !c.hidden
     );
     let usedWidth = ["0px"];
-
     this.columns = columns.map((columnDef, index) => {
-      columnDef.tableData = {
+      columnDef[tableData] = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
@@ -80,12 +80,15 @@ export default class DataManager {
             ? columnDef.width + "px"
             : columnDef.width,
         additionalWidth: 0,
-        ...columnDef.tableData,
+        ...columnDef[tableData],
         id: index,
       };
 
-      if (columnDef.tableData.width !== undefined) {
-        usedWidth.push(columnDef.tableData.width);
+      if (
+        columnDef[tableData] !== undefined &&
+        columnDef[tableData].width !== undefined
+      ) {
+        usedWidth.push(columnDef[tableData].width);
       }
 
       return columnDef;
@@ -93,7 +96,9 @@ export default class DataManager {
 
     usedWidth = "(" + usedWidth.join(" + ") + ")";
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef[tableData].width = columnDef[
+        tableData
+      ].initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -136,20 +141,20 @@ export default class DataManager {
   }
 
   changeFilterValue(columnId, value) {
-    this.columns[columnId].tableData.filterValue = value;
+    this.columns[columnId][tableData].filterValue = value;
     this.filtered = false;
   }
 
   changeRowSelected(checked, path) {
     const rowData = this.findDataByPath(this.sortedData, path);
-    rowData.tableData.checked = checked;
+    rowData[tableData].checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
 
     const checkChildRows = (rowData) => {
-      if (rowData.tableData.childRows) {
-        rowData.tableData.childRows.forEach((childRow) => {
-          if (childRow.tableData.checked !== checked) {
-            childRow.tableData.checked = checked;
+      if (rowData[tableData].childRows) {
+        rowData[tableData].childRows.forEach((childRow) => {
+          if (childRow[tableData].checked !== checked) {
+            childRow[tableData].checked = checked;
             this.selectedCount = this.selectedCount + (checked ? 1 : -1);
           }
           checkChildRows(childRow);
@@ -166,11 +171,12 @@ export default class DataManager {
     const rowData = this.findDataByPath(this.sortedData, path);
 
     if (
-      (rowData.tableData.showDetailPanel || "").toString() === render.toString()
+      (rowData[tableData].showDetailPanel || "").toString() ===
+      render.toString()
     ) {
-      rowData.tableData.showDetailPanel = undefined;
+      rowData[tableData].showDetailPanel = undefined;
     } else {
-      rowData.tableData.showDetailPanel = render;
+      rowData[tableData].showDetailPanel = render;
     }
 
     if (
@@ -178,7 +184,7 @@ export default class DataManager {
       this.lastDetailPanelRow &&
       this.lastDetailPanelRow != rowData
     ) {
-      this.lastDetailPanelRow.tableData.showDetailPanel = undefined;
+      this.lastDetailPanelRow[tableData].showDetailPanel = undefined;
     }
 
     this.lastDetailPanelRow = rowData;
@@ -197,10 +203,10 @@ export default class DataManager {
 
   changeRowEditing(rowData, mode) {
     if (rowData) {
-      rowData.tableData.editing = mode;
+      rowData[tableData].editing = mode;
 
       if (this.lastEditingRow && this.lastEditingRow != rowData) {
-        this.lastEditingRow.tableData.editing = undefined;
+        this.lastEditingRow[tableData].editing = undefined;
       }
 
       if (mode) {
@@ -209,7 +215,7 @@ export default class DataManager {
         this.lastEditingRow = undefined;
       }
     } else if (this.lastEditingRow) {
-      this.lastEditingRow.tableData.editing = undefined;
+      this.lastEditingRow[tableData].editing = undefined;
       this.lastEditingRow = undefined;
     }
   }
@@ -227,7 +233,7 @@ export default class DataManager {
             setCheck(element.groups);
           } else {
             element.data.forEach((d) => {
-              d.tableData.checked = d.tableData.disabled ? false : checked;
+              d[tableData].checked = d[tableData].disabled ? false : checked;
               selectedCount++;
             });
           }
@@ -237,7 +243,7 @@ export default class DataManager {
       setCheck(this.groupedData);
     } else {
       this.searchedData.map((row) => {
-        row.tableData.checked = row.tableData.disabled ? false : checked;
+        row[tableData].checked = row[tableData].disabled ? false : checked;
         return row;
       });
       selectedCount = this.searchedData.length;
@@ -255,12 +261,12 @@ export default class DataManager {
   }
 
   changeGroupOrder(columnId) {
-    const column = this.columns.find((c) => c.tableData.id === columnId);
+    const column = this.columns.find((c) => c[tableData].id === columnId);
 
-    if (column.tableData.groupSort === "asc") {
-      column.tableData.groupSort = "desc";
+    if (column[tableData].groupSort === "asc") {
+      column[tableData].groupSort = "desc";
     } else {
-      column.tableData.groupSort = "asc";
+      column[tableData].groupSort = "asc";
     }
 
     this.sorted = false;
@@ -273,7 +279,7 @@ export default class DataManager {
 
   changeTreeExpand(path) {
     const rowData = this.findDataByPath(this.sortedData, path);
-    rowData.tableData.isTreeExpanded = !rowData.tableData.isTreeExpanded;
+    rowData[tableData].isTreeExpanded = !rowData[tableData].isTreeExpanded;
   }
 
   changeDetailPanelType(type) {
@@ -284,9 +290,9 @@ export default class DataManager {
     let start = 0;
 
     let groups = this.columns
-      .filter((col) => col.tableData.groupOrder > -1)
+      .filter((col) => col[tableData].groupOrder > -1)
       .sort(
-        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
+        (col1, col2) => col1[tableData].groupOrder - col2[tableData].groupOrder
       );
 
     if (
@@ -312,7 +318,7 @@ export default class DataManager {
       result.source.droppableId === "headers"
     ) {
       const newGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c[tableData].id == result.draggableId
       );
 
       if (newGroup.grouping === false || !newGroup.field) {
@@ -325,9 +331,9 @@ export default class DataManager {
       result.source.droppableId === "groups"
     ) {
       const removeGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
+        (c) => c[tableData].id == result.draggableId
       );
-      removeGroup.tableData.groupOrder = undefined;
+      removeGroup[tableData].groupOrder = undefined;
       groups.splice(result.source.index, 1);
     } else if (
       result.destination.droppableId === "headers" &&
@@ -338,8 +344,8 @@ export default class DataManager {
 
       // get the effective start and end considering hidden columns
       const sorted = this.columns
-        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter((column) => column.tableData.groupOrder === undefined);
+        .sort((a, b) => a[tableData].columnOrder - b[tableData].columnOrder)
+        .filter((column) => column[tableData].groupOrder === undefined);
       let numHiddenBeforeStart = 0;
       let numVisibleBeforeStart = 0;
       for (
@@ -378,7 +384,7 @@ export default class DataManager {
       }
 
       for (let i = 0; i < colsToMov.length; i++) {
-        colsToMov[i].tableData.columnOrder = effectiveStart + i;
+        colsToMov[i][tableData].columnOrder = effectiveStart + i;
       }
 
       return;
@@ -387,26 +393,26 @@ export default class DataManager {
     }
 
     for (let i = 0; i < groups.length; i++) {
-      groups[i].tableData.groupOrder = start + i;
+      groups[i][tableData].groupOrder = start + i;
     }
 
     this.sorted = this.grouped = false;
   }
 
   startCellEditable = (rowData, columnDef) => {
-    rowData.tableData.editCellList = [
-      ...(rowData.tableData.editCellList || []),
+    rowData[tableData].editCellList = [
+      ...(rowData[tableData].editCellList || []),
       columnDef,
     ];
   };
 
   finishCellEditable = (rowData, columnDef) => {
-    if (rowData.tableData.editCellList) {
-      var index = rowData.tableData.editCellList.findIndex(
-        (c) => c.tableData.id === columnDef.tableData.id
+    if (rowData[tableData].editCellList) {
+      var index = rowData[tableData].editCellList.findIndex(
+        (c) => c[tableData].id === columnDef[tableData].id
       );
       if (index !== -1) {
-        rowData.tableData.editCellList.splice(index, 1);
+        rowData[tableData].editCellList.splice(index, 1);
       }
     }
   };
@@ -416,32 +422,34 @@ export default class DataManager {
   };
 
   onBulkEditRowChanged = (oldData, newData) => {
-    this.bulkEditChangedRows[oldData.tableData.id] = {
+    this.bulkEditChangedRows[oldData[tableData].id] = {
       oldData,
       newData,
     };
   };
 
   onColumnResized(id, additionalWidth) {
-    const column = this.columns.find((c) => c.tableData.id === id);
+    const column = this.columns.find((c) => c[tableData].id === id);
     if (!column) return;
 
-    const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
+    const nextColumn = this.columns.find((c) => c[tableData].id === id + 1);
     if (!nextColumn) return;
 
-    // console.log("S i: " + column.tableData.initialWidth);
-    // console.log("S a: " + column.tableData.additionalWidth);
-    // console.log("S w: " + column.tableData.width);
+    // console.log("S i: " + column[tableData].initialWidth);
+    // console.log("S a: " + column[tableData].additionalWidth);
+    // console.log("S w: " + column[tableData].width);
 
-    column.tableData.additionalWidth = additionalWidth;
-    column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+    column[tableData].additionalWidth = additionalWidth;
+    column[
+      tableData
+    ].width = `calc(${column[tableData].initialWidth} + ${column[tableData].additionalWidth}px)`;
 
-    // nextColumn.tableData.additionalWidth = -1 * additionalWidth;
-    // nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+    // nextColumn[tableData].additionalWidth = -1 * additionalWidth;
+    // nextColumn[tableData].width = `calc(${nextColumn[tableData].initialWidth} + ${nextColumn[tableData].additionalWidth}px)`;
 
-    // console.log("F i: " + column.tableData.initialWidth);
-    // console.log("F a: " + column.tableData.additionalWidth);
-    // console.log("F w: " + column.tableData.width);
+    // console.log("F i: " + column[tableData].initialWidth);
+    // console.log("F a: " + column[tableData].additionalWidth);
+    // console.log("F w: " + column[tableData].width);
   }
 
   expandTreeForNodes = (data) => {
@@ -450,7 +458,7 @@ export default class DataManager {
       while (this.parentFunc(currentRow, this.data)) {
         let parent = this.parentFunc(currentRow, this.data);
         if (parent) {
-          parent.tableData.isTreeExpanded = true;
+          parent[tableData].isTreeExpanded = true;
         }
         currentRow = parent;
       }
@@ -463,9 +471,9 @@ export default class DataManager {
         (result, current) => {
           return (
             result &&
-            result.tableData &&
-            result.tableData.childRows &&
-            result.tableData.childRows[current]
+            result[tableData] &&
+            result[tableData].childRows &&
+            result[tableData].childRows[current]
           );
         },
         { tableData: { childRows: renderData } }
@@ -523,7 +531,7 @@ export default class DataManager {
 
     if (this.parentFunc) {
       dataType = "tree";
-    } else if (this.columns.find((a) => a.tableData.groupOrder > -1)) {
+    } else if (this.columns.find((a) => a[tableData].groupOrder > -1)) {
       dataType = "group";
     }
 
@@ -544,7 +552,9 @@ export default class DataManager {
   }
 
   sortList(list) {
-    const columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    const columnDef = this.columns.find(
+      (_) => _[tableData].id === this.orderBy
+    );
     let result = list;
 
     if (columnDef.customSort) {
@@ -628,7 +638,7 @@ export default class DataManager {
 
     if (this.applyFilters) {
       this.columns
-        .filter((columnDef) => columnDef.tableData.filterValue)
+        .filter((columnDef) => columnDef[tableData].filterValue)
         .forEach((columnDef) => {
           const { lookup, type, tableData } = columnDef;
           if (columnDef.customFilterAndSearch) {
@@ -780,9 +790,9 @@ export default class DataManager {
     const tmpData = [...this.searchedData];
 
     const groups = this.columns
-      .filter((col) => col.tableData.groupOrder > -1)
+      .filter((col) => col[tableData].groupOrder > -1)
       .sort(
-        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
+        (col1, col2) => col1[tableData].groupOrder - col2[tableData].groupOrder
       );
 
     const subData = tmpData.reduce(
@@ -838,7 +848,7 @@ export default class DataManager {
 
   treefyData() {
     this.sorted = this.paged = false;
-    this.data.forEach((a) => (a.tableData.childRows = null));
+    this.data.forEach((a) => (a[tableData].childRows = null));
     this.treefiedData = [];
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
@@ -846,10 +856,10 @@ export default class DataManager {
     // if filter or search is enabled, collapse the tree
     if (
       this.searchText ||
-      this.columns.some((columnDef) => columnDef.tableData.filterValue)
+      this.columns.some((columnDef) => columnDef[tableData].filterValue)
     ) {
       this.data.forEach((row) => {
-        row.tableData.isTreeExpanded = false;
+        row[tableData].isTreeExpanded = false;
       });
 
       // expand the tree for all nodes present after filtering and searching
@@ -857,30 +867,30 @@ export default class DataManager {
     }
 
     const addRow = (rowData) => {
-      rowData.tableData.markedForTreeRemove = false;
+      rowData[tableData].markedForTreeRemove = false;
       let parent = this.parentFunc(rowData, this.data);
       if (parent) {
-        parent.tableData.childRows = parent.tableData.childRows || [];
-        if (!parent.tableData.childRows.includes(rowData)) {
-          parent.tableData.childRows.push(rowData);
+        parent[tableData].childRows = parent[tableData].childRows || [];
+        if (!parent[tableData].childRows.includes(rowData)) {
+          parent[tableData].childRows.push(rowData);
           this.treefiedDataLength++;
         }
 
         addRow(parent);
 
-        rowData.tableData.path = [
-          ...parent.tableData.path,
-          parent.tableData.childRows.length - 1,
+        rowData[tableData].path = [
+          ...parent[tableData].path,
+          parent[tableData].childRows.length - 1,
         ];
         this.treeDataMaxLevel = Math.max(
           this.treeDataMaxLevel,
-          rowData.tableData.path.length
+          rowData[tableData].path.length
         );
       } else {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
           this.treefiedDataLength++;
-          rowData.tableData.path = [this.treefiedData.length - 1];
+          rowData[tableData].path = [this.treefiedData.length - 1];
         }
       }
     };
@@ -891,39 +901,39 @@ export default class DataManager {
     });
     const markForTreeRemove = (rowData) => {
       let pointer = this.treefiedData;
-      rowData.tableData.path.forEach((pathPart) => {
-        if (pointer.tableData && pointer.tableData.childRows) {
-          pointer = pointer.tableData.childRows;
+      rowData[tableData].path.forEach((pathPart) => {
+        if (pointer[tableData] && pointer[tableData].childRows) {
+          pointer = pointer[tableData].childRows;
         }
         pointer = pointer[pathPart];
       });
-      pointer.tableData.markedForTreeRemove = true;
+      pointer[tableData].markedForTreeRemove = true;
     };
 
     const traverseChildrenAndUnmark = (rowData) => {
-      if (rowData.tableData.childRows) {
-        rowData.tableData.childRows.forEach((row) => {
+      if (rowData[tableData].childRows) {
+        rowData[tableData].childRows.forEach((row) => {
           traverseChildrenAndUnmark(row);
         });
       }
-      rowData.tableData.markedForTreeRemove = false;
+      rowData[tableData].markedForTreeRemove = false;
     };
 
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
     this.data.forEach((rowData) => {
       if (
         !this.searchText &&
-        !this.columns.some((columnDef) => columnDef.tableData.filterValue)
+        !this.columns.some((columnDef) => columnDef[tableData].filterValue)
       ) {
-        if (rowData.tableData.isTreeExpanded === undefined) {
+        if (rowData[tableData].isTreeExpanded === undefined) {
           var isExpanded =
             typeof this.defaultExpanded === "boolean"
               ? this.defaultExpanded
               : this.defaultExpanded(rowData);
-          rowData.tableData.isTreeExpanded = isExpanded;
+          rowData[tableData].isTreeExpanded = isExpanded;
         }
       }
-      const hasSearchMatchedChildren = rowData.tableData.isTreeExpanded;
+      const hasSearchMatchedChildren = rowData[tableData].isTreeExpanded;
 
       if (!hasSearchMatchedChildren && this.searchedData.indexOf(rowData) < 0) {
         markForTreeRemove(rowData);
@@ -940,10 +950,10 @@ export default class DataManager {
     const traverseTreeAndDeleteMarked = (rowDataArray) => {
       for (var i = rowDataArray.length - 1; i >= 0; i--) {
         const item = rowDataArray[i];
-        if (item.tableData.childRows) {
-          traverseTreeAndDeleteMarked(item.tableData.childRows);
+        if (item[tableData].childRows) {
+          traverseTreeAndDeleteMarked(item[tableData].childRows);
         }
-        if (item.tableData.markedForTreeRemove) rowDataArray.splice(i, 1);
+        if (item[tableData].markedForTreeRemove) rowDataArray.splice(i, 1);
       }
     };
 
@@ -958,21 +968,22 @@ export default class DataManager {
       this.sortedData = [...this.groupedData];
 
       const groups = this.columns
-        .filter((col) => col.tableData.groupOrder > -1)
+        .filter((col) => col[tableData].groupOrder > -1)
         .sort(
-          (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
+          (col1, col2) =>
+            col1[tableData].groupOrder - col2[tableData].groupOrder
         );
 
       const sortGroups = (list, columnDef) => {
         if (columnDef.customSort) {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
+            columnDef[tableData].groupSort === "desc"
               ? (a, b) => columnDef.customSort(b.value, a.value, "group")
               : (a, b) => columnDef.customSort(a.value, b.value, "group")
           );
         } else {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
+            columnDef[tableData].groupSort === "desc"
               ? (a, b) => this.sort(b.value, a.value, columnDef.type)
               : (a, b) => this.sort(a.value, b.value, columnDef.type)
           );
@@ -1003,11 +1014,11 @@ export default class DataManager {
 
         const sortTree = (list) => {
           list.forEach((item) => {
-            if (item.tableData.childRows) {
-              item.tableData.childRows = this.sortList(
-                item.tableData.childRows
+            if (item[tableData].childRows) {
+              item[tableData].childRows = this.sortList(
+                item[tableData].childRows
               );
-              sortTree(item.tableData.childRows);
+              sortTree(item[tableData].childRows);
             }
           });
         };

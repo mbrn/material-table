@@ -11,7 +11,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { Tooltip } from "@material-ui/core";
 import * as CommonValues from "../utils/common-values";
 import equal from "fast-deep-equal";
-
+const tableData = CommonValues.tableData;
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
@@ -40,7 +40,7 @@ export class MTableHeader extends React.Component {
 
   handleMouseDown = (e, columnDef) => {
     this.setState({
-      lastAdditionalWidth: columnDef.tableData.additionalWidth,
+      lastAdditionalWidth: columnDef[tableData].additionalWidth,
       lastX: e.clientX,
       resizingColumnDef: columnDef,
     });
@@ -60,10 +60,11 @@ export class MTableHeader extends React.Component {
     );
 
     if (
-      this.state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
+      this.state.resizingColumnDef[tableData].additionalWidth !==
+      additionalWidth
     ) {
       this.props.onColumnResized(
-        this.state.resizingColumnDef.tableData.id,
+        this.state.resizingColumnDef[tableData].id,
         additionalWidth
       );
     }
@@ -75,7 +76,7 @@ export class MTableHeader extends React.Component {
 
   getCellStyle = (columnDef) => {
     const width = CommonValues.reducePercentsInCalc(
-      columnDef.tableData.width,
+      columnDef[tableData].width,
       this.props.scrollWidth
     );
 
@@ -105,17 +106,17 @@ export class MTableHeader extends React.Component {
     const mapArr = this.props.columns
       .filter(
         (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+          !columnDef.hidden && !(columnDef[tableData].groupOrder > -1)
       )
-      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+      .sort((a, b) => a[tableData].columnOrder - b[tableData].columnOrder)
       .map((columnDef, index) => {
         let content = columnDef.title;
 
         if (this.props.draggable) {
           content = (
             <Draggable
-              key={columnDef.tableData.id}
-              draggableId={columnDef.tableData.id.toString()}
+              key={columnDef[tableData].id}
+              draggableId={columnDef[tableData].id.toString()}
               index={index}
             >
               {(provided, snapshot) => (
@@ -135,11 +136,11 @@ export class MTableHeader extends React.Component {
           content = (
             <TableSortLabel
               IconComponent={this.props.icons.SortArrow}
-              active={this.props.orderBy === columnDef.tableData.id}
+              active={this.props.orderBy === columnDef[tableData].id}
               direction={this.props.orderDirection || "asc"}
               onClick={() => {
                 const orderDirection =
-                  columnDef.tableData.id !== this.props.orderBy
+                  columnDef[tableData].id !== this.props.orderBy
                     ? "asc"
                     : this.props.orderDirection === "asc"
                     ? "desc"
@@ -153,7 +154,7 @@ export class MTableHeader extends React.Component {
                     ? "asc"
                     : "desc";
                 this.props.onOrderChange(
-                  columnDef.tableData.id,
+                  columnDef[tableData].id,
                   orderDirection
                 );
               }}
@@ -185,8 +186,8 @@ export class MTableHeader extends React.Component {
                   cursor: "col-resize",
                   color:
                     this.state.resizingColumnDef &&
-                    this.state.resizingColumnDef.tableData.id ===
-                      columnDef.tableData.id
+                    this.state.resizingColumnDef[tableData].id ===
+                      columnDef[tableData].id
                       ? this.props.theme.palette.primary.main
                       : "inherit",
                 }}
@@ -204,7 +205,7 @@ export class MTableHeader extends React.Component {
             : "left";
         return (
           <TableCell
-            key={columnDef.tableData.id}
+            key={columnDef[tableData].id}
             align={cellAlignment}
             className={this.props.classes.header}
             style={this.getCellStyle(columnDef)}
@@ -329,14 +330,14 @@ export class MTableHeader extends React.Component {
     }
 
     this.props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+      .filter((columnDef) => columnDef[tableData].groupOrder > -1)
       .forEach((columnDef) => {
         headers.splice(
           0,
           0,
           <TableCell
             padding="checkbox"
-            key={"key-group-header" + columnDef.tableData.id}
+            key={"key-group-header" + columnDef[tableData].id}
             className={this.props.classes.header}
           />
         );

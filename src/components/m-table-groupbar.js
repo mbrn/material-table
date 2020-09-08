@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import * as React from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import { tableData } from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 class MTableGroupbar extends React.Component {
@@ -58,8 +59,8 @@ class MTableGroupbar extends React.Component {
               {this.props.groupColumns.map((columnDef, index) => {
                 return (
                   <Draggable
-                    key={columnDef.tableData.id}
-                    draggableId={columnDef.tableData.id.toString()}
+                    key={columnDef[tableData].id}
+                    draggableId={columnDef[tableData].id.toString()}
                     index={index}
                   >
                     {(provided, snapshot) => (
@@ -82,12 +83,12 @@ class MTableGroupbar extends React.Component {
                               <div style={{ float: "left" }}>
                                 {columnDef.title}
                               </div>
-                              {columnDef.tableData.groupSort && (
+                              {columnDef[tableData].groupSort && (
                                 <this.props.icons.SortArrow
                                   style={{
                                     transition: "300ms ease all",
                                     transform:
-                                      columnDef.tableData.groupSort === "asc"
+                                      columnDef[tableData].groupSort === "asc"
                                         ? "rotate(-180deg)"
                                         : "none",
                                     fontSize: 18,

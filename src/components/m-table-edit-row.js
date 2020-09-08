@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import * as React from "react";
 import { byString, setByString } from "../utils";
 import * as CommonValues from "../utils/common-values";
+const tableData = CommonValues.tableData;
 /* eslint-enable no-unused-vars */
 
 export default class MTableEditRow extends React.Component {
@@ -33,9 +34,9 @@ export default class MTableEditRow extends React.Component {
     const mapArr = this.props.columns
       .filter(
         (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+          !columnDef.hidden && !(columnDef[tableData].groupOrder > -1)
       )
-      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+      .sort((a, b) => a[tableData].columnOrder - b[tableData].columnOrder)
       .map((columnDef, index) => {
         const value =
           typeof this.state.data[columnDef.field] !== "undefined"
@@ -93,7 +94,7 @@ export default class MTableEditRow extends React.Component {
               icons={this.props.icons}
               columnDef={columnDef}
               value={readonlyValue}
-              key={columnDef.tableData.id}
+              key={columnDef[tableData].id}
               rowData={this.props.data}
               style={getCellStyle(columnDef, value)}
             />
@@ -120,14 +121,14 @@ export default class MTableEditRow extends React.Component {
           return (
             <TableCell
               size={size}
-              key={columnDef.tableData.id}
+              key={columnDef[tableData].id}
               align={
                 ["numeric"].indexOf(columnDef.type) !== -1 ? "right" : "left"
               }
               style={getCellStyle(columnDef, value)}
             >
               <EditComponent
-                key={columnDef.tableData.id}
+                key={columnDef[tableData].id}
                 columnDef={cellProps}
                 value={value}
                 error={!error.isValid}
@@ -161,7 +162,7 @@ export default class MTableEditRow extends React.Component {
 
   handleSave = () => {
     const newData = this.state.data;
-    delete newData.tableData;
+    delete newData[tableData];
     this.props.onEditingApproved(
       this.props.mode,
       this.state.data,
@@ -267,7 +268,7 @@ export default class MTableEditRow extends React.Component {
     } else {
       const colSpan = this.props.columns.filter(
         (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+          !columnDef.hidden && !(columnDef[tableData].groupOrder > -1)
       ).length;
       columns = [
         <TableCell
@@ -330,14 +331,14 @@ export default class MTableEditRow extends React.Component {
     }
 
     this.props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+      .filter((columnDef) => columnDef[tableData].groupOrder > -1)
       .forEach((columnDef) => {
         columns.splice(
           0,
           0,
           <TableCell
             padding="none"
-            key={"key-group-cell" + columnDef.tableData.id}
+            key={"key-group-cell" + columnDef[tableData].id}
           />
         );
       });

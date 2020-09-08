@@ -8,6 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from "prop-types";
 import * as React from "react";
 import * as CommonValues from "../utils/common-values";
+const tableData = CommonValues.tableData;
 /* eslint-enable no-unused-vars */
 
 export default class MTableBodyRow extends React.Component {
@@ -16,16 +17,16 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns
       .filter(
         (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
+          !columnDef.hidden && !(columnDef[tableData].groupOrder > -1)
       )
-      .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+      .sort((a, b) => a[tableData].columnOrder - b[tableData].columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
 
         if (
-          this.props.data.tableData.editCellList &&
-          this.props.data.tableData.editCellList.find(
-            (c) => c.tableData.id === columnDef.tableData.id
+          this.props.data[tableData].editCellList &&
+          this.props.data[tableData].editCellList.find(
+            (c) => c[tableData].id === columnDef[tableData].id
           )
         ) {
           return (
@@ -37,9 +38,9 @@ export default class MTableBodyRow extends React.Component {
               size={size}
               key={
                 "cell-" +
-                this.props.data.tableData.id +
+                this.props.data[tableData].id +
                 "-" +
-                columnDef.tableData.id
+                columnDef[tableData].id
               }
               rowData={this.props.data}
               cellEditable={this.props.cellEditable}
@@ -60,9 +61,9 @@ export default class MTableBodyRow extends React.Component {
               value={value}
               key={
                 "cell-" +
-                this.props.data.tableData.id +
+                this.props.data[tableData].id +
                 "-" +
-                columnDef.tableData.id
+                columnDef[tableData].id
               }
               rowData={this.props.data}
               cellEditable={
@@ -136,9 +137,9 @@ export default class MTableBodyRow extends React.Component {
       >
         <Checkbox
           size={size}
-          checked={this.props.data.tableData.checked === true}
+          checked={this.props.data[tableData].checked === true}
           onClick={(e) => e.stopPropagation()}
-          value={this.props.data.tableData.id.toString()}
+          value={this.props.data[tableData].id.toString()}
           onChange={(event) =>
             this.props.onRowSelected(event, this.props.path, this.props.data)
           }
@@ -179,7 +180,7 @@ export default class MTableBodyRow extends React.Component {
             style={{
               transition: "all ease 200ms",
               ...this.rotateIconStyle(
-                this.props.data.tableData.showDetailPanel
+                this.props.data[tableData].showDetailPanel
               ),
             }}
             onClick={(event) => {
@@ -211,8 +212,9 @@ export default class MTableBodyRow extends React.Component {
               }
 
               const isOpen =
-                (this.props.data.tableData.showDetailPanel || "").toString() ===
-                panel.render.toString();
+                (
+                  this.props.data[tableData].showDetailPanel || ""
+                ).toString() === panel.render.toString();
 
               let iconButton = <this.props.icons.DetailPanel />;
               let animation = true;
@@ -280,8 +282,8 @@ export default class MTableBodyRow extends React.Component {
   renderTreeDataColumn() {
     const size = CommonValues.elementSize(this.props);
     if (
-      this.props.data.tableData.childRows &&
-      this.props.data.tableData.childRows.length > 0
+      this.props.data[tableData].childRows &&
+      this.props.data[tableData].childRows.length > 0
     ) {
       return (
         <TableCell
@@ -295,7 +297,9 @@ export default class MTableBodyRow extends React.Component {
             style={{
               transition: "all ease 200ms",
               marginLeft: this.props.level * 9,
-              ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded),
+              ...this.rotateIconStyle(
+                this.props.data[tableData].isTreeExpanded
+              ),
             }}
             onClick={(event) => {
               this.props.onTreeExpandChanged(this.props.path, this.props.data);
@@ -386,7 +390,7 @@ export default class MTableBodyRow extends React.Component {
     }
 
     this.props.columns
-      .filter((columnDef) => columnDef.tableData.groupOrder > -1)
+      .filter((columnDef) => columnDef[tableData].groupOrder > -1)
       .forEach((columnDef) => {
         renderColumns.splice(
           0,
@@ -394,7 +398,7 @@ export default class MTableBodyRow extends React.Component {
           <TableCell
             size={size}
             padding="none"
-            key={"key-group-cell" + columnDef.tableData.id}
+            key={"key-group-cell" + columnDef[tableData].id}
           />
         );
       });
@@ -450,8 +454,8 @@ export default class MTableBodyRow extends React.Component {
         >
           {renderColumns}
         </TableRow>
-        {this.props.data.tableData &&
-          this.props.data.tableData.showDetailPanel && (
+        {this.props.data[tableData] &&
+          this.props.data[tableData].showDetailPanel && (
             <TableRow
             // selected={this.props.index % 2 === 0}
             >
@@ -460,14 +464,14 @@ export default class MTableBodyRow extends React.Component {
                 colSpan={renderColumns.length}
                 padding="none"
               >
-                {this.props.data.tableData.showDetailPanel(this.props.data)}
+                {this.props.data[tableData].showDetailPanel(this.props.data)}
               </TableCell>
             </TableRow>
           )}
-        {this.props.data.tableData.childRows &&
-          this.props.data.tableData.isTreeExpanded &&
-          this.props.data.tableData.childRows.map((data, index) => {
-            if (data.tableData.editing) {
+        {this.props.data[tableData].childRows &&
+          this.props.data[tableData].isTreeExpanded &&
+          this.props.data[tableData].childRows.map((data, index) => {
+            if (data[tableData].editing) {
               return (
                 <this.props.components.EditRow
                   columns={this.props.columns.filter((columnDef) => {
@@ -479,7 +483,7 @@ export default class MTableBodyRow extends React.Component {
                   localization={this.props.localization}
                   getFieldValue={this.props.getFieldValue}
                   key={index}
-                  mode={data.tableData.editing}
+                  mode={data[tableData].editing}
                   options={this.props.options}
                   isTreeData={this.props.isTreeData}
                   detailPanel={this.props.detailPanel}

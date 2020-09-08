@@ -4,7 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import PropTypes from "prop-types";
 import parseISO from "date-fns/parseISO";
 import * as CommonValues from "../utils/common-values";
-
+const tableData = CommonValues.tableData;
 /* eslint-enable no-unused-vars */
 
 /* eslint-disable no-useless-escape */
@@ -118,7 +118,7 @@ export default class MTableCell extends React.Component {
 
   getStyle = () => {
     const width = CommonValues.reducePercentsInCalc(
-      this.props.columnDef.tableData.width,
+      this.props.columnDef[tableData].width,
       this.props.scrollWidth
     );
 

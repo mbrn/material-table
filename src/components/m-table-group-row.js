@@ -4,6 +4,7 @@ import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { tableData } from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 export default class MTableGroupRow extends React.Component {
@@ -54,7 +55,7 @@ export default class MTableGroupRow extends React.Component {
         ));
       } else {
         detail = this.props.groupData.data.map((rowData, index) => {
-          if (rowData.tableData.editing) {
+          if (rowData[tableData].editing) {
             return (
               <this.props.components.EditRow
                 columns={this.props.columns}
@@ -64,7 +65,7 @@ export default class MTableGroupRow extends React.Component {
                 path={[...this.props.path, index]}
                 localization={this.props.localization}
                 key={index}
-                mode={rowData.tableData.editing}
+                mode={rowData[tableData].editing}
                 options={this.props.options}
                 isTreeData={this.props.isTreeData}
                 detailPanel={this.props.detailPanel}

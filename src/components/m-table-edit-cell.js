@@ -6,6 +6,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import withTheme from "@material-ui/core/styles/withTheme";
 import { MTable } from "..";
+import { tableData } from "../utils/common-values";
+
 /* eslint-enable no-unused-vars */
 
 class MTableEditCell extends React.Component {
@@ -22,7 +24,7 @@ class MTableEditCell extends React.Component {
     let cellStyle = {
       boxShadow: "2px 0px 15px rgba(125,147,178,.25)",
       color: "inherit",
-      width: this.props.columnDef.tableData.width,
+      width: this.props.columnDef[tableData].width,
       boxSizing: "border-box",
       fontSize: "inherit",
       fontFamily: "inherit",

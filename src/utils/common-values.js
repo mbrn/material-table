@@ -1,3 +1,5 @@
+export const tableData = Symbol("tableData");
+
 export const elementSize = (props) =>
   props.options.padding === "default" ? "medium" : "small";
 export const baseIconSize = (props) =>

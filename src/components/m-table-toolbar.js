@@ -16,6 +16,7 @@ import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
 import "jspdf-autotable";
 import * as React from "react";
+import { tableData } from "../utils/common-values";
 const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
 /* eslint-enable no-unused-vars */
 
@@ -43,7 +44,7 @@ export class MTableToolbar extends React.Component {
           columnDef.field
       )
       .sort((a, b) =>
-        a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1
+        a[tableData].columnOrder > b[tableData].columnOrder ? 1 : -1
       );
     const data = (this.props.exportAllData
       ? this.props.data
@@ -212,16 +213,16 @@ export class MTableToolbar extends React.Component {
               {this.props.columns.map((col) => {
                 if (!col.hidden || col.hiddenByColumnsButton) {
                   return (
-                    <li key={col.tableData.id}>
+                    <li key={col[tableData].id}>
                       <MenuItem
                         className={classes.formControlLabel}
                         component="label"
-                        htmlFor={`column-toggle-${col.tableData.id}`}
+                        htmlFor={`column-toggle-${col[tableData].id}`}
                         disabled={col.removable === false}
                       >
                         <Checkbox
                           checked={!col.hidden}
-                          id={`column-toggle-${col.tableData.id}`}
+                          id={`column-toggle-${col[tableData].id}`}
                           onChange={() =>
                             this.props.onColumnsChanged(col, !col.hidden)
                           }

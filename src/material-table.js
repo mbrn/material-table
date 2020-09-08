@@ -12,7 +12,7 @@ import { debounce } from "debounce";
 import equal from "fast-deep-equal";
 import { withStyles } from "@material-ui/core";
 import * as CommonValues from "./utils/common-values";
-
+const tableData = CommonValues.tableData;
 /* eslint-enable no-unused-vars */
 
 export default class MaterialTable extends React.Component {
@@ -31,14 +31,14 @@ export default class MaterialTable extends React.Component {
       ...renderState,
       query: {
         filters: renderState.columns
-          .filter((a) => a.tableData.filterValue)
+          .filter((a) => a[tableData].filterValue)
           .map((a) => ({
             column: a,
             operator: "=",
-            value: a.tableData.filterValue,
+            value: a[tableData].filterValue,
           })),
         orderBy: renderState.columns.find(
-          (a) => a.tableData.id === renderState.orderBy
+          (a) => a[tableData].id === renderState.orderBy
         ),
         orderDirection: renderState.orderDirection,
         page: 0,
@@ -123,7 +123,7 @@ export default class MaterialTable extends React.Component {
   cleanColumns(columns) {
     return columns.map((col) => {
       const colClone = { ...col };
-      delete colClone.tableData;
+      delete colClone[tableData];
       return colClone;
     });
   }
@@ -335,7 +335,7 @@ export default class MaterialTable extends React.Component {
   };
 
   onChangeGroupOrder = (groupedColumn) => {
-    this.dataManager.changeGroupOrder(groupedColumn.tableData.id);
+    this.dataManager.changeGroupOrder(groupedColumn[tableData].id);
     this.setState(this.dataManager.getRenderState());
   };
 
@@ -347,7 +347,7 @@ export default class MaterialTable extends React.Component {
       const query = { ...this.state.query };
       query.page = 0;
       query.orderBy = this.state.columns.find(
-        (a) => a.tableData.id === newOrderBy
+        (a) => a[tableData].id === newOrderBy
       );
       query.orderDirection = orderDirection;
       this.onQueryChange(query, () => {
@@ -431,7 +431,7 @@ export default class MaterialTable extends React.Component {
     const result = {
       combine: null,
       destination: { droppableId: "headers", index: 0 },
-      draggableId: groupedColumn.tableData.id,
+      draggableId: groupedColumn[tableData].id,
       mode: "FLUID",
       reason: "DROP",
       source: { index, droppableId: "groups" },
@@ -633,7 +633,7 @@ export default class MaterialTable extends React.Component {
 
       const findSelecteds = (list) => {
         list.forEach((row) => {
-          if (row.tableData.checked) {
+          if (row[tableData].checked) {
             selectedRows.push(row);
           }
         });
@@ -668,11 +668,11 @@ export default class MaterialTable extends React.Component {
       const query = { ...this.state.query };
       query.page = 0;
       query.filters = this.state.columns
-        .filter((a) => a.tableData.filterValue)
+        .filter((a) => a[tableData].filterValue)
         .map((a) => ({
           column: a,
           operator: "=",
-          value: a.tableData.filterValue,
+          value: a[tableData].filterValue,
         }));
 
       this.onQueryChange(query);
@@ -680,11 +680,11 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState(), () => {
         if (this.props.onFilterChange) {
           const appliedFilters = this.state.columns
-            .filter((a) => a.tableData.filterValue)
+            .filter((a) => a[tableData].filterValue)
             .map((a) => ({
               column: a,
               operator: "=",
-              value: a.tableData.filterValue,
+              value: a[tableData].filterValue,
             }));
           this.props.onFilterChange(appliedFilters);
         }
@@ -696,7 +696,7 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeTreeExpand(path);
     this.setState(this.dataManager.getRenderState(), () => {
       this.props.onTreeExpandChange &&
-        this.props.onTreeExpandChange(data, data.tableData.isTreeExpanded);
+        this.props.onTreeExpandChange(data, data[tableData].isTreeExpanded);
     });
   };
 
@@ -838,7 +838,7 @@ export default class MaterialTable extends React.Component {
             props.parentChildData
               ? this.state.treefiedDataLength
               : this.state.columns.filter(
-                  (col) => col.tableData.groupOrder > -1
+                  (col) => col[tableData].groupOrder > -1
                 ).length > 0
               ? this.state.groupedDataLength
               : this.state.data.length
@@ -942,11 +942,11 @@ export default class MaterialTable extends React.Component {
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
       const colDef =
         props.columns[count >= 0 ? i : props.columns.length - 1 - i];
-      if (colDef.tableData) {
-        if (typeof colDef.tableData.width === "number") {
-          result.push(colDef.tableData.width + "px");
+      if (colDef[tableData]) {
+        if (typeof colDef[tableData].width === "number") {
+          result.push(colDef[tableData].width + "px");
         } else {
-          result.push(colDef.tableData.width);
+          result.push(colDef[tableData].width);
         }
       }
     }
@@ -976,7 +976,7 @@ export default class MaterialTable extends React.Component {
               selectedRows={
                 this.state.selectedCount > 0
                   ? this.state.originalData.filter((a) => {
-                      return a.tableData.checked;
+                      return a[tableData].checked;
                     })
                   : []
               }
@@ -1019,10 +1019,10 @@ export default class MaterialTable extends React.Component {
                 ...props.localization.grouping,
               }}
               groupColumns={this.state.columns
-                .filter((col) => col.tableData.groupOrder > -1)
+                .filter((col) => col[tableData].groupOrder > -1)
                 .sort(
                   (col1, col2) =>
-                    col1.tableData.groupOrder - col2.tableData.groupOrder
+                    col1[tableData].groupOrder - col2[tableData].groupOrder
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}

@@ -4,6 +4,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { tableData } from "../utils/common-values";
 /* eslint-enable no-unused-vars */
 
 class MTableBody extends React.Component {
@@ -76,7 +77,7 @@ class MTableBody extends React.Component {
 
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
-      if (data.tableData.editing || this.props.bulkEditOpen) {
+      if (data[tableData].editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
             columns={this.props.columns.filter((columnDef) => {
@@ -92,8 +93,8 @@ class MTableBody extends React.Component {
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization,
             }}
-            key={"row-" + data.tableData.id}
-            mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
+            key={"row-" + data[tableData].id}
+            mode={this.props.bulkEditOpen ? "bulk" : data[tableData].editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -112,7 +113,7 @@ class MTableBody extends React.Component {
             data={data}
             index={index}
             errorState={this.props.errorState}
-            key={"row-" + data.tableData.id}
+            key={"row-" + data[tableData].id}
             level={0}
             options={this.props.options}
             localization={{
@@ -187,9 +188,9 @@ class MTableBody extends React.Component {
   render() {
     let renderData = this.props.renderData;
     const groups = this.props.columns
-      .filter((col) => col.tableData.groupOrder > -1)
+      .filter((col) => col[tableData].groupOrder > -1)
       .sort(
-        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
+        (col1, col2) => col1[tableData].groupOrder - col2[tableData].groupOrder
       );
 
     let emptyRowCount = 0;
