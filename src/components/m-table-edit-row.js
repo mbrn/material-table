@@ -100,6 +100,7 @@ export default class MTableEditRow extends React.Component {
           );
         } else {
           const { editComponent, ...cellProps } = columnDef;
+          const cellAlignment = columnDef.align !== undefined ? columnDef.align : ['numeric', 'currency'].indexOf(columnDef.type) !== -1 ? "right" : "left";
           const EditComponent =
             editComponent || this.props.components.EditField;
           let error = { isValid: true, helperText: "" };
@@ -121,9 +122,7 @@ export default class MTableEditRow extends React.Component {
             <TableCell
               size={size}
               key={columnDef.tableData.id}
-              align={
-                ["numeric"].indexOf(columnDef.type) !== -1 ? "right" : "left"
-              }
+              align={cellAlignment}
               style={getCellStyle(columnDef, value)}
             >
               <EditComponent
