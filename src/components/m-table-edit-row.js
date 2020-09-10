@@ -160,6 +160,9 @@ export default class MTableEditRow extends React.Component {
   }
 
   handleSave = () => {
+    if (!this.isValid()) {
+      return;
+    }
     const newData = this.state.data;
     delete newData.tableData;
     this.props.onEditingApproved(
@@ -169,17 +172,8 @@ export default class MTableEditRow extends React.Component {
     );
   };
 
-  renderActions() {
-    if (this.props.mode === "bulk") {
-      return <TableCell padding="none" key="key-actions-column" />;
-    }
-
-    const size = CommonValues.elementSize(this.props);
-    const localization = {
-      ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
-    };
-    const isValid = this.props.columns.every((column) => {
+  isValid = () => {
+    return this.props.columns.every((column) => {
       if (column.validate) {
         const response = column.validate(this.state.data);
         switch (typeof response) {
@@ -194,6 +188,19 @@ export default class MTableEditRow extends React.Component {
         return true;
       }
     });
+  };
+
+  renderActions() {
+    if (this.props.mode === "bulk") {
+      return <TableCell padding="none" key="key-actions-column" />;
+    }
+
+    const size = CommonValues.elementSize(this.props);
+    const localization = {
+      ...MTableEditRow.defaultProps.localization,
+      ...this.props.localization,
+    };
+    const isValid = this.isValid();
     const actions = [
       {
         icon: this.props.icons.Check,
