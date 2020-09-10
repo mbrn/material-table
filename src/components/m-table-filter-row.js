@@ -101,7 +101,9 @@ class MTableFilterRow extends React.Component {
   renderFilterComponent = (columnDef) =>
     React.createElement(columnDef.filterComponent, {
       columnDef: columnDef,
-      onFilterChanged: this.props.onFilterChanged,
+      onFilterChanged: (rowId = columnDef.tableData.id, value) => {
+        this.props.onFilterChanged(rowId, value);
+      },
     });
 
   renderBooleanFilter = (columnDef) => (

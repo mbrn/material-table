@@ -178,7 +178,8 @@ export interface Column<RowData extends object> {
   filtering?: boolean;
   filterComponent?: (props: {
     columnDef: Column<RowData>;
-    onFilterChanged: (rowId: string, value: any) => void;
+    onFilterChanged?(rowId: string, value: any): void;
+    onFilterChanged?(value: any): void;
   }) => React.ReactElement<any>;
   filterPlaceholder?: string;
   filterCellStyle?: React.CSSProperties;
