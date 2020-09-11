@@ -331,7 +331,7 @@ export interface Options<RowData extends object> {
   groupTitle?: (groupData: any) => any;
   overflowY?: "visible" | "hidden" | "scroll" | "auto" | "initial" | "inherit";
   pageSize?: number;
-  pageSizeOptions?: number[];
+  pageSizeOptions?: Array<number | { value: number; label: string }>;
   paginationType?: "normal" | "stepped";
   paginationPosition?: "bottom" | "top" | "both";
   rowStyle?:
