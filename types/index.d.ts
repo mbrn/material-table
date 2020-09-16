@@ -103,6 +103,7 @@ export interface DetailPanel<RowData extends object> {
   icon?: string | React.ComponentType<any>;
   openIcon?: string | React.ComponentType<any>;
   tooltip?: string;
+  iconProps?: IconProps;
   render: (rowData: RowData) => string | React.ReactNode;
 }
 
