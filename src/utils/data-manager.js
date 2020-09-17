@@ -84,7 +84,10 @@ export default class DataManager {
         id: index,
       };
 
-      if (columnDef.width !== undefined) {
+      if (
+        !undefinedWidthColumns.includes(columnDef) &&
+        columnDef.tableData.width !== undefined
+      ) {
         usedWidth.push(columnDef.tableData.width);
       }
 
