@@ -85,7 +85,8 @@ class MTableFilterRow extends React.Component {
             selecteds
               .map((selected) => columnDef.lookup[selected])
               .sort((a, b) => a.localeCompare(b))
-              .join(", ")          }
+              .join(", ")
+          }
           MenuProps={MenuProps}
           style={{ marginTop: 0 }}
         >
