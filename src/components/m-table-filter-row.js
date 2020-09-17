@@ -82,8 +82,10 @@ class MTableFilterRow extends React.Component {
             <Input id={"select-multiple-checkbox" + columnDef.tableData.id} />
           }
           renderValue={(selecteds) =>
-            selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
-          }
+            selecteds
+              .map((selected) => columnDef.lookup[selected])
+              .sort((a, b) => a.localeCompare(b))
+              .join(", ")          }
           MenuProps={MenuProps}
           style={{ marginTop: 0 }}
         >
