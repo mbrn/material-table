@@ -82,7 +82,7 @@ export default class MaterialTable extends React.Component {
           : "";
     }
 
-    this.dataManager.setColumns(props.columns);
+    this.dataManager.setColumns(props.columns, isInit);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
     this.dataManager.changeRowEditing();
 
