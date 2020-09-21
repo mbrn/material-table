@@ -166,6 +166,7 @@ export interface Column<RowData extends object> {
   defaultGroupSort?: "asc" | "desc";
   defaultSort?: "asc" | "desc";
   disableClick?: boolean;
+  disableInternalSorting?: boolean;
   editComponent?: (
     props: EditComponentProps<RowData>
   ) => React.ReactElement<any>;
@@ -302,6 +303,7 @@ export interface Options<RowData extends object> {
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: "single" | "multiple";
+  disableInternalSorting?: boolean;
   doubleHorizontalScroll?: boolean;
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;

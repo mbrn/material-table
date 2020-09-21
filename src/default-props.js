@@ -203,6 +203,7 @@ export const defaultProps = {
     columnsButton: false,
     detailPanelType: "multiple",
     debounceInterval: 200,
+    disableInternalSorting: false,
     doubleHorizontalScroll: false,
     emptyRowsWhenPaging: true,
     exportAllData: false,

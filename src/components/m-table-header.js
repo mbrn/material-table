@@ -352,6 +352,7 @@ export class MTableHeader extends React.Component {
 
 MTableHeader.defaultProps = {
   dataCount: 0,
+  disableInternalSorting: false,
   hasSelection: false,
   headerStyle: {},
   selectedCount: 0,
@@ -370,6 +371,7 @@ MTableHeader.defaultProps = {
 MTableHeader.propTypes = {
   columns: PropTypes.array.isRequired,
   dataCount: PropTypes.number,
+  disableInternalSorting: PropTypes.bool,
   hasDetailPanel: PropTypes.bool.isRequired,
   detailPanelColumnAlignment: PropTypes.string,
   hasSelection: PropTypes.bool,

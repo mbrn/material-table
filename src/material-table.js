@@ -84,6 +84,8 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
+    this.dataManager.disableInternalSorting =
+      props.options.disableInternalSorting;
     this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
@@ -858,6 +860,7 @@ export default class MaterialTable extends React.Component {
           onOrderChange={this.onChangeOrder}
           actionsHeaderIndex={props.options.actionsColumnIndex}
           sorting={props.options.sorting}
+          disableInternalSorting={props.options.disableInternalSorting}
           grouping={props.options.grouping}
           isTreeData={this.props.parentChildData !== undefined}
           draggable={props.options.draggable}

@@ -45,6 +45,7 @@ export const propTypes = {
       customSort: PropTypes.func,
       defaultFilter: PropTypes.any,
       defaultSort: PropTypes.oneOf(["asc", "desc"]),
+      disableInternalSorting: PropTypes.bool,
       editComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
       emptyValue: PropTypes.oneOfType([
         PropTypes.string,
@@ -305,6 +306,7 @@ export const propTypes = {
     defaultExpanded: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(["single", "multiple"]),
+    disableInternalSorting: PropTypes.bool,
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,

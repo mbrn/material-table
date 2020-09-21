@@ -7,6 +7,7 @@ export default class DataManager {
   applySort = false;
   currentPage = 0;
   detailPanelType = "multiple";
+  disableInternalSorting = false;
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -545,6 +546,11 @@ export default class DataManager {
 
   sortList(list) {
     const columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+
+    if (this.disableInternalSorting || columnDef.disableInternalSorting) {
+      return list;
+    }
+
     let result = list;
 
     if (columnDef.customSort) {
