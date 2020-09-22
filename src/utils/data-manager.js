@@ -59,11 +59,9 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns, isInit) {
+  setColumns(columns) {
     const undefinedWidthColumns = columns.filter(
-      (c) =>
-        c.width === undefined &&
-        (!c.hidden || (isInit && c.hiddenByColumnsButton))
+      (c) => c.width === undefined && !c.hidden
     );
     let usedWidth = ["0px"];
 
@@ -576,7 +574,7 @@ export default class DataManager {
     return result;
   }
 
-  getRenderState = () => {
+  getRenderState = (resetColsWidth) => {
     if (this.filtered === false) {
       this.filterData();
     }
@@ -599,6 +597,20 @@ export default class DataManager {
 
     if (this.paged === false) {
       this.pageData();
+    }
+
+    if (resetColsWidth) {
+      this.setColumns(
+        this.columns.map((col) => ({
+          ...col,
+          width: undefined,
+          tableData: {
+            ...col.tableData,
+            initialWidth: undefined,
+            width: undefined,
+          },
+        }))
+      );
     }
 
     return {
