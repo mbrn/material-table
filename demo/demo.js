@@ -429,6 +429,7 @@ class App extends Component {
         tooltip: "This is tooltip text",
         editPlaceholder: "This is placeholder",
         maxWidth: 50,
+        hidden: true,
       },
       {
         title: "Soyadı",
@@ -437,6 +438,8 @@ class App extends Component {
         tooltip: "This is tooltip text",
         editable: "never",
         resizable: false,
+        hidden: true,
+        hiddenByColumnsButton: true,
       },
       { title: "Evli", field: "isMarried" },
       {
@@ -504,6 +507,7 @@ class App extends Component {
                   //   },
                   // }}
                   options={{
+                    columnsButton: true,
                     tableLayout: "fixed",
                     columnResizable: true,
                     headerSelectionProps: {
