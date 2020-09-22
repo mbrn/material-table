@@ -24,7 +24,9 @@ class MTableAction extends React.Component {
       }
     }
 
-    if (action.hidden) {
+    if (typeof action.hidden === "function" && action.hidden(this.props.data)) {
+      return null;
+    } else if (typeof action.hidden === "boolean" && action.hidden) {
       return null;
     }
 

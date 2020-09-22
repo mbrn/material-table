@@ -114,7 +114,7 @@ export interface Action<RowData extends object> {
   tooltip?: string;
   onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
-  hidden?: boolean;
+  hidden?: boolean | ((data: RowData | RowData[]) => boolean);
 }
 
 export interface EditComponentProps<RowData extends object> {

@@ -482,6 +482,26 @@ class App extends Component {
               <Grid item xs={12}>
                 {this.state.selectedRows && this.state.selectedRows.length}
                 <MaterialTable
+                  actions={[
+                    {
+                      icon: "save",
+                      tooltip: "Save",
+                      onClick: (E, rowData) => alert(rowData.name),
+                      hidden: (rowData) => rowData.name !== "A1",
+                    },
+                    {
+                      icon: "home",
+                      tooltip: "Home",
+                      onClick: (E, rowData) => alert(rowData.name),
+                      hidden: false,
+                    },
+                    {
+                      icon: "remove",
+                      tooltip: "Remove",
+                      onClick: (E, rowData) => alert(rowData.name),
+                      hidden: true,
+                    },
+                  ]}
                   tableRef={this.tableRef}
                   columns={this.state.columns}
                   data={this.state.data}

@@ -28,7 +28,7 @@ export const propTypes = {
         onClick: PropTypes.func.isRequired,
         iconProps: PropTypes.object,
         disabled: PropTypes.bool,
-        hidden: PropTypes.bool,
+        hidden: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
       }),
     ])
   ),
