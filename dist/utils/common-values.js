@@ -1,12 +1,12 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.selectionMaxWidth = exports.actionsColumnWidth = exports.rowActions = exports.baseIconSize = exports.elementSize = void 0;
 
 var elementSize = function elementSize(props) {
-  return props.options.padding === 'default' ? 'medium' : 'small';
+  return props.options.padding === "default" ? "medium" : "small";
 };
 
 exports.elementSize = elementSize;
