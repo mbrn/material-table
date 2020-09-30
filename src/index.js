@@ -24,6 +24,9 @@ const styles = (theme) => ({
   paginationSelectRoot: {
     margin: 0,
   },
+  draggableRow: {
+    display: "table",
+  },
 });
 
 export default withStyles(styles, { withTheme: true })((props) => (

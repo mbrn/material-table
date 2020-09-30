@@ -1,4 +1,12 @@
-import { Grid, MuiThemeProvider, Button } from "@material-ui/core";
+import {
+  Grid,
+  MuiThemeProvider,
+  FormControl,
+  FormHelperText,
+  MenuItem,
+  Select,
+  Button,
+} from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
@@ -33,6 +41,7 @@ for (let i = 0; i < 1; i++) {
 
 class App extends Component {
   tableRef = React.createRef();
+  remoteDataTableRef = React.createRef();
 
   colRenderCount = 0;
 
@@ -471,6 +480,22 @@ class App extends Component {
       { title: "First Name", field: "first_name", defaultFilter: "De" },
       { title: "Last Name", field: "last_name" },
     ],
+    dragOption: "disabled",
+    remoteDataOrder: [],
+  };
+
+  resetDataOrder = (data) => {
+    this.state.remoteDataOrder = [];
+    data.forEach((el) => this.state.remoteDataOrder.push(el.id));
+  };
+
+  reorderData = (data) => {
+    return data.sort((a, b) => {
+      const aPos = this.state.remoteDataOrder.indexOf(a.id);
+      const bPos = this.state.remoteDataOrder.indexOf(b.id);
+
+      return aPos === -1 ? 1 : bPos === -1 ? 1 : aPos - bPos;
+    });
   };
 
   render() {
@@ -594,11 +619,28 @@ class App extends Component {
             >
               Select
             </button>
-            {/* <MaterialTable
+            <MaterialTable
+              tableRef={this.remoteDataTableRef}
               title={
-                <Typography variant="h6" color="primary">
-                  Remote Data Preview
-                </Typography>
+                <>
+                  <Typography variant="h6" color="primary">
+                    Remote Data Preview
+                  </Typography>
+                  <FormControl>
+                    <Select
+                      defaultValue="disable"
+                      onChange={(event) => {
+                        this.setState({ dragOption: event.target.value });
+                      }}
+                    >
+                      <MenuItem value="disable">No Drag</MenuItem>
+                      <MenuItem value="columns">Draggable columns</MenuItem>
+                      <MenuItem value="row">Draggable Row</MenuItem>
+                      <MenuItem value="cell">Draggable Cell</MenuItem>
+                    </Select>
+                    <FormHelperText>Drag Options</FormHelperText>
+                  </FormControl>
+                </>
               }
               columns={[
                 {
@@ -639,6 +681,15 @@ class App extends Component {
                 grouping: true,
                 groupTitle: (group) => group.data.length,
                 searchFieldVariant: "outlined",
+                draggable: this.state.dragOption === "columns",
+                draggableRows:
+                  this.state.dragOption === "cell" ||
+                  this.state.dragOption === "row",
+                draggableRowsOptions: {
+                  draggableCell: this.state.dragOption === "cell",
+                  dragCellContent: "=",
+                  dragCellWidth: "40px",
+                },
               }}
               localization={{
                 toolbar: {
@@ -654,6 +705,7 @@ class App extends Component {
                   fetch(url)
                     .then((response) => response.json())
                     .then((result) => {
+                      this.resetDataOrder(result.data);
                       resolve({
                         data: result.data,
                         page: result.page - 1,
@@ -662,7 +714,16 @@ class App extends Component {
                     });
                 })
               }
-            /> */}
+              onRowDrop={(result) => {
+                this.state.remoteDataOrder.splice(
+                  result.destination.index,
+                  0,
+                  this.state.remoteDataOrder.splice(result.source.index, 1)[0]
+                );
+                const dataManager = this.remoteDataTableRef.current.dataManager;
+                dataManager.setData(this.reorderData(dataManager.data));
+              }}
+            />
           </div>
         </MuiThemeProvider>
       </>

@@ -17,6 +17,7 @@ import * as CommonValues from "./utils/common-values";
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
+  draggableRowsIdentifier = "draggable-rows";
 
   constructor(props) {
     /* eslint-disable-next-line no-console */
@@ -408,6 +409,16 @@ export default class MaterialTable extends React.Component {
   };
 
   onDragEnd = (result) => {
+    if (this.props.options.draggableRows) {
+      this.toggleDraggableClass(result);
+      if (
+        result.source.droppableId === this.draggableRowsIdentifier &&
+        this.props.onRowDrop
+      ) {
+        this.props.onRowDrop(result);
+      }
+    }
+
     if (!result || !result.source || !result.destination) return;
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -814,6 +825,25 @@ export default class MaterialTable extends React.Component {
     }
   }
 
+  toggleDraggableClass = (result) => {
+    let container = this.tableContainerDiv.current;
+    container.style.height = container.getBoundingClientRect().height + "px";
+    let row = container.querySelector(
+      'tr[data-rbd-draggable-id="' + result.draggableId + '"]'
+    );
+    if (row.classList.contains(this.props.classes.draggableRow)) {
+      row.classList.remove(this.props.classes.draggableRow);
+    } else {
+      row.classList.add(this.props.classes.draggableRow);
+    }
+  };
+
+  onDragStart = (result) => {
+    if (this.props.options.draggableRows) {
+      this.toggleDraggableClass(result);
+    }
+  };
+
   renderTable = (props) => (
     <Table
       style={{
@@ -870,45 +900,52 @@ export default class MaterialTable extends React.Component {
           scrollWidth={this.state.width}
         />
       )}
-      <props.components.Body
-        actions={props.actions}
-        components={props.components}
-        icons={props.icons}
-        renderData={this.state.renderData}
-        currentPage={this.state.currentPage}
-        initialFormData={props.initialFormData}
-        pageSize={this.state.pageSize}
-        columns={this.state.columns}
-        errorState={this.state.errorState}
-        detailPanel={props.detailPanel}
-        options={props.options}
-        getFieldValue={this.dataManager.getFieldValue}
-        isTreeData={this.props.parentChildData !== undefined}
-        onFilterChanged={this.onFilterChange}
-        onRowSelected={this.onRowSelected}
-        onToggleDetailPanel={this.onToggleDetailPanel}
-        onGroupExpandChanged={this.onGroupExpandChanged}
-        onTreeExpandChanged={this.onTreeExpandChanged}
-        onEditingCanceled={this.onEditingCanceled}
-        onEditingApproved={this.onEditingApproved}
-        localization={{
-          ...MaterialTable.defaultProps.localization.body,
-          ...this.props.localization.body,
-        }}
-        onRowClick={this.props.onRowClick}
-        showAddRow={this.state.showAddRow}
-        hasAnyEditingRow={
-          !!(this.state.lastEditingRow || this.state.showAddRow)
-        }
-        hasDetailPanel={!!props.detailPanel}
-        treeDataMaxLevel={this.state.treeDataMaxLevel}
-        cellEditable={props.cellEditable}
-        onCellEditStarted={this.onCellEditStarted}
-        onCellEditFinished={this.onCellEditFinished}
-        bulkEditOpen={this.dataManager.bulkEditOpen}
-        onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
-        scrollWidth={this.state.width}
-      />
+      <DragDropContext
+        onBeforeDragStart={this.onDragStart}
+        onDragEnd={this.onDragEnd}
+      >
+        <Droppable
+          isDropDisabled={!this.props.options.draggableRows}
+          droppableId={this.draggableRowsIdentifier}
+        >
+          {(provided, snapshot) => (
+            <props.components.Body
+              provided={provided}
+              actions={props.actions}
+              components={props.components}
+              icons={props.icons}
+              renderData={this.state.renderData}
+              currentPage={this.state.currentPage}
+              initialFormData={props.initialFormData}
+              pageSize={this.state.pageSize}
+              columns={this.state.columns}
+              errorState={this.state.errorState}
+              detailPanel={props.detailPanel}
+              options={props.options}
+              getFieldValue={this.dataManager.getFieldValue}
+              isTreeData={this.props.parentChildData !== undefined}
+              onFilterChanged={this.onFilterChange}
+              onRowSelected={this.onRowSelected}
+              onToggleDetailPanel={this.onToggleDetailPanel}
+              onGroupExpandChanged={this.onGroupExpandChanged}
+              onTreeExpandChanged={this.onTreeExpandChanged}
+              onEditingCanceled={this.onEditingCanceled}
+              onEditingApproved={this.onEditingApproved}
+              localization={{
+                ...MaterialTable.defaultProps.localization.body,
+                ...this.props.localization.body,
+              }}
+              onRowClick={this.props.onRowClick}
+              showAddRow={this.state.showAddRow}
+              hasAnyEditingRow={
+                !!(this.state.lastEditingRow || this.state.showAddRow)
+              }
+              hasDetailPanel={!!props.detailPanel}
+              treeDataMaxLevel={this.state.treeDataMaxLevel}
+            />
+          )}
+        </Droppable>
+      </DragDropContext>
     </Table>
   );
 
@@ -1028,6 +1065,7 @@ export default class MaterialTable extends React.Component {
                 )}
               onSortChanged={this.onChangeGroupOrder}
               onGroupRemoved={this.onGroupRemoved}
+              options={props.options}
             />
           )}
           <ScrollBar double={props.options.doubleHorizontalScroll}>

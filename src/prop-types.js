@@ -306,6 +306,13 @@ export const propTypes = {
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(["single", "multiple"]),
     doubleHorizontalScroll: PropTypes.bool,
+    draggableRows: PropTypes.bool,
+    draggableRowsOptions: PropTypes.shape({
+      draggableCell: PropTypes.bool,
+      dragHeaderContent: PropTypes.string | PropTypes.element,
+      dragCellContent: PropTypes.string | PropTypes.element,
+      dragCellWidth: PropTypes.string,
+    }),
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,
     exportButton: PropTypes.oneOfType([

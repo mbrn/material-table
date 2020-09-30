@@ -8,6 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from "prop-types";
 import * as React from "react";
 import * as CommonValues from "../utils/common-values";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 /* eslint-enable no-unused-vars */
 
 export default class MTableBodyRow extends React.Component {
@@ -105,6 +106,7 @@ export default class MTableBodyRow extends React.Component {
       </TableCell>
     );
   }
+
   renderSelectionColumn() {
     let checkboxProps = this.props.options.selectionProps || {};
     if (typeof checkboxProps === "function") {
@@ -146,6 +148,17 @@ export default class MTableBodyRow extends React.Component {
           {...checkboxProps}
         />
       </TableCell>
+    );
+  }
+
+  renderDraggableColumn() {
+    const draggableOptions = this.props.options.draggableRowsOptions;
+    return (
+      <TableCell
+        padding="none"
+        key="key-drag-column"
+        style={{ width: draggableOptions.dragCellWidth }}
+      />
     );
   }
 
@@ -428,28 +441,65 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <>
-        <TableRow
-          selected={hasAnyEditingRow}
-          {...rowProps}
-          hover={onRowClick ? true : false}
-          style={this.getStyle(this.props.index, this.props.level)}
-          onClick={(event) => {
-            onRowClick &&
-              onRowClick(event, this.props.data, (panelIndex) => {
-                let panel = detailPanel;
-                if (Array.isArray(panel)) {
-                  panel = panel[panelIndex || 0];
-                  if (typeof panel === "function") {
-                    panel = panel(this.props.data);
-                  }
-                  panel = panel.render;
-                }
-                onToggleDetailPanel(this.props.path, panel);
-              });
-          }}
+        <Draggable
+          isDragDisabled={!options.draggableRows}
+          key={"row-" + this.props.index.toString()}
+          draggableId={"row-" + this.props.index.toString()}
+          index={this.props.index}
         >
-          {renderColumns}
-        </TableRow>
+          {(provided, snapshot) => {
+            const {
+              style: providedStyle,
+              ...providedDraggableProps
+            } = provided.draggableProps;
+            const rowStyle = {
+              ...this.getStyle(this.props.index, this.props.level),
+              ...providedStyle,
+            };
+            return (
+              <TableRow
+                selected={hasAnyEditingRow}
+                {...rowProps}
+                hover={onRowClick ? true : false}
+                style={rowStyle}
+                onClick={(event) => {
+                  onRowClick &&
+                    onRowClick(event, this.props.data, (panelIndex) => {
+                      let panel = detailPanel;
+                      if (Array.isArray(panel)) {
+                        panel = panel[panelIndex || 0];
+                        if (typeof panel === "function") {
+                          panel = panel(this.props.data);
+                        }
+                        panel = panel.render;
+                      }
+
+                      onToggleDetailPanel(this.props.path, panel);
+                    });
+                }}
+                ref={provided.innerRef}
+                {...providedDraggableProps}
+                {...(options.draggableRowsOptions.draggableCell
+                  ? {}
+                  : provided.dragHandleProps)}
+              >
+                {options.draggableRows &&
+                  options.draggableRowsOptions.draggableCell && (
+                    <this.props.components.Cell
+                      value={options.draggableRowsOptions.dragCellContent}
+                      columnDef={{
+                        tableData: {
+                          width: options.draggableRowsOptions.dragCellWidth,
+                        },
+                      }}
+                      {...provided.dragHandleProps}
+                    />
+                  )}
+                {renderColumns}
+              </TableRow>
+            );
+          }}
+        </Draggable>
         {this.props.data.tableData &&
           this.props.data.tableData.showDetailPanel && (
             <TableRow
