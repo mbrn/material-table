@@ -1,3 +1,8 @@
+> :warning: Please do not create pull requests that contains a lot of change. Because we are working on refactoring and testing. Just pull requests that fixes a bug with a few line changes.
+
+<br/>
+<br/>
+
 <p align="center" style="box-shadow: 2px 2px;">
   <a href="https://material-table.com" rel="noopener" target="_blank" ><img width="200" src="https://raw.githubusercontent.com/mbrn/material-table.com/master/docs/assets/logo-back.png" alt="material-table"></a></p>
 </p>
@@ -17,6 +22,10 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/material-table/Lobby)
 
 </div>
+
+## Roadmap
+
+- [More on our roadmap can be found here](https://github.com/mbrn/material-table/blob/master/.github/ROADMAP.md)
 
 ## Key features
 
@@ -47,7 +56,7 @@ To support material-table visit [SUPPORT](https://www.patreon.com/mbrn) page.
 
 ## Issue Prioritizing
 
-Issues would be prioritized according reactions count. `is:issue is:open sort:reactions-+1-desc` filter would be use. 
+Issues would be prioritized according reactions count. `is:issue is:open sort:reactions-+1-desc` filter would be use.
 
 [List issues according to reaction score](https://github.com/mbrn/material-table/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
 
@@ -179,11 +188,16 @@ class App extends Component {
             {
               title: "Doğum Yeri",
               field: "birthCity",
-              lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
-            }
+              lookup: { 34: "İstanbul", 63: "Şanlıurfa" },
+            },
           ]}
           data={[
-            { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 }
+            {
+              name: "Mehmet",
+              surname: "Baran",
+              birthYear: 1987,
+              birthCity: 63,
+            },
           ]}
           title="Demo Title"
         />
@@ -205,7 +219,7 @@ If you have any sort of doubt, idea or just want to talk about the project, feel
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute. [[Contribute](https://github.com/mbrn/material-table/blob/master/.github/CONTRIBUTING.md)].
 <a href="https://github.com/mbrn/material-table/graphs/contributors"><img src="https://opencollective.com/material-table/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
