@@ -21,7 +21,9 @@ export default class MaterialTable extends React.Component {
 
   constructor(props) {
     /* eslint-disable-next-line no-console */
-    console.log('======= material-table: LegalDesk\'s forked version currently in use =======');
+    console.log(
+      "======= material-table: LegalDesk's forked version currently in use ======="
+    );
     super(props);
 
     const calculatedProps = this.getProps(props);
@@ -910,7 +912,6 @@ export default class MaterialTable extends React.Component {
         >
           {(provided, snapshot) => (
             <props.components.Body
-              provided={provided}
               actions={props.actions}
               components={props.components}
               icons={props.icons}
@@ -942,6 +943,12 @@ export default class MaterialTable extends React.Component {
               }
               hasDetailPanel={!!props.detailPanel}
               treeDataMaxLevel={this.state.treeDataMaxLevel}
+              cellEditable={props.cellEditable}
+              onCellEditStarted={this.onCellEditStarted}
+              onCellEditFinished={this.onCellEditFinished}
+              bulkEditOpen={this.dataManager.bulkEditOpen}
+              onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+              scrollWidth={this.state.width}
             />
           )}
         </Droppable>
