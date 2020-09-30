@@ -61,6 +61,7 @@ class MTableGroupbar extends React.Component {
                     key={columnDef.tableData.id}
                     draggableId={columnDef.tableData.id.toString()}
                     index={index}
+                    isDragDisabled={!this.props.options.draggable}
                   >
                     {(provided, snapshot) => (
                       <div

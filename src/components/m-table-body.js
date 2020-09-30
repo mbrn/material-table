@@ -198,7 +198,7 @@ class MTableBody extends React.Component {
     }
 
     return (
-      <TableBody>
+      <TableBody ref={this.props.provided?.innerRef}>
         {this.props.options.filtering && (
           <this.props.components.FilterRow
             columns={this.props.columns.filter(
@@ -213,6 +213,10 @@ class MTableBody extends React.Component {
             actionsColumnIndex={this.props.options.actionsColumnIndex}
             onFilterChanged={this.props.onFilterChanged}
             selection={this.props.options.selection}
+            draggableCells={
+              this.props.options.draggableRows &&
+              this.props.options.draggableRowsOptions.draggableCell
+            }
             localization={{
               ...MTableBody.defaultProps.localization.filterRow,
               ...this.props.localization.filterRow,
@@ -289,6 +293,7 @@ class MTableBody extends React.Component {
           />
         )}
         {this.renderEmpty(emptyRowCount, renderData)}
+        {this.props.provided.placeholder}
       </TableBody>
     );
   }
@@ -338,6 +343,7 @@ MTableBody.propTypes = {
   onRowClick: PropTypes.func,
   onEditingCanceled: PropTypes.func,
   onEditingApproved: PropTypes.func,
+  provided: PropTypes.object,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   cellEditable: PropTypes.object,
   onCellEditStarted: PropTypes.func,
