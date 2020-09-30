@@ -22,7 +22,6 @@ export default class MTableBodyRow extends React.Component {
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-
         if (
           this.props.data.tableData.editCellList &&
           this.props.data.tableData.editCellList.find(

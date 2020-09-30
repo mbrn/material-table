@@ -912,6 +912,7 @@ export default class MaterialTable extends React.Component {
         >
           {(provided, snapshot) => (
             <props.components.Body
+              provided={provided}
               actions={props.actions}
               components={props.components}
               icons={props.icons}

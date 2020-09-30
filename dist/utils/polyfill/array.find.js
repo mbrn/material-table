@@ -1,6 +1,6 @@
 "use strict";
 
-Object.defineProperty(Array.prototype, 'find', {
+Object.defineProperty(Array.prototype, "find", {
   value: function value(predicate) {
     if (this == null) {
       throw new TypeError('"this" is null or not defined');
@@ -9,8 +9,8 @@ Object.defineProperty(Array.prototype, 'find', {
     var o = Object(this);
     var len = o.length >>> 0;
 
-    if (typeof predicate !== 'function') {
-      throw new TypeError('predicate must be a function');
+    if (typeof predicate !== "function") {
+      throw new TypeError("predicate must be a function");
     }
 
     var thisArg = arguments[1];
@@ -27,5 +27,5 @@ Object.defineProperty(Array.prototype, 'find', {
     }
 
     return undefined;
-  }
+  },
 });

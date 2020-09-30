@@ -1,4 +1,4 @@
-#  LegalDesk Build of `material-table`
+# LegalDesk Build of `material-table`
 
 [https://github.com/Legal-Desk/LD_app/pull/128](https://github.com/Legal-Desk/LD_app/pull/128)
 
@@ -8,11 +8,7 @@ Asana: [https://app.asana.com/0/1178141488152579/1177203758492499](https://app.a
 
 `material-table` does not work exactly the way we need it to, this PR is about forking the repo so that we can directly edit the source code to serve our needs.
 
-
-
 1. First we forked [https://github.com/mbrn/material-table](https://github.com/mbrn/material-table) into [https://github.com/Legal-Desk/material-table](https://github.com/Legal-Desk/material-table) and cloned the forked version locally
-
-
 
 2. Then we linked material table with `yarn` as detailed here [https://medium.com/@chrisdmasters/how-to-fork-a-dependency-and-use-it-locally-in-a-project-707c80d3449c](https://medium.com/@chrisdmasters/how-to-fork-a-dependency-and-use-it-locally-in-a-project-707c80d3449c):
 
@@ -20,11 +16,7 @@ Asana: [https://app.asana.com/0/1178141488152579/1177203758492499](https://app.a
 
 `LD_app (fork-material-table) $ yarn link material-table`
 
-
-
 3. Then we updated the package version with the symlink as shown in the code changes in `package.json`.
-
-
 
 4. This created an error as indicated here: [https://reactjs.org/warnings/invalid-hook-call-warning.html](https://reactjs.org/warnings/invalid-hook-call-warning.html). To overcome this, I linked our app's `react` to the fork of material-table:
 
@@ -32,37 +24,21 @@ Asana: [https://app.asana.com/0/1178141488152579/1177203758492499](https://app.a
 
 `material-table (build) $ yarn link react`
 
-
-
 5. I then needed to also run the below command as indicated at the end of the above article:
 
 `material-table (build) $ npm link ../LD_app/node_modules/react`
 
-
-
 6. I then ran: `material-table (build) $ npm run build` and restarted the server
-
-
-
 
 Notes from [@Chee7ah](https://github.com/Chee7ah):
 
-
-
 1. We should keep our fork up to date with the base repo. Could set it up as a new git remote (e.g. upstream) and periodically get the newer changes into master. Otherwise we won’t get newer features / bugfixes and be stuck with the code as is.
-
-
 
 2. In order to ease the updating process, would recommend keeping a pristine branch into which we can pull incoming changes, and working in another branch which we can keep rebasing.
 
-
-
 3. In order to make rebasing simpler, would try to avoid any complicated changes, e.g. instead of modifying some logic, just adding a single line calling a brand new function that does what we need to. This makes it easier to avoid crazy conflicts while updating as it’s just one line that could conflict. (even though this might make the actual logic more convoluted, but on the other hand, we can also keep track of what are our modifications much easier)
 
-
-
 4. If it makes sense, could also open a PR on their repo to see if we can get the changes included in the main package
-
 
 > :warning: Please do not create pull requests that contains a lot of change. Because we are working on refactoring and testing. Just pull requests that fixes a bug with a few line changes.
 
