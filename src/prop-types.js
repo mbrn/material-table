@@ -58,6 +58,7 @@ export const propTypes = {
       filterPlaceholder: PropTypes.string,
       filterComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
       grouping: PropTypes.bool,
+      showGroupCount: PropTypes.bool,
       headerStyle: PropTypes.object,
       hidden: PropTypes.bool,
       hideFilterIcon: PropTypes.bool,

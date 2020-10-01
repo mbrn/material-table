@@ -114,7 +114,13 @@ export default class MTableGroupRow extends React.Component {
       title = React.cloneElement(title);
     }
 
-    let separator = this.props.options.groupRowSeparator || ": ";
+    const separator = this.props.options.groupRowSeparator || ": ";
+
+    const counter = this.props.groupData.data.length;
+
+    const conterText = this.props.options.showGroupCount ? `(${counter}) ` : "";
+
+    const groupText = `${conterText}${title}${separator}`;
 
     return (
       <>
@@ -138,10 +144,7 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>
-              {title}
-              {separator}
-            </b>
+            <b>{groupText}</b>
           </this.props.components.Cell>
         </TableRow>
         {detail}
