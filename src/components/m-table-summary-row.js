@@ -8,11 +8,28 @@ function MTableSummaryRow({ data, columns, currentData, renderSummaryRow }) {
   }
   return (
     <TableRow>
-      {columns.map((column, index) => (
-        <TableCell key={index}>
-          {renderSummaryRow({ index, column, data, currentData, columns })}
-        </TableCell>
-      ))}
+      {columns.map((column, index) => {
+        const summaryColumn = renderSummaryRow({
+          index,
+          column,
+          data,
+          currentData,
+          columns,
+        });
+        let value = "";
+        let style = {};
+        if (summaryColumn && summaryColumn.value) {
+          value = summaryColumn.value;
+          style = summaryColumn.style;
+        } else {
+          value = summaryColumn;
+        }
+        return (
+          <TableCell key={index} style={style}>
+            {value}
+          </TableCell>
+        );
+      })}
     </TableRow>
   );
 }

@@ -51,7 +51,7 @@ export interface MaterialTableProps<RowData extends object> {
     index: number;
     data: RowData[];
     currentData: RowData[];
-  }) => unknown;
+  }) => { value: unknwon; style: CSSProperties } | unknown;
   initialFormData?: object;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
