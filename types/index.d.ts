@@ -39,6 +39,19 @@ export interface MaterialTableProps<RowData extends object> {
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
   icons?: Icons;
+  renderSummaryRow?: ({
+    columns,
+    column,
+    index,
+    data,
+    currentData,
+  }: {
+    columns: Column<RowData>[];
+    column: Column<RowData>;
+    index: number;
+    data: RowData[];
+    currentData: RowData[];
+  }) => unknown;
   initialFormData?: object;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;

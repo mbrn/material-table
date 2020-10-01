@@ -197,13 +197,13 @@ class MTableBody extends React.Component {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
 
+    const columns = this.props.columns.filter((columnDef) => !columnDef.hidden);
+
     return (
       <TableBody>
         {this.props.options.filtering && (
           <this.props.components.FilterRow
-            columns={this.props.columns.filter(
-              (columnDef) => !columnDef.hidden
-            )}
+            columns={columns}
             icons={this.props.icons}
             hasActions={
               this.props.actions.filter(
@@ -288,6 +288,12 @@ class MTableBody extends React.Component {
             scrollWidth={this.props.scrollWidth}
           />
         )}
+        <this.props.components.SummaryRow
+          currentData={renderData}
+          columns={columns}
+          data={this.props.data}
+          renderSummaryRow={this.props.renderSummaryRow}
+        />
         {this.renderEmpty(emptyRowCount, renderData)}
       </TableBody>
     );
@@ -297,6 +303,7 @@ class MTableBody extends React.Component {
 MTableBody.defaultProps = {
   actions: [],
   currentPage: 0,
+  data: [],
   pageSize: 5,
   renderData: [],
   selection: false,
@@ -309,6 +316,8 @@ MTableBody.defaultProps = {
 
 MTableBody.propTypes = {
   actions: PropTypes.array,
+  data: PropTypes.array,
+  renderSummaryRow: PropTypes.func,
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,

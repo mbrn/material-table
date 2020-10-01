@@ -32,6 +32,7 @@ export const propTypes = {
       }),
     ])
   ),
+  renderSummaryRow: PropTypes.func,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       cellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

@@ -13,6 +13,7 @@ import MTableHeader from "./m-table-header";
 import MTablePagination from "./m-table-pagination";
 import MTableSteppedPagination from "./m-table-stepped-pagination";
 import MTableToolbar from "./m-table-toolbar";
+import { MTableSummaryRow } from "./m-table-summary-row";
 
 export {
   MTableAction,
@@ -30,4 +31,5 @@ export {
   MTablePagination,
   MTableSteppedPagination,
   MTableToolbar,
+  MTableSummaryRow,
 };
