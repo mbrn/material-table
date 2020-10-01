@@ -123,7 +123,7 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 13,
-            }
+            },
           }}
           inputProps={{
             "aria-label": `${this.props.columnDef.title}: press space to edit`,
@@ -145,7 +145,7 @@ class MTableEditField extends React.Component {
           InputProps={{
             style: {
               fontSize: 13,
-            }
+            },
           }}
           inputProps={{
             "aria-label": `${this.props.columnDef.title}: press space to edit`,
@@ -178,7 +178,7 @@ class MTableEditField extends React.Component {
         InputProps={{
           style: {
             fontSize: 13,
-          }
+          },
         }}
         inputProps={{
           "aria-label": this.props.columnDef.title,
@@ -208,7 +208,7 @@ class MTableEditField extends React.Component {
           style: {
             fontSize: 13,
             textAlign: "right",
-          }
+          },
         }}
         inputProps={{
           "aria-label": this.props.columnDef.title,
