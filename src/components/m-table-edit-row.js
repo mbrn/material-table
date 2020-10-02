@@ -320,8 +320,8 @@ export default class MTableEditRow extends React.Component {
 
     // Lastly we add detail panel icon
     if (this.props.detailPanel) {
-      const aligment = this.props.options.detailPanelColumnAlignment;
-      const index = aligment === "left" ? 0 : columns.length;
+      const alignment = this.props.options.detailPanelColumnAlignment;
+      const index = alignment === "left" ? 0 : columns.length;
       columns.splice(
         index,
         0,
