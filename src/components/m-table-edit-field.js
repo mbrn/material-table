@@ -37,7 +37,10 @@ class MTableEditField extends React.Component {
         <Select
           {...props}
           value={this.props.value === undefined ? "" : this.props.value}
-          onChange={(event) => this.props.onChange(event.target.value)}
+          onChange={(event) => {
+            event.stopPropagation();
+            this.props.onChange(event.target.value);
+          }}
           style={{
             fontSize: 13,
           }}
@@ -63,20 +66,24 @@ class MTableEditField extends React.Component {
           <FormControlLabel
             label=""
             control={
-              <Checkbox
-                {...props}
-                value={String(this.props.value)}
-                checked={Boolean(this.props.value)}
-                onChange={(event) => this.props.onChange(event.target.checked)}
-                style={{
-                  padding: 0,
-                  width: 24,
-                  marginLeft: 9,
-                }}
-                inputProps={{
-                  "aria-label": this.props.columnDef.title,
-                }}
-              />
+              <div onClick={(event) => event.stopPropagation()}>
+                <Checkbox
+                  {...props}
+                  value={String(this.props.value)}
+                  checked={Boolean(this.props.value)}
+                  onChange={(event) =>
+                    this.props.onChange(event.target.checked)
+                  }
+                  style={{
+                    padding: 0,
+                    width: 24,
+                    marginLeft: 9,
+                  }}
+                  inputProps={{
+                    "aria-label": this.props.columnDef.title,
+                  }}
+                />
+              </div>
             }
           />
         </FormGroup>
@@ -93,42 +100,46 @@ class MTableEditField extends React.Component {
         : "dd.MM.yyyy";
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
-        <DatePicker
-          {...this.getProps()}
-          format={dateFormat}
-          value={this.props.value || null}
-          onChange={this.props.onChange}
-          clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            },
-          }}
-          inputProps={{
-            "aria-label": `${this.props.columnDef.title}: press space to edit`,
-          }}
-        />
+        <div onClick={(event) => event.stopPropagation()}>
+          <DatePicker
+            {...this.getProps()}
+            format={dateFormat}
+            value={this.props.value || null}
+            onChange={this.props.onChange}
+            clearable
+            InputProps={{
+              style: {
+                fontSize: 13,
+              },
+            }}
+            inputProps={{
+              "aria-label": `${this.props.columnDef.title}: press space to edit`,
+            }}
+          />
+        </div>
       </MuiPickersUtilsProvider>
     );
   }
   renderTimeField() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
-        <TimePicker
-          {...this.getProps()}
-          format="HH:mm:ss"
-          value={this.props.value || null}
-          onChange={this.props.onChange}
-          clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            },
-          }}
-          inputProps={{
-            "aria-label": `${this.props.columnDef.title}: press space to edit`,
-          }}
-        />
+        <div onClick={(event) => event.stopPropagation()}>
+          <TimePicker
+            {...this.getProps()}
+            format="HH:mm:ss"
+            value={this.props.value || null}
+            onChange={this.props.onChange}
+            clearable
+            InputProps={{
+              style: {
+                fontSize: 13,
+              },
+            }}
+            inputProps={{
+              "aria-label": `${this.props.columnDef.title}: press space to edit`,
+            }}
+          />
+        </div>
       </MuiPickersUtilsProvider>
     );
   }
@@ -136,21 +147,23 @@ class MTableEditField extends React.Component {
   renderDateTimeField() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>
-        <DateTimePicker
-          {...this.getProps()}
-          format="dd.MM.yyyy HH:mm:ss"
-          value={this.props.value || null}
-          onChange={this.props.onChange}
-          clearable
-          InputProps={{
-            style: {
-              fontSize: 13,
-            },
-          }}
-          inputProps={{
-            "aria-label": `${this.props.columnDef.title}: press space to edit`,
-          }}
-        />
+        <div onClick={(event) => event.stopPropagation()}>
+          <DateTimePicker
+            {...this.getProps()}
+            format="dd.MM.yyyy HH:mm:ss"
+            value={this.props.value || null}
+            onChange={this.props.onChange}
+            clearable
+            InputProps={{
+              style: {
+                fontSize: 13,
+              },
+            }}
+            inputProps={{
+              "aria-label": `${this.props.columnDef.title}: press space to edit`,
+            }}
+          />
+        </div>
       </MuiPickersUtilsProvider>
     );
   }
@@ -168,6 +181,7 @@ class MTableEditField extends React.Component {
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
         value={this.props.value === undefined ? "" : this.props.value}
+        onClick={(event) => event.stopPropagation()}
         onChange={(event) =>
           this.props.onChange(
             this.props.columnDef.type === "numeric"
@@ -197,6 +211,7 @@ class MTableEditField extends React.Component {
         style={{ float: "right" }}
         type="number"
         value={this.props.value === undefined ? "" : this.props.value}
+        onClick={(event) => event.stopPropagation()}
         onChange={(event) => {
           let value = event.target.valueAsNumber;
           if (!value && value !== 0) {
