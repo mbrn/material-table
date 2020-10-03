@@ -9,6 +9,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultProps = void 0;
 
+var _objectSpread2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/objectSpread")
+);
+
 var _extends2 = _interopRequireDefault(
   require("@babel/runtime/helpers/extends")
 );
@@ -70,6 +74,59 @@ OverlayLoading.propTypes = {
   theme: _propTypes["default"].any,
 };
 
+var OverlayError = function OverlayError(props) {
+  return /*#__PURE__*/ _react["default"].createElement(
+    "div",
+    {
+      style: {
+        display: "table",
+        width: "100%",
+        height: "100%",
+        backgroundColor: (0, _colorManipulator.fade)(
+          props.theme.palette.background.paper,
+          0.7
+        ),
+      },
+    },
+    /*#__PURE__*/ _react["default"].createElement(
+      "div",
+      {
+        style: {
+          display: "table-cell",
+          width: "100%",
+          height: "100%",
+          verticalAlign: "middle",
+          textAlign: "center",
+        },
+      },
+      /*#__PURE__*/ _react["default"].createElement(
+        "span",
+        null,
+        props.error.message
+      ),
+      " ",
+      /*#__PURE__*/ _react["default"].createElement(props.icon, {
+        onClick: props.retry,
+        style: {
+          cursor: "pointer",
+          position: "relative",
+          top: 5,
+        },
+      })
+    )
+  );
+};
+
+OverlayError.propTypes = {
+  error: _propTypes["default"].oneOfType([
+    _propTypes["default"].object,
+    _propTypes["default"].string,
+  ]),
+  retry: _propTypes["default"].func,
+  theme: _propTypes["default"].any,
+  icon: _propTypes["default"].any,
+};
+
 var Container = function Container(props) {
   return /*#__PURE__*/ _react["default"].createElement(
     _Paper["default"],
@@ -92,6 +149,7 @@ var defaultProps = {
     Body: MComponents.MTableBody,
     Cell: MComponents.MTableCell,
     Container: Container,
+    EditCell: MComponents.MTableEditCell,
     EditField: MComponents.MTableEditField,
     EditRow: MComponents.MTableEditRow,
     FilterRow: MComponents.MTableFilterRow,
@@ -99,6 +157,7 @@ var defaultProps = {
     GroupRow: MComponents.MTableGroupRow,
     Header: MComponents.MTableHeader,
     OverlayLoading: OverlayLoading,
+    OverlayError: OverlayError,
     Pagination: _TablePagination["default"],
     Row: MComponents.MTableBodyRow,
     Toolbar: MComponents.MTableToolbar,
@@ -223,6 +282,18 @@ var defaultProps = {
         "clear"
       );
     }),
+    Resize: _react["default"].forwardRef(function (props, ref) {
+      return /*#__PURE__*/ _react["default"].createElement(
+        _Icon["default"],
+        (0, _extends2["default"])({}, props, {
+          ref: ref,
+          style: (0, _objectSpread2["default"])({}, props.style, {
+            transform: "rotate(90deg)",
+          }),
+        }),
+        "drag_handle"
+      );
+    }),
     Search: _react["default"].forwardRef(function (props, ref) {
       return /*#__PURE__*/ _react["default"].createElement(
         _Icon["default"],
@@ -259,6 +330,15 @@ var defaultProps = {
         "view_column"
       );
     }),
+    Retry: _react["default"].forwardRef(function (props, ref) {
+      return /*#__PURE__*/ _react["default"].createElement(
+        _Icon["default"],
+        (0, _extends2["default"])({}, props, {
+          ref: ref,
+        }),
+        "replay"
+      );
+    }),
     /* eslint-enable react/display-name */
   },
   isLoading: false,
@@ -270,6 +350,13 @@ var defaultProps = {
     detailPanelType: "multiple",
     debounceInterval: 200,
     doubleHorizontalScroll: false,
+    draggableRows: false,
+    draggableRowsOptions: {
+      draggableCell: false,
+      dragHeaderContent: "",
+      dragCellContent: "=",
+      dragCellWidth: "40px",
+    },
     emptyRowsWhenPaging: true,
     exportAllData: false,
     exportButton: false,
@@ -277,6 +364,7 @@ var defaultProps = {
     filtering: false,
     groupTitle: false,
     header: true,
+    headerSelectionProps: {},
     hideFilterIcons: false,
     loadingType: "overlay",
     padding: "default",
@@ -285,6 +373,7 @@ var defaultProps = {
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
     paginationType: "normal",
+    paginationPosition: "bottom",
     showEmptyDataSourceMessage: true,
     showFirstLastPageButtons: true,
     showSelectAllCheckbox: true,
@@ -303,9 +392,10 @@ var defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: "left",
     thirdSortClick: true,
-    overflowY: "auto",
+    overflowY: "initial",
   },
   localization: {
+    error: "Data could not be retrieved",
     grouping: {
       groupedBy: "Grouped By:",
       placeholder: "Drag headers here to group by",
@@ -327,6 +417,9 @@ var defaultProps = {
       addTooltip: "Add",
       deleteTooltip: "Delete",
       editTooltip: "Edit",
+      bulkEditTooltip: "Edit All",
+      bulkEditApprove: "Save all changes",
+      bulkEditCancel: "Discard all changes",
     },
   },
   style: {},

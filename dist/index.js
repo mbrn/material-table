@@ -64,6 +64,9 @@ var styles = function styles(theme) {
     paginationSelectRoot: {
       margin: 0,
     },
+    draggableRow: {
+      display: "table",
+    },
   };
 };
 

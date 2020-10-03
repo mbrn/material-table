@@ -55,6 +55,10 @@ var _TableCell = _interopRequireDefault(require("@material-ui/core/TableCell"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _parseISO = _interopRequireDefault(require("date-fns/parseISO"));
+
+var CommonValues = _interopRequireWildcard(require("../utils/common-values"));
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -120,10 +124,19 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
       (0, _assertThisInitialized2["default"])(_this),
       "getStyle",
       function () {
+        var width = CommonValues.reducePercentsInCalc(
+          _this.props.columnDef.tableData.width,
+          _this.props.scrollWidth
+        );
         var cellStyle = {
           color: "inherit",
-          width: _this.props.columnDef.tableData.width,
+          width: width,
+          maxWidth: _this.props.columnDef.maxWidth,
+          minWidth: _this.props.columnDef.minWidth,
           boxSizing: "border-box",
+          fontSize: "inherit",
+          fontFamily: "inherit",
+          fontWeight: "inherit",
         };
 
         if (typeof _this.props.columnDef.cellStyle === "function") {
@@ -157,6 +170,12 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
     {
       key: "getRenderValue",
       value: function getRenderValue() {
+        var dateLocale =
+          this.props.columnDef.dateSetting &&
+          this.props.columnDef.dateSetting.locale
+            ? this.props.columnDef.dateSetting.locale
+            : undefined;
+
         if (
           this.props.columnDef.emptyValue !== undefined &&
           (this.props.value === undefined || this.props.value === null)
@@ -167,7 +186,7 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
         if (this.props.columnDef.render) {
           if (this.props.rowData) {
             return this.props.columnDef.render(this.props.rowData, "row");
-          } else {
+          } else if (this.props.value) {
             return this.props.columnDef.render(this.props.value, "group");
           }
         } else if (this.props.columnDef.type === "boolean") {
@@ -191,9 +210,11 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
           }
         } else if (this.props.columnDef.type === "date") {
           if (this.props.value instanceof Date) {
-            return this.props.value.toLocaleDateString();
+            return this.props.value.toLocaleDateString(dateLocale);
           } else if (isoDateRegex.exec(this.props.value)) {
-            return new Date(this.props.value).toLocaleDateString();
+            return (0, _parseISO["default"])(
+              this.props.value
+            ).toLocaleDateString(dateLocale);
           } else {
             return this.props.value;
           }
@@ -201,7 +222,9 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
           if (this.props.value instanceof Date) {
             return this.props.value.toLocaleTimeString();
           } else if (isoDateRegex.exec(this.props.value)) {
-            return new Date(this.props.value).toLocaleTimeString();
+            return (0, _parseISO["default"])(
+              this.props.value
+            ).toLocaleTimeString(dateLocale);
           } else {
             return this.props.value;
           }
@@ -209,7 +232,9 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
           if (this.props.value instanceof Date) {
             return this.props.value.toLocaleString();
           } else if (isoDateRegex.exec(this.props.value)) {
-            return new Date(this.props.value).toLocaleString();
+            return (0, _parseISO["default"])(this.props.value).toLocaleString(
+              dateLocale
+            );
           } else {
             return this.props.value;
           }
@@ -271,15 +296,51 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
     {
       key: "render",
       value: function render() {
+        var _this2 = this;
+
         var _this$props = this.props,
           icons = _this$props.icons,
           columnDef = _this$props.columnDef,
           rowData = _this$props.rowData,
+          errorState = _this$props.errorState,
+          cellEditable = _this$props.cellEditable,
+          onCellEditStarted = _this$props.onCellEditStarted,
+          scrollWidth = _this$props.scrollWidth,
           cellProps = (0, _objectWithoutProperties2["default"])(_this$props, [
             "icons",
             "columnDef",
             "rowData",
+            "errorState",
+            "cellEditable",
+            "onCellEditStarted",
+            "scrollWidth",
           ]);
+        var cellAlignment =
+          columnDef.align !== undefined
+            ? columnDef.align
+            : ["numeric", "currency"].indexOf(this.props.columnDef.type) !== -1
+            ? "right"
+            : "left";
+        var renderValue = this.getRenderValue();
+
+        if (cellEditable) {
+          renderValue = /*#__PURE__*/ React.createElement(
+            "div",
+            {
+              style: {
+                borderBottom: "1px dashed grey",
+                cursor: "pointer",
+                width: "max-content",
+              },
+              onClick: function onClick(e) {
+                e.stopPropagation();
+                onCellEditStarted(_this2.props.rowData, _this2.props.columnDef);
+              },
+            },
+            renderValue
+          );
+        }
+
         return /*#__PURE__*/ React.createElement(
           _TableCell["default"],
           (0, _extends2["default"])(
@@ -289,16 +350,12 @@ var MTableCell = /*#__PURE__*/ (function (_React$Component) {
             cellProps,
             {
               style: this.getStyle(),
-              align:
-                ["numeric", "currency"].indexOf(this.props.columnDef.type) !==
-                -1
-                  ? "right"
-                  : "left",
+              align: cellAlignment,
               onClick: this.handleClickCell,
             }
           ),
           this.props.children,
-          this.getRenderValue()
+          renderValue
         );
       },
     },
@@ -315,4 +372,8 @@ MTableCell.propTypes = {
   columnDef: _propTypes["default"].object.isRequired,
   value: _propTypes["default"].any,
   rowData: _propTypes["default"].object,
+  errorState: _propTypes["default"].oneOfType([
+    _propTypes["default"].object,
+    _propTypes["default"].bool,
+  ]),
 };

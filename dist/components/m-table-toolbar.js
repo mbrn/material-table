@@ -13,6 +13,10 @@ var _objectSpread2 = _interopRequireDefault(
   require("@babel/runtime/helpers/objectSpread")
 );
 
+var _slicedToArray2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/slicedToArray")
+);
+
 var _classCallCheck2 = _interopRequireDefault(
   require("@babel/runtime/helpers/classCallCheck")
 );
@@ -81,6 +85,8 @@ var _filefy = require("filefy");
 
 var _propTypes = _interopRequireWildcard(require("prop-types"));
 
+require("jspdf-autotable");
+
 var React = _interopRequireWildcard(require("react"));
 
 function _createSuper(Derived) {
@@ -110,7 +116,9 @@ function _isNativeReflectConstruct() {
   }
 }
 
+var jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
 /* eslint-enable no-unused-vars */
+
 var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
   (0, _inherits2["default"])(MTableToolbar, _React$Component);
 
@@ -137,31 +145,53 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
     );
     (0, _defineProperty2["default"])(
       (0, _assertThisInitialized2["default"])(_this),
-      "defaultExportCsv",
+      "getTableData",
       function () {
         var columns = _this.props.columns
           .filter(function (columnDef) {
             return (
-              !columnDef.hidden &&
-              columnDef.field &&
-              columnDef["export"] !== false
+              (!columnDef.hidden || columnDef["export"] === true) &&
+              columnDef["export"] !== false &&
+              columnDef.field
             );
           })
           .sort(function (a, b) {
             return a.tableData.columnOrder > b.tableData.columnOrder ? 1 : -1;
           });
 
-        var dataToExport = _this.props.exportAllData
+        var data = (_this.props.exportAllData
           ? _this.props.data
-          : _this.props.renderData;
-        var data = dataToExport.map(function (rowData) {
+          : _this.props.renderData
+        ).map(function (rowData) {
           return columns.map(function (columnDef) {
             return _this.props.getFieldValue(rowData, columnDef);
           });
         });
-        var builder = new _filefy.CsvBuilder(
-          (_this.props.exportFileName || _this.props.title || "data") + ".csv"
-        );
+        return [columns, data];
+      }
+    );
+    (0, _defineProperty2["default"])(
+      (0, _assertThisInitialized2["default"])(_this),
+      "defaultExportCsv",
+      function () {
+        var _this$getTableData = _this.getTableData(),
+          _this$getTableData2 = (0, _slicedToArray2["default"])(
+            _this$getTableData,
+            2
+          ),
+          columns = _this$getTableData2[0],
+          data = _this$getTableData2[1];
+
+        var fileName = _this.props.title || "data";
+
+        if (_this.props.exportFileName) {
+          fileName =
+            typeof _this.props.exportFileName === "function"
+              ? _this.props.exportFileName()
+              : _this.props.exportFileName;
+        }
+
+        var builder = new _filefy.CsvBuilder(fileName + ".csv");
         builder
           .setDelimeter(_this.props.exportDelimiter)
           .setColumns(
@@ -175,12 +205,62 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
     );
     (0, _defineProperty2["default"])(
       (0, _assertThisInitialized2["default"])(_this),
+      "defaultExportPdf",
+      function () {
+        if (jsPDF !== null) {
+          var _this$getTableData3 = _this.getTableData(),
+            _this$getTableData4 = (0, _slicedToArray2["default"])(
+              _this$getTableData3,
+              2
+            ),
+            columns = _this$getTableData4[0],
+            data = _this$getTableData4[1];
+
+          var content = {
+            startY: 50,
+            head: [
+              columns.map(function (columnDef) {
+                return columnDef.title;
+              }),
+            ],
+            body: data,
+          };
+          var unit = "pt";
+          var size = "A4";
+          var orientation = "landscape";
+          var doc = new jsPDF(orientation, unit, size);
+          doc.setFontSize(15);
+          doc.text(_this.props.exportFileName || _this.props.title, 40, 40);
+          doc.autoTable(content);
+          doc.save(
+            (_this.props.exportFileName || _this.props.title || "data") + ".pdf"
+          );
+        }
+      }
+    );
+    (0, _defineProperty2["default"])(
+      (0, _assertThisInitialized2["default"])(_this),
       "exportCsv",
       function () {
         if (_this.props.exportCsv) {
           _this.props.exportCsv(_this.props.columns, _this.props.data);
         } else {
           _this.defaultExportCsv();
+        }
+
+        _this.setState({
+          exportButtonAnchorEl: null,
+        });
+      }
+    );
+    (0, _defineProperty2["default"])(
+      (0, _assertThisInitialized2["default"])(_this),
+      "exportPdf",
+      function () {
+        if (_this.props.exportPdf) {
+          _this.props.exportPdf(_this.props.columns, _this.props.data);
+        } else {
+          _this.defaultExportPdf();
         }
 
         _this.setState({
@@ -250,18 +330,20 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
                     onClick: function onClick() {
                       return _this2.onSearchChange("");
                     },
+                    "aria-label": localization.clearSearchAriaLabel,
                   },
                   /*#__PURE__*/ React.createElement(
                     this.props.icons.ResetSearch,
                     {
                       fontSize: "small",
+                      "aria-label": "clear",
                     }
                   )
                 )
               ),
               style: this.props.searchFieldStyle,
               inputProps: {
-                "aria-label": "Search",
+                "aria-label": localization.searchAriaLabel,
               },
             },
           });
@@ -335,32 +417,43 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
                   localization.addRemoveColumns
                 ),
                 this.props.columns.map(function (col) {
-                  return /*#__PURE__*/ React.createElement(
-                    "li",
-                    {
-                      key: col.tableData.id,
-                    },
-                    /*#__PURE__*/ React.createElement(
-                      _MenuItem["default"],
+                  if (!col.hidden || col.hiddenByColumnsButton) {
+                    return /*#__PURE__*/ React.createElement(
+                      "li",
                       {
-                        className: classes.formControlLabel,
-                        component: "label",
-                        htmlFor: "column-toggle-".concat(col.tableData.id),
-                        disabled: col.removable === false,
+                        key: col.tableData.id,
                       },
-                      /*#__PURE__*/ React.createElement(_Checkbox["default"], {
-                        checked: !col.hidden,
-                        id: "column-toggle-".concat(col.tableData.id),
-                        onChange: function onChange() {
-                          return _this3.props.onColumnsChanged(
-                            col,
-                            !col.hidden
-                          );
+                      /*#__PURE__*/ React.createElement(
+                        _MenuItem["default"],
+                        {
+                          className: classes.formControlLabel,
+                          component: "label",
+                          htmlFor: "column-toggle-".concat(col.tableData.id),
+                          disabled: col.removable === false,
                         },
-                      }),
-                      /*#__PURE__*/ React.createElement("span", null, col.title)
-                    )
-                  );
+                        /*#__PURE__*/ React.createElement(
+                          _Checkbox["default"],
+                          {
+                            checked: !col.hidden,
+                            id: "column-toggle-".concat(col.tableData.id),
+                            onChange: function onChange() {
+                              return _this3.props.onColumnsChanged(
+                                col,
+                                !col.hidden
+                              );
+                            },
+                          }
+                        ),
+                        /*#__PURE__*/ React.createElement(
+                          "span",
+                          null,
+                          col.title
+                        )
+                      )
+                    );
+                  }
+
+                  return null;
                 })
               )
             ),
@@ -401,14 +494,26 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
                     });
                   },
                 },
-                /*#__PURE__*/ React.createElement(
-                  _MenuItem["default"],
-                  {
-                    key: "export-csv",
-                    onClick: this.exportCsv,
-                  },
-                  localization.exportName
-                )
+                (this.props.exportButton === true ||
+                  this.props.exportButton.csv) &&
+                  /*#__PURE__*/ React.createElement(
+                    _MenuItem["default"],
+                    {
+                      key: "export-csv",
+                      onClick: this.exportCsv,
+                    },
+                    localization.exportCSVName
+                  ),
+                (this.props.exportButton === true ||
+                  this.props.exportButton.pdf) &&
+                  /*#__PURE__*/ React.createElement(
+                    _MenuItem["default"],
+                    {
+                      key: "export-pdf",
+                      onClick: this.exportPdf,
+                    },
+                    localization.exportPDFName
+                  )
               )
             ),
           /*#__PURE__*/ React.createElement(
@@ -502,10 +607,12 @@ var MTableToolbar = /*#__PURE__*/ (function (_React$Component) {
           this.props.showTextRowsSelected &&
           this.props.selectedRows &&
           this.props.selectedRows.length > 0
-            ? localization.nRowsSelected.replace(
-                "{0}",
-                this.props.selectedRows.length
-              )
+            ? typeof localization.nRowsSelected === "function"
+              ? localization.nRowsSelected(this.props.selectedRows.length)
+              : localization.nRowsSelected.replace(
+                  "{0}",
+                  this.props.selectedRows.length
+                )
             : this.props.showTitle
             ? this.props.title
             : null;
@@ -550,9 +657,12 @@ MTableToolbar.defaultProps = {
     showColumnsAriaLabel: "Show Columns",
     exportTitle: "Export",
     exportAriaLabel: "Export",
-    exportName: "Export as CSV",
+    exportCSVName: "Export as CSV",
+    exportPDFName: "Export as PDF",
     searchTooltip: "Search",
     searchPlaceholder: "Search",
+    searchAriaLabel: "Search",
+    clearSearchAriaLabel: "Clear Search",
   },
   search: true,
   showTitle: true,
@@ -591,10 +701,20 @@ MTableToolbar.propTypes = {
   renderData: _propTypes["default"].array,
   data: _propTypes["default"].array,
   exportAllData: _propTypes["default"].bool,
-  exportButton: _propTypes["default"].bool,
+  exportButton: _propTypes["default"].oneOfType([
+    _propTypes["default"].bool,
+    _propTypes["default"].shape({
+      csv: _propTypes["default"].bool,
+      pdf: _propTypes["default"].bool,
+    }),
+  ]),
   exportDelimiter: _propTypes["default"].string,
-  exportFileName: _propTypes["default"].string,
+  exportFileName: _propTypes["default"].oneOfType([
+    _propTypes["default"].string,
+    _propTypes["default"].func,
+  ]),
   exportCsv: _propTypes["default"].func,
+  exportPdf: _propTypes["default"].func,
   classes: _propTypes["default"].object,
   searchAutoFocus: _propTypes["default"].bool,
 };

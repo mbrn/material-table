@@ -198,7 +198,7 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
           /*#__PURE__*/ React.createElement(
             _InputLabel["default"],
             {
-              htmlFor: "select-multiple-checkbox",
+              htmlFor: "select-multiple-checkbox" + columnDef.tableData.id,
               style: {
                 marginTop: -16,
               },
@@ -210,17 +210,23 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
             {
               multiple: true,
               value: selectedFilter,
-              onClose: function onClose(event) {
-                _this.props.onFilterChanged(
-                  columnDef.tableData.id,
-                  event.target.value
-                );
+              onClose: function onClose() {
+                if (columnDef.filterOnItemSelect !== true)
+                  _this.props.onFilterChanged(
+                    columnDef.tableData.id,
+                    selectedFilter
+                  );
               },
               onChange: function onChange(event) {
                 setSelectedFilter(event.target.value);
+                if (columnDef.filterOnItemSelect === true)
+                  _this.props.onFilterChanged(
+                    columnDef.tableData.id,
+                    event.target.value
+                  );
               },
               input: /*#__PURE__*/ React.createElement(_Input["default"], {
-                id: "select-multiple-checkbox",
+                id: "select-multiple-checkbox" + columnDef.tableData.id,
               }),
               renderValue: function renderValue(selecteds) {
                 return selecteds
@@ -429,6 +435,17 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
             );
           });
 
+        if (this.props.draggableCells) {
+          columns.splice(
+            0,
+            0,
+            /*#__PURE__*/ React.createElement(_TableCell["default"], {
+              padding: "none",
+              key: "key-draggable-column",
+            })
+          );
+        }
+
         if (this.props.selection) {
           columns.splice(
             0,
@@ -465,8 +482,10 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
         }
 
         if (this.props.hasDetailPanel) {
+          var alignment = this.props.detailPanelColumnAlignment;
+          var index = alignment === "left" ? 0 : columns.length;
           columns.splice(
-            0,
+            index,
             0,
             /*#__PURE__*/ React.createElement(_TableCell["default"], {
               padding: "none",
@@ -503,9 +522,12 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
         return /*#__PURE__*/ React.createElement(
           _TableRow["default"],
           {
-            style: {
-              height: 10,
-            },
+            style: (0, _objectSpread2["default"])(
+              {
+                height: 10,
+              },
+              this.props.filterRowStyle
+            ),
           },
           columns
         );
@@ -517,7 +539,9 @@ var MTableFilterRow = /*#__PURE__*/ (function (_React$Component) {
 
 MTableFilterRow.defaultProps = {
   columns: [],
+  detailPanelColumnAlignment: "left",
   selection: false,
+  draggableCells: false,
   hasActions: false,
   localization: {
     filterTooltip: "Filter",
@@ -527,9 +551,11 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   columns: _propTypes["default"].array.isRequired,
   hasDetailPanel: _propTypes["default"].bool.isRequired,
+  detailPanelColumnAlignment: _propTypes["default"].string,
   isTreeData: _propTypes["default"].bool.isRequired,
   onFilterChanged: _propTypes["default"].func.isRequired,
   filterCellStyle: _propTypes["default"].object,
+  filterRowStyle: _propTypes["default"].object,
   selection: _propTypes["default"].bool.isRequired,
   actionsColumnIndex: _propTypes["default"].number,
   hasActions: _propTypes["default"].bool,

@@ -144,7 +144,13 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                   paddingBottom: 0,
                   textAlign: "center",
                 },
-                colSpan: this.props.columns.length + addColumn,
+                colSpan: this.props.columns.reduce(function (
+                  currentVal,
+                  columnDef
+                ) {
+                  return columnDef.hidden ? currentVal : currentVal + 1;
+                },
+                addColumn),
                 key: "empty-",
               },
               localization.emptyDataSourceMessage
@@ -181,7 +187,7 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
         var _this = this;
 
         return renderData.map(function (data, index) {
-          if (data.tableData.editing) {
+          if (data.tableData.editing || _this.props.bulkEditOpen) {
             return /*#__PURE__*/ React.createElement(
               _this.props.components.EditRow,
               {
@@ -190,6 +196,7 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                 }),
                 components: _this.props.components,
                 data: data,
+                errorState: _this.props.errorState,
                 icons: _this.props.icons,
                 localization: (0, _objectSpread2["default"])(
                   {},
@@ -200,14 +207,18 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                       _this.props.localization.dateTimePickerLocalization,
                   }
                 ),
-                key: index,
-                mode: data.tableData.editing,
+                key: "row-" + data.tableData.id,
+                mode: _this.props.bulkEditOpen
+                  ? "bulk"
+                  : data.tableData.editing,
                 options: _this.props.options,
                 isTreeData: _this.props.isTreeData,
                 detailPanel: _this.props.detailPanel,
                 onEditingCanceled: _this.props.onEditingCanceled,
                 onEditingApproved: _this.props.onEditingApproved,
                 getFieldValue: _this.props.getFieldValue,
+                onBulkEditRowChanged: _this.props.onBulkEditRowChanged,
+                scrollWidth: _this.props.scrollWidth,
               }
             );
           } else {
@@ -218,13 +229,18 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                 icons: _this.props.icons,
                 data: data,
                 index: index,
+                errorState: _this.props.errorState,
                 key: "row-" + data.tableData.id,
                 level: 0,
                 options: _this.props.options,
                 localization: (0, _objectSpread2["default"])(
                   {},
                   MTableBody.defaultProps.localization.editRow,
-                  _this.props.localization.editRow
+                  _this.props.localization.editRow,
+                  {
+                    dateTimePickerLocalization:
+                      _this.props.localization.dateTimePickerLocalization,
+                  }
                 ),
                 onRowSelected: _this.props.onRowSelected,
                 actions: _this.props.actions,
@@ -240,6 +256,10 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                 onEditingApproved: _this.props.onEditingApproved,
                 hasAnyEditingRow: _this.props.hasAnyEditingRow,
                 treeDataMaxLevel: _this.props.treeDataMaxLevel,
+                cellEditable: _this.props.cellEditable,
+                onCellEditStarted: _this.props.onCellEditStarted,
+                onCellEditFinished: _this.props.onCellEditFinished,
+                scrollWidth: _this.props.scrollWidth,
               }
             );
           }
@@ -279,8 +299,17 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               localization: (0, _objectSpread2["default"])(
                 {},
                 MTableBody.defaultProps.localization.editRow,
-                _this2.props.localization.editRow
+                _this2.props.localization.editRow,
+                {
+                  dateTimePickerLocalization:
+                    _this2.props.localization.dateTimePickerLocalization,
+                }
               ),
+              cellEditable: _this2.props.cellEditable,
+              onCellEditStarted: _this2.props.onCellEditStarted,
+              onCellEditFinished: _this2.props.onCellEditFinished,
+              onBulkEditRowChanged: _this2.props.onBulkEditRowChanged,
+              scrollWidth: _this2.props.scrollWidth,
             }
           );
         });
@@ -289,6 +318,8 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
     {
       key: "render",
       value: function render() {
+        var _this$props$provided;
+
         var renderData = this.props.renderData;
         var groups = this.props.columns
           .filter(function (col) {
@@ -305,7 +336,13 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
 
         return /*#__PURE__*/ React.createElement(
           _TableBody["default"],
-          null,
+          {
+            ref:
+              (_this$props$provided = this.props.provided) === null ||
+              _this$props$provided === void 0
+                ? void 0
+                : _this$props$provided.innerRef,
+          },
           this.props.options.filtering &&
             /*#__PURE__*/ React.createElement(this.props.components.FilterRow, {
               columns: this.props.columns.filter(function (columnDef) {
@@ -319,6 +356,9 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               actionsColumnIndex: this.props.options.actionsColumnIndex,
               onFilterChanged: this.props.onFilterChanged,
               selection: this.props.options.selection,
+              draggableCells:
+                this.props.options.draggableRows &&
+                this.props.options.draggableRowsOptions.draggableCell,
               localization: (0, _objectSpread2["default"])(
                 {},
                 MTableBody.defaultProps.localization.filterRow,
@@ -329,9 +369,13 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
                 }
               ),
               hasDetailPanel: !!this.props.detailPanel,
+              detailPanelColumnAlignment: this.props.options
+                .detailPanelColumnAlignment,
               isTreeData: this.props.isTreeData,
               filterCellStyle: this.props.options.filterCellStyle,
+              filterRowStyle: this.props.options.filterRowStyle,
               hideFilterIcons: this.props.options.hideFilterIcons,
+              scrollWidth: this.props.scrollWidth,
             }),
           this.props.showAddRow &&
             this.props.options.addRowPosition === "first" &&
@@ -341,13 +385,18 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               }),
               data: this.props.initialFormData,
               components: this.props.components,
+              errorState: this.props.errorState,
               icons: this.props.icons,
               key: "key-add-row",
               mode: "add",
               localization: (0, _objectSpread2["default"])(
                 {},
                 MTableBody.defaultProps.localization.editRow,
-                this.props.localization.editRow
+                this.props.localization.editRow,
+                {
+                  dateTimePickerLocalization: this.props.localization
+                    .dateTimePickerLocalization,
+                }
               ),
               options: this.props.options,
               isTreeData: this.props.isTreeData,
@@ -355,6 +404,7 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               onEditingCanceled: this.props.onEditingCanceled,
               onEditingApproved: this.props.onEditingApproved,
               getFieldValue: this.props.getFieldValue,
+              scrollWidth: this.props.scrollWidth,
             }),
           groups.length > 0
             ? this.renderGroupedRows(groups, renderData)
@@ -367,13 +417,18 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               }),
               data: this.props.initialFormData,
               components: this.props.components,
+              errorState: this.props.errorState,
               icons: this.props.icons,
               key: "key-add-row",
               mode: "add",
               localization: (0, _objectSpread2["default"])(
                 {},
                 MTableBody.defaultProps.localization.editRow,
-                this.props.localization.editRow
+                this.props.localization.editRow,
+                {
+                  dateTimePickerLocalization: this.props.localization
+                    .dateTimePickerLocalization,
+                }
               ),
               options: this.props.options,
               isTreeData: this.props.isTreeData,
@@ -381,8 +436,10 @@ var MTableBody = /*#__PURE__*/ (function (_React$Component) {
               onEditingCanceled: this.props.onEditingCanceled,
               onEditingApproved: this.props.onEditingApproved,
               getFieldValue: this.props.getFieldValue,
+              scrollWidth: this.props.scrollWidth,
             }),
-          this.renderEmpty(emptyRowCount, renderData)
+          this.renderEmpty(emptyRowCount, renderData),
+          this.props.provided.placeholder
         );
       },
     },
@@ -427,6 +484,7 @@ MTableBody.propTypes = {
   renderData: _propTypes["default"].array,
   initialFormData: _propTypes["default"].object,
   selection: _propTypes["default"].bool.isRequired,
+  scrollWidth: _propTypes["default"].number.isRequired,
   showAddRow: _propTypes["default"].bool,
   treeDataMaxLevel: _propTypes["default"].number,
   localization: _propTypes["default"].object,
@@ -437,6 +495,16 @@ MTableBody.propTypes = {
   onRowClick: _propTypes["default"].func,
   onEditingCanceled: _propTypes["default"].func,
   onEditingApproved: _propTypes["default"].func,
+  provided: _propTypes["default"].object,
+  errorState: _propTypes["default"].oneOfType([
+    _propTypes["default"].object,
+    _propTypes["default"].bool,
+  ]),
+  cellEditable: _propTypes["default"].object,
+  onCellEditStarted: _propTypes["default"].func,
+  onCellEditFinished: _propTypes["default"].func,
+  bulkEditOpen: _propTypes["default"].bool,
+  onBulkEditRowChanged: _propTypes["default"].func,
 };
 var _default = MTableBody;
 exports["default"] = _default;

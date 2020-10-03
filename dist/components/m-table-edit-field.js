@@ -47,6 +47,20 @@ var _Select = _interopRequireDefault(require("@material-ui/core/Select"));
 
 var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
 
+var _FormControl = _interopRequireDefault(
+  require("@material-ui/core/FormControl")
+);
+
+var _FormHelperText = _interopRequireDefault(
+  require("@material-ui/core/FormHelperText")
+);
+
+var _FormGroup = _interopRequireDefault(require("@material-ui/core/FormGroup"));
+
+var _FormControlLabel = _interopRequireDefault(
+  require("@material-ui/core/FormControlLabel")
+);
+
 var _dateFns = _interopRequireDefault(require("@date-io/date-fns"));
 
 var _pickers = require("@material-ui/pickers");
@@ -98,10 +112,16 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
           columnDef = _this$props.columnDef,
           rowData = _this$props.rowData,
           onRowDataChange = _this$props.onRowDataChange,
+          errorState = _this$props.errorState,
+          onBulkEditRowChanged = _this$props.onBulkEditRowChanged,
+          scrollWidth = _this$props.scrollWidth,
           props = (0, _objectWithoutProperties2["default"])(_this$props, [
             "columnDef",
             "rowData",
             "onRowDataChange",
+            "errorState",
+            "onBulkEditRowChanged",
+            "scrollWidth",
           ]);
         return props;
       },
@@ -111,30 +131,50 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
       value: function renderLookupField() {
         var _this = this;
 
+        var _this$getProps = this.getProps(),
+          helperText = _this$getProps.helperText,
+          error = _this$getProps.error,
+          props = (0, _objectWithoutProperties2["default"])(_this$getProps, [
+            "helperText",
+            "error",
+          ]);
+
         return /*#__PURE__*/ React.createElement(
-          _Select["default"],
-          (0, _extends2["default"])({}, this.getProps(), {
-            value: this.props.value === undefined ? "" : this.props.value,
-            onChange: function onChange(event) {
-              return _this.props.onChange(event.target.value);
-            },
-            style: {
-              fontSize: 13,
-            },
-            SelectDisplayProps: {
-              "aria-label": this.props.columnDef.title,
-            },
-          }),
-          Object.keys(this.props.columnDef.lookup).map(function (key) {
-            return /*#__PURE__*/ React.createElement(
-              _MenuItem["default"],
-              {
-                key: key,
-                value: key,
+          _FormControl["default"],
+          {
+            error: Boolean(error),
+          },
+          /*#__PURE__*/ React.createElement(
+            _Select["default"],
+            (0, _extends2["default"])({}, props, {
+              value: this.props.value === undefined ? "" : this.props.value,
+              onChange: function onChange(event) {
+                return _this.props.onChange(event.target.value);
               },
-              _this.props.columnDef.lookup[key]
-            );
-          })
+              style: {
+                fontSize: 13,
+              },
+              SelectDisplayProps: {
+                "aria-label": this.props.columnDef.title,
+              },
+            }),
+            Object.keys(this.props.columnDef.lookup).map(function (key) {
+              return /*#__PURE__*/ React.createElement(
+                _MenuItem["default"],
+                {
+                  key: key,
+                  value: key,
+                },
+                _this.props.columnDef.lookup[key]
+              );
+            })
+          ),
+          Boolean(helperText) &&
+            /*#__PURE__*/ React.createElement(
+              _FormHelperText["default"],
+              null,
+              helperText
+            )
         );
       },
     },
@@ -143,39 +183,71 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
       value: function renderBooleanField() {
         var _this2 = this;
 
+        var _this$getProps2 = this.getProps(),
+          helperText = _this$getProps2.helperText,
+          error = _this$getProps2.error,
+          props = (0, _objectWithoutProperties2["default"])(_this$getProps2, [
+            "helperText",
+            "error",
+          ]);
+
         return /*#__PURE__*/ React.createElement(
-          _Checkbox["default"],
-          (0, _extends2["default"])({}, this.getProps(), {
-            value: String(this.props.value),
-            checked: Boolean(this.props.value),
-            onChange: function onChange(event) {
-              return _this2.props.onChange(event.target.checked);
-            },
-            style: {
-              paddingLeft: 0,
-              paddingTop: 0,
-              paddingBottom: 0,
-            },
-            inputProps: {
-              "aria-label": this.props.columnDef.title,
-            },
-          })
+          _FormControl["default"],
+          {
+            error: Boolean(error),
+            component: "fieldset",
+          },
+          /*#__PURE__*/ React.createElement(
+            _FormGroup["default"],
+            null,
+            /*#__PURE__*/ React.createElement(_FormControlLabel["default"], {
+              label: "",
+              control: /*#__PURE__*/ React.createElement(
+                _Checkbox["default"],
+                (0, _extends2["default"])({}, props, {
+                  value: String(this.props.value),
+                  checked: Boolean(this.props.value),
+                  onChange: function onChange(event) {
+                    return _this2.props.onChange(event.target.checked);
+                  },
+                  style: {
+                    padding: 0,
+                    width: 24,
+                    marginLeft: 9,
+                  },
+                  inputProps: {
+                    "aria-label": this.props.columnDef.title,
+                  },
+                })
+              ),
+            })
+          ),
+          /*#__PURE__*/ React.createElement(
+            _FormHelperText["default"],
+            null,
+            helperText
+          )
         );
       },
     },
     {
       key: "renderDateField",
       value: function renderDateField() {
+        var dateFormat =
+          this.props.columnDef.dateSetting &&
+          this.props.columnDef.dateSetting.format
+            ? this.props.columnDef.dateSetting.format
+            : "dd.MM.yyyy";
         return /*#__PURE__*/ React.createElement(
           _pickers.MuiPickersUtilsProvider,
           {
             utils: _dateFns["default"],
-            locale: this.props.dateTimePickerLocalization,
+            locale: this.props.locale,
           },
           /*#__PURE__*/ React.createElement(
             _pickers.DatePicker,
             (0, _extends2["default"])({}, this.getProps(), {
-              format: "dd.MM.yyyy",
+              format: dateFormat,
               value: this.props.value || null,
               onChange: this.props.onChange,
               clearable: true,
@@ -202,7 +274,7 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
           _pickers.MuiPickersUtilsProvider,
           {
             utils: _dateFns["default"],
-            locale: this.props.dateTimePickerLocalization,
+            locale: this.props.locale,
           },
           /*#__PURE__*/ React.createElement(
             _pickers.TimePicker,
@@ -215,12 +287,12 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
                 style: {
                   fontSize: 13,
                 },
-                inputProps: {
-                  "aria-label": "".concat(
-                    this.props.columnDef.title,
-                    ": press space to edit"
-                  ),
-                },
+              },
+              inputProps: {
+                "aria-label": "".concat(
+                  this.props.columnDef.title,
+                  ": press space to edit"
+                ),
               },
             })
           )
@@ -234,7 +306,7 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
           _pickers.MuiPickersUtilsProvider,
           {
             utils: _dateFns["default"],
-            locale: this.props.dateTimePickerLocalization,
+            locale: this.props.locale,
           },
           /*#__PURE__*/ React.createElement(
             _pickers.DateTimePicker,
@@ -247,12 +319,12 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
                 style: {
                   fontSize: 13,
                 },
-                inputProps: {
-                  "aria-label": "".concat(
-                    this.props.columnDef.title,
-                    ": press space to edit"
-                  ),
-                },
+              },
+              inputProps: {
+                "aria-label": "".concat(
+                  this.props.columnDef.title,
+                  ": press space to edit"
+                ),
               },
             })
           )
@@ -267,6 +339,7 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
         return /*#__PURE__*/ React.createElement(
           _TextField["default"],
           (0, _extends2["default"])({}, this.getProps(), {
+            fullWidth: true,
             style:
               this.props.columnDef.type === "numeric"
                 ? {
@@ -274,18 +347,24 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
                   }
                 : {},
             type: this.props.columnDef.type === "numeric" ? "number" : "text",
-            placeholder: this.props.columnDef.title,
+            placeholder:
+              this.props.columnDef.editPlaceholder ||
+              this.props.columnDef.title,
             value: this.props.value === undefined ? "" : this.props.value,
             onChange: function onChange(event) {
-              return _this3.props.onChange(event.target.value);
+              return _this3.props.onChange(
+                _this3.props.columnDef.type === "numeric"
+                  ? event.target.valueAsNumber
+                  : event.target.value
+              );
             },
             InputProps: {
               style: {
                 fontSize: 13,
               },
-              inputProps: {
-                "aria-label": this.props.columnDef.title,
-              },
+            },
+            inputProps: {
+              "aria-label": this.props.columnDef.title,
             },
           })
         );
@@ -299,18 +378,34 @@ var MTableEditField = /*#__PURE__*/ (function (_React$Component) {
         return /*#__PURE__*/ React.createElement(
           _TextField["default"],
           (0, _extends2["default"])({}, this.getProps(), {
-            placeholder: this.props.columnDef.title,
+            placeholder:
+              this.props.columnDef.editPlaceholder ||
+              this.props.columnDef.title,
+            style: {
+              float: "right",
+            },
+            type: "number",
             value: this.props.value === undefined ? "" : this.props.value,
             onChange: function onChange(event) {
-              return _this4.props.onChange(event.target.value);
+              var value = event.target.valueAsNumber;
+
+              if (!value && value !== 0) {
+                value = undefined;
+              }
+
+              return _this4.props.onChange(value);
             },
-            inputProps: {
+            InputProps: {
               style: {
                 fontSize: 13,
                 textAlign: "right",
-                "aria-label": this.props.columnDef.title,
               },
             },
+            inputProps: {
+              "aria-label": this.props.columnDef.title,
+            },
+            onKeyDown: this.props.onKeyDown,
+            autoFocus: this.props.autoFocus,
           })
         );
       },
@@ -347,7 +442,7 @@ MTableEditField.propTypes = {
   value: _propTypes["default"].any,
   onChange: _propTypes["default"].func.isRequired,
   columnDef: _propTypes["default"].object.isRequired,
-  dateTimePickerLocalization: _propTypes["default"].object,
+  locale: _propTypes["default"].object,
 };
 var _default = MTableEditField;
 exports["default"] = _default;

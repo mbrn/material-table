@@ -47,6 +47,12 @@ Object.defineProperty(exports, "MTableCell", {
     return _mTableCell["default"];
   },
 });
+Object.defineProperty(exports, "MTableEditCell", {
+  enumerable: true,
+  get: function get() {
+    return _mTableEditCell["default"];
+  },
+});
 Object.defineProperty(exports, "MTableEditRow", {
   enumerable: true,
   get: function get() {
@@ -103,6 +109,8 @@ var _mTableGroupbar = _interopRequireDefault(require("./m-table-groupbar"));
 var _mTableGroupRow = _interopRequireDefault(require("./m-table-group-row"));
 
 var _mTableCell = _interopRequireDefault(require("./m-table-cell"));
+
+var _mTableEditCell = _interopRequireDefault(require("./m-table-edit-cell"));
 
 var _mTableEditRow = _interopRequireDefault(require("./m-table-edit-row"));
 

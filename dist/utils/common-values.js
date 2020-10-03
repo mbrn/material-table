@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.selectionMaxWidth = exports.actionsColumnWidth = exports.rowActions = exports.baseIconSize = exports.elementSize = void 0;
+exports.reducePercentsInCalc = exports.selectionMaxWidth = exports.actionsColumnWidth = exports.rowActions = exports.baseIconSize = exports.elementSize = void 0;
 
 var elementSize = function elementSize(props) {
   return props.options.padding === "default" ? "medium" : "small";
@@ -36,3 +36,28 @@ var selectionMaxWidth = function selectionMaxWidth(props, maxTreeLevel) {
 };
 
 exports.selectionMaxWidth = selectionMaxWidth;
+
+var reducePercentsInCalc = function reducePercentsInCalc(calc, fullValue) {
+  var index = calc.indexOf("%");
+
+  while (index !== -1) {
+    var leftIndex = index - 1;
+
+    while (leftIndex >= 0 && "0123456789.".indexOf(calc[leftIndex]) !== -1) {
+      leftIndex--;
+    }
+
+    leftIndex++;
+    var value = Number.parseFloat(calc.substring(leftIndex, index));
+    calc =
+      calc.substring(0, leftIndex) +
+      (value * fullValue) / 100 +
+      "px" +
+      calc.substring(index + 1);
+    index = calc.indexOf("%");
+  }
+
+  return calc;
+};
+
+exports.reducePercentsInCalc = reducePercentsInCalc;

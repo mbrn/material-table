@@ -178,6 +178,7 @@ var MTableGroupbar = /*#__PURE__*/ (function (_React$Component) {
                       key: columnDef.tableData.id,
                       draggableId: columnDef.tableData.id.toString(),
                       index: index,
+                      isDragDisabled: !_this2.props.options.draggable,
                     },
                     function (provided, snapshot) {
                       return /*#__PURE__*/ React.createElement(

@@ -165,6 +165,10 @@ var MTableGroupRow = /*#__PURE__*/ (function (_React$Component) {
                   options: _this2.props.options,
                   hasAnyEditingRow: _this2.props.hasAnyEditingRow,
                   isTreeData: _this2.props.isTreeData,
+                  cellEditable: _this2.props.cellEditable,
+                  onCellEditStarted: _this2.props.onCellEditStarted,
+                  onCellEditFinished: _this2.props.onCellEditFinished,
+                  scrollWidth: _this2.props.scrollWidth,
                 }
               );
             });
@@ -191,6 +195,8 @@ var MTableGroupRow = /*#__PURE__*/ (function (_React$Component) {
                     onEditingCanceled: _this2.props.onEditingCanceled,
                     onEditingApproved: _this2.props.onEditingApproved,
                     getFieldValue: _this2.props.getFieldValue,
+                    onBulkEditRowChanged: _this2.props.onBulkEditRowChanged,
+                    scrollWidth: _this2.props.scrollWidth,
                   }
                 );
               } else {
@@ -218,6 +224,10 @@ var MTableGroupRow = /*#__PURE__*/ (function (_React$Component) {
                     onEditingCanceled: _this2.props.onEditingCanceled,
                     onEditingApproved: _this2.props.onEditingApproved,
                     hasAnyEditingRow: _this2.props.hasAnyEditingRow,
+                    cellEditable: _this2.props.cellEditable,
+                    onCellEditStarted: _this2.props.onCellEditStarted,
+                    onCellEditFinished: _this2.props.onCellEditFinished,
+                    scrollWidth: _this2.props.scrollWidth,
                   }
                 );
               }
@@ -328,4 +338,9 @@ MTableGroupRow.propTypes = {
   onEditingApproved: _propTypes["default"].func,
   options: _propTypes["default"].object,
   path: _propTypes["default"].arrayOf(_propTypes["default"].number),
+  scrollWidth: _propTypes["default"].number.isRequired,
+  cellEditable: _propTypes["default"].object,
+  onCellEditStarted: _propTypes["default"].func,
+  onCellEditFinished: _propTypes["default"].func,
+  onBulkEditRowChanged: _propTypes["default"].func,
 };

@@ -73,6 +73,8 @@ var React = _interopRequireWildcard(require("react"));
 
 var CommonValues = _interopRequireWildcard(require("../utils/common-values"));
 
+var _reactBeautifulDnd = require("react-beautiful-dnd");
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -152,26 +154,59 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
               columnDef
             );
 
-            return /*#__PURE__*/ React.createElement(
-              _this2.props.components.Cell,
-              {
-                size: size,
-                icons: _this2.props.icons,
-                columnDef: (0, _objectSpread2["default"])(
-                  {
-                    cellStyle: _this2.props.options.cellStyle,
-                  },
-                  columnDef
-                ),
-                value: value,
-                key:
-                  "cell-" +
-                  _this2.props.data.tableData.id +
-                  "-" +
-                  columnDef.tableData.id,
-                rowData: _this2.props.data,
-              }
-            );
+            if (
+              _this2.props.data.tableData.editCellList &&
+              _this2.props.data.tableData.editCellList.find(function (c) {
+                return c.tableData.id === columnDef.tableData.id;
+              })
+            ) {
+              return /*#__PURE__*/ React.createElement(
+                _this2.props.components.EditCell,
+                {
+                  components: _this2.props.components,
+                  icons: _this2.props.icons,
+                  localization: _this2.props.localization,
+                  columnDef: columnDef,
+                  size: size,
+                  key:
+                    "cell-" +
+                    _this2.props.data.tableData.id +
+                    "-" +
+                    columnDef.tableData.id,
+                  rowData: _this2.props.data,
+                  cellEditable: _this2.props.cellEditable,
+                  onCellEditFinished: _this2.props.onCellEditFinished,
+                  scrollWidth: _this2.props.scrollWidth,
+                }
+              );
+            } else {
+              return /*#__PURE__*/ React.createElement(
+                _this2.props.components.Cell,
+                {
+                  size: size,
+                  errorState: _this2.props.errorState,
+                  icons: _this2.props.icons,
+                  columnDef: (0, _objectSpread2["default"])(
+                    {
+                      cellStyle: _this2.props.options.cellStyle,
+                    },
+                    columnDef
+                  ),
+                  value: value,
+                  key:
+                    "cell-" +
+                    _this2.props.data.tableData.id +
+                    "-" +
+                    columnDef.tableData.id,
+                  rowData: _this2.props.data,
+                  cellEditable:
+                    columnDef.editable !== "never" &&
+                    !!_this2.props.cellEditable,
+                  onCellEditStarted: _this2.props.onCellEditStarted,
+                  scrollWidth: _this2.props.scrollWidth,
+                }
+              );
+            }
           });
         return mapArr;
       },
@@ -276,6 +311,19 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
       },
     },
     {
+      key: "renderDraggableColumn",
+      value: function renderDraggableColumn() {
+        var draggableOptions = this.props.options.draggableRowsOptions;
+        return /*#__PURE__*/ React.createElement(_TableCell["default"], {
+          padding: "none",
+          key: "key-drag-column",
+          style: {
+            width: draggableOptions.dragCellWidth,
+          },
+        });
+      },
+    },
+    {
       key: "renderDetailPanelColumn",
       value: function renderDetailPanelColumn() {
         var _this4 = this;
@@ -304,10 +352,13 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
               size: size,
               padding: "none",
               key: "key-detail-panel-column",
-              style: {
-                width: 42,
-                textAlign: "center",
-              },
+              style: (0, _objectSpread2["default"])(
+                {
+                  width: 42,
+                  textAlign: "center",
+                },
+                this.props.options.detailPanelColumnStyle
+              ),
             },
             /*#__PURE__*/ React.createElement(
               _IconButton["default"],
@@ -347,11 +398,14 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
             /*#__PURE__*/ React.createElement(
               "div",
               {
-                style: {
-                  width: 42 * this.props.detailPanel.length,
-                  textAlign: "center",
-                  display: "flex",
-                },
+                style: (0, _objectSpread2["default"])(
+                  {
+                    width: 42 * this.props.detailPanel.length,
+                    textAlign: "center",
+                    display: "flex",
+                  },
+                  this.props.options.detailPanelColumnStyle
+                ),
               },
               this.props.detailPanel.map(function (panel, index) {
                 if (typeof panel === "function") {
@@ -497,7 +551,12 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
           style = (0, _objectSpread2["default"])(
             {},
             style,
-            this.props.options.rowStyle(this.props.data, index, level)
+            this.props.options.rowStyle(
+              this.props.data,
+              index,
+              level,
+              this.props.hasAnyEditingRow
+            )
           );
         } else if (this.props.options.rowStyle) {
           style = (0, _objectSpread2["default"])(
@@ -512,7 +571,7 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
         }
 
         if (this.props.hasAnyEditingRow) {
-          style.opacity = 0.2;
+          style.opacity = style.opacity ? style.opacity : 0.2;
         }
 
         return style;
@@ -599,6 +658,11 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
           treeDataMaxLevel = _this$props.treeDataMaxLevel,
           localization = _this$props.localization,
           actions = _this$props.actions,
+          errorState = _this$props.errorState,
+          cellEditable = _this$props.cellEditable,
+          onCellEditStarted = _this$props.onCellEditStarted,
+          onCellEditFinished = _this$props.onCellEditFinished,
+          scrollWidth = _this$props.scrollWidth,
           rowProps = (0, _objectWithoutProperties2["default"])(_this$props, [
             "icons",
             "data",
@@ -618,41 +682,91 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
             "treeDataMaxLevel",
             "localization",
             "actions",
+            "errorState",
+            "cellEditable",
+            "onCellEditStarted",
+            "onCellEditFinished",
+            "scrollWidth",
           ]);
         return /*#__PURE__*/ React.createElement(
           React.Fragment,
           null,
           /*#__PURE__*/ React.createElement(
-            _TableRow["default"],
-            (0, _extends2["default"])(
-              {
-                selected: hasAnyEditingRow,
-              },
-              rowProps,
-              {
-                hover: onRowClick ? true : false,
-                style: this.getStyle(this.props.index, this.props.level),
-                onClick: function onClick(event) {
-                  onRowClick &&
-                    onRowClick(event, _this6.props.data, function (panelIndex) {
-                      var panel = detailPanel;
+            _reactBeautifulDnd.Draggable,
+            {
+              isDragDisabled: !options.draggableRows,
+              key: "row-" + this.props.index.toString(),
+              draggableId: "row-" + this.props.index.toString(),
+              index: this.props.index,
+            },
+            function (provided, snapshot) {
+              var _provided$draggablePr = provided.draggableProps,
+                providedStyle = _provided$draggablePr.style,
+                providedDraggableProps = (0,
+                _objectWithoutProperties2["default"])(_provided$draggablePr, [
+                  "style",
+                ]);
+              var rowStyle = (0, _objectSpread2["default"])(
+                {},
+                _this6.getStyle(_this6.props.index, _this6.props.level),
+                providedStyle
+              );
+              return /*#__PURE__*/ React.createElement(
+                _TableRow["default"],
+                (0, _extends2["default"])(
+                  {
+                    selected: hasAnyEditingRow,
+                  },
+                  rowProps,
+                  {
+                    hover: onRowClick ? true : false,
+                    style: rowStyle,
+                    onClick: function onClick(event) {
+                      onRowClick &&
+                        onRowClick(event, _this6.props.data, function (
+                          panelIndex
+                        ) {
+                          var panel = detailPanel;
 
-                      if (Array.isArray(panel)) {
-                        panel = panel[panelIndex || 0];
+                          if (Array.isArray(panel)) {
+                            panel = panel[panelIndex || 0];
 
-                        if (typeof panel === "function") {
-                          panel = panel(_this6.props.data);
-                        }
+                            if (typeof panel === "function") {
+                              panel = panel(_this6.props.data);
+                            }
 
-                        panel = panel.render;
-                      }
+                            panel = panel.render;
+                          }
 
-                      onToggleDetailPanel(_this6.props.path, panel);
-                    });
-                },
-              }
-            ),
-            renderColumns
+                          onToggleDetailPanel(_this6.props.path, panel);
+                        });
+                    },
+                    ref: provided.innerRef,
+                  },
+                  providedDraggableProps,
+                  options.draggableRowsOptions.draggableCell
+                    ? {}
+                    : provided.dragHandleProps
+                ),
+                options.draggableRows &&
+                  options.draggableRowsOptions.draggableCell &&
+                  /*#__PURE__*/ React.createElement(
+                    _this6.props.components.Cell,
+                    (0, _extends2["default"])(
+                      {
+                        value: options.draggableRowsOptions.dragCellContent,
+                        columnDef: {
+                          tableData: {
+                            width: options.draggableRowsOptions.dragCellWidth,
+                          },
+                        },
+                      },
+                      provided.dragHandleProps
+                    )
+                  ),
+                renderColumns
+              );
+            }
           ),
           this.props.data.tableData &&
             this.props.data.tableData.showDetailPanel &&
@@ -691,6 +805,7 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
                     detailPanel: _this6.props.detailPanel,
                     onEditingCanceled: onEditingCanceled,
                     onEditingApproved: onEditingApproved,
+                    errorState: _this6.props.errorState,
                   }
                 );
               } else {
@@ -709,6 +824,10 @@ var MTableBodyRow = /*#__PURE__*/ (function (_React$Component) {
                     onEditingApproved: onEditingApproved,
                     hasAnyEditingRow: _this6.props.hasAnyEditingRow,
                     treeDataMaxLevel: treeDataMaxLevel,
+                    errorState: _this6.props.errorState,
+                    cellEditable: cellEditable,
+                    onCellEditStarted: onCellEditStarted,
+                    onCellEditFinished: onCellEditFinished,
                   })
                 );
               }
@@ -753,4 +872,8 @@ MTableBodyRow.propTypes = {
   onRowClick: _propTypes["default"].func,
   onEditingApproved: _propTypes["default"].func,
   onEditingCanceled: _propTypes["default"].func,
+  errorState: _propTypes["default"].oneOfType([
+    _propTypes["default"].object,
+    _propTypes["default"].bool,
+  ]),
 };

@@ -168,6 +168,11 @@ var propTypes = {
       _propTypes["default"].func,
       StyledComponent,
     ]),
+    OverlayError: _propTypes["default"].oneOfType([
+      _propTypes["default"].element,
+      _propTypes["default"].func,
+      StyledComponent,
+    ]),
     Pagination: _propTypes["default"].oneOfType([
       _propTypes["default"].element,
       _propTypes["default"].func,
@@ -323,22 +328,47 @@ var propTypes = {
   ]),
   options: _propTypes["default"].shape({
     actionsCellStyle: _propTypes["default"].object,
+    editCellStyle: _propTypes["default"].object,
+    detailPanelColumnStyle: _propTypes["default"].object,
     actionsColumnIndex: _propTypes["default"].number,
     addRowPosition: _propTypes["default"].oneOf(["first", "last"]),
     columnsButton: _propTypes["default"].bool,
-    defaultExpanded: _propTypes["default"].bool | _propTypes["default"].func,
+    defaultExpanded: _propTypes["default"].oneOfType([
+      _propTypes["default"].bool,
+      _propTypes["default"].func,
+    ]),
     debounceInterval: _propTypes["default"].number,
     detailPanelType: _propTypes["default"].oneOf(["single", "multiple"]),
     doubleHorizontalScroll: _propTypes["default"].bool,
+    draggableRows: _propTypes["default"].bool,
+    draggableRowsOptions: _propTypes["default"].shape({
+      draggableCell: _propTypes["default"].bool,
+      dragHeaderContent:
+        _propTypes["default"].string | _propTypes["default"].element,
+      dragCellContent:
+        _propTypes["default"].string | _propTypes["default"].element,
+      dragCellWidth: _propTypes["default"].string,
+    }),
     emptyRowsWhenPaging: _propTypes["default"].bool,
     exportAllData: _propTypes["default"].bool,
-    exportButton: _propTypes["default"].bool,
+    exportButton: _propTypes["default"].oneOfType([
+      _propTypes["default"].bool,
+      _propTypes["default"].shape({
+        csv: _propTypes["default"].bool,
+        pdf: _propTypes["default"].bool,
+      }),
+    ]),
     exportDelimiter: _propTypes["default"].string,
-    exportFileName: _propTypes["default"].string,
+    exportFileName: _propTypes["default"].oneOfType([
+      _propTypes["default"].string,
+      _propTypes["default"].func,
+    ]),
     exportCsv: _propTypes["default"].func,
     filtering: _propTypes["default"].bool,
     filterCellStyle: _propTypes["default"].object,
+    filterRowStyle: _propTypes["default"].object,
     header: _propTypes["default"].bool,
+    headerSelectionProps: _propTypes["default"].object,
     headerStyle: _propTypes["default"].object,
     hideFilterIcons: _propTypes["default"].bool,
     initialPage: _propTypes["default"].number,
@@ -363,15 +393,10 @@ var propTypes = {
     paging: _propTypes["default"].bool,
     pageSize: _propTypes["default"].number,
     pageSizeOptions: _propTypes["default"].arrayOf(
-      _propTypes["default"].oneOfType([
-        _propTypes["default"].number,
-        _propTypes["default"].shape({
-          value: _propTypes["default"].number,
-          label: _propTypes["default"].string,
-        }),
-      ])
+      _propTypes["default"].number
     ),
     paginationType: _propTypes["default"].oneOf(["normal", "stepped"]),
+    paginationPosition: _propTypes["default"].oneOf(["bottom", "top", "both"]),
     rowStyle: _propTypes["default"].oneOfType([
       _propTypes["default"].object,
       _propTypes["default"].func,
