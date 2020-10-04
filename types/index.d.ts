@@ -26,7 +26,7 @@ export interface MaterialTableProps<RowData extends object> {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
     onBulkUpdate?: (
-      changes: { oldData: RowData; newData: RowData }[]
+      changes: Record<number, { oldData: RowData; newData: RowData }>
     ) => Promise<any>;
     onRowAdd?: (newData: RowData) => Promise<any>;
     onRowUpdate?: (newData: RowData, oldData?: RowData) => Promise<any>;
@@ -130,10 +130,12 @@ export interface EditCellColumnDef {
   field: string;
   title: string;
   tableData: {
+    columnOrder: number;
     filterValue: any;
     groupOrder: any;
     groupSort: string;
     id: number;
+    width: string;
   };
 }
 
@@ -196,6 +198,7 @@ export interface Column<RowData extends object> {
     | "never"
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
+  resizable?: boolean;
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
@@ -295,6 +298,7 @@ export interface Options<RowData extends object> {
   actionsColumnIndex?: number;
   addRowPosition?: "first" | "last";
   columnsButton?: boolean;
+  columnResizable?: boolean;
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
   detailPanelType?: "single" | "multiple";
@@ -302,7 +306,7 @@ export interface Options<RowData extends object> {
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
-  exportButton?: boolean;
+  exportButton?: boolean | { csv?: boolean; pdf?: boolean };
   exportDelimiter?: string;
   exportFileName?:
     | string
@@ -361,6 +365,7 @@ export interface Localization {
     dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
+      filterPlaceHolder?: React.ReactNode;
       filterTooltip?: React.ReactNode;
     };
     editRow?: {
@@ -399,9 +404,12 @@ export interface Localization {
     showColumnsAriaLabel?: string;
     exportTitle?: React.ReactNode;
     exportAriaLabel?: string;
-    exportName?: React.ReactNode;
+    exportCSVName?: React.ReactNode;
+    exportPDFName?: React.ReactNode;
     searchTooltip?: React.ReactNode;
     searchPlaceholder?: React.ReactNode;
+    searchAriaLabel?: string;
+    clearSearchAriaLabel?: string;
   };
 }
 

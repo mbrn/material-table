@@ -44,6 +44,7 @@ export default class MTableBodyRow extends React.Component {
               rowData={this.props.data}
               cellEditable={this.props.cellEditable}
               onCellEditFinished={this.props.onCellEditFinished}
+              scrollWidth={this.props.scrollWidth}
             />
           );
         } else {
@@ -68,6 +69,7 @@ export default class MTableBodyRow extends React.Component {
                 columnDef.editable !== "never" && !!this.props.cellEditable
               }
               onCellEditStarted={this.props.onCellEditStarted}
+              scrollWidth={this.props.scrollWidth}
             />
           );
         }
@@ -317,7 +319,12 @@ export default class MTableBodyRow extends React.Component {
     if (typeof this.props.options.rowStyle === "function") {
       style = {
         ...style,
-        ...this.props.options.rowStyle(this.props.data, index, level),
+        ...this.props.options.rowStyle(
+          this.props.data,
+          index,
+          level,
+          this.props.hasAnyEditingRow
+        ),
       };
     } else if (this.props.options.rowStyle) {
       style = {
@@ -331,7 +338,7 @@ export default class MTableBodyRow extends React.Component {
     }
 
     if (this.props.hasAnyEditingRow) {
-      style.opacity = 0.2;
+      style.opacity = style.opacity ? style.opacity : 0.2;
     }
 
     return style;
@@ -415,6 +422,7 @@ export default class MTableBodyRow extends React.Component {
       cellEditable,
       onCellEditStarted,
       onCellEditFinished,
+      scrollWidth,
       ...rowProps
     } = this.props;
 

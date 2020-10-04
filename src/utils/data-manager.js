@@ -71,17 +71,21 @@ export default class DataManager {
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || "asc",
-        width: columnDef.width,
+        width:
+          typeof columnDef.width === "number"
+            ? columnDef.width + "px"
+            : columnDef.width,
+        initialWidth:
+          typeof columnDef.width === "number"
+            ? columnDef.width + "px"
+            : columnDef.width,
+        additionalWidth: 0,
         ...columnDef.tableData,
         id: index,
       };
 
-      if (columnDef.width !== undefined) {
-        if (typeof columnDef.width === "number") {
-          usedWidth.push(columnDef.width + "px");
-        } else {
-          usedWidth.push(columnDef.width);
-        }
+      if (columnDef.tableData.width !== undefined) {
+        usedWidth.push(columnDef.tableData.width);
       }
 
       return columnDef;
@@ -89,7 +93,7 @@ export default class DataManager {
 
     usedWidth = "(" + usedWidth.join(" + ") + ")";
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -418,6 +422,28 @@ export default class DataManager {
     };
   };
 
+  onColumnResized(id, additionalWidth) {
+    const column = this.columns.find((c) => c.tableData.id === id);
+    if (!column) return;
+
+    const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
+    if (!nextColumn) return;
+
+    // console.log("S i: " + column.tableData.initialWidth);
+    // console.log("S a: " + column.tableData.additionalWidth);
+    // console.log("S w: " + column.tableData.width);
+
+    column.tableData.additionalWidth = additionalWidth;
+    column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
+
+    // nextColumn.tableData.additionalWidth = -1 * additionalWidth;
+    // nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
+
+    // console.log("F i: " + column.tableData.initialWidth);
+    // console.log("F a: " + column.tableData.additionalWidth);
+    // console.log("F w: " + column.tableData.width);
+  }
+
   expandTreeForNodes = (data) => {
     data.forEach((row) => {
       let currentRow = row;
@@ -717,6 +743,7 @@ export default class DataManager {
     this.searchedData = [...this.filteredData];
 
     if (this.searchText && this.applySearch) {
+      const trimmedSearchText = this.searchText.trim();
       this.searchedData = this.searchedData.filter((row) => {
         return this.columns
           .filter((columnDef) => {
@@ -727,7 +754,7 @@ export default class DataManager {
           .some((columnDef) => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(
-                this.searchText,
+                trimmedSearchText,
                 row,
                 columnDef
               );
@@ -737,7 +764,7 @@ export default class DataManager {
                 return value
                   .toString()
                   .toUpperCase()
-                  .includes(this.searchText.toUpperCase());
+                  .includes(trimmedSearchText.toUpperCase());
               }
             }
           });

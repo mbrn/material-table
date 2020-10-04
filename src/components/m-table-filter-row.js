@@ -246,8 +246,10 @@ class MTableFilterRow extends React.Component {
     }
 
     if (this.props.hasDetailPanel) {
+      const alignment = this.props.detailPanelColumnAlignment;
+      const index = alignment === "left" ? 0 : columns.length;
       columns.splice(
-        0,
+        index,
         0,
         <TableCell padding="none" key="key-detail-panel-column" />
       );
@@ -284,6 +286,7 @@ class MTableFilterRow extends React.Component {
 
 MTableFilterRow.defaultProps = {
   columns: [],
+  detailPanelColumnAlignment: "left",
   selection: false,
   hasActions: false,
   localization: {
@@ -295,6 +298,7 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   columns: PropTypes.array.isRequired,
   hasDetailPanel: PropTypes.bool.isRequired,
+  detailPanelColumnAlignment: PropTypes.string,
   isTreeData: PropTypes.bool.isRequired,
   onFilterChanged: PropTypes.func.isRequired,
   filterCellStyle: PropTypes.object,

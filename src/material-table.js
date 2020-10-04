@@ -101,6 +101,7 @@ export default class MaterialTable extends React.Component {
     const shouldReorder =
       isInit ||
       (defaultSortColumnIndex !== this.dataManager.orderBy &&
+        !this.isRemoteData() &&
         defaultSortDirection !== this.dataManager.orderDirection);
     shouldReorder &&
       this.dataManager.changeOrder(
@@ -719,6 +720,11 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState());
   };
 
+  onColumnResized = (id, additionalWidth) => {
+    this.dataManager.onColumnResized(id, additionalWidth);
+    this.setState(this.dataManager.getRenderState());
+  };
+
   renderFooter() {
     const props = this.getProps();
     if (props.options.paging) {
@@ -858,6 +864,8 @@ export default class MaterialTable extends React.Component {
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
+          onColumnResized={this.onColumnResized}
+          scrollWidth={this.state.width}
         />
       )}
       <props.components.Body
@@ -897,6 +905,7 @@ export default class MaterialTable extends React.Component {
         onCellEditFinished={this.onCellEditFinished}
         bulkEditOpen={this.dataManager.bulkEditOpen}
         onBulkEditRowChanged={this.dataManager.onBulkEditRowChanged}
+        scrollWidth={this.state.width}
       />
     </Table>
   );

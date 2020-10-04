@@ -23,6 +23,8 @@ class MTableEditField extends React.Component {
       rowData,
       onRowDataChange,
       errorState,
+      onBulkEditRowChanged,
+      scrollWidth,
       ...props
     } = this.props;
     return props;
@@ -56,7 +58,7 @@ class MTableEditField extends React.Component {
     const { helperText, error, ...props } = this.getProps();
 
     return (
-      <FormControl error={error} component="fieldset">
+      <FormControl error={Boolean(error)} component="fieldset">
         <FormGroup>
           <FormControlLabel
             label=""
@@ -122,9 +124,9 @@ class MTableEditField extends React.Component {
             style: {
               fontSize: 13,
             },
-            inputProps: {
-              "aria-label": `${this.props.columnDef.title}: press space to edit`,
-            },
+          }}
+          inputProps={{
+            "aria-label": `${this.props.columnDef.title}: press space to edit`,
           }}
         />
       </MuiPickersUtilsProvider>
@@ -144,9 +146,9 @@ class MTableEditField extends React.Component {
             style: {
               fontSize: 13,
             },
-            inputProps: {
-              "aria-label": `${this.props.columnDef.title}: press space to edit`,
-            },
+          }}
+          inputProps={{
+            "aria-label": `${this.props.columnDef.title}: press space to edit`,
           }}
         />
       </MuiPickersUtilsProvider>
@@ -177,9 +179,9 @@ class MTableEditField extends React.Component {
           style: {
             fontSize: 13,
           },
-          inputProps: {
-            "aria-label": this.props.columnDef.title,
-          },
+        }}
+        inputProps={{
+          "aria-label": this.props.columnDef.title,
         }}
       />
     );
@@ -202,12 +204,14 @@ class MTableEditField extends React.Component {
           }
           return this.props.onChange(value);
         }}
-        inputProps={{
+        InputProps={{
           style: {
             fontSize: 13,
             textAlign: "right",
-            "aria-label": this.props.columnDef.title,
           },
+        }}
+        inputProps={{
+          "aria-label": this.props.columnDef.title,
         }}
         onKeyDown={this.props.onKeyDown}
         autoFocus={this.props.autoFocus}
