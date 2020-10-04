@@ -268,7 +268,6 @@ export default class DataManager {
 
   changeColumnHidden(column, hidden) {
     column.hidden = hidden;
-    column.hiddenByColumnsButton = hidden;
   }
 
   changeTreeExpand(path) {
