@@ -221,9 +221,7 @@ export class MTableToolbar extends React.Component {
                       <Checkbox
                         checked={!col.hidden}
                         id={`column-toggle-${col.tableData.id}`}
-                        onChange={() =>
-                          this.props.onColumnsChanged(col, !col.hidden)
-                        }
+                        onChange={() => this.props.onColumnsChanged(col)}
                       />
                       <span>{col.title}</span>
                     </MenuItem>
@@ -349,6 +347,7 @@ export class MTableToolbar extends React.Component {
         : this.props.showTitle
         ? this.props.title
         : null;
+
     return (
       <Toolbar
         className={classNames(classes.root, {

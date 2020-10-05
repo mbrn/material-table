@@ -268,6 +268,10 @@ export default class DataManager {
 
   changeColumnHidden(column, hidden) {
     column.hidden = hidden;
+    const nextColumns = this.columns.map((col) => {
+      return col.field === column.field ? { ...col, hidden } : col;
+    });
+    this.setColumns(nextColumns);
   }
 
   changeTreeExpand(path) {

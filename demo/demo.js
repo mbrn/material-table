@@ -424,6 +424,8 @@ class App extends Component {
     columns: [
       {
         title: "Adı",
+        hidden: true,
+        hiddenByColumnsButton: true,
         field: "name",
         filterPlaceholder: "Adı filter",
         tooltip: "This is tooltip text",
@@ -506,6 +508,7 @@ class App extends Component {
                   options={{
                     tableLayout: "fixed",
                     columnResizable: true,
+                    columnsButton: true,
                     headerSelectionProps: {
                       color: "primary",
                     },
