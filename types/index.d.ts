@@ -73,7 +73,7 @@ export interface MaterialTableProps<RowData extends object> {
 
 export interface Filter<RowData extends object> {
   column: Column<RowData>;
-  operator: "=";
+  operator: "=" | string;
   value: any;
 }
 export interface ErrorState {
