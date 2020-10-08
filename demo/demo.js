@@ -438,7 +438,7 @@ class App extends Component {
         editable: "never",
         resizable: false,
       },
-      { title: "Evli", field: "isMarried", type: "boolean" },
+      { title: "Evli", field: "isMarried" },
       {
         title: "Cinsiyet",
         field: "sex",
@@ -489,22 +489,20 @@ class App extends Component {
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
                   }}
-                  onRowClick={(event, rowData, togglePanel) => togglePanel()}
-                  detailPanel={(rowData) => <div>hello world</div>}
-                  cellEditable={{
-                    cellStyle: {},
-                    onCellEditApproved: (
-                      newValue,
-                      oldValue,
-                      rowData,
-                      columnDef
-                    ) => {
-                      return new Promise((resolve, reject) => {
-                        console.log("newValue: " + newValue);
-                        setTimeout(resolve, 4000);
-                      });
-                    },
-                  }}
+                  // cellEditable={{
+                  //   cellStyle: {},
+                  //   onCellEditApproved: (
+                  //     newValue,
+                  //     oldValue,
+                  //     rowData,
+                  //     columnDef
+                  //   ) => {
+                  //     return new Promise((resolve, reject) => {
+                  //       console.log("newValue: " + newValue);
+                  //       setTimeout(resolve, 4000);
+                  //     });
+                  //   },
+                  // }}
                   options={{
                     tableLayout: "fixed",
                     columnResizable: true,
