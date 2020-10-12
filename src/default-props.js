@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
 import * as MComponents from "./components";
 import PropTypes from "prop-types";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
 
 const OverlayLoading = (props) => (
   <div
@@ -13,7 +13,7 @@ const OverlayLoading = (props) => (
       display: "table",
       width: "100%",
       height: "100%",
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
     <div
@@ -39,7 +39,7 @@ const OverlayError = (props) => (
       display: "table",
       width: "100%",
       height: "100%",
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
     <div

@@ -10,7 +10,7 @@ let direction = "ltr";
 const theme = createMuiTheme({
   direction: direction,
   palette: {
-    type: "light",
+    mode: "light",
   },
 });
 
