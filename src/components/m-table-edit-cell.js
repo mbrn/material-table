@@ -129,6 +129,7 @@ class MTableEditCell extends React.Component {
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
+              rowData={this.props.rowData}
               value={this.state.value}
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
