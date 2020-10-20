@@ -50,6 +50,7 @@ class MTableAction extends React.Component {
       <IconButton
         size={this.props.size}
         color="inherit"
+        aria-label="Clear"
         disabled={disabled}
         onClick={handleOnClick}
       >
