@@ -298,6 +298,7 @@ export const propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   options: PropTypes.shape({
     actionsCellStyle: PropTypes.object,
+    actionsCellDivStyle: PropTypes.object,
     editCellStyle: PropTypes.object,
     detailPanelColumnStyle: PropTypes.object,
     actionsColumnIndex: PropTypes.number,
