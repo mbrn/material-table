@@ -35,6 +35,7 @@ class MTablePaginationInner extends React.Component {
       rowsPerPage,
       theme,
       showFirstLastPageButtons,
+      iconButtonProps,
     } = this.props;
     const localization = {
       ...MTablePaginationInner.defaultProps.localization,
@@ -47,9 +48,10 @@ class MTablePaginationInner extends React.Component {
           <Tooltip title={localization.firstTooltip}>
             <span>
               <IconButton
+                {...iconButtonProps}
                 onClick={this.handleFirstPageButtonClick}
-                disabled={page === 0}
                 aria-label={localization.firstAriaLabel}
+                disabled={page === 0}
               >
                 {theme.direction === "rtl" ? (
                   <this.props.icons.LastPage />
@@ -63,6 +65,7 @@ class MTablePaginationInner extends React.Component {
         <Tooltip title={localization.previousTooltip}>
           <span>
             <IconButton
+              {...iconButtonProps}
               onClick={this.handleBackButtonClick}
               disabled={page === 0}
               aria-label={localization.previousAriaLabel}
@@ -103,6 +106,7 @@ class MTablePaginationInner extends React.Component {
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
+              {...iconButtonProps}
               onClick={this.handleNextButtonClick}
               disabled={page >= Math.ceil(count / rowsPerPage) - 1}
               aria-label={localization.nextAriaLabel}
@@ -119,6 +123,7 @@ class MTablePaginationInner extends React.Component {
           <Tooltip title={localization.lastTooltip}>
             <span>
               <IconButton
+                {...iconButtonProps}
                 onClick={this.handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label={localization.lastAriaLabel}
@@ -155,10 +160,12 @@ MTablePaginationInner.propTypes = {
   localization: PropTypes.object,
   theme: PropTypes.any,
   showFirstLastPageButtons: PropTypes.bool,
+  iconButtonProps: PropTypes.object,
 };
 
 MTablePaginationInner.defaultProps = {
   showFirstLastPageButtons: true,
+  iconButtonProps: {},
   localization: {
     firstTooltip: "First Page",
     previousTooltip: "Previous Page",

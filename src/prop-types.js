@@ -336,6 +336,7 @@ export const propTypes = {
       "initial",
       "inherit",
     ]),
+    paginationIconButtonProps: PropTypes.object,
     padding: PropTypes.oneOf(["default", "dense"]),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
