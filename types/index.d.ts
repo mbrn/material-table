@@ -1,5 +1,6 @@
 import * as React from "react";
 import { IconProps } from "@material-ui/core/Icon";
+import { IconButtonProps } from "@material-ui/core/IconButton";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { string } from "prop-types";
 
@@ -113,6 +114,7 @@ export interface Action<RowData extends object> {
   position?: "auto" | "toolbar" | "toolbarOnSelect" | "row";
   tooltip?: string;
   onClick: (event: any, data: RowData | RowData[]) => void;
+  iconButtonProps?: IconButtonProps;
   iconProps?: IconProps;
   hidden?: boolean;
 }

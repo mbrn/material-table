@@ -27,6 +27,7 @@ export const propTypes = {
         tooltip: PropTypes.string,
         onClick: PropTypes.func.isRequired,
         iconProps: PropTypes.object,
+        iconButtonProps: PropTypes.object,
         disabled: PropTypes.bool,
         hidden: PropTypes.bool,
       }),
