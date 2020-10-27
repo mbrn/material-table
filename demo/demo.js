@@ -487,7 +487,13 @@ class App extends Component {
                       icon: "save",
                       tooltip: "Save",
                       onClick: (E, rowData) => alert(rowData.name),
-                      hidden: (rowData) => rowData.name !== "A1",
+                      hidden: (rowData) => {
+                        if (rowData instanceof Array) {
+                          return !!rowData.find((data) => data.name === "A2");
+                        } else {
+                          return rowData.name === "A2";
+                        }
+                      },
                     },
                     {
                       icon: "home",
@@ -529,7 +535,7 @@ class App extends Component {
                     headerSelectionProps: {
                       color: "primary",
                     },
-                    selection: false,
+                    selection: true,
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
 
