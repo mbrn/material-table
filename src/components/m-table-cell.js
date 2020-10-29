@@ -168,7 +168,7 @@ export default class MTableCell extends React.Component {
         : "left";
 
     let renderValue = this.getRenderValue();
-    if (cellEditable) {
+    if (cellEditable && ( (typeof cellEditable.isCellEditable !== "function") || cellEditable.isCellEditable(rowData, columnDef))) {
       renderValue = (
         <div
           style={{

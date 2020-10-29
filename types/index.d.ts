@@ -9,6 +9,7 @@ export interface MaterialTableProps<RowData extends object> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
   cellEditable?: {
     cellStyle?: React.CSSProperties;
+    isCellEditable?: (rowData: RowData, columnDef: Column<RowData>) => boolean;
     onCellEditApproved: (
       newValue: any,
       oldValue: any,
