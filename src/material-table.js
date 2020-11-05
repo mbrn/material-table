@@ -84,7 +84,7 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
-    this.dataManager.changeRowEditing();
+    isInit && this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
