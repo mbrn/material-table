@@ -50,9 +50,11 @@
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "7.0.0",
-    "@material-ui/core": "^5.0.0-alpha.15",
-    "@emotion/core": "^10.0.35",
-    "@emotion/styled": "^10.0.27",
+    "@material-ui/core": "^5.0.0-alpha.16",
+    "@material-ui/lab": "^5.0.0-alpha.16",
+    "@emotion/core": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@emotion/react": "^11.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.4",
     "babel-polyfill": "^6.26.0",
@@ -78,7 +80,6 @@
   },
   "dependencies": {
     "@date-io/date-fns": "^2.8.0",
-    "@material-ui/pickers": "^4.0.0-alpha.12",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0",
     "debounce": "^1.2.0",
@@ -92,9 +93,11 @@
   },
   "peerDependencies": {
     "@date-io/core": "^2.0.0",
-    "@material-ui/core": "^5.0.0-alpha.15",
-    "@emotion/core": "^10.0.35",
-    "@emotion/styled": "^10.0.27",
+    "@material-ui/core": "^5.0.0-alpha.16",
+    "@material-ui/lab": "^5.0.0-alpha.16",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   }

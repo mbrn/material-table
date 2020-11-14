@@ -13,7 +13,7 @@ import {
   TimePicker,
   DatePicker,
   DateTimePicker,
-} from "@material-ui/pickers";
+} from "@material-ui/lab";
 import PropTypes from "prop-types";
 
 class MTableEditField extends React.Component {
@@ -171,6 +171,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         fullWidth
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
@@ -203,6 +204,7 @@ class MTableEditField extends React.Component {
     return (
       <TextField
         {...this.getProps()}
+        variant="standard"
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }

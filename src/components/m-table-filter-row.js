@@ -20,7 +20,7 @@ import {
   TimePicker,
   DatePicker,
   DateTimePicker,
-} from "@material-ui/pickers";
+} from "@material-ui/lab";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -126,6 +126,7 @@ class MTableFilterRow extends React.Component {
     const FilterIcon = this.props.icons.Filter;
     return (
       <TextField
+        variant="standard"
         style={columnDef.type === "numeric" ? { float: "right" } : {}}
         type={columnDef.type === "numeric" ? "number" : "search"}
         value={columnDef.tableData.filterValue || ""}
