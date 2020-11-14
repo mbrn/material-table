@@ -180,6 +180,7 @@ export interface Column<RowData extends Record<string, any>> {
     onFilterChanged: (rowId: string, value: any) => void;
   }) => React.ReactElement<any>;
   filterPlaceholder?: string;
+  filterOnItemSelect: boolean;
   filterCellStyle?: React.CSSProperties;
   grouping?: boolean;
   groupTitle?: string | ((groupData: any) => any) | React.ReactNode;
