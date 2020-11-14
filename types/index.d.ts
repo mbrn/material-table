@@ -1,11 +1,10 @@
 import * as React from "react";
 import { IconProps } from "@material-ui/core/Icon";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import { string } from "prop-types";
 
 type SvgIconComponent = typeof SvgIcon;
 
-export interface MaterialTableProps<RowData extends object> {
+export interface MaterialTableProps<RowData extends Record<string, any>> {
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
   cellEditable?: {
     cellStyle?: React.CSSProperties;
@@ -39,7 +38,7 @@ export interface MaterialTableProps<RowData extends object> {
     isDeleteHidden?: (rowData: RowData) => boolean;
   };
   icons?: Icons;
-  initialFormData?: object;
+  initialFormData?: Record<string, any>;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
   options?: Options<RowData>;
@@ -71,7 +70,7 @@ export interface MaterialTableProps<RowData extends object> {
   totalCount?: number;
 }
 
-export interface Filter<RowData extends object> {
+export interface Filter<RowData extends Record<string, any>> {
   column: Column<RowData>;
   operator: "=";
   value: any;
@@ -81,7 +80,7 @@ export interface ErrorState {
   errorCause: "query" | "add" | "update" | "delete";
 }
 
-export interface Query<RowData extends object> {
+export interface Query<RowData extends Record<string, any>> {
   filters: Filter<RowData>[];
   page: number;
   pageSize: number;
@@ -92,13 +91,13 @@ export interface Query<RowData extends object> {
   error?: ErrorState;
 }
 
-export interface QueryResult<RowData extends object> {
+export interface QueryResult<RowData extends Record<string, any>> {
   data: RowData[];
   page: number;
   totalCount: number;
 }
 
-export interface DetailPanel<RowData extends object> {
+export interface DetailPanel<RowData extends Record<string, any>> {
   disabled?: boolean;
   icon?: string | React.ComponentType<any>;
   openIcon?: string | React.ComponentType<any>;
@@ -106,7 +105,7 @@ export interface DetailPanel<RowData extends object> {
   render: (rowData: RowData) => string | React.ReactNode;
 }
 
-export interface Action<RowData extends object> {
+export interface Action<RowData extends Record<string, any>> {
   disabled?: boolean;
   icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
   isFreeAction?: boolean;
@@ -117,7 +116,7 @@ export interface Action<RowData extends object> {
   hidden?: boolean;
 }
 
-export interface EditComponentProps<RowData extends object> {
+export interface EditComponentProps<RowData extends Record<string, any>> {
   rowData: RowData;
   value: any;
   onChange: (newValue: any) => void;
@@ -139,7 +138,7 @@ export interface EditCellColumnDef {
   };
 }
 
-export interface Column<RowData extends object> {
+export interface Column<RowData extends Record<string, any>> {
   align?: "center" | "inherit" | "justify" | "left" | "right";
   cellStyle?:
     | React.CSSProperties
@@ -189,7 +188,7 @@ export interface Column<RowData extends object> {
   hiddenByColumnsButton?: boolean;
   hideFilterIcon?: boolean;
   initialEditValue?: any;
-  lookup?: object;
+  lookup?: Record<string, any>;
   editPlaceholder?: string;
   editable?:
     | "always"
@@ -291,7 +290,7 @@ export interface Icons {
   Retry?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
-export interface Options<RowData extends object> {
+export interface Options<RowData extends Record<string, any>> {
   actionsCellStyle?: React.CSSProperties;
   detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
@@ -318,7 +317,7 @@ export interface Options<RowData extends object> {
   fixedColumns?: { left?: number; right?: number };
   groupRowSeparator?: string;
   header?: boolean;
-  headerSelectionProps?: object;
+  headerSelectionProps?: Record<string, any>;
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
@@ -362,7 +361,7 @@ export interface Options<RowData extends object> {
 export interface Localization {
   error?: React.ReactNode;
   body?: {
-    dateTimePickerLocalization?: object; // The date-fns locale object applied to the datepickers
+    dateTimePickerLocalization?: Record<string, any>; // The date-fns locale object applied to the datepickers
     emptyDataSourceMessage?: React.ReactNode;
     filterRow?: {
       filterPlaceHolder?: React.ReactNode;
@@ -414,5 +413,5 @@ export interface Localization {
 }
 
 export default class MaterialTable<
-  RowData extends object
+  RowData extends Record<string, any>
 > extends React.Component<MaterialTableProps<RowData>> {}
