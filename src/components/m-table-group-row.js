@@ -35,6 +35,7 @@ export default class MTableGroupRow extends React.Component {
             groups={this.props.groups}
             icons={this.props.icons}
             level={this.props.level + 1}
+            localization: _this2.props.localization,
             path={[...this.props.path, index]}
             onGroupExpandChanged={this.props.onGroupExpandChanged}
             onRowSelected={this.props.onRowSelected}
@@ -86,6 +87,7 @@ export default class MTableGroupRow extends React.Component {
                 detailPanel={this.props.detailPanel}
                 getFieldValue={this.props.getFieldValue}
                 icons={this.props.icons}
+                localization: _this2.props.localization,
                 path={[...this.props.path, index]}
                 onRowSelected={this.props.onRowSelected}
                 onRowClick={this.props.onRowClick}
