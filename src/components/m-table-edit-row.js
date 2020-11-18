@@ -16,7 +16,7 @@ export default class MTableEditRow extends React.Component {
       data: props.data
         ? JSON.parse(JSON.stringify(props.data))
         : this.createRowData(),
-      touched: false,
+      touched: {},
     };
   }
 
@@ -105,7 +105,7 @@ export default class MTableEditRow extends React.Component {
             editComponent || this.props.components.EditField;
           let error = { isValid: true, helperText: "" };
 
-          if (columnDef.validate && this.state.touched) {
+          if (columnDef.validate && this.state.touched[columnDef.field]) {
             const validateResponse = columnDef.validate(this.state.data);
             switch (typeof validateResponse) {
               case "object":
@@ -138,16 +138,24 @@ export default class MTableEditRow extends React.Component {
                 rowData={this.state.data}
                 onChange={(value) => {
                   const data = { ...this.state.data };
+                  const touchedFields = {
+                    ...this.state.touched,
+                    [columnDef.field]: true,
+                  };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  this.setState({ data, touched: true }, () => {
+                  this.setState({ data, touched: touchedFields }, () => {
                     if (this.props.onBulkEditRowChanged) {
                       this.props.onBulkEditRowChanged(this.props.data, data);
                     }
                   });
                 }}
                 onRowDataChange={(data) => {
-                  this.setState({ data, touched: true }, () => {
+                  const touchedFields = {
+                    ...this.state.touched,
+                    [columnDef.field]: true,
+                  };
+                  this.setState({ data, touched: touchedFields }, () => {
                     if (this.props.onBulkEditRowChanged) {
                       this.props.onBulkEditRowChanged(this.props.data, data);
                     }
