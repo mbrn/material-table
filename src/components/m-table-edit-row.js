@@ -16,6 +16,7 @@ export default class MTableEditRow extends React.Component {
       data: props.data
         ? JSON.parse(JSON.stringify(props.data))
         : this.createRowData(),
+      touched: false,
     };
   }
 
@@ -103,7 +104,8 @@ export default class MTableEditRow extends React.Component {
           const EditComponent =
             editComponent || this.props.components.EditField;
           let error = { isValid: true, helperText: "" };
-          if (columnDef.validate) {
+
+          if (columnDef.validate && this.state.touched) {
             const validateResponse = columnDef.validate(this.state.data);
             switch (typeof validateResponse) {
               case "object":
@@ -138,14 +140,14 @@ export default class MTableEditRow extends React.Component {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
                   // data[columnDef.field] = value;
-                  this.setState({ data }, () => {
+                  this.setState({ data, touched: true }, () => {
                     if (this.props.onBulkEditRowChanged) {
                       this.props.onBulkEditRowChanged(this.props.data, data);
                     }
                   });
                 }}
                 onRowDataChange={(data) => {
-                  this.setState({ data }, () => {
+                  this.setState({ data, touched: true }, () => {
                     if (this.props.onBulkEditRowChanged) {
                       this.props.onBulkEditRowChanged(this.props.data, data);
                     }
