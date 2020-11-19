@@ -983,11 +983,20 @@ export default class DataManager {
 
       this.sortedData = sortGroups(this.sortedData, groups[0]);
 
+      const getGroupsIndex = (groups) =>
+        groups.reduce((result, group) => {
+          result[group.value] = groups.findIndex(
+            (g) => g.value === group.value
+          );
+          return result;
+        }, {});
+
       const sortGroupData = (list, level) => {
         list.forEach((element) => {
           if (element.groups.length > 0) {
             const column = groups[level];
             element.groups = sortGroups(element.groups, column);
+            element.groupsIndex = getGroupsIndex(element.groups);
             sortGroupData(element.groups, level + 1);
           } else {
             if (this.orderBy >= 0 && this.orderDirection) {
