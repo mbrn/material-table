@@ -11,7 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
-import classNames from "classnames";
+import clsx from "clsx";
 import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
 import "jspdf-autotable";
@@ -354,7 +354,7 @@ export class MTableToolbar extends React.Component {
         : null;
     return (
       <Toolbar
-        className={classNames(classes.root, {
+        className={clsx(classes.root, {
           [classes.highlight]:
             this.props.showTextRowsSelected &&
             this.props.selectedRows &&
