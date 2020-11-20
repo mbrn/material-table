@@ -179,21 +179,24 @@ export default class MTableEditRow extends React.Component {
       ...MTableEditRow.defaultProps.localization,
       ...this.props.localization,
     };
-    const isValid = this.props.columns.every((column) => {
-      if (column.validate) {
-        const response = column.validate(this.state.data);
-        switch (typeof response) {
-          case "object":
-            return response.isValid;
-          case "string":
-            return response.length === 0;
-          case "boolean":
-            return response;
-        }
-      } else {
-        return true;
-      }
-    });
+    const isValid =
+      this.props.mode !== "delete"
+        ? this.props.columns.every((column) => {
+            if (column.validate) {
+              const response = column.validate(this.state.data);
+              switch (typeof response) {
+                case "object":
+                  return response.isValid;
+                case "string":
+                  return response.length === 0;
+                case "boolean":
+                  return response;
+              }
+            } else {
+              return true;
+            }
+          })
+        : true;
     const actions = [
       {
         icon: this.props.icons.Check,
