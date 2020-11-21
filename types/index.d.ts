@@ -323,6 +323,7 @@ export interface Options<RowData extends object> {
   hideFilterIcons?: boolean;
   initialPage?: number;
   loadingType?: "overlay" | "linear";
+  linearPosition?: "top" | "bottom";
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
   padding?: "default" | "dense";

@@ -214,6 +214,7 @@ export const defaultProps = {
     headerSelectionProps: {},
     hideFilterIcons: false,
     loadingType: "overlay",
+    linearPosition: "bottom",
     padding: "default",
     searchAutoFocus: false,
     paging: true,

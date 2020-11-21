@@ -1074,6 +1074,25 @@ export default class MaterialTable extends React.Component {
                         </div>
                       ) : null}
 
+                      {(this.state.isLoading || props.isLoading) &&
+                        props.options.loadingType === "linear" &&
+                        props.options.linearPosition === "top" && (
+                          <div style={{ position: "relative", width: "100%" }}>
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                height: "100%",
+                                width: "100%",
+                                zIndex: 11,
+                              }}
+                            >
+                              <LinearProgress />
+                            </div>
+                          </div>
+                        )}
+
                       <div>{table}</div>
 
                       {this.state.width &&
@@ -1111,7 +1130,8 @@ export default class MaterialTable extends React.Component {
             </Droppable>
           </ScrollBar>
           {(this.state.isLoading || props.isLoading) &&
-            props.options.loadingType === "linear" && (
+            props.options.loadingType === "linear" &&
+            props.options.linearPosition === "bottom" && (
               <div style={{ position: "relative", width: "100%" }}>
                 <div
                   style={{
