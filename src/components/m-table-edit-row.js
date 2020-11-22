@@ -19,6 +19,16 @@ export default class MTableEditRow extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data) {
+      this.setState({
+        data: this.props.data
+          ? JSON.parse(JSON.stringify(this.props.data))
+          : this.createRowData(),
+      });
+    }
+  }
+
   createRowData() {
     return this.props.columns
       .filter((column) => "initialEditValue" in column && column.field)
@@ -171,7 +181,32 @@ export default class MTableEditRow extends React.Component {
 
   renderActions() {
     if (this.props.mode === "bulk") {
-      return <TableCell padding="none" key="key-actions-column" />;
+      const action = this.props.editable.onRowDelete
+        ? [
+            {
+              icon: this.props.icons.Delete,
+              tooltip: this.props.localization.deleteTooltip,
+              onClick: () => {
+                this.props.onEditingApproved(
+                  "delete",
+                  this.props.data,
+                  this.props.data
+                );
+              },
+            },
+          ]
+        : [];
+      return (
+        <TableCell padding="none" key="key-actions-column">
+          <div style={{ display: "flex" }}>
+            <this.props.components.Actions
+              data={this.props.data}
+              actions={action}
+              components={this.props.components}
+            />
+          </div>
+        </TableCell>
+      );
     }
 
     const size = CommonValues.elementSize(this.props);
@@ -383,6 +418,7 @@ MTableEditRow.defaultProps = {
   index: 0,
   options: {},
   path: [],
+  editable: {},
   localization: {
     saveTooltip: "Save",
     cancelTooltip: "Cancel",
@@ -393,6 +429,7 @@ MTableEditRow.defaultProps = {
 
 MTableEditRow.propTypes = {
   actions: PropTypes.array,
+  editable: PropTypes.object,
   icons: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   data: PropTypes.object,

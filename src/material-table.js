@@ -310,7 +310,6 @@ export default class MaterialTable extends React.Component {
         });
       }
     }
-
     return calculatedProps;
   }
 
@@ -878,6 +877,7 @@ export default class MaterialTable extends React.Component {
         pageSize={this.state.pageSize}
         columns={this.state.columns}
         errorState={this.state.errorState}
+        editable={props.editable}
         detailPanel={props.detailPanel}
         options={props.options}
         getFieldValue={this.dataManager.getFieldValue}

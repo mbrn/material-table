@@ -79,6 +79,8 @@ class MTableBody extends React.Component {
       if (data.tableData.editing || this.props.bulkEditOpen) {
         return (
           <this.props.components.EditRow
+            editable={this.props.editable}
+            actions={this.props.actions}
             columns={this.props.columns.filter((columnDef) => {
               return !columnDef.hidden;
             })}
@@ -91,6 +93,7 @@ class MTableBody extends React.Component {
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
                 .dateTimePickerLocalization,
+              deleteTooltip: this.props.localization.deleteTooltip,
             }}
             key={"row-" + data.tableData.id}
             mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
@@ -309,6 +312,7 @@ MTableBody.defaultProps = {
 
 MTableBody.propTypes = {
   actions: PropTypes.array,
+  editable: PropTypes.object,
   components: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   currentPage: PropTypes.number,
