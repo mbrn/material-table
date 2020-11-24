@@ -10,22 +10,10 @@ export const selectionMaxWidth = (props, maxTreeLevel) =>
   baseIconSize(props) + 9 * maxTreeLevel;
 
 export const reducePercentsInCalc = (calc, fullValue) => {
-  let index = calc.indexOf("%");
-  while (index !== -1) {
-    let leftIndex = index - 1;
-    while (leftIndex >= 0 && "0123456789.".indexOf(calc[leftIndex]) !== -1) {
-      leftIndex--;
-    }
-    leftIndex++;
-
-    const value = Number.parseFloat(calc.substring(leftIndex, index));
-    calc =
-      calc.substring(0, leftIndex) +
-      (value * fullValue) / 100 +
-      "px" +
-      calc.substring(index + 1);
-    index = calc.indexOf("%");
+  const captureGroups = calc.match(/(\d*)%/);
+  if (captureGroups && captureGroups.length > 1) {
+    const percentage = captureGroups[1];
+    return calc.replace(/\d*%/, `${fullValue * (percentage / 100)}px`);
   }
-
-  return calc;
+  return calc.replace(/\d*%/, `${fullValue}px`);
 };

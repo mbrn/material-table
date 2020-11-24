@@ -422,6 +422,7 @@ export default class MTableBodyRow extends React.Component {
       cellEditable,
       onCellEditStarted,
       onCellEditFinished,
+      scrollWidth,
       ...rowProps
     } = this.props;
 
