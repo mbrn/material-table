@@ -134,6 +134,7 @@ export default class MTableEditRow extends React.Component {
                 helperText={error.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}
                 rowData={this.state.data}
+                errorState={this.props.errorState}
                 onChange={(value) => {
                   const data = { ...this.state.data };
                   setByString(data, columnDef.field, value);
