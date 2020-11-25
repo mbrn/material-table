@@ -9,7 +9,7 @@ import { MTablePagination, MTableSteppedPagination } from "./components";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import DataManager from "./utils/data-manager";
 import { debounce } from "debounce";
-import equal from "fast-deep-equal";
+import equal from "react-fast-compare";
 import { withStyles } from "@material-ui/core";
 import * as CommonValues from "./utils/common-values";
 

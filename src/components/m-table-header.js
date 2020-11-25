@@ -10,7 +10,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Draggable } from "react-beautiful-dnd";
 import { Tooltip } from "@material-ui/core";
 import * as CommonValues from "../utils/common-values";
-import equal from "fast-deep-equal";
+import equal from "react-fast-compare";
 
 /* eslint-enable no-unused-vars */
 
