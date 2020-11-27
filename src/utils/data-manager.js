@@ -246,8 +246,8 @@ export default class DataManager {
     let currentGroup;
     let currentGroupArray = this.groupedData;
 
-    path.forEach((_, index) => {
-      currentGroup = currentGroupArray[path[index]];
+    path.forEach((value) => {
+      currentGroup = currentGroupArray.find((group) => group.value == value);
       currentGroupArray = currentGroup.groups;
     });
 

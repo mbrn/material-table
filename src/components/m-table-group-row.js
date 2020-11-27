@@ -182,7 +182,7 @@ export default class MTableGroupRow extends React.Component {
                 checked={totalRows === selectedRows}
                 onChange={(event, checked) =>
                   this.props.onGroupSelected &&
-                  this.props.onGroupSelected(checked, this.props.path)
+                  this.props.onGroupSelected(checked, this.props.groupData.path)
                 }
                 style={{ marginRight: 8 }}
               />
