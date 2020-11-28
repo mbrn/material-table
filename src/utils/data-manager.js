@@ -701,7 +701,7 @@ export default class DataManager {
                   return currentDateToCompare === selectedDateToCompare;
                 }
 
-                return true;
+                return false;
               });
             } else if (type === "time") {
               this.filteredData = this.filteredData.filter((row) => {
