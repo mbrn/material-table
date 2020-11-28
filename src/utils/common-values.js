@@ -10,6 +10,7 @@ export const selectionMaxWidth = (props, maxTreeLevel) =>
   baseIconSize(props) + 9 * maxTreeLevel;
 
 export const reducePercentsInCalc = (calc, fullValue) => {
+  if(!calc) return `${fullValue}px`
   const captureGroups = calc.match(/(\d*)%/);
   if (captureGroups && captureGroups.length > 1) {
     const percentage = captureGroups[1];
