@@ -335,53 +335,22 @@ export default class DataManager {
       result.destination.droppableId === "headers" &&
       result.source.droppableId === "headers"
     ) {
-      start = Math.min(result.destination.index, result.source.index);
-      const end = Math.max(result.destination.index, result.source.index);
+      const sourceIndex = result.source.index;
+      const destinationIndex = result.destination.index;
 
-      // get the effective start and end considering hidden columns
-      const sorted = this.columns
-        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter((column) => column.tableData.groupOrder === undefined);
-      let numHiddenBeforeStart = 0;
-      let numVisibleBeforeStart = 0;
-      for (
-        let i = 0;
-        i < sorted.length && numVisibleBeforeStart <= start;
-        i++
-      ) {
-        if (sorted[i].hidden) {
-          numHiddenBeforeStart++;
-        } else {
-          numVisibleBeforeStart++;
-        }
-      }
-      const effectiveStart = start + numHiddenBeforeStart;
-
-      let effectiveEnd = effectiveStart;
-      for (
-        let numVisibleInRange = 0;
-        numVisibleInRange < end - start && effectiveEnd < sorted.length;
-        effectiveEnd++
-      ) {
-        if (!sorted[effectiveEnd].hidden) {
-          numVisibleInRange++;
-        }
-      }
-      const colsToMov = sorted.slice(effectiveStart, effectiveEnd + 1);
-
-      if (result.destination.index < result.source.index) {
-        // Take last and add as first
-        const last = colsToMov.pop();
-        colsToMov.unshift(last);
-      } else {
-        // Take first and add as last
-        const last = colsToMov.shift();
-        colsToMov.push(last);
+      if (sourceIndex === destinationIndex) {
+        return;
       }
 
-      for (let i = 0; i < colsToMov.length; i++) {
-        colsToMov[i].tableData.columnOrder = effectiveStart + i;
-      }
+      const sourceColumnOrder = this.columns[destinationIndex].tableData
+        .columnOrder;
+      const destinationColumnOrder = this.columns[sourceIndex].tableData
+        .columnOrder;
+
+      this.columns[sourceIndex].tableData.columnOrder = sourceColumnOrder;
+      this.columns[
+        destinationIndex
+      ].tableData.columnOrder = destinationColumnOrder;
 
       return;
     } else {
