@@ -336,21 +336,17 @@ export default class DataManager {
       result.source.droppableId === "headers"
     ) {
       const sourceIndex = result.source.index;
-      const destinationIndex = result.destination.index;
+      const destIndex = result.destination.index;
 
-      if (sourceIndex === destinationIndex) {
+      if (sourceIndex === destIndex) {
         return;
       }
 
-      const sourceColumnOrder = this.columns[destinationIndex].tableData
-        .columnOrder;
-      const destinationColumnOrder = this.columns[sourceIndex].tableData
-        .columnOrder;
+      const sourceColumnOrder = this.columns[destIndex].tableData.columnOrder;
+      const destColumnOrder = this.columns[sourceIndex].tableData.columnOrder;
 
       this.columns[sourceIndex].tableData.columnOrder = sourceColumnOrder;
-      this.columns[
-        destinationIndex
-      ].tableData.columnOrder = destinationColumnOrder;
+      this.columns[destIndex].tableData.columnOrder = destColumnOrder;
 
       return;
     } else {
