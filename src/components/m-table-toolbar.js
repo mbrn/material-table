@@ -440,6 +440,14 @@ MTableToolbar.propTypes = {
 export const styles = (theme) => ({
   root: {
     paddingRight: theme.spacing(1),
+    display:'flex',
+    flexDirection:'row',
+    flexWrap:'wrap'
+  },
+  '@media only screen and (max-device-width: 480px)':{
+    root: {
+      flexDirection:'column'
+    }
   },
   highlight:
     theme.palette.type === "light"
