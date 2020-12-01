@@ -60,8 +60,10 @@ export default class DataManager {
   }
 
   setColumns(columns) {
-    const undefinedWidthColumns = columns.filter(
-      (c) => c.width === undefined && !c.hidden
+    const undefinedWidthColumns = columns.filter((c) =>
+      c.width === undefined && c.columnDef
+        ? c.columnDef.tableData.width === undefined
+        : true && !c.hidden
     );
     let usedWidth = ["0px"];
 
