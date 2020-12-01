@@ -5,6 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import withTheme from "@material-ui/core/styles/withTheme";
+import getValidationResult from "../utils/get-validation-result";
 import { MTable } from "..";
 /* eslint-enable no-unused-vars */
 
@@ -123,13 +124,21 @@ class MTableEditCell extends React.Component {
   }
 
   render() {
+    const rowData = this.props.rowData;
+    const columnDef = this.props.columnDef;
+    const validationResult = getValidationResult(columnDef.validate, {
+      ...rowData,
+      [columnDef.field]: this.state.value,
+    });
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
-              columnDef={this.props.columnDef}
+              columnDef={columnDef}
               value={this.state.value}
+              error={!validationResult.isValid}
+              helperText={validationResult.helperText}
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}

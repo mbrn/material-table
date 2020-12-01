@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import * as React from "react";
 import { byString, setByString } from "../utils";
 import * as CommonValues from "../utils/common-values";
+import getValidationResult from "../utils/get-validation-result";
 /* eslint-enable no-unused-vars */
 
 export default class MTableEditRow extends React.Component {
@@ -102,21 +103,10 @@ export default class MTableEditRow extends React.Component {
           const { editComponent, ...cellProps } = columnDef;
           const EditComponent =
             editComponent || this.props.components.EditField;
-          let error = { isValid: true, helperText: "" };
-          if (columnDef.validate) {
-            const validateResponse = columnDef.validate(this.state.data);
-            switch (typeof validateResponse) {
-              case "object":
-                error = { ...validateResponse };
-                break;
-              case "boolean":
-                error = { isValid: validateResponse, helperText: "" };
-                break;
-              case "string":
-                error = { isValid: false, helperText: validateResponse };
-                break;
-            }
-          }
+          const validationResult = getValidationResult(
+            columnDef.validate,
+            this.state.data
+          );
           return (
             <TableCell
               size={size}
@@ -130,8 +120,8 @@ export default class MTableEditRow extends React.Component {
                 key={columnDef.tableData.id}
                 columnDef={cellProps}
                 value={value}
-                error={!error.isValid}
-                helperText={error.helperText}
+                error={!validationResult.isValid}
+                helperText={validationResult.helperText}
                 locale={this.props.localization.dateTimePickerLocalization}
                 rowData={this.state.data}
                 onChange={(value) => {
