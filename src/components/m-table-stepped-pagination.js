@@ -167,9 +167,13 @@ MTablePaginationInner.propTypes = {
 MTablePaginationInner.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
+    firstAriaLabel: "First Page",
     firstTooltip: "First Page",
+    previousAriaLabel: "Previous Page",
     previousTooltip: "Previous Page",
+    nextAriaLabel: "Next Page",
     nextTooltip: "Next Page",
+    lastAriaLabel: "Last Page",
     lastTooltip: "Last Page",
     labelDisplayedRows: "{from}-{to} of {count}",
     labelRowsPerPage: "Rows per page:",
