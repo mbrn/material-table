@@ -1011,7 +1011,7 @@ export default class MaterialTable extends React.Component {
               }}
             />
           )}
-          {props.options.grouping && (
+          {props.options.grouping && !props.options.hideGroupingDnD && (
             <props.components.Groupbar
               icons={props.icons}
               localization={{

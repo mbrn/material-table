@@ -61,6 +61,7 @@ export const propTypes = {
       headerStyle: PropTypes.object,
       hidden: PropTypes.bool,
       hideFilterIcon: PropTypes.bool,
+      hideGroupingDnD: PropTypes.bool,
       initialEditValue: PropTypes.any,
       lookup: PropTypes.object,
       editable: PropTypes.oneOfType([

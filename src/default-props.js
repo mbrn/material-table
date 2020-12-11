@@ -213,6 +213,7 @@ export const defaultProps = {
     header: true,
     headerSelectionProps: {},
     hideFilterIcons: false,
+    hideGroupingDnD: false,
     loadingType: "overlay",
     padding: "default",
     searchAutoFocus: false,
