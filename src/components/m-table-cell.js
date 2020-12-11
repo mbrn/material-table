@@ -123,14 +123,10 @@ export default class MTableCell extends React.Component {
     );
 
     let cellStyle = {
-      color: "inherit",
       width,
       maxWidth: this.props.columnDef.maxWidth,
       minWidth: this.props.columnDef.minWidth,
       boxSizing: "border-box",
-      fontSize: "inherit",
-      fontFamily: "inherit",
-      fontWeight: "inherit",
     };
 
     if (typeof this.props.columnDef.cellStyle === "function") {
