@@ -65,7 +65,7 @@ export default class DataManager {
         // Hidden column
         return false;
       }
-      if (c.columnDef && columnDef.tableData && columnDef.tableData.width) {
+      if (c.columnDef && c.columnDef.tableData && c.columnDef.tableData.width) {
         // tableData.width already calculated
         return false;
       }
