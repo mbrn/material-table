@@ -3,7 +3,6 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
-import Typography from "@material-ui/core/Typography";
 
 let direction = "ltr";
 // direction = 'rtl';
@@ -429,6 +428,16 @@ class App extends Component {
         tooltip: "This is tooltip text",
         editPlaceholder: "This is placeholder",
         maxWidth: 50,
+        // editComponent: (props) => (
+        //   <div>
+        //     <p>Adı</p>
+        //     <input
+        //       type="text"
+        //       value={props.value}
+        //       onChange={(e) => props.onChange(e.target.value)}
+        //     />
+        //   </div>
+        // ),
       },
       {
         title: "Soyadı",

@@ -222,7 +222,9 @@ class MTableEditField extends React.Component {
   render() {
     let component = "ok";
 
-    if (this.props.columnDef.lookup) {
+    if (this.props.columnDef.editComponent) {
+      component = this.props.columnDef.editComponent(this.props);
+    } else if (this.props.columnDef.lookup) {
       component = this.renderLookupField();
     } else if (this.props.columnDef.type === "boolean") {
       component = this.renderBooleanField();
