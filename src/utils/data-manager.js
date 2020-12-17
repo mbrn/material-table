@@ -765,8 +765,9 @@ export default class DataManager {
               if (value) {
                 return value
                   .toString()
+                  .normalize('NFD').replace(/[\u0300-\u036f]/g,"")
                   .toUpperCase()
-                  .includes(trimmedSearchText.toUpperCase());
+                  .includes(trimmedSearchText.normalize('NFD').replace(/[\u0300-\u036f]/g,"").toUpperCase());
               }
             }
           });
