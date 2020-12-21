@@ -6,5 +6,10 @@
       "omitLastInOneLineBlock": true
     }]
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

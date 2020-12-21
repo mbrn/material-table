@@ -1,9 +1,3 @@
-See original [readme here](/.github/README_ORIGINAL.md)
-
-# THIS IS THE README I AM USING FOR THE NPM PACKAGE WE CAN CHANGE THIS IF NEED BE
-
---- 
-
 <div align="center">
 
   <h1><a target="_blank" rel="noopener noreferrer" href="https://material-table-core.com">@material-table/core</a></h1>
@@ -24,12 +18,12 @@ See original [readme here](/.github/README_ORIGINAL.md)
 
 </div>
 
-🚧 Documentation, including this `README`, is a work in progress 🚧
+🚧 Documentation, including this `README`, is a work in progress 🚧 ✅ The code here is _at least_ as stable as `material-table` `v1.69.0` ✅
 
-✅ The code here is *at least* as stable as `material-table` `v1.57.2` ✅
+### See original [readme here](/.github/README_ORIGINAL.md)
 
- - [Please check out `material-table` here](https://github.com/mbrn/material-table)
- - [Why does this repo exist?...and more here](/.github/MoreInfo.md)
+- [Please check out `material-table` here](https://github.com/mbrn/material-table)
+- [Why does this repo exist?...and more here](/.github/MoreInfo.md)
 
 ---
 
@@ -37,15 +31,15 @@ See original [readme here](/.github/README_ORIGINAL.md)
 
 [https://material-table-core.com](https://material-table-core.com)
 
- - [Compatibility with `material-table`](#compatibility)
- - [Installation](#installation)
- - [Examples](https://oze4.github.io/material-table-core/)
- - [Documentation](#documentation)
-   - [`npm` Commands](#npm-commands)
- - [`material-table` Issue Tracker](https://oze4.github.io/material-table-core/#/issue-tracker)
- - [To-Do List](https://oze4.github.io/material-table-core/#/to-do)
- - [Contributing](#contributing)
-   - [Demo Documentation](/.github/DemoDocumentation.md)
+- [Compatibility with `material-table`](#compatibility)
+- [Installation](#installation)
+- [Examples](https://oze4.github.io/material-table-core/)
+- [Documentation](#documentation)
+  - [`npm` Commands](#npm-commands)
+- [`material-table` Issue Tracker](https://oze4.github.io/material-table-core/#/issue-tracker)
+- [To-Do List](https://oze4.github.io/material-table-core/#/to-do)
+- [Contributing](#contributing)
+  - [Demo Documentation](/.github/DemoDocumentation.md)
 
 ---
 
@@ -55,11 +49,10 @@ Our main goal is to resolve current open issues over at `material-table`. Theref
 
 With that being said, we will not be modifying component names or making drastic changes to the API/structure - imports will remain the same, etc..
 
-
 ## Installation
 
- - `npm install @material-table/core`
- - `yarn add @material-table/core`
+- `npm install @material-table/core`
+- `yarn add @material-table/core`
 
 ```javascript
 // If you can import it from `material-table` you
@@ -71,22 +64,20 @@ import MaterialTable from "@material-table/core";
 
 For now, the existing material-table docs are valid.
 
-  - [material-table README](https://github.com/mbrn/material-table/blob/master/README.md)
-  - [material-table API Documentation](https://material-table.com)
-  - [Demo Documentation](/.github/DemoDocumentation.md)
+- [material-table README](https://github.com/mbrn/material-table/blob/master/README.md)
+- [material-table API Documentation](https://material-table.com)
+- [Demo Documentation](/.github/DemoDocumentation.md)
 
 ## npm Commands
 
-<small>*make sure you are at the root of the project</small>
+<small>\*make sure you are at the root of the project</small>
 
-| Command | Purpose | Notes |
-| --- | --- | --- |
-| `npm start` | Runs demo | Listens on port `:8080` |
-| `npm run build:demo` | Bundles the demo | Outputs to `/docs`. After making changes to the demo, you'll need to run this |
+| Command                        | Purpose                                         | Notes                                                                                                                                                                                       |
+| ------------------------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm start`                    | Runs demo                                       | Listens on port `:8080`                                                                                                                                                                     |
+| `npm run build:demo`           | Bundles the demo                                | Outputs to `/docs`. After making changes to the demo, you'll need to run this                                                                                                               |
 | `npm run update:issue:tracker` | Update Issue Tracker with newly resolved issues | Searches `material-table` pull requests and issues for any comment that contains `/mtc::resolved`. [More info can be found here](/.github/DemoDocumentation.md#issue-tracker-documentation) |
 
 ## Contributing
 
 Gladly accepting "applications" :) ..but seriously, my main goal is to be responsive... I have no issue giving access/permission to those that wish to help improve this excellent product! [Demo documentation can be found here](/.github/DemoDocumentation.md)
-
-
