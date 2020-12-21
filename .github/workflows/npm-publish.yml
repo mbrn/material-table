@@ -22,7 +22,7 @@ jobs:
 
         # All of theses inputs are optional
         with:
-          # tag_name: "v%s" # the name pattern of the new tag
+          tag_name: "v%s" # the name pattern of the new tag
           # tag_message: "v%s" # the message pattern of the new tag
           # create_tag: "true" # whether to create a git tag or not (defaults to "true")
           commit_pattern: "^Release (\\S+)" # pattern that the commit message needs to follow
