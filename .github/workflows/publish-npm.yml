@@ -1,0 +1,36 @@
+#
+# Will publish a new version to npm if the version has been changed and
+# the commit pattern matches "^Release (\\S+)"
+#
+
+name: publish-npm
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish-npm:
+    name: publish-npm
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Publish if version has been updated and commit pattern matches ^Release (\\S+)
+        uses: pascalgn/npm-publish-action@1.3.6
+
+        # All of theses inputs are optional
+        with:
+          tag_name: "v%s" # the name pattern of the new tag
+          # tag_message: "v%s" # the message pattern of the new tag
+          # create_tag: "true" # whether to create a git tag or not (defaults to "true")
+          commit_pattern: "^Release (\\S+)" # pattern that the commit message needs to follow
+          workspace: "." # custom workspace directory that contains the package.json file
+          publish_command: "npm install && npm run lint && npm run build" # custom publish command (defaults to yarn)
+          # publish_args: "--non-interactive" # publish command arguments (for example --prod --verbose, defaults to empty)
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
