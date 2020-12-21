@@ -14,7 +14,7 @@
 
 🚧 Documentation, including this `README`, is a work in progress 🚧
 
-✅ The code here is _at least_ as stable as **`material-table` `v1.69.0`** ✅
+✅ The code here is _at least_ as stable as **`material-table` `v1.69.2`** ✅
 
 - [Please check out `material-table` here](https://github.com/mbrn/material-table)
 
