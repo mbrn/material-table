@@ -60,35 +60,38 @@ export default class DataManager {
   }
 
   setColumns(columns) {
-    const undefinedWidthColumns = columns.filter((c) =>
-      c.width === undefined && c.columnDef
-        ? c.columnDef.tableData.width === undefined
-        : true && !c.hidden
-    );
+    const undefinedWidthColumns = columns.filter((c) => {
+      if (c.hidden) {
+        // Hidden column
+        return false;
+      }
+      if (c.columnDef && c.columnDef.tableData && c.columnDef.tableData.width) {
+        // tableData.width already calculated
+        return false;
+      }
+      // Calculate width if no value provided
+      return c.width === undefined;
+    });
     let usedWidth = ["0px"];
 
     this.columns = columns.map((columnDef, index) => {
+      const width = typeof columnDef.width === "number" ? columnDef.width + "px" : columnDef.width;
+
+      if (width && columnDef.tableData && columnDef.tableData.width !== undefined) {
+        usedWidth.push(width);
+      }
+
       columnDef.tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
         groupSort: columnDef.defaultGroupSort || "asc",
-        width:
-          typeof columnDef.width === "number"
-            ? columnDef.width + "px"
-            : columnDef.width,
-        initialWidth:
-          typeof columnDef.width === "number"
-            ? columnDef.width + "px"
-            : columnDef.width,
+        width,
+        initialWidth: width,
         additionalWidth: 0,
         ...columnDef.tableData,
         id: index,
       };
-
-      if (columnDef.tableData.width !== undefined) {
-        usedWidth.push(columnDef.tableData.width);
-      }
 
       return columnDef;
     });
