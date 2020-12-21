@@ -12,13 +12,13 @@
 
 </div>
 
-🚧 Documentation is a work in progress! ***[Contribute here](https://github.com/material-table-core/website)*** 🚧
+🚧 Documentation is a work in progress! **_[Contribute here](https://github.com/material-table-core/website)_** 🚧
 
 💬 [Need help? Have a suggestion? Or just come say hi!](https://github.com/material-table-core/core/discussions) 💬
 
-💪 The code here is _at least_ as stable as **`material-table` `v1.69.2`** 💪 
+💪 The code here is _at least_ as stable as **`material-table` `v1.69.2`** 💪
 
-✅ [Please check out `material-table` here](https://github.com/mbrn/material-table) ✅ 
+✅ [Please check out `material-table` here](https://github.com/mbrn/material-table) ✅
 
 ---
 
@@ -27,6 +27,8 @@
 - [Installation](#installation)
 - [Examples](#examples)
 - [Documentation](#documentation)
+- [Contributing](#contributing)
+  - [How to publish to NPM](#publish-npm)
 
 ---
 
@@ -49,3 +51,9 @@ See [here](https://github.com/material-table-core/core) for current info
 
 - [Docs](https://material-table-core.com)
 - [material-table API Documentation](https://material-table.com)
+
+## Contributing
+
+### Publish NPM
+
+**_If your commit meets the following pattern,_** `^Release (\\S+)`**_, a new version will be published on NPM (via Github Actions)_** For example, `Release v1.1.1`.
