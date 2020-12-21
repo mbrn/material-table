@@ -22,27 +22,17 @@
 
 ✅ The code here is _at least_ as stable as **`material-table` `v1.69.0`** ✅
 
-### See original [readme here](/.github/README_ORIGINAL.md)
-
 - [Please check out `material-table` here](https://github.com/mbrn/material-table)
-- [Why does this repo exist?...and more here](/.github/MoreInfo.md)
 
 ---
 
 # Table of Contents
 
-- [Compatibility with `material-table`](#compatibility)
 - [Installation](#installation)
 - [Examples](#examples)
 - [Documentation](#documentation)
 
 ---
-
-## Compatibility
-
-Our main goal is to resolve current open issues over at `material-table`. Therefore, we are not backwards compatible. [See here for more info on our goals, etc..](/.github/MoreInfo.md)
-
-With that being said, we will not be modifying component names or making drastic changes to the API/structure - imports will remain the same, etc..
 
 ## Installation
 
@@ -55,8 +45,11 @@ With that being said, we will not be modifying component names or making drastic
 import MaterialTable from "@material-table/core";
 ```
 
+## Examples
+
+See [here](https://github.com/material-table-core/core) for current info
+
 ## Documentation
 
 - [Docs](https://material-table-core.com)
 - [material-table API Documentation](https://material-table.com)
-- [Demo Documentation](/.github/DemoDocumentation.md)
