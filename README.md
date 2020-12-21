@@ -12,7 +12,7 @@
 
 </div>
 
-🚧 Documentation is a work in progress! ***[Please see here](https://github.com/material-table-core/website) if you would like to contribute** (we use Docusaurus 2)* 🚧
+🚧 Documentation is a work in progress! 🚧 ***[Please see here](https://github.com/material-table-core/website) if you would like to contribute** (we use Docusaurus 2)* 🚧
 
 💬 [Need help? Have a suggestion? Or just come say hi!](https://github.com/material-table-core/core/discussions) 💬
 
