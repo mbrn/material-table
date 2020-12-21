@@ -3,11 +3,13 @@
 # the commit pattern matches "^Release (\\S+)"
 #
 
-name: publish-npm
+name: publish
+
 on:
   push:
     branches:
       - main
+
 jobs:
   publish-npm:
     name: publish-npm
