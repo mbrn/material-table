@@ -3,12 +3,6 @@
   <h1><a target="_blank" rel="noopener noreferrer" href="https://material-table-core.com">@material-table/core</a></h1>
 
   <p align="center">
-    <a href="https://travis-ci.org/oze4/material-table-core">
-      <img 
-        title="build_status" 
-        src="https://travis-ci.org/oze4/material-table-core.svg?branch=master"
-      >
-    </a>
     <a href="https://www.npmjs.com/package/@material-table/core">
       <img 
         title="npm_package" 
