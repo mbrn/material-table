@@ -56,4 +56,4 @@ See [here](https://github.com/material-table-core/core) for current info
 
 ### Publish NPM
 
-**_If your commit meets the following pattern,_** `^Release (\\S+)`**_, a new version will be published on NPM (via Github Actions)_** For example, `Release v1.1.1`.
+**_If your commit meets the following pattern,_** `^Release (\\S+)`**_, a new version will be published on NPM (via Github Actions)_** For example, `Release v1.1.1`
