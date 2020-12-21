@@ -12,11 +12,13 @@
 
 </div>
 
-🚧 Documentation, including this `README`, is a work in progress 🚧
+🚧 Documentation, including this `README`, is a work in progress! 🚧
 
-✅ The code here is _at least_ as stable as **`material-table` `v1.69.2`** ✅
+💬 [Need help? Have a suggestion? Or just come say hi!](https://github.com/material-table-core/core/discussions) 💬
 
-- [Please check out `material-table` here](https://github.com/mbrn/material-table)
+💪 The code here is _at least_ as stable as **`material-table` `v1.69.2`** 💪 
+
+✅ [Please check out `material-table` here](https://github.com/mbrn/material-table) ✅ 
 
 ---
 
