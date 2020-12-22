@@ -3,7 +3,7 @@
 # the commit pattern matches "^Release (\\S+)"
 #
 
-name: publish
+name: Build and Publish
 
 on: [push]
 
