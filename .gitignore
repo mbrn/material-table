@@ -2,7 +2,7 @@
 .vscode
 dist
 node_modules
-package-lock.json
+# package-lock.json
 yarn.lock
 .idea
 .DS_Store

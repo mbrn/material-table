@@ -38,6 +38,7 @@ class MTableFilterRow extends React.Component {
     ...MTableFilterRow.defaultProps.localization,
     ...this.props.localization,
   });
+
   getLocalizedFilterPlaceHolder = (columnDef) =>
     columnDef.filterPlaceholder ||
     this.getLocalizationData().filterPlaceHolder ||
@@ -64,19 +65,21 @@ class MTableFilterRow extends React.Component {
           multiple
           value={selectedFilter}
           onClose={() => {
-            if (columnDef.filterOnItemSelect !== true)
+            if (columnDef.filterOnItemSelect !== true) {
               this.props.onFilterChanged(
                 columnDef.tableData.id,
                 selectedFilter
               );
+            }
           }}
           onChange={(event) => {
             setSelectedFilter(event.target.value);
-            if (columnDef.filterOnItemSelect === true)
+            if (columnDef.filterOnItemSelect === true) {
               this.props.onFilterChanged(
                 columnDef.tableData.id,
                 event.target.value
               );
+            }
           }}
           input={
             <Input id={"select-multiple-checkbox" + columnDef.tableData.id} />

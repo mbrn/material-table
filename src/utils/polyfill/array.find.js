@@ -3,15 +3,15 @@ Object.defineProperty(Array.prototype, "find", {
     if (this == null) {
       throw new TypeError('"this" is null or not defined');
     }
-    var o = Object(this);
-    var len = o.length >>> 0;
+    const o = Object(this);
+    const len = o.length >>> 0;
     if (typeof predicate !== "function") {
       throw new TypeError("predicate must be a function");
     }
-    var thisArg = arguments[1];
-    var k = 0;
+    const thisArg = arguments[1];
+    let k = 0;
     while (k < len) {
-      var kValue = o[k];
+      const kValue = o[k];
       if (predicate.call(thisArg, kValue, k, o)) {
         return kValue;
       }

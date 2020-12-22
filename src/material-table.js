@@ -184,7 +184,7 @@ export default class MaterialTable extends React.Component {
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
 
-    if (calculatedProps.options.selection)
+    if (calculatedProps.options.selection) {
       calculatedProps.actions = calculatedProps.actions
         .filter((a) => a)
         .map((action) => {
@@ -192,17 +192,17 @@ export default class MaterialTable extends React.Component {
             action.position === "auto" ||
             action.isFreeAction === false ||
             (action.position === undefined && action.isFreeAction === undefined)
-          )
-            if (typeof action === "function")
+          ) {
+            if (typeof action === "function") {
               return { action: action, position: "toolbarOnSelect" };
-            else return { ...action, position: "toolbarOnSelect" };
-          else if (action.isFreeAction)
-            if (typeof action === "function")
+            } else return { ...action, position: "toolbarOnSelect" };
+          } else if (action.isFreeAction) {
+            if (typeof action === "function") {
               return { action: action, position: "toolbar" };
-            else return { ...action, position: "toolbar" };
-          else return action;
+            } else return { ...action, position: "toolbar" };
+          } else return action;
         });
-    else
+    } else {
       calculatedProps.actions = calculatedProps.actions
         .filter((a) => a)
         .map((action) => {
@@ -210,16 +210,17 @@ export default class MaterialTable extends React.Component {
             action.position === "auto" ||
             action.isFreeAction === false ||
             (action.position === undefined && action.isFreeAction === undefined)
-          )
-            if (typeof action === "function")
+          ) {
+            if (typeof action === "function") {
               return { action: action, position: "row" };
-            else return { ...action, position: "row" };
-          else if (action.isFreeAction)
-            if (typeof action === "function")
+            } else return { ...action, position: "row" };
+          } else if (action.isFreeAction) {
+            if (typeof action === "function") {
               return { action: action, position: "toolbar" };
-            else return { ...action, position: "toolbar" };
-          else return action;
+            } else return { ...action, position: "toolbar" };
+          } else return action;
         });
+    }
 
     if (calculatedProps.editable) {
       if (calculatedProps.editable.onRowAdd) {
@@ -573,9 +574,11 @@ export default class MaterialTable extends React.Component {
       this.setState(this.dataManager.getRenderState());
     }
   };
+
   retry = () => {
     this.onQueryChange(this.state.query);
   };
+
   onQueryChange = (query, callback) => {
     query = { ...this.state.query, ...query, error: this.state.errorState };
     this.setState({ isLoading: true, errorState: undefined }, () => {
@@ -911,7 +914,7 @@ export default class MaterialTable extends React.Component {
   );
 
   getColumnsWidth = (props, count) => {
-    let result = [];
+    const result = [];
 
     const actionsWidth = CommonValues.actionsColumnWidth(props);
     if (actionsWidth > 0) {
@@ -1172,7 +1175,7 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-var style = () => ({
+const style = () => ({
   horizontalScrollContainer: {
     "& ::-webkit-scrollbar": {
       "-webkit-appearance": "none",

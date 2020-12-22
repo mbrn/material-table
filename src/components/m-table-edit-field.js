@@ -111,6 +111,7 @@ class MTableEditField extends React.Component {
       </MuiPickersUtilsProvider>
     );
   }
+
   renderTimeField() {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={this.props.locale}>

@@ -185,7 +185,7 @@ class MTableBody extends React.Component {
   }
 
   render() {
-    let renderData = this.props.renderData;
+    const renderData = this.props.renderData;
     const groups = this.props.columns
       .filter((col) => col.tableData.groupOrder > -1)
       .sort(

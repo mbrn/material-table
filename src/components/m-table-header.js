@@ -241,6 +241,7 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
+
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(
       this.props,

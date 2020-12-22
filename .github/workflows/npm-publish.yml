@@ -5,14 +5,12 @@
 
 name: publish
 
-on: [push]
+on: []
 
 jobs:
-  publish-npm:
-    name: publish-npm
-
+  npm-publish:
+    name: npm-publish
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

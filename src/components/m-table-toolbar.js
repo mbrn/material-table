@@ -78,7 +78,7 @@ export class MTableToolbar extends React.Component {
     if (jsPDF !== null) {
       const [columns, data] = this.getTableData();
 
-      let content = {
+      const content = {
         startY: 50,
         head: [columns.map((columnDef) => columnDef.title)],
         body: data,

@@ -105,6 +105,7 @@ export default class MTableBodyRow extends React.Component {
       </TableCell>
     );
   }
+
   renderSelectionColumn() {
     let checkboxProps = this.props.options.selectionProps || {};
     if (typeof checkboxProps === "function") {
@@ -162,7 +163,7 @@ export default class MTableBodyRow extends React.Component {
         React.createElement(icon, { ...iconProps })
       );
 
-    if (typeof this.props.detailPanel == "function") {
+    if (typeof this.props.detailPanel === "function") {
       return (
         <TableCell
           size={size}
@@ -431,7 +432,7 @@ export default class MTableBodyRow extends React.Component {
         <TableRow
           selected={hasAnyEditingRow}
           {...rowProps}
-          hover={onRowClick ? true : false}
+          hover={!!onRowClick}
           style={this.getStyle(this.props.index, this.props.level)}
           onClick={(event) => {
             onRowClick &&

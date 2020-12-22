@@ -75,9 +75,16 @@ export default class DataManager {
     let usedWidth = ["0px"];
 
     this.columns = columns.map((columnDef, index) => {
-      const width = typeof columnDef.width === "number" ? columnDef.width + "px" : columnDef.width;
+      const width =
+        typeof columnDef.width === "number"
+          ? columnDef.width + "px"
+          : columnDef.width;
 
-      if (width && columnDef.tableData && columnDef.tableData.width !== undefined) {
+      if (
+        width &&
+        columnDef.tableData &&
+        columnDef.tableData.width !== undefined
+      ) {
         usedWidth.push(width);
       }
 
@@ -407,7 +414,7 @@ export default class DataManager {
 
   finishCellEditable = (rowData, columnDef) => {
     if (rowData.tableData.editCellList) {
-      var index = rowData.tableData.editCellList.findIndex(
+      const index = rowData.tableData.editCellList.findIndex(
         (c) => c.tableData.id === columnDef.tableData.id
       );
       if (index !== -1) {
@@ -453,7 +460,7 @@ export default class DataManager {
     data.forEach((row) => {
       let currentRow = row;
       while (this.parentFunc(currentRow, this.data)) {
-        let parent = this.parentFunc(currentRow, this.data);
+        const parent = this.parentFunc(currentRow, this.data);
         if (parent) {
           parent.tableData.isTreeExpanded = true;
         }
@@ -804,7 +811,7 @@ export default class DataManager {
 
           if (!group) {
             const path = [...(o.path || []), value];
-            let oldGroup = this.findGroupByGroupPath(
+            const oldGroup = this.findGroupByGroupPath(
               this.groupedData,
               path
             ) || {
@@ -863,7 +870,7 @@ export default class DataManager {
 
     const addRow = (rowData) => {
       rowData.tableData.markedForTreeRemove = false;
-      let parent = this.parentFunc(rowData, this.data);
+      const parent = this.parentFunc(rowData, this.data);
       if (parent) {
         parent.tableData.childRows = parent.tableData.childRows || [];
         if (!parent.tableData.childRows.includes(rowData)) {
@@ -921,7 +928,7 @@ export default class DataManager {
         !this.columns.some((columnDef) => columnDef.tableData.filterValue)
       ) {
         if (rowData.tableData.isTreeExpanded === undefined) {
-          var isExpanded =
+          const isExpanded =
             typeof this.defaultExpanded === "boolean"
               ? this.defaultExpanded
               : this.defaultExpanded(rowData);
@@ -943,7 +950,7 @@ export default class DataManager {
     });
 
     const traverseTreeAndDeleteMarked = (rowDataArray) => {
-      for (var i = rowDataArray.length - 1; i >= 0; i--) {
+      for (let i = rowDataArray.length - 1; i >= 0; i--) {
         const item = rowDataArray[i];
         if (item.tableData.childRows) {
           traverseTreeAndDeleteMarked(item.tableData.childRows);
