@@ -11,10 +11,15 @@
 ## </div>
 
 ✅ [Why does this repo exist?](#about)
+
 🚧 [Documentation](#documentation) [[contribute to the docs](https://github.com/material-table-core/website)] (_work in progress_)
+
 ⚙️ [Example code](https://material-table-core.github.io/examples) (_work in progress_)
+
 💬 [Have a suggestion?](https://github.com/material-table-core/core/discussions)
+
 ❌ Have an existing issue/PR at `mbrn/material-table`? We are actively deploying - please feel free to open an issue/PR
+
 💪 [How to contribute](#contributing)
 
 ---
