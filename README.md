@@ -14,11 +14,13 @@
 
 🚧 Documentation is a work in progress! **_[Contribute here](https://github.com/material-table-core/website)_** 🚧
 
-💬 [Need help? Have a suggestion? Or just come say hi!](https://github.com/material-table-core/core/discussions) 💬
+⚙️ [Examples](https://material-table-core.github.io/examples) ⚙️
+
+💬 [Have a suggestion?](https://github.com/material-table-core/core/discussions) 💬
 
 💪 The code here is _at least_ as stable as **`material-table` `v1.69.2`** 💪
 
-✅ [Please check out `material-table` here](https://github.com/mbrn/material-table) ✅
+✅ [Forked from `material-table`](https://github.com/mbrn/material-table) ✅
 
 ---
 
