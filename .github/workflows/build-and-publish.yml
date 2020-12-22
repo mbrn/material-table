@@ -23,7 +23,7 @@ jobs:
       - run: npm run build --if-present
 
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release') && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' && startsWith(github.event.head_commit.message, 'Release')
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +33,8 @@ jobs:
           node-version: 14
       - name: Publish
         run: |
-          npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+          npm config set @material-table:registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
           npm publish --ignore-scripts
         env:
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
