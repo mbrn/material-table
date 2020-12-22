@@ -27,7 +27,7 @@
 # Table of Contents
 
 - [Installation](#installation)
-- [Examples](#examples)
+- [Examples](https://material-table-core.github.io/examples)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
   - [How to publish to NPM](https://github.com/material-table-core/core/discussions/11)
@@ -44,10 +44,6 @@
 // can import it from `@material-table/core`
 import MaterialTable from "@material-table/core";
 ```
-
-## Examples
-
-See [here](https://github.com/material-table-core/core) for current info
 
 ## Documentation
 
