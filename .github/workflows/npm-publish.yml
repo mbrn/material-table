@@ -27,7 +27,7 @@ jobs:
           # create_tag: "true" # whether to create a git tag or not (defaults to "true")
           commit_pattern: "^Release (\\S+)" # pattern that the commit message needs to follow
           workspace: "." # custom workspace directory that contains the package.json file
-          publish_command: "yarn" # custom publish command (defaults to yarn)
+          publish_command: "npm install && npm run build && yarn" # custom publish command (defaults to yarn)
           # publish_args: "--non-interactive" # publish command arguments (for example --prod --verbose, defaults to empty)
 
         env:

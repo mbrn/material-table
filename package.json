@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.1.14",
+  "version": "2.1.15",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +15,6 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "prepublish": "npm install && npm run build",
     "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
