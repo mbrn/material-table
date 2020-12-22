@@ -8,29 +8,32 @@ name: publish
 on: []
 
 jobs:
-  npm-publish:
-    name: npm-publish
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build on Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --if-present
+
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event.commits
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Publish if version has been updated and commit pattern matches ^Release (\\S+)
-        uses: pascalgn/npm-publish-action@1.3.6
-
-        # All of theses inputs are optional
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-          tag_name: "v%s" # the name pattern of the new tag
-          # tag_message: "v%s" # the message pattern of the new tag
-          # create_tag: "true" # whether to create a git tag or not (defaults to "true")
-          commit_pattern: "^Release (\\S+)" # pattern that the commit message needs to follow
-          workspace: "." # custom workspace directory that contains the package.json file
-          #
-          #
-          # I COULD ONLY GET THIS TO WORK USING "yarn"
-          publish_command: "yarn" # custom publish command (defaults to yarn)
-          # publish_args: "--non-interactive" # publish command arguments (for example --prod --verbose, defaults to empty)
-
+          node-version: 14
+      - name: Publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
