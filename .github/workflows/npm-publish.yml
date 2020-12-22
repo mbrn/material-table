@@ -5,7 +5,7 @@
 
 name: publish
 
-on: []
+on: [push]
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
       - run: npm run build --if-present
 
   publish:
-    if: github.ref == 'refs/heads/main' && github.event.commits
+    if: github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'Release')
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +33,7 @@ jobs:
           node-version: 14
       - name: Publish
         run: |
-          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm config set //registry.npmjs.org/:_authToken ${NPM_AUTH_TOKEN}
           npm publish --ignore-scripts
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
