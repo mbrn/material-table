@@ -40,7 +40,7 @@
     "datatable",
     "table"
   ],
-  "author": "Mehmet Baran",
+  "author": "Mehmet Baran, material-table-core contributors",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/material-table-core/core/issues"
