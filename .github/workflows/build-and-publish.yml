@@ -5,7 +5,11 @@
 
 name: Build and Publish
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
@@ -23,7 +27,7 @@ jobs:
       - run: npm run build --if-present
 
   publish:
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' && startsWith(github.event.head_commit.message, 'Release')
+    if: startsWith(github.event.head_commit.message, 'Release')
     needs: build
     runs-on: ubuntu-latest
     steps:
