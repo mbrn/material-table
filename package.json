@@ -15,7 +15,7 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
+    "start": "webpack serve --config ./demo/webpack.config.js --mode development --progress",
     "build": "babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore",
