@@ -43,7 +43,7 @@
 ```javascript
 // If you can import it from `material-table` you
 // can import it from `@material-table/core`
-import MaterialTable from "@material-table/core";
+import MaterialTable from '@material-table/core';
 ```
 
 ## Documentation
