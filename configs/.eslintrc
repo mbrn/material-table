@@ -8,7 +8,12 @@
   },
   "parser": "babel-eslint",
   "plugins": [
-    "only-warn" // only warn for everything (for now)
+    /**
+     *
+     * Only warn for EVERYTHING (for now)
+     *
+     */
+    "only-warn" 
   ],
   "settings": {
     "react": {
