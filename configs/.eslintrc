@@ -5,18 +5,11 @@
     "semi": ["error", "always", {
       "omitLastInOneLineBlock": true
     }],
-    "multiline-ternary": "off",
-    "react/prop-types": "off",
-    
-    // Warnings added to suppress errors
-    "no-useless-constructor": "warn",
-    "eqeqeq": "warn",
-    "array-callback-return": "warn",
-    "no-extend-native": "warn",
-    "node/handle-callback-err": "warn",
-    "new-cap": "warn"
   },
   "parser": "babel-eslint",
+  "plugins": [
+    "only-warn" // only warn for everything (for now)
+  ],
   "settings": {
     "react": {
       "version": "detect"

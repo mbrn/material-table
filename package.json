@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.1.18",
+  "version": "2.1.19",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -15,13 +15,13 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "start": "webpack serve --config ./demo/webpack.config.js --mode development --progress",
-    "build": "babel src --out-dir dist",
+    "start": "./node_modules/.bin/webpack serve --config ./demo/webpack.config.js --mode development --progress",
+    "build": "./node_modules/.bin/babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
-    "eslint": "eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore",
-    "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
-    "lint:fix": "eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore --fix",
-    "prettify": "prettier --write **/*.js"
+    "eslint": "./node_modules/.bin/eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore",
+    "tsc": "./node_modules/.bin/tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
+    "lint:fix": "./node_modules/.bin/eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore --fix",
+    "prettify": "./node_modules/.bin/prettier -c ./.prettierrc --write **/*.js"
   },
   "husky": {
     "hooks": {
@@ -63,6 +63,7 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-only-warn": "^1.0.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-standard": "^5.0.0",

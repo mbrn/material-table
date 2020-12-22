@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
-import PropTypes from "prop-types";
-import * as React from "react";
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 export default class MTableGroupRow extends React.Component {
   rotateIconStyle = (isOpen) => ({
-    transform: isOpen ? "rotate(90deg)" : "none",
+    transform: isOpen ? 'rotate(90deg)' : 'none',
   });
 
   render() {
@@ -26,7 +26,7 @@ export default class MTableGroupRow extends React.Component {
         detail = this.props.groupData.groups.map((groupData, index) => (
           <this.props.components.GroupRow
             actions={this.props.actions}
-            key={groupData.value || "" + index}
+            key={groupData.value || '' + index}
             columns={this.props.columns}
             components={this.props.components}
             detailPanel={this.props.detailPanel}
@@ -118,13 +118,13 @@ export default class MTableGroupRow extends React.Component {
     }
 
     let title = column.title;
-    if (typeof this.props.options.groupTitle === "function") {
+    if (typeof this.props.options.groupTitle === 'function') {
       title = this.props.options.groupTitle(this.props.groupData);
-    } else if (typeof title !== "string") {
+    } else if (typeof title !== 'string') {
       title = React.cloneElement(title);
     }
 
-    const separator = this.props.options.groupRowSeparator || ": ";
+    const separator = this.props.options.groupRowSeparator || ': ';
 
     return (
       <>
@@ -139,7 +139,7 @@ export default class MTableGroupRow extends React.Component {
           >
             <IconButton
               style={{
-                transition: "all ease 200ms",
+                transition: 'all ease 200ms',
                 ...this.rotateIconStyle(this.props.groupData.isExpanded),
               }}
               onClick={(event) => {

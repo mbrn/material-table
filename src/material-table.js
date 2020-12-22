@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
-import Table from "@material-ui/core/Table";
-import TableFooter from "@material-ui/core/TableFooter";
-import TableRow from "@material-ui/core/TableRow";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import DoubleScrollbar from "react-double-scrollbar";
-import * as React from "react";
-import { MTablePagination, MTableSteppedPagination } from "./components";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import DataManager from "./utils/data-manager";
-import { debounce } from "debounce";
-import equal from "fast-deep-equal";
-import { withStyles } from "@material-ui/core";
-import * as CommonValues from "./utils/common-values";
+import Table from '@material-ui/core/Table';
+import TableFooter from '@material-ui/core/TableFooter';
+import TableRow from '@material-ui/core/TableRow';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import DoubleScrollbar from 'react-double-scrollbar';
+import * as React from 'react';
+import { MTablePagination, MTableSteppedPagination } from './components';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import DataManager from './utils/data-manager';
+import { debounce } from 'debounce';
+import equal from 'fast-deep-equal';
+import { withStyles } from '@material-ui/core';
+import * as CommonValues from './utils/common-values';
 
 /* eslint-enable no-unused-vars */
 
@@ -34,7 +34,7 @@ export default class MaterialTable extends React.Component {
           .filter((a) => a.tableData.filterValue)
           .map((a) => ({
             column: a,
-            operator: "=",
+            operator: '=',
             value: a.tableData.filterValue,
           })),
         orderBy: renderState.columns.find(
@@ -71,7 +71,7 @@ export default class MaterialTable extends React.Component {
 
   setDataManagerFields(props, isInit) {
     let defaultSortColumnIndex = -1;
-    let defaultSortDirection = "";
+    let defaultSortDirection = '';
     if (props && props.options.sorting !== false) {
       defaultSortColumnIndex = props.columns.findIndex(
         (a) => a.defaultSort && a.sorting !== false
@@ -79,7 +79,7 @@ export default class MaterialTable extends React.Component {
       defaultSortDirection =
         defaultSortColumnIndex > -1
           ? props.columns[defaultSortColumnIndex].defaultSort
-          : "";
+          : '';
     }
 
     this.dataManager.setColumns(props.columns);
@@ -108,7 +108,7 @@ export default class MaterialTable extends React.Component {
         defaultSortColumnIndex,
         defaultSortDirection
       );
-    isInit && this.dataManager.changeSearchText(props.options.searchText || "");
+    isInit && this.dataManager.changeSearchText(props.options.searchText || '');
     isInit &&
       this.dataManager.changeCurrentPage(
         props.options.initialPage ? props.options.initialPage : 0
@@ -189,17 +189,17 @@ export default class MaterialTable extends React.Component {
         .filter((a) => a)
         .map((action) => {
           if (
-            action.position === "auto" ||
+            action.position === 'auto' ||
             action.isFreeAction === false ||
             (action.position === undefined && action.isFreeAction === undefined)
           ) {
-            if (typeof action === "function") {
-              return { action: action, position: "toolbarOnSelect" };
-            } else return { ...action, position: "toolbarOnSelect" };
+            if (typeof action === 'function') {
+              return { action: action, position: 'toolbarOnSelect' };
+            } else return { ...action, position: 'toolbarOnSelect' };
           } else if (action.isFreeAction) {
-            if (typeof action === "function") {
-              return { action: action, position: "toolbar" };
-            } else return { ...action, position: "toolbar" };
+            if (typeof action === 'function') {
+              return { action: action, position: 'toolbar' };
+            } else return { ...action, position: 'toolbar' };
           } else return action;
         });
     } else {
@@ -207,17 +207,17 @@ export default class MaterialTable extends React.Component {
         .filter((a) => a)
         .map((action) => {
           if (
-            action.position === "auto" ||
+            action.position === 'auto' ||
             action.isFreeAction === false ||
             (action.position === undefined && action.isFreeAction === undefined)
           ) {
-            if (typeof action === "function") {
-              return { action: action, position: "row" };
-            } else return { ...action, position: "row" };
+            if (typeof action === 'function') {
+              return { action: action, position: 'row' };
+            } else return { ...action, position: 'row' };
           } else if (action.isFreeAction) {
-            if (typeof action === "function") {
-              return { action: action, position: "toolbar" };
-            } else return { ...action, position: "toolbar" };
+            if (typeof action === 'function') {
+              return { action: action, position: 'toolbar' };
+            } else return { ...action, position: 'toolbar' };
           } else return action;
         });
     }
@@ -227,7 +227,7 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Add,
           tooltip: localization.addTooltip,
-          position: "toolbar",
+          position: 'toolbar',
           disabled: !!this.dataManager.lastEditingRow,
           onClick: () => {
             this.dataManager.changeRowEditing();
@@ -251,7 +251,7 @@ export default class MaterialTable extends React.Component {
             calculatedProps.editable.isEditHidden &&
             calculatedProps.editable.isEditHidden(rowData),
           onClick: (e, rowData) => {
-            this.dataManager.changeRowEditing(rowData, "update");
+            this.dataManager.changeRowEditing(rowData, 'update');
             this.setState({
               ...this.dataManager.getRenderState(),
               showAddRow: false,
@@ -272,7 +272,7 @@ export default class MaterialTable extends React.Component {
             calculatedProps.editable.isDeleteHidden &&
             calculatedProps.editable.isDeleteHidden(rowData),
           onClick: (e, rowData) => {
-            this.dataManager.changeRowEditing(rowData, "delete");
+            this.dataManager.changeRowEditing(rowData, 'delete');
             this.setState({
               ...this.dataManager.getRenderState(),
               showAddRow: false,
@@ -284,7 +284,7 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Edit,
           tooltip: localization.bulkEditTooltip,
-          position: "toolbar",
+          position: 'toolbar',
           hidden: this.dataManager.bulkEditOpen,
           onClick: () => {
             this.dataManager.changeBulkEditOpen(true);
@@ -294,14 +294,14 @@ export default class MaterialTable extends React.Component {
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Check,
           tooltip: localization.bulkEditApprove,
-          position: "toolbar",
+          position: 'toolbar',
           hidden: !this.dataManager.bulkEditOpen,
-          onClick: () => this.onEditingApproved("bulk"),
+          onClick: () => this.onEditingApproved('bulk'),
         });
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Clear,
           tooltip: localization.bulkEditCancel,
-          position: "toolbar",
+          position: 'toolbar',
           hidden: !this.dataManager.bulkEditOpen,
           onClick: () => {
             this.dataManager.changeBulkEditOpen(false);
@@ -341,7 +341,7 @@ export default class MaterialTable extends React.Component {
   };
 
   onChangeOrder = (orderBy, orderDirection) => {
-    const newOrderBy = orderDirection === "" ? -1 : orderBy;
+    const newOrderBy = orderDirection === '' ? -1 : orderBy;
     this.dataManager.changeOrder(newOrderBy, orderDirection);
 
     if (this.isRemoteData()) {
@@ -412,8 +412,8 @@ export default class MaterialTable extends React.Component {
     this.setState(this.dataManager.getRenderState(), () => {
       if (
         this.props.onColumnDragged &&
-        result.destination.droppableId === "headers" &&
-        result.source.droppableId === "headers"
+        result.destination.droppableId === 'headers' &&
+        result.source.droppableId === 'headers'
       ) {
         this.props.onColumnDragged(
           result.source.index,
@@ -431,12 +431,12 @@ export default class MaterialTable extends React.Component {
   onGroupRemoved = (groupedColumn, index) => {
     const result = {
       combine: null,
-      destination: { droppableId: "headers", index: 0 },
+      destination: { droppableId: 'headers', index: 0 },
       draggableId: groupedColumn.tableData.id,
-      mode: "FLUID",
-      reason: "DROP",
-      source: { index, droppableId: "groups" },
-      type: "DEFAULT",
+      mode: 'FLUID',
+      reason: 'DROP',
+      source: { index, droppableId: 'groups' },
+      type: 'DEFAULT',
     };
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -446,7 +446,7 @@ export default class MaterialTable extends React.Component {
   };
 
   onEditingApproved = (mode, newData, oldData) => {
-    if (mode === "add" && this.props.editable && this.props.editable.onRowAdd) {
+    if (mode === 'add' && this.props.editable && this.props.editable.onRowAdd) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
           .onRowAdd(newData)
@@ -460,13 +460,13 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: "add",
+              errorCause: 'add',
             };
             this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
-      mode === "update" &&
+      mode === 'update' &&
       this.props.editable &&
       this.props.editable.onRowUpdate
     ) {
@@ -490,13 +490,13 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: "update",
+              errorCause: 'update',
             };
             this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
-      mode === "delete" &&
+      mode === 'delete' &&
       this.props.editable &&
       this.props.editable.onRowDelete
     ) {
@@ -520,13 +520,13 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: "delete",
+              errorCause: 'delete',
             };
             this.setState({ isLoading: false, errorState });
           });
       });
     } else if (
-      mode === "bulk" &&
+      mode === 'bulk' &&
       this.props.editable &&
       this.props.editable.onBulkUpdate
     ) {
@@ -551,7 +551,7 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: "bulk edit",
+              errorCause: 'bulk edit',
             };
             this.setState({ isLoading: false, errorState });
           });
@@ -560,16 +560,16 @@ export default class MaterialTable extends React.Component {
   };
 
   onEditingCanceled = (mode, rowData) => {
-    if (mode === "add") {
+    if (mode === 'add') {
       this.props.editable.onRowAddCancelled &&
         this.props.editable.onRowAddCancelled();
       this.setState({ showAddRow: false });
-    } else if (mode === "update") {
+    } else if (mode === 'update') {
       this.props.editable.onRowUpdateCancelled &&
         this.props.editable.onRowUpdateCancelled();
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
-    } else if (mode === "delete") {
+    } else if (mode === 'delete') {
       this.dataManager.changeRowEditing(rowData);
       this.setState(this.dataManager.getRenderState());
     }
@@ -607,12 +607,12 @@ export default class MaterialTable extends React.Component {
           };
           const errorState = {
             message:
-              typeof error === "object"
+              typeof error === 'object'
                 ? error.message
                 : error !== undefined
                 ? error
                 : localization.error,
-            errorCause: "query",
+            errorCause: 'query',
           };
           this.setState({
             isLoading: false,
@@ -674,7 +674,7 @@ export default class MaterialTable extends React.Component {
         .filter((a) => a.tableData.filterValue)
         .map((a) => ({
           column: a,
-          operator: "=",
+          operator: '=',
           value: a.tableData.filterValue,
         }));
 
@@ -686,7 +686,7 @@ export default class MaterialTable extends React.Component {
             .filter((a) => a.tableData.filterValue)
             .map((a) => ({
               column: a,
-              operator: "=",
+              operator: '=',
               value: a.tableData.filterValue,
             }));
           this.props.onFilterChange(appliedFilters);
@@ -749,7 +749,7 @@ export default class MaterialTable extends React.Component {
 
       return (
         <Table>
-          <TableFooter style={{ display: "grid" }}>
+          <TableFooter style={{ display: 'grid' }}>
             <TableRow>
               <props.components.Pagination
                 classes={{
@@ -759,8 +759,8 @@ export default class MaterialTable extends React.Component {
                   selectRoot: props.classes.paginationSelectRoot,
                 }}
                 style={{
-                  float: props.theme.direction === "rtl" ? "" : "right",
-                  overflowX: "auto",
+                  float: props.theme.direction === 'rtl' ? '' : 'right',
+                  overflowX: 'auto',
                 }}
                 colSpan={3}
                 count={
@@ -771,8 +771,8 @@ export default class MaterialTable extends React.Component {
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
                   renderValue: (value) => (
-                    <div style={{ padding: "0px 5px" }}>
-                      {value + " " + localization.labelRowsSelect + " "}
+                    <div style={{ padding: '0px 5px' }}>
+                      {value + ' ' + localization.labelRowsSelect + ' '}
                     </div>
                   ),
                 }}
@@ -780,7 +780,7 @@ export default class MaterialTable extends React.Component {
                 onChangePage={this.onChangePage}
                 onChangeRowsPerPage={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) =>
-                  props.options.paginationType === "normal" ? (
+                  props.options.paginationType === 'normal' ? (
                     <MTablePagination
                       {...subProps}
                       icons={props.icons}
@@ -802,9 +802,9 @@ export default class MaterialTable extends React.Component {
                 }
                 labelDisplayedRows={(row) =>
                   localization.labelDisplayedRows
-                    .replace("{from}", row.from)
-                    .replace("{to}", row.to)
-                    .replace("{count}", row.count)
+                    .replace('{from}', row.from)
+                    .replace('{to}', row.to)
+                    .replace('{count}', row.count)
                 }
                 labelRowsPerPage={localization.labelRowsPerPage}
               />
@@ -821,7 +821,7 @@ export default class MaterialTable extends React.Component {
         tableLayout:
           props.options.fixedColumns &&
           (props.options.fixedColumns.left || props.options.fixedColumns.right)
-            ? "fixed"
+            ? 'fixed'
             : props.options.tableLayout,
       }}
     >
@@ -851,7 +851,7 @@ export default class MaterialTable extends React.Component {
           showActionsColumn={
             props.actions &&
             props.actions.filter(
-              (a) => a.position === "row" || typeof a === "function"
+              (a) => a.position === 'row' || typeof a === 'function'
             ).length > 0
           }
           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
@@ -923,13 +923,13 @@ export default class MaterialTable extends React.Component {
         props.options.actionsColumnIndex >= 0 &&
         props.options.actionsColumnIndex < count
       ) {
-        result.push(actionsWidth + "px");
+        result.push(actionsWidth + 'px');
       } else if (
         count < 0 &&
         props.options.actionsColumnIndex < 0 &&
         props.options.actionsColumnIndex >= count
       ) {
-        result.push(actionsWidth + "px");
+        result.push(actionsWidth + 'px');
       }
     }
 
@@ -939,22 +939,22 @@ export default class MaterialTable extends React.Component {
         props,
         this.state.treeDataMaxLevel
       );
-      result.push(selectionWidth + "px");
+      result.push(selectionWidth + 'px');
     }
 
     for (let i = 0; i < Math.abs(count) && i < props.columns.length; i++) {
       const colDef =
         props.columns[count >= 0 ? i : props.columns.length - 1 - i];
       if (colDef.tableData) {
-        if (typeof colDef.tableData.width === "number") {
-          result.push(colDef.tableData.width + "px");
+        if (typeof colDef.tableData.width === 'number') {
+          result.push(colDef.tableData.width + 'px');
         } else {
           result.push(colDef.tableData.width);
         }
       }
     }
 
-    return "calc(" + result.join(" + ") + ")";
+    return 'calc(' + result.join(' + ') + ')';
   };
 
   render() {
@@ -966,10 +966,10 @@ export default class MaterialTable extends React.Component {
         nonce={props.options.cspNonce}
       >
         <props.components.Container
-          style={{ position: "relative", ...props.style }}
+          style={{ position: 'relative', ...props.style }}
         >
-          {props.options.paginationPosition === "top" ||
-          props.options.paginationPosition === "both"
+          {props.options.paginationPosition === 'top' ||
+          props.options.paginationPosition === 'both'
             ? this.renderFooter()
             : null}
           {props.options.toolbar && (
@@ -1054,18 +1054,18 @@ export default class MaterialTable extends React.Component {
                               props,
                               -1 * props.options.fixedColumns.right
                             ),
-                            position: "absolute",
+                            position: 'absolute',
                             top: 0,
                             right: 0,
-                            boxShadow: "-2px 0px 15px rgba(125,147,178,.25)",
-                            overflowX: "hidden",
+                            boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
+                            overflowX: 'hidden',
                             zIndex: 11,
                           }}
                         >
                           <div
                             style={{
                               width: this.state.width,
-                              background: "white",
+                              background: 'white',
                               transform: `translateX(calc(${this.getColumnsWidth(
                                 props,
                                 -1 * props.options.fixedColumns.right
@@ -1088,18 +1088,18 @@ export default class MaterialTable extends React.Component {
                               props,
                               props.options.fixedColumns.left
                             ),
-                            position: "absolute",
+                            position: 'absolute',
                             top: 0,
                             left: 0,
-                            boxShadow: "2px 0px 15px rgba(125,147,178,.25)",
-                            overflowX: "hidden",
+                            boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
+                            overflowX: 'hidden',
                             zIndex: 11,
                           }}
                         >
                           <div
                             style={{
                               width: this.state.width,
-                              background: "white",
+                              background: 'white',
                             }}
                           >
                             {table}
@@ -1114,35 +1114,35 @@ export default class MaterialTable extends React.Component {
             </Droppable>
           </ScrollBar>
           {(this.state.isLoading || props.isLoading) &&
-            props.options.loadingType === "linear" && (
-              <div style={{ position: "relative", width: "100%" }}>
+            props.options.loadingType === 'linear' && (
+              <div style={{ position: 'relative', width: '100%' }}>
                 <div
                   style={{
-                    position: "absolute",
+                    position: 'absolute',
                     top: 0,
                     left: 0,
-                    height: "100%",
-                    width: "100%",
+                    height: '100%',
+                    width: '100%',
                   }}
                 >
                   <LinearProgress />
                 </div>
               </div>
             )}
-          {props.options.paginationPosition === "bottom" ||
-          props.options.paginationPosition === "both"
+          {props.options.paginationPosition === 'bottom' ||
+          props.options.paginationPosition === 'both'
             ? this.renderFooter()
             : null}
 
           {(this.state.isLoading || props.isLoading) &&
-            props.options.loadingType === "overlay" && (
+            props.options.loadingType === 'overlay' && (
               <div
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   top: 0,
                   left: 0,
-                  height: "100%",
-                  width: "100%",
+                  height: '100%',
+                  width: '100%',
                   zIndex: 11,
                 }}
               >
@@ -1150,14 +1150,14 @@ export default class MaterialTable extends React.Component {
               </div>
             )}
           {this.state.errorState &&
-            this.state.errorState.errorCause === "query" && (
+            this.state.errorState.errorCause === 'query' && (
               <div
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   top: 0,
                   left: 0,
-                  height: "100%",
-                  width: "100%",
+                  height: '100%',
+                  width: '100%',
                   zIndex: 11,
                 }}
               >
@@ -1177,16 +1177,16 @@ export default class MaterialTable extends React.Component {
 
 const style = () => ({
   horizontalScrollContainer: {
-    "& ::-webkit-scrollbar": {
-      "-webkit-appearance": "none",
+    '& ::-webkit-scrollbar': {
+      '-webkit-appearance': 'none',
     },
-    "& ::-webkit-scrollbar:horizontal": {
+    '& ::-webkit-scrollbar:horizontal': {
       height: 8,
     },
-    "& ::-webkit-scrollbar-thumb": {
+    '& ::-webkit-scrollbar-thumb': {
       borderRadius: 4,
-      border: "2px solid white",
-      backgroundColor: "rgba(0, 0, 0, .3)",
+      border: '2px solid white',
+      backgroundColor: 'rgba(0, 0, 0, .3)',
     },
   },
 });
@@ -1198,7 +1198,7 @@ const ScrollBar = withStyles(style)(({ double, children, classes }) => {
     return (
       <div
         className={classes.horizontalScrollContainer}
-        style={{ overflowX: "auto", position: "relative" }}
+        style={{ overflowX: 'auto', position: 'relative' }}
       >
         {children}
       </div>

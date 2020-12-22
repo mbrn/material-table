@@ -1,20 +1,20 @@
-import formatDate from "date-fns/format";
-import { byString } from "./";
+import formatDate from 'date-fns/format';
+import { byString } from './';
 
 export default class DataManager {
   applyFilters = false;
   applySearch = false;
   applySort = false;
   currentPage = 0;
-  detailPanelType = "multiple";
+  detailPanelType = 'multiple';
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
-  orderDirection = "";
+  orderDirection = '';
   pageSize = 5;
   paging = true;
   parentFunc = null;
-  searchText = "";
+  searchText = '';
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
@@ -72,12 +72,12 @@ export default class DataManager {
       // Calculate width if no value provided
       return c.width === undefined;
     });
-    let usedWidth = ["0px"];
+    let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
       const width =
-        typeof columnDef.width === "number"
-          ? columnDef.width + "px"
+        typeof columnDef.width === 'number'
+          ? columnDef.width + 'px'
           : columnDef.width;
 
       if (
@@ -92,7 +92,7 @@ export default class DataManager {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || "asc",
+        groupSort: columnDef.defaultGroupSort || 'asc',
         width,
         initialWidth: width,
         additionalWidth: 0,
@@ -103,7 +103,7 @@ export default class DataManager {
       return columnDef;
     });
 
-    usedWidth = "(" + usedWidth.join(" + ") + ")";
+    usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach((columnDef) => {
       columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
@@ -178,7 +178,7 @@ export default class DataManager {
     const rowData = this.findDataByPath(this.sortedData, path);
 
     if (
-      (rowData.tableData.showDetailPanel || "").toString() === render.toString()
+      (rowData.tableData.showDetailPanel || '').toString() === render.toString()
     ) {
       rowData.tableData.showDetailPanel = undefined;
     } else {
@@ -186,7 +186,7 @@ export default class DataManager {
     }
 
     if (
-      this.detailPanelType === "single" &&
+      this.detailPanelType === 'single' &&
       this.lastDetailPanelRow &&
       this.lastDetailPanelRow != rowData
     ) {
@@ -232,7 +232,7 @@ export default class DataManager {
 
   changeAllSelected(checked) {
     let selectedCount = 0;
-    if (this.isDataType("group")) {
+    if (this.isDataType('group')) {
       const setCheck = (data) => {
         data.forEach((element) => {
           if (element.groups.length > 0) {
@@ -269,10 +269,10 @@ export default class DataManager {
   changeGroupOrder(columnId) {
     const column = this.columns.find((c) => c.tableData.id === columnId);
 
-    if (column.tableData.groupSort === "asc") {
-      column.tableData.groupSort = "desc";
+    if (column.tableData.groupSort === 'asc') {
+      column.tableData.groupSort = 'desc';
     } else {
-      column.tableData.groupSort = "asc";
+      column.tableData.groupSort = 'asc';
     }
 
     this.sorted = false;
@@ -302,8 +302,8 @@ export default class DataManager {
       );
 
     if (
-      result.destination.droppableId === "groups" &&
-      result.source.droppableId === "groups"
+      result.destination.droppableId === 'groups' &&
+      result.source.droppableId === 'groups'
     ) {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
@@ -320,8 +320,8 @@ export default class DataManager {
         groups.push(last);
       }
     } else if (
-      result.destination.droppableId === "groups" &&
-      result.source.droppableId === "headers"
+      result.destination.droppableId === 'groups' &&
+      result.source.droppableId === 'headers'
     ) {
       const newGroup = this.columns.find(
         (c) => c.tableData.id == result.draggableId
@@ -333,8 +333,8 @@ export default class DataManager {
 
       groups.splice(result.destination.index, 0, newGroup);
     } else if (
-      result.destination.droppableId === "headers" &&
-      result.source.droppableId === "groups"
+      result.destination.droppableId === 'headers' &&
+      result.source.droppableId === 'groups'
     ) {
       const removeGroup = this.columns.find(
         (c) => c.tableData.id == result.draggableId
@@ -342,8 +342,8 @@ export default class DataManager {
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
     } else if (
-      result.destination.droppableId === "headers" &&
-      result.source.droppableId === "headers"
+      result.destination.droppableId === 'headers' &&
+      result.source.droppableId === 'headers'
     ) {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
@@ -470,7 +470,7 @@ export default class DataManager {
   };
 
   findDataByPath = (renderData, path) => {
-    if (this.isDataType("tree")) {
+    if (this.isDataType('tree')) {
       const node = path.reduce(
         (result, current) => {
           return (
@@ -520,7 +520,7 @@ export default class DataManager {
 
   getFieldValue = (rowData, columnDef, lookup = true) => {
     let value =
-      typeof rowData[columnDef.field] !== "undefined"
+      typeof rowData[columnDef.field] !== 'undefined'
         ? rowData[columnDef.field]
         : byString(rowData, columnDef.field);
     if (columnDef.lookup && lookup) {
@@ -531,19 +531,19 @@ export default class DataManager {
   };
 
   isDataType(type) {
-    let dataType = "normal";
+    let dataType = 'normal';
 
     if (this.parentFunc) {
-      dataType = "tree";
+      dataType = 'tree';
     } else if (this.columns.find((a) => a.tableData.groupOrder > -1)) {
-      dataType = "group";
+      dataType = 'group';
     }
 
     return type === dataType;
   }
 
   sort(a, b, type) {
-    if (type === "numeric") {
+    if (type === 'numeric') {
       return a - b;
     } else {
       if (a !== b) {
@@ -560,14 +560,14 @@ export default class DataManager {
     let result = list;
 
     if (columnDef.customSort) {
-      if (this.orderDirection === "desc") {
-        result = list.sort((a, b) => columnDef.customSort(b, a, "row", "desc"));
+      if (this.orderDirection === 'desc') {
+        result = list.sort((a, b) => columnDef.customSort(b, a, 'row', 'desc'));
       } else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, "row"));
+        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
       }
     } else {
       result = list.sort(
-        this.orderDirection === "desc"
+        this.orderDirection === 'desc'
           ? (a, b) =>
               this.sort(
                 this.getFieldValue(b, columnDef),
@@ -595,11 +595,11 @@ export default class DataManager {
       this.searchData();
     }
 
-    if (this.grouped === false && this.isDataType("group")) {
+    if (this.grouped === false && this.isDataType('group')) {
       this.groupData();
     }
 
-    if (this.treefied === false && this.isDataType("tree")) {
+    if (this.treefied === false && this.isDataType('tree')) {
       this.treefyData();
     }
 
@@ -664,47 +664,47 @@ export default class DataManager {
                   ) > -1
                 );
               });
-            } else if (type === "numeric") {
+            } else if (type === 'numeric') {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
-                return value + "" === tableData.filterValue;
+                return value + '' === tableData.filterValue;
               });
-            } else if (type === "boolean" && tableData.filterValue) {
+            } else if (type === 'boolean' && tableData.filterValue) {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
                 return (
-                  (value && tableData.filterValue === "checked") ||
-                  (!value && tableData.filterValue === "unchecked")
+                  (value && tableData.filterValue === 'checked') ||
+                  (!value && tableData.filterValue === 'unchecked')
                 );
               });
-            } else if (["date", "datetime"].includes(type)) {
+            } else if (['date', 'datetime'].includes(type)) {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
 
                 const currentDate = value ? new Date(value) : null;
 
-                if (currentDate && currentDate.toString() !== "Invalid Date") {
+                if (currentDate && currentDate.toString() !== 'Invalid Date') {
                   const selectedDate = tableData.filterValue;
-                  let currentDateToCompare = "";
-                  let selectedDateToCompare = "";
+                  let currentDateToCompare = '';
+                  let selectedDateToCompare = '';
 
-                  if (type === "date") {
+                  if (type === 'date') {
                     currentDateToCompare = formatDate(
                       currentDate,
-                      "MM/dd/yyyy"
+                      'MM/dd/yyyy'
                     );
                     selectedDateToCompare = formatDate(
                       selectedDate,
-                      "MM/dd/yyyy"
+                      'MM/dd/yyyy'
                     );
-                  } else if (type === "datetime") {
+                  } else if (type === 'datetime') {
                     currentDateToCompare = formatDate(
                       currentDate,
-                      "MM/dd/yyyy - HH:mm"
+                      'MM/dd/yyyy - HH:mm'
                     );
                     selectedDateToCompare = formatDate(
                       selectedDate,
-                      "MM/dd/yyyy - HH:mm"
+                      'MM/dd/yyyy - HH:mm'
                     );
                   }
 
@@ -713,7 +713,7 @@ export default class DataManager {
 
                 return true;
               });
-            } else if (type === "time") {
+            } else if (type === 'time') {
               this.filteredData = this.filteredData.filter((row) => {
                 const value = this.getFieldValue(row, columnDef);
                 const currentHour = value || null;
@@ -722,7 +722,7 @@ export default class DataManager {
                   const selectedHour = tableData.filterValue;
                   const currentHourToCompare = formatDate(
                     selectedHour,
-                    "HH:mm"
+                    'HH:mm'
                   );
 
                   return currentHour === currentHourToCompare;
@@ -816,7 +816,7 @@ export default class DataManager {
               path
             ) || {
               isExpanded:
-                typeof this.defaultExpanded === "boolean"
+                typeof this.defaultExpanded === 'boolean'
                   ? this.defaultExpanded
                   : false,
             };
@@ -929,7 +929,7 @@ export default class DataManager {
       ) {
         if (rowData.tableData.isTreeExpanded === undefined) {
           const isExpanded =
-            typeof this.defaultExpanded === "boolean"
+            typeof this.defaultExpanded === 'boolean'
               ? this.defaultExpanded
               : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
@@ -966,7 +966,7 @@ export default class DataManager {
   sortData() {
     this.paged = false;
 
-    if (this.isDataType("group")) {
+    if (this.isDataType('group')) {
       this.sortedData = [...this.groupedData];
 
       const groups = this.columns
@@ -978,13 +978,13 @@ export default class DataManager {
       const sortGroups = (list, columnDef) => {
         if (columnDef.customSort) {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
-              ? (a, b) => columnDef.customSort(b.value, a.value, "group")
-              : (a, b) => columnDef.customSort(a.value, b.value, "group")
+            columnDef.tableData.groupSort === 'desc'
+              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
+              : (a, b) => columnDef.customSort(a.value, b.value, 'group')
           );
         } else {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
+            columnDef.tableData.groupSort === 'desc'
               ? (a, b) => this.sort(b.value, a.value, columnDef.type)
               : (a, b) => this.sort(a.value, b.value, columnDef.type)
           );
@@ -1008,7 +1008,7 @@ export default class DataManager {
       };
 
       sortGroupData(this.sortedData, 1);
-    } else if (this.isDataType("tree")) {
+    } else if (this.isDataType('tree')) {
       this.sortedData = [...this.treefiedData];
       if (this.orderBy != -1) {
         this.sortedData = this.sortList(this.sortedData);
@@ -1026,7 +1026,7 @@ export default class DataManager {
 
         sortTree(this.sortedData);
       }
-    } else if (this.isDataType("normal")) {
+    } else if (this.isDataType('normal')) {
       this.sortedData = [...this.searchedData];
       if (this.orderBy != -1 && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
