@@ -28,7 +28,7 @@
 - [Examples](#examples)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
-  - [How to publish to NPM](#publish-npm)
+  - [How to publish to NPM](https://github.com/material-table-core/core/discussions/11)
 
 ---
 
@@ -54,6 +54,4 @@ See [here](https://github.com/material-table-core/core) for current info
 
 ## Contributing
 
-### Publish NPM
-
-**_If your commit meets the following pattern,_** `^Release (\\S+)`**_, a new version will be published on NPM (via Github Actions)_** For example, `Release 1.1.1`
+`//todo`
