@@ -27,5 +27,3 @@ jobs:
           npm config set @material-table:registry https://registry.npmjs.org/
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
           npm publish --ignore-scripts
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
