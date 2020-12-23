@@ -36,6 +36,8 @@
   </p> 
   <!-- ^^^ end badges ^^^ -->
 
+💾 [Installation](#installation) 🎉 [Usage](#usage)
+
 </div>
 
 ✅ [Why does this repo exist?](#about)
@@ -65,13 +67,31 @@
 
 ## Installation
 
-- `npm install @material-table/core`
-- `yarn add @material-table/core`
+#### yarn
+
+`yarn add @material-table/core`
+
+#### npm
+
+`npm install @material-table/core`
+
+## Usage
+
+#### Updating `material-table`
+
+Simply update your imports to receive the latest updates!
+
+```diff
+- import MaterialTable from 'material-table';
++ import MaterialTable from '@material-table/core';
+```
+
+#### Compatibility
+
+If you can import it from `material-table` you can import it from `@material-table/core`. This will never change.
 
 ```javascript
-// If you can import it from `material-table` you
-// can import it from `@material-table/core`
-import MaterialTable from '@material-table/core';
+import MaterialTable, { MTableAction /*, etc...*/ } from '@material-table/core';
 ```
 
 ## Documentation
@@ -81,4 +101,4 @@ import MaterialTable from '@material-table/core';
 
 ## Contributing
 
-`//todo`
+See [here](https://github.com/material-table-core) for more!
