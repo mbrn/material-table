@@ -20,10 +20,17 @@
   <!-- * Badges * -->
   <p>
     <!-- build status -->
-    <a href="https://github.com/material-table-core/core/workflows/Build%20and%20Publish/badge.svg?branch=master">
+    <a href="https://github.com/material-table-core/core/actions?query=workflow%3ABuild">
       <img 
         title="Build" 
         src="https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master"
+      >
+    </a>
+    <!-- publish status -->
+    <a href="https://github.com/material-table-core/core/actions?query=workflow%3APublish">
+      <img 
+        title="Publish" 
+        src="https://github.com/material-table-core/core/workflows/Publish/badge.svg"
       >
     </a>
     <!-- npm package -->
