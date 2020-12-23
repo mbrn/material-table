@@ -1,14 +1,42 @@
 <div align="center">
 
-  <h1><a target="_blank" rel="noopener noreferrer" href="https://material-table-core.com">@material-table/core</a></h1>
-  <h4>a fork of <code><a target="_blank" rel="noopener noreferrer" href="https://material-table.com">mbrn/material-table</a></code></h4>
+  <!-- Title -->
+  <h1>@material-table/core</h1>
 
-  <p align="center">
+  <!-- Subtitle : a fork of mbrn/material-table -->
+  <h4>
+    a fork of 
+    <code>
+      <a 
+        target="_blank" 
+        rel="noopener noreferrer"
+        href="https://material-table.com"
+      >
+        mbrn/material-table
+      </a>
+    </code>
+  </h4>
+
+  <!-- * Badges * -->
+  <p>
+    <!-- build status -->
+    <a href="https://github.com/material-table-core/core/workflows/Build%20and%20Publish/badge.svg?branch=master">
+      <img 
+        title="Build" 
+        src="https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master"
+      >
+    </a>
+    <!-- npm package -->
     <a href="https://www.npmjs.com/package/@material-table/core">
-      <img title="npm_package" src="https://badge.fury.io/js/%40material-table%2Fcore.svg"></a>
-  </p>
+      <img 
+        title="npm_package" 
+        src="https://badge.fury.io/js/%40material-table%2Fcore.svg"
+      >
+    </a>
+  </p> 
+  <!-- ^^^ end badges ^^^ -->
 
-## </div>
+</div>
 
 ✅ [Why does this repo exist?](#about)
 
