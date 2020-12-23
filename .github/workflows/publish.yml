@@ -3,7 +3,7 @@
 # the commit pattern matches "^Release (\\S+)"
 #
 
-name: Build
+name: Publish
 
 on:
   push:
@@ -12,23 +12,8 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build on Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run build --if-present
-
   publish:
     if: startsWith(github.event.head_commit.message, 'Release')
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
