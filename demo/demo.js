@@ -502,6 +502,9 @@ class App extends Component {
                   //       setTimeout(resolve, 4000);
                   //     });
                   //   },
+                  //   isCellEditable: (rowData, columnDef) => {
+                  //     return !(columnDef.field === "birthCity" && rowData.birthCity === 34);
+                  //   },
                   // }}
                   options={{
                     tableLayout: 'fixed',

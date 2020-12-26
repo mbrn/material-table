@@ -15,6 +15,7 @@ export interface MaterialTableProps<RowData extends object> {
       rowData: RowData,
       columnDef: Column<RowData>
     ) => Promise<void>;
+    isCellEditable: (rowData: RowData, columnDef: Column<RowData>) => boolean;
   };
   columns: Column<RowData>[];
   components?: Components;

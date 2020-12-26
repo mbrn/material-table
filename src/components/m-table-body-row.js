@@ -48,6 +48,13 @@ export default class MTableBodyRow extends React.Component {
             />
           );
         } else {
+          let isEditable =
+            columnDef.editable !== "never" && !!this.props.cellEditable;
+          if (isEditable && this.props.cellEditable.isCellEditable)
+            isEditable = this.props.cellEditable.isCellEditable(
+              this.props.data,
+              columnDef
+            );
           return (
             <this.props.components.Cell
               size={size}
@@ -65,9 +72,7 @@ export default class MTableBodyRow extends React.Component {
                 columnDef.tableData.id
               }
               rowData={this.props.data}
-              cellEditable={
-                columnDef.editable !== 'never' && !!this.props.cellEditable
-              }
+              cellEditable={isEditable}
               onCellEditStarted={this.props.onCellEditStarted}
               scrollWidth={this.props.scrollWidth}
             />
