@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Draggable } from "react-beautiful-dnd";
-import { Tooltip } from "@material-ui/core";
-import * as CommonValues from "../utils/common-values";
-import equal from "fast-deep-equal";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Draggable } from 'react-beautiful-dnd';
+import { Tooltip } from '@material-ui/core';
+import * as CommonValues from '../utils/common-values';
+import equal from 'fast-deep-equal';
 
 /* eslint-enable no-unused-vars */
 
@@ -29,13 +29,13 @@ export class MTableHeader extends React.Component {
   // }
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.handleMouseMove);
-    document.addEventListener("mouseup", this.handleMouseUp);
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.handleMouseMove);
-    document.removeEventListener("mouseup", this.handleMouseUp);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
   }
 
   handleMouseDown = (e, columnDef) => {
@@ -82,14 +82,14 @@ export class MTableHeader extends React.Component {
     const style = {
       ...this.props.headerStyle,
       ...columnDef.headerStyle,
-      boxSizing: "border-box",
+      boxSizing: 'border-box',
       width,
       maxWidth: columnDef.maxWidth,
       minWidth: columnDef.minWidth,
     };
 
     if (
-      this.props.options.tableLayout === "fixed" &&
+      this.props.options.tableLayout === 'fixed' &&
       this.props.options.columnResizable &&
       columnDef.resizable !== false
     ) {
@@ -100,7 +100,7 @@ export class MTableHeader extends React.Component {
   };
 
   renderHeader() {
-    const size = this.props.options.padding === "default" ? "medium" : "small";
+    const size = this.props.options.padding === 'default' ? 'medium' : 'small';
 
     const mapArr = this.props.columns
       .filter(
@@ -136,22 +136,22 @@ export class MTableHeader extends React.Component {
             <TableSortLabel
               IconComponent={this.props.icons.SortArrow}
               active={this.props.orderBy === columnDef.tableData.id}
-              direction={this.props.orderDirection || "asc"}
+              direction={this.props.orderDirection || 'asc'}
               onClick={() => {
                 const orderDirection =
                   columnDef.tableData.id !== this.props.orderBy
-                    ? "asc"
-                    : this.props.orderDirection === "asc"
-                    ? "desc"
-                    : this.props.orderDirection === "desc" &&
+                    ? 'asc'
+                    : this.props.orderDirection === 'asc'
+                    ? 'desc'
+                    : this.props.orderDirection === 'desc' &&
                       this.props.thirdSortClick
-                    ? ""
-                    : this.props.orderDirection === "desc" &&
+                    ? ''
+                    : this.props.orderDirection === 'desc' &&
                       !this.props.thirdSortClick
-                    ? "asc"
-                    : this.props.orderDirection === ""
-                    ? "asc"
-                    : "desc";
+                    ? 'asc'
+                    : this.props.orderDirection === ''
+                    ? 'asc'
+                    : 'desc';
                 this.props.onOrderChange(
                   columnDef.tableData.id,
                   orderDirection
@@ -172,23 +172,23 @@ export class MTableHeader extends React.Component {
         }
 
         if (
-          this.props.options.tableLayout === "fixed" &&
+          this.props.options.tableLayout === 'fixed' &&
           this.props.options.columnResizable &&
           columnDef.resizable !== false
         ) {
           content = (
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: 1 }}>{content}</div>
               <div></div>
               <this.props.icons.Resize
                 style={{
-                  cursor: "col-resize",
+                  cursor: 'col-resize',
                   color:
                     this.state.resizingColumnDef &&
                     this.state.resizingColumnDef.tableData.id ===
                       columnDef.tableData.id
                       ? this.props.theme.palette.primary.main
-                      : "inherit",
+                      : 'inherit',
                 }}
                 onMouseDown={(e) => this.handleMouseDown(e, columnDef)}
               />
@@ -199,9 +199,9 @@ export class MTableHeader extends React.Component {
         const cellAlignment =
           columnDef.align !== undefined
             ? columnDef.align
-            : ["numeric", "currency"].indexOf(columnDef.type) !== -1
-            ? "right"
-            : "left";
+            : ['numeric', 'currency'].indexOf(columnDef.type) !== -1
+            ? 'right'
+            : 'left';
         return (
           <TableCell
             key={columnDef.tableData.id}
@@ -231,8 +231,8 @@ export class MTableHeader extends React.Component {
         style={{
           ...this.props.headerStyle,
           width: width,
-          textAlign: "center",
-          boxSizing: "border-box",
+          textAlign: 'center',
+          boxSizing: 'border-box',
         }}
       >
         <TableSortLabel hideSortIcon={true} disabled>
@@ -241,6 +241,7 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
+
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(
       this.props,
@@ -308,7 +309,7 @@ export class MTableHeader extends React.Component {
     }
 
     if (this.props.hasDetailPanel) {
-      if (this.props.detailPanelColumnAlignment === "right") {
+      if (this.props.detailPanelColumnAlignment === 'right') {
         headers.push(this.renderDetailPanelColumnCell());
       } else {
         headers.splice(0, 0, this.renderDetailPanelColumnCell());
@@ -321,7 +322,7 @@ export class MTableHeader extends React.Component {
         0,
         <TableCell
           padding="none"
-          key={"key-tree-data-header"}
+          key={'key-tree-data-header'}
           className={this.props.classes.header}
           style={{ ...this.props.headerStyle }}
         />
@@ -336,7 +337,7 @@ export class MTableHeader extends React.Component {
           0,
           <TableCell
             padding="checkbox"
-            key={"key-group-header" + columnDef.tableData.id}
+            key={'key-group-header' + columnDef.tableData.id}
             className={this.props.classes.header}
           />
         );
@@ -357,12 +358,12 @@ MTableHeader.defaultProps = {
   selectedCount: 0,
   sorting: true,
   localization: {
-    actions: "Actions",
+    actions: 'Actions',
   },
   orderBy: undefined,
-  orderDirection: "asc",
+  orderDirection: 'asc',
   actionsHeaderIndex: 0,
-  detailPanelColumnAlignment: "left",
+  detailPanelColumnAlignment: 'left',
   draggable: true,
   thirdSortClick: true,
 };
@@ -392,7 +393,7 @@ MTableHeader.propTypes = {
 export const styles = (theme) => ({
   header: {
     // display: 'inline-block',
-    position: "sticky",
+    position: 'sticky',
     top: 0,
     zIndex: 10,
     backgroundColor: theme.palette.background.paper, // Change according to theme,

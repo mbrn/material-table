@@ -6,5 +6,18 @@
       "omitLastInOneLineBlock": true
     }]
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "plugins": [
+    /**
+     *
+     * Only warn for EVERYTHING (for now)
+     *
+     */
+    "only-warn" 
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

@@ -1,6 +1,9 @@
 {
-  "name": "material-table",
-  "version": "1.69.2",
+  "name": "@material-table/core",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "2.1.25",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -12,13 +15,13 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
-    "build": "babel src --out-dir dist",
+    "start": "./node_modules/.bin/webpack serve --config ./demo/webpack.config.js --mode development --progress",
+    "build": "./node_modules/.bin/babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
-    "eslint": "eslint src/** -c ./configs/.eslintrc",
-    "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
-    "lint:fix": "eslint src/** --fix",
-    "prettify": "prettier --write **/*.js"
+    "eslint": "./node_modules/.bin/eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore",
+    "tsc": "./node_modules/.bin/tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
+    "lint:fix": "./node_modules/.bin/eslint src/** -c ./configs/.eslintrc --ignore-path ./configs/.eslintignore --fix",
+    "prettify": "./node_modules/.bin/prettier -c ./.prettierrc --write **/*.js"
   },
   "husky": {
     "hooks": {
@@ -27,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mbrn/material-table.git"
+    "url": "git+https://github.com/material-table-core/core.git"
   },
   "keywords": [
     "react",
@@ -36,62 +39,63 @@
     "datatable",
     "table"
   ],
-  "author": "Mehmet Baran",
+  "author": "Mehmet Baran, material-table-core contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mbrn/material-table/issues"
+    "url": "https://github.com/material-table-core/core/issues"
   },
-  "homepage": "https://github.com/mbrn/material-table#readme",
+  "homepage": "https://material-table-core.com",
   "devDependencies": {
-    "@babel/cli": "7.1.2",
-    "@babel/core": "7.4.4",
-    "@babel/plugin-proposal-class-properties": "7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "7.0.0",
-    "@babel/plugin-transform-runtime": "7.1.0",
-    "@babel/preset-env": "7.2.0",
-    "@babel/preset-react": "7.0.0",
-    "@material-ui/core": "4.0.1",
-    "babel-eslint": "10.0.1",
-    "babel-loader": "8.0.4",
-    "babel-polyfill": "6.26.0",
-    "buble": "0.19.3",
-    "eslint": "5.7.0",
-    "eslint-config-defaults": "9.0.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-node": "7.0.1",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-standard": "4.0.0",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@material-ui/core": "^4.11.2",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "babel-polyfill": "^6.26.0",
+    "buble": "^0.20.0",
+    "eslint": "^7.16.0",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-only-warn": "^1.0.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-standard": "^5.0.0",
     "husky": "1.2.0",
-    "prettier": "2.0.5",
+    "prettier": "^2.2.1",
     "pretty-quick": "2.0.1",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-hot-loader": "4.3.12",
-    "typescript": "3.2.2",
-    "webpack": "4.27.1",
-    "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.1.10"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hot-loader": "^4.13.0",
+    "typescript": "^4.1.3",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@date-io/date-fns": "1.1.0",
-    "@material-ui/pickers": "3.2.2",
-    "classnames": "2.2.6",
-    "date-fns": "2.0.0-alpha.27",
-    "debounce": "1.2.0",
-    "fast-deep-equal": "2.0.1",
-    "filefy": "0.1.10",
-    "jspdf": "2.1.0",
-    "jspdf-autotable": "3.5.9",
-    "prop-types": "15.6.2",
-    "react-beautiful-dnd": "13.0.0",
+    "@date-io/date-fns": "^2.10.6",
+    "@material-ui/pickers": "^3.2.10",
+    "classnames": "^2.2.6",
+    "date-fns": "^2.16.1",
+    "debounce": "^1.2.0",
+    "fast-deep-equal": "^3.1.3",
+    "filefy": "^0.1.10",
+    "jspdf": "^2.2.0",
+    "jspdf-autotable": "^3.5.13",
+    "prop-types": "^15.7.2",
+    "react-beautiful-dnd": "^13.0.0",
     "react-double-scrollbar": "0.0.15"
   },
   "peerDependencies": {
-    "@date-io/core": "1.3.6",
-    "@material-ui/core": "4.0.1",
-    "react": "16.8.4",
-    "react-dom": "16.8.4"
+    "@date-io/core": "^2.10.6",
+    "@material-ui/core": "^4.11.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

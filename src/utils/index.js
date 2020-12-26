@@ -3,11 +3,11 @@ export const byString = (o, s) => {
     return;
   }
 
-  s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-  s = s.replace(/^\./, ""); // strip a leading dot
-  var a = s.split(".");
-  for (var i = 0, n = a.length; i < n; ++i) {
-    var x = a[i];
+  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+  s = s.replace(/^\./, ''); // strip a leading dot
+  const a = s.split('.');
+  for (let i = 0, n = a.length; i < n; ++i) {
+    const x = a[i];
     if (o && x in o) {
       o = o[x];
     } else {
@@ -18,14 +18,14 @@ export const byString = (o, s) => {
 };
 
 export const setByString = (obj, path, value) => {
-  var schema = obj; // a moving reference to internal objects within obj
+  let schema = obj; // a moving reference to internal objects within obj
 
-  path = path.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
-  path = path.replace(/^\./, ""); // strip a leading dot
-  var pList = path.split(".");
-  var len = pList.length;
-  for (var i = 0; i < len - 1; i++) {
-    var elem = pList[i];
+  path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+  path = path.replace(/^\./, ''); // strip a leading dot
+  const pList = path.split('.');
+  const len = pList.length;
+  for (let i = 0; i < len - 1; i++) {
+    const elem = pList[i];
     if (!schema[elem]) schema[elem] = {};
     schema = schema[elem];
   }
