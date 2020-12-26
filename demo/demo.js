@@ -429,6 +429,16 @@ class App extends Component {
         tooltip: 'This is tooltip text',
         editPlaceholder: 'This is placeholder',
         maxWidth: 50,
+        // editComponent: (props) => (
+        //   <div>
+        //     <p>Adı</p>
+        //     <input
+        //       type="text"
+        //       value={props.value}
+        //       onChange={(e) => props.onChange(e.target.value)}
+        //     />
+        //   </div>
+        // ),
       },
       {
         title: 'Soyadı',

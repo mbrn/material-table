@@ -133,6 +133,7 @@ class MTableEditCell extends React.Component {
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}
+              rowData={this.props.rowData}
               autoFocus
             />
           </div>

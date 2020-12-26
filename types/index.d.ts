@@ -1,7 +1,7 @@
-import * as React from "react";
-import { IconProps } from "@material-ui/core/Icon";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import { string } from "prop-types";
+import * as React from 'react';
+import { IconProps } from '@material-ui/core/Icon';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import { string } from 'prop-types';
 
 type SvgIconComponent = typeof SvgIcon;
 
@@ -50,7 +50,7 @@ export interface MaterialTableProps<RowData extends object> {
   onChangePage?: (page: number, pageSize: number) => void;
   onChangeColumnHidden?: (column: Column<RowData>, hidden: boolean) => void;
   onColumnDragged?: (sourceIndex: number, destinationIndex: number) => void;
-  onOrderChange?: (orderBy: number, orderDirection: "asc" | "desc") => void;
+  onOrderChange?: (orderBy: number, orderDirection: 'asc' | 'desc') => void;
   onGroupRemoved?: (column: Column<RowData>, index: boolean) => void;
   onRowClick?: (
     event?: React.MouseEvent,
@@ -74,12 +74,12 @@ export interface MaterialTableProps<RowData extends object> {
 
 export interface Filter<RowData extends object> {
   column: Column<RowData>;
-  operator: "=";
+  operator: '=';
   value: any;
 }
 export interface ErrorState {
   message: string;
-  errorCause: "query" | "add" | "update" | "delete";
+  errorCause: 'query' | 'add' | 'update' | 'delete';
 }
 
 export interface Query<RowData extends object> {
@@ -89,7 +89,7 @@ export interface Query<RowData extends object> {
   totalCount: number;
   search: string;
   orderBy: Column<RowData>;
-  orderDirection: "asc" | "desc";
+  orderDirection: 'asc' | 'desc';
   error?: ErrorState;
 }
 
@@ -111,7 +111,7 @@ export interface Action<RowData extends object> {
   disabled?: boolean;
   icon: string | (() => React.ReactElement<any>) | SvgIconComponent;
   isFreeAction?: boolean;
-  position?: "auto" | "toolbar" | "toolbarOnSelect" | "row";
+  position?: 'auto' | 'toolbar' | 'toolbarOnSelect' | 'row';
   tooltip?: string;
   onClick: (event: any, data: RowData | RowData[]) => void;
   iconProps?: IconProps;
@@ -141,7 +141,7 @@ export interface EditCellColumnDef {
 }
 
 export interface Column<RowData extends object> {
-  align?: "center" | "inherit" | "justify" | "left" | "right";
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
   cellStyle?:
     | React.CSSProperties
     | ((data: RowData[], rowData: RowData) => React.CSSProperties);
@@ -160,12 +160,12 @@ export interface Column<RowData extends object> {
   customSort?: (
     data1: RowData,
     data2: RowData,
-    type: "row" | "group"
+    type: 'row' | 'group'
   ) => number;
   defaultFilter?: any;
   defaultGroupOrder?: number;
-  defaultGroupSort?: "asc" | "desc";
-  defaultSort?: "asc" | "desc";
+  defaultGroupSort?: 'asc' | 'desc';
+  defaultSort?: 'asc' | 'desc';
   disableClick?: boolean;
   editComponent?: (
     props: EditComponentProps<RowData>
@@ -193,29 +193,29 @@ export interface Column<RowData extends object> {
   lookup?: object;
   editPlaceholder?: string;
   editable?:
-    | "always"
-    | "onUpdate"
-    | "onAdd"
-    | "never"
+    | 'always'
+    | 'onUpdate'
+    | 'onAdd'
+    | 'never'
     | ((columnDef: Column<RowData>, rowData: RowData) => boolean);
   removable?: boolean;
   resizable?: boolean;
   validate?: (
     rowData: RowData
   ) => { isValid: boolean; helperText?: string } | string | boolean;
-  render?: (data: RowData, type: "row" | "group") => any;
+  render?: (data: RowData, type: 'row' | 'group') => any;
   searchable?: boolean;
   sorting?: boolean;
   title?: string | React.ReactElement<any>;
   tooltip?: string;
   type?:
-    | "string"
-    | "boolean"
-    | "numeric"
-    | "date"
-    | "datetime"
-    | "time"
-    | "currency";
+    | 'string'
+    | 'boolean'
+    | 'numeric'
+    | 'date'
+    | 'datetime'
+    | 'time'
+    | 'currency';
   width?: string | number;
 }
 
@@ -297,12 +297,12 @@ export interface Options<RowData extends object> {
   detailPanelColumnStyle?: React.CSSProperties;
   editCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
-  addRowPosition?: "first" | "last";
+  addRowPosition?: 'first' | 'last';
   columnsButton?: boolean;
   columnResizable?: boolean;
   defaultExpanded?: boolean | ((rowData: any) => boolean);
   debounceInterval?: number;
-  detailPanelType?: "single" | "multiple";
+  detailPanelType?: 'single' | 'multiple';
   doubleHorizontalScroll?: boolean;
   draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
@@ -323,18 +323,18 @@ export interface Options<RowData extends object> {
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
-  loadingType?: "overlay" | "linear";
+  loadingType?: 'overlay' | 'linear';
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
-  padding?: "default" | "dense";
+  padding?: 'default' | 'dense';
   paging?: boolean;
   grouping?: boolean;
   groupTitle?: (groupData: any) => any;
-  overflowY?: "visible" | "hidden" | "scroll" | "auto" | "initial" | "inherit";
+  overflowY?: 'visible' | 'hidden' | 'scroll' | 'auto' | 'initial' | 'inherit';
   pageSize?: number;
   pageSizeOptions?: number[];
-  paginationType?: "normal" | "stepped";
-  paginationPosition?: "bottom" | "top" | "both";
+  paginationType?: 'normal' | 'stepped';
+  paginationPosition?: 'bottom' | 'top' | 'both';
   rowStyle?:
     | React.CSSProperties
     | ((data: any, index: number, level: number) => React.CSSProperties);
@@ -345,18 +345,18 @@ export interface Options<RowData extends object> {
   showTextRowsSelected?: boolean;
   search?: boolean;
   searchText?: string;
-  searchFieldAlignment?: "left" | "right";
+  searchFieldAlignment?: 'left' | 'right';
   searchFieldStyle?: React.CSSProperties;
-  searchFieldVariant?: "standard" | "filled" | "outlined";
+  searchFieldVariant?: 'standard' | 'filled' | 'outlined';
   searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
   sorting?: boolean;
-  tableLayout?: "auto" | "fixed";
+  tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;
   toolbar?: boolean;
-  toolbarButtonAlignment?: "left" | "right";
-  detailPanelColumnAlignment?: "left" | "right";
+  toolbarButtonAlignment?: 'left' | 'right';
+  detailPanelColumnAlignment?: 'left' | 'right';
   cspNonce?: string;
 }
 

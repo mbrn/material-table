@@ -16,7 +16,7 @@ A simple and powerful Datatable for React based on [Material-UI Table](https://m
 [![Build Status](https://travis-ci.org/mbrn/material-table.svg?branch=master)](https://travis-ci.org/mbrn/material-table)
 [![Financial Contributors on Open Collective](https://opencollective.com/material-table/all/badge.svg?label=financial+contributors)](https://opencollective.com/material-table) [![npm package](https://img.shields.io/npm/v/material-table/latest.svg)](https://www.npmjs.com/package/material-table)
 [![NPM Downloads](https://img.shields.io/npm/dm/material-table.svg?style=flat)](https://npmcharts.com/compare/material-table?minimal=true)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mbrn/material-table.svg)](http://isitmaintained.com/project/mbrn/material-table "Average time to resolve an issue")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mbrn/material-table.svg)](http://isitmaintained.com/project/mbrn/material-table 'Average time to resolve an issue')
 [![xscode](https://img.shields.io/badge/Available%20on-xs%3Acode-blue?style=?style=plastic&logo=appveyor&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////////VXz1bAAAAAJ0Uk5T/wDltzBKAAAAlUlEQVR42uzXSwqAMAwE0Mn9L+3Ggtgkk35QwcnSJo9S+yGwM9DCooCbgn4YrJ4CIPUcQF7/XSBbx2TEz4sAZ2q1RAECBAiYBlCtvwN+KiYAlG7UDGj59MViT9hOwEqAhYCtAsUZvL6I6W8c2wcbd+LIWSCHSTeSAAECngN4xxIDSK9f4B9t377Wd7H5Nt7/Xz8eAgwAvesLRjYYPuUAAAAASUVORK5CYII=)](https://xscode.com/mbrn/material-table)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/baranmehmet.svg?label=follow+baranmehmet)](https://twitter.com/baranmehmet)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/material-table/Lobby)
@@ -108,14 +108,14 @@ To install @material-ui/icons with `yarn`:
 If your environment doesn't support tree-shaking, the **recommended** way to import the icons is the following:
 
 ```jsx
-import AddBox from "@material-ui/icons/AddBox";
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
 ```
 
 If your environment support tree-shaking you can also import the icons this way:
 
 ```jsx
-import { AddBox, ArrowDownward } from "@material-ui/icons";
+import { AddBox, ArrowDownward } from '@material-ui/icons';
 ```
 
 Note: Importing named exports in this way will result in the code for _every icon_ being included in your project, so is not recommended unless you configure [tree-shaking](https://webpack.js.org/guides/tree-shaking/). It may also impact Hot Module Reload performance. Source: [@material-ui/icons](https://github.com/mui-org/material-ui/blob/master/packages/material-ui-icons/README.md#imports)
@@ -172,29 +172,29 @@ const tableIcons = {
 Here is a basic example of using material-table within a react application.
 
 ```jsx
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import MaterialTable from "material-table";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import MaterialTable from 'material-table';
 
 class App extends Component {
   render() {
     return (
-      <div style={{ maxWidth: "100%" }}>
+      <div style={{ maxWidth: '100%' }}>
         <MaterialTable
           columns={[
-            { title: "Adı", field: "name" },
-            { title: "Soyadı", field: "surname" },
-            { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
+            { title: 'Adı', field: 'name' },
+            { title: 'Soyadı', field: 'surname' },
+            { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
             {
-              title: "Doğum Yeri",
-              field: "birthCity",
-              lookup: { 34: "İstanbul", 63: "Şanlıurfa" },
+              title: 'Doğum Yeri',
+              field: 'birthCity',
+              lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
             },
           ]}
           data={[
             {
-              name: "Mehmet",
-              surname: "Baran",
+              name: 'Mehmet',
+              surname: 'Baran',
               birthYear: 1987,
               birthCity: 63,
             },
@@ -206,7 +206,7 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("react-div"));
+ReactDOM.render(<App />, document.getElementById('react-div'));
 ```
 
 ## Contributing
