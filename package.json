@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.1.24",
+  "version": "2.1.25",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -44,7 +44,7 @@
   "bugs": {
     "url": "https://github.com/material-table-core/core/issues"
   },
-  "homepage": "https://github.com/material-table-core/core#readme",
+  "homepage": "https://material-table-core.com",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
