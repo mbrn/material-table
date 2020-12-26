@@ -1,26 +1,26 @@
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
-import ListItemText from "@material-ui/core/ListItemText";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-import Tooltip from "@material-ui/core/Tooltip";
-import DateFnsUtils from "@date-io/date-fns";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
   DateTimePicker,
-} from "@material-ui/pickers";
+} from '@material-ui/pickers';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -38,10 +38,11 @@ class MTableFilterRow extends React.Component {
     ...MTableFilterRow.defaultProps.localization,
     ...this.props.localization,
   });
+
   getLocalizedFilterPlaceHolder = (columnDef) =>
     columnDef.filterPlaceholder ||
     this.getLocalizationData().filterPlaceHolder ||
-    "";
+    '';
 
   LookupFilter = ({ columnDef }) => {
     const [selectedFilter, setSelectedFilter] = React.useState(
@@ -53,9 +54,9 @@ class MTableFilterRow extends React.Component {
     }, [columnDef.tableData.filterValue]);
 
     return (
-      <FormControl style={{ width: "100%" }}>
+      <FormControl style={{ width: '100%' }}>
         <InputLabel
-          htmlFor={"select-multiple-checkbox" + columnDef.tableData.id}
+          htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
           style={{ marginTop: -16 }}
         >
           {this.getLocalizedFilterPlaceHolder(columnDef)}
@@ -64,25 +65,27 @@ class MTableFilterRow extends React.Component {
           multiple
           value={selectedFilter}
           onClose={() => {
-            if (columnDef.filterOnItemSelect !== true)
+            if (columnDef.filterOnItemSelect !== true) {
               this.props.onFilterChanged(
                 columnDef.tableData.id,
                 selectedFilter
               );
+            }
           }}
           onChange={(event) => {
             setSelectedFilter(event.target.value);
-            if (columnDef.filterOnItemSelect === true)
+            if (columnDef.filterOnItemSelect === true) {
               this.props.onFilterChanged(
                 columnDef.tableData.id,
                 event.target.value
               );
+            }
           }}
           input={
-            <Input id={"select-multiple-checkbox" + columnDef.tableData.id} />
+            <Input id={'select-multiple-checkbox' + columnDef.tableData.id} />
           }
           renderValue={(selecteds) =>
-            selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
+            selecteds.map((selected) => columnDef.lookup[selected]).join(', ')
           }
           MenuProps={MenuProps}
           style={{ marginTop: 0 }}
@@ -107,13 +110,13 @@ class MTableFilterRow extends React.Component {
   renderBooleanFilter = (columnDef) => (
     <Checkbox
       indeterminate={columnDef.tableData.filterValue === undefined}
-      checked={columnDef.tableData.filterValue === "checked"}
+      checked={columnDef.tableData.filterValue === 'checked'}
       onChange={() => {
         let val;
         if (columnDef.tableData.filterValue === undefined) {
-          val = "checked";
-        } else if (columnDef.tableData.filterValue === "checked") {
-          val = "unchecked";
+          val = 'checked';
+        } else if (columnDef.tableData.filterValue === 'checked') {
+          val = 'unchecked';
         }
 
         this.props.onFilterChanged(columnDef.tableData.id, val);
@@ -126,9 +129,9 @@ class MTableFilterRow extends React.Component {
     const FilterIcon = this.props.icons.Filter;
     return (
       <TextField
-        style={columnDef.type === "numeric" ? { float: "right" } : {}}
-        type={columnDef.type === "numeric" ? "number" : "search"}
-        value={columnDef.tableData.filterValue || ""}
+        style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
+        type={columnDef.type === 'numeric' ? 'number' : 'search'}
+        value={columnDef.tableData.filterValue || ''}
         placeholder={this.getLocalizedFilterPlaceHolder(columnDef)}
         onChange={(event) => {
           this.props.onFilterChanged(
@@ -136,7 +139,7 @@ class MTableFilterRow extends React.Component {
             event.target.value
           );
         }}
-        inputProps={{ "aria-label": `filter data by ${columnDef.title}` }}
+        inputProps={{ 'aria-label': `filter data by ${columnDef.title}` }}
         InputProps={
           this.props.hideFilterIcons || columnDef.hideFilterIcon
             ? undefined
@@ -165,11 +168,11 @@ class MTableFilterRow extends React.Component {
     };
 
     let dateInputElement = null;
-    if (columnDef.type === "date") {
+    if (columnDef.type === 'date') {
       dateInputElement = <DatePicker {...pickerProps} />;
-    } else if (columnDef.type === "datetime") {
+    } else if (columnDef.type === 'datetime') {
       dateInputElement = <DateTimePicker {...pickerProps} />;
-    } else if (columnDef.type === "time") {
+    } else if (columnDef.type === 'time') {
       dateInputElement = <TimePicker {...pickerProps} />;
     }
     return (
@@ -192,9 +195,9 @@ class MTableFilterRow extends React.Component {
         return this.renderFilterComponent(columnDef);
       } else if (columnDef.lookup) {
         return <this.LookupFilter columnDef={columnDef} />;
-      } else if (columnDef.type === "boolean") {
+      } else if (columnDef.type === 'boolean') {
         return this.renderBooleanFilter(columnDef);
-      } else if (["date", "datetime", "time"].includes(columnDef.type)) {
+      } else if (['date', 'datetime', 'time'].includes(columnDef.type)) {
         return this.renderDateTypeFilter(columnDef);
       } else {
         return this.renderDefaultFilter(columnDef);
@@ -247,7 +250,7 @@ class MTableFilterRow extends React.Component {
 
     if (this.props.hasDetailPanel) {
       const alignment = this.props.detailPanelColumnAlignment;
-      const index = alignment === "left" ? 0 : columns.length;
+      const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
         0,
@@ -259,7 +262,7 @@ class MTableFilterRow extends React.Component {
       columns.splice(
         0,
         0,
-        <TableCell padding="none" key={"key-tree-data-filter"} />
+        <TableCell padding="none" key={'key-tree-data-filter'} />
       );
     }
 
@@ -271,7 +274,7 @@ class MTableFilterRow extends React.Component {
           0,
           <TableCell
             padding="checkbox"
-            key={"key-group-filter" + columnDef.tableData.id}
+            key={'key-group-filter' + columnDef.tableData.id}
           />
         );
       });
@@ -286,11 +289,11 @@ class MTableFilterRow extends React.Component {
 
 MTableFilterRow.defaultProps = {
   columns: [],
-  detailPanelColumnAlignment: "left",
+  detailPanelColumnAlignment: 'left',
   selection: false,
   hasActions: false,
   localization: {
-    filterTooltip: "Filter",
+    filterTooltip: 'Filter',
   },
   hideFilterIcons: false,
 };
