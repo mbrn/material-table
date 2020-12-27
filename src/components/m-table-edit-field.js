@@ -178,6 +178,7 @@ class MTableEditField extends React.Component {
         }
         InputProps={{
           style: {
+            minWidth: 50,
             fontSize: 13,
           },
         }}
