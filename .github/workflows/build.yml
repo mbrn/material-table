@@ -5,11 +5,7 @@
 
 name: Build
 
-on:
-  push:
-    branches:
-      - main
-      - master
+on: [push]
 
 jobs:
   build:
