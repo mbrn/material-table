@@ -10,6 +10,10 @@ export const selectionMaxWidth = (props, maxTreeLevel) =>
   baseIconSize(props) + 9 * maxTreeLevel;
 
 export const reducePercentsInCalc = (calc, fullValue) => {
+  // https://github.com/mbrn/material-table/pull/2655
+  // fix a bug when columns options hidden and hiddenByColumnsButton are set to true
+  if (!calc) return `${fullValue}px`;
+
   const captureGroups = calc.match(/(\d*)%/);
   if (captureGroups && captureGroups.length > 1) {
     const percentage = captureGroups[1];
