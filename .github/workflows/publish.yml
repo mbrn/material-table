@@ -5,6 +5,16 @@
 
 name: Publish
 
+#
+#
+# ~ IMPORTANT ~
+# If your commit message starts with `Release`
+#   - We will attempt to automatically publish your commit (although, your commit will not be automatically approved)
+#   - *NOTE*
+#     - We **DO NOT** increase the package.json version please do this yourself!!
+#
+#
+
 on:
   push:
     branches:
@@ -13,7 +23,7 @@ on:
 
 jobs:
   publish:
-    if: startsWith(github.event.head_commit.message, 'Release')
+    if: startsWith(github.event.head_commit.message, 'Release ')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

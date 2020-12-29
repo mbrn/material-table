@@ -19,33 +19,46 @@
 
   <!-- * Badges * -->
   <p>
-    <!-- build status -->
-    <a href="https://github.com/material-table-core/core/actions?query=workflow%3ABuild">
-      <img 
-        title="Build" 
-        src="https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master"
-      >
-    </a>
-    <!-- publish status -->
-    <a href="https://github.com/material-table-core/core/actions?query=workflow%3APublish">
-      <img 
-        title="Publish" 
-        src="https://github.com/material-table-core/core/workflows/Publish/badge.svg"
-      >
-    </a>
-    <!-- npm package -->
-    <a href="https://www.npmjs.com/package/@material-table/core">
-      <img 
-        title="npm_package" 
-        src="https://badge.fury.io/js/%40material-table%2Fcore.svg"
-      >
-    </a>
+    <section>
+      <!-- build status -->
+      <a href="https://github.com/material-table-core/core/actions?query=workflow%3ABuild">
+        <img 
+          title="Build" 
+          src="https://github.com/material-table-core/core/workflows/Build/badge.svg?branch=master"
+        >
+      </a>
+      <!-- publish status -->
+      <a href="https://github.com/material-table-core/core/actions?query=workflow%3APublish">
+        <img 
+          title="Publish" 
+          src="https://github.com/material-table-core/core/workflows/Publish/badge.svg"
+        >
+      </a>
+      <!-- npm package -->
+      <a href="https://www.npmjs.com/package/@material-table/core">
+        <img 
+          title="npm_package" 
+          src="https://badge.fury.io/js/%40material-table%2Fcore.svg"
+        >
+      </a>
+    </section>
+    <section>
+      <!-- gitter -->
+      <a href="https://gitter.im/MaterialTableCore/community">
+        <img 
+          title="chat_on_gitter" 
+          src="https://img.shields.io/gitter/room/material-table-core/core"
+        >
+      </a>    
+    </section>
   </p> 
   <!-- ^^^ end badges ^^^ -->
 
-💾 [Installation](#installation) 🎉 [Usage](#usage)
-
 </div>
+
+💾 [Installation](#installation)
+
+🎉 [Usage](#usage)
 
 ✅ [Why does this repo exist?](#about)
 

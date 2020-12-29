@@ -1,8 +1,4 @@
-#
-# Will publish a new version to npm if the version has been changed and
-# the commit pattern matches "^Release (\\S+)"
-#
-
+# Should run on each push, this should include pull requests
 name: Build
 
 on: [push]
