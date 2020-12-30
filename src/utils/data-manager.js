@@ -281,6 +281,10 @@ export default class DataManager {
   changeColumnHidden(column, hidden) {
     column.hidden = hidden;
     column.hiddenByColumnsButton = hidden;
+    // https://github.com/mbrn/material-table/pull/2655
+    // https://github.com/material-table-core/core/issues/20#issuecomment-752265651
+    // Fix #20
+    this.setColumns(this.columns);
   }
 
   changeTreeExpand(path) {
