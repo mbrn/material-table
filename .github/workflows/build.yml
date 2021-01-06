@@ -1,7 +1,7 @@
 # Should run on each push, this should include pull requests
 name: Build
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
