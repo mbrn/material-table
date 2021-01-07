@@ -43,12 +43,12 @@
       </a>
     </section>
     <section>
-      <!-- gitter -->
-      <a href="https://gitter.im/MaterialTableCore/community">
+      <!-- discord -->
+      <a href="https://discord.com/channels/796859493412765697/">
         <img 
-          title="chat_on_gitter" 
-          src="https://img.shields.io/gitter/room/material-table-core/core"
-        >
+           alt="Discord" 
+           src="https://img.shields.io/discord/796859493412765697?label=discord"
+         >
       </a>    
     </section>
   </p> 
