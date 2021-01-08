@@ -6,3 +6,4 @@ yarn.lock
 .idea
 .DS_Store
 *.iml
+cypress/videos
