@@ -8,8 +8,6 @@ const externalDependencies = Object.keys(pkg.peerDependencies).map(
   (key) => key
 );
 
-console.log({ externalDependencies });
-
 rimraf(path.resolve(__dirname, './dist'), (error) => {
   if (error) {
     console.log("error : error removing old build files at './dist' " + error);
