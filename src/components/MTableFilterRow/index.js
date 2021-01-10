@@ -112,7 +112,6 @@ export default function MTableFilterRow(props) {
     );
   }
 
-  //____________________________________________
   return render();
 }
 
