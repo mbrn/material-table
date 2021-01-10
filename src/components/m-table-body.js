@@ -11,7 +11,7 @@ class MTableBody extends React.Component {
     const rowHeight = this.props.options.padding === 'default' ? 49 : 36;
     const localization = {
       ...MTableBody.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     if (
       this.props.options.showEmptyDataSourceMessage &&
@@ -43,7 +43,7 @@ class MTableBody extends React.Component {
               (this.props.options.paging &&
               this.props.options.emptyRowsWhenPaging
                 ? this.props.pageSize
-                : 1),
+                : 1)
           }}
           key={'empty-' + 0}
         >
@@ -90,7 +90,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             key={'row-' + data.tableData.id}
             mode={this.props.bulkEditOpen ? 'bulk' : data.tableData.editing}
@@ -119,7 +119,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
@@ -173,7 +173,7 @@ class MTableBody extends React.Component {
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
           dateTimePickerLocalization: this.props.localization
-            .dateTimePickerLocalization,
+            .dateTimePickerLocalization
         }}
         cellEditable={this.props.cellEditable}
         onCellEditStarted={this.props.onCellEditStarted}
@@ -217,7 +217,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.filterRow,
               ...this.props.localization.filterRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             hasDetailPanel={!!this.props.detailPanel}
             detailPanelColumnAlignment={
@@ -246,7 +246,7 @@ class MTableBody extends React.Component {
                 ...MTableBody.defaultProps.localization.editRow,
                 ...this.props.localization.editRow,
                 dateTimePickerLocalization: this.props.localization
-                  .dateTimePickerLocalization,
+                  .dateTimePickerLocalization
               }}
               options={this.props.options}
               isTreeData={this.props.isTreeData}
@@ -277,7 +277,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -303,8 +303,8 @@ MTableBody.defaultProps = {
   localization: {
     emptyDataSourceMessage: 'No records to display',
     filterRow: {},
-    editRow: {},
-  },
+    editRow: {}
+  }
 };
 
 MTableBody.propTypes = {
@@ -314,7 +314,7 @@ MTableBody.propTypes = {
   currentPage: PropTypes.number,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
@@ -343,7 +343,7 @@ MTableBody.propTypes = {
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
   bulkEditOpen: PropTypes.bool,
-  onBulkEditRowChanged: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func
 };
 
 export default MTableBody;

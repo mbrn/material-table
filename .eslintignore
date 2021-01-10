@@ -3,3 +3,4 @@ types
 .github
 demo
 dist
+__tests__

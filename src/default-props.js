@@ -13,7 +13,7 @@ const OverlayLoading = (props) => (
       display: 'table',
       width: '100%',
       height: '100%',
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: fade(props.theme.palette.background.paper, 0.7)
     }}
   >
     <div
@@ -22,7 +22,7 @@ const OverlayLoading = (props) => (
         width: '100%',
         height: '100%',
         verticalAlign: 'middle',
-        textAlign: 'center',
+        textAlign: 'center'
       }}
     >
       <CircularProgress />
@@ -30,7 +30,7 @@ const OverlayLoading = (props) => (
   </div>
 );
 OverlayLoading.propTypes = {
-  theme: PropTypes.any,
+  theme: PropTypes.any
 };
 
 const OverlayError = (props) => (
@@ -39,7 +39,7 @@ const OverlayError = (props) => (
       display: 'table',
       width: '100%',
       height: '100%',
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: fade(props.theme.palette.background.paper, 0.7)
     }}
   >
     <div
@@ -48,7 +48,7 @@ const OverlayError = (props) => (
         width: '100%',
         height: '100%',
         verticalAlign: 'middle',
-        textAlign: 'center',
+        textAlign: 'center'
       }}
     >
       <span>{props.error.message}</span>{' '}
@@ -63,7 +63,7 @@ OverlayError.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   retry: PropTypes.func,
   theme: PropTypes.any,
-  icon: PropTypes.any,
+  icon: PropTypes.any
 };
 
 const Container = (props) => <Paper elevation={2} {...props} />;
@@ -89,7 +89,7 @@ export const defaultProps = {
     OverlayError: OverlayError,
     Pagination: TablePagination,
     Row: MComponents.MTableBodyRow,
-    Toolbar: MComponents.MTableToolbar,
+    Toolbar: MComponents.MTableToolbar
   },
   data: [],
   icons: {
@@ -192,7 +192,7 @@ export const defaultProps = {
       <Icon {...props} ref={ref}>
         replay
       </Icon>
-    )),
+    ))
     /* eslint-enable react/display-name */
   },
   isLoading: false,
@@ -239,18 +239,18 @@ export const defaultProps = {
     defaultExpanded: false,
     detailPanelColumnAlignment: 'left',
     thirdSortClick: true,
-    overflowY: 'auto',
+    overflowY: 'auto'
   },
   localization: {
     error: 'Data could not be retrieved',
     grouping: {
       groupedBy: 'Grouped By:',
-      placeholder: 'Drag headers here to group by',
+      placeholder: 'Drag headers here to group by'
     },
     pagination: {
       labelDisplayedRows: '{from}-{to} of {count}',
       labelRowsPerPage: 'Rows per page:',
-      labelRowsSelect: 'rows',
+      labelRowsSelect: 'rows'
     },
     toolbar: {},
     header: {},
@@ -259,15 +259,15 @@ export const defaultProps = {
       editRow: {
         saveTooltip: 'Save',
         cancelTooltip: 'Cancel',
-        deleteText: 'Are you sure you want to delete this row?',
+        deleteText: 'Are you sure you want to delete this row?'
       },
       addTooltip: 'Add',
       deleteTooltip: 'Delete',
       editTooltip: 'Edit',
       bulkEditTooltip: 'Edit All',
       bulkEditApprove: 'Save all changes',
-      bulkEditCancel: 'Discard all changes',
-    },
+      bulkEditCancel: 'Discard all changes'
+    }
   },
-  style: {},
+  style: {}
 };

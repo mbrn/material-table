@@ -21,6 +21,6 @@ if (!Array.prototype.find) {
         k++;
       }
       return undefined;
-    },
+    }
   });
 }

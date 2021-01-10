@@ -97,7 +97,7 @@ export default class DataManager {
         initialWidth: width,
         additionalWidth: 0,
         ...columnDef.tableData,
-        id: index,
+        id: index
       };
 
       return columnDef;
@@ -411,7 +411,7 @@ export default class DataManager {
   startCellEditable = (rowData, columnDef) => {
     rowData.tableData.editCellList = [
       ...(rowData.tableData.editCellList || []),
-      columnDef,
+      columnDef
     ];
   };
 
@@ -433,7 +433,7 @@ export default class DataManager {
   onBulkEditRowChanged = (oldData, newData) => {
     this.bulkEditChangedRows[oldData.tableData.id] = {
       oldData,
-      newData,
+      newData
     };
   };
 
@@ -628,7 +628,7 @@ export default class DataManager {
       selectedCount: this.selectedCount,
       treefiedDataLength: this.treefiedDataLength,
       treeDataMaxLevel: this.treeDataMaxLevel,
-      groupedDataLength: this.groupedDataLength,
+      groupedDataLength: this.groupedDataLength
     };
   };
 
@@ -821,7 +821,7 @@ export default class DataManager {
               isExpanded:
                 typeof this.defaultExpanded === 'boolean'
                   ? this.defaultExpanded
-                  : false,
+                  : false
             };
 
             group = {
@@ -830,7 +830,7 @@ export default class DataManager {
               groupsIndex: {},
               data: [],
               isExpanded: oldGroup.isExpanded,
-              path: path,
+              path: path
             };
             o.groups.push(group);
             o.groupsIndex[value] = o.groups.length - 1;
@@ -885,7 +885,7 @@ export default class DataManager {
 
         rowData.tableData.path = [
           ...parent.tableData.path,
-          parent.tableData.childRows.length - 1,
+          parent.tableData.childRows.length - 1
         ];
         this.treeDataMaxLevel = Math.max(
           this.treeDataMaxLevel,

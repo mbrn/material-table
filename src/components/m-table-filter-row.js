@@ -19,7 +19,7 @@ import {
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
-  DateTimePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 
 const ITEM_HEIGHT = 48;
@@ -28,15 +28,15 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 class MTableFilterRow extends React.Component {
   getLocalizationData = () => ({
     ...MTableFilterRow.defaultProps.localization,
-    ...this.props.localization,
+    ...this.props.localization
   });
 
   getLocalizedFilterPlaceHolder = (columnDef) =>
@@ -104,7 +104,7 @@ class MTableFilterRow extends React.Component {
   renderFilterComponent = (columnDef) =>
     React.createElement(columnDef.filterComponent, {
       columnDef: columnDef,
-      onFilterChanged: this.props.onFilterChanged,
+      onFilterChanged: this.props.onFilterChanged
     });
 
   renderBooleanFilter = (columnDef) => (
@@ -150,7 +150,7 @@ class MTableFilterRow extends React.Component {
                       <FilterIcon />
                     </Tooltip>
                   </InputAdornment>
-                ),
+                )
               }
         }
       />
@@ -164,7 +164,7 @@ class MTableFilterRow extends React.Component {
       value: columnDef.tableData.filterValue || null,
       onChange: onDateInputChange,
       placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
-      clearable: true,
+      clearable: true
     };
 
     let dateInputElement = null;
@@ -217,7 +217,7 @@ class MTableFilterRow extends React.Component {
           key={columnDef.tableData.id}
           style={{
             ...this.props.filterCellStyle,
-            ...columnDef.filterCellStyle,
+            ...columnDef.filterCellStyle
           }}
         >
           {this.getComponentForColumn(columnDef)}
@@ -293,9 +293,9 @@ MTableFilterRow.defaultProps = {
   selection: false,
   hasActions: false,
   localization: {
-    filterTooltip: 'Filter',
+    filterTooltip: 'Filter'
   },
-  hideFilterIcons: false,
+  hideFilterIcons: false
 };
 
 MTableFilterRow.propTypes = {
@@ -310,7 +310,7 @@ MTableFilterRow.propTypes = {
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
   localization: PropTypes.object,
-  hideFilterIcons: PropTypes.bool,
+  hideFilterIcons: PropTypes.bool
 };
 
 export default MTableFilterRow;

@@ -25,7 +25,7 @@ export class MTableToolbar extends React.Component {
     this.state = {
       columnsButtonAnchorEl: null,
       exportButtonAnchorEl: null,
-      searchText: props.searchText,
+      searchText: props.searchText
     };
   }
 
@@ -81,7 +81,7 @@ export class MTableToolbar extends React.Component {
       const content = {
         startY: 50,
         head: [columns.map((columnDef) => columnDef.title)],
-        body: data,
+        body: data
       };
 
       const unit = 'pt';
@@ -119,7 +119,7 @@ export class MTableToolbar extends React.Component {
   renderSearch() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     if (this.props.search) {
       return (
@@ -159,8 +159,8 @@ export class MTableToolbar extends React.Component {
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              'aria-label': localization.searchAriaLabel,
-            },
+              'aria-label': localization.searchAriaLabel
+            }
           }}
         />
       );
@@ -172,7 +172,7 @@ export class MTableToolbar extends React.Component {
   renderDefaultActions() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const { classes } = this.props;
 
@@ -185,7 +185,7 @@ export class MTableToolbar extends React.Component {
                 color="inherit"
                 onClick={(event) =>
                   this.setState({
-                    columnsButtonAnchorEl: event.currentTarget,
+                    columnsButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.showColumnsAriaLabel}
@@ -204,7 +204,7 @@ export class MTableToolbar extends React.Component {
                 style={{
                   opacity: 1,
                   fontWeight: 600,
-                  fontSize: 12,
+                  fontSize: 12
                 }}
               >
                 {localization.addRemoveColumns}
@@ -255,7 +255,7 @@ export class MTableToolbar extends React.Component {
                 color="inherit"
                 onClick={(event) =>
                   this.setState({
-                    exportButtonAnchorEl: event.currentTarget,
+                    exportButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.exportAriaLabel}
@@ -333,7 +333,7 @@ export class MTableToolbar extends React.Component {
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            textOverflow: 'ellipsis'
           }}
         >
           {title}
@@ -349,7 +349,7 @@ export class MTableToolbar extends React.Component {
     const { classes } = this.props;
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const title =
       this.props.showTextRowsSelected &&
@@ -370,7 +370,7 @@ export class MTableToolbar extends React.Component {
           [classes.highlight]:
             this.props.showTextRowsSelected &&
             this.props.selectedRows &&
-            this.props.selectedRows.length > 0,
+            this.props.selectedRows.length > 0
         })}
       >
         {title && this.renderToolbarTitle(title)}
@@ -401,7 +401,7 @@ MTableToolbar.defaultProps = {
     searchTooltip: 'Search',
     searchPlaceholder: 'Search',
     searchAriaLabel: 'Search',
-    clearSearchAriaLabel: 'Clear Search',
+    clearSearchAriaLabel: 'Clear Search'
   },
   search: true,
   showTitle: true,
@@ -412,7 +412,7 @@ MTableToolbar.defaultProps = {
   searchFieldAlignment: 'right',
   searchFieldVariant: 'standard',
   selectedRows: [],
-  title: 'No Title!',
+  title: 'No Title!'
 };
 
 MTableToolbar.propTypes = {
@@ -440,47 +440,47 @@ MTableToolbar.propTypes = {
   exportAllData: PropTypes.bool,
   exportButton: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
+    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })
   ]),
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
   exportPdf: PropTypes.func,
   classes: PropTypes.object,
-  searchAutoFocus: PropTypes.bool,
+  searchAutoFocus: PropTypes.bool
 };
 
 export const styles = (theme) => ({
   root: {
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   highlight:
     theme.palette.type === 'light'
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
         }
       : {
           color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.secondary.dark
         },
   spacer: {
-    flex: '1 1 10%',
+    flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   title: {
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   formControlLabel: {
     paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
+    paddingRight: theme.spacing(1)
+  }
 });
 
 export default withStyles(styles)(MTableToolbar);

@@ -15,7 +15,7 @@ export default class MTableEditRow extends React.Component {
     this.state = {
       data: props.data
         ? JSON.parse(JSON.stringify(props.data))
-        : this.createRowData(),
+        : this.createRowData()
     };
   }
 
@@ -43,12 +43,12 @@ export default class MTableEditRow extends React.Component {
             : byString(this.state.data, columnDef.field);
         const getCellStyle = (columnDef, value) => {
           let cellStyle = {
-            color: 'inherit',
+            color: 'inherit'
           };
           if (typeof columnDef.cellStyle === 'function') {
             cellStyle = {
               ...cellStyle,
-              ...columnDef.cellStyle(value, this.props.data),
+              ...columnDef.cellStyle(value, this.props.data)
             };
           } else {
             cellStyle = { ...cellStyle, ...columnDef.cellStyle };
@@ -177,7 +177,7 @@ export default class MTableEditRow extends React.Component {
     const size = CommonValues.elementSize(this.props);
     const localization = {
       ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const isValid = this.props.columns.every((column) => {
       if (column.validate) {
@@ -199,15 +199,15 @@ export default class MTableEditRow extends React.Component {
         icon: this.props.icons.Check,
         tooltip: localization.saveTooltip,
         disabled: !isValid,
-        onClick: this.handleSave,
+        onClick: this.handleSave
       },
       {
         icon: this.props.icons.Clear,
         tooltip: localization.cancelTooltip,
         onClick: () => {
           this.props.onEditingCanceled(this.props.mode, this.props.data);
-        },
-      },
+        }
+      }
     ];
     return (
       <TableCell
@@ -217,7 +217,7 @@ export default class MTableEditRow extends React.Component {
         style={{
           width: 42 * actions.length,
           padding: '0px 5px',
-          ...this.props.options.editCellStyle,
+          ...this.props.options.editCellStyle
         }}
       >
         <div style={{ display: 'flex' }}>
@@ -235,7 +235,7 @@ export default class MTableEditRow extends React.Component {
   getStyle() {
     const style = {
       // boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.2)',
-      borderBottom: '1px solid red',
+      borderBottom: '1px solid red'
     };
 
     return style;
@@ -255,7 +255,7 @@ export default class MTableEditRow extends React.Component {
     const size = CommonValues.elementSize(this.props);
     const localization = {
       ...MTableEditRow.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     let columns;
     if (
@@ -279,7 +279,7 @@ export default class MTableEditRow extends React.Component {
           colSpan={colSpan}
         >
           <Typography variant="h6">{localization.deleteText}</Typography>
-        </TableCell>,
+        </TableCell>
       ];
     }
 
@@ -386,9 +386,9 @@ MTableEditRow.defaultProps = {
   localization: {
     saveTooltip: 'Save',
     cancelTooltip: 'Cancel',
-    deleteText: 'Are you sure you want to delete this row?',
+    deleteText: 'Are you sure you want to delete this row?'
   },
-  onBulkEditRowChanged: () => {},
+  onBulkEditRowChanged: () => {}
 };
 
 MTableEditRow.propTypes = {
@@ -398,7 +398,7 @@ MTableEditRow.propTypes = {
   data: PropTypes.object,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   options: PropTypes.object.isRequired,
   onRowSelected: PropTypes.func,
@@ -410,5 +410,5 @@ MTableEditRow.propTypes = {
   localization: PropTypes.object,
   getFieldValue: PropTypes.func,
   errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  onBulkEditRowChanged: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func
 };
