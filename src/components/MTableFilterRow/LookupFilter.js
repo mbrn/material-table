@@ -57,8 +57,8 @@ export default function LookupFilter({ columnDef }) {
         input={
           <Input id={'select-multiple-checkbox' + columnDef.tableData.id} />
         }
-        renderValue={(selecteds) =>
-          selecteds.map((selected) => columnDef.lookup[selected]).join(', ')
+        renderValue={(selectedArr) =>
+          selectedArr.map((selected) => columnDef.lookup[selected]).join(', ')
         }
         MenuProps={MenuProps}
         style={{ marginTop: 0 }}
