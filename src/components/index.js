@@ -26,7 +26,6 @@ export {
   MTableEditCell,
   MTableEditRow,
   MTableEditField,
-  MTableFilterRow,
   MTableHeader,
   MTablePagination,
   MTableSteppedPagination,
