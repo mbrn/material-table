@@ -23,7 +23,7 @@ class MTableGroupbar extends React.Component {
     // background: isDragging ? 'lightgreen' : 'grey',
 
     // styles we need to apply on draggables
-    ...draggableStyle,
+    ...draggableStyle
   });
 
   getListStyle = (isDraggingOver) => ({
@@ -34,7 +34,7 @@ class MTableGroupbar extends React.Component {
     padding: 8,
     overflow: 'auto',
     border: '1px solid #ccc',
-    borderStyle: 'dashed',
+    borderStyle: 'dashed'
   });
 
   render() {
@@ -90,7 +90,7 @@ class MTableGroupbar extends React.Component {
                                       columnDef.tableData.groupSort === 'asc'
                                         ? 'rotate(-180deg)'
                                         : 'none',
-                                    fontSize: 18,
+                                    fontSize: 18
                                   }}
                                 />
                               )}
@@ -125,8 +125,8 @@ MTableGroupbar.defaultProps = {};
 MTableGroupbar.propTypes = {
   localization: PropTypes.shape({
     groupedBy: PropTypes.string,
-    placeholder: PropTypes.string,
-  }),
+    placeholder: PropTypes.string
+  })
 };
 
 export default MTableGroupbar;

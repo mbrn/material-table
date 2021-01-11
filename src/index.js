@@ -12,18 +12,18 @@ export { MaterialTable as MTable };
 
 const styles = (theme) => ({
   paginationRoot: {
-    width: '100%',
+    width: '100%'
   },
   paginationToolbar: {
     padding: 0,
-    width: '100%',
+    width: '100%'
   },
   paginationCaption: {
-    display: 'none',
+    display: 'none'
   },
   paginationSelectRoot: {
-    margin: 0,
-  },
+    margin: 0
+  }
 });
 
 export default withStyles(styles, { withTheme: true })((props) => (

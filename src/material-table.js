@@ -35,7 +35,7 @@ export default class MaterialTable extends React.Component {
           .map((a) => ({
             column: a,
             operator: '=',
-            value: a.tableData.filterValue,
+            value: a.tableData.filterValue
           })),
         orderBy: renderState.columns.find(
           (a) => a.tableData.id === renderState.orderBy
@@ -45,11 +45,11 @@ export default class MaterialTable extends React.Component {
         pageSize: calculatedProps.options.pageSize,
         search: renderState.searchText,
 
-        totalCount: 0,
+        totalCount: 0
       },
       showAddRow: false,
       bulkEditOpen: false,
-      width: 0,
+      width: 0
     };
 
     this.tableContainerDiv = React.createRef();
@@ -59,7 +59,7 @@ export default class MaterialTable extends React.Component {
     this.setState(
       {
         ...this.dataManager.getRenderState(),
-        width: this.tableContainerDiv.current.scrollWidth,
+        width: this.tableContainerDiv.current.scrollWidth
       },
       () => {
         if (this.isRemoteData()) {
@@ -166,20 +166,20 @@ export default class MaterialTable extends React.Component {
     const calculatedProps = { ...(props || this.props) };
     calculatedProps.components = {
       ...MaterialTable.defaultProps.components,
-      ...calculatedProps.components,
+      ...calculatedProps.components
     };
     calculatedProps.icons = {
       ...MaterialTable.defaultProps.icons,
-      ...calculatedProps.icons,
+      ...calculatedProps.icons
     };
     calculatedProps.options = {
       ...MaterialTable.defaultProps.options,
-      ...calculatedProps.options,
+      ...calculatedProps.options
     };
 
     const localization = {
       ...MaterialTable.defaultProps.localization.body,
-      ...calculatedProps.localization.body,
+      ...calculatedProps.localization.body
     };
 
     calculatedProps.actions = [...(calculatedProps.actions || [])];
@@ -233,9 +233,9 @@ export default class MaterialTable extends React.Component {
             this.dataManager.changeRowEditing();
             this.setState({
               ...this.dataManager.getRenderState(),
-              showAddRow: !this.state.showAddRow,
+              showAddRow: !this.state.showAddRow
             });
-          },
+          }
         });
       }
       if (calculatedProps.editable.onRowUpdate) {
@@ -254,9 +254,9 @@ export default class MaterialTable extends React.Component {
             this.dataManager.changeRowEditing(rowData, 'update');
             this.setState({
               ...this.dataManager.getRenderState(),
-              showAddRow: false,
+              showAddRow: false
             });
-          },
+          }
         }));
       }
       if (calculatedProps.editable.onRowDelete) {
@@ -275,9 +275,9 @@ export default class MaterialTable extends React.Component {
             this.dataManager.changeRowEditing(rowData, 'delete');
             this.setState({
               ...this.dataManager.getRenderState(),
-              showAddRow: false,
+              showAddRow: false
             });
-          },
+          }
         }));
       }
       if (calculatedProps.editable.onBulkUpdate) {
@@ -289,14 +289,14 @@ export default class MaterialTable extends React.Component {
           onClick: () => {
             this.dataManager.changeBulkEditOpen(true);
             this.setState(this.dataManager.getRenderState());
-          },
+          }
         });
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Check,
           tooltip: localization.bulkEditApprove,
           position: 'toolbar',
           hidden: !this.dataManager.bulkEditOpen,
-          onClick: () => this.onEditingApproved('bulk'),
+          onClick: () => this.onEditingApproved('bulk')
         });
         calculatedProps.actions.push({
           icon: calculatedProps.icons.Clear,
@@ -307,7 +307,7 @@ export default class MaterialTable extends React.Component {
             this.dataManager.changeBulkEditOpen(false);
             this.dataManager.clearBulkEditChangedRows();
             this.setState(this.dataManager.getRenderState());
-          },
+          }
         });
       }
     }
@@ -436,7 +436,7 @@ export default class MaterialTable extends React.Component {
       mode: 'FLUID',
       reason: 'DROP',
       source: { index, droppableId: 'groups' },
-      type: 'DEFAULT',
+      type: 'DEFAULT'
     };
     this.dataManager.changeByDrag(result);
     this.setState(this.dataManager.getRenderState(), () => {
@@ -460,7 +460,7 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: 'add',
+              errorCause: 'add'
             };
             this.setState({ isLoading: false, errorState });
           });
@@ -478,7 +478,7 @@ export default class MaterialTable extends React.Component {
             this.setState(
               {
                 isLoading: false,
-                ...this.dataManager.getRenderState(),
+                ...this.dataManager.getRenderState()
               },
               () => {
                 if (this.isRemoteData()) {
@@ -490,7 +490,7 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: 'update',
+              errorCause: 'update'
             };
             this.setState({ isLoading: false, errorState });
           });
@@ -508,7 +508,7 @@ export default class MaterialTable extends React.Component {
             this.setState(
               {
                 isLoading: false,
-                ...this.dataManager.getRenderState(),
+                ...this.dataManager.getRenderState()
               },
               () => {
                 if (this.isRemoteData()) {
@@ -520,7 +520,7 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: 'delete',
+              errorCause: 'delete'
             };
             this.setState({ isLoading: false, errorState });
           });
@@ -539,7 +539,7 @@ export default class MaterialTable extends React.Component {
             this.setState(
               {
                 isLoading: false,
-                ...this.dataManager.getRenderState(),
+                ...this.dataManager.getRenderState()
               },
               () => {
                 if (this.isRemoteData()) {
@@ -551,7 +551,7 @@ export default class MaterialTable extends React.Component {
           .catch((reason) => {
             const errorState = {
               message: reason,
-              errorCause: 'bulk edit',
+              errorCause: 'bulk edit'
             };
             this.setState({ isLoading: false, errorState });
           });
@@ -593,7 +593,7 @@ export default class MaterialTable extends React.Component {
               isLoading: false,
               errorState: false,
               ...this.dataManager.getRenderState(),
-              query,
+              query
             },
             () => {
               callback && callback();
@@ -603,7 +603,7 @@ export default class MaterialTable extends React.Component {
         .catch((error) => {
           const localization = {
             ...MaterialTable.defaultProps.localization,
-            ...this.props.localization,
+            ...this.props.localization
           };
           const errorState = {
             message:
@@ -612,12 +612,12 @@ export default class MaterialTable extends React.Component {
                 : error !== undefined
                 ? error
                 : localization.error,
-            errorCause: 'query',
+            errorCause: 'query'
           };
           this.setState({
             isLoading: false,
             errorState,
-            ...this.dataManager.getRenderState(),
+            ...this.dataManager.getRenderState()
           });
         });
     });
@@ -675,7 +675,7 @@ export default class MaterialTable extends React.Component {
         .map((a) => ({
           column: a,
           operator: '=',
-          value: a.tableData.filterValue,
+          value: a.tableData.filterValue
         }));
 
       this.onQueryChange(query);
@@ -687,7 +687,7 @@ export default class MaterialTable extends React.Component {
             .map((a) => ({
               column: a,
               operator: '=',
-              value: a.tableData.filterValue,
+              value: a.tableData.filterValue
             }));
           this.props.onFilterChange(appliedFilters);
         }
@@ -733,7 +733,7 @@ export default class MaterialTable extends React.Component {
     if (props.options.paging) {
       const localization = {
         ...MaterialTable.defaultProps.localization.pagination,
-        ...this.props.localization.pagination,
+        ...this.props.localization.pagination
       };
 
       const isOutsidePageNumbers = this.isOutsidePageNumbers(props);
@@ -756,11 +756,11 @@ export default class MaterialTable extends React.Component {
                   root: props.classes.paginationRoot,
                   toolbar: props.classes.paginationToolbar,
                   caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot,
+                  selectRoot: props.classes.paginationSelectRoot
                 }}
                 style={{
                   float: props.theme.direction === 'rtl' ? '' : 'right',
-                  overflowX: 'auto',
+                  overflowX: 'auto'
                 }}
                 colSpan={3}
                 count={
@@ -774,7 +774,7 @@ export default class MaterialTable extends React.Component {
                     <div style={{ padding: '0px 5px' }}>
                       {value + ' ' + localization.labelRowsSelect + ' '}
                     </div>
-                  ),
+                  )
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
                 onChangePage={this.onChangePage}
@@ -817,12 +817,13 @@ export default class MaterialTable extends React.Component {
 
   renderTable = (props) => (
     <Table
+      id="material-----table"
       style={{
         tableLayout:
           props.options.fixedColumns &&
           (props.options.fixedColumns.left || props.options.fixedColumns.right)
             ? 'fixed'
-            : props.options.tableLayout,
+            : props.options.tableLayout
       }}
     >
       {props.options.header && (
@@ -830,7 +831,7 @@ export default class MaterialTable extends React.Component {
           actions={props.actions}
           localization={{
             ...MaterialTable.defaultProps.localization.header,
-            ...this.props.localization.header,
+            ...this.props.localization.header
           }}
           columns={this.state.columns}
           hasSelection={props.options.selection}
@@ -894,7 +895,7 @@ export default class MaterialTable extends React.Component {
         onEditingApproved={this.onEditingApproved}
         localization={{
           ...MaterialTable.defaultProps.localization.body,
-          ...this.props.localization.body,
+          ...this.props.localization.body
         }}
         onRowClick={this.props.onRowClick}
         showAddRow={this.state.showAddRow}
@@ -1010,7 +1011,7 @@ export default class MaterialTable extends React.Component {
               onColumnsChanged={this.onChangeColumnHidden}
               localization={{
                 ...MaterialTable.defaultProps.localization.toolbar,
-                ...this.props.localization.toolbar,
+                ...this.props.localization.toolbar
               }}
             />
           )}
@@ -1019,7 +1020,7 @@ export default class MaterialTable extends React.Component {
               icons={props.icons}
               localization={{
                 ...MaterialTable.defaultProps.localization.grouping,
-                ...props.localization.grouping,
+                ...props.localization.grouping
               }}
               groupColumns={this.state.columns
                 .filter((col) => col.tableData.groupOrder > -1)
@@ -1042,7 +1043,7 @@ export default class MaterialTable extends React.Component {
                       style={{
                         maxHeight: props.options.maxBodyHeight,
                         minHeight: props.options.minBodyHeight,
-                        overflowY: props.options.overflowY,
+                        overflowY: props.options.overflowY
                       }}
                     >
                       {this.state.width &&
@@ -1059,7 +1060,7 @@ export default class MaterialTable extends React.Component {
                             right: 0,
                             boxShadow: '-2px 0px 15px rgba(125,147,178,.25)',
                             overflowX: 'hidden',
-                            zIndex: 11,
+                            zIndex: 11
                           }}
                         >
                           <div
@@ -1069,7 +1070,7 @@ export default class MaterialTable extends React.Component {
                               transform: `translateX(calc(${this.getColumnsWidth(
                                 props,
                                 -1 * props.options.fixedColumns.right
-                              )} - 100%))`,
+                              )} - 100%))`
                             }}
                           >
                             {table}
@@ -1093,13 +1094,13 @@ export default class MaterialTable extends React.Component {
                             left: 0,
                             boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
                             overflowX: 'hidden',
-                            zIndex: 11,
+                            zIndex: 11
                           }}
                         >
                           <div
                             style={{
                               width: this.state.width,
-                              background: 'white',
+                              background: 'white'
                             }}
                           >
                             {table}
@@ -1122,7 +1123,7 @@ export default class MaterialTable extends React.Component {
                     top: 0,
                     left: 0,
                     height: '100%',
-                    width: '100%',
+                    width: '100%'
                   }}
                 >
                   <LinearProgress />
@@ -1143,7 +1144,7 @@ export default class MaterialTable extends React.Component {
                   left: 0,
                   height: '100%',
                   width: '100%',
-                  zIndex: 11,
+                  zIndex: 11
                 }}
               >
                 <props.components.OverlayLoading theme={props.theme} />
@@ -1158,7 +1159,7 @@ export default class MaterialTable extends React.Component {
                   left: 0,
                   height: '100%',
                   width: '100%',
-                  zIndex: 11,
+                  zIndex: 11
                 }}
               >
                 <props.components.OverlayError
@@ -1178,17 +1179,17 @@ export default class MaterialTable extends React.Component {
 const style = () => ({
   horizontalScrollContainer: {
     '& ::-webkit-scrollbar': {
-      '-webkit-appearance': 'none',
+      '-webkit-appearance': 'none'
     },
     '& ::-webkit-scrollbar:horizontal': {
-      height: 8,
+      height: 8
     },
     '& ::-webkit-scrollbar-thumb': {
       borderRadius: 4,
       border: '2px solid white',
-      backgroundColor: 'rgba(0, 0, 0, .3)',
-    },
-  },
+      backgroundColor: 'rgba(0, 0, 0, .3)'
+    }
+  }
 });
 
 const ScrollBar = withStyles(style)(({ double, children, classes }) => {

@@ -50,11 +50,12 @@ export default class MTableBodyRow extends React.Component {
         } else {
           let isEditable =
             columnDef.editable !== 'never' && !!this.props.cellEditable;
-          if (isEditable && this.props.cellEditable.isCellEditable)
+          if (isEditable && this.props.cellEditable.isCellEditable) {
             isEditable = this.props.cellEditable.isCellEditable(
               this.props.data,
               columnDef
             );
+          }
           return (
             <this.props.components.Cell
               size={size}
@@ -62,7 +63,7 @@ export default class MTableBodyRow extends React.Component {
               icons={this.props.icons}
               columnDef={{
                 cellStyle: this.props.options.cellStyle,
-                ...columnDef,
+                ...columnDef
               }}
               value={value}
               key={
@@ -95,7 +96,7 @@ export default class MTableBodyRow extends React.Component {
           width: width,
           padding: '0px 5px',
           boxSizing: 'border-box',
-          ...this.props.options.actionsCellStyle,
+          ...this.props.options.actionsCellStyle
         }}
       >
         <div style={{ display: 'flex' }}>
@@ -126,11 +127,11 @@ export default class MTableBodyRow extends React.Component {
     const styles =
       size === 'medium'
         ? {
-            marginLeft: this.props.level * 9,
+            marginLeft: this.props.level * 9
           }
         : {
             padding: '4px',
-            marginLeft: 5 + this.props.level * 9,
+            marginLeft: 5 + this.props.level * 9
           };
 
     return (
@@ -156,7 +157,7 @@ export default class MTableBodyRow extends React.Component {
   }
 
   rotateIconStyle = (isOpen) => ({
-    transform: isOpen ? 'rotate(90deg)' : 'none',
+    transform: isOpen ? 'rotate(90deg)' : 'none'
   });
 
   renderDetailPanelColumn() {
@@ -177,16 +178,14 @@ export default class MTableBodyRow extends React.Component {
           style={{
             width: 42,
             textAlign: 'center',
-            ...this.props.options.detailPanelColumnStyle,
+            ...this.props.options.detailPanelColumnStyle
           }}
         >
           <IconButton
             size={size}
             style={{
               transition: 'all ease 200ms',
-              ...this.rotateIconStyle(
-                this.props.data.tableData.showDetailPanel
-              ),
+              ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel)
             }}
             onClick={(event) => {
               this.props.onToggleDetailPanel(
@@ -208,7 +207,7 @@ export default class MTableBodyRow extends React.Component {
               width: 42 * this.props.detailPanel.length,
               textAlign: 'center',
               display: 'flex',
-              ...this.props.options.detailPanelColumnStyle,
+              ...this.props.options.detailPanelColumnStyle
             }}
           >
             {this.props.detailPanel.map((panel, index) => {
@@ -249,7 +248,7 @@ export default class MTableBodyRow extends React.Component {
                   key={'key-detail-panel-' + index}
                   style={{
                     transition: 'all ease 200ms',
-                    ...this.rotateIconStyle(animation && isOpen),
+                    ...this.rotateIconStyle(animation && isOpen)
                   }}
                   disabled={panel.disabled}
                   onClick={(event) => {
@@ -301,7 +300,7 @@ export default class MTableBodyRow extends React.Component {
             style={{
               transition: 'all ease 200ms',
               marginLeft: this.props.level * 9,
-              ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded),
+              ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded)
             }}
             onClick={(event) => {
               this.props.onTreeExpandChanged(this.props.path, this.props.data);
@@ -319,7 +318,7 @@ export default class MTableBodyRow extends React.Component {
 
   getStyle(index, level) {
     let style = {
-      transition: 'all ease 300ms',
+      transition: 'all ease 300ms'
     };
 
     if (typeof this.props.options.rowStyle === 'function') {
@@ -330,12 +329,12 @@ export default class MTableBodyRow extends React.Component {
           index,
           level,
           this.props.hasAnyEditingRow
-        ),
+        )
       };
     } else if (this.props.options.rowStyle) {
       style = {
         ...style,
-        ...this.props.options.rowStyle,
+        ...this.props.options.rowStyle
       };
     }
 
@@ -525,7 +524,7 @@ MTableBodyRow.defaultProps = {
   index: 0,
   data: {},
   options: {},
-  path: [],
+  path: []
 };
 
 MTableBodyRow.propTypes = {
@@ -535,7 +534,7 @@ MTableBodyRow.propTypes = {
   data: PropTypes.object.isRequired,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   hasAnyEditingRow: PropTypes.bool,
   options: PropTypes.object.isRequired,
@@ -548,5 +547,5 @@ MTableBodyRow.propTypes = {
   onRowClick: PropTypes.func,
   onEditingApproved: PropTypes.func,
   onEditingCanceled: PropTypes.func,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };

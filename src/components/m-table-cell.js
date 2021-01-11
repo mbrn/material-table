@@ -99,13 +99,13 @@ export default class MTableCell extends React.Component {
           maximumFractionDigits:
             currencySetting.maximumFractionDigits !== undefined
               ? currencySetting.maximumFractionDigits
-              : 2,
+              : 2
         }
       ).format(value !== undefined ? value : 0);
     } else {
       return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'USD'
       }).format(value !== undefined ? value : 0);
     }
   }
@@ -130,13 +130,13 @@ export default class MTableCell extends React.Component {
       boxSizing: 'border-box',
       fontSize: 'inherit',
       fontFamily: 'inherit',
-      fontWeight: 'inherit',
+      fontWeight: 'inherit'
     };
 
     if (typeof this.props.columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...this.props.columnDef.cellStyle(this.props.value, this.props.rowData),
+        ...this.props.columnDef.cellStyle(this.props.value, this.props.rowData)
       };
     } else {
       cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
@@ -174,7 +174,7 @@ export default class MTableCell extends React.Component {
           style={{
             borderBottom: '1px dashed grey',
             cursor: 'pointer',
-            width: 'max-content',
+            width: 'max-content'
           }}
           onClick={(e) => {
             e.stopPropagation();
@@ -203,12 +203,12 @@ export default class MTableCell extends React.Component {
 
 MTableCell.defaultProps = {
   columnDef: {},
-  value: undefined,
+  value: undefined
 };
 
 MTableCell.propTypes = {
   columnDef: PropTypes.object.isRequired,
   value: PropTypes.any,
   rowData: PropTypes.object,
-  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  errorState: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 };

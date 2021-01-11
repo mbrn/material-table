@@ -45,7 +45,7 @@ class MTablePaginationInner extends React.Component {
             maxWidth: '30px',
             maxHeight: '30px',
             minWidth: '30px',
-            minHeight: '30px',
+            minHeight: '30px'
           }}
           disabled={p === this.props.page}
           variant={buttonVariant}
@@ -67,12 +67,12 @@ class MTablePaginationInner extends React.Component {
       page,
       rowsPerPage,
       theme,
-      showFirstLastPageButtons,
+      showFirstLastPageButtons
     } = this.props;
 
     const localization = {
       ...MTablePaginationInner.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const maxPages = Math.ceil(count / rowsPerPage) - 1;
 
@@ -149,8 +149,8 @@ const actionsStyles = (theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
+    marginLeft: theme.spacing(2.5)
+  }
 });
 
 MTablePaginationInner.propTypes = {
@@ -161,7 +161,7 @@ MTablePaginationInner.propTypes = {
   classes: PropTypes.object,
   localization: PropTypes.object,
   theme: PropTypes.any,
-  showFirstLastPageButtons: PropTypes.bool,
+  showFirstLastPageButtons: PropTypes.bool
 };
 
 MTablePaginationInner.defaultProps = {
@@ -172,8 +172,8 @@ MTablePaginationInner.defaultProps = {
     nextTooltip: 'Next Page',
     lastTooltip: 'Last Page',
     labelDisplayedRows: '{from}-{to} of {count}',
-    labelRowsPerPage: 'Rows per page:',
-  },
+    labelRowsPerPage: 'Rows per page:'
+  }
 };
 
 const MTableSteppedPagination = withStyles(actionsStyles, { withTheme: true })(

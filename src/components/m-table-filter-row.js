@@ -19,7 +19,7 @@ import {
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
-  DateTimePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 
 const ITEM_HEIGHT = 48;
@@ -28,9 +28,9 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 function MTableFilterRow(props) {
@@ -98,7 +98,7 @@ function MTableFilterRow(props) {
   const renderFilterComponent = (columnDef) =>
     React.createElement(columnDef.filterComponent, {
       columnDef: columnDef,
-      onFilterChanged: props.onFilterChanged,
+      onFilterChanged: props.onFilterChanged
     });
 
   const renderBooleanFilter = (columnDef) => (
@@ -141,7 +141,7 @@ function MTableFilterRow(props) {
                       <FilterIcon />
                     </Tooltip>
                   </InputAdornment>
-                ),
+                )
               }
         }
       />
@@ -287,9 +287,9 @@ MTableFilterRow.defaultProps = {
   selection: false,
   hasActions: false,
   localization: {
-    filterTooltip: 'Filter',
+    filterTooltip: 'Filter'
   },
-  hideFilterIcons: false,
+  hideFilterIcons: false
 };
 
 MTableFilterRow.propTypes = {
@@ -304,7 +304,7 @@ MTableFilterRow.propTypes = {
   actionsColumnIndex: PropTypes.number,
   hasActions: PropTypes.bool,
   localization: PropTypes.object,
-  hideFilterIcons: PropTypes.bool,
+  hideFilterIcons: PropTypes.bool
 };
 
 export default MTableFilterRow;

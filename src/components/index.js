@@ -29,5 +29,5 @@ export {
   MTableHeader,
   MTablePagination,
   MTableSteppedPagination,
-  MTableToolbar,
+  MTableToolbar
 };

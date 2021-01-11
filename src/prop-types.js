@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const RefComponent = PropTypes.shape({ current: PropTypes.element });
 const StyledComponent = PropTypes.shape({
   classes: PropTypes.object,
-  innerRef: RefComponent,
+  innerRef: RefComponent
 });
 
 export const propTypes = {
@@ -15,21 +15,21 @@ export const propTypes = {
           PropTypes.element,
           PropTypes.func,
           PropTypes.string,
-          RefComponent,
+          RefComponent
         ]).isRequired,
         isFreeAction: PropTypes.bool,
         position: PropTypes.oneOf([
           'auto',
           'toolbar',
           'toolbarOnSelect',
-          'row',
+          'row'
         ]),
         tooltip: PropTypes.string,
         onClick: PropTypes.func.isRequired,
         iconProps: PropTypes.object,
         disabled: PropTypes.bool,
-        hidden: PropTypes.bool,
-      }),
+        hidden: PropTypes.bool
+      })
     ])
   ),
   columns: PropTypes.arrayOf(
@@ -39,7 +39,7 @@ export const propTypes = {
         locale: PropTypes.string,
         currencyCode: PropTypes.string,
         minimumFractionDigits: PropTypes.number,
-        maximumFractionDigits: PropTypes.number,
+        maximumFractionDigits: PropTypes.number
       }),
       customFilterAndSearch: PropTypes.func,
       customSort: PropTypes.func,
@@ -49,7 +49,7 @@ export const propTypes = {
       emptyValue: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node,
-        PropTypes.func,
+        PropTypes.func
       ]),
       export: PropTypes.bool,
       field: PropTypes.string,
@@ -65,7 +65,7 @@ export const propTypes = {
       lookup: PropTypes.object,
       editable: PropTypes.oneOfType([
         PropTypes.func,
-        PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never']),
+        PropTypes.oneOf(['always', 'onUpdate', 'onAdd', 'never'])
       ]),
       removable: PropTypes.bool,
       render: PropTypes.func,
@@ -79,95 +79,95 @@ export const propTypes = {
         'date',
         'datetime',
         'time',
-        'currency',
-      ]),
+        'currency'
+      ])
     })
   ).isRequired,
   components: PropTypes.shape({
     Action: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Actions: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Body: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Cell: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Container: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     EditField: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     EditRow: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     FilterRow: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Groupbar: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     GroupRow: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Header: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     OverlayLoading: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     OverlayError: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Pagination: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Row: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
+      StyledComponent
     ]),
     Toolbar: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      StyledComponent,
-    ]),
+      StyledComponent
+    ])
   }),
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
-    PropTypes.func,
+    PropTypes.func
   ]).isRequired,
   editable: PropTypes.shape({
     isEditable: PropTypes.func,
@@ -178,7 +178,7 @@ export const propTypes = {
     onRowAddCancelled: PropTypes.func,
     onRowUpdateCancelled: PropTypes.func,
     isEditHidden: PropTypes.func,
-    isDeleteHidden: PropTypes.func,
+    isDeleteHidden: PropTypes.func
   }),
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
@@ -191,107 +191,107 @@ export const propTypes = {
             PropTypes.element,
             PropTypes.func,
             PropTypes.string,
-            RefComponent,
+            RefComponent
           ]),
           openIcon: PropTypes.oneOfType([
             PropTypes.element,
             PropTypes.func,
             PropTypes.string,
-            RefComponent,
+            RefComponent
           ]),
           tooltip: PropTypes.string,
-          render: PropTypes.func.isRequired,
-        }),
+          render: PropTypes.func.isRequired
+        })
       ])
-    ),
+    )
   ]),
   icons: PropTypes.shape({
     Add: PropTypes.oneOfType([PropTypes.element, PropTypes.func, RefComponent]),
     Check: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Clear: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Delete: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     DetailPanel: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Edit: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Export: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Filter: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     FirstPage: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     LastPage: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     NextPage: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     PreviousPage: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Refresh: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     ResetSearch: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     Search: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     SortArrow: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     ThirdStateCheck: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
+      RefComponent
     ]),
     ViewColumn: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
-      RefComponent,
-    ]),
+      RefComponent
+    ])
   }),
   isLoading: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
@@ -310,7 +310,7 @@ export const propTypes = {
     exportAllData: PropTypes.bool,
     exportButton: PropTypes.oneOfType([
       PropTypes.bool,
-      PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
+      PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })
     ]),
     exportDelimiter: PropTypes.string,
     exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
@@ -332,7 +332,7 @@ export const propTypes = {
       'scroll',
       'auto',
       'initial',
-      'inherit',
+      'inherit'
     ]),
     padding: PropTypes.oneOf(['default', 'dense']),
     paging: PropTypes.bool,
@@ -357,17 +357,17 @@ export const propTypes = {
     showTextRowsSelected: PropTypes.bool,
     sorting: PropTypes.bool,
     toolbar: PropTypes.bool,
-    thirdSortClick: PropTypes.bool,
+    thirdSortClick: PropTypes.bool
   }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
       groupedBy: PropTypes.string,
-      placeholder: PropTypes.string,
+      placeholder: PropTypes.string
     }),
     pagination: PropTypes.object,
     toolbar: PropTypes.object,
     header: PropTypes.object,
-    body: PropTypes.object,
+    body: PropTypes.object
   }),
   initialFormData: PropTypes.object,
   onSearchChange: PropTypes.func,
@@ -385,5 +385,5 @@ export const propTypes = {
   tableRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,
-  totalCount: PropTypes.number,
+  totalCount: PropTypes.number
 };

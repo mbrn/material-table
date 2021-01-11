@@ -12,7 +12,7 @@ import {
   MuiPickersUtilsProvider,
   TimePicker,
   DatePicker,
-  DateTimePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 
@@ -39,7 +39,7 @@ class MTableEditField extends React.Component {
           value={this.props.value === undefined ? '' : this.props.value}
           onChange={(event) => this.props.onChange(event.target.value)}
           style={{
-            fontSize: 13,
+            fontSize: 13
           }}
           SelectDisplayProps={{ 'aria-label': this.props.columnDef.title }}
         >
@@ -71,10 +71,10 @@ class MTableEditField extends React.Component {
                 style={{
                   padding: 0,
                   width: 24,
-                  marginLeft: 9,
+                  marginLeft: 9
                 }}
                 inputProps={{
-                  'aria-label': this.props.columnDef.title,
+                  'aria-label': this.props.columnDef.title
                 }}
               />
             }
@@ -101,11 +101,11 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`,
+            'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -123,11 +123,11 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`,
+            'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -145,11 +145,11 @@ class MTableEditField extends React.Component {
           clearable
           InputProps={{
             style: {
-              fontSize: 13,
-            },
+              fontSize: 13
+            }
           }}
           inputProps={{
-            'aria-label': `${this.props.columnDef.title}: press space to edit`,
+            'aria-label': `${this.props.columnDef.title}: press space to edit`
           }}
         />
       </MuiPickersUtilsProvider>
@@ -179,11 +179,11 @@ class MTableEditField extends React.Component {
         InputProps={{
           style: {
             minWidth: 50,
-            fontSize: 13,
-          },
+            fontSize: 13
+          }
         }}
         inputProps={{
-          'aria-label': this.props.columnDef.title,
+          'aria-label': this.props.columnDef.title
         }}
       />
     );
@@ -209,11 +209,11 @@ class MTableEditField extends React.Component {
         InputProps={{
           style: {
             fontSize: 13,
-            textAlign: 'right',
-          },
+            textAlign: 'right'
+          }
         }}
         inputProps={{
-          'aria-label': this.props.columnDef.title,
+          'aria-label': this.props.columnDef.title
         }}
         onKeyDown={this.props.onKeyDown}
         autoFocus={this.props.autoFocus}
@@ -250,7 +250,7 @@ MTableEditField.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   columnDef: PropTypes.object.isRequired,
-  locale: PropTypes.object,
+  locale: PropTypes.object
 };
 
 export default MTableEditField;

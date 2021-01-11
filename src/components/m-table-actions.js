@@ -23,7 +23,7 @@ class MTableActions extends React.Component {
 
 MTableActions.defaultProps = {
   actions: [],
-  data: {},
+  data: {}
 };
 
 MTableActions.propTypes = {
@@ -31,10 +31,10 @@ MTableActions.propTypes = {
   actions: PropTypes.array.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
-  size: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default MTableActions;
