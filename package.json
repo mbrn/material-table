@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/webpack serve --config ./__tests__/demo/webpack.config.js --mode development --progress",
-    "build": "node esbuild.config.js",
-    "build:babel": "./node_modules/.bin/babel src --out-dir dist",
+    "build:esbuild": "node esbuild.config.js",
+    "build": "./node_modules/.bin/babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "./node_modules/.bin/eslint src/** -c ./.eslintrc --ignore-path ./.eslintignore",
     "tsc": "./node_modules/.bin/tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
