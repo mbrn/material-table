@@ -33,18 +33,18 @@ const MenuProps = {
   }
 };
 
-class MTableFilterRow extends React.Component {
-  getLocalizationData = () => ({
+function MTableFilterRow(props) {
+  const getLocalizationData = () => ({
     ...MTableFilterRow.defaultProps.localization,
-    ...this.props.localization
+    ...props.localization,
   });
 
-  getLocalizedFilterPlaceHolder = (columnDef) =>
+  const getLocalizedFilterPlaceHolder = (columnDef) =>
     columnDef.filterPlaceholder ||
-    this.getLocalizationData().filterPlaceHolder ||
+    getLocalizationData().filterPlaceHolder ||
     '';
 
-  LookupFilter = ({ columnDef }) => {
+  const LookupFilter = ({ columnDef }) => {
     const [selectedFilter, setSelectedFilter] = React.useState(
       columnDef.tableData.filterValue || []
     );
@@ -59,26 +59,20 @@ class MTableFilterRow extends React.Component {
           htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
           style={{ marginTop: -16 }}
         >
-          {this.getLocalizedFilterPlaceHolder(columnDef)}
+          {getLocalizedFilterPlaceHolder(columnDef)}
         </InputLabel>
         <Select
           multiple
           value={selectedFilter}
           onClose={() => {
             if (columnDef.filterOnItemSelect !== true) {
-              this.props.onFilterChanged(
-                columnDef.tableData.id,
-                selectedFilter
-              );
+              props.onFilterChanged(columnDef.tableData.id, selectedFilter);
             }
           }}
           onChange={(event) => {
             setSelectedFilter(event.target.value);
             if (columnDef.filterOnItemSelect === true) {
-              this.props.onFilterChanged(
-                columnDef.tableData.id,
-                event.target.value
-              );
+              props.onFilterChanged(columnDef.tableData.id, event.target.value);
             }
           }}
           input={
@@ -101,13 +95,13 @@ class MTableFilterRow extends React.Component {
     );
   };
 
-  renderFilterComponent = (columnDef) =>
+  const renderFilterComponent = (columnDef) =>
     React.createElement(columnDef.filterComponent, {
       columnDef: columnDef,
-      onFilterChanged: this.props.onFilterChanged
+      onFilterChanged: props.onFilterChanged
     });
 
-  renderBooleanFilter = (columnDef) => (
+  const renderBooleanFilter = (columnDef) => (
     <Checkbox
       indeterminate={columnDef.tableData.filterValue === undefined}
       checked={columnDef.tableData.filterValue === 'checked'}
@@ -119,29 +113,26 @@ class MTableFilterRow extends React.Component {
           val = 'unchecked';
         }
 
-        this.props.onFilterChanged(columnDef.tableData.id, val);
+        props.onFilterChanged(columnDef.tableData.id, val);
       }}
     />
   );
 
-  renderDefaultFilter = (columnDef) => {
-    const localization = this.getLocalizationData();
-    const FilterIcon = this.props.icons.Filter;
+  const renderDefaultFilter = (columnDef) => {
+    const localization = getLocalizationData();
+    const FilterIcon = props.icons.Filter;
     return (
       <TextField
         style={columnDef.type === 'numeric' ? { float: 'right' } : {}}
         type={columnDef.type === 'numeric' ? 'number' : 'search'}
         value={columnDef.tableData.filterValue || ''}
-        placeholder={this.getLocalizedFilterPlaceHolder(columnDef)}
+        placeholder={getLocalizedFilterPlaceHolder(columnDef)}
         onChange={(event) => {
-          this.props.onFilterChanged(
-            columnDef.tableData.id,
-            event.target.value
-          );
+          props.onFilterChanged(columnDef.tableData.id, event.target.value);
         }}
         inputProps={{ 'aria-label': `filter data by ${columnDef.title}` }}
         InputProps={
-          this.props.hideFilterIcons || columnDef.hideFilterIcon
+          props.hideFilterIcons || columnDef.hideFilterIcon
             ? undefined
             : {
                 startAdornment: (
@@ -157,14 +148,14 @@ class MTableFilterRow extends React.Component {
     );
   };
 
-  renderDateTypeFilter = (columnDef) => {
+  const renderDateTypeFilter = (columnDef) => {
     const onDateInputChange = (date) =>
-      this.props.onFilterChanged(columnDef.tableData.id, date);
+      props.onFilterChanged(columnDef.tableData.id, date);
     const pickerProps = {
       value: columnDef.tableData.filterValue || null,
       onChange: onDateInputChange,
-      placeholder: this.getLocalizedFilterPlaceHolder(columnDef),
-      clearable: true
+      placeholder: getLocalizedFilterPlaceHolder(columnDef),
+      clearable: true,
     };
 
     let dateInputElement = null;
@@ -178,35 +169,35 @@ class MTableFilterRow extends React.Component {
     return (
       <MuiPickersUtilsProvider
         utils={DateFnsUtils}
-        locale={this.props.localization.dateTimePickerLocalization}
+        locale={props.localization.dateTimePickerLocalization}
       >
         {dateInputElement}
       </MuiPickersUtilsProvider>
     );
   };
 
-  getComponentForColumn(columnDef) {
+  function getComponentForColumn(columnDef) {
     if (columnDef.filtering === false) {
       return null;
     }
 
     if (columnDef.field || columnDef.customFilterAndSearch) {
       if (columnDef.filterComponent) {
-        return this.renderFilterComponent(columnDef);
+        return renderFilterComponent(columnDef);
       } else if (columnDef.lookup) {
-        return <this.LookupFilter columnDef={columnDef} />;
+        return <LookupFilter columnDef={columnDef} />;
       } else if (columnDef.type === 'boolean') {
-        return this.renderBooleanFilter(columnDef);
+        return renderBooleanFilter(columnDef);
       } else if (['date', 'datetime', 'time'].includes(columnDef.type)) {
-        return this.renderDateTypeFilter(columnDef);
+        return renderDateTypeFilter(columnDef);
       } else {
-        return this.renderDefaultFilter(columnDef);
+        return renderDefaultFilter(columnDef);
       }
     }
   }
 
-  render() {
-    const columns = this.props.columns
+  function render() {
+    const columns = props.columns
       .filter(
         (columnDef) =>
           !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
@@ -216,15 +207,15 @@ class MTableFilterRow extends React.Component {
         <TableCell
           key={columnDef.tableData.id}
           style={{
-            ...this.props.filterCellStyle,
-            ...columnDef.filterCellStyle
+            ...props.filterCellStyle,
+            ...columnDef.filterCellStyle,
           }}
         >
-          {this.getComponentForColumn(columnDef)}
+          {getComponentForColumn(columnDef)}
         </TableCell>
       ));
 
-    if (this.props.selection) {
+    if (props.selection) {
       columns.splice(
         0,
         0,
@@ -232,24 +223,24 @@ class MTableFilterRow extends React.Component {
       );
     }
 
-    if (this.props.hasActions) {
-      if (this.props.actionsColumnIndex === -1) {
+    if (props.hasActions) {
+      if (props.actionsColumnIndex === -1) {
         columns.push(<TableCell key="key-action-column" />);
       } else {
         let endPos = 0;
-        if (this.props.selection) {
+        if (props.selection) {
           endPos = 1;
         }
         columns.splice(
-          this.props.actionsColumnIndex + endPos,
+          props.actionsColumnIndex + endPos,
           0,
           <TableCell key="key-action-column" />
         );
       }
     }
 
-    if (this.props.hasDetailPanel) {
-      const alignment = this.props.detailPanelColumnAlignment;
+    if (props.hasDetailPanel) {
+      const alignment = props.detailPanelColumnAlignment;
       const index = alignment === 'left' ? 0 : columns.length;
       columns.splice(
         index,
@@ -258,7 +249,7 @@ class MTableFilterRow extends React.Component {
       );
     }
 
-    if (this.props.isTreeData > 0) {
+    if (props.isTreeData > 0) {
       columns.splice(
         0,
         0,
@@ -266,7 +257,7 @@ class MTableFilterRow extends React.Component {
       );
     }
 
-    this.props.columns
+    props.columns
       .filter((columnDef) => columnDef.tableData.groupOrder > -1)
       .forEach((columnDef) => {
         columns.splice(
@@ -280,11 +271,14 @@ class MTableFilterRow extends React.Component {
       });
 
     return (
-      <TableRow style={{ height: 10, ...this.props.filterRowStyle }}>
+      <TableRow style={{ height: 10, ...props.filterRowStyle }}>
         {columns}
       </TableRow>
     );
   }
+
+  //____________________________________________
+  return render();
 }
 
 MTableFilterRow.defaultProps = {
