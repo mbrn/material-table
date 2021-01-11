@@ -75,7 +75,7 @@ class MTableEditCell extends React.Component {
             this.props.columnDef
           );
         })
-        .catch((error) => {
+        .catch(() => {
           this.setState({ isLoading: false });
         });
     });

@@ -4,7 +4,8 @@
     "one-var": "off",
     "semi": ["error", "always", {
       "omitLastInOneLineBlock": true
-    }]
+    }],
+    "space-before-function-paren": "off"
   },
   "parser": "babel-eslint",
   "plugins": [
