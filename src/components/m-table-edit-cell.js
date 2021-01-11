@@ -1,12 +1,8 @@
-/* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
-import TableCell from "@material-ui/core/TableCell";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import withTheme from "@material-ui/core/styles/withTheme";
-import { MTable } from "..";
-/* eslint-enable no-unused-vars */
+import React from 'react';
+import PropTypes from 'prop-types';
+import TableCell from '@material-ui/core/TableCell';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import withTheme from '@material-ui/core/styles/withTheme';
 
 class MTableEditCell extends React.Component {
   constructor(props) {
@@ -14,39 +10,39 @@ class MTableEditCell extends React.Component {
 
     this.state = {
       isLoading: false,
-      value: this.props.rowData[this.props.columnDef.field],
+      value: this.props.rowData[this.props.columnDef.field]
     };
   }
 
   getStyle = () => {
     let cellStyle = {
-      boxShadow: "2px 0px 15px rgba(125,147,178,.25)",
-      color: "inherit",
+      boxShadow: '2px 0px 15px rgba(125,147,178,.25)',
+      color: 'inherit',
       width: this.props.columnDef.tableData.width,
-      boxSizing: "border-box",
-      fontSize: "inherit",
-      fontFamily: "inherit",
-      fontWeight: "inherit",
-      padding: "0 16px",
+      boxSizing: 'border-box',
+      fontSize: 'inherit',
+      fontFamily: 'inherit',
+      fontWeight: 'inherit',
+      padding: '0 16px'
     };
 
-    if (typeof this.props.columnDef.cellStyle === "function") {
+    if (typeof this.props.columnDef.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
-        ...this.props.columnDef.cellStyle(this.state.value, this.props.rowData),
+        ...this.props.columnDef.cellStyle(this.state.value, this.props.rowData)
       };
     } else {
       cellStyle = { ...cellStyle, ...this.props.columnDef.cellStyle };
     }
 
-    if (typeof this.props.cellEditable.cellStyle === "function") {
+    if (typeof this.props.cellEditable.cellStyle === 'function') {
       cellStyle = {
         ...cellStyle,
         ...this.props.cellEditable.cellStyle(
           this.state.value,
           this.props.rowData,
           this.props.columnDef
-        ),
+        )
       };
     } else {
       cellStyle = { ...cellStyle, ...this.props.cellEditable.cellStyle };
@@ -79,7 +75,7 @@ class MTableEditCell extends React.Component {
             this.props.columnDef
           );
         })
-        .catch((error) => {
+        .catch(() => {
           this.setState({ isLoading: false });
         });
     });
@@ -92,7 +88,7 @@ class MTableEditCell extends React.Component {
   renderActions() {
     if (this.state.isLoading) {
       return (
-        <div style={{ display: "flex", justifyContent: "center", width: 60 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', width: 60 }}>
           <CircularProgress size={20} />
         </div>
       );
@@ -103,14 +99,14 @@ class MTableEditCell extends React.Component {
         icon: this.props.icons.Check,
         tooltip: this.props.localization.saveTooltip,
         onClick: this.onApprove,
-        disabled: this.state.isLoading,
+        disabled: this.state.isLoading
       },
       {
         icon: this.props.icons.Clear,
         tooltip: this.props.localization.cancelTooltip,
         onClick: this.onCancel,
-        disabled: this.state.isLoading,
-      },
+        disabled: this.state.isLoading
+      }
     ];
 
     return (
@@ -125,7 +121,7 @@ class MTableEditCell extends React.Component {
   render() {
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
@@ -133,6 +129,7 @@ class MTableEditCell extends React.Component {
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}
+              rowData={this.props.rowData}
               autoFocus
             />
           </div>
@@ -144,7 +141,7 @@ class MTableEditCell extends React.Component {
 }
 
 MTableEditCell.defaultProps = {
-  columnDef: {},
+  columnDef: {}
 };
 
 MTableEditCell.propTypes = {
@@ -156,7 +153,7 @@ MTableEditCell.propTypes = {
   localization: PropTypes.object.isRequired,
   onCellEditFinished: PropTypes.func.isRequired,
   rowData: PropTypes.object.isRequired,
-  size: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default withTheme(MTableEditCell);

@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import PropTypes from "prop-types";
-import * as React from "react";
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 /* eslint-enable no-unused-vars */
 
 class MTableBody extends React.Component {
   renderEmpty(emptyRowCount, renderData) {
-    const rowHeight = this.props.options.padding === "default" ? 49 : 36;
+    const rowHeight = this.props.options.padding === 'default' ? 49 : 36;
     const localization = {
       ...MTableBody.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     if (
       this.props.options.showEmptyDataSourceMessage &&
@@ -24,7 +24,7 @@ class MTableBody extends React.Component {
       if (
         this.props.actions &&
         this.props.actions.filter(
-          (a) => a.position === "row" || typeof a === "function"
+          (a) => a.position === 'row' || typeof a === 'function'
         ).length > 0
       ) {
         addColumn++;
@@ -43,12 +43,12 @@ class MTableBody extends React.Component {
               (this.props.options.paging &&
               this.props.options.emptyRowsWhenPaging
                 ? this.props.pageSize
-                : 1),
+                : 1)
           }}
-          key={"empty-" + 0}
+          key={'empty-' + 0}
         >
           <TableCell
-            style={{ paddingTop: 0, paddingBottom: 0, textAlign: "center" }}
+            style={{ paddingTop: 0, paddingBottom: 0, textAlign: 'center' }}
             colSpan={this.props.columns.reduce(
               (currentVal, columnDef) =>
                 columnDef.hidden ? currentVal : currentVal + 1,
@@ -64,10 +64,10 @@ class MTableBody extends React.Component {
       return (
         <React.Fragment>
           {[...Array(emptyRowCount)].map((r, index) => (
-            <TableRow style={{ height: rowHeight }} key={"empty-" + index} />
+            <TableRow style={{ height: rowHeight }} key={'empty-' + index} />
           ))}
           {emptyRowCount > 0 && (
-            <TableRow style={{ height: 1 }} key={"empty-last1"} />
+            <TableRow style={{ height: 1 }} key={'empty-last1'} />
           )}
         </React.Fragment>
       );
@@ -90,10 +90,10 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
-            key={"row-" + data.tableData.id}
-            mode={this.props.bulkEditOpen ? "bulk" : data.tableData.editing}
+            key={'row-' + data.tableData.id}
+            mode={this.props.bulkEditOpen ? 'bulk' : data.tableData.editing}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
             detailPanel={this.props.detailPanel}
@@ -112,14 +112,14 @@ class MTableBody extends React.Component {
             data={data}
             index={index}
             errorState={this.props.errorState}
-            key={"row-" + data.tableData.id}
+            key={'row-' + data.tableData.id}
             level={0}
             options={this.props.options}
             localization={{
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             onRowSelected={this.props.onRowSelected}
             actions={this.props.actions}
@@ -149,7 +149,7 @@ class MTableBody extends React.Component {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
         actions={this.props.actions}
-        key={groupData.value == null ? "" + index : groupData.value}
+        key={groupData.value == null ? '' + index : groupData.value}
         columns={this.props.columns}
         components={this.props.components}
         detailPanel={this.props.detailPanel}
@@ -173,7 +173,7 @@ class MTableBody extends React.Component {
           ...MTableBody.defaultProps.localization.editRow,
           ...this.props.localization.editRow,
           dateTimePickerLocalization: this.props.localization
-            .dateTimePickerLocalization,
+            .dateTimePickerLocalization
         }}
         cellEditable={this.props.cellEditable}
         onCellEditStarted={this.props.onCellEditStarted}
@@ -185,7 +185,7 @@ class MTableBody extends React.Component {
   }
 
   render() {
-    let renderData = this.props.renderData;
+    const renderData = this.props.renderData;
     const groups = this.props.columns
       .filter((col) => col.tableData.groupOrder > -1)
       .sort(
@@ -207,7 +207,7 @@ class MTableBody extends React.Component {
             icons={this.props.icons}
             hasActions={
               this.props.actions.filter(
-                (a) => a.position === "row" || typeof a === "function"
+                (a) => a.position === 'row' || typeof a === 'function'
               ).length > 0
             }
             actionsColumnIndex={this.props.options.actionsColumnIndex}
@@ -217,7 +217,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.filterRow,
               ...this.props.localization.filterRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             hasDetailPanel={!!this.props.detailPanel}
             detailPanelColumnAlignment={
@@ -231,7 +231,7 @@ class MTableBody extends React.Component {
           />
         )}
         {this.props.showAddRow &&
-          this.props.options.addRowPosition === "first" && (
+          this.props.options.addRowPosition === 'first' && (
             <this.props.components.EditRow
               columns={this.props.columns.filter((columnDef) => {
                 return !columnDef.hidden;
@@ -246,7 +246,7 @@ class MTableBody extends React.Component {
                 ...MTableBody.defaultProps.localization.editRow,
                 ...this.props.localization.editRow,
                 dateTimePickerLocalization: this.props.localization
-                  .dateTimePickerLocalization,
+                  .dateTimePickerLocalization
               }}
               options={this.props.options}
               isTreeData={this.props.isTreeData}
@@ -262,7 +262,7 @@ class MTableBody extends React.Component {
           ? this.renderGroupedRows(groups, renderData)
           : this.renderUngroupedRows(renderData)}
 
-        {this.props.showAddRow && this.props.options.addRowPosition === "last" && (
+        {this.props.showAddRow && this.props.options.addRowPosition === 'last' && (
           <this.props.components.EditRow
             columns={this.props.columns.filter((columnDef) => {
               return !columnDef.hidden;
@@ -277,7 +277,7 @@ class MTableBody extends React.Component {
               ...MTableBody.defaultProps.localization.editRow,
               ...this.props.localization.editRow,
               dateTimePickerLocalization: this.props.localization
-                .dateTimePickerLocalization,
+                .dateTimePickerLocalization
             }}
             options={this.props.options}
             isTreeData={this.props.isTreeData}
@@ -301,10 +301,10 @@ MTableBody.defaultProps = {
   renderData: [],
   selection: false,
   localization: {
-    emptyDataSourceMessage: "No records to display",
+    emptyDataSourceMessage: 'No records to display',
     filterRow: {},
-    editRow: {},
-  },
+    editRow: {}
+  }
 };
 
 MTableBody.propTypes = {
@@ -314,7 +314,7 @@ MTableBody.propTypes = {
   currentPage: PropTypes.number,
   detailPanel: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.func]))
   ]),
   getFieldValue: PropTypes.func.isRequired,
   hasAnyEditingRow: PropTypes.bool,
@@ -343,7 +343,7 @@ MTableBody.propTypes = {
   onCellEditStarted: PropTypes.func,
   onCellEditFinished: PropTypes.func,
   bulkEditOpen: PropTypes.bool,
-  onBulkEditRowChanged: PropTypes.func,
+  onBulkEditRowChanged: PropTypes.func
 };
 
 export default MTableBody;

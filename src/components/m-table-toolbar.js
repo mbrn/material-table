@@ -1,23 +1,20 @@
-/* eslint-disable no-unused-vars */
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import Toolbar from "@material-ui/core/Toolbar";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { lighten } from "@material-ui/core/styles/colorManipulator";
-import classNames from "classnames";
-import { CsvBuilder } from "filefy";
-import PropTypes, { oneOf } from "prop-types";
-import "jspdf-autotable";
-import * as React from "react";
-const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
-/* eslint-enable no-unused-vars */
+import Checkbox from '@material-ui/core/Checkbox';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
+import classNames from 'classnames';
+import { CsvBuilder } from 'filefy';
+import PropTypes from 'prop-types';
+import 'jspdf-autotable';
+import * as React from 'react';
+import { defaultExportPdf } from '../utils/exportPdf';
 
 export class MTableToolbar extends React.Component {
   constructor(props) {
@@ -25,7 +22,7 @@ export class MTableToolbar extends React.Component {
     this.state = {
       columnsButtonAnchorEl: null,
       exportButtonAnchorEl: null,
-      searchText: props.searchText,
+      searchText: props.searchText
     };
   }
 
@@ -58,44 +55,20 @@ export class MTableToolbar extends React.Component {
   defaultExportCsv = () => {
     const [columns, data] = this.getTableData();
 
-    let fileName = this.props.title || "data";
+    let fileName = this.props.title || 'data';
     if (this.props.exportFileName) {
       fileName =
-        typeof this.props.exportFileName === "function"
+        typeof this.props.exportFileName === 'function'
           ? this.props.exportFileName()
           : this.props.exportFileName;
     }
 
-    const builder = new CsvBuilder(fileName + ".csv");
+    const builder = new CsvBuilder(fileName + '.csv');
     builder
       .setDelimeter(this.props.exportDelimiter)
       .setColumns(columns.map((columnDef) => columnDef.title))
       .addRows(data)
       .exportFile();
-  };
-
-  defaultExportPdf = () => {
-    if (jsPDF !== null) {
-      const [columns, data] = this.getTableData();
-
-      let content = {
-        startY: 50,
-        head: [columns.map((columnDef) => columnDef.title)],
-        body: data,
-      };
-
-      const unit = "pt";
-      const size = "A4";
-      const orientation = "landscape";
-
-      const doc = new jsPDF(orientation, unit, size);
-      doc.setFontSize(15);
-      doc.text(this.props.exportFileName || this.props.title, 40, 40);
-      doc.autoTable(content);
-      doc.save(
-        (this.props.exportFileName || this.props.title || "data") + ".pdf"
-      );
-    }
   };
 
   exportCsv = () => {
@@ -111,7 +84,7 @@ export class MTableToolbar extends React.Component {
     if (this.props.exportPdf) {
       this.props.exportPdf(this.props.columns, this.props.data);
     } else {
-      this.defaultExportPdf();
+      defaultExportPdf(this.props, this.getTableData);
     }
     this.setState({ exportButtonAnchorEl: null });
   };
@@ -119,14 +92,14 @@ export class MTableToolbar extends React.Component {
   renderSearch() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     if (this.props.search) {
       return (
         <TextField
           autoFocus={this.props.searchAutoFocus}
           className={
-            this.props.searchFieldAlignment === "left" &&
+            this.props.searchFieldAlignment === 'left' &&
             this.props.showTitle === false
               ? null
               : this.props.classes.searchField
@@ -147,7 +120,7 @@ export class MTableToolbar extends React.Component {
               <InputAdornment position="end">
                 <IconButton
                   disabled={!this.state.searchText}
-                  onClick={() => this.onSearchChange("")}
+                  onClick={() => this.onSearchChange('')}
                   aria-label={localization.clearSearchAriaLabel}
                 >
                   <this.props.icons.ResetSearch
@@ -159,8 +132,8 @@ export class MTableToolbar extends React.Component {
             ),
             style: this.props.searchFieldStyle,
             inputProps: {
-              "aria-label": localization.searchAriaLabel,
-            },
+              'aria-label': localization.searchAriaLabel
+            }
           }}
         />
       );
@@ -172,7 +145,7 @@ export class MTableToolbar extends React.Component {
   renderDefaultActions() {
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const { classes } = this.props;
 
@@ -185,7 +158,7 @@ export class MTableToolbar extends React.Component {
                 color="inherit"
                 onClick={(event) =>
                   this.setState({
-                    columnsButtonAnchorEl: event.currentTarget,
+                    columnsButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.showColumnsAriaLabel}
@@ -199,40 +172,52 @@ export class MTableToolbar extends React.Component {
               onClose={() => this.setState({ columnsButtonAnchorEl: null })}
             >
               <MenuItem
-                key={"text"}
+                key={'text'}
                 disabled
                 style={{
                   opacity: 1,
                   fontWeight: 600,
-                  fontSize: 12,
+                  fontSize: 12
                 }}
               >
                 {localization.addRemoveColumns}
               </MenuItem>
+
+              {/**
+               * Add columns to the Columns Button Menu
+               * aka the menu that pops up when `MaterialTable.options.columnsButton` is true
+               */}
               {this.props.columns.map((col) => {
-                if (!col.hidden || col.hiddenByColumnsButton) {
-                  return (
-                    <li key={col.tableData.id}>
-                      <MenuItem
-                        className={classes.formControlLabel}
-                        component="label"
-                        htmlFor={`column-toggle-${col.tableData.id}`}
-                        disabled={col.removable === false}
-                      >
-                        <Checkbox
-                          checked={!col.hidden}
-                          id={`column-toggle-${col.tableData.id}`}
-                          onChange={() =>
-                            this.props.onColumnsChanged(col, !col.hidden)
-                          }
-                        />
-                        <span>{col.title}</span>
-                      </MenuItem>
-                    </li>
-                  );
+                const hiddenFromColumnsButtonMenu =
+                  col.hiddenByColumnsButton !== undefined
+                    ? col.hiddenByColumnsButton
+                    : this.props.columnsHiddenInColumnsButton;
+
+                if (hiddenFromColumnsButtonMenu) {
+                  return null;
                 }
-                return null;
+
+                return (
+                  <li key={col.tableData.id}>
+                    <MenuItem
+                      className={classes.formControlLabel}
+                      component="label"
+                      htmlFor={`column-toggle-${col.tableData.id}`}
+                      disabled={col.removable === false}
+                    >
+                      <Checkbox
+                        checked={!col.hidden}
+                        id={`column-toggle-${col.tableData.id}`}
+                        onChange={() =>
+                          this.props.onColumnsChanged(col, !col.hidden)
+                        }
+                      />
+                      <span>{col.title}</span>
+                    </MenuItem>
+                  </li>
+                );
               })}
+              {/** End Add columns to the Columns Button Menu */}
             </Menu>
           </span>
         )}
@@ -243,7 +228,7 @@ export class MTableToolbar extends React.Component {
                 color="inherit"
                 onClick={(event) =>
                   this.setState({
-                    exportButtonAnchorEl: event.currentTarget,
+                    exportButtonAnchorEl: event.currentTarget
                   })
                 }
                 aria-label={localization.exportAriaLabel}
@@ -275,7 +260,7 @@ export class MTableToolbar extends React.Component {
           <this.props.components.Actions
             actions={
               this.props.actions &&
-              this.props.actions.filter((a) => a.position === "toolbar")
+              this.props.actions.filter((a) => a.position === 'toolbar')
             }
             components={this.props.components}
           />
@@ -289,7 +274,7 @@ export class MTableToolbar extends React.Component {
       <React.Fragment>
         <this.props.components.Actions
           actions={this.props.actions.filter(
-            (a) => a.position === "toolbarOnSelect"
+            (a) => a.position === 'toolbarOnSelect'
           )}
           data={this.props.selectedRows}
           components={this.props.components}
@@ -315,13 +300,13 @@ export class MTableToolbar extends React.Component {
   renderToolbarTitle(title) {
     const { classes } = this.props;
     const toolBarTitle =
-      typeof title === "string" ? (
+      typeof title === 'string' ? (
         <Typography
           variant="h6"
           style={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
           }}
         >
           {title}
@@ -337,16 +322,16 @@ export class MTableToolbar extends React.Component {
     const { classes } = this.props;
     const localization = {
       ...MTableToolbar.defaultProps.localization,
-      ...this.props.localization,
+      ...this.props.localization
     };
     const title =
       this.props.showTextRowsSelected &&
       this.props.selectedRows &&
       this.props.selectedRows.length > 0
-        ? typeof localization.nRowsSelected === "function"
+        ? typeof localization.nRowsSelected === 'function'
           ? localization.nRowsSelected(this.props.selectedRows.length)
           : localization.nRowsSelected.replace(
-              "{0}",
+              '{0}',
               this.props.selectedRows.length
             )
         : this.props.showTitle
@@ -358,15 +343,15 @@ export class MTableToolbar extends React.Component {
           [classes.highlight]:
             this.props.showTextRowsSelected &&
             this.props.selectedRows &&
-            this.props.selectedRows.length > 0,
+            this.props.selectedRows.length > 0
         })}
       >
         {title && this.renderToolbarTitle(title)}
-        {this.props.searchFieldAlignment === "left" && this.renderSearch()}
-        {this.props.toolbarButtonAlignment === "left" && this.renderActions()}
+        {this.props.searchFieldAlignment === 'left' && this.renderSearch()}
+        {this.props.toolbarButtonAlignment === 'left' && this.renderActions()}
         <div className={classes.spacer} />
-        {this.props.searchFieldAlignment === "right" && this.renderSearch()}
-        {this.props.toolbarButtonAlignment === "right" && this.renderActions()}
+        {this.props.searchFieldAlignment === 'right' && this.renderSearch()}
+        {this.props.toolbarButtonAlignment === 'right' && this.renderActions()}
       </Toolbar>
     );
   }
@@ -375,31 +360,32 @@ export class MTableToolbar extends React.Component {
 MTableToolbar.defaultProps = {
   actions: [],
   columns: [],
+  columnsHiddenInColumnsButton: false, // By default, all columns are shown in the Columns Button (columns action when `options.columnsButton = true`)
   columnsButton: false,
   localization: {
-    addRemoveColumns: "Add or remove columns",
-    nRowsSelected: "{0} row(s) selected",
-    showColumnsTitle: "Show Columns",
-    showColumnsAriaLabel: "Show Columns",
-    exportTitle: "Export",
-    exportAriaLabel: "Export",
-    exportCSVName: "Export as CSV",
-    exportPDFName: "Export as PDF",
-    searchTooltip: "Search",
-    searchPlaceholder: "Search",
-    searchAriaLabel: "Search",
-    clearSearchAriaLabel: "Clear Search",
+    addRemoveColumns: 'Add or remove columns',
+    nRowsSelected: '{0} row(s) selected',
+    showColumnsTitle: 'Show Columns',
+    showColumnsAriaLabel: 'Show Columns',
+    exportTitle: 'Export',
+    exportAriaLabel: 'Export',
+    exportCSVName: 'Export as CSV',
+    exportPDFName: 'Export as PDF',
+    searchTooltip: 'Search',
+    searchPlaceholder: 'Search',
+    searchAriaLabel: 'Search',
+    clearSearchAriaLabel: 'Clear Search'
   },
   search: true,
   showTitle: true,
-  searchText: "",
+  searchText: '',
   showTextRowsSelected: true,
-  toolbarButtonAlignment: "right",
+  toolbarButtonAlignment: 'right',
   searchAutoFocus: false,
-  searchFieldAlignment: "right",
-  searchFieldVariant: "standard",
+  searchFieldAlignment: 'right',
+  searchFieldVariant: 'standard',
   selectedRows: [],
-  title: "No Title!",
+  title: 'No Title!'
 };
 
 MTableToolbar.propTypes = {
@@ -427,47 +413,47 @@ MTableToolbar.propTypes = {
   exportAllData: PropTypes.bool,
   exportButton: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),
+    PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool })
   ]),
   exportDelimiter: PropTypes.string,
   exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
   exportPdf: PropTypes.func,
   classes: PropTypes.object,
-  searchAutoFocus: PropTypes.bool,
+  searchAutoFocus: PropTypes.bool
 };
 
 export const styles = (theme) => ({
   root: {
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   highlight:
-    theme.palette.type === "light"
+    theme.palette.type === 'light'
       ? {
           color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
         }
       : {
           color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: theme.palette.secondary.dark
         },
   spacer: {
-    flex: "1 1 10%",
+    flex: '1 1 10%'
   },
   actions: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   title: {
-    overflow: "hidden",
+    overflow: 'hidden'
   },
   searchField: {
     minWidth: 150,
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   formControlLabel: {
     paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
+    paddingRight: theme.spacing(1)
+  }
 });
 
 export default withStyles(styles)(MTableToolbar);

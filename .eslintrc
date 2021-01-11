@@ -1,0 +1,24 @@
+{
+  "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "one-var": "off",
+    "semi": ["error", "always", {
+      "omitLastInOneLineBlock": true
+    }],
+    "space-before-function-paren": "off"
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    /**
+     *
+     * Only warn for EVERYTHING (for now)
+     *
+     */
+    "only-warn" 
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

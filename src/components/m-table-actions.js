@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
+import * as React from 'react';
+import PropTypes from 'prop-types';
 /* eslint-enable no-unused-vars */
 
 class MTableActions extends React.Component {
@@ -9,7 +9,7 @@ class MTableActions extends React.Component {
       return this.props.actions.map((action, index) => (
         <this.props.components.Action
           action={action}
-          key={"action-" + index}
+          key={'action-' + index}
           data={this.props.data}
           size={this.props.size}
           disabled={this.props.disabled}
@@ -23,7 +23,7 @@ class MTableActions extends React.Component {
 
 MTableActions.defaultProps = {
   actions: [],
-  data: {},
+  data: {}
 };
 
 MTableActions.propTypes = {
@@ -31,10 +31,10 @@ MTableActions.propTypes = {
   actions: PropTypes.array.isRequired,
   data: PropTypes.oneOfType([
     PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.object)
   ]),
   disabled: PropTypes.bool,
-  size: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default MTableActions;

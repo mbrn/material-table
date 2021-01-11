@@ -1,0 +1,39 @@
+#
+# Will publish a new version to npm if the version has been changed and
+# the commit pattern matches "^Release (\\S+)"
+#
+
+name: Publish
+
+#
+#
+# ~ IMPORTANT ~
+# If your commit message starts with `Release`
+#   - We will attempt to automatically publish your commit (although, your commit will not be automatically approved)
+#   - *NOTE*
+#     - We **DO NOT** increase the package.json version please do this yourself!!
+#
+#
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  publish:
+    if: startsWith(github.event.head_commit.message, 'Release ')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Publish
+        run: |
+          npm install
+          npm run build
+          npm config set @material-table:registry https://registry.npmjs.org/
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
+          npm publish --ignore-scripts
