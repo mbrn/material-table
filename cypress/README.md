@@ -1,3 +1,0 @@
-- All tests should go in `~/cypress/integration`
-- Run `npm run cypress:helloworld` to see a demo
-  - The spec for this demo can be found at `~/cypress/integration/helloworld.spec.js`
