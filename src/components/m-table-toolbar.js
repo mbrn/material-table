@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -13,11 +11,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 import { CsvBuilder } from 'filefy';
-import PropTypes, { oneOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import 'jspdf-autotable';
 import * as React from 'react';
-const jsPDF = typeof window !== 'undefined' ? require('jspdf').jsPDF : null;
-/* eslint-enable no-unused-vars */
+import { defaultExportPdf } from '../utils/exportPdf';
 
 export class MTableToolbar extends React.Component {
   constructor(props) {
@@ -74,30 +71,6 @@ export class MTableToolbar extends React.Component {
       .exportFile();
   };
 
-  defaultExportPdf = () => {
-    if (jsPDF !== null) {
-      const [columns, data] = this.getTableData();
-
-      const content = {
-        startY: 50,
-        head: [columns.map((columnDef) => columnDef.title)],
-        body: data
-      };
-
-      const unit = 'pt';
-      const size = 'A4';
-      const orientation = 'landscape';
-
-      const doc = new jsPDF(orientation, unit, size);
-      doc.setFontSize(15);
-      doc.text(this.props.exportFileName || this.props.title, 40, 40);
-      doc.autoTable(content);
-      doc.save(
-        (this.props.exportFileName || this.props.title || 'data') + '.pdf'
-      );
-    }
-  };
-
   exportCsv = () => {
     if (this.props.exportCsv) {
       this.props.exportCsv(this.props.columns, this.props.data);
@@ -111,7 +84,7 @@ export class MTableToolbar extends React.Component {
     if (this.props.exportPdf) {
       this.props.exportPdf(this.props.columns, this.props.data);
     } else {
-      this.defaultExportPdf();
+      defaultExportPdf(this.props, this.getTableData);
     }
     this.setState({ exportButtonAnchorEl: null });
   };

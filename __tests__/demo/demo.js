@@ -2,7 +2,7 @@ import { Grid, MuiThemeProvider, Button } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MaterialTable from '../../dist/material-table';
+import MaterialTable from '../../src';
 
 let direction = 'ltr';
 // direction = 'rtl';
@@ -702,7 +702,10 @@ const App2 = () => {
         { title: 'Sirname', field: 'sirname' },
         { title: 'Age', field: 'age' }
       ]}
-      options={{ filtering: true }}
+      options={{
+        filtering: true,
+        exportButton: true
+      }}
       onFilterChange={(appliedFilter) => {
         console.log({ appliedFilter, ref });
       }}
