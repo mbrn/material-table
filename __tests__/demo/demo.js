@@ -516,6 +516,7 @@ class App extends Component {
                   //   },
                   // }}
                   options={{
+                    filtering: true,
                     tableLayout: 'fixed',
                     columnResizable: true,
                     headerSelectionProps: {
@@ -585,7 +586,7 @@ class App extends Component {
                       emptyDataSourceMessage: 'No records to display',
                       filterRow: {
                         filterTooltip: 'Filter',
-                        filterPlaceHolder: 'Filtaaer'
+                        filterPlaceHolder: 'Filter'
                       }
                     }
                   }}
@@ -682,6 +683,33 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const App2 = () => {
+  const ref = React.useRef();
+  return (
+    <MaterialTable
+      tableRef={ref}
+      data={[
+        { name: 'Bar', sirname: 'Zab', age: 44 },
+        { name: 'Baz', sirname: 'Oof', age: 34 },
+        { name: 'Foo', sirname: 'Rab', age: 24 }
+      ]}
+      columns={[
+        {
+          title: 'Given Name',
+          field: 'name',
+          customFilterAndSearch: (term, rowData) => term == rowData.name.length
+        },
+        { title: 'Sirname', field: 'sirname' },
+        { title: 'Age', field: 'age' }
+      ]}
+      options={{ filtering: true }}
+      onFilterChange={(appliedFilter) => {
+        console.log({ appliedFilter, ref });
+      }}
+    />
+  );
+};
+
+ReactDOM.render(<App2 />, document.getElementById('app'));
 
 module.hot.accept();
