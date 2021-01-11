@@ -167,7 +167,7 @@ MTablePaginationInner.propTypes = {
 MTablePaginationInner.defaultProps = {
   showFirstLastPageButtons: true,
   localization: {
-  firstAriaLabel: "First Page",
+    firstAriaLabel: "First Page",
     firstTooltip: "First Page",
     previousAriaLabel: "Previous Page",
     previousTooltip: "Previous Page",
