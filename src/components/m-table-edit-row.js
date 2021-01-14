@@ -278,7 +278,9 @@ export default class MTableEditRow extends React.Component {
           key="key-edit-cell"
           colSpan={colSpan}
         >
-          <Typography variant="h6">{localization.deleteText}</Typography>
+          <Typography variant="h6">
+            {typeof localization.deleteText === 'function' ? localization.deleteText(this.state.data) : localization.deleteText}
+          </Typography>
         </TableCell>,
       ];
     }
@@ -388,7 +390,7 @@ MTableEditRow.defaultProps = {
     cancelTooltip: "Cancel",
     deleteText: "Are you sure you want to delete this row?",
   },
-  onBulkEditRowChanged: () => {},
+  onBulkEditRowChanged: () => { },
 };
 
 MTableEditRow.propTypes = {
