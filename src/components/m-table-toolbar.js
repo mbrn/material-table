@@ -135,6 +135,7 @@ export class MTableToolbar extends React.Component {
           onChange={(event) => this.onSearchChange(event.target.value)}
           placeholder={localization.searchPlaceholder}
           variant={this.props.searchFieldVariant}
+          size={this.props.searchFieldSize}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -398,6 +399,7 @@ MTableToolbar.defaultProps = {
   searchAutoFocus: false,
   searchFieldAlignment: "right",
   searchFieldVariant: "standard",
+  searchFieldSize: "normal",
   selectedRows: [],
   title: "No Title!",
 };
@@ -416,6 +418,7 @@ MTableToolbar.propTypes = {
   search: PropTypes.bool.isRequired,
   searchFieldStyle: PropTypes.object,
   searchFieldVariant: PropTypes.string,
+  searchFieldSize: PropTypes.string,
   selectedRows: PropTypes.array,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   showTitle: PropTypes.bool.isRequired,

@@ -348,6 +348,7 @@ export const propTypes = {
     searchFieldStyle: PropTypes.object,
     searchAutoFocus: PropTypes.bool,
     searchFieldVariant: PropTypes.oneOf(["standard", "filled", "outlined"]),
+    searchFieldSize: PropTypes.oneOf(["small", "normal"]),
     selection: PropTypes.bool,
     selectionProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     showEmptyDataSourceMessage: PropTypes.bool,

@@ -347,6 +347,7 @@ export interface Options<RowData extends object> {
   searchFieldAlignment?: "left" | "right";
   searchFieldStyle?: React.CSSProperties;
   searchFieldVariant?: "standard" | "filled" | "outlined";
+  searchFieldSize?: "small" | "normal";
   searchAutoFocus?: boolean;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
