@@ -232,6 +232,7 @@ export const defaultProps = {
     searchFieldAlignment: "right",
     searchFieldStyle: {},
     searchFieldVariant: "standard",
+    searchFieldSize: "normal",
     selection: false,
     selectionProps: {},
     sorting: true,
