@@ -37,6 +37,7 @@ class MTableBody extends React.Component {
       }
       return (
         <TableRow
+          classes={this.props.bodyClasses.row}
           style={{
             height:
               rowHeight *
@@ -198,7 +199,7 @@ class MTableBody extends React.Component {
     }
 
     return (
-      <TableBody>
+      <TableBody classes={this.props.bodyClasses.body}>
         {this.props.options.filtering && (
           <this.props.components.FilterRow
             columns={this.props.columns.filter(
@@ -300,6 +301,7 @@ MTableBody.defaultProps = {
   pageSize: 5,
   renderData: [],
   selection: false,
+  bodyClasses: {},
   localization: {
     emptyDataSourceMessage: "No records to display",
     filterRow: {},

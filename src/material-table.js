@@ -821,6 +821,7 @@ export default class MaterialTable extends React.Component {
             ? "fixed"
             : props.options.tableLayout,
       }}
+      classes={props.options.tableClasses}
     >
       {props.options.header && (
         <props.components.Header
@@ -864,6 +865,7 @@ export default class MaterialTable extends React.Component {
           thirdSortClick={props.options.thirdSortClick}
           treeDataMaxLevel={this.state.treeDataMaxLevel}
           options={props.options}
+          headerClasses={props.options.headerClasses}
           onColumnResized={this.onColumnResized}
           scrollWidth={this.state.width}
         />
@@ -880,6 +882,7 @@ export default class MaterialTable extends React.Component {
         errorState={this.state.errorState}
         detailPanel={props.detailPanel}
         options={props.options}
+        bodyClasses={props.options.bodyClasses}
         getFieldValue={this.dataManager.getFieldValue}
         isTreeData={this.props.parentChildData !== undefined}
         onFilterChanged={this.onFilterChange}

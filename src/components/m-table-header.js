@@ -343,8 +343,8 @@ export class MTableHeader extends React.Component {
       });
 
     return (
-      <TableHead>
-        <TableRow>{headers}</TableRow>
+      <TableHead classes={this.props.headerClasses.head}>
+        <TableRow classes={this.props.headerClasses.row}>{headers}</TableRow>
       </TableHead>
     );
   }
@@ -356,6 +356,7 @@ MTableHeader.defaultProps = {
   headerStyle: {},
   selectedCount: 0,
   sorting: true,
+  headerClasses: {},
   localization: {
     actions: "Actions",
   },
