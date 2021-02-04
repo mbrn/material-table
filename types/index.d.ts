@@ -242,6 +242,7 @@ export const MTableActions: (props: any) => React.ReactElement<any>;
 export const MTableBody: (props: any) => React.ReactElement<any>;
 export const MTableBodyRow: (props: any) => React.ReactElement<any>;
 export const MTableCell: (props: any) => React.ReactElement<any>;
+export const MTableEditCell: (props: any) => React.ReactElement<any>;
 export const MTableEditField: (props: any) => React.ReactElement<any>;
 export const MTableEditRow: (props: any) => React.ReactElement<any>;
 export const MTableFilterRow: (props: any) => React.ReactElement<any>;
