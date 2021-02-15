@@ -1,5 +1,11 @@
 {
-  "extends": ["standard", "eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["jest"],
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
+  ],
   "rules": {
     "one-var": "off",
     "semi": ["error", "always", {
