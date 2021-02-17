@@ -253,6 +253,7 @@ var MTableEditRow = /*#__PURE__*/ (function (_React$Component) {
                   value: readonlyValue,
                   key: columnDef.tableData.id,
                   rowData: _this2.props.data,
+                  updatedData: _this2.state.data,
                   style: getCellStyle(columnDef, value),
                 }
               );
@@ -269,7 +270,10 @@ var MTableEditRow = /*#__PURE__*/ (function (_React$Component) {
               };
 
               if (columnDef.validate) {
-                var validateResponse = columnDef.validate(_this2.state.data);
+                var validateResponse = columnDef.validate(
+                  _this2.state.data,
+                  _this2.props.data
+                );
 
                 switch ((0, _typeof2.default)(validateResponse)) {
                   case "object":
@@ -311,6 +315,7 @@ var MTableEditRow = /*#__PURE__*/ (function (_React$Component) {
                   helperText: error.helperText,
                   locale: _this2.props.localization.dateTimePickerLocalization,
                   rowData: _this2.state.data,
+                  originalData: _this2.props.data,
                   onChange: function onChange(value) {
                     var data = (0, _objectSpread2.default)(
                       {},
