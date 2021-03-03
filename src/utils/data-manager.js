@@ -1,6 +1,5 @@
 import formatDate from "date-fns/format";
 import { byString } from "./";
-import equal from "fast-deep-equal";
 
 export default class DataManager {
   applyFilters = false;
@@ -51,14 +50,19 @@ export default class DataManager {
     const prevData = this.data; // current data has info regarding what is open/being edited
     this.data = data.map((row, index) => {
       let prevTableData = [];
+      const rowID = row.id || index; //allow use the opportunity to set their own ID
       // if this row is in our old data, keep the tableData
       if (prevData[index]) {
         const prevRow = prevData[index];
         prevTableData = prevRow.tableData; // hold onto tableData
         delete prevRow.tableData; // clean the prevRow for compare
+        // if the user is passing an id we can assume they always have been and thus check if the ids match and clear prevData if they don't match
+        if (row.id && row.id !== prevTableData.id) {
+          prevTableData = [];
+        }
       }
 
-      row.tableData = { ...row.tableData, ...prevTableData, id: index }; // combine previous table data for this row with this row's data to insure user interaction not cancelled
+      row.tableData = { ...row.tableData, ...prevTableData, id: rowID }; // combine previous table data for this row with this row's data to insure user interaction not cancelled
       if (row.tableData.checked) {
         this.selectedCount++;
       }
