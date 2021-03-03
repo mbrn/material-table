@@ -1,5 +1,6 @@
 import formatDate from "date-fns/format";
 import { byString } from "./";
+import equal from "fast-deep-equal";
 
 export default class DataManager {
   applyFilters = false;
@@ -47,9 +48,17 @@ export default class DataManager {
 
   setData(data) {
     this.selectedCount = 0;
-
+    const prevData = this.data; // current data has info regarding what is open/being edited
     this.data = data.map((row, index) => {
-      row.tableData = { ...row.tableData, id: index };
+      let prevTableData = [];
+      // if this row is in our old data, keep the tableData
+      if (prevData[index]) {
+        const prevRow = prevData[index];
+        prevTableData = prevRow.tableData; // hold onto tableData
+        delete prevRow.tableData; // clean the prevRow for compare
+      }
+
+      row.tableData = { ...row.tableData, ...prevTableData, id: index }; // combine previous table data for this row with this row's data to insure user interaction not cancelled
       if (row.tableData.checked) {
         this.selectedCount++;
       }
