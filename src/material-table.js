@@ -5,11 +5,11 @@ import TableRow from "@material-ui/core/TableRow";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import DoubleScrollbar from "react-double-scrollbar";
 import * as React from "react";
+import equal from "fast-deep-equal";
 import { MTablePagination, MTableSteppedPagination } from "./components";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import DataManager from "./utils/data-manager";
 import { debounce } from "debounce";
-import equal from "fast-deep-equal";
 import { withStyles } from "@material-ui/core";
 import * as CommonValues from "./utils/common-values";
 
@@ -84,7 +84,6 @@ export default class MaterialTable extends React.Component {
 
     this.dataManager.setColumns(props.columns);
     this.dataManager.setDefaultExpanded(props.options.defaultExpanded);
-    this.dataManager.changeRowEditing();
 
     if (this.isRemoteData(props)) {
       this.dataManager.changeApplySearch(false);
@@ -120,25 +119,28 @@ export default class MaterialTable extends React.Component {
     this.dataManager.changeDetailPanelType(props.options.detailPanelType);
   }
 
-  cleanColumns(columns) {
-    return columns.map((col) => {
-      const colClone = { ...col };
-      delete colClone.tableData;
-      return colClone;
+  cleanProps(dirtyProps) {
+    return dirtyProps.map((prop) => {
+      const propClone = { ...prop };
+      delete propClone.tableData;
+      delete propClone.render;
     });
   }
 
   componentDidUpdate(prevProps) {
     // const propsChanged = Object.entries(this.props).reduce((didChange, prop) => didChange || prop[1] !== prevProps[prop[0]], false);
 
-    const fixedPrevColumns = this.cleanColumns(prevProps.columns);
-    const fixedPropsColumns = this.cleanColumns(this.props.columns);
+    const fixedPrevColumns = this.cleanProps(prevProps.columns);
+    const fixedPropsColumns = this.cleanProps(this.props.columns);
+    const fixedPrevData = this.cleanProps(prevProps.data);
+    const fixedPropsData = this.cleanProps(this.props.data);
 
     let propsChanged = !equal(fixedPrevColumns, fixedPropsColumns);
     propsChanged =
       propsChanged || !equal(prevProps.options, this.props.options);
+
     if (!this.isRemoteData()) {
-      propsChanged = propsChanged || !equal(prevProps.data, this.props.data);
+      propsChanged = propsChanged || !equal(fixedPrevData, fixedPropsData);
     }
 
     if (propsChanged) {
