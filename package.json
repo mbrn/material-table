@@ -18,7 +18,8 @@
     "eslint": "eslint src/** -c ./configs/.eslintrc",
     "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
     "lint:fix": "eslint src/** --fix",
-    "prettify": "prettier --write **/*.js"
+    "prettify": "prettier --write **/*.js",
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
