@@ -275,7 +275,10 @@ export class MTableToolbar extends React.Component {
           <this.props.components.Actions
             actions={
               this.props.actions &&
-              this.props.actions.filter((a) => a.position === "toolbar")
+              this.props.actions.filter(
+                (a) =>
+                  a.position === "toolbar" || a.position === "toolbarAlways"
+              )
             }
             components={this.props.components}
           />
@@ -289,7 +292,8 @@ export class MTableToolbar extends React.Component {
       <React.Fragment>
         <this.props.components.Actions
           actions={this.props.actions.filter(
-            (a) => a.position === "toolbarOnSelect"
+            (a) =>
+              a.position === "toolbarOnSelect" || a.position === "toolbarAlways"
           )}
           data={this.props.selectedRows}
           components={this.props.components}

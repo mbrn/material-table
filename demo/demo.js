@@ -509,7 +509,9 @@ class App extends Component {
                     headerSelectionProps: {
                       color: "primary",
                     },
-                    selection: false,
+                    selection: true,
+                    showTextRowsSelected: true,
+
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
 
@@ -519,6 +521,19 @@ class App extends Component {
                       };
                     },
                   }}
+                  actions={[
+                    {
+                      icon: "add_box",
+                      tooltip:
+                        "This button is always visible regardless if checkbox is selected or not",
+                      position: "toolbarAlways",
+                      onClick: () => {
+                        console.log(
+                          "This button is always visible regardless if checkbox is selected or not"
+                        );
+                      },
+                    },
+                  ]}
                   // editable={{
                   //   onBulkUpdate: (changedRows) =>
                   //     new Promise((resolve, reject) => {

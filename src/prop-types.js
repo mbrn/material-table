@@ -23,6 +23,7 @@ export const propTypes = {
           "toolbar",
           "toolbarOnSelect",
           "row",
+          "toolbarAlways",
         ]),
         tooltip: PropTypes.string,
         onClick: PropTypes.func.isRequired,
