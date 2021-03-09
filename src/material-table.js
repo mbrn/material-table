@@ -124,6 +124,7 @@ export default class MaterialTable extends React.Component {
       const propClone = { ...prop };
       delete propClone.tableData;
       delete propClone.render;
+      return propClone;
     });
   }
 
