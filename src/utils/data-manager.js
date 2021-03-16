@@ -214,7 +214,11 @@ export default class DataManager {
     if (rowData) {
       rowData.tableData.editing = mode;
 
-      if (this.lastEditingRow && this.lastEditingRow != rowData) {
+      if (
+        this.lastEditingRow &&
+        this.lastEditingRow.tableData &&
+        this.lastEditingRow != rowData
+      ) {
         this.lastEditingRow.tableData.editing = undefined;
       }
 
@@ -224,7 +228,6 @@ export default class DataManager {
         this.lastEditingRow = undefined;
       }
     } else if (this.lastEditingRow) {
-      this.lastEditingRow.tableData.editing = undefined;
       this.lastEditingRow = undefined;
     }
   }

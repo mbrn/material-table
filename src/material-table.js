@@ -474,9 +474,9 @@ export default class MaterialTable extends React.Component {
     ) {
       this.setState({ isLoading: true }, () => {
         this.props.editable
-          .onRowUpdate(newData, oldData)
+          .onRowUpdate(newData)
           .then((result) => {
-            this.dataManager.changeRowEditing(oldData);
+            this.dataManager.changeRowEditing(oldData, mode);
             this.setState(
               {
                 isLoading: false,
