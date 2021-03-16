@@ -473,7 +473,7 @@ export default class MaterialTable extends React.Component {
         this.props.editable
           .onRowUpdate(newData, oldData)
           .then((result) => {
-            this.dataManager.changeRowEditing(oldData);
+            this.dataManager.changeRowEditing(oldData, mode);
             this.setState(
               {
                 isLoading: false,
@@ -503,7 +503,7 @@ export default class MaterialTable extends React.Component {
         this.props.editable
           .onRowDelete(oldData)
           .then((result) => {
-            this.dataManager.changeRowEditing(oldData);
+            this.dataManager.changeRowEditing(oldData, mode);
             this.setState(
               {
                 isLoading: false,
@@ -566,10 +566,10 @@ export default class MaterialTable extends React.Component {
     } else if (mode === "update") {
       this.props.editable.onRowUpdateCancelled &&
         this.props.editable.onRowUpdateCancelled();
-      this.dataManager.changeRowEditing(rowData);
+      this.dataManager.changeRowEditing(rowData, mode);
       this.setState(this.dataManager.getRenderState());
     } else if (mode === "delete") {
-      this.dataManager.changeRowEditing(rowData);
+      this.dataManager.changeRowEditing(rowData, mode);
       this.setState(this.dataManager.getRenderState());
     }
   };
