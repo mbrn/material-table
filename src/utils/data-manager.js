@@ -212,7 +212,7 @@ export default class DataManager {
 
   changeRowEditing(rowData, mode) {
     if (rowData) {
-      rowData.tableData.editing = mode;
+      if (rowData.tableData) rowData.tableData.editing = mode;
 
       if (
         this.lastEditingRow &&
