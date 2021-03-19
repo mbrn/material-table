@@ -14,7 +14,7 @@ export default class MTableEditRow extends React.Component {
 
     this.state = {
       data: props.data
-        ? JSON.parse(JSON.stringify(props.data))
+        ? { ...props.data }
         : this.createRowData(),
     };
   }
