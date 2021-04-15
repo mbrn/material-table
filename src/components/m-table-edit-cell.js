@@ -56,7 +56,7 @@ class MTableEditCell extends React.Component {
   };
 
   handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    if ((e.keyCode === 13 && e.target.type !== 'textarea') || (e.keyCode === 13 && e.shiftKey)) {
       this.onApprove();
     } else if (e.keyCode === 27) {
       this.onCancel();

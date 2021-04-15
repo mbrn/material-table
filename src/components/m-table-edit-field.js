@@ -160,6 +160,10 @@ class MTableEditField extends React.Component {
       <TextField
         {...this.getProps()}
         fullWidth
+        multiline={
+          this.props.columnDef.multiline === true ? true : false
+        }
+        rows={this.props.columnDef.rows || 1}
         style={
           this.props.columnDef.type === "numeric" ? { float: "right" } : {}
         }

@@ -184,6 +184,7 @@ class App extends Component {
           columns={[
             { title: "Adı", field: "name" },
             { title: "Soyadı", field: "surname" },
+            { title: "Desc1", field: "description", multiline: true, rows: 2 }, // generate a textarea input
             { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
             {
               title: "Doğum Yeri",
@@ -195,6 +196,7 @@ class App extends Component {
             {
               name: "Mehmet",
               surname: "Baran",
+              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
               birthYear: 1987,
               birthCity: 63,
             },
