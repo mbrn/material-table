@@ -650,7 +650,9 @@ export default class MaterialTable extends React.Component {
       query.page = 0;
       query.search = searchText;
 
-      this.onQueryChange(query);
+      this.onQueryChange(query, () => {
+        this.props.onSearchChange && this.props.onSearchChange(searchText);
+      });
     } else {
       this.setState(this.dataManager.getRenderState(), () => {
         this.props.onSearchChange && this.props.onSearchChange(searchText);
