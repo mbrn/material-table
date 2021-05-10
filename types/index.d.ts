@@ -312,6 +312,7 @@ export interface Options<RowData extends object> {
     | string
     | ((columns: Column<RowData>, data: string[][]) => string);
   exportCsv?: (columns: any[], renderData: any[]) => void;
+  exportPdf?: (columns: any[], renderData: any[]) => void;
   filtering?: boolean;
   filterCellStyle?: React.CSSProperties;
   filterRowStyle?: React.CSSProperties;
