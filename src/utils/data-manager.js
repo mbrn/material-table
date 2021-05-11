@@ -82,7 +82,7 @@ export default class DataManager {
             ? columnDef.width + "px"
             : columnDef.width,
         additionalWidth: 0,
-        ...columnDef.tableData,
+        //...columnDef.tableData,
         id: index,
       };
 
