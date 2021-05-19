@@ -100,7 +100,7 @@ export class MTableHeader extends React.Component {
   };
 
   renderHeader() {
-    const size = this.props.options.padding === "default" ? "medium" : "small";
+    const size = this.props.options.padding === "normal" ? "medium" : "small";
 
     const mapArr = this.props.columns
       .filter(

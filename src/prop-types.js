@@ -334,7 +334,7 @@ export const propTypes = {
       "initial",
       "inherit",
     ]),
-    padding: PropTypes.oneOf(["default", "dense"]),
+    padding: PropTypes.oneOf(["normal", "dense"]),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),

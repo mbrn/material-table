@@ -325,7 +325,7 @@ export interface Options<RowData extends object> {
   loadingType?: "overlay" | "linear";
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
-  padding?: "default" | "dense";
+  padding?: "normal" | "dense";
   paging?: boolean;
   grouping?: boolean;
   groupTitle?: (groupData: any) => any;
