@@ -2,8 +2,8 @@
 import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Tooltip from "@material-ui/core/Tooltip";
-import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
 import * as React from "react";
 /* eslint-enable no-unused-vars */
@@ -109,9 +109,9 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden smDown={true}>
+        <Box sx={{ display: { xs: "false", sm: "false", md: "block" } }}>
           {this.renderPagesButton(pageStart, pageEnd)}
-        </Hidden>
+        </Box>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
