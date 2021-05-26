@@ -124,7 +124,7 @@ export default class MTableGroupRow extends React.Component {
       title = React.cloneElement(title);
     }
 
-    let separator = this.props.options.groupRowSeparator || ": ";
+    let separator = this.props.options.groupRowSeparator ?? ": ";
 
     return (
       <>
