@@ -10,7 +10,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import DataManager from "./utils/data-manager";
 import { debounce } from "debounce";
 import equal from "fast-deep-equal";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/styles";
 import * as CommonValues from "./utils/common-values";
 
 /* eslint-enable no-unused-vars */

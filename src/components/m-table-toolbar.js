@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { withStyles } from "@material-ui/styles";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 import { CsvBuilder } from "filefy";
