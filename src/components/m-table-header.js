@@ -80,12 +80,12 @@ export class MTableHeader extends React.Component {
     );
 
     const style = {
-      ...this.props.headerStyle,
-      ...columnDef.headerStyle,
       boxSizing: "border-box",
       width,
       maxWidth: columnDef.maxWidth,
       minWidth: columnDef.minWidth,
+      ...this.props.headerStyle,
+      ...columnDef.headerStyle,
     };
 
     if (
