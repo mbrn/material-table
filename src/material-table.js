@@ -381,7 +381,7 @@ export default class MaterialTable extends React.Component {
     }
   };
 
-  onChangeRowsPerPage = (event) => {
+  onRowsPerPageChange = (event) => {
     const pageSize = event.target.value;
 
     this.dataManager.changePageSize(pageSize);
@@ -393,14 +393,14 @@ export default class MaterialTable extends React.Component {
       query.pageSize = event.target.value;
       query.page = 0;
       this.onQueryChange(query, () => {
-        this.props.onChangeRowsPerPage &&
-          this.props.onChangeRowsPerPage(pageSize);
+        this.props.onRowsPerPageChange &&
+          this.props.onRowsPerPageChange(pageSize);
       });
     } else {
       this.dataManager.changeCurrentPage(0);
       this.setState(this.dataManager.getRenderState(), () => {
-        this.props.onChangeRowsPerPage &&
-          this.props.onChangeRowsPerPage(pageSize);
+        this.props.onRowsPerPageChange &&
+          this.props.onRowsPerPageChange(pageSize);
       });
     }
   };
@@ -775,7 +775,7 @@ export default class MaterialTable extends React.Component {
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
                 onPageChange={this.onPageChange}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
+                onRowsPerPageChange={this.onRowsPerPageChange}
                 ActionsComponent={(subProps) =>
                   props.options.paginationType === "normal" ? (
                     <MTablePagination
