@@ -236,41 +236,43 @@ export class MTableToolbar extends React.Component {
             </Menu>
           </span>
         )}
-        {this.props.exportButton && (
-          <span>
-            <Tooltip title={localization.exportTitle}>
-              <IconButton
-                color="inherit"
-                onClick={(event) =>
-                  this.setState({
-                    exportButtonAnchorEl: event.currentTarget,
-                  })
-                }
-                aria-label={localization.exportAriaLabel}
+        {this.props.exportButton &&
+          (this.props.exportButton.csv === true ||
+            this.props.exportButton.pdf === true) && (
+            <span>
+              <Tooltip title={localization.exportTitle}>
+                <IconButton
+                  color="inherit"
+                  onClick={(event) =>
+                    this.setState({
+                      exportButtonAnchorEl: event.currentTarget,
+                    })
+                  }
+                  aria-label={localization.exportAriaLabel}
+                >
+                  <this.props.icons.Export />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={this.state.exportButtonAnchorEl}
+                open={Boolean(this.state.exportButtonAnchorEl)}
+                onClose={() => this.setState({ exportButtonAnchorEl: null })}
               >
-                <this.props.icons.Export />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={this.state.exportButtonAnchorEl}
-              open={Boolean(this.state.exportButtonAnchorEl)}
-              onClose={() => this.setState({ exportButtonAnchorEl: null })}
-            >
-              {(this.props.exportButton === true ||
-                this.props.exportButton.csv) && (
-                <MenuItem key="export-csv" onClick={this.exportCsv}>
-                  {localization.exportCSVName}
-                </MenuItem>
-              )}
-              {(this.props.exportButton === true ||
-                this.props.exportButton.pdf) && (
-                <MenuItem key="export-pdf" onClick={this.exportPdf}>
-                  {localization.exportPDFName}
-                </MenuItem>
-              )}
-            </Menu>
-          </span>
-        )}
+                {(this.props.exportButton === true ||
+                  this.props.exportButton.csv) && (
+                  <MenuItem key="export-csv" onClick={this.exportCsv}>
+                    {localization.exportCSVName}
+                  </MenuItem>
+                )}
+                {(this.props.exportButton === true ||
+                  this.props.exportButton.pdf) && (
+                  <MenuItem key="export-pdf" onClick={this.exportPdf}>
+                    {localization.exportPDFName}
+                  </MenuItem>
+                )}
+              </Menu>
+            </span>
+          )}
         <span>
           <this.props.components.Actions
             actions={
