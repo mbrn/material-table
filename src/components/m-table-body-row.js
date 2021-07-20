@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import Checkbox from "@material-ui/core/Checkbox";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
-import Icon from "@material-ui/core/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from "prop-types";
 import * as React from "react";
@@ -66,7 +66,11 @@ export default class MTableBodyRow extends React.Component {
               }
               rowData={this.props.data}
               cellEditable={
-                columnDef.editable !== "never" && !!this.props.cellEditable
+                columnDef.editable !== "never" &&
+                ((typeof columnDef.editable === "function" &&
+                  !!columnDef.editable(columnDef, this.props.data)) ||
+                  typeof columnDef.editable !== "function") &&
+                !!this.props.cellEditable
               }
               onCellEditStarted={this.props.onCellEditStarted}
               scrollWidth={this.props.scrollWidth}
