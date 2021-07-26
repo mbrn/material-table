@@ -69,6 +69,10 @@ export default class MaterialTable extends React.Component {
     );
   }
 
+  componentWillUnmount() {
+    this.props.columns.forEach(col => delete col.tableData);
+  }
+
   setDataManagerFields(props, isInit) {
     let defaultSortColumnIndex = -1;
     let defaultSortDirection = "";
