@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
-import TableCell from "@material-ui/core/TableCell";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import withTheme from "@material-ui/core/styles/withTheme";
-import { MTable } from "..";
+import TableCell from "@material-ui/core/TableCell";
+import PropTypes from "prop-types";
+import * as React from "react";
 /* eslint-enable no-unused-vars */
 
 class MTableEditCell extends React.Component {
@@ -101,13 +99,17 @@ class MTableEditCell extends React.Component {
     const actions = [
       {
         icon: this.props.icons.Check,
-        tooltip: this.props.localization.saveTooltip,
+        tooltip: this.props.localization
+          ? this.props.localization.saveTooltip
+          : "",
         onClick: this.onApprove,
         disabled: this.state.isLoading,
       },
       {
         icon: this.props.icons.Clear,
-        tooltip: this.props.localization.cancelTooltip,
+        tooltip: this.props.localization
+          ? this.props.localization.cancelTooltip
+          : "",
         onClick: this.onCancel,
         disabled: this.state.isLoading,
       },
@@ -124,8 +126,30 @@ class MTableEditCell extends React.Component {
 
   render() {
     return (
-      <TableCell size={this.props.size} style={this.getStyle()} padding="none">
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <TableCell
+        size={this.props.size}
+        style={this.getStyle()}
+        padding="none"
+        onBlur={(event) => {
+          if (
+            event.target.attributes &&
+            event.target.attributes["role"] &&
+            event.target.attributes["role"].value === "option"
+          ) {
+            event.preventDefault();
+            return;
+          }
+
+          `${this.props.rowData[this.props.columnDef.field]}` ===
+          this.state.value
+            ? this.onCancel()
+            : this.onApprove();
+        }}
+      >
+        <div
+          style={{ display: "flex", alignItems: "center" }}
+          id={"table-cell-lookup-option-box"}
+        >
           <div style={{ flex: 1, marginRight: 4 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
@@ -136,7 +160,7 @@ class MTableEditCell extends React.Component {
               autoFocus
             />
           </div>
-          {this.renderActions()}
+          {/* {this.renderActions()} */}
         </div>
       </TableCell>
     );

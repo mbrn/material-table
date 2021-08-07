@@ -1,11 +1,11 @@
-import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Icon from "@material-ui/core/Icon";
 import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
-import * as MComponents from "./components";
-import PropTypes from "prop-types";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import TablePagination from "@material-ui/core/TablePagination";
+import PropTypes from "prop-types";
+import React from "react";
+import * as MComponents from "./components";
 
 const OverlayLoading = (props) => (
   <div
@@ -209,6 +209,7 @@ export const defaultProps = {
     exportButton: false,
     exportDelimiter: ",",
     filtering: false,
+    draggableRow: false,
     groupTitle: false,
     header: true,
     headerSelectionProps: {},

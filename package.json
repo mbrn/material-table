@@ -1,6 +1,6 @@
 {
-  "name": "material-table",
-  "version": "1.69.3",
+  "name": "ray-material-table",
+  "version": "1.69.4",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mbrn/material-table.git"
+    "url": "git+https://github.com/payandeh/material-table.git"
   },
   "keywords": [
     "react",
@@ -39,9 +39,9 @@
   "author": "Mehmet Baran",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mbrn/material-table/issues"
+    "url": "https://github.com/payandeh/material-table/issues"
   },
-  "homepage": "https://github.com/mbrn/material-table#readme",
+  "homepage": "https://github.com/payandeh/material-table#readme",
   "devDependencies": {
     "@babel/cli": "7.1.2",
     "@babel/core": "7.4.4",

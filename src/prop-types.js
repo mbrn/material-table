@@ -306,7 +306,9 @@ export const propTypes = {
     debounceInterval: PropTypes.number,
     detailPanelType: PropTypes.oneOf(["single", "multiple"]),
     doubleHorizontalScroll: PropTypes.bool,
+    hideGroupByColumnTitle: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
+    draggableRow: PropTypes.bool,
     exportAllData: PropTypes.bool,
     exportButton: PropTypes.oneOfType([
       PropTypes.bool,
@@ -373,6 +375,7 @@ export const propTypes = {
   onSearchChange: PropTypes.func,
   onFilterChange: PropTypes.func,
   onColumnDragged: PropTypes.func,
+  onColumnResized: PropTypes.func,
   onGroupRemoved: PropTypes.func,
   onSelectionChange: PropTypes.func,
   onChangeRowsPerPage: PropTypes.func,

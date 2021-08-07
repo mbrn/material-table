@@ -14,10 +14,7 @@ export default class MTableBodyRow extends React.Component {
   renderColumns() {
     const size = CommonValues.elementSize(this.props);
     const mapArr = this.props.columns
-      .filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      )
+      .filter((columnDef) => !columnDef.hidden)
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);

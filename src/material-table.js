@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
+import { withStyles } from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import Table from "@material-ui/core/Table";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import DoubleScrollbar from "react-double-scrollbar";
-import * as React from "react";
-import { MTablePagination, MTableSteppedPagination } from "./components";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import DataManager from "./utils/data-manager";
 import { debounce } from "debounce";
 import equal from "fast-deep-equal";
-import { withStyles } from "@material-ui/core";
+import * as React from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import DoubleScrollbar from "react-double-scrollbar";
+import { MTablePagination, MTableSteppedPagination } from "./components";
 import * as CommonValues from "./utils/common-values";
+import DataManager from "./utils/data-manager";
 
 /* eslint-enable no-unused-vars */
 
@@ -723,6 +723,8 @@ export default class MaterialTable extends React.Component {
   onColumnResized = (id, additionalWidth) => {
     this.dataManager.onColumnResized(id, additionalWidth);
     this.setState(this.dataManager.getRenderState());
+    const column = this.dataManager.columns.find((c) => c.tableData.id === id);
+    this.props.onColumnResized(column, additionalWidth);
   };
 
   renderFooter() {

@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
-import * as React from "react";
-import PropTypes from "prop-types";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
+import { Tooltip } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import withStyles from "@material-ui/core/styles/withStyles";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import PropTypes from "prop-types";
+import * as React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { Tooltip } from "@material-ui/core";
 import * as CommonValues from "../utils/common-values";
-import equal from "fast-deep-equal";
 
 /* eslint-enable no-unused-vars */
 
@@ -103,10 +102,7 @@ export class MTableHeader extends React.Component {
     const size = this.props.options.padding === "default" ? "medium" : "small";
 
     const mapArr = this.props.columns
-      .filter(
-        (columnDef) =>
-          !columnDef.hidden && !(columnDef.tableData.groupOrder > -1)
-      )
+      .filter((columnDef) => !columnDef.hidden)
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
         let content = columnDef.title;

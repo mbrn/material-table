@@ -1,9 +1,8 @@
-import { Grid, MuiThemeProvider, Button } from "@material-ui/core";
+import { MuiThemeProvider, Typography } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
-import Typography from "@material-ui/core/Typography";
 
 let direction = "ltr";
 // direction = 'rtl';
@@ -14,22 +13,22 @@ const theme = createMuiTheme({
   },
 });
 
-const bigData = [];
-for (let i = 0; i < 1; i++) {
-  const d = {
-    id: i + 1,
-    name: "Name" + i,
-    surname: "Surname" + Math.round(i / 10),
-    isMarried: i % 2 ? true : false,
-    birthDate: new Date(1987, 1, 1),
-    birthCity: 0,
-    sex: i % 2 ? "Male" : "Female",
-    type: "adult",
-    insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-    time: new Date(1900, 1, 1, 14, 23, 35),
-  };
-  bigData.push(d);
-}
+// const bigData = [];
+// for (let i = 0; i < 1; i++) {
+//   const d = {
+//     id: i,
+//     name: "Name" + i,
+//     surname: "Surname" + Math.round(i / 10),
+//     isMarried: i % 2 ? true : false,
+//     birthDate: new Date(1987, 1, 1),
+//     birthCity: 0,
+//     sex: i % 2 ? "Male" : "Female",
+//     type: "adult",
+//     insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+//     time: new Date(1900, 1, 1, 14, 23, 35),
+//   };
+//   bigData.push(d);
+// }
 
 class App extends Component {
   tableRef = React.createRef();
@@ -39,9 +38,10 @@ class App extends Component {
   state = {
     text: "text",
     selecteds: 0,
+    isLoading: false,
     data: [
       {
-        id: 1,
+        id: 0,
         name: "A1",
         surname: "B",
         isMarried: true,
@@ -53,7 +53,7 @@ class App extends Component {
         time: new Date(1900, 1, 1, 14, 23, 35),
       },
       {
-        id: 2,
+        id: 1,
         name: "A2",
         surname: "B",
         isMarried: false,
@@ -116,310 +116,310 @@ class App extends Component {
         time: new Date(1900, 1, 1, 14, 23, 35),
         parentId: 5,
       },
-      {
-        id: 11,
-        name: "A1",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 0,
-        sex: "Male",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 21,
-        name: "A2",
-        surname: "B",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 31,
-        name: "A3",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 41,
-        name: "A4",
-        surname: "Dede",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 3,
-      },
-      {
-        id: 51,
-        name: "A5",
-        surname: "C",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 61,
-        name: "A6",
-        surname: "C",
-        isMarried: true,
-        birthDate: new Date(1989, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 5,
-      },
-      {
-        id: 12,
-        name: "A1",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 0,
-        sex: "Male",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 22,
-        name: "A2",
-        surname: "B",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 32,
-        name: "A3",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 42,
-        name: "A4",
-        surname: "Dede",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 3,
-      },
-      {
-        id: 52,
-        name: "A5",
-        surname: "C",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 62,
-        name: "A6",
-        surname: "C",
-        isMarried: true,
-        birthDate: new Date(1989, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 5,
-      },
-      {
-        id: 13,
-        name: "A1",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 0,
-        sex: "Male",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 23,
-        name: "A2",
-        surname: "B",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 33,
-        name: "A3",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 43,
-        name: "A4",
-        surname: "Dede",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 3,
-      },
-      {
-        id: 53,
-        name: "A5",
-        surname: "C",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 63,
-        name: "A6",
-        surname: "C",
-        isMarried: true,
-        birthDate: new Date(1989, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 5,
-      },
-      {
-        id: 14,
-        name: "A1",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 0,
-        sex: "Male",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 24,
-        name: "A2",
-        surname: "B",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "adult",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 34,
-        name: "A3",
-        surname: "B",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 1,
-      },
-      {
-        id: 44,
-        name: "A4",
-        surname: "Dede",
-        isMarried: true,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 3,
-      },
-      {
-        id: 54,
-        name: "A5",
-        surname: "C",
-        isMarried: false,
-        birthDate: new Date(1987, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-      },
-      {
-        id: 64,
-        name: "A6",
-        surname: "C",
-        isMarried: true,
-        birthDate: new Date(1989, 1, 1),
-        birthCity: 34,
-        sex: "Female",
-        type: "child",
-        insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
-        time: new Date(1900, 1, 1, 14, 23, 35),
-        parentId: 5,
-      },
+      // {
+      //   id: 11,
+      //   name: "A1",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 0,
+      //   sex: "Male",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 21,
+      //   name: "A2",
+      //   surname: "B",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 31,
+      //   name: "A3",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 41,
+      //   name: "A4",
+      //   surname: "Dede",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 3,
+      // },
+      // {
+      //   id: 51,
+      //   name: "A5",
+      //   surname: "C",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 61,
+      //   name: "A6",
+      //   surname: "C",
+      //   isMarried: true,
+      //   birthDate: new Date(1989, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 5,
+      // },
+      // {
+      //   id: 12,
+      //   name: "A1",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 0,
+      //   sex: "Male",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 22,
+      //   name: "A2",
+      //   surname: "B",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 32,
+      //   name: "A3",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 42,
+      //   name: "A4",
+      //   surname: "Dede",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 3,
+      // },
+      // {
+      //   id: 52,
+      //   name: "A5",
+      //   surname: "C",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 62,
+      //   name: "A6",
+      //   surname: "C",
+      //   isMarried: true,
+      //   birthDate: new Date(1989, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 5,
+      // },
+      // {
+      //   id: 13,
+      //   name: "A1",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 0,
+      //   sex: "Male",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 23,
+      //   name: "A2",
+      //   surname: "B",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 33,
+      //   name: "A3",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 43,
+      //   name: "A4",
+      //   surname: "Dede",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 3,
+      // },
+      // {
+      //   id: 53,
+      //   name: "A5",
+      //   surname: "C",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 63,
+      //   name: "A6",
+      //   surname: "C",
+      //   isMarried: true,
+      //   birthDate: new Date(1989, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 5,
+      // },
+      // {
+      //   id: 14,
+      //   name: "A1",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 0,
+      //   sex: "Male",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 24,
+      //   name: "A2",
+      //   surname: "B",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "adult",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 34,
+      //   name: "A3",
+      //   surname: "B",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 1,
+      // },
+      // {
+      //   id: 44,
+      //   name: "A4",
+      //   surname: "Dede",
+      //   isMarried: true,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 3,
+      // },
+      // {
+      //   id: 54,
+      //   name: "A5",
+      //   surname: "C",
+      //   isMarried: false,
+      //   birthDate: new Date(1987, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      // },
+      // {
+      //   id: 64,
+      //   name: "A6",
+      //   surname: "C",
+      //   isMarried: true,
+      //   birthDate: new Date(1989, 1, 1),
+      //   birthCity: 34,
+      //   sex: "Female",
+      //   type: "child",
+      //   insertDateTime: new Date(2018, 1, 1, 12, 23, 44),
+      //   time: new Date(1900, 1, 1, 14, 23, 35),
+      //   parentId: 5,
+      // },
     ],
     columns: [
       {
@@ -438,7 +438,7 @@ class App extends Component {
         editable: "never",
         resizable: false,
       },
-      { title: "Evli", field: "isMarried" },
+      { title: "Evli", field: "isMarried", defaultGroupOrder: 0 },
       {
         title: "Cinsiyet",
         field: "sex",
@@ -478,7 +478,7 @@ class App extends Component {
       <>
         <MuiThemeProvider theme={theme}>
           <div style={{ maxWidth: "100%", direction }}>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs={12}>
                 {this.state.selectedRows && this.state.selectedRows.length}
                 <MaterialTable
@@ -486,88 +486,45 @@ class App extends Component {
                   columns={this.state.columns}
                   data={this.state.data}
                   title="Demo Title"
+                  isLoading={this.state.isLoading}
                   onFilterChange={(appliedFilter) => {
                     console.log("selected Filters : ", appliedFilter);
                   }}
-                  // cellEditable={{
-                  //   cellStyle: {},
-                  //   onCellEditApproved: (
-                  //     newValue,
-                  //     oldValue,
-                  //     rowData,
-                  //     columnDef
-                  //   ) => {
-                  //     return new Promise((resolve, reject) => {
-                  //       console.log("newValue: " + newValue);
-                  //       setTimeout(resolve, 4000);
-                  //     });
-                  //   },
-                  // }}
+                  cellEditable={{
+                    cellStyle: {},
+                    onCellEditApproved: (
+                      newValue,
+                      oldValue,
+                      rowData,
+                      columnDef
+                    ) => {
+                      return new Promise((resolve, reject) => {
+                        console.log("newValue: " + newValue);
+                        setTimeout(resolve, 4000);
+                      });
+                    },
+                  }}
+
                   options={{
                     tableLayout: "fixed",
                     columnResizable: true,
+                    defaultExpanded: true,
+                    selection: true,
                     headerSelectionProps: {
                       color: "primary",
                     },
-                    selection: false,
-                    selectionProps: (rowData) => {
-                      rowData.tableData.disabled = rowData.name === "A1";
+                    grouping: true,
+                    hideGroupByColumnTitle: true,
+                    // selectionProps: (rowData) => {
+                    //   rowData.tableData.disabled = rowData.name === "A1";
 
-                      return {
-                        disabled: rowData.name === "A1",
-                        color: "primary",
-                      };
-                    },
+                    //   return {
+                    //     disabled: rowData.name === "A1",
+                    //     color: "primary",
+                    //   };
+                    // },
                   }}
-                  // editable={{
-                  //   onBulkUpdate: (changedRows) =>
-                  //     new Promise((resolve, reject) => {
-                  //       console.log(changedRows);
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           data.push(newData);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowAdd: (newData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           data.push(newData);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowUpdate: (newData, oldData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* const data = this.state.data;
-                  //           const index = data.indexOf(oldData);
-                  //           data[index] = newData;
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  //   onRowDelete: (oldData) =>
-                  //     new Promise((resolve, reject) => {
-                  //       setTimeout(() => {
-                  //         {
-                  //           /* let data = this.state.data;
-                  //           const index = data.indexOf(oldData);
-                  //           data.splice(index, 1);
-                  //           this.setState({ data }, () => resolve()); */
-                  //         }
-                  //         resolve();
-                  //       }, 1000);
-                  //     }),
-                  // }}
+                  
                   localization={{
                     body: {
                       emptyDataSourceMessage: "No records to display",
@@ -576,6 +533,12 @@ class App extends Component {
                         filterPlaceHolder: "Filtaaer",
                       },
                     },
+                  }}
+                  onColumnResized={(a, b) => {
+                    console.log("a");
+                    console.log(a);
+                    console.log("b");
+                    console.log(b);
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
                   onColumnDragged={(oldPos, newPos) =>
@@ -586,15 +549,22 @@ class App extends Component {
                   // parentChildData={(row, rows) => rows.find(a => a.id === row.parentId)}
                 />
               </Grid>
-            </Grid>
-            {this.state.text}
+            </Grid> */}
+            {/* {this.state.text} */}
             <button
-              onClick={() => this.tableRef.current.onAllSelected(true)}
+              onClick={(event) => {
+                debugger;
+                this.tableRef.current.onChangePage(
+                  event,
+                  this.tableRef.current.state.query.page + 1
+                );
+              }}
               style={{ margin: 10 }}
             >
               Select
             </button>
-            {/* <MaterialTable
+            <MaterialTable
+              tableRef={this.tableRef}
               title={
                 <Typography variant="h6" color="primary">
                   Remote Data Preview
@@ -662,7 +632,7 @@ class App extends Component {
                     });
                 })
               }
-            /> */}
+            />
           </div>
         </MuiThemeProvider>
       </>

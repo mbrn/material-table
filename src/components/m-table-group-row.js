@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
+import IconButton from "@material-ui/core/IconButton";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import * as React from "react";
 /* eslint-enable no-unused-vars */
@@ -148,10 +148,12 @@ export default class MTableGroupRow extends React.Component {
             >
               <this.props.icons.DetailPanel />
             </IconButton>
-            <b>
-              {title}
-              {separator}
-            </b>
+            {!this.props.options.hideGroupByColumnTitle && (
+              <b>
+                {title}
+                {separator}
+              </b>
+            )}
           </this.props.components.Cell>
         </TableRow>
         {detail}
