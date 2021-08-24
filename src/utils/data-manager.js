@@ -1,20 +1,20 @@
-import formatDate from "date-fns/format";
-import { byString } from "./";
+import formatDate from 'date-fns/format';
+import { byString } from './';
 
 export default class DataManager {
   applyFilters = false;
   applySearch = false;
   applySort = false;
   currentPage = 0;
-  detailPanelType = "multiple";
+  detailPanelType = 'multiple';
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
-  orderDirection = "";
+  orderDirection = '';
   pageSize = 5;
   paging = true;
   parentFunc = null;
-  searchText = "";
+  searchText = '';
   selectedCount = 0;
   treefiedDataLength = 0;
   treeDataMaxLevel = 0;
@@ -60,27 +60,18 @@ export default class DataManager {
   }
 
   setColumns(columns) {
-    const undefinedWidthColumns = columns.filter((c) =>
-      c.width === undefined && c.columnDef
-        ? c.columnDef.tableData.width === undefined
-        : true && !c.hidden
-    );
-    let usedWidth = ["0px"];
+    const undefinedWidthColumns = columns.filter(c => !c.width);
+    let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || "asc",
-        width:
-          typeof columnDef.width === "number"
-            ? columnDef.width + "px"
-            : columnDef.width,
+        groupSort: columnDef.defaultGroupSort || 'asc',
+        width: typeof columnDef.width === 'number' ? columnDef.width + 'px' : columnDef.width,
         initialWidth:
-          typeof columnDef.width === "number"
-            ? columnDef.width + "px"
-            : columnDef.width,
+          typeof columnDef.width === 'number' ? columnDef.width + 'px' : columnDef.width,
         additionalWidth: 0,
         ...columnDef.tableData,
         id: index,
@@ -93,8 +84,8 @@ export default class DataManager {
       return columnDef;
     });
 
-    usedWidth = "(" + usedWidth.join(" + ") + ")";
-    undefinedWidthColumns.forEach((columnDef) => {
+    usedWidth = '(' + usedWidth.join(' + ') + ')';
+    undefinedWidthColumns.forEach(columnDef => {
       columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
@@ -147,9 +138,9 @@ export default class DataManager {
     rowData.tableData.checked = checked;
     this.selectedCount = this.selectedCount + (checked ? 1 : -1);
 
-    const checkChildRows = (rowData) => {
+    const checkChildRows = rowData => {
       if (rowData.tableData.childRows) {
-        rowData.tableData.childRows.forEach((childRow) => {
+        rowData.tableData.childRows.forEach(childRow => {
           if (childRow.tableData.checked !== checked) {
             childRow.tableData.checked = checked;
             this.selectedCount = this.selectedCount + (checked ? 1 : -1);
@@ -167,16 +158,14 @@ export default class DataManager {
   changeDetailPanelVisibility(path, render) {
     const rowData = this.findDataByPath(this.sortedData, path);
 
-    if (
-      (rowData.tableData.showDetailPanel || "").toString() === render.toString()
-    ) {
+    if ((rowData.tableData.showDetailPanel || '').toString() === render.toString()) {
       rowData.tableData.showDetailPanel = undefined;
     } else {
       rowData.tableData.showDetailPanel = render;
     }
 
     if (
-      this.detailPanelType === "single" &&
+      this.detailPanelType === 'single' &&
       this.lastDetailPanelRow &&
       this.lastDetailPanelRow != rowData
     ) {
@@ -222,13 +211,13 @@ export default class DataManager {
 
   changeAllSelected(checked) {
     let selectedCount = 0;
-    if (this.isDataType("group")) {
-      const setCheck = (data) => {
-        data.forEach((element) => {
+    if (this.isDataType('group')) {
+      const setCheck = data => {
+        data.forEach(element => {
           if (element.groups.length > 0) {
             setCheck(element.groups);
           } else {
-            element.data.forEach((d) => {
+            element.data.forEach(d => {
               d.tableData.checked = d.tableData.disabled ? false : checked;
               selectedCount++;
             });
@@ -238,7 +227,7 @@ export default class DataManager {
 
       setCheck(this.groupedData);
     } else {
-      this.searchedData.map((row) => {
+      this.searchedData.map(row => {
         row.tableData.checked = row.tableData.disabled ? false : checked;
         return row;
       });
@@ -257,12 +246,12 @@ export default class DataManager {
   }
 
   changeGroupOrder(columnId) {
-    const column = this.columns.find((c) => c.tableData.id === columnId);
+    const column = this.columns.find(c => c.tableData.id === columnId);
 
-    if (column.tableData.groupSort === "asc") {
-      column.tableData.groupSort = "desc";
+    if (column.tableData.groupSort === 'asc') {
+      column.tableData.groupSort = 'desc';
     } else {
-      column.tableData.groupSort = "asc";
+      column.tableData.groupSort = 'asc';
     }
 
     this.sorted = false;
@@ -286,15 +275,10 @@ export default class DataManager {
     let start = 0;
 
     let groups = this.columns
-      .filter((col) => col.tableData.groupOrder > -1)
-      .sort(
-        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
-      );
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
-    if (
-      result.destination.droppableId === "groups" &&
-      result.source.droppableId === "groups"
-    ) {
+    if (result.destination.droppableId === 'groups' && result.source.droppableId === 'groups') {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
@@ -310,12 +294,10 @@ export default class DataManager {
         groups.push(last);
       }
     } else if (
-      result.destination.droppableId === "groups" &&
-      result.source.droppableId === "headers"
+      result.destination.droppableId === 'groups' &&
+      result.source.droppableId === 'headers'
     ) {
-      const newGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
-      );
+      const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
 
       if (newGroup.grouping === false || !newGroup.field) {
         return;
@@ -323,17 +305,15 @@ export default class DataManager {
 
       groups.splice(result.destination.index, 0, newGroup);
     } else if (
-      result.destination.droppableId === "headers" &&
-      result.source.droppableId === "groups"
+      result.destination.droppableId === 'headers' &&
+      result.source.droppableId === 'groups'
     ) {
-      const removeGroup = this.columns.find(
-        (c) => c.tableData.id == result.draggableId
-      );
+      const removeGroup = this.columns.find(c => c.tableData.id == result.draggableId);
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
     } else if (
-      result.destination.droppableId === "headers" &&
-      result.source.droppableId === "headers"
+      result.destination.droppableId === 'headers' &&
+      result.source.droppableId === 'headers'
     ) {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
@@ -341,14 +321,10 @@ export default class DataManager {
       // get the effective start and end considering hidden columns
       const sorted = this.columns
         .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-        .filter((column) => column.tableData.groupOrder === undefined);
+        .filter(column => column.tableData.groupOrder === undefined);
       let numHiddenBeforeStart = 0;
       let numVisibleBeforeStart = 0;
-      for (
-        let i = 0;
-        i < sorted.length && numVisibleBeforeStart <= start;
-        i++
-      ) {
+      for (let i = 0; i < sorted.length && numVisibleBeforeStart <= start; i++) {
         if (sorted[i].hidden) {
           numHiddenBeforeStart++;
         } else {
@@ -396,16 +372,13 @@ export default class DataManager {
   }
 
   startCellEditable = (rowData, columnDef) => {
-    rowData.tableData.editCellList = [
-      ...(rowData.tableData.editCellList || []),
-      columnDef,
-    ];
+    rowData.tableData.editCellList = [...(rowData.tableData.editCellList || []), columnDef];
   };
 
   finishCellEditable = (rowData, columnDef) => {
     if (rowData.tableData.editCellList) {
       var index = rowData.tableData.editCellList.findIndex(
-        (c) => c.tableData.id === columnDef.tableData.id
+        c => c.tableData.id === columnDef.tableData.id,
       );
       if (index !== -1) {
         rowData.tableData.editCellList.splice(index, 1);
@@ -425,10 +398,10 @@ export default class DataManager {
   };
 
   onColumnResized(id, additionalWidth) {
-    const column = this.columns.find((c) => c.tableData.id === id);
+    const column = this.columns.find(c => c.tableData.id === id);
     if (!column) return;
 
-    const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
+    const nextColumn = this.columns.find(c => c.tableData.id === id + 1);
     if (!nextColumn) return;
 
     // console.log("S i: " + column.tableData.initialWidth);
@@ -446,8 +419,8 @@ export default class DataManager {
     // console.log("F w: " + column.tableData.width);
   }
 
-  expandTreeForNodes = (data) => {
-    data.forEach((row) => {
+  expandTreeForNodes = data => {
+    data.forEach(row => {
       let currentRow = row;
       while (this.parentFunc(currentRow, this.data)) {
         let parent = this.parentFunc(currentRow, this.data);
@@ -460,7 +433,7 @@ export default class DataManager {
   };
 
   findDataByPath = (renderData, path) => {
-    if (this.isDataType("tree")) {
+    if (this.isDataType('tree')) {
       const node = path.reduce(
         (result, current) => {
           return (
@@ -470,7 +443,7 @@ export default class DataManager {
             result.tableData.childRows[current]
           );
         },
-        { tableData: { childRows: renderData } }
+        { tableData: { childRows: renderData } },
       );
 
       return node;
@@ -510,7 +483,7 @@ export default class DataManager {
 
   getFieldValue = (rowData, columnDef, lookup = true) => {
     let value =
-      typeof rowData[columnDef.field] !== "undefined"
+      typeof rowData[columnDef.field] !== 'undefined'
         ? rowData[columnDef.field]
         : byString(rowData, columnDef.field);
     if (columnDef.lookup && lookup) {
@@ -521,19 +494,19 @@ export default class DataManager {
   };
 
   isDataType(type) {
-    let dataType = "normal";
+    let dataType = 'normal';
 
     if (this.parentFunc) {
-      dataType = "tree";
-    } else if (this.columns.find((a) => a.tableData.groupOrder > -1)) {
-      dataType = "group";
+      dataType = 'tree';
+    } else if (this.columns.find(a => a.tableData.groupOrder > -1)) {
+      dataType = 'group';
     }
 
     return type === dataType;
   }
 
   sort(a, b, type) {
-    if (type === "numeric") {
+    if (type === 'numeric') {
       return a - b;
     } else {
       if (a !== b) {
@@ -546,30 +519,30 @@ export default class DataManager {
   }
 
   sortList(list) {
-    const columnDef = this.columns.find((_) => _.tableData.id === this.orderBy);
+    const columnDef = this.columns.find(_ => _.tableData.id === this.orderBy);
     let result = list;
 
     if (columnDef.customSort) {
-      if (this.orderDirection === "desc") {
-        result = list.sort((a, b) => columnDef.customSort(b, a, "row", "desc"));
+      if (this.orderDirection === 'desc') {
+        result = list.sort((a, b) => columnDef.customSort(b, a, 'row', 'desc'));
       } else {
-        result = list.sort((a, b) => columnDef.customSort(a, b, "row"));
+        result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
       }
     } else {
       result = list.sort(
-        this.orderDirection === "desc"
+        this.orderDirection === 'desc'
           ? (a, b) =>
-              this.sort(
-                this.getFieldValue(b, columnDef),
-                this.getFieldValue(a, columnDef),
-                columnDef.type
-              )
+            this.sort(
+              this.getFieldValue(b, columnDef),
+              this.getFieldValue(a, columnDef),
+              columnDef.type,
+            )
           : (a, b) =>
-              this.sort(
-                this.getFieldValue(a, columnDef),
-                this.getFieldValue(b, columnDef),
-                columnDef.type
-              )
+            this.sort(
+              this.getFieldValue(a, columnDef),
+              this.getFieldValue(b, columnDef),
+              columnDef.type,
+            ),
       );
     }
 
@@ -585,11 +558,11 @@ export default class DataManager {
       this.searchData();
     }
 
-    if (this.grouped === false && this.isDataType("group")) {
+    if (this.grouped === false && this.isDataType('group')) {
       this.groupData();
     }
 
-    if (this.treefied === false && this.isDataType("tree")) {
+    if (this.treefied === false && this.isDataType('tree')) {
       this.treefyData();
     }
 
@@ -630,72 +603,55 @@ export default class DataManager {
 
     if (this.applyFilters) {
       this.columns
-        .filter((columnDef) => columnDef.tableData.filterValue)
-        .forEach((columnDef) => {
+        .filter(columnDef => columnDef.tableData.filterValue)
+        .forEach(columnDef => {
           const { lookup, type, tableData } = columnDef;
           if (columnDef.customFilterAndSearch) {
             this.filteredData = this.filteredData.filter(
-              (row) =>
-                !!columnDef.customFilterAndSearch(
-                  tableData.filterValue,
-                  row,
-                  columnDef
-                )
+              row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef),
             );
           } else {
             if (lookup) {
-              this.filteredData = this.filteredData.filter((row) => {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef, false);
                 return (
                   !tableData.filterValue ||
                   tableData.filterValue.length === 0 ||
                   tableData.filterValue.indexOf(
-                    value !== undefined && value !== null && value.toString()
+                    value !== undefined && value !== null && value.toString(),
                   ) > -1
                 );
               });
-            } else if (type === "numeric") {
-              this.filteredData = this.filteredData.filter((row) => {
+            } else if (type === 'numeric') {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef);
-                return value + "" === tableData.filterValue;
+                return value + '' === tableData.filterValue;
               });
-            } else if (type === "boolean" && tableData.filterValue) {
-              this.filteredData = this.filteredData.filter((row) => {
+            } else if (type === 'boolean' && tableData.filterValue) {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef);
                 return (
-                  (value && tableData.filterValue === "checked") ||
-                  (!value && tableData.filterValue === "unchecked")
+                  (value && tableData.filterValue === 'checked') ||
+                  (!value && tableData.filterValue === 'unchecked')
                 );
               });
-            } else if (["date", "datetime"].includes(type)) {
-              this.filteredData = this.filteredData.filter((row) => {
+            } else if (['date', 'datetime'].includes(type)) {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef);
 
                 const currentDate = value ? new Date(value) : null;
 
-                if (currentDate && currentDate.toString() !== "Invalid Date") {
+                if (currentDate && currentDate.toString() !== 'Invalid Date') {
                   const selectedDate = tableData.filterValue;
-                  let currentDateToCompare = "";
-                  let selectedDateToCompare = "";
+                  let currentDateToCompare = '';
+                  let selectedDateToCompare = '';
 
-                  if (type === "date") {
-                    currentDateToCompare = formatDate(
-                      currentDate,
-                      "MM/dd/yyyy"
-                    );
-                    selectedDateToCompare = formatDate(
-                      selectedDate,
-                      "MM/dd/yyyy"
-                    );
-                  } else if (type === "datetime") {
-                    currentDateToCompare = formatDate(
-                      currentDate,
-                      "MM/dd/yyyy - HH:mm"
-                    );
-                    selectedDateToCompare = formatDate(
-                      selectedDate,
-                      "MM/dd/yyyy - HH:mm"
-                    );
+                  if (type === 'date') {
+                    currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy');
+                    selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy');
+                  } else if (type === 'datetime') {
+                    currentDateToCompare = formatDate(currentDate, 'MM/dd/yyyy - HH:mm');
+                    selectedDateToCompare = formatDate(selectedDate, 'MM/dd/yyyy - HH:mm');
                   }
 
                   return currentDateToCompare === selectedDateToCompare;
@@ -703,17 +659,14 @@ export default class DataManager {
 
                 return true;
               });
-            } else if (type === "time") {
-              this.filteredData = this.filteredData.filter((row) => {
+            } else if (type === 'time') {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef);
                 const currentHour = value || null;
 
                 if (currentHour) {
                   const selectedHour = tableData.filterValue;
-                  const currentHourToCompare = formatDate(
-                    selectedHour,
-                    "HH:mm"
-                  );
+                  const currentHourToCompare = formatDate(selectedHour, 'HH:mm');
 
                   return currentHour === currentHourToCompare;
                 }
@@ -721,14 +674,11 @@ export default class DataManager {
                 return true;
               });
             } else {
-              this.filteredData = this.filteredData.filter((row) => {
+              this.filteredData = this.filteredData.filter(row => {
                 const value = this.getFieldValue(row, columnDef);
                 return (
                   value &&
-                  value
-                    .toString()
-                    .toUpperCase()
-                    .includes(tableData.filterValue.toUpperCase())
+                  value.toString().toUpperCase().includes(tableData.filterValue.toUpperCase())
                 );
               });
             }
@@ -746,27 +696,18 @@ export default class DataManager {
 
     if (this.searchText && this.applySearch) {
       const trimmedSearchText = this.searchText.trim();
-      this.searchedData = this.searchedData.filter((row) => {
+      this.searchedData = this.searchedData.filter(row => {
         return this.columns
-          .filter((columnDef) => {
-            return columnDef.searchable === undefined
-              ? !columnDef.hidden
-              : columnDef.searchable;
+          .filter(columnDef => {
+            return columnDef.searchable === undefined ? !columnDef.hidden : columnDef.searchable;
           })
-          .some((columnDef) => {
+          .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
-              return !!columnDef.customFilterAndSearch(
-                trimmedSearchText,
-                row,
-                columnDef
-              );
+              return !!columnDef.customFilterAndSearch(trimmedSearchText, row, columnDef);
             } else if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
               if (value) {
-                return value
-                  .toString()
-                  .toUpperCase()
-                  .includes(trimmedSearchText.toUpperCase());
+                return value.toString().toUpperCase().includes(trimmedSearchText.toUpperCase());
               }
             }
           });
@@ -782,17 +723,14 @@ export default class DataManager {
     const tmpData = [...this.searchedData];
 
     const groups = this.columns
-      .filter((col) => col.tableData.groupOrder > -1)
-      .sort(
-        (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
-      );
+      .filter(col => col.tableData.groupOrder > -1)
+      .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
     const subData = tmpData.reduce(
       (result, currentRow) => {
         let object = result;
         object = groups.reduce((o, colDef) => {
-          const value =
-            currentRow[colDef.field] || byString(currentRow, colDef.field);
+          const value = currentRow[colDef.field] || byString(currentRow, colDef.field);
 
           let group;
           if (o.groupsIndex[value] !== undefined) {
@@ -801,14 +739,8 @@ export default class DataManager {
 
           if (!group) {
             const path = [...(o.path || []), value];
-            let oldGroup = this.findGroupByGroupPath(
-              this.groupedData,
-              path
-            ) || {
-              isExpanded:
-                typeof this.defaultExpanded === "boolean"
-                  ? this.defaultExpanded
-                  : false,
+            let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || {
+              isExpanded: typeof this.defaultExpanded === 'boolean' ? this.defaultExpanded : false,
             };
 
             group = {
@@ -830,7 +762,7 @@ export default class DataManager {
 
         return result;
       },
-      { groups: [], groupsIndex: {} }
+      { groups: [], groupsIndex: {} },
     );
 
     this.groupedData = subData.groups;
@@ -840,17 +772,14 @@ export default class DataManager {
 
   treefyData() {
     this.sorted = this.paged = false;
-    this.data.forEach((a) => (a.tableData.childRows = null));
+    this.data.forEach(a => (a.tableData.childRows = null));
     this.treefiedData = [];
     this.treefiedDataLength = 0;
     this.treeDataMaxLevel = 0;
 
     // if filter or search is enabled, collapse the tree
-    if (
-      this.searchText ||
-      this.columns.some((columnDef) => columnDef.tableData.filterValue)
-    ) {
-      this.data.forEach((row) => {
+    if (this.searchText || this.columns.some(columnDef => columnDef.tableData.filterValue)) {
+      this.data.forEach(row => {
         row.tableData.isTreeExpanded = false;
       });
 
@@ -858,7 +787,7 @@ export default class DataManager {
       this.expandTreeForNodes(this.searchedData);
     }
 
-    const addRow = (rowData) => {
+    const addRow = rowData => {
       rowData.tableData.markedForTreeRemove = false;
       let parent = this.parentFunc(rowData, this.data);
       if (parent) {
@@ -870,14 +799,8 @@ export default class DataManager {
 
         addRow(parent);
 
-        rowData.tableData.path = [
-          ...parent.tableData.path,
-          parent.tableData.childRows.length - 1,
-        ];
-        this.treeDataMaxLevel = Math.max(
-          this.treeDataMaxLevel,
-          rowData.tableData.path.length
-        );
+        rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
+        this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowData.tableData.path.length);
       } else {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
@@ -888,12 +811,12 @@ export default class DataManager {
     };
 
     // Add all rows initially
-    this.data.forEach((rowData) => {
+    this.data.forEach(rowData => {
       addRow(rowData);
     });
-    const markForTreeRemove = (rowData) => {
+    const markForTreeRemove = rowData => {
       let pointer = this.treefiedData;
-      rowData.tableData.path.forEach((pathPart) => {
+      rowData.tableData.path.forEach(pathPart => {
         if (pointer.tableData && pointer.tableData.childRows) {
           pointer = pointer.tableData.childRows;
         }
@@ -902,9 +825,9 @@ export default class DataManager {
       pointer.tableData.markedForTreeRemove = true;
     };
 
-    const traverseChildrenAndUnmark = (rowData) => {
+    const traverseChildrenAndUnmark = rowData => {
       if (rowData.tableData.childRows) {
-        rowData.tableData.childRows.forEach((row) => {
+        rowData.tableData.childRows.forEach(row => {
           traverseChildrenAndUnmark(row);
         });
       }
@@ -912,14 +835,11 @@ export default class DataManager {
     };
 
     // for all data rows, restore initial expand if no search term is available and remove items that shouldn't be there
-    this.data.forEach((rowData) => {
-      if (
-        !this.searchText &&
-        !this.columns.some((columnDef) => columnDef.tableData.filterValue)
-      ) {
+    this.data.forEach(rowData => {
+      if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
         if (rowData.tableData.isTreeExpanded === undefined) {
           var isExpanded =
-            typeof this.defaultExpanded === "boolean"
+            typeof this.defaultExpanded === 'boolean'
               ? this.defaultExpanded
               : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
@@ -933,13 +853,13 @@ export default class DataManager {
     });
 
     // preserve all children of nodes that are matched by search or filters
-    this.data.forEach((rowData) => {
+    this.data.forEach(rowData => {
       if (this.searchedData.indexOf(rowData) > -1) {
         traverseChildrenAndUnmark(rowData);
       }
     });
 
-    const traverseTreeAndDeleteMarked = (rowDataArray) => {
+    const traverseTreeAndDeleteMarked = rowDataArray => {
       for (var i = rowDataArray.length - 1; i >= 0; i--) {
         const item = rowDataArray[i];
         if (item.tableData.childRows) {
@@ -956,27 +876,25 @@ export default class DataManager {
   sortData() {
     this.paged = false;
 
-    if (this.isDataType("group")) {
+    if (this.isDataType('group')) {
       this.sortedData = [...this.groupedData];
 
       const groups = this.columns
-        .filter((col) => col.tableData.groupOrder > -1)
-        .sort(
-          (col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder
-        );
+        .filter(col => col.tableData.groupOrder > -1)
+        .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
       const sortGroups = (list, columnDef) => {
         if (columnDef.customSort) {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
-              ? (a, b) => columnDef.customSort(b.value, a.value, "group")
-              : (a, b) => columnDef.customSort(a.value, b.value, "group")
+            columnDef.tableData.groupSort === 'desc'
+              ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
+              : (a, b) => columnDef.customSort(a.value, b.value, 'group'),
           );
         } else {
           return list.sort(
-            columnDef.tableData.groupSort === "desc"
+            columnDef.tableData.groupSort === 'desc'
               ? (a, b) => this.sort(b.value, a.value, columnDef.type)
-              : (a, b) => this.sort(a.value, b.value, columnDef.type)
+              : (a, b) => this.sort(a.value, b.value, columnDef.type),
           );
         }
       };
@@ -984,7 +902,7 @@ export default class DataManager {
       this.sortedData = sortGroups(this.sortedData, groups[0]);
 
       const sortGroupData = (list, level) => {
-        list.forEach((element) => {
+        list.forEach(element => {
           if (element.groups.length > 0) {
             const column = groups[level];
             element.groups = sortGroups(element.groups, column);
@@ -998,17 +916,15 @@ export default class DataManager {
       };
 
       sortGroupData(this.sortedData, 1);
-    } else if (this.isDataType("tree")) {
+    } else if (this.isDataType('tree')) {
       this.sortedData = [...this.treefiedData];
       if (this.orderBy != -1) {
         this.sortedData = this.sortList(this.sortedData);
 
-        const sortTree = (list) => {
-          list.forEach((item) => {
+        const sortTree = list => {
+          list.forEach(item => {
             if (item.tableData.childRows) {
-              item.tableData.childRows = this.sortList(
-                item.tableData.childRows
-              );
+              item.tableData.childRows = this.sortList(item.tableData.childRows);
               sortTree(item.tableData.childRows);
             }
           });
@@ -1016,7 +932,7 @@ export default class DataManager {
 
         sortTree(this.sortedData);
       }
-    } else if (this.isDataType("normal")) {
+    } else if (this.isDataType('normal')) {
       this.sortedData = [...this.searchedData];
       if (this.orderBy != -1 && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
