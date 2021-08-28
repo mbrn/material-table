@@ -242,6 +242,9 @@ export default class MTableEditRow extends React.Component {
   }
 
   handleKeyDown = (e) => {
+    if (e.defaultPrevented) {
+      return;
+    }
     if (e.keyCode === 13 && e.target.type !== "textarea") {
       this.handleSave();
     } else if (e.keyCode === 13 && e.target.type === "textarea" && e.shiftKey) {
