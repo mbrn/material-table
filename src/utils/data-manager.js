@@ -765,8 +765,8 @@ export default class DataManager {
               if (value) {
                 return value
                   .toString()
-                  .toUpperCase()
-                  .includes(trimmedSearchText.toUpperCase());
+                  .toLocaleUpperCase()
+                  .includes(trimmedSearchText.toLocaleUpperCase());
               }
             }
           });
