@@ -769,7 +769,10 @@ export default class MaterialTable extends React.Component {
                 SelectProps={{
                   renderValue: (value) => (
                     <div style={{ padding: "0px 5px" }}>
-                      {value + " " + localization.labelRowsSelect + " "}
+                      {(value === -1 ? localization.labelAllRows : value) +
+                        " " +
+                        localization.labelRowsSelect +
+                        " "}
                     </div>
                   ),
                 }}

@@ -196,6 +196,9 @@ class MTableBody extends React.Component {
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
+    if (emptyRowCount < 0) {
+      emptyRowCount = 0;
+    }
 
     return (
       <TableBody>

@@ -337,7 +337,9 @@ export const propTypes = {
     padding: PropTypes.oneOf(["default", "dense"]),
     paging: PropTypes.bool,
     pageSize: PropTypes.number,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+    pageSizeOptions: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.number, PropTypes.object])
+    ),
     paginationType: PropTypes.oneOf(["normal", "stepped"]),
     paginationPosition: PropTypes.oneOf(["bottom", "top", "both"]),
     rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
