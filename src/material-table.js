@@ -744,6 +744,14 @@ export default class MaterialTable extends React.Component {
         ? props.totalCount
         : this.state.data.length;
 
+      let allRowsLabel = localization.labelAllRows;
+      const allPageSizeOption = props.options.pageSizeOptions.find(
+        (pageSizeOption) => pageSizeOption && pageSizeOption.value === -1
+      );
+      if (allPageSizeOption && allPageSizeOption.label) {
+        allRowsLabel = allPageSizeOption.label;
+      }
+
       return (
         <Table>
           <TableFooter style={{ display: "grid" }}>
@@ -769,7 +777,7 @@ export default class MaterialTable extends React.Component {
                 SelectProps={{
                   renderValue: (value) => (
                     <div style={{ padding: "0px 5px" }}>
-                      {(value === -1 ? localization.labelAllRows : value) +
+                      {(value === -1 ? allRowsLabel : value) +
                         " " +
                         localization.labelRowsSelect +
                         " "}
