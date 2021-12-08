@@ -376,6 +376,9 @@ export interface Localization {
     addTooltip?: React.ReactNode;
     deleteTooltip?: React.ReactNode;
     editTooltip?: React.ReactNode;
+    bulkEditTooltip?: React.ReactNode;
+    bulkEditApprove?: React.ReactNode;
+    bulkEditCancel?: React.ReactNode;
   };
   header?: {
     actions?: React.ReactNode;

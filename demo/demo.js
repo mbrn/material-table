@@ -575,6 +575,7 @@ class App extends Component {
                         filterTooltip: "Filter",
                         filterPlaceHolder: "Filtaaer",
                       },
+                      // bulkEditTooltip: 'Edit all',
                     },
                   }}
                   onSearchChange={(e) => console.log("search changed: " + e)}
