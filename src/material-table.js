@@ -700,8 +700,23 @@ export default class MaterialTable extends React.Component {
     });
   };
 
+  onExpandedHook = (rowData) => {
+    const isHookDefined = !!this.props.onDetailPanelExpanded;
+    if (isHookDefined) {
+      this.props.onDetailPanelExpanded(rowData);
+    }
+  }
+
+  onClosedHook = (rowData) => {
+    const isHookDefined = !!this.props.onDetailPanelClosed;
+    if (isHookDefined) {
+      this.props.onDetailPanelClosed(rowData);
+    }
+  }
+
   onToggleDetailPanel = (path, render) => {
-    this.dataManager.changeDetailPanelVisibility(path, render);
+    const detailPanelHooks = { onExpanded: this.onExpandedHook, onClosed: this.onClosedHook };
+    this.dataManager.changeDetailPanelVisibility(path, render, detailPanelHooks);
     this.setState(this.dataManager.getRenderState());
   };
 

@@ -164,14 +164,14 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  changeDetailPanelVisibility(path, render) {
+  changeDetailPanelVisibility(path, render, hooks) {
     const rowData = this.findDataByPath(this.sortedData, path);
-
-    if (
-      (rowData.tableData.showDetailPanel || "").toString() === render.toString()
-    ) {
+    if ((rowData.tableData.showDetailPanel || '').toString() === render.toString()) {
+      hooks.onClosed(rowData);
       rowData.tableData.showDetailPanel = undefined;
-    } else {
+    }
+    else {
+      hooks.onExpanded(rowData);
       rowData.tableData.showDetailPanel = render;
     }
 
