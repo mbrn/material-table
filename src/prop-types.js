@@ -227,6 +227,11 @@ export const propTypes = {
       PropTypes.func,
       RefComponent,
     ]),
+    DetailPanelOpen: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.func,
+      RefComponent,
+    ]),
     Edit: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.func,
