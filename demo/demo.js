@@ -1,9 +1,17 @@
 import { Grid, MuiThemeProvider, Button } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import React, { Component } from "react";
+import React, { Component, forwardRef } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
 import Typography from "@material-ui/core/Typography";
+
+import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
+
+const tableIcons = {
+  DetailPanel: forwardRef((props, ref) => <Add {...props} ref={ref} />),
+  DetailPanelOpen: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+};
 
 let direction = "ltr";
 // direction = 'rtl';
@@ -594,7 +602,8 @@ class App extends Component {
             >
               Select
             </button>
-            {/* <MaterialTable
+            <MaterialTable
+              icons={tableIcons}
               title={
                 <Typography variant="h6" color="primary">
                   Remote Data Preview
@@ -662,7 +671,7 @@ class App extends Component {
                     });
                 })
               }
-            /> */}
+            />
           </div>
         </MuiThemeProvider>
       </>

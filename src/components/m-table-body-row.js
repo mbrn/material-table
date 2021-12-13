@@ -150,8 +150,17 @@ export default class MTableBodyRow extends React.Component {
   }
 
   rotateIconStyle = (isOpen) => ({
-    transform: isOpen ? "rotate(90deg)" : "none",
+    transform:
+      isOpen && !this.props.icons.DetailPanelOpen ? "rotate(90deg)" : "none",
   });
+
+  renderDetailIcon = (isOpen) => {
+    if (this.props.icons.DetailPanelOpen && isOpen) {
+      return <this.props.icons.DetailPanelOpen />;
+    } else {
+      return <this.props.icons.DetailPanel />;
+    }
+  };
 
   renderDetailPanelColumn() {
     const size = CommonValues.elementSize(this.props);
@@ -190,7 +199,7 @@ export default class MTableBodyRow extends React.Component {
               event.stopPropagation();
             }}
           >
-            <this.props.icons.DetailPanel />
+            {this.renderDetailIcon()}
           </IconButton>
         </TableCell>
       );
@@ -214,7 +223,7 @@ export default class MTableBodyRow extends React.Component {
                 (this.props.data.tableData.showDetailPanel || "").toString() ===
                 panel.render.toString();
 
-              let iconButton = <this.props.icons.DetailPanel />;
+              let iconButton = this.renderDetailIcon();
               let animation = true;
               if (isOpen) {
                 if (panel.openIcon) {
@@ -302,7 +311,7 @@ export default class MTableBodyRow extends React.Component {
               event.stopPropagation();
             }}
           >
-            <this.props.icons.DetailPanel />
+            {this.renderDetailIcon()}
           </IconButton>
         </TableCell>
       );

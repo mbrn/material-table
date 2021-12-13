@@ -8,7 +8,8 @@ import * as React from "react";
 
 export default class MTableGroupRow extends React.Component {
   rotateIconStyle = (isOpen) => ({
-    transform: isOpen ? "rotate(90deg)" : "none",
+    transform:
+      isOpen && !this.props.icons.DetailPanelOpen ? "rotate(90deg)" : "none",
   });
 
   render() {
@@ -146,7 +147,12 @@ export default class MTableGroupRow extends React.Component {
                 this.props.onGroupExpandChanged(this.props.path);
               }}
             >
-              <this.props.icons.DetailPanel />
+              {this.props.groupData.isExpanded &&
+              this.props.icons.DetailPanelOpen ? (
+                <this.props.icons.DetailPanelOpen />
+              ) : (
+                <this.props.icons.DetailPanel />
+              )}
             </IconButton>
             <b>
               {title}

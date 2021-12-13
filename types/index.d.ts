@@ -260,6 +260,9 @@ export interface Icons {
   DetailPanel?: React.ForwardRefExoticComponent<
     React.RefAttributes<SVGSVGElement>
   >;
+  DetailPanelOpen?: React.ForwardRefExoticComponent<
+    React.RefAttributes<SVGSVGElement>
+  >;
   Edit?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   Export?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
   Filter?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
