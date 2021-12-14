@@ -149,18 +149,20 @@ export default class MTableBodyRow extends React.Component {
     );
   }
 
-  rotateIconStyle = (isOpen) => ({
-    transform:
-      isOpen && !this.props.icons.DetailPanelOpen ? "rotate(90deg)" : "none",
-  });
+  rotateIconStyle(isOpen) {
+    return {
+      transform:
+        isOpen && !this.props.icons.DetailPanelOpen ? "rotate(90deg)" : "none",
+    };
+  }
 
-  renderDetailIcon = (isOpen) => {
+  renderDetailIcon(isOpen) {
     if (this.props.icons.DetailPanelOpen && isOpen) {
       return <this.props.icons.DetailPanelOpen />;
     } else {
       return <this.props.icons.DetailPanel />;
     }
-  };
+  }
 
   renderDetailPanelColumn() {
     const size = CommonValues.elementSize(this.props);
