@@ -201,7 +201,7 @@ export default class MTableBodyRow extends React.Component {
               event.stopPropagation();
             }}
           >
-            {this.renderDetailIcon()}
+            {this.renderDetailIcon(this.props.data.tableData.showDetailPanel)}
           </IconButton>
         </TableCell>
       );
@@ -225,7 +225,7 @@ export default class MTableBodyRow extends React.Component {
                 (this.props.data.tableData.showDetailPanel || "").toString() ===
                 panel.render.toString();
 
-              let iconButton = this.renderDetailIcon();
+              let iconButton = this.renderDetailIcon(isOpen);
               let animation = true;
               if (isOpen) {
                 if (panel.openIcon) {
@@ -313,7 +313,7 @@ export default class MTableBodyRow extends React.Component {
               event.stopPropagation();
             }}
           >
-            {this.renderDetailIcon()}
+            {this.renderDetailIcon(this.props.data.tableData.isTreeExpanded)}
           </IconButton>
         </TableCell>
       );
