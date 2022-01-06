@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import Toolbar from "@material-ui/core/Toolbar";
-import Chip from "@material-ui/core/Chip";
-import Typography from "@material-ui/core/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import * as React from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";

@@ -1,31 +1,38 @@
 import React from "react";
 import MaterialTable from "../src";
-import { MuiThemeProvider } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 const App = () => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <MaterialTable
-        columns={[
-          {
-            title: "First Name",
-            field: "firstName",
-          },
-          {
-            title: "Last Name",
-            field: "lastName",
-          },
-        ]}
-        data={[
-          {
-            firstName: "Mark",
-            lastName: "Zipagang",
-          },
-        ]}
-      />
-    </MuiThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <MaterialTable
+          columns={[
+            {
+              title: "First Name",
+              field: "firstName",
+            },
+            {
+              title: "Last Name",
+              field: "lastName",
+            },
+            {
+                title: "Position",
+                field: "position",
+            },
+          ]}
+          data={[
+            {
+              firstName: "Mark",
+              lastName: "Zipagang",
+              position: "Father"
+            },
+          ]}
+        />
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 
