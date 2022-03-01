@@ -510,6 +510,8 @@ class App extends Component {
                       color: "primary",
                     },
                     selection: false,
+                    paginationType: "stepped",
+                    numberOfPagesAround: 2,
                     selectionProps: (rowData) => {
                       rowData.tableData.disabled = rowData.name === "A1";
 

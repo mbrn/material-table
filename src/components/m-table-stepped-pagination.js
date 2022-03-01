@@ -32,10 +32,17 @@ class MTablePaginationInner extends React.Component {
     );
   };
 
-  renderPagesButton(start, end) {
+  renderPagesButton(start, end, maxPages, numberOfPagesAround = 1) {
     const buttons = [];
 
-    for (let p = start; p <= end; p++) {
+    for (
+      let p = start - numberOfPagesAround + 1;
+      p <= end + numberOfPagesAround - 1;
+      p++
+    ) {
+      if (p < 0 || p > maxPages) {
+        continue;
+      }
       const buttonVariant = p === this.props.page ? "contained" : "text";
       buttons.push(
         <Button
@@ -68,6 +75,7 @@ class MTablePaginationInner extends React.Component {
       rowsPerPage,
       theme,
       showFirstLastPageButtons,
+      numberOfPagesAround,
     } = this.props;
 
     const localization = {
@@ -110,7 +118,12 @@ class MTablePaginationInner extends React.Component {
           </span>
         </Tooltip>
         <Hidden smDown={true}>
-          {this.renderPagesButton(pageStart, pageEnd)}
+          {this.renderPagesButton(
+            pageStart,
+            pageEnd,
+            maxPages,
+            numberOfPagesAround
+          )}
         </Hidden>
         <Tooltip title={localization.nextTooltip}>
           <span>
@@ -162,6 +175,17 @@ MTablePaginationInner.propTypes = {
   localization: PropTypes.object,
   theme: PropTypes.any,
   showFirstLastPageButtons: PropTypes.bool,
+  numberOfPagesAround: (props, propName) => {
+    if (props[propName] < 0) {
+      throw Error("numberOfPagesAround can't be negative number!");
+      //todo: to discuss: what will be the max user can set?
+      // I tried to set numberOfPagesAround to 100 - the table will show max 13 pages to both side, therefore 27 pages at top
+      //} else if (props[propName] >= 10) {
+      //  throw Error('numberOfPagesAround can\'t be greater than 10!');
+    } else if (!Number.isInteger(props[propName])) {
+      throw Error("numberOfPagesAround must be integer!");
+    }
+  },
 };
 
 MTablePaginationInner.defaultProps = {

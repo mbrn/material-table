@@ -325,6 +325,7 @@ export const propTypes = {
     initialPage: PropTypes.number,
     maxBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     minBodyHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    numberOfPagesAround: PropTypes.number,
     loadingType: PropTypes.oneOf(["overlay", "linear"]),
     overflowY: PropTypes.oneOf([
       "visible",
