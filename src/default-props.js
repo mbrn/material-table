@@ -219,6 +219,7 @@ export const defaultProps = {
     paging: true,
     pageSize: 5,
     pageSizeOptions: [5, 10, 20],
+    numberOfPagesAround: 1,
     paginationType: "normal",
     paginationPosition: "bottom",
     showEmptyDataSourceMessage: true,
