@@ -1,11 +1,11 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Icon from "@material-ui/core/Icon";
-import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
+import CircularProgress from "@mui/material/CircularProgress";
+import Icon from "@mui/material/Icon";
+import Paper from "@mui/material/Paper";
+import TablePagination from "@mui/material/TablePagination";
 import * as MComponents from "./components";
 import PropTypes from "prop-types";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@mui/material/styles";
 
 const OverlayLoading = (props) => (
   <div
@@ -13,7 +13,7 @@ const OverlayLoading = (props) => (
       display: "table",
       width: "100%",
       height: "100%",
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
     <div
@@ -39,7 +39,7 @@ const OverlayError = (props) => (
       display: "table",
       width: "100%",
       height: "100%",
-      backgroundColor: fade(props.theme.palette.background.paper, 0.7),
+      backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
     <div

@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
 import PropTypes from "prop-types";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import withStyles from "@material-ui/core/styles/withStyles";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { withStyles } from "@mui/styles";
 import { Draggable } from "react-beautiful-dnd";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 import * as CommonValues from "../utils/common-values";
 import equal from "fast-deep-equal";
 

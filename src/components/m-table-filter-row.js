@@ -1,26 +1,25 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
 import PropTypes from "prop-types";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
-import ListItemText from "@material-ui/core/ListItemText";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-import Tooltip from "@material-ui/core/Tooltip";
-import DateFnsUtils from "@date-io/date-fns";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
+import InputAdornment from "@mui/material/InputAdornment";
+import Tooltip from "@mui/material/Tooltip";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {
-  MuiPickersUtilsProvider,
-  TimePicker,
+  LocalizationProvider,
   DatePicker,
+  TimePicker,
   DateTimePicker,
-} from "@material-ui/pickers";
+} from "@mui/lab";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -173,12 +172,12 @@ class MTableFilterRow extends React.Component {
       dateInputElement = <TimePicker {...pickerProps} />;
     }
     return (
-      <MuiPickersUtilsProvider
-        utils={DateFnsUtils}
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
         locale={this.props.localization.dateTimePickerLocalization}
       >
         {dateInputElement}
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   };
 

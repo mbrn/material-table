@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import * as React from "react";
 /* eslint-enable no-unused-vars */
@@ -145,6 +145,7 @@ export default class MTableGroupRow extends React.Component {
               onClick={(event) => {
                 this.props.onGroupExpandChanged(this.props.path);
               }}
+              size="large"
             >
               <this.props.icons.DetailPanel />
             </IconButton>

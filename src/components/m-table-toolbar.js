@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import Toolbar from "@material-ui/core/Toolbar";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { lighten } from "@material-ui/core/styles/colorManipulator";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { lighten } from "@mui/material/styles";
+import { withStyles } from "@mui/styles";
 import classNames from "classnames";
 import { CsvBuilder } from "filefy";
 import PropTypes, { oneOf } from "prop-types";
@@ -149,6 +149,7 @@ export class MTableToolbar extends React.Component {
                   disabled={!this.state.searchText}
                   onClick={() => this.onSearchChange("")}
                   aria-label={localization.clearSearchAriaLabel}
+                  size="large"
                 >
                   <this.props.icons.ResetSearch
                     fontSize="small"
@@ -189,6 +190,7 @@ export class MTableToolbar extends React.Component {
                   })
                 }
                 aria-label={localization.showColumnsAriaLabel}
+                size="large"
               >
                 <this.props.icons.ViewColumn />
               </IconButton>
@@ -247,6 +249,7 @@ export class MTableToolbar extends React.Component {
                   })
                 }
                 aria-label={localization.exportAriaLabel}
+                size="large"
               >
                 <this.props.icons.Export />
               </IconButton>
@@ -442,7 +445,7 @@ export const styles = (theme) => ({
     paddingRight: theme.spacing(1),
   },
   highlight:
-    theme.palette.type === "light"
+    theme.palette.mode === "light"
       ? {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85),

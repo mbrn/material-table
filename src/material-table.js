@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import Table from "@material-ui/core/Table";
-import TableFooter from "@material-ui/core/TableFooter";
-import TableRow from "@material-ui/core/TableRow";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Table from "@mui/material/Table";
+import TableFooter from "@mui/material/TableFooter";
+import TableRow from "@mui/material/TableRow";
+import LinearProgress from "@mui/material/LinearProgress";
 import DoubleScrollbar from "react-double-scrollbar";
 import * as React from "react";
 import { MTablePagination, MTableSteppedPagination } from "./components";
@@ -10,7 +10,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import DataManager from "./utils/data-manager";
 import { debounce } from "debounce";
 import equal from "fast-deep-equal";
-import { withStyles } from "@material-ui/core";
+import { withStyles } from "@mui/styles";
 import * as CommonValues from "./utils/common-values";
 
 /* eslint-enable no-unused-vars */
@@ -774,8 +774,8 @@ export default class MaterialTable extends React.Component {
                   ),
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
-                onChangePage={this.onChangePage}
-                onChangeRowsPerPage={this.onChangeRowsPerPage}
+                onPageChange={this.onChangePage}
+                onRowsPerPageChange={this.onChangeRowsPerPage}
                 ActionsComponent={(subProps) =>
                   props.options.paginationType === "normal" ? (
                     <MTablePagination
