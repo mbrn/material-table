@@ -218,23 +218,23 @@ export interface Column<RowData extends object> {
   width?: string | number;
 }
 
-export interface Components {
-  Action?: React.ComponentType<any>;
-  Actions?: React.ComponentType<any>;
-  Body?: React.ComponentType<any>;
-  Cell?: React.ComponentType<any>;
-  Container?: React.ComponentType<any>;
-  EditField?: React.ComponentType<any>;
-  EditRow?: React.ComponentType<any>;
-  FilterRow?: React.ComponentType<any>;
-  Groupbar?: React.ComponentType<any>;
-  GroupRow?: React.ComponentType<any>;
-  Header?: React.ComponentType<any>;
-  Pagination?: React.ComponentType<any>;
-  OverlayLoading?: React.ComponentType<any>;
-  OverlayError?: React.ComponentType<any>;
-  Row?: React.ComponentType<any>;
-  Toolbar?: React.ComponentType<any>;
+export interface Components<T> {
+  Action?: React.ComponentType<T>;
+  Actions?: React.ComponentType<T>;
+  Body?: React.ComponentType<T>;
+  Cell?: React.ComponentType<T>;
+  Container?: React.ComponentType<T>;
+  EditField?: React.ComponentType<T>;
+  EditRow?: React.ComponentType<T>;
+  FilterRow?: React.ComponentType<T>;
+  Groupbar?: React.ComponentType<T>;
+  GroupRow?: React.ComponentType<T>;
+  Header?: React.ComponentType<T>;
+  Pagination?: React.ComponentType<T>;
+  OverlayLoading?: React.ComponentType<T>;
+  OverlayError?: React.ComponentType<T>;
+  Row?: React.ComponentType<T>;
+  Toolbar?: React.ComponentType<T>;
 }
 
 export const MTableAction: (props: any) => React.ReactElement<any>;
