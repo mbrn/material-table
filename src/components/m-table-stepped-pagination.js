@@ -14,12 +14,12 @@ const MTableSteppedPagination = (props) => {
 
   const {
     count,
+    icons,
+    localization: localizationProp,
+    onPageChange,
     page,
     rowsPerPage,
-    icons,
-    onPageChange,
     showFirstLastPageButtons,
-    localization: localizationProp,
   } = props;
 
   const maxPages = Math.ceil(count / rowsPerPage) - 1;
@@ -153,12 +153,12 @@ const MTableSteppedPagination = (props) => {
 };
 
 MTableSteppedPagination.propTypes = {
+  count: PropTypes.number,
+  icons: PropTypes.object,
+  localization: PropTypes.object,
   onPageChange: PropTypes.func,
   page: PropTypes.number,
-  count: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  localization: PropTypes.object,
-  icons: PropTypes.object,
   showFirstLastPageButtons: PropTypes.bool,
 };
 
