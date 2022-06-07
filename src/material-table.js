@@ -1,19 +1,19 @@
-/* eslint-disable no-unused-vars */
+import * as React from "react";
+import { debounce } from "debounce";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import DoubleScrollbar from "react-double-scrollbar";
+import equal from "fast-deep-equal";
+// @mui
+import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableFooter from "@mui/material/TableFooter";
 import TableRow from "@mui/material/TableRow";
 import LinearProgress from "@mui/material/LinearProgress";
-import DoubleScrollbar from "react-double-scrollbar";
-import * as React from "react";
-import { MTablePagination, MTableSteppedPagination } from "./components";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+// utils
 import DataManager from "./utils/data-manager";
-import { debounce } from "debounce";
-import equal from "fast-deep-equal";
-import { withStyles } from "@mui/styles";
 import * as CommonValues from "./utils/common-values";
-
-/* eslint-enable no-unused-vars */
+// components
+import { MTablePagination, MTableSteppedPagination } from "./components";
 
 export default class MaterialTable extends React.Component {
   dataManager = new DataManager();
@@ -746,18 +746,20 @@ export default class MaterialTable extends React.Component {
 
       return (
         <Table>
-          <TableFooter style={{ display: "grid" }}>
+          <TableFooter sx={{ display: "grid" }}>
             <TableRow>
               <props.components.Pagination
-                classes={{
-                  root: props.classes.paginationRoot,
-                  toolbar: props.classes.paginationToolbar,
-                  caption: props.classes.paginationCaption,
-                  selectRoot: props.classes.paginationSelectRoot,
-                }}
-                style={{
+                sx={{
                   float: props.theme.direction === "rtl" ? "" : "right",
                   overflowX: "auto",
+                  width: 1,
+                  "& .MuiToolbar-root": {
+                    width: 1,
+                    p: 0,
+                  },
+                  "& .MuiTablePagination-selectLabel": {
+                    display: "none",
+                  },
                 }}
                 colSpan={3}
                 count={
@@ -768,9 +770,9 @@ export default class MaterialTable extends React.Component {
                 rowsPerPageOptions={props.options.pageSizeOptions}
                 SelectProps={{
                   renderValue: (value) => (
-                    <div style={{ padding: "0px 5px" }}>
+                    <Box sx={{ px: 0.5 }}>
                       {value + " " + localization.labelRowsSelect + " "}
-                    </div>
+                    </Box>
                   ),
                 }}
                 page={this.isRemoteData() ? this.state.query.page : currentPage}
@@ -814,7 +816,7 @@ export default class MaterialTable extends React.Component {
 
   renderTable = (props) => (
     <Table
-      style={{
+      sx={{
         tableLayout:
           props.options.fixedColumns &&
           (props.options.fixedColumns.left || props.options.fixedColumns.right)
@@ -963,7 +965,7 @@ export default class MaterialTable extends React.Component {
         nonce={props.options.cspNonce}
       >
         <props.components.Container
-          style={{ position: "relative", ...props.style }}
+          sx={{ position: "relative", ...props.style }}
         >
           {props.options.paginationPosition === "top" ||
           props.options.paginationPosition === "both"
@@ -1034,9 +1036,9 @@ export default class MaterialTable extends React.Component {
                 const table = this.renderTable(props);
                 return (
                   <div ref={provided.innerRef}>
-                    <div
+                    <Box
                       ref={this.tableContainerDiv}
-                      style={{
+                      sx={{
                         maxHeight: props.options.maxBodyHeight,
                         minHeight: props.options.minBodyHeight,
                         overflowY: props.options.overflowY,
@@ -1045,8 +1047,8 @@ export default class MaterialTable extends React.Component {
                       {this.state.width &&
                       props.options.fixedColumns &&
                       props.options.fixedColumns.right ? (
-                        <div
-                          style={{
+                        <Box
+                          sx={{
                             width: this.getColumnsWidth(
                               props,
                               -1 * props.options.fixedColumns.right
@@ -1059,8 +1061,8 @@ export default class MaterialTable extends React.Component {
                             zIndex: 11,
                           }}
                         >
-                          <div
-                            style={{
+                          <Box
+                            sx={{
                               width: this.state.width,
                               background: "white",
                               transform: `translateX(calc(${this.getColumnsWidth(
@@ -1070,8 +1072,8 @@ export default class MaterialTable extends React.Component {
                             }}
                           >
                             {table}
-                          </div>
-                        </div>
+                          </Box>
+                        </Box>
                       ) : null}
 
                       <div>{table}</div>
@@ -1079,8 +1081,8 @@ export default class MaterialTable extends React.Component {
                       {this.state.width &&
                       props.options.fixedColumns &&
                       props.options.fixedColumns.left ? (
-                        <div
-                          style={{
+                        <Box
+                          sx={{
                             width: this.getColumnsWidth(
                               props,
                               props.options.fixedColumns.left
@@ -1093,17 +1095,17 @@ export default class MaterialTable extends React.Component {
                             zIndex: 11,
                           }}
                         >
-                          <div
-                            style={{
+                          <Box
+                            sx={{
                               width: this.state.width,
                               background: "white",
                             }}
                           >
                             {table}
-                          </div>
-                        </div>
+                          </Box>
+                        </Box>
                       ) : null}
-                    </div>
+                    </Box>
                     {provided.placeholder}
                   </div>
                 );
@@ -1112,19 +1114,19 @@ export default class MaterialTable extends React.Component {
           </ScrollBar>
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "linear" && (
-              <div style={{ position: "relative", width: "100%" }}>
-                <div
-                  style={{
+              <Box sx={{ position: "relative", width: 1 }}>
+                <Box
+                  sx={{
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    height: "100%",
-                    width: "100%",
+                    height: 1,
+                    width: 1,
                   }}
                 >
                   <LinearProgress />
-                </div>
-              </div>
+                </Box>
+              </Box>
             )}
           {props.options.paginationPosition === "bottom" ||
           props.options.paginationPosition === "both"
@@ -1133,28 +1135,28 @@ export default class MaterialTable extends React.Component {
 
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
-              <div
-                style={{
+              <Box
+                sx={{
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  height: "100%",
-                  width: "100%",
+                  height: 1,
+                  width: 1,
                   zIndex: 11,
                 }}
               >
                 <props.components.OverlayLoading theme={props.theme} />
-              </div>
+              </Box>
             )}
           {this.state.errorState &&
             this.state.errorState.errorCause === "query" && (
-              <div
-                style={{
+              <Box
+                sx={{
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  height: "100%",
-                  width: "100%",
+                  height: 1,
+                  width: 1,
                   zIndex: 11,
                 }}
               >
@@ -1164,7 +1166,7 @@ export default class MaterialTable extends React.Component {
                   theme={props.theme}
                   icon={props.icons.Retry}
                 />
-              </div>
+              </Box>
             )}
         </props.components.Container>
       </DragDropContext>
@@ -1172,33 +1174,31 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-var style = () => ({
-  horizontalScrollContainer: {
-    "& ::-webkit-scrollbar": {
-      "-webkit-appearance": "none",
-    },
-    "& ::-webkit-scrollbar:horizontal": {
-      height: 8,
-    },
-    "& ::-webkit-scrollbar-thumb": {
-      borderRadius: 4,
-      border: "2px solid white",
-      backgroundColor: "rgba(0, 0, 0, .3)",
-    },
-  },
-});
-
-const ScrollBar = withStyles(style)(({ double, children, classes }) => {
+const ScrollBar = ({ double, children, classes }) => {
   if (double) {
     return <DoubleScrollbar>{children}</DoubleScrollbar>;
   } else {
     return (
-      <div
-        className={classes.horizontalScrollContainer}
-        style={{ overflowX: "auto", position: "relative" }}
+      <Box
+        sx={{
+          overflowX: "auto",
+          position: "relative",
+
+          "& ::-webkit-scrollbar": {
+            "-webkit-appearance": "none",
+          },
+          "& ::-webkit-scrollbar:horizontal": {
+            height: 8,
+          },
+          "& ::-webkit-scrollbar-thumb": {
+            borderRadius: 4,
+            border: "2px solid white",
+            backgroundColor: "rgba(0, 0, 0, .3)",
+          },
+        }}
       >
         {children}
-      </div>
+      </Box>
     );
   }
-});
+};
