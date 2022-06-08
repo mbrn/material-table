@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
+import * as React from "react";
+import PropTypes from "prop-types";
+import useTheme from "@mui/material/styles/useTheme";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { withStyles } from "@mui/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import PropTypes from "prop-types";
-import * as React from "react";
-/* eslint-enable no-unused-vars */
 
 class MTablePaginationInner extends React.Component {
   handleFirstPageButtonClick = (event) => {
@@ -29,7 +28,6 @@ class MTablePaginationInner extends React.Component {
 
   render() {
     const {
-      classes,
       count,
       page,
       rowsPerPage,
@@ -42,7 +40,13 @@ class MTablePaginationInner extends React.Component {
     };
 
     return (
-      <div className={classes.root}>
+      <Box
+        sx={{
+          flexShrink: 0,
+          color: "text.secondary",
+          display: "flex",
+        }}
+      >
         {showFirstLastPageButtons && (
           <Tooltip title={localization.firstTooltip}>
             <span>
@@ -136,19 +140,10 @@ class MTablePaginationInner extends React.Component {
             </span>
           </Tooltip>
         )}
-      </div>
+      </Box>
     );
   }
 }
-
-const actionsStyles = (theme) => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    display: "flex",
-    // lineHeight: '48px'
-  },
-});
 
 MTablePaginationInner.propTypes = {
   onPageChange: PropTypes.func,
@@ -173,8 +168,9 @@ MTablePaginationInner.defaultProps = {
   },
 };
 
-const MTablePagination = withStyles(actionsStyles, { withTheme: true })(
-  MTablePaginationInner
-);
+const MTablePagination = (props) => {
+  const theme = useTheme();
+  return <MTablePaginationInner {...props} theme={theme} />;
+};
 
 export default MTablePagination;
