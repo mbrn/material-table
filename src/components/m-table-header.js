@@ -1,18 +1,25 @@
-/* eslint-disable no-unused-vars */
 import * as React from "react";
 import PropTypes from "prop-types";
+import { Draggable } from "react-beautiful-dnd";
+// @mui
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import Tooltip from "@mui/material/Tooltip";
+// @mui table
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { withStyles } from "@mui/styles";
-import { Draggable } from "react-beautiful-dnd";
-import { Tooltip } from "@mui/material";
+// utils
 import * as CommonValues from "../utils/common-values";
-import equal from "fast-deep-equal";
+// import equal from "fast-deep-equal";
 
-/* eslint-enable no-unused-vars */
+const sxHeader = {
+  position: "sticky",
+  top: 0,
+  zIndex: 10,
+  bgcolor: "background.paper",
+};
 
 export class MTableHeader extends React.Component {
   constructor(props) {
@@ -177,22 +184,22 @@ export class MTableHeader extends React.Component {
           columnDef.resizable !== false
         ) {
           content = (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <div style={{ flex: 1 }}>{content}</div>
-              <div></div>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ flex: 1 }}>{content}</Box>
+              <Box />
               <this.props.icons.Resize
-                style={{
+                sx={{
                   cursor: "col-resize",
                   color:
                     this.state.resizingColumnDef &&
                     this.state.resizingColumnDef.tableData.id ===
                       columnDef.tableData.id
-                      ? this.props.theme.palette.primary.main
+                      ? "primary.main"
                       : "inherit",
                 }}
                 onMouseDown={(e) => this.handleMouseDown(e, columnDef)}
               />
-            </div>
+            </Box>
           );
         }
 
@@ -206,8 +213,7 @@ export class MTableHeader extends React.Component {
           <TableCell
             key={columnDef.tableData.id}
             align={cellAlignment}
-            className={this.props.classes.header}
-            style={this.getCellStyle(columnDef)}
+            sx={{ ...sxHeader, ...this.getCellStyle(columnDef) }}
             size={size}
           >
             {content}
@@ -227,8 +233,8 @@ export class MTableHeader extends React.Component {
       <TableCell
         key="key-actions-column"
         padding="checkbox"
-        className={this.props.classes.header}
-        style={{
+        sx={{
+          ...sxHeader,
           ...this.props.headerStyle,
           width: width,
           textAlign: "center",
@@ -251,8 +257,7 @@ export class MTableHeader extends React.Component {
       <TableCell
         padding="none"
         key="key-selection-column"
-        className={this.props.classes.header}
-        style={{ ...this.props.headerStyle, width: selectionWidth }}
+        sx={{ ...sxHeader, ...this.props.headerStyle, width: selectionWidth }}
       >
         {this.props.showSelectAllCheckbox && (
           <Checkbox
@@ -279,8 +284,7 @@ export class MTableHeader extends React.Component {
       <TableCell
         padding="none"
         key="key-detail-panel-column"
-        className={this.props.classes.header}
-        style={{ ...this.props.headerStyle }}
+        sx={{ ...sxHeader, ...this.props.headerStyle }}
       />
     );
   }
@@ -322,8 +326,7 @@ export class MTableHeader extends React.Component {
         <TableCell
           padding="none"
           key={"key-tree-data-header"}
-          className={this.props.classes.header}
-          style={{ ...this.props.headerStyle }}
+          sx={{ ...sxHeader, ...this.props.headerStyle }}
         />
       );
     }
@@ -337,7 +340,7 @@ export class MTableHeader extends React.Component {
           <TableCell
             padding="checkbox"
             key={"key-group-header" + columnDef.tableData.id}
-            className={this.props.classes.header}
+            sx={sxHeader}
           />
         );
       });
@@ -389,14 +392,4 @@ MTableHeader.propTypes = {
   tooltip: PropTypes.string,
 };
 
-export const styles = (theme) => ({
-  header: {
-    // display: 'inline-block',
-    position: "sticky",
-    top: 0,
-    zIndex: 10,
-    backgroundColor: theme.palette.background.paper, // Change according to theme,
-  },
-});
-
-export default withStyles(styles, { withTheme: true })(MTableHeader);
+export default MTableHeader;
