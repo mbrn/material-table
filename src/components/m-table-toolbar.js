@@ -1,6 +1,10 @@
-/* eslint-disable no-unused-vars */
+import "jspdf-autotable";
+import * as React from "react";
+import PropTypes from "prop-types";
+import { CsvBuilder } from "filefy";
+// @mui
+import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Menu from "@mui/material/Menu";
@@ -10,14 +14,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { lighten } from "@mui/material/styles";
-import { withStyles } from "@mui/styles";
-import classNames from "classnames";
-import { CsvBuilder } from "filefy";
-import PropTypes, { oneOf } from "prop-types";
-import "jspdf-autotable";
-import * as React from "react";
+
 const jsPDF = typeof window !== "undefined" ? require("jspdf").jsPDF : null;
-/* eslint-enable no-unused-vars */
 
 export class MTableToolbar extends React.Component {
   constructor(props) {
@@ -125,11 +123,14 @@ export class MTableToolbar extends React.Component {
       return (
         <TextField
           autoFocus={this.props.searchAutoFocus}
-          className={
+          sx={
             this.props.searchFieldAlignment === "left" &&
             this.props.showTitle === false
-              ? null
-              : this.props.classes.searchField
+              ? {}
+              : {
+                  minWidth: 150,
+                  pl: 2,
+                }
           }
           value={this.state.searchText}
           onChange={(event) => this.onSearchChange(event.target.value)}
@@ -175,7 +176,6 @@ export class MTableToolbar extends React.Component {
       ...MTableToolbar.defaultProps.localization,
       ...this.props.localization,
     };
-    const { classes } = this.props;
 
     return (
       <div>
@@ -203,7 +203,7 @@ export class MTableToolbar extends React.Component {
               <MenuItem
                 key={"text"}
                 disabled
-                style={{
+                sx={{
                   opacity: 1,
                   fontWeight: 600,
                   fontSize: 12,
@@ -216,7 +216,7 @@ export class MTableToolbar extends React.Component {
                   return (
                     <li key={col.tableData.id}>
                       <MenuItem
-                        className={classes.formControlLabel}
+                        sx={{ px: 1 }}
                         component="label"
                         htmlFor={`column-toggle-${col.tableData.id}`}
                         disabled={col.removable === false}
@@ -302,26 +302,23 @@ export class MTableToolbar extends React.Component {
   }
 
   renderActions() {
-    const { classes } = this.props;
-
     return (
-      <div className={classes.actions}>
-        <div>
+      <Box sx={{ color: "text.secondary" }}>
+        <Box>
           {this.props.selectedRows && this.props.selectedRows.length > 0
             ? this.renderSelectedActions()
             : this.renderDefaultActions()}
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 
   renderToolbarTitle(title) {
-    const { classes } = this.props;
     const toolBarTitle =
       typeof title === "string" ? (
         <Typography
           variant="h6"
-          style={{
+          sx={{
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -333,41 +330,53 @@ export class MTableToolbar extends React.Component {
         title
       );
 
-    return <div className={classes.title}>{toolBarTitle}</div>;
+    return <Box sx={{ overflow: "hidden" }}>{toolBarTitle}</Box>;
   }
 
   render() {
-    const { classes } = this.props;
     const localization = {
       ...MTableToolbar.defaultProps.localization,
       ...this.props.localization,
     };
-    const title =
+
+    const hasSelectedRows =
       this.props.showTextRowsSelected &&
       this.props.selectedRows &&
-      this.props.selectedRows.length > 0
-        ? typeof localization.nRowsSelected === "function"
-          ? localization.nRowsSelected(this.props.selectedRows.length)
-          : localization.nRowsSelected.replace(
-              "{0}",
-              this.props.selectedRows.length
-            )
-        : this.props.showTitle
-        ? this.props.title
-        : null;
+      this.props.selectedRows.length > 0;
+
+    const title = hasSelectedRows
+      ? typeof localization.nRowsSelected === "function"
+        ? localization.nRowsSelected(this.props.selectedRows.length)
+        : localization.nRowsSelected.replace(
+            "{0}",
+            this.props.selectedRows.length
+          )
+      : this.props.showTitle
+      ? this.props.title
+      : null;
+
     return (
       <Toolbar
-        className={classNames(classes.root, {
-          [classes.highlight]:
-            this.props.showTextRowsSelected &&
-            this.props.selectedRows &&
-            this.props.selectedRows.length > 0,
-        })}
+        sx={{
+          pr: 1,
+          ...(hasSelectedRows
+            ? {
+                color: (theme) =>
+                  theme.palette.mode === "light"
+                    ? theme.palette.secondary.main
+                    : theme.palette.text.primary,
+                bgcolor: (theme) =>
+                  theme.palette.mode === "light"
+                    ? lighten(theme.palette.secondary.light, 0.85)
+                    : theme.palette.secondary.dark,
+              }
+            : {}),
+        }}
       >
         {title && this.renderToolbarTitle(title)}
         {this.props.searchFieldAlignment === "left" && this.renderSearch()}
         {this.props.toolbarButtonAlignment === "left" && this.renderActions()}
-        <div className={classes.spacer} />
+        <Box sx={{ flex: "1 1 10%" }} />
         {this.props.searchFieldAlignment === "right" && this.renderSearch()}
         {this.props.toolbarButtonAlignment === "right" && this.renderActions()}
       </Toolbar>
@@ -436,41 +445,7 @@ MTableToolbar.propTypes = {
   exportFileName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   exportCsv: PropTypes.func,
   exportPdf: PropTypes.func,
-  classes: PropTypes.object,
   searchAutoFocus: PropTypes.bool,
 };
 
-export const styles = (theme) => ({
-  root: {
-    paddingRight: theme.spacing(1),
-  },
-  highlight:
-    theme.palette.mode === "light"
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
-  spacer: {
-    flex: "1 1 10%",
-  },
-  actions: {
-    color: theme.palette.text.secondary,
-  },
-  title: {
-    overflow: "hidden",
-  },
-  searchField: {
-    minWidth: 150,
-    paddingLeft: theme.spacing(2),
-  },
-  formControlLabel: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(MTableToolbar);
+export default MTableToolbar;
