@@ -1,11 +1,8 @@
-/* eslint-disable no-unused-vars */
 import * as React from "react";
 import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import CircularProgress from "@mui/material/CircularProgress";
-import { withTheme } from "@mui/styles";
-import { MTable } from "..";
-/* eslint-enable no-unused-vars */
 
 class MTableEditCell extends React.Component {
   constructor(props) {
@@ -26,7 +23,7 @@ class MTableEditCell extends React.Component {
       fontSize: "inherit",
       fontFamily: "inherit",
       fontWeight: "inherit",
-      padding: "0 16px",
+      px: 2,
     };
 
     if (typeof this.props.columnDef.cellStyle === "function") {
@@ -91,9 +88,9 @@ class MTableEditCell extends React.Component {
   renderActions() {
     if (this.state.isLoading) {
       return (
-        <div style={{ display: "flex", justifyContent: "center", width: 60 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", width: 60 }}>
           <CircularProgress size={20} />
-        </div>
+        </Box>
       );
     }
 
@@ -123,9 +120,9 @@ class MTableEditCell extends React.Component {
 
   render() {
     return (
-      <TableCell size={this.props.size} style={this.getStyle()} padding="none">
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ flex: 1, marginRight: 4 }}>
+      <TableCell size={this.props.size} sx={this.getStyle()} padding="none">
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ flex: 1, mr: 0.5 }}>
             <this.props.components.EditField
               columnDef={this.props.columnDef}
               value={this.state.value}
@@ -134,9 +131,9 @@ class MTableEditCell extends React.Component {
               disabled={this.state.isLoading}
               autoFocus
             />
-          </div>
+          </Box>
           {this.renderActions()}
-        </div>
+        </Box>
       </TableCell>
     );
   }
@@ -158,4 +155,4 @@ MTableEditCell.propTypes = {
   size: PropTypes.string,
 };
 
-export default withTheme(MTableEditCell);
+export default MTableEditCell;
