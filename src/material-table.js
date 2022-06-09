@@ -1185,7 +1185,7 @@ const ScrollBar = ({ double, children, classes }) => {
           position: "relative",
 
           "& ::-webkit-scrollbar": {
-            "-webkit-appearance": "none",
+            WebkitAppearance: "none",
           },
           "& ::-webkit-scrollbar:horizontal": {
             height: 8,
