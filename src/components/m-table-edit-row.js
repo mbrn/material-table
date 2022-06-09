@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import * as React from "react";
@@ -214,20 +215,20 @@ export default class MTableEditRow extends React.Component {
         size={size}
         padding="none"
         key="key-actions-column"
-        style={{
+        sx={{
           width: 42 * actions.length,
           padding: "0px 5px",
           ...this.props.options.editCellStyle,
         }}
       >
-        <div style={{ display: "flex" }}>
+        <Box sx={{ display: "flex" }}>
           <this.props.components.Actions
             data={this.props.data}
             actions={actions}
             components={this.props.components}
             size={size}
           />
-        </div>
+        </Box>
       </TableCell>
     );
   }

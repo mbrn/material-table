@@ -52,10 +52,10 @@ class MTableFilterRow extends React.Component {
     }, [columnDef.tableData.filterValue]);
 
     return (
-      <FormControl style={{ width: "100%" }}>
+      <FormControl sx={{ width: 1 }}>
         <InputLabel
           htmlFor={"select-multiple-checkbox" + columnDef.tableData.id}
-          style={{ marginTop: -16 }}
+          sx={{ mt: -2 }}
         >
           {this.getLocalizedFilterPlaceHolder(columnDef)}
         </InputLabel>
@@ -84,7 +84,7 @@ class MTableFilterRow extends React.Component {
             selecteds.map((selected) => columnDef.lookup[selected]).join(", ")
           }
           MenuProps={MenuProps}
-          style={{ marginTop: 0 }}
+          sx={{ marginTop: 0 }}
         >
           {Object.keys(columnDef.lookup).map((key) => (
             <MenuItem key={key} value={key}>
@@ -211,7 +211,7 @@ class MTableFilterRow extends React.Component {
       .map((columnDef) => (
         <TableCell
           key={columnDef.tableData.id}
-          style={{
+          sx={{
             ...this.props.filterCellStyle,
             ...columnDef.filterCellStyle,
           }}
@@ -276,7 +276,7 @@ class MTableFilterRow extends React.Component {
       });
 
     return (
-      <TableRow style={{ height: 10, ...this.props.filterRowStyle }}>
+      <TableRow sx={{ height: 10, ...this.props.filterRowStyle }}>
         {columns}
       </TableRow>
     );

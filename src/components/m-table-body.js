@@ -37,7 +37,7 @@ class MTableBody extends React.Component {
       }
       return (
         <TableRow
-          style={{
+          sx={{
             height:
               rowHeight *
               (this.props.options.paging &&
@@ -48,7 +48,7 @@ class MTableBody extends React.Component {
           key={"empty-" + 0}
         >
           <TableCell
-            style={{ paddingTop: 0, paddingBottom: 0, textAlign: "center" }}
+            sx={{ py: 0, textAlign: "center" }}
             colSpan={this.props.columns.reduce(
               (currentVal, columnDef) =>
                 columnDef.hidden ? currentVal : currentVal + 1,
@@ -64,10 +64,10 @@ class MTableBody extends React.Component {
       return (
         <React.Fragment>
           {[...Array(emptyRowCount)].map((r, index) => (
-            <TableRow style={{ height: rowHeight }} key={"empty-" + index} />
+            <TableRow sx={{ height: rowHeight }} key={"empty-" + index} />
           ))}
           {emptyRowCount > 0 && (
-            <TableRow style={{ height: 1 }} key={"empty-last1"} />
+            <TableRow sx={{ height: 1 }} key={"empty-last1"} />
           )}
         </React.Fragment>
       );

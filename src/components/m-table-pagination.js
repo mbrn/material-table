@@ -83,7 +83,7 @@ class MTablePaginationInner extends React.Component {
         </Tooltip>
         <Typography
           variant="caption"
-          style={{
+          sx={{
             flex: 1,
             textAlign: "center",
             alignSelf: "center",
@@ -150,7 +150,6 @@ MTablePaginationInner.propTypes = {
   page: PropTypes.number,
   count: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  classes: PropTypes.object,
   localization: PropTypes.object,
   theme: PropTypes.any,
   showFirstLastPageButtons: PropTypes.bool,

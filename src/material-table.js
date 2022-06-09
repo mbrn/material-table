@@ -1174,7 +1174,7 @@ export default class MaterialTable extends React.Component {
   }
 }
 
-const ScrollBar = ({ double, children, classes }) => {
+const ScrollBar = ({ double, children }) => {
   if (double) {
     return <DoubleScrollbar>{children}</DoubleScrollbar>;
   } else {

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as React from "react";
+import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import parseISO from "date-fns/parseISO";
@@ -170,8 +171,8 @@ export default class MTableCell extends React.Component {
     let renderValue = this.getRenderValue();
     if (cellEditable) {
       renderValue = (
-        <div
-          style={{
+        <Box
+          sx={{
             borderBottom: "1px dashed grey",
             cursor: "pointer",
             width: "max-content",
@@ -182,7 +183,7 @@ export default class MTableCell extends React.Component {
           }}
         >
           {renderValue}
-        </div>
+        </Box>
       );
     }
 

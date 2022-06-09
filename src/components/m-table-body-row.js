@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -86,14 +87,14 @@ export default class MTableBodyRow extends React.Component {
         size={size}
         padding="none"
         key="key-actions-column"
-        style={{
+        sx={{
           width: width,
           padding: "0px 5px",
           boxSizing: "border-box",
           ...this.props.options.actionsCellStyle,
         }}
       >
-        <div style={{ display: "flex" }}>
+        <Box sx={{ display: "flex" }}>
           <this.props.components.Actions
             data={this.props.data}
             actions={actions}
@@ -101,7 +102,7 @@ export default class MTableBodyRow extends React.Component {
             size={size}
             disabled={this.props.hasAnyEditingRow}
           />
-        </div>
+        </Box>
       </TableCell>
     );
   }
@@ -132,7 +133,7 @@ export default class MTableBodyRow extends React.Component {
         size={size}
         padding="none"
         key="key-selection-column"
-        style={{ width: selectionWidth }}
+        sx={{ width: selectionWidth }}
       >
         <Checkbox
           size={size}
@@ -142,7 +143,7 @@ export default class MTableBodyRow extends React.Component {
           onChange={(event) =>
             this.props.onRowSelected(event, this.props.path, this.props.data)
           }
-          style={styles}
+          sx={styles}
           {...checkboxProps}
         />
       </TableCell>
@@ -168,7 +169,7 @@ export default class MTableBodyRow extends React.Component {
           size={size}
           padding="none"
           key="key-detail-panel-column"
-          style={{
+          sx={{
             width: 42,
             textAlign: "center",
             ...this.props.options.detailPanelColumnStyle,
@@ -176,7 +177,7 @@ export default class MTableBodyRow extends React.Component {
         >
           <IconButton
             size={size}
-            style={{
+            sx={{
               transition: "all ease 200ms",
               ...this.rotateIconStyle(
                 this.props.data.tableData.showDetailPanel
@@ -197,8 +198,8 @@ export default class MTableBodyRow extends React.Component {
     } else {
       return (
         <TableCell size={size} padding="none" key="key-detail-panel-column">
-          <div
-            style={{
+          <Box
+            sx={{
               width: 42 * this.props.detailPanel.length,
               textAlign: "center",
               display: "flex",
@@ -241,7 +242,7 @@ export default class MTableBodyRow extends React.Component {
                 <IconButton
                   size={size}
                   key={"key-detail-panel-" + index}
-                  style={{
+                  sx={{
                     transition: "all ease 200ms",
                     ...this.rotateIconStyle(animation && isOpen),
                   }}
@@ -271,7 +272,7 @@ export default class MTableBodyRow extends React.Component {
 
               return iconButton;
             })}
-          </div>
+          </Box>
         </TableCell>
       );
     }
@@ -288,11 +289,11 @@ export default class MTableBodyRow extends React.Component {
           size={size}
           padding="none"
           key={"key-tree-data-column"}
-          style={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}
+          sx={{ width: 48 + 9 * (this.props.treeDataMaxLevel - 2) }}
         >
           <IconButton
             size={size}
-            style={{
+            sx={{
               transition: "all ease 200ms",
               marginLeft: this.props.level * 9,
               ...this.rotateIconStyle(this.props.data.tableData.isTreeExpanded),

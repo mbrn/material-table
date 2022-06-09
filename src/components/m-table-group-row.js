@@ -138,7 +138,7 @@ export default class MTableGroupRow extends React.Component {
             icons={this.props.icons}
           >
             <IconButton
-              style={{
+              sx={{
                 transition: "all ease 200ms",
                 ...this.rotateIconStyle(this.props.groupData.isExpanded),
               }}

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
@@ -31,7 +32,7 @@ class MTableGroupbar extends React.Component {
     background: "#0000000a",
     display: "flex",
     width: "100%",
-    padding: 8,
+    p: 1,
     overflow: "auto",
     border: "1px solid #ccc",
     borderStyle: "dashed",
@@ -39,19 +40,19 @@ class MTableGroupbar extends React.Component {
 
   render() {
     return (
-      <Toolbar style={{ padding: 0, minHeight: "unset" }}>
+      <Toolbar sx={{ p: 0, minHeight: "unset" }}>
         <Droppable
           droppableId="groups"
           direction="horizontal"
           placeholder="Deneme"
         >
           {(provided, snapshot) => (
-            <div
+            <Box
               ref={provided.innerRef}
-              style={this.getListStyle(snapshot.isDraggingOver)}
+              sx={this.getListStyle(snapshot.isDraggingOver)}
             >
               {this.props.groupColumns.length > 0 && (
-                <Typography variant="caption" style={{ padding: 8 }}>
+                <Typography variant="caption" sx={{ p: 1 }}>
                   {this.props.localization.groupedBy}
                 </Typography>
               )}
@@ -63,11 +64,11 @@ class MTableGroupbar extends React.Component {
                     index={index}
                   >
                     {(provided, snapshot) => (
-                      <div
+                      <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={this.getItemStyle(
+                        sx={this.getItemStyle(
                           snapshot.isDragging,
                           provided.draggableProps.style
                         )}
@@ -76,15 +77,13 @@ class MTableGroupbar extends React.Component {
                           {...provided.dragHandleProps}
                           onClick={() => this.props.onSortChanged(columnDef)}
                           label={
-                            <div
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <div style={{ float: "left" }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <Box sx={{ float: "left" }}>
                                 {columnDef.title}
-                              </div>
+                              </Box>
                               {columnDef.tableData.groupSort && (
                                 <this.props.icons.SortArrow
-                                  style={{
+                                  sx={{
                                     transition: "300ms ease all",
                                     transform:
                                       columnDef.tableData.groupSort === "asc"
@@ -94,25 +93,25 @@ class MTableGroupbar extends React.Component {
                                   }}
                                 />
                               )}
-                            </div>
+                            </Box>
                           }
-                          style={{ boxShadow: "none", textTransform: "none" }}
+                          sx={{ boxShadow: "none", textTransform: "none" }}
                           onDelete={() =>
                             this.props.onGroupRemoved(columnDef, index)
                           }
                         />
-                      </div>
+                      </Box>
                     )}
                   </Draggable>
                 );
               })}
               {this.props.groupColumns.length === 0 && (
-                <Typography variant="caption" style={{ padding: 8 }}>
+                <Typography variant="caption" sx={{ p: 1 }}>
                   {this.props.localization.placeholder}
                 </Typography>
               )}
               {provided.placeholder}
-            </div>
+            </Box>
           )}
         </Droppable>
       </Toolbar>

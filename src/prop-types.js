@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 
 const RefComponent = PropTypes.shape({ current: PropTypes.element });
 const StyledComponent = PropTypes.shape({
-  classes: PropTypes.object,
   innerRef: RefComponent,
 });
 

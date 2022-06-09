@@ -38,7 +38,7 @@ class MTableEditField extends React.Component {
           {...props}
           value={this.props.value === undefined ? "" : this.props.value}
           onChange={(event) => this.props.onChange(event.target.value)}
-          style={{
+          sx={{
             fontSize: 13,
           }}
           SelectDisplayProps={{ "aria-label": this.props.columnDef.title }}
@@ -68,10 +68,10 @@ class MTableEditField extends React.Component {
                 value={String(this.props.value)}
                 checked={Boolean(this.props.value)}
                 onChange={(event) => this.props.onChange(event.target.checked)}
-                style={{
-                  padding: 0,
+                sx={{
+                  p: 0,
                   width: 24,
-                  marginLeft: 9,
+                  ml: 1,
                 }}
                 inputProps={{
                   "aria-label": this.props.columnDef.title,
@@ -203,7 +203,7 @@ class MTableEditField extends React.Component {
         placeholder={
           this.props.columnDef.editPlaceholder || this.props.columnDef.title
         }
-        style={{ float: "right" }}
+        sx={{ float: "right" }}
         type="number"
         value={this.props.value === undefined ? "" : this.props.value}
         onChange={(event) => {
@@ -214,7 +214,7 @@ class MTableEditField extends React.Component {
           return this.props.onChange(value);
         }}
         InputProps={{
-          style: {
+          sx: {
             fontSize: 13,
             textAlign: "right",
           },

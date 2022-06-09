@@ -1,5 +1,6 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import Icon from "@mui/material/Icon";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
@@ -8,16 +9,16 @@ import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 
 const OverlayLoading = (props) => (
-  <div
-    style={{
+  <Box
+    sx={{
       display: "table",
       width: "100%",
       height: "100%",
       backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
-    <div
-      style={{
+    <Box
+      sx={{
         display: "table-cell",
         width: "100%",
         height: "100%",
@@ -26,24 +27,24 @@ const OverlayLoading = (props) => (
       }}
     >
       <CircularProgress />
-    </div>
-  </div>
+    </Box>
+  </Box>
 );
 OverlayLoading.propTypes = {
   theme: PropTypes.any,
 };
 
 const OverlayError = (props) => (
-  <div
-    style={{
+  <Box
+    sx={{
       display: "table",
       width: "100%",
       height: "100%",
       backgroundColor: alpha(props.theme.palette.background.paper, 0.7),
     }}
   >
-    <div
-      style={{
+    <Box
+      sx={{
         display: "table-cell",
         width: "100%",
         height: "100%",
@@ -54,10 +55,10 @@ const OverlayError = (props) => (
       <span>{props.error.message}</span>{" "}
       <props.icon
         onClick={props.retry}
-        style={{ cursor: "pointer", position: "relative", top: 5 }}
+        sx={{ cursor: "pointer", position: "relative", top: 5 }}
       />
-    </div>
-  </div>
+    </Box>
+  </Box>
 );
 OverlayError.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -70,7 +71,6 @@ const Container = (props) => <Paper elevation={2} {...props} />;
 
 export const defaultProps = {
   actions: [],
-  classes: {},
   columns: [],
   components: {
     Action: MComponents.MTableAction,
@@ -163,7 +163,7 @@ export const defaultProps = {
       <Icon
         {...props}
         ref={ref}
-        style={{ ...props.style, transform: "rotate(90deg)" }}
+        sx={{ ...props.style, transform: "rotate(90deg)" }}
       >
         drag_handle
       </Icon>
