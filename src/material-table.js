@@ -965,7 +965,10 @@ export default class MaterialTable extends React.Component {
         nonce={props.options.cspNonce}
       >
         <props.components.Container
-          sx={{ position: "relative", ...props.style }}
+          sx={[
+            { position: "relative", ...props.style },
+            ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
+          ]}
         >
           {props.options.paginationPosition === "top" ||
           props.options.paginationPosition === "both"
@@ -1132,7 +1135,6 @@ export default class MaterialTable extends React.Component {
           props.options.paginationPosition === "both"
             ? this.renderFooter()
             : null}
-
           {(this.state.isLoading || props.isLoading) &&
             props.options.loadingType === "overlay" && (
               <Box
