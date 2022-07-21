@@ -322,7 +322,7 @@ export interface Options<RowData extends object> {
   headerStyle?: React.CSSProperties;
   hideFilterIcons?: boolean;
   initialPage?: number;
-  loadingType?: "overlay" | "linear";
+  loadingType?: "overlay" | "linear" | "none";
   maxBodyHeight?: number | string;
   minBodyHeight?: number | string;
   padding?: "default" | "dense";
