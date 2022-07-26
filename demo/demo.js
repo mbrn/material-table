@@ -9,7 +9,6 @@ import { createTheme } from "@mui/material/styles";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
-import Typography from "@mui/material/Typography";
 
 let direction = "ltr";
 // direction = 'rtl';
