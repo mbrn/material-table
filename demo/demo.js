@@ -527,6 +527,7 @@ class App extends Component {
                           color: "primary",
                         };
                       },
+                      searchText: "İstanbul",
                     }}
                     // editable={{
                     //   onBulkUpdate: (changedRows) =>

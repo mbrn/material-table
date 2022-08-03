@@ -108,7 +108,7 @@ export default class MaterialTable extends React.Component {
         defaultSortColumnIndex,
         defaultSortDirection
       );
-    isInit && this.dataManager.changeSearchText(props.options.searchText || "");
+    isInit && this.dataManager.changeSearchText(props.options.searchText);
     isInit &&
       this.dataManager.changeCurrentPage(
         props.options.initialPage ? props.options.initialPage : 0
