@@ -19,7 +19,7 @@ import {
   DatePicker,
   TimePicker,
   DateTimePicker,
-} from "@mui/lab";
+} from "@mui/x-date-pickers";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

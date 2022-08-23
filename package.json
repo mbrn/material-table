@@ -52,6 +52,7 @@
     "@babel/preset-react": "7.0.0",
     "@mui/material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.72",
+    "@mui/x-date-pickers": "^5.0.0-beta.6",
     "@mui/styles": "5.5.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
