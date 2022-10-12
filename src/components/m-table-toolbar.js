@@ -270,7 +270,16 @@ export class MTableToolbar extends React.Component {
                 <MenuItem key="export-pdf" onClick={this.exportPdf}>
                   {localization.exportPDFName}
                 </MenuItem>
-              )}
+                )}
+               {(this.props.exportButton === true && (this.props.exportMenuOptions &&(this.props.exportMenuOptions.map((col) => {
+                  return (
+                    <MenuItem key="export-pdf" onClick={col.method}>
+                    {col.name}
+                  </MenuItem>
+                    
+                  );
+               })))
+        )}
             </Menu>
           </span>
         )}
@@ -428,6 +437,7 @@ MTableToolbar.propTypes = {
   renderData: PropTypes.array,
   data: PropTypes.array,
   exportAllData: PropTypes.bool,
+  exportMenuOptions: PropTypes.array,
   exportButton: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),

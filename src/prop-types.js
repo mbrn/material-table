@@ -308,6 +308,7 @@ export const propTypes = {
     doubleHorizontalScroll: PropTypes.bool,
     emptyRowsWhenPaging: PropTypes.bool,
     exportAllData: PropTypes.bool,
+    exportMenuOptions:PropTypes.arrayOf(PropTypes.object),
     exportButton: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.shape({ csv: PropTypes.bool, pdf: PropTypes.bool }),

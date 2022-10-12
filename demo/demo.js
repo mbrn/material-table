@@ -519,6 +519,8 @@ class App extends Component {
                         color: "primary",
                       },
                       selection: true,
+                      exportButton: true,
+                      exportMenuOptions: [{ name: 'testing', method:()=>{console.log("customized export options")}}],
                       selectionProps: (rowData) => {
                         rowData.tableData.disabled = rowData.name === "A1";
 

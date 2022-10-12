@@ -207,6 +207,7 @@ export const defaultProps = {
     emptyRowsWhenPaging: true,
     exportAllData: false,
     exportButton: false,
+    exportMenuOptions:[],
     exportDelimiter: ",",
     filtering: false,
     groupTitle: false,
