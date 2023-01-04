@@ -122,13 +122,16 @@ class MTableEditCell extends React.Component {
   }
 
   render() {
+    const { editComponent, ...cellProps } = this.props.columnDef;
+    const EditComponent = editComponent || this.props.components.EditField;
     return (
       <TableCell size={this.props.size} style={this.getStyle()} padding="none">
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flex: 1, marginRight: 4 }}>
-            <this.props.components.EditField
-              columnDef={this.props.columnDef}
+            <EditComponent
+              columnDef={cellProps}
               value={this.state.value}
+              rowData={this.props.rowData}
               onChange={(value) => this.setState({ value })}
               onKeyDown={this.handleKeyDown}
               disabled={this.state.isLoading}
