@@ -59,6 +59,11 @@ export class MTableHeader extends React.Component {
       additionalWidth
     );
 
+    additionalWidth = Math.max(
+      this.state.resizingColumnDef.minWidth || additionalWidth,
+      additionalWidth
+    );
+
     if (
       this.state.resizingColumnDef.tableData.additionalWidth !== additionalWidth
     ) {
