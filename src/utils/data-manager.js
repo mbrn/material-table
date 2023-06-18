@@ -86,16 +86,21 @@ export default class DataManager {
         id: index,
       };
 
-      if (columnDef.tableData.width !== undefined) {
-        usedWidth.push(columnDef.tableData.width);
+      if (columnDef.tableData.initialWidth !== undefined) {
+        usedWidth.push(columnDef.tableData.initialWidth);
       }
+
+      // if (columnDef.tableData.width !== undefined) {
+      //   usedWidth.push(columnDef.tableData.width);
+      // }
 
       return columnDef;
     });
 
     usedWidth = "(" + usedWidth.join(" + ") + ")";
     undefinedWidthColumns.forEach((columnDef) => {
-      columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
+      // columnDef.tableData.width = columnDef.tableData.initialWidth = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
   }
 
@@ -431,19 +436,8 @@ export default class DataManager {
     const nextColumn = this.columns.find((c) => c.tableData.id === id + 1);
     if (!nextColumn) return;
 
-    // console.log("S i: " + column.tableData.initialWidth);
-    // console.log("S a: " + column.tableData.additionalWidth);
-    // console.log("S w: " + column.tableData.width);
-
     column.tableData.additionalWidth = additionalWidth;
     column.tableData.width = `calc(${column.tableData.initialWidth} + ${column.tableData.additionalWidth}px)`;
-
-    // nextColumn.tableData.additionalWidth = -1 * additionalWidth;
-    // nextColumn.tableData.width = `calc(${nextColumn.tableData.initialWidth} + ${nextColumn.tableData.additionalWidth}px)`;
-
-    // console.log("F i: " + column.tableData.initialWidth);
-    // console.log("F a: " + column.tableData.additionalWidth);
-    // console.log("F w: " + column.tableData.width);
   }
 
   expandTreeForNodes = (data) => {
