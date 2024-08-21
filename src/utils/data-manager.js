@@ -893,7 +893,9 @@ export default class DataManager {
         }
         pointer = pointer[pathPart];
       });
-      pointer.tableData.markedForTreeRemove = true;
+      if (pointer.tableData) {
+        pointer.tableData.markedForTreeRemove = true;
+      }
     };
 
     const traverseChildrenAndUnmark = (rowData) => {
