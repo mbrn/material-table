@@ -12,7 +12,7 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config ./demo/webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "eslint src/** -c ./configs/.eslintrc",
@@ -50,8 +50,8 @@
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/preset-env": "7.2.0",
     "@babel/preset-react": "7.0.0",
-    "@mui/material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.72",
+    "@mui/material": "^5.5.0",
     "@mui/styles": "5.5.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
@@ -84,7 +84,7 @@
     "debounce": "1.2.0",
     "fast-deep-equal": "2.0.1",
     "filefy": "0.1.10",
-    "jspdf": "2.1.0",
+    "jspdf": "^3.0.1",
     "jspdf-autotable": "3.5.9",
     "prop-types": "15.6.2",
     "react-beautiful-dnd": "13.1.0",
@@ -92,8 +92,8 @@
   },
   "peerDependencies": {
     "@date-io/core": "^2.13.1",
-    "@mui/material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.72",
+    "@mui/material": "^5.5.0",
     "@mui/styles": "5.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
