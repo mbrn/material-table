@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "2.0.6",
+  "version": "2.2.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -12,18 +12,13 @@
     "extends": "./configs/.babelrc"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./demo/webpack.config.js --mode development",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config ./demo/webpack.config.js --mode development",
     "build": "babel src --out-dir dist",
     "lint": "npm run eslint && npm run tsc",
     "eslint": "eslint src/** -c ./configs/.eslintrc",
     "tsc": "tsc --noEmit --lib es6,dom --skipLibCheck types/index.d.ts",
     "lint:fix": "eslint src/** --fix",
     "prettify": "prettier --write **/*.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && pretty-quick --staged"
-    }
   },
   "repository": {
     "type": "git",
@@ -48,28 +43,31 @@
     "@babel/plugin-proposal-class-properties": "7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-runtime": "7.1.0",
+    "@babel/plugin-proposal-optional-chaining": "7.21.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7.18.6",
+    "@babel/plugin-proposal-logical-assignment-operators": "7.20.7",
     "@babel/preset-env": "7.2.0",
     "@babel/preset-react": "7.0.0",
-    "@mui/material": "^5.5.0",
-    "@mui/lab": "^5.0.0-alpha.72",
-    "@mui/styles": "5.5.0",
+    "@mui/material": "6.5.0",
+    "@mui/lab": "6.0.1-beta.36",
+    "@mui/styles": "6.4.8",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
     "babel-polyfill": "6.26.0",
     "buble": "0.19.3",
-    "eslint": "5.7.0",
+    "eslint": "7.32.0",
     "eslint-config-defaults": "9.0.0",
-    "eslint-config-standard": "12.0.0",
+    "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-node": "7.0.1",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-react": "7.11.1",
-    "eslint-plugin-standard": "4.0.0",
+    "eslint-plugin-standard": "5.0.0",
     "husky": "1.2.0",
     "prettier": "2.0.5",
     "pretty-quick": "2.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-hot-loader": "4.13.0",
     "typescript": "4.6.2",
     "webpack": "4.27.1",
@@ -79,6 +77,7 @@
   "dependencies": {
     "@date-io/date-fns": "2.13.1",
     "@emotion/styled": "11.8.1",
+    "@emotion/react": "11.9.0",
     "classnames": "2.2.6",
     "date-fns": "2.28.0",
     "debounce": "1.2.0",
@@ -92,10 +91,10 @@
   },
   "peerDependencies": {
     "@date-io/core": "^2.13.1",
-    "@mui/material": "^5.5.0",
-    "@mui/lab": "^5.0.0-alpha.72",
-    "@mui/styles": "5.5.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@mui/material": "6.5.0",
+    "@mui/lab": "6.0.1-beta.36",
+    "@mui/styles": "6.4.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
