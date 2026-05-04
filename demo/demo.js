@@ -1,25 +1,19 @@
-import {
-  Grid,
-  ThemeProvider,
-  StyledEngineProvider,
-  Button,
-  adaptV4Theme,
-} from "@mui/material";
+import { GridLegacy as Grid, StyledEngineProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "../src";
+import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as LegacyThemeProvider } from "@mui/styles";
 
 let direction = "ltr";
 // direction = 'rtl';
-const theme = createTheme(
-  adaptV4Theme({
-    direction: direction,
-    palette: {
-      mode: "light",
-    },
-  })
-);
+const theme = createTheme({
+  direction: direction,
+  palette: {
+    mode: "light",
+  },
+});
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -31,7 +25,7 @@ const App = () => {
       { field: "title", title: "Title" },
       { field: "completed", title: "Completed", type: "boolean" },
     ],
-    []
+    [],
   );
 
   const loadData = useCallback(async () => {
@@ -39,7 +33,7 @@ const App = () => {
 
     try {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos"
+        "https://jsonplaceholder.typicode.com/todos",
       );
       const jsonData = await response.json();
       setData(jsonData);
@@ -57,24 +51,26 @@ const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <div style={{ maxWidth: "100%", direction }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <MaterialTable
-                columns={columns}
-                data={data}
-                title="Demo Title"
-                isLoading={loading}
-                options={{
-                  columnResizable: true,
-                }}
-              />
+        <LegacyThemeProvider theme={theme}>
+          <div style={{ maxWidth: "100%", direction }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <MaterialTable
+                  columns={columns}
+                  data={data}
+                  title="Demo Title"
+                  isLoading={loading}
+                  options={{
+                    columnResizable: true,
+                  }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <button onClick={loadData} style={{ margin: 10 }}>
-            Select
-          </button>
-        </div>
+            <button onClick={loadData} style={{ margin: 10 }}>
+              Select
+            </button>
+          </div>
+        </LegacyThemeProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );

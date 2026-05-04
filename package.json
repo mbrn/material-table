@@ -1,6 +1,6 @@
 {
   "name": "material-table",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Datatable for React based on https://material-ui.com/api/table/ with additional features",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -48,8 +48,8 @@
     "@babel/plugin-proposal-logical-assignment-operators": "7.20.7",
     "@babel/preset-env": "7.2.0",
     "@babel/preset-react": "7.0.0",
-    "@mui/material": "6.5.0",
-    "@mui/lab": "6.0.1-beta.36",
+    "@mui/material": "7.3.0",
+    "@mui/lab": "7.0.1-beta.24",
     "@mui/styles": "6.4.8",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
@@ -70,9 +70,9 @@
     "react-dom": "18.3.1",
     "react-hot-loader": "4.13.0",
     "typescript": "4.6.2",
-    "webpack": "4.27.1",
-    "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.1.10"
+    "webpack": "5.75.0",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "4.11.1"
   },
   "dependencies": {
     "@date-io/date-fns": "2.13.1",
@@ -91,8 +91,8 @@
   },
   "peerDependencies": {
     "@date-io/core": "^2.13.1",
-    "@mui/material": "6.5.0",
-    "@mui/lab": "6.0.1-beta.36",
+    "@mui/material": "7.3.0",
+    "@mui/lab": "7.0.1-beta.24",
     "@mui/styles": "6.4.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

@@ -1,12 +1,12 @@
 const webpack = require("webpack");
 
 module.exports = {
-  entry: ["babel-polyfill", "./demo/demo.js"],
+  entry: ["./demo/demo.js"], // ← remove babel-polyfill, use core-js in babel config instead
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules\/(?!(@mui)\/).*/, // @mui hariç node_modules exclude
+        exclude: /node_modules\/(?!(@mui)\/).*/,
         use: {
           loader: "babel-loader",
           options: {
@@ -26,16 +26,19 @@ module.exports = {
   },
   resolve: {
     extensions: ["*", ".js", ".jsx"],
+    fullySpecified: false, // ← fixes MUI ESM issue
   },
   output: {
     path: __dirname + "/dist",
     publicPath: "/",
     filename: "bundle.js",
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    // ← HotModuleReplacementPlugin removed, webpack 5 handles it natively
+  ],
   devServer: {
-    contentBase: "./demo",
+    static: "./demo",        // ← contentBase is now static
     hot: true,
-    disableHostCheck: true,
+    allowedHosts: "all",     // ← disableHostCheck is now allowedHosts: "all"
   },
 };

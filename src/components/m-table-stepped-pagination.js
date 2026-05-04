@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Hidden from "@mui/material/Hidden";
+import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { withStyles } from "@mui/styles";
@@ -111,9 +111,9 @@ class MTablePaginationInner extends React.Component {
             </IconButton>
           </span>
         </Tooltip>
-        <Hidden mdDown={true}>
+        <Paper sx={{ display: { xs: 'none', md: 'block' } }}>
           {this.renderPagesButton(pageStart, pageEnd)}
-        </Hidden>
+        </Paper>
         <Tooltip title={localization.nextTooltip}>
           <span>
             <IconButton
